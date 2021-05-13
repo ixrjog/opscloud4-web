@@ -5,6 +5,7 @@ import { get, isEmpty } from 'lodash'
 import qs from 'qs'
 import util from '@/libs/util'
 import store from '@/store'
+import router from '@/router'
 
 /**
  * @description 记录和显示错误
@@ -82,10 +83,15 @@ function createService () {
         // 返回响应内容
         case 0: return response.data
         // 例如在 code 401 情况下退回到登录页面
-        case 401: throw new Error('请重新登录')
+        case 401:
+          // throw new Error('请重新登录')
+          router.push({ name: 'login' }); break
         // 根据需要添加其它判断
-        default: throw new Error(`${response.data.msg}: ${response.config.url}`)
+        default: break
       }
+      const error = new Error(response.data.msg)
+      handleError(error)
+      throw error
     },
     error => {
       const status = get(error, 'response.status')
