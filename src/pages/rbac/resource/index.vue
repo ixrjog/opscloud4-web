@@ -6,7 +6,7 @@
         <resource-table></resource-table>
       </el-tab-pane>
       <el-tab-pane label="资源组" name="resourceGroup">
-
+        <group-table></group-table>
       </el-tab-pane>
     </el-tabs>
   </d2-container>
@@ -15,6 +15,7 @@
 <script>
 
 import ResourceTable from '../../../components/caesar/rbac/ResourceTable'
+import GroupTable from '../../../components/caesar/rbac/GroupTable'
 
 export default {
   data () {
@@ -25,10 +26,10 @@ export default {
   mounted () {
   },
   components: {
-    ResourceTable
+    ResourceTable,
+    GroupTable
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
