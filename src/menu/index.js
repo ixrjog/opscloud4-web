@@ -31,7 +31,7 @@ export const menuAside = supplementPath([
     children: [
       { path: '/rbac/resource', title: '资源管理', icon: 'modx' },
       { path: '/rbac/role', title: '角色管理', icon: 'users' },
-      { path: '/rbac/user/role', title: '用户角色配置', icon: 'id-card' }
+      { path: '/rbac/user-role', title: '用户角色配置', icon: 'id-card' }
     ]
   }
 ])

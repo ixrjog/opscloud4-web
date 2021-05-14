@@ -15,14 +15,16 @@
           <select-item :name="item.groupName" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
+      <el-button @click="fetchData" style="margin-left: 5px" :disabled="roleId === ''">查询</el-button>
     </el-row>
     <el-row :gutter="20" style="margin-top: 10px">
       <el-col :span="12">
-        <role-resource-table :group-id="groupId" :role-id="roleId" :bind="false" ref="bindRoleResource" @fetchData="fetchData"></role-resource-table>
+        <role-resource-table :group-id="groupId" :role-id="roleId" :bind="false" ref="bindRoleResource"
+                             @fetchData="fetchData"></role-resource-table>
       </el-col>
       <el-col :span="12">
-        <role-resource-table :group-id="groupId" :role-id="roleId" :bind="true" ref="unbindRoleResource" @fetchData="fetchData"></role-resource-table>
+        <role-resource-table :group-id="groupId" :role-id="roleId" :bind="true" ref="unbindRoleResource"
+                             @fetchData="fetchData"></role-resource-table>
       </el-col>
     </el-row>
   </div>
@@ -78,6 +80,7 @@ export default {
         })
     },
     fetchData () {
+      if (this.roleId === '') return
       this.$refs.bindRoleResource.fetchData()
       this.$refs.unbindRoleResource.fetchData()
     }

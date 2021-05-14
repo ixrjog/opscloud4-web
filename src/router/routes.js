@@ -68,6 +68,15 @@ const frameIn = [
           auth: true,
           title: '资源管理'
         }
+      },
+      {
+        path: '/rbac/user-role',
+        name: 'rbac-user-role',
+        component: () => import('@/pages/rbac/user-role'),
+        meta: {
+          auth: true,
+          title: '用户角色管理'
+        }
       }
       // {
       //   path: '/rbac/resource',

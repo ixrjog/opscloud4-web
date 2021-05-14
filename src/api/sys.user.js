@@ -33,6 +33,6 @@ export function SYS_USER_LOGIN (data = {}) {
   return request({
     url: '/log/login',
     method: 'post',
-    data
+    data: data
   })
 }
