@@ -22,11 +22,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background @current-change="paginationCurrentChange" :page-sizes="[10, 15, 20, 25, 30]"
-                   @size-change="handleSizeChange"
-                   layout="sizes, prev, pager, next" :total="table.pagination.total" :current-page="table.pagination.currentPage"
-                   :page-size="table.pagination.pageSize">
-    </el-pagination>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange" @handleSizeChange="handleSizeChange"></pagination>
     <!-- role编辑-->
     <role-editor ref="roleEditor" :formStatus="formStatus.role" @close="fetchData"></role-editor>
     <!--    <MenuDialog :formStatus="formMenuStatus" ref="menuDialog"></MenuDialog>-->
@@ -34,11 +30,11 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
 
 import { QUERY_ROLE_PAGE, DELETE_ROLE_BY_ID } from '@/api/modules/auth/auth.role.api.js'
 import RoleEditor from './RoleEditor'
 import WhetherTag from '../common/tag/WhetherTag'
+import Pagination from '../common/page/Pagination'
 
 export default {
   name: 'RbacRoleTable',
@@ -70,37 +66,22 @@ export default {
     }
   },
   computed: {
-    ...mapState('d2admin/user', [
-      'info'
-    ])
   },
   mounted () {
-    this.initPageSize()
     this.fetchData()
   },
   components: {
+    Pagination,
     WhetherTag,
     RoleEditor
-    // RoleDialog,
-    // MenuDialog
   },
   methods: {
-    ...mapActions({
-      setPageSize: 'd2admin/user/set'
-    }),
-    handleSizeChange (size) {
-      this.table.pagination.pageSize = size
-      this.info.pageSize = size
-      this.setPageSize(this.info)
-      this.fetchData()
-    },
-    initPageSize () {
-      if (typeof (this.info.pageSize) !== 'undefined') {
-        this.table.pagination.pageSize = this.info.pageSize
-      }
-    },
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
+      this.fetchData()
+    },
+    handleSizeChange (size) {
+      this.table.pagination.pageSize = size
       this.fetchData()
     },
     handlerRowEdit (row) {

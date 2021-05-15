@@ -46,19 +46,13 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background @current-change="paginationCurrentChange" :page-sizes="[10, 15, 20, 25, 30]"
-                   @size-change="handleSizeChange"
-                   layout="sizes, prev, pager, next" :total="table.pagination.total"
-                   :current-page="table.pagination.currentPage"
-                   :page-size="table.pagination.pageSize">
-    </el-pagination>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange" @handleSizeChange="handleSizeChange"></pagination>
     <resource-editor ref="resourceEditor" :formStatus="formStatus.resource" :auth-options="authOptions" :ui-options="uiOptions"
                      @close="fetchData"></resource-editor>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
 
 import { QUERY_RESOURCE_PAGE, DELETE_RESOURCE_BY_ID } from '@/api/modules/auth/auth.resource.api.js'
 import { QUERY_GROUP_PAGE } from '@/api/modules/auth/auth.group.api.js'
@@ -66,6 +60,7 @@ import { QUERY_GROUP_PAGE } from '@/api/modules/auth/auth.group.api.js'
 import WhetherTag from '../common/tag/WhetherTag'
 import SelectItem from '../common/SelectItem'
 import ResourceEditor from './ResourceEditor'
+import Pagination from '../common/page/Pagination'
 
 const whetherOptions = [
   {
@@ -108,37 +103,24 @@ export default {
     }
   },
   computed: {
-    ...mapState('d2admin/user', [
-      'info'
-    ])
   },
   mounted () {
-    this.initPageSize()
     this.getGroup('')
     this.fetchData()
   },
   components: {
+    Pagination,
     ResourceEditor,
     WhetherTag,
     SelectItem
   },
   methods: {
-    ...mapActions({
-      setPageSize: 'd2admin/user/set'
-    }),
-    handleSizeChange (size) {
-      this.table.pagination.pageSize = size
-      this.info.pageSize = size
-      this.setPageSize(this.info)
-      this.fetchData()
-    },
-    initPageSize () {
-      if (typeof (this.info.pageSize) !== 'undefined') {
-        this.table.pagination.pageSize = this.info.pageSize
-      }
-    },
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
+      this.fetchData()
+    },
+    handleSizeChange (size) {
+      this.table.pagination.pageSize = size
       this.fetchData()
     },
     getGroup (groupName) {

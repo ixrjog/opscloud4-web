@@ -16,21 +16,16 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background @current-change="paginationCurrentChange" :page-sizes="[10, 15, 20, 25, 30]"
-                   @size-change="handleSizeChange"
-                   layout="sizes, prev, pager, next" :total="table.pagination.total"
-                   :current-page="table.pagination.currentPage"
-                   :page-size="table.pagination.pageSize">
-    </el-pagination>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange" @handleSizeChange="handleSizeChange"></pagination>
     <group-editor ref="groupEditor" :formStatus="formStatus.group" @close="fetchData"></group-editor>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
 // API
 import { QUERY_GROUP_PAGE, DELETE_GROUP_BY_ID } from '@/api/modules/auth/auth.group.api.js'
 import GroupEditor from './GroupEditor'
+import Pagination from '../common/page/Pagination'
 
 export default {
   name: 'AuthGroupTable',
@@ -58,35 +53,20 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState('d2admin/user', [
-      'info'
-    ])
-  },
   mounted () {
-    this.initPageSize()
     this.fetchData()
   },
   components: {
-    GroupEditor
+    GroupEditor,
+    Pagination
   },
   methods: {
-    ...mapActions({
-      setPageSize: 'd2admin/user/set'
-    }),
-    handleSizeChange (size) {
-      this.table.pagination.pageSize = size
-      this.info.pageSize = size
-      this.setPageSize(this.info)
-      this.fetchData()
-    },
-    initPageSize () {
-      if (typeof (this.info.pageSize) !== 'undefined') {
-        this.table.pagination.pageSize = this.info.pageSize
-      }
-    },
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
+      this.fetchData()
+    },
+    handleSizeChange (size) {
+      this.table.pagination.pageSize = size
       this.fetchData()
     },
     handlerRowDel (row) {
