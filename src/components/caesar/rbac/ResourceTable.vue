@@ -140,16 +140,18 @@ export default {
       this.formStatus.resource.visible = true
     },
     handlerRowAdd () {
+      const group = this.queryParam.groupId === '' ? null : this.groupOptions.find(e => e.id === this.queryParam.groupId)
       const resource = {
         id: '',
-        groupId: '',
-        group: null,
+        groupId: group === null ? '' : group.id,
+        group: group,
         resourceName: '',
         comment: '',
         needAuth: true,
         ui: false
       }
       this.$refs.resourceEditor.initData(resource)
+
       this.formStatus.resource.operationType = true
       this.formStatus.resource.visible = true
     },

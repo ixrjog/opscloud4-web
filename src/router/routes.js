@@ -50,7 +50,27 @@ const frameIn = [
         hidden: true,
         component: _import('system/function/redirect')
       },
-      // RBAC
+      // SysCredential
+      {
+        path: '/sys/credential',
+        name: 'sys-credential',
+        component: () => import('@/pages/sys/credential'),
+        meta: {
+          auth: true,
+          title: '系统凭据配置'
+        }
+      },
+      // Datasource 数据源
+      {
+        path: '/datasource/config',
+        name: 'datasource-config',
+        component: () => import('@/pages/datasource/config'),
+        meta: {
+          auth: true,
+          title: '数据源配置'
+        }
+      },
+      // RBAC 基于角色的访问控制
       {
         path: '/rbac/role',
         name: 'rbac-role',

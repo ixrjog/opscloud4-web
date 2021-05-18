@@ -5,7 +5,6 @@
       <el-form-item label="资源路径" :label-width="labelWidth" :required="true">
         <el-input v-model="resource.resourceName" placeholder="请输入内容"></el-input>
       </el-form-item>
-
       <el-form-item label="资源组" :label-width="labelWidth" :required="true">
         <el-select v-model="resource.groupId" filterable clearable
                    remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup">

@@ -16,7 +16,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange" @handleSizeChange="handleSizeChange"></pagination>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                @handleSizeChange="handleSizeChange"></pagination>
     <group-editor ref="groupEditor" :formStatus="formStatus.group" @close="fetchData"></group-editor>
   </div>
 </template>

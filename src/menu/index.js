@@ -25,12 +25,28 @@ function supplementPath (menu) {
 // 菜单 侧边栏
 export const menuAside = supplementPath([
   {
+    path: '/sys',
+    title: '系统管理',
+    icon: 'cogs',
+    children: [
+      { path: '/sys/credential', title: '凭据配置', icon: 'key' }
+    ]
+  },
+  {
+    path: '/datasource',
+    title: '数据源管理',
+    icon: 'superpowers',
+    children: [
+      { path: '/datasource/config', title: '数据源配置', icon: 'modx' }
+    ]
+  },
+  {
     path: '/auth',
-    title: 'RBAC配置',
+    title: 'RBAC管理',
     icon: 'address-card',
     children: [
-      { path: '/rbac/resource', title: '资源管理', icon: 'modx' },
-      { path: '/rbac/role', title: '角色管理', icon: 'users' },
+      { path: '/rbac/resource', title: '资源配置', icon: 'modx' },
+      { path: '/rbac/role', title: '角色配置', icon: 'users' },
       { path: '/rbac/user-role', title: '用户角色配置', icon: 'id-card' }
     ]
   }
