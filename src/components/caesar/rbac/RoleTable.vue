@@ -111,7 +111,7 @@ export default {
     fetchData () {
       this.table.loading = true
       const requestBody = {
-        roleName: this.queryParam.roleName,
+        ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }

@@ -123,7 +123,8 @@ export default {
       queryParam: {
         queryName: '',
         dsType: '',
-        isActive: ''
+        isActive: '',
+        extend: true
       },
       roleOptions: []
     }
@@ -195,10 +196,7 @@ export default {
     fetchData () {
       this.table.loading = true
       const requestBody = {
-        queryName: this.queryParam.queryName,
-        dsType: this.queryParam.dsType,
-        isActive: this.queryParam.isActive,
-        extend: true,
+        ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }

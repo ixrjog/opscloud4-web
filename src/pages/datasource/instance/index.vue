@@ -58,7 +58,8 @@ export default {
       },
       queryParam: {
         instanceType: '',
-        isActive: ''
+        isActive: '',
+        extend: true
       },
       roleOptions: []
     }
@@ -78,9 +79,7 @@ export default {
     },
     fetchData () {
       const requestBody = {
-        instanceType: this.queryParam.instanceType,
-        isActive: this.queryParam.isActive,
-        extend: true
+        ...this.queryParam
       }
       QUERY_DATASOURCE_INSTANCE(requestBody)
         .then(res => {

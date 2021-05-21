@@ -123,8 +123,7 @@ export default {
     fetchData () {
       this.table.loading = true
       const requestBody = {
-        queryName: this.queryParam.queryName,
-        kind: this.queryParam.kind,
+        ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }

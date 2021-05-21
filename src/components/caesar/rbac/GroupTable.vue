@@ -42,7 +42,8 @@ export default {
         }
       },
       queryParam: {
-        queryName: ''
+        queryName: '',
+        extend: true
       },
       formStatus: {
         group: {
@@ -103,8 +104,7 @@ export default {
     fetchData () {
       this.table.loading = true
       const requestBody = {
-        groupName: this.queryParam.groupName,
-        extend: true,
+        ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }

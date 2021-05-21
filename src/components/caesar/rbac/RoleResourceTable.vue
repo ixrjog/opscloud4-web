@@ -13,12 +13,17 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange" @handleSizeChange="handleSizeChange"></pagination>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                @handleSizeChange="handleSizeChange"></pagination>
   </el-card>
 </template>
 
 <script>
-import { QUERY_BIND_ROLE_RESOURCE_PAGE, ADD_ROLE_RESOURCE, DELETE_ROLE_RESOURCE_BY_ID } from '@/api/modules/auth/auth.role.resource.api.js'
+import {
+  QUERY_BIND_ROLE_RESOURCE_PAGE,
+  ADD_ROLE_RESOURCE,
+  DELETE_ROLE_RESOURCE_BY_ID
+} from '@/api/modules/auth/auth.role.resource.api.js'
 import Pagination from '../common/page/Pagination'
 
 export default {
@@ -40,8 +45,7 @@ export default {
   components: {
     Pagination
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage

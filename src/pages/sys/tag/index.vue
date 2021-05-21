@@ -122,8 +122,7 @@ export default {
     fetchData () {
       this.table.loading = true
       const requestBody = {
-        tagKey: this.queryParam.tagKey,
-        businessType: this.queryParam.businessType,
+        ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
