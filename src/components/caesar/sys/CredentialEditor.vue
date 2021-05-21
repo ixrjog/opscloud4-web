@@ -75,12 +75,12 @@ export default {
   methods: {
     editorInit: function () {
       // language extension prerequsite...
-      require('brace/ext/language_tools')
+      // require('brace/ext/language_tools')
       // language
-      require('brace/mode/yaml')
+      // require('brace/mode/yaml')
       require('brace/theme/chrome')
       // snippet
-      require('brace/snippets/yaml')
+      // require('brace/snippets/yaml')
     },
     initData (credential) {
       this.credential = credential

@@ -60,6 +60,15 @@ const frameIn = [
           title: '系统凭据配置'
         }
       },
+      {
+        path: '/sys/tag',
+        name: 'sys/tag',
+        component: () => import('@/pages/sys/tag'),
+        meta: {
+          auth: true,
+          title: '标签配置'
+        }
+      },
       // Datasource 数据源
       {
         path: '/datasource/config',
@@ -68,6 +77,15 @@ const frameIn = [
         meta: {
           auth: true,
           title: '数据源配置'
+        }
+      },
+      {
+        path: '/datasource/instance',
+        name: 'datasource-instance',
+        component: () => import('@/pages/datasource/instance'),
+        meta: {
+          auth: true,
+          title: '数据源实例'
         }
       },
       // RBAC 基于角色的访问控制

@@ -22,7 +22,7 @@
       <el-table-column prop="title" label="凭据标题" width="250"></el-table-column>
       <el-table-column prop="kind" label="凭据分类" width="150">
         <template slot-scope="scope">
-          <credential-kind-tag  :kinds="kindOptions" :kind="scope.row.kind"></credential-kind-tag>
+          <credential-kind-tag :kinds="kindOptions" :kind="scope.row.kind"></credential-kind-tag>
         </template>
       </el-table-column>
       <el-table-column prop="fingerprint" label="指纹" width="250"></el-table-column>

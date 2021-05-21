@@ -41,7 +41,7 @@
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="数据源属性" name="dsProps">
-          <el-form-item label="凭据配置" :label-position="top" required>
+          <el-form-item label="凭据配置" label-position="top" required>
             <el-select v-model="datasourceConfig.credentialId" filterable clearable
                        remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential">
               <el-option v-for="item in credentialOptions" :key="item.id" :label="item.title" :value="item.id">
@@ -49,7 +49,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="属性(YML)" :label-position="top" required>
+          <el-form-item label="属性(YML)" label-position="top" required>
             <editor v-model="datasourceConfig.propsYml" @init="editorInit" lang="yaml" theme="chrome" height="400"
                     :options="options"></editor>
           </el-form-item>
@@ -126,7 +126,6 @@ export default {
       }
     },
     handleClick () {
-
     },
     getCredential (queryName) {
       const requestBody = {

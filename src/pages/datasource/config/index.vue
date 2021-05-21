@@ -27,22 +27,28 @@
       </el-row>
     </div>
     <el-table :data="table.data" style="width: 100%">
-      <el-table-column prop="name" label="名称" width="250"></el-table-column>
+      <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="dsType" label="数据源类型" width="150">
         <template slot-scope="scope">
           <datasource-type-tag :ds-type="scope.row.dsType"></datasource-type-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="kind" label="分类" width="150"></el-table-column>
+      <el-table-column prop="kind" label="分类" width="300"></el-table-column>
       <el-table-column prop="version" label="版本" width="150"></el-table-column>
-      <el-table-column prop="isActive" label="有效">
+      <el-table-column prop="isRegistered" label="注册" width="150">
+        <template slot-scope="scope">
+          <whether-tag :whether="scope.row.isRegistered"></whether-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="isActive" label="有效" width="150">
         <template slot-scope="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="warning" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" plain size="mini" :disabled="scope.row.isRegistered" @click="handlerRowRegister(scope.row)">注册</el-button>
+          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -53,6 +59,12 @@
                               :active-options="activeOptions"
                               ref="datasourceConfigEditor"
                               @close="fetchData"></datasource-config-editor>
+    <datasource-instance-register-editor :form-status="formStatus.instance"
+                                         :ds-type-options="dsTypeOptions"
+                                         :active-options="activeOptions"
+                                         ref="datasourceInstanceRegisterEditor"
+                                         @close="fetchData">
+    </datasource-instance-register-editor>
   </d2-container>
 </template>
 
@@ -64,6 +76,8 @@ import Pagination from '../../../components/caesar/common/page/Pagination'
 import ActiveTag from '../../../components/caesar/common/tag/ActiveTag'
 import DatasourceTypeTag from '../../../components/caesar/common/tag/DatasourceTypeTag'
 import DatasourceConfigEditor from '../../../components/caesar/datasource/DatasourceConfigEditor'
+import DatasourceInstanceRegisterEditor from '../../../components/caesar/datasource/DatasourceInstanceRegisterEditor'
+import WhetherTag from '../../../components/caesar/common/tag/WhetherTag'
 
 const activeOptions = [{
   value: true,
@@ -98,6 +112,12 @@ export default {
           addTitle: '新增数据源配置',
           updateTitle: '更新数据源配置',
           operationType: true
+        },
+        instance: {
+          visible: false,
+          addTitle: '注册数据源实例配置',
+          updateTitle: '更新数据源实例配置',
+          operationType: true
         }
       },
       queryParam: {
@@ -115,8 +135,10 @@ export default {
   components: {
     Pagination,
     DatasourceConfigEditor,
+    DatasourceInstanceRegisterEditor,
     DatasourceTypeTag,
-    ActiveTag
+    ActiveTag,
+    WhetherTag
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -145,6 +167,25 @@ export default {
       this.$refs.datasourceConfigEditor.initData(dsConfig)
       this.formStatus.config.operationType = true
       this.formStatus.config.visible = true
+    },
+    handlerRowRegister (row) {
+      const datasource = {
+        config: row,
+        instance: {
+          id: '',
+          parentId: 0,
+          uuid: '',
+          instanceName: '',
+          isActive: true,
+          instanceType: '',
+          kind: '',
+          configId: row.id,
+          comment: ''
+        }
+      }
+      this.$refs.datasourceInstanceRegisterEditor.initData(datasource)
+      this.formStatus.instance.operationType = true
+      this.formStatus.instance.visible = true
     },
     handlerRowEdit (row) {
       this.$refs.datasourceConfigEditor.initData(Object.assign({}, row))

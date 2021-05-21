@@ -29,7 +29,8 @@ export const menuAside = supplementPath([
     title: '系统管理',
     icon: 'cogs',
     children: [
-      { path: '/sys/credential', title: '凭据配置', icon: 'key' }
+      { path: '/sys/credential', title: '凭据配置', icon: 'key' },
+      { path: '/sys/tag', title: '标签配置', icon: 'tag' }
     ]
   },
   {
@@ -37,6 +38,7 @@ export const menuAside = supplementPath([
     title: '数据源管理',
     icon: 'superpowers',
     children: [
+      { path: '/datasource/instance', title: '数据源实例', icon: 'th' },
       { path: '/datasource/config', title: '数据源配置', icon: 'modx' }
     ]
   },
