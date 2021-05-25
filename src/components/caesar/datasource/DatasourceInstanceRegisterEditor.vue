@@ -60,8 +60,18 @@ const instanceType = {
       label: 'LDAP'
     }
   ],
-  gitlab: [],
-  jenkins: [],
+  gitlab: [
+    {
+      value: 'GITLAB',
+      label: 'GITLAB'
+    }
+  ],
+  jenkins: [
+    {
+      value: 'JENKINS',
+      label: 'JENKINS'
+    }
+  ],
   aliyun: [
     {
       value: 'ECS',

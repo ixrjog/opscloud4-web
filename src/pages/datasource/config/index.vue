@@ -30,12 +30,12 @@
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="dsType" label="数据源类型" width="150">
         <template slot-scope="scope">
-          <datasource-type-tag :ds-type="scope.row.dsType"></datasource-type-tag>
+          <datasource-type-tag :ds-type="scope.row.dsType" :ds-type-options="dsTypeOptions"></datasource-type-tag>
         </template>
       </el-table-column>
       <el-table-column prop="kind" label="分类" width="300"></el-table-column>
       <el-table-column prop="version" label="版本" width="150"></el-table-column>
-      <el-table-column prop="isRegistered" label="注册" width="150">
+      <el-table-column prop="isRegistered" label="注册实例" width="150">
         <template slot-scope="scope">
           <whether-tag :whether="scope.row.isRegistered"></whether-tag>
         </template>
@@ -47,7 +47,9 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" :disabled="scope.row.isRegistered" @click="handlerRowRegister(scope.row)">注册</el-button>
+          <el-button type="primary" plain size="mini" :disabled="scope.row.isRegistered"
+                     @click="handlerRowRegister(scope.row)">注册
+          </el-button>
           <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
@@ -70,7 +72,10 @@
 
 <script>
 
-import { QUERY_DATASOURCE_CONFIG_PAGE } from '@/api/modules/datasource/datasource.config.api.js'
+import {
+  GET_DATASOURCE_CONFIG_TYPE_OPTIONS,
+  QUERY_DATASOURCE_CONFIG_PAGE
+} from '@/api/modules/datasource/datasource.config.api.js'
 
 import Pagination from '../../../components/caesar/common/page/Pagination'
 import ActiveTag from '../../../components/caesar/common/tag/ActiveTag'
@@ -87,11 +92,6 @@ const activeOptions = [{
   label: '无效'
 }]
 
-const dsTypeOptions = [{
-  value: 1,
-  label: 'LDAP'
-}]
-
 export default {
   data () {
     return {
@@ -105,7 +105,7 @@ export default {
         }
       },
       activeOptions: activeOptions,
-      dsTypeOptions: dsTypeOptions,
+      dsTypeOptions: [],
       formStatus: {
         config: {
           visible: false,
@@ -131,6 +131,7 @@ export default {
   },
   computed: {},
   mounted () {
+    this.getDsTypeOptions()
     this.fetchData()
   },
   components: {
@@ -149,6 +150,12 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    getDsTypeOptions () {
+      GET_DATASOURCE_CONFIG_TYPE_OPTIONS()
+        .then(res => {
+          this.dsTypeOptions = res.body.options
+        })
     },
     handlerAdd () {
       const dsConfig = {

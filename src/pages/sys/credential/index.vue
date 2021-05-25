@@ -15,6 +15,7 @@
           </el-option>
         </el-select>
         <el-button @click="fetchData">查询</el-button>
+        <el-button @click="handlerAdd">新增</el-button>
       </el-row>
     </div>
     <el-table :data="table.data" style="width: 100%">
@@ -100,7 +101,7 @@ export default {
           this.kindOptions = res.body.options
         })
     },
-    handlerRowAdd () {
+    handlerAdd () {
       const credential = {
         title: '',
         kind: 1,

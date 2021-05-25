@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card shadow="hover">
+    <el-card shadow="hover" style="height: 150px">
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
         <span style="font-size: 14px">{{instance.instanceName}}</span>

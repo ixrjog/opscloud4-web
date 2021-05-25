@@ -2,6 +2,14 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/datasource/config'
 
+export function GET_DATASOURCE_CONFIG_TYPE_OPTIONS () {
+  // 接口请求
+  return request({
+    url: baseUrl + '/type/options/get',
+    method: 'get'
+  })
+}
+
 export function QUERY_DATASOURCE_CONFIG_PAGE (data) {
   // 接口请求
   return request({

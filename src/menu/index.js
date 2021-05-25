@@ -30,7 +30,16 @@ export const menuAside = supplementPath([
     icon: 'cogs',
     children: [
       { path: '/sys/credential', title: '凭据配置', icon: 'key' },
-      { path: '/sys/tag', title: '标签配置', icon: 'tag' }
+      { path: '/sys/tag', title: '标签配置', icon: 'tag' },
+      { path: '/sys/guacamole', title: 'Guacamole', icon: 'terminal' }
+    ]
+  },
+  {
+    title: '服务器管理',
+    icon: 'server',
+    children: [
+      { path: '/server', title: '服务器', icon: 'server' },
+      { path: '/server/group', title: '服务器组', icon: 'window-restore' }
     ]
   },
   {
