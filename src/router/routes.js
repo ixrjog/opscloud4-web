@@ -2,6 +2,11 @@ import playground from './modules/playground'
 import plugins from './modules/plugins'
 import components from './modules/components'
 
+import sys from './modules/caesar.sys'
+import server from './modules/caesar.server'
+import rbac from './modules/caesar.rbac'
+import datasource from './modules/caesar.datasource'
+
 import layoutHeaderAside from '@/layout/header-aside'
 
 // 由于懒加载页面太多的话会造成webpack热更新太慢，所以开发环境不使用懒加载，只有生产环境使用懒加载
@@ -50,118 +55,14 @@ const frameIn = [
         hidden: true,
         component: _import('system/function/redirect')
       },
-      // SysCredential
-      {
-        path: '/sys/credential',
-        name: 'sys-credential',
-        component: () => import('@/pages/sys/credential'),
-        meta: {
-          auth: true,
-          title: '系统凭据配置'
-        }
-      },
-      {
-        path: '/sys/tag',
-        name: 'sys/tag',
-        component: () => import('@/pages/sys/tag'),
-        meta: {
-          auth: true,
-          title: '标签配置'
-        }
-      },
-      {
-        path: '/sys/guacamole',
-        name: 'sys/guacamole',
-        component: () => import('@/pages/sys/guacamole'),
-        meta: {
-          auth: true,
-          title: 'VNC/RDP'
-        }
-      },
+      // 系统配置
+      ...sys,
       // Server
-      // {
-      //   path: '/server',
-      //   name: 'server',
-      //   component: () => import('@/pages/server'),
-      //   meta: {
-      //     auth: true,
-      //     title: '服务器'
-      //   }
-      // },
-      {
-        path: '/server/group',
-        name: 'server-group',
-        component: () => import('@/pages/server/group'),
-        meta: {
-          auth: true,
-          title: '服务器组'
-        }
-      },
+      ...server,
       // Datasource 数据源
-      {
-        path: '/datasource/config',
-        name: 'datasource-config',
-        component: () => import('@/pages/datasource/config'),
-        meta: {
-          auth: true,
-          title: '数据源配置'
-        }
-      },
-      {
-        path: '/datasource/instance',
-        name: 'datasource-instance',
-        component: () => import('@/pages/datasource/instance'),
-        meta: {
-          auth: true,
-          title: '数据源实例'
-        }
-      },
+      ...datasource,
       // RBAC 基于角色的访问控制
-      {
-        path: '/rbac/role',
-        name: 'rbac-role',
-        component: () => import('@/pages/rbac/role'),
-        meta: {
-          auth: true,
-          title: '角色管理'
-        }
-      },
-      {
-        path: '/rbac/resource',
-        name: 'rbac-resource',
-        component: () => import('@/pages/rbac/resource'),
-        meta: {
-          auth: true,
-          title: '资源管理'
-        }
-      },
-      {
-        path: '/rbac/user-role',
-        name: 'rbac-user-role',
-        component: () => import('@/pages/rbac/user-role'),
-        meta: {
-          auth: true,
-          title: '用户角色管理'
-        }
-      }
-      // {
-      //   path: '/rbac/resource',
-      //   name: 'auth-resource',
-      //   component: () => import('@/pages/auth/resource'),
-      //   meta: {
-      //     auth: true,
-      //     title: '资源管理'
-      //   }
-      // },
-      // {
-      //   path: '/rbac/user/role',
-      //   name: 'auth-user-role',
-      //   component: () => import('@/pages/auth/user-role'),
-      //   meta: {
-      //     auth: true,
-      //     title: '用户角色管理'
-      //   }
-      // }
+      ...rbac
     ]
   },
   playground,

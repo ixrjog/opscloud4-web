@@ -18,7 +18,7 @@
         <el-button @click="handlerAdd">新增</el-button>
       </el-row>
     </div>
-    <el-table :data="table.data" style="width: 100%">
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="username" label="凭据账户" width="250"></el-table-column>
       <el-table-column prop="title" label="凭据标题" width="250"></el-table-column>
       <el-table-column prop="kind" label="凭据分类" width="150">
@@ -27,9 +27,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="fingerprint" label="指纹" width="250"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="280">
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="warning" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>

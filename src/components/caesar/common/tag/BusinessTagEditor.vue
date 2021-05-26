@@ -34,9 +34,6 @@ export default {
   mounted () {
   },
   methods: {
-    handleClick () {
-      this.$emit('input', !this.value)
-    },
     initData (businessTags) {
       this.getTags()
       this.businessTags = businessTags
@@ -57,10 +54,7 @@ export default {
       UPDATE_BUSINESS_TAGS(requestBody)
         .then(res => {
           // 返回数据
-          this.$message({
-            message: '成功',
-            type: 'success'
-          })
+          this.$message.success('成功!')
           this.formStatus.visible = false
           this.$emit('close')
         })

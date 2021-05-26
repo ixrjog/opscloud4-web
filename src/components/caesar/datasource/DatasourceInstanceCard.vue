@@ -9,7 +9,8 @@
       </div>
       <business-tags :tags="instance.tags"></business-tags>
     </el-card>
-    <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
+    <business-tag-editor ref="businessTagEditor" :business-type="businessType"
+                         :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
   </div>
 </template>
 

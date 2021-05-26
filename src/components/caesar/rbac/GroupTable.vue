@@ -5,7 +5,7 @@
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button @click="handlerRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%">
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="groupName" label="资源组名称"></el-table-column>
       <el-table-column prop="resourceSize" label="资源数量"></el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>

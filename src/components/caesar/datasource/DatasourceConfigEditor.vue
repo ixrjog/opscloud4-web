@@ -118,9 +118,9 @@ export default {
     },
     initData (datasourceConfig) {
       this.datasourceConfig = datasourceConfig
-      if (datasourceConfig.sysCredential !== null) {
+      if (datasourceConfig.credential !== null) {
         this.credentialOptions = []
-        this.credentialOptions.push(datasourceConfig.sysCredential)
+        this.credentialOptions.push(datasourceConfig.credential)
       } else {
         this.getCredential('')
       }
