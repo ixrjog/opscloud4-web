@@ -7,11 +7,12 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="groupName" label="资源组名称"></el-table-column>
+      <el-table-column prop="basePath" label="基本路径"></el-table-column>
       <el-table-column prop="resourceSize" label="资源数量"></el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
-          <el-button type="warning" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>

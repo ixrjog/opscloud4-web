@@ -5,6 +5,9 @@
       <el-form-item label="资源组名称" :label-width="labelWidth" required>
         <el-input v-model="group.groupName" placeholder="请输入内容" ></el-input>
       </el-form-item>
+      <el-form-item label="基本路径" :label-width="labelWidth">
+        <el-input v-model="group.basePath" placeholder="请输入内容" ></el-input>
+      </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
         <el-input v-model="group.comment" placeholder="请输入内容"></el-input>
       </el-form-item>

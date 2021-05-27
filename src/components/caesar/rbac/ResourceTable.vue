@@ -46,8 +46,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange" @handleSizeChange="handleSizeChange"></pagination>
-    <resource-editor ref="resourceEditor" :formStatus="formStatus.resource" :auth-options="authOptions" :ui-options="uiOptions"
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                @handleSizeChange="handleSizeChange"></pagination>
+    <resource-editor ref="resourceEditor" :formStatus="formStatus.resource" :auth-options="authOptions"
+                     :ui-options="uiOptions"
                      @close="fetchData"></resource-editor>
   </div>
 </template>
@@ -102,8 +104,7 @@ export default {
       groupOptions: []
     }
   },
-  computed: {
-  },
+  computed: {},
   mounted () {
     this.getGroup('')
     this.fetchData()
@@ -145,7 +146,7 @@ export default {
         id: '',
         groupId: group === null ? '' : group.id,
         group: group,
-        resourceName: '',
+        resourceName: group !== null && group.basePath !== null ? group.basePath : '',
         comment: '',
         needAuth: true,
         ui: false

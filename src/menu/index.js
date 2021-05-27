@@ -36,6 +36,13 @@ export const menuAside = supplementPath([
     ]
   },
   {
+    title: '用户管理',
+    icon: 'user',
+    children: [
+      { path: '/user', title: '用户', icon: 'user' }
+    ]
+  },
+  {
     title: '服务器管理',
     icon: 'server',
     children: [

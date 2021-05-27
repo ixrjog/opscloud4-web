@@ -5,7 +5,7 @@
       <el-tab-pane label="服务器组" name="group">
         <server-group-table></server-group-table>
       </el-tab-pane>
-      <el-tab-pane label="服务器类型" name="groupType">
+      <el-tab-pane label="服务器组类型" name="groupType">
         <server-group-type-table></server-group-type-table>
       </el-tab-pane>
     </el-tabs>
