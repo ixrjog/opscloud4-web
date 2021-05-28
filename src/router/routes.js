@@ -3,9 +3,11 @@ import plugins from './modules/plugins'
 import components from './modules/components'
 
 import sys from './modules/caesar.sys'
+import user from './modules/caesar.user'
 import server from './modules/caesar.server'
 import rbac from './modules/caesar.rbac'
 import datasource from './modules/caesar.datasource'
+import workbench from './modules/caesar.workbench'
 
 import layoutHeaderAside from '@/layout/header-aside'
 
@@ -57,7 +59,10 @@ const frameIn = [
       },
       // 系统配置
       ...sys,
-      // Server
+      ...workbench,
+      // 用户
+      ...user,
+      // 服务器
       ...server,
       // Datasource 数据源
       ...datasource,

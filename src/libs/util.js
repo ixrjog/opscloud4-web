@@ -31,4 +31,18 @@ util.open = function (url) {
   document.body.removeChild(document.getElementById('d2admin-link-temp'))
 }
 
+/**
+ * 返回ws
+ * @returns {string}
+ */
+util.wsUrl = function (wsUrl) {
+  if (process.env.NODE_ENV === 'development') {
+    return process.env.VUE_APP_WS_API + wsUrl
+  } else {
+    const host = window.location.host
+    const httpProtocol = window.location.href.split('://')[0]
+    return (httpProtocol === 'http' ? 'ws' : 'wss') + '://' + host + process.env.VUE_APP_WS_API + wsUrl
+  }
+}
+
 export default util

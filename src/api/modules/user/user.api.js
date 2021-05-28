@@ -10,3 +10,43 @@ export function QUERY_USER_PAGE (data) {
     data
   })
 }
+
+export function ADD_USER (data) {
+  return request({
+    url: baseUrl + '/add',
+    method: 'post',
+    data
+  })
+}
+
+export function UPDATE_USER (data) {
+  return request({
+    url: baseUrl + '/update',
+    method: 'put',
+    data
+  })
+}
+
+export function REVOKE_USER_BUSINESS_PERMISSION (data) {
+  return request({
+    url: baseUrl + '/business/permission/revoke',
+    method: 'put',
+    data
+  })
+}
+
+export function GRANT_USER_BUSINESS_PERMISSION (data) {
+  return request({
+    url: baseUrl + '/business/permission/grant',
+    method: 'post',
+    data
+  })
+}
+
+export function SET_USER_BUSINESS_PERMISSION (data) {
+  return request({
+    url: baseUrl + '/business/permission/set',
+    method: 'put',
+    params: data
+  })
+}

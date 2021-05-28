@@ -4,19 +4,8 @@
     <el-tabs v-model="activeName">
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="server">
-          <el-form-item label="名称" :label-width="formStatus.labelWidth" required>
+          <el-form-item label="名称" :label-width="labelWidth" required>
             <el-input v-model.trim="server.name" placeholder="请输入内容"></el-input>
-          </el-form-item>
-          <el-form-item label="服务器组" :label-width="labelWidth" required>
-            <el-select v-model.trim="server.serverGroupId" clearable
-                       remote reserve-keyword placeholder="选择服务器组" :remote-method="getGroup">
-              <el-option
-                v-for="item in serverGroupOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-            </el-select>
           </el-form-item>
           <el-form-item label="服务器类型" :label-width="labelWidth" required>
             <el-select v-model="server.serverType" placeholder="选择类型">
@@ -25,6 +14,17 @@
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="服务器组" :label-width="labelWidth" required>
+            <el-select v-model.trim="server.serverGroupId" filterable clearable
+                       remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup">
+              <el-option
+                v-for="item in serverGroupOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
               </el-option>
             </el-select>
           </el-form-item>
@@ -148,7 +148,7 @@ export default {
         this.getGroup(queryName)
       }
       this.$nextTick(() => {
-        const accountIds = server.accounts !== null ? server.accounts.map(e => e.id) : []
+        const accountIds = this.server.accounts !== null ? this.server.accounts.map(e => e.id) : []
         this.$refs.serverAccountTransfer.init(accountIds)
       })
     },

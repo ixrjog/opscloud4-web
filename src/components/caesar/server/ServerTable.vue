@@ -255,7 +255,8 @@ export default {
         monitorStatus: -1,
         serverStatus: 1,
         isActive: true,
-        comment: ''
+        comment: '',
+        accounts: null
       }
       this.$refs.serverEditor.initData(server)
       this.formStatus.server.operationType = true
