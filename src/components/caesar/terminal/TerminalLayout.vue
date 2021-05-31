@@ -1,25 +1,25 @@
 <template>
   <div>
     <el-row :gutter="2">
-      <div v-for="server in servers" :key="server.name">
+      <div v-for="server in terminals" :key="server.instanceId">
         <el-col :span="colSpan">
           <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
             <div slot="header" class="clearfix" style="height: 15px">
-              <span><el-tag>{{ server.name }}</el-tag></span>
-              <el-tooltip class="item" effect="light" content="退出" placement="top-start">
+              <span><el-tag>{{ server.label }}</el-tag></span>
+              <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"
-                           @click="handlerLogoutByInstance( {id:server.name,isNotify:true})">
+                           @click="handlerLogout( {server:server,isNotify:true})">
                   Logout
                 </el-button>
               </el-tooltip>
               <el-tooltip class="item" effect="light" content="复制会话" placement="top-start">
                 <el-button style="float: right; padding: 3px 0;margin-right: 20px" type="text"
-                           @click="handlerDuplicateSessionByInstanceId(server.name)">Duplicate
+                           @click="handlerDuplicateSession(server)">Duplicate
                 </el-button>
               </el-tooltip>
             </div>
             <terminal-item :terminalSetting="terminalSetting" :server="server" @sendMessage="sendMessage"
-                           :ref="`terminal_${server.name}`" :id="`${server.name}`"></terminal-item>
+                           :ref="`terminal_${server.instanceId}`" :id="`${server.instanceId}`"></terminal-item>
           </el-card>
         </el-col>
       </div>
@@ -39,16 +39,16 @@ const wsUrl = 'ws/terminal'
 
 const message = {
   heartbeat: {
-    status: 'HEARTBEAT'
+    state: 'HEARTBEAT'
   },
   close: {
-    status: 'CLOSE'
+    state: 'CLOSE'
   }
 }
 
 export default {
   name: 'TerminalLayout',
-  props: ['terminalSetting', 'servers', 'instanceIds', 'uuid', 'loginType', 'colSpan'],
+  props: ['terminalSetting', 'terminals', 'uuid', 'loginType', 'colSpan'],
   data () {
     return {
       terminalState: TerminalState,
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     open () {
-      for (const server of this.servers) {
+      for (const server of this.terminals) {
         this.initTerminal(server)
       }
       this.handlerLogin()
@@ -75,31 +75,29 @@ export default {
     close () {
       this.sendMessage(message.close)
       /**
-         *
-         0        CONNECTING        连接尚未建立
-         1        OPEN              WebSocket的链接已经建立
-         2        CLOSING           连接正在关闭
-         3        CLOSED            连接已经关闭或不可用
-         */
-      if (this.socket.readyState !== 3) {
-        try {
-          this.socket.close()
-        } catch (e) {
-        }
-        this.socket = null
+       *
+       0        CONNECTING        连接尚未建立
+       1        OPEN              WebSocket的链接已经建立
+       2        CLOSING           连接正在关闭
+       3        CLOSED            连接已经关闭或不可用
+       */
+      try {
+        if (this.socket.readyState !== 3) this.socket.close()
+      } catch (e) {
       }
+      this.socket = null
       clearInterval(this.timer)
     },
     /**
-       * 登录
-       */
+     * 登录
+     */
     handlerLogin () {
       this.initSocket()
       this.setTimer()
     },
     initTerminal (server) {
       this.$nextTick(() => {
-        this.$refs[`terminal_${server.name}`][0].init()
+        this.$refs[`terminal_${server.instanceId}`][0].init()
       })
     },
     setTimer () {
@@ -115,38 +113,45 @@ export default {
       }
     },
     /**
-       * 单个终端退出
-       * @param id
-       */
-    handlerLogoutByInstance (args) {
+     * handlerLogoutByInstance
+     * {
+     * server : {},
+     * isNotify : boolean
+     * }
+     * 单个终端退出
+     * @param id
+     */
+    handlerLogout (args) {
       const logoutMessage = {
         state: this.terminalState.LOGOUT,
-        instanceId: args.id
+        instanceId: args.server.instanceId,
       }
       this.sendMessage(logoutMessage)
-      this.$refs[`terminal_${args.id}`][0].dispose()
-      this.$emit('handlerLogoutByInstance', args)
+      this.$refs[`terminal_${args.server.instanceId}`][0].dispose()
+      this.$emit('handlerLogoutByServerNode', args)
     },
     /**
-       * 复制会话，重开一个终端（支持变更用户类型）
-       * @param id
-       */
-    handlerDuplicateSessionByInstanceId (id) {
+     * 复制会话，重开一个终端（支持变更用户类型）
+     * @param id
+     */
+    handlerDuplicateSession (serverNode) {
+      const fitAddon = this.$refs[`terminal_${serverNode.instanceId}`][0].getFitAddon()
+      let newServerNode = Object.assign({}, serverNode)
       // 计算 instanceId  源id  server-prod-1#1
-      const instanceId = tools.instanceId(id)
-      const fitAddon = this.$refs[`terminal_${id}`][0].getFitAddon()
+      newServerNode.instanceId = tools.instanceId(serverNode.instanceId)
       const duplicateSessionMessage = {
         state: this.terminalState.DUPLICATE_SESSION,
-        duplicateInstanceId: id,
+        // duplicateInstanceId: id,
+        duplicateServerNode: serverNode, // 源会话
+        serverNode: newServerNode,  // 目标会话
         token: util.cookies.get('token'),
         loginType: this.loginType,
-        instanceId: instanceId,
         terminal: {
           width: fitAddon._terminal.cols * 7,
-          height: document.getElementById(id).clientHeight
+          height: document.getElementById(serverNode.instanceId).clientHeight
         }
       }
-      this.$emit('handlerLoginByInstanceId', instanceId)
+      this.$emit('handlerLoginByServerNode', newServerNode)
       this.$nextTick(() => {
         this.sendMessage(duplicateSessionMessage)
       })
@@ -159,19 +164,21 @@ export default {
       this.sendMessage(batchCommandMessage)
     },
     handlerResize () {
-      for (const server of this.servers) {
+      for (const server of this.terminals) {
         this.handlerResizeByServer(server)
       }
     },
     handlerResizeByServer (server) {
-      this.$refs[`terminal_${server.name}`][0].resize()
+      this.$nextTick(() => {
+        this.$refs[`terminal_${server.instanceId}`][0].resize()
+      })
     },
     sendMessage (message) {
       this.socketOnSend(JSON.stringify(message))
     },
     /**
-       * WS初始化
-       */
+     * WS初始化
+     */
     initSocket () {
       this.socket = new WebSocket(this.socketURI)
       this.socketOnClose()
@@ -184,10 +191,9 @@ export default {
         try {
           this.$nextTick(() => {
             const initMessage = {
-              uuid: this.uuid,
               token: util.cookies.get('token'),
               loginType: this.loginType,
-              instanceIds: this.instanceIds,
+              serverNodes: this.terminals,
               state: this.terminalState.LOGIN,
               terminal: {
                 width: 0,
@@ -214,7 +220,10 @@ export default {
       }
     },
     socketOnSend (data) {
-      this.socket.send(data)
+      try {
+        this.socket.send(data)
+      } catch (e) {
+      }
     },
     socketOnMessage () {
       this.socket.onmessage = (message) => {

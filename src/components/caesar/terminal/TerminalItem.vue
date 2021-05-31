@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <div :id="server.name" class="xterm"></div>
-  </div>
+    <div :id="server.instanceId" class="xterm"></div>
 </template>
 
 <script>
@@ -55,15 +53,15 @@ export default {
         convertEol: true // 启用时，光标将设置为下一行的开头
       })
       term.loadAddon(this.fitAddon)
-      term.open(document.getElementById(this.server.name))
+      term.open(document.getElementById(this.server.instanceId))
       this.fitAddon.fit() // 获取对象的高度和宽度
       term.focus() // 聚焦
       const _this = this
       term.onData(function (cmd) {
         const command = {
           data: cmd,
-          state: this.terminalState.COMMAND,
-          instanceId: _this.server.name
+          state: _this.terminalState.COMMAND,
+          instanceId: _this.server.instanceId
         }
         _this.sendMessage(command)
       })
@@ -77,14 +75,14 @@ export default {
        */
     resize () {
       if (this.term === null) return
-      const id = this.server.name
+      const id = this.server.instanceId
       this.fitAddon.fit() // 获取对象的高度和宽度
       const resizeMessage = {
         state: this.terminalState.RESIZE,
         instanceId: id,
         terminal: {
           width: this.fitAddon._terminal.cols * 7, // 边界扣除
-          height: document.getElementById(this.server.name).clientHeight
+          height: document.getElementById(this.server.instanceId).clientHeight
         }
       }
       this.sendMessage(resizeMessage)

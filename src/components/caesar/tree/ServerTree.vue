@@ -61,9 +61,6 @@ export default {
     getCheckedNodes (leafOnly) {
       return this.$refs.myServerTree.getCheckedNodes(leafOnly)
     },
-    getCheckedKeys (leafOnly) {
-      return this.$refs.myServerTree.getCheckedKeys(leafOnly)
-    },
     getUuid () {
       return this.serverTree.uuid
     },
