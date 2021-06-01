@@ -25,19 +25,19 @@
                    plain>命令同步
         </el-button>
       </el-tooltip>
-<!--      <el-tooltip class="item" effect="light" content="您的个人文档，用于记录常用指令" placement="bottom">-->
-<!--        <el-button @click="handlerPreviewUserDoc">用户文档</el-button>-->
-<!--      </el-tooltip>-->
-<!--      <el-button @click="handlerSetting">终端设置</el-button>-->
+      <!--      <el-tooltip class="item" effect="light" content="您的个人文档，用于记录常用指令" placement="bottom">-->
+      <!--        <el-button @click="handlerPreviewUserDoc">用户文档</el-button>-->
+      <!--      </el-tooltip>-->
+      <el-button @click="handlerSetting">终端设置</el-button>
       <el-tooltip class="item" effect="light" content="修复终端字符错位" placement="bottom">
         <el-button @click="handlerResize" v-if="mode === 1">调整大小</el-button>
       </el-tooltip>
       <el-button @click="handlerLogin" type="primary" v-if="mode === 0">批量登录</el-button>
       <el-button @click="handlerLogout" type="primary" v-if="mode === 1">全部关闭</el-button>
     </el-row>
-<!--    <doc-dialog ref="docDialog" :formStatus="formStatus.doc"></doc-dialog>-->
-<!--    <user-terminal-setting ref="userTerminalSetting" @closeUserXTermSetting="resetTerminalSetting"-->
-<!--                           :formStatus="formStatus.setting"></user-terminal-setting>-->
+    <!--    <doc-dialog ref="docDialog" :formStatus="formStatus.doc"></doc-dialog>-->
+    <user-terminal-setting ref="userTerminalSetting"
+                           :formStatus="formStatus.setting"></user-terminal-setting>
   </div>
 </template>
 
@@ -47,6 +47,8 @@
 // import UserTerminalSetting from '../setting/UserTerminalSetting'
 //
 // import { queryUserDocByType } from '@api/doc/doc.js'
+
+import UserTerminalSetting from '../user/UserTerminalSetting'
 
 const layoutModeOptions = [
   {
@@ -72,8 +74,7 @@ export default {
   name: 'TerminalTools',
   props: ['terminalSetting', 'mode', 'batchType'],
   components: {
-    // DocDialog,
-    // UserTerminalSetting
+    UserTerminalSetting
   },
   data () {
     return {
@@ -95,19 +96,15 @@ export default {
     }
   },
   methods: {
-    // handlerSetting () {
-    //   const xtermSettingMap = {}
-    //   xtermSettingMap.XTERM_FOREGROUND = this.terminalSetting.theme.foreground
-    //   xtermSettingMap.XTERM_BACKGROUND = this.terminalSetting.theme.background
-    //   xtermSettingMap.XTERM_ROWS = this.terminalSetting.rows
-    //   this.formStatus.setting.visible = true
-    //   this.$refs.userTerminalSetting.initData(xtermSettingMap)
-    // },
     setLayoutMode (layoutMode) {
       this.layout.mode = layoutMode
     },
     resetTerminalSetting () {
       this.$emit('resetTerminalSetting')
+    },
+    handlerSetting () {
+      this.$refs.userTerminalSetting.init()
+      this.formStatus.setting.visible = true
     },
     // handlerPreviewUserDoc () {
     //   queryUserDocByType(1)

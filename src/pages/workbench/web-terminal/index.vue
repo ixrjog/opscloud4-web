@@ -1,6 +1,6 @@
 <template>
   <d2-container>
-    <div>
+    <div v-show="terminalLayout.terminals.length === 0">
       <h1>{{title}}</h1>
     </div>
     <!--      顶部工具栏-->
@@ -23,7 +23,7 @@
       <el-col>
         <!--          终端布局-->
         <terminal-layout class="terminal-layout" ref="terminalLayout"
-                         :terminal-setting="terminalSetting"
+                         :terminalSetting="terminalSetting"
                          :terminals="terminalLayout.terminals"
                          :uuid="terminalLayout.uuid"
                          :loginType="terminalLayout.loginType"
@@ -41,16 +41,7 @@ import ServerTree from '../../../components/caesar/tree/ServerTree'
 import TerminalTools from '../../../components/caesar/terminal/TerminalTools'
 import TerminalLayout from '../../../components/caesar/terminal/TerminalLayout'
 
-const terminalSetting = {
-  theme: {
-    foreground: '#FFFFFF', // 字体
-    background: '#606266', // 背景色
-    cursor: 'help', // 设置光标
-    red: '#dd7479',
-    blue: '#1BD1FF'
-  },
-  rows: 30
-}
+import { mapState } from 'vuex'
 
 export default {
   props: {},
@@ -60,7 +51,16 @@ export default {
       layout: {
         mode: 0
       },
-      terminalSetting: Object.assign({}, terminalSetting), // 终端设置
+      terminalSetting: {
+        theme: {
+          foreground: '#FFFFFF', // 字体
+          background: '#606266', // 背景色
+          cursor: 'help', // 设置光标
+          red: '#dd7479',
+          blue: '#1BD1FF'
+        },
+        rows: 30
+      },
       terminalTools: {
         mode: 0, // 0未登录:1登录
         batchType: ''
@@ -74,8 +74,13 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState('d2admin/user', [
+      'info'
+    ])
+  },
   mounted () {
-    // this.initTerminalSetting()
+    this.initTerminalSetting()
   },
   beforeDestroy () {
     this.handlerLogout()
@@ -89,21 +94,13 @@ export default {
     /**
      * 设置终端主题色彩
      */
-    // initTerminalSetting () {
-    //   queryUserSettingByGroup(settingGroup)
-    //     .then(res => {
-    //       if (res.success) {
-    //         try {
-    //           this.terminalSetting.theme.foreground = res.body.XTERM_FOREGROUND
-    //           this.terminalSetting.theme.background = res.body.XTERM_BACKGROUND
-    //           this.terminalSetting.rows = res.body.XTERM_ROWS || 30
-    //         } catch (e) {
-    //         }
-    //       } else {
-    //         this.$message.error(res.msg)
-    //       }
-    //     })
-    // },
+    initTerminalSetting () {
+      if (typeof (this.info.terminalSetting) !== 'undefined') {
+        this.terminalSetting.theme.foreground = this.info.terminalSetting.theme.foreground
+        this.terminalSetting.theme.background = this.info.terminalSetting.theme.background
+        this.terminalSetting.rows = this.info.terminalSetting.rows
+      }
+    },
     handlerChangeBatch () {
       let isBatch = true
       if (this.terminalTools.batchType === '') {
@@ -167,7 +164,7 @@ export default {
      */
     handlerLogout () {
       if (this.terminalLayout.serverNodes.length === 0) return
-      this.terminalLayout.terminals.forEach( serverNode => {
+      this.terminalLayout.terminals.forEach(serverNode => {
           const args = {
             server: serverNode,
             isNotify: false

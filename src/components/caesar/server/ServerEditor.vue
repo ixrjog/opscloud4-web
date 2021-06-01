@@ -39,6 +39,16 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="系统类型" :label-width="labelWidth" required>
+            <el-select v-model="server.osType" placeholder="选择类型">
+              <el-option
+                v-for="item in osTypeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
             <el-select v-model="server.isActive" placeholder="选择">
               <el-option
@@ -93,6 +103,17 @@ const serverTypeOptions = [{
   label: '物理服务器'
 }]
 
+const osTypeOptions = [{
+  value: 'Linux',
+  label: 'Linux'
+}, {
+  value: 'Windows',
+  label: 'Windows'
+},{
+  value: 'MacOS',
+  label: 'MacOS'
+}]
+
 export default {
   data () {
     return {
@@ -101,7 +122,8 @@ export default {
       labelWidth: '150px',
       envOptions: [],
       serverGroupOptions: [],
-      server: ''
+      server: '',
+      osTypeOptions: osTypeOptions
     }
   },
   name: 'ServerEditor',

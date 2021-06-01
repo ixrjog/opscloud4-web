@@ -88,6 +88,8 @@
         </template>
       </el-table-column>
     </el-table>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                @handleSizeChange="handleSizeChange"></pagination>
     <server-editor :formStatus="formStatus.server" :activeOptions="activeOptions" ref="serverEditor"
                    @close="fetchData"></server-editor>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id" :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
@@ -108,6 +110,7 @@ import BusinessTags from '../common/tag/BusinessTags'
 import ServerStatusTag from '../common/tag/ServerStatusTag'
 import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import AccountTags from '../common/tag/AccountTags'
+import Pagination from '../common/page/Pagination'
 
 const activeOptions = [{
   value: true,
@@ -181,6 +184,7 @@ export default {
   },
   computed: {},
   components: {
+    Pagination,
     SelectItem,
     ServerEditor,
     BusinessTags,
@@ -192,6 +196,14 @@ export default {
   },
   filters: {},
   methods: {
+    paginationCurrentChange (currentPage) {
+      this.table.pagination.currentPage = currentPage
+      this.fetchData()
+    },
+    handleSizeChange (size) {
+      this.table.pagination.pageSize = size
+      this.fetchData()
+    },
     getTag (name) {
       const requestBody = {
         tagKey: name,

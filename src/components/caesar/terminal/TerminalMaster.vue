@@ -34,7 +34,7 @@
 import util from '@/libs/util'
 import tools from '@/libs/tools'
 
-// import { queryUserSettingByGroup } from '@api/user/user.setting.js'
+import { mapState } from 'vuex'
 import TerminalItem from './TerminalItem'
 
 const wsUrl = 'ws/terminal'
@@ -66,18 +66,24 @@ export default {
       servers: [], // 所有服务器列表
       timer: null, // 心跳定时器
       terminalSetting: { // 终端主题
-        theme: theme
+        theme: theme,
+        rows: 30
       }
     }
   },
   name: 'TerminalMaster',
   props: ['formStatus'],
+  computed: {
+    ...mapState('d2admin/user', [
+      'info'
+    ])
+  },
   mixins: [],
   components: {
     TerminalItem
   },
   mounted () {
-    // this.initTerminalSetting()
+    this.initTerminalSetting()
   },
   beforeDestroy () {
     try {
@@ -88,23 +94,15 @@ export default {
   },
   methods: {
     /**
-       * 设置终端主题色彩
-       */
-    // initTerminalSetting () {
-    //   queryUserSettingByGroup(settingGroup)
-    //     .then(res => {
-    //       if (res.success) {
-    //         try {
-    //           this.terminalSetting.theme.foreground = res.body.XTERM_FOREGROUND
-    //           this.terminalSetting.theme.background = res.body.XTERM_BACKGROUND
-    //           this.terminalSetting.rows = res.body.XTERM_ROWS || 30
-    //         } catch (e) {
-    //         }
-    //       } else {
-    //         this.$message.error(res.msg)
-    //       }
-    //     })
-    // },
+     * 设置终端主题色彩
+     */
+    initTerminalSetting () {
+      if (typeof (this.info.terminalSetting) !== 'undefined') {
+        this.terminalSetting = {
+          ...this.info.terminalSetting
+        }
+      }
+    },
     handlerExit () {
       this.sendMessage(message.close)
       this.servers = []
@@ -129,8 +127,8 @@ export default {
       }, 10000)
     },
     /**
-       * 发送空心跳 避免阿里云SLB会话断开
-       */
+     * 发送空心跳 避免阿里云SLB会话断开
+     */
     handlerHeartbeat () {
       try {
         this.sendMessage(message.heartbeat)
@@ -138,15 +136,15 @@ export default {
       }
     },
     /**
-       * 后端调整体型
-       */
+     * 后端调整体型
+     */
     handlerResize (server) {
       this.$refs[`terminal_${server.name}`][0].resize()
     },
     /**
-       * 复制会话，重开一个终端（支持变更用户类型）
-       * @param id
-       */
+     * 复制会话，重开一个终端（支持变更用户类型）
+     * @param id
+     */
     handlerDuplicateSession () {
       // 计算 instanceId  源id  server-prod-1#1
       const instanceId = this.server.name + '#' + tools.uuid()
@@ -170,9 +168,9 @@ export default {
       })
     },
     /**
-       * 单个终端退出
-       * @param id
-       */
+     * 单个终端退出
+     * @param id
+     */
     handlerLogout (name) {
       const logoutMessage = {
         status: 'LOGOUT',
@@ -196,8 +194,8 @@ export default {
         })
     },
     /**
-       * 登录
-       */
+     * 登录
+     */
     handlerLogin () {
       this.initSocket()
       this.setTimer()
@@ -211,8 +209,8 @@ export default {
       // this.terminalMap[this.server.name].focus() // 强制焦点
     },
     /**
-       * WS初始化
-       */
+     * WS初始化
+     */
     initSocket () {
       this.socket = new WebSocket(this.socketURI)
       this.socketOnClose()

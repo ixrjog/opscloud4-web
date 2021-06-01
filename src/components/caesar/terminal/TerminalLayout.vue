@@ -60,6 +60,8 @@ export default {
   components: {
     TerminalItem
   },
+  mounted () {
+  },
   beforeDestroy () {
   },
   methods: {
