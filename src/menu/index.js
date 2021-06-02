@@ -32,6 +32,7 @@ export const menuAside = supplementPath([
       { path: '/sys/credential', title: '凭据配置', icon: 'key' },
       { path: '/sys/tag', title: '标签配置', icon: 'tag' },
       { path: '/sys/env', title: '环境配置', icon: 'sun-o' },
+      { path: '/sys/menu', title: '菜单管理', icon: 'tag' },
       { path: '/sys/guacamole', title: 'Guacamole', icon: 'terminal' }
     ]
   },
