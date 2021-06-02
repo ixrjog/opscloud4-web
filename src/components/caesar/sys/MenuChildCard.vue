@@ -1,33 +1,27 @@
 <template>
-  <el-card shadow="never" v-show="menuId !== ''">
+  <el-card shadow="hover" v-show="menuId !== ''">
     <div slot="header" style="height: 15px">
       <span>{{ title }}</span>
       <el-row style="float: right">
-        <el-button type="success" icon="el-icon-lock" v-if="finalized" plain
-                   @click="updateFinalized()" size="mini"></el-button>
-        <el-button type="warning" icon="el-icon-unlock" v-if="!finalized" plain
-                   @click="updateFinalized()" size="mini"></el-button>
-        <el-button-group style="margin-left: 10px">
-          <el-button plain @click="addMenuChild()" size="mini" :disabled="finalized">新增</el-button>
-          <el-button plain @click="saveMenuChild()" size="mini" :disabled="finalized">保存</el-button>
-        </el-button-group>
+          <el-button @click="addMenuChild()" type="text" style="padding: 3px 0;margin-left: 5px;">新增</el-button>
+          <el-button @click="saveMenuChild()" type="text" style="padding: 3px 0; margin-left: 5px;">保存</el-button>
       </el-row>
     </div>
-    <draggable :list="menuChildList" @start="dragging = true" @end="dragging = false" :disabled="finalized">
+    <draggable :list="menuChildList" @start="dragging = true" @end="dragging = false" :disabled="false">
       <div v-for="(menuChild,index) in menuChildList" :key="index">
         <el-form :inline="true" :model="menuChild" label-width="60px">
           <el-form-item label="名称" required>
-            <el-input v-model.trim="menuChild.title" :readonly="finalized"></el-input>
+            <el-input v-model.trim="menuChild.title"></el-input>
           </el-form-item>
           <el-form-item label="路径" required>
-            <el-input v-model.trim="menuChild.path" :readonly="finalized" class="input"></el-input>
+            <el-input v-model.trim="menuChild.path" class="input"></el-input>
           </el-form-item>
           <el-form-item label="图标" required>
-            <el-input v-model.trim="menuChild.icon" :readonly="finalized"
+            <el-input v-model.trim="menuChild.icon"
                       :suffix-icon="getIcon(menuChild.icon)"></el-input>
           </el-form-item>
           <el-form-item style="float: right">
-            <el-button type="danger" plain @click.prevent="handlerDel(menuChild)" :disabled="finalized">删除</el-button>
+            <el-button type="danger" plain @click.prevent="handlerDel(menuChild)">删除</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -52,7 +46,6 @@ export default {
     return {
       menuId: '',
       title: '',
-      finalized: true,
       menuChildList: [],
       dragging: false
     }
@@ -65,13 +58,9 @@ export default {
   },
   methods: {
     initData (menuId, title) {
-      this.finalized = true
       this.menuId = menuId
       this.title = title
       this.fetchData()
-    },
-    updateFinalized () {
-      this.finalized = !this.finalized
     },
     getIcon (icon) {
       return `fa fa-${icon}`
@@ -106,7 +95,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          DELETE_MENU_CHILD(menuChild.id)
+          DELETE_MENU_CHILD({id: menuChild.id})
             .then(() => {
               this.fetchData()
               this.$message.success('删除成功!')
@@ -117,10 +106,7 @@ export default {
       }
     },
     fetchData () {
-      const param = {
-        id: this.menuId
-      }
-      QUERY_MENU_CHILD(param)
+      QUERY_MENU_CHILD({ id: this.menuId})
         .then(({ body }) => {
           this.menuChildList = body
         })
@@ -130,7 +116,18 @@ export default {
 </script>
 
 <style scoped>
-.input {
-  width: 220px;
-}
+  .el-card__header {
+    padding: 10px 10px;
+    border-bottom: 1px solid #EBEEF5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .el-button {
+    margin-left: 5px;
+  }
+
+  .input {
+    width: 220px;
+  }
 </style>

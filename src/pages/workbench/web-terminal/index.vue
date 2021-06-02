@@ -165,12 +165,12 @@ export default {
     handlerLogout () {
       if (this.terminalLayout.serverNodes.length === 0) return
       this.terminalLayout.terminals.forEach(serverNode => {
-          const args = {
-            server: serverNode,
-            isNotify: false
-          }
-          this.$refs.terminalLayout.handlerLogout(args)
+        const args = {
+          server: serverNode,
+          isNotify: false
         }
+        this.$refs.terminalLayout.handlerLogout(args)
+      }
       )
       this.$message.warning('所有终端已关闭')
       this.recovery()
