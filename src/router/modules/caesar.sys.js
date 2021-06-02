@@ -34,5 +34,14 @@ export default [
       auth: true,
       title: 'VNC/RDP'
     }
+  },
+  {
+    path: '/sys/menu',
+    name: 'sys/menu',
+    component: () => import('@/pages/sys/menu'),
+    meta: {
+      auth: true,
+      title: '菜单管理'
+    }
   }
 ]
