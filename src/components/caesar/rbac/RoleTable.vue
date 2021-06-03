@@ -17,15 +17,16 @@
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
-          <!--                    <el-button type="primary" plain size="mini" @click="editMenu(scope.row)">菜单</el-button>-->
+          <el-button type="primary" plain size="mini" @click="handlerEditMenu(scope.row)">菜单</el-button>
           <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange" @handleSizeChange="handleSizeChange"></pagination>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                @handleSizeChange="handleSizeChange"></pagination>
     <!-- role编辑-->
     <role-editor ref="roleEditor" :formStatus="formStatus.role" @close="fetchData"></role-editor>
-    <!--    <MenuDialog :formStatus="formMenuStatus" ref="menuDialog"></MenuDialog>-->
+    <role-menu-editor ref="roleMenuEditor" :formStatus="formStatus.roleMenu"></role-menu-editor>
   </div>
 </template>
 
@@ -35,6 +36,7 @@ import { QUERY_ROLE_PAGE, DELETE_ROLE_BY_ID } from '@/api/modules/auth/auth.role
 import RoleEditor from './RoleEditor'
 import WhetherTag from '../common/tag/WhetherTag'
 import Pagination from '../common/page/Pagination'
+import RoleMenuEditor from '@/components/caesar/rbac/RoleMenuEditor'
 
 export default {
   name: 'RbacRoleTable',
@@ -61,19 +63,22 @@ export default {
           operationType: true,
           addTitle: '新增角色配置',
           updateTitle: '更新角色配置'
+        },
+        roleMenu: {
+          visible: false
         }
       }
     }
   },
-  computed: {
-  },
+  computed: {},
   mounted () {
     this.fetchData()
   },
   components: {
     Pagination,
     WhetherTag,
-    RoleEditor
+    RoleEditor,
+    RoleMenuEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -88,6 +93,10 @@ export default {
       this.$refs.roleEditor.initData(Object.assign({}, row))
       this.formStatus.role.operationType = false
       this.formStatus.role.visible = true
+    },
+    handlerEditMenu (row) {
+      this.$refs.roleMenuEditor.initData(Object.assign({}, row))
+      this.formStatus.roleMenu.visible = true
     },
     handlerRowAdd () {
       const role = {
@@ -128,9 +137,9 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
 </style>
