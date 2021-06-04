@@ -33,7 +33,7 @@
 
 <script>
 import draggable from 'vuedraggable'
-import { DELETE_MENU, QUERY_MENU, SAVE_MENU } from '@/api/modules/sys/sys.menu'
+import { DELETE_MENU, QUERY_MENU, SAVE_MENU } from '@/api/modules/sys/sys.menu.api'
 
 const menu = {
   id: '',
