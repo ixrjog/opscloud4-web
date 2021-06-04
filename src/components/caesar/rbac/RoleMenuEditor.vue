@@ -31,7 +31,7 @@ import {
   QUERY_AUTH_ROLE_MENU_DETAIL,
   QUERY_MENU_TREE,
   SAVE_AUTH_ROLE_MENU
-} from '@/api/modules/sys/sys.menu'
+} from '@/api/modules/sys/sys.menu.api'
 
 export default {
   data () {
