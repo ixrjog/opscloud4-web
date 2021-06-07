@@ -80,7 +80,6 @@ export default {
       }).then(() => {
         DELETE_GROUP_BY_ID(row.id).then(res => {
           this.fetchData()
-          debugger
           this.$message.success('删除成功!')
         })
       }).catch(() => {

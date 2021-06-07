@@ -7,11 +7,10 @@ import d2Admin from '@/plugin/d2admin'
 // store
 import store from '@/store/index'
 
-import util from '@/libs/util.js'
-
 // 菜单和路由设置
 import router from './router'
-import { menuHeader, menuAside } from '@/menu'
+// import { menuHeader, menuAside } from '@/menu'
+import { menuHeader } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
 import ui from '@/libs/util.ui'
 
@@ -28,8 +27,7 @@ new Vue({
     this.$store.commit('d2admin/page/init', frameInRoutes)
     // 设置顶栏菜单
     // this.$store.commit('d2admin/menu/headerSet', menuHeader)
-    util.ui.init()
-    // this.$store.commit('d2admin/menu/headerSet', menuAside)
+    ui.init()
     // this.$store.commit('d2admin/menu/asideSet', menuAside)
     // 初始化菜单搜索功能
     this.$store.commit('d2admin/search/init', menuHeader)
