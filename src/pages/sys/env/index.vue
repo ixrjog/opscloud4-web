@@ -15,6 +15,11 @@
             <env-tag :env="scope.row"></env-tag>
           </template>
         </el-table-column>
+        <el-table-column prop="name" label="终端提示色">
+          <template slot-scope="scope">
+            <prompt-color-tag v-if="scope.row.promptColor !== null" :env="scope.row" :promptColorOptions="promptColorOptions"></prompt-color-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="envType" label="类型值"></el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>
         <el-table-column fixed="right" label="操作" width="280">
@@ -26,7 +31,7 @@
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                   @handleSizeChange="handleSizeChange"></pagination>
-      <env-editor :formStatus="formStatus.env" ref="envEditor" @close="fetchData"></env-editor>
+      <env-editor :formStatus="formStatus.env" ref="envEditor" :promptColorOptions="promptColorOptions" @close="fetchData"></env-editor>
     </template>
   </d2-container>
 </template>
@@ -38,6 +43,36 @@ import { QUERY_ENV_PAGE, DELETE_ENV_BY_ID } from '@/api/modules/sys/sys.env.api.
 import Pagination from '../../../components/caesar/common/page/Pagination'
 import EnvTag from '../../../components/caesar/common/tag/EnvTag'
 import EnvEditor from '../../../components/caesar/sys/EnvEditor'
+import PromptColorTag from '../../../components/caesar/common/tag/PromptColorTag'
+
+const promptColorOptions = [{
+  value: 0,
+  label: 'BLACK'
+}, {
+  value: 1,
+  label: 'RED'
+}, {
+  value: 2,
+  label: 'GREEN'
+}, {
+  value: 3,
+  label: 'YELLOW'
+}, {
+  value: 4,
+  label: 'BLUE'
+}, {
+  value: 5,
+  label: 'MAGENTA'
+}, {
+  value: 6,
+  label: 'CYAN'
+}, {
+  value: 7,
+  label: 'WHITE'
+}, {
+  value: 8,
+  label: 'BRIGHT'
+}]
 
 export default {
   data () {
@@ -62,13 +97,15 @@ export default {
       },
       queryParam: {
         envName: ''
-      }
+      },
+      promptColorOptions: promptColorOptions
     }
   },
   components: {
     EnvTag,
     EnvEditor,
-    Pagination
+    Pagination,
+    PromptColorTag
   },
   computed: {},
   mounted () {
