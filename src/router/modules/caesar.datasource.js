@@ -16,5 +16,14 @@ export default [
       auth: true,
       title: '数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/ldap',
+    name: 'datasource-instance-ldap',
+    component: () => import('@/pages/datasource/instance/ldap'),
+    meta: {
+      auth: true,
+      title: 'LDAP数据源实例'
+    }
   }
 ]

@@ -7,7 +7,7 @@
       </div>
       <div>
         <el-tag
-          v-if="user.credentialDetails.credentialMap != null && user.credentialDetails.credentialMap.PUB_KEY !== null"
+          v-if="JSON.stringify(user.credentialDetails.credentialMap) !== '{}' && user.credentialDetails.credentialMap.PUB_KEY !== null"
           style="margin-left: 5px">
           {{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}
           {{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}
@@ -42,7 +42,7 @@ export default {
     handlerEdit () {
       const credentialMap = this.user.credentialDetails.credentialMap
       let pubKey = {}
-      if(credentialMap != null && credentialMap.PUB_KEY !== null){
+      if (JSON.stringify(credentialMap) !== '{}' && credentialMap.PUB_KEY !== null) {
         pubKey = Object.assign({}, credentialMap.PUB_KEY[0])
       } else {
         pubKey = {

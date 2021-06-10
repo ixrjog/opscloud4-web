@@ -4,8 +4,10 @@
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
         <span style="font-size: 14px">{{instance.instanceName}}</span>
-        <el-button style="float: right; padding: 3px 0" type="text"><i class="fa fa-cogs"></i></el-button>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="handlerTagEdit"><i class="fa fa-tag"></i></el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="handlerOpen"><i class="fa fa-cogs"></i>
+        </el-button>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="handlerTagEdit"><i class="fa fa-tag"></i>
+        </el-button>
       </div>
       <business-tags :tags="instance.tags"></business-tags>
     </el-card>
@@ -40,6 +42,11 @@ export default {
     BusinessTags
   },
   methods: {
+    handlerOpen () {
+      this.$router.push({
+        path: '/datasource/instance/' + this.instance.instanceType.toLocaleLowerCase() + '?id=' + this.instance.id
+      })
+    },
     handlerTagEdit () {
       const businessTags = {
         tagIds: this.instance.tags !== null ? this.instance.tags.map(e => e.id) : []
