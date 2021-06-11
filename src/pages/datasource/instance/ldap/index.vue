@@ -1,89 +1,35 @@
 <template>
   <d2-container>
-    <div>
-      <h1>数据源实例</h1>
-    </div>
-    <div>
-      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: -5px">
-        <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">
-          <el-option
-            v-for="item in dsTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-button @click="fetchData">查询</el-button>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="6" v-for="instance in dsInstances" :key="instance.id" >
-          <datasource-instance-card :instance="instance"></datasource-instance-card>
-        </el-col>
-      </el-row>
-    </div>
+    <h1>用户管理</h1>
+    <el-tabs v-model="activeName" v-if="instanceId !== null">
+      <el-tab-pane label="账户" name="account">
+        <account-table :instanceId="instanceId"></account-table>
+      </el-tab-pane>
+    </el-tabs>
   </d2-container>
 </template>
 
 <script>
 
 
-const activeOptions = [{
-  value: true,
-  label: '有效'
-}, {
-  value: false,
-  label: '无效'
-}]
-
-const dsTypeOptions = [{
-  value: 1,
-  label: 'LDAP'
-}]
+import AccountTable from '../../../../components/caesar/datasource/account/AccountTable'
 
 export default {
   data () {
     return {
-      dsInstances: [],
-      activeOptions: activeOptions,
-      dsTypeOptions: dsTypeOptions,
-      formStatus: {
-        config: {
-          visible: false,
-          addTitle: '新增数据源配置',
-          updateTitle: '更新数据源配置',
-          operationType: true
-        }
-      },
-      queryParam: {
-        instanceType: '',
-        isActive: '',
-        extend: true
-      },
-      roleOptions: []
+      activeName: 'account',
+      instanceId: null
     }
   },
   computed: {},
   mounted () {
-    this.fetchData()
+    this.instanceId = this.$route.query.id
+    this.activeName = 'account'
   },
   components: {
+    AccountTable
   },
-  methods: {
-    handlerRowEdit (row) {
-      this.$refs.datasourceConfigEditor.initData(Object.assign({}, row))
-      this.formStatus.config.operationType = false
-      this.formStatus.config.visible = true
-    },
-    fetchData () {
-      const requestBody = {
-        ...this.queryParam
-      }
-      QUERY_DATASOURCE_INSTANCE(requestBody)
-        .then(res => {
-          this.dsInstances = res.body
-        })
-    }
-  }
+  methods: {}
 }
 </script>
 
