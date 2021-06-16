@@ -1,9 +1,12 @@
 <template>
   <d2-container>
-    <h1>用户管理</h1>
-    <el-tabs v-model="activeName" v-if="instanceId !== null">
+    <h1>LDAP实例管理</h1>
+    <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="账户" name="account">
         <account-table :instanceId="instanceId"></account-table>
+      </el-tab-pane>
+      <el-tab-pane label="账户组" name="group">
+        <account-group-table ref="accountGroupTable" :instanceId="instanceId"></account-group-table>
       </el-tab-pane>
     </el-tabs>
   </d2-container>
@@ -11,8 +14,8 @@
 
 <script>
 
-
 import AccountTable from '../../../../components/caesar/datasource/account/AccountTable'
+import AccountGroupTable from '../../../../components/caesar/datasource/account/AccountGroupTable'
 
 export default {
   data () {
@@ -27,9 +30,16 @@ export default {
     this.activeName = 'account'
   },
   components: {
-    AccountTable
+    AccountTable,
+    AccountGroupTable
   },
-  methods: {}
+  methods: {
+    handleClick () {
+      if (this.activeName === 'group') {
+        this.$refs.accountGroupTable.fetchData()
+      }
+    }
+  }
 }
 </script>
 

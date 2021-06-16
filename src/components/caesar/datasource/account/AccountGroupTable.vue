@@ -6,11 +6,18 @@
       <el-button @click="handlePull">拉取</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="displayName" label="显示名"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column prop="account" label="手机"></el-table-column>
-      <el-table-column label="操作" width="280">
+      <el-table-column prop="name" label="组名" width="200"></el-table-column>
+      <el-table-column prop="accounts" label="关联账户数量" width="100">
+        <template slot-scope="scope">
+          {{scope.row.accounts.length}}
+        </template>
+      </el-table-column>
+      <el-table-column prop="accounts" label="关联账户">
+        <template slot-scope="scope">
+          <datasource-accounts-tag :accounts="scope.row.accounts"></datasource-accounts-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
         </template>
       </el-table-column>
@@ -22,12 +29,12 @@
 
 <script>
 
-import { QUERY_ACCOUNT_PAGE,PULL_ACCOUNT } from '@/api/modules/datasource/datasource.account.api.js'
+import { QUERY_ACCOUNT_GROUP_PAGE, PULL_ACCOUNT_GROUP } from '@/api/modules/datasource/datasource.account.api.js'
 import Pagination from '../../common/page/Pagination'
-
+import DatasourceAccountsTag from '../common/DatasourceAccountsTag'
 
 export default {
-  name: 'AccountTable',
+  name: 'AccountGroupTable',
   props: ['instanceId'],
   data () {
     return {
@@ -49,9 +56,9 @@ export default {
   },
   computed: {},
   mounted () {
-    this.fetchData()
   },
   components: {
+    DatasourceAccountsTag,
     Pagination
   },
   methods: {
@@ -63,10 +70,10 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handlePull(){
-      PULL_ACCOUNT({id: this.instanceId})
+    handlePull () {
+      PULL_ACCOUNT_GROUP({ id: this.instanceId })
         .then(res => {
-          this.$message.success("后台任务执行中！")
+          this.$message.success('后台任务执行中！')
         })
     },
     fetchData () {
@@ -77,7 +84,7 @@ export default {
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
-      QUERY_ACCOUNT_PAGE(requestBody)
+      QUERY_ACCOUNT_GROUP_PAGE(requestBody)
         .then(res => {
           this.table.data = res.body.data
           this.table.pagination.total = res.body.totalNum

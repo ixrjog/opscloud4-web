@@ -19,3 +19,21 @@ export function PULL_ACCOUNT (param) {
     params: param
   })
 }
+
+export function QUERY_ACCOUNT_GROUP_PAGE (data) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/group/page/query',
+    method: 'post',
+    data
+  })
+}
+
+export function PULL_ACCOUNT_GROUP (param) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/group/pull',
+    method: 'get',
+    params: param
+  })
+}
