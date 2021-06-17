@@ -17,7 +17,6 @@
 
 <script>
 
-
 import UserInfo from '../../../components/caesar/user/UserInfoCard'
 import { GET_USER_DETAILS } from '@/api/modules/user/user.details.api.js'
 import PubkeyInfo from '../../../components/caesar/user/details/UserCredentialPubKeyInfoCard'
@@ -49,7 +48,6 @@ export default {
           this.user = res.body
         })
     }
-
   }
 }
 </script>

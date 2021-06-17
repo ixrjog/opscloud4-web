@@ -9,7 +9,7 @@
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="displayName" label="显示名"></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column prop="account" label="手机"></el-table-column>
+      <el-table-column prop="phone" label="手机"></el-table-column>
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
         </template>
@@ -24,7 +24,6 @@
 
 import { QUERY_ACCOUNT_PAGE,PULL_ACCOUNT } from '@/api/modules/datasource/datasource.account.api.js'
 import Pagination from '../../common/page/Pagination'
-
 
 export default {
   name: 'AccountTable',

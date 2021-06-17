@@ -22,7 +22,7 @@
         <editor v-model="credential.credential" @init="editorInit" theme="chrome" :height="form.credentialHeight"
                 :options="options"></editor>
       </el-form-item>
-      <el-form-item label="公钥" :label-width="labelWidth" v-show="form.showCredential2">
+      <el-form-item :label="form.credential2Label" :label-width="labelWidth" :required="true" v-if="form.showCredential2">
         <editor v-model="credential.credential2" @init="editorInit" theme="chrome" height="100"
                 :options="options"></editor>
       </el-form-item>
@@ -103,10 +103,17 @@ export default {
           this.form.showCredential2 = true
           this.form.showPassphrase = true
           this.form.credentialHeight = 450
+          this.form.credential2Label = '公钥'
           this.form.credentialLabel = '凭据(私钥)'
           break
         case 4:
           this.form.credentialLabel = '凭据(令牌)'
+          break
+        case 5: // Access Key
+          this.form.showCredential2 = true
+          this.form.credentialHeight = 50
+          this.form.credentialLabel = 'AccessKey'
+          this.form.credential2Label = 'SecretKey'
           break
       }
     },

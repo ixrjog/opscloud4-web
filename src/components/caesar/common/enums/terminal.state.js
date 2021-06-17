@@ -7,5 +7,4 @@ const TerminalState = Object.freeze({
   BATCH_COMMAND: 'BATCH_COMMAND'
 })
 
-
 export default TerminalState
