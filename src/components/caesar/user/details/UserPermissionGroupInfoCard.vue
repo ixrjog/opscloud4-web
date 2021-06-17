@@ -2,15 +2,14 @@
   <div>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 10px">
       <div slot="header" class="clearfix">
-        <span>授权的服务器组<i class="header-icon el-icon-info"></i>(深色标签拥有管理员权限)</span>
+        <span>授权的用户组</span>
       </div>
       <div>
         <span class="tag-group">
           <span v-for="item in groups" :key="item.id">
               <el-tooltip class="item" effect="light" :content="item.comment || '没有填写'" placement="bottom">
-                 <el-tag style="margin-left: 5px"
-                         :type=" item.userPermission.permissionRole === 'admin' ? 'danger': '' ">{{ item.name }}</el-tag>
-              </el-tooltip>
+          <el-tag style="margin-left: 5px">{{ item.name }}</el-tag>
+        </el-tooltip>
          </span>
        </span>
       </div>
@@ -33,7 +32,7 @@ const queryParam = {
 }
 
 export default {
-  name: 'UserPermissionServerGroupInfoCard',
+  name: 'UserPermissionGroupInfoCard',
   props: ['userId'],
   data () {
     return {
@@ -49,7 +48,7 @@ export default {
     fetchData () {
       const requestBody = {
         ...this.queryParam,
-        businessType: this.businessType.SERVERGROUP,
+        businessType: this.businessType.USERGROUP,
         userId: this.userId,
       }
       QUERY_USER_BUSINESS_PERMISSION(requestBody)

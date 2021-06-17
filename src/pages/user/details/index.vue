@@ -8,6 +8,7 @@
       <el-col :span="16">
         <pubkey-info :user="user"></pubkey-info>
         <roles-info :roles="user.roles"></roles-info>
+        <user-group-info :userId="user.id"></user-group-info>
         <server-group-info :userId="user.id"></server-group-info>
       </el-col>
     </el-row>
@@ -23,6 +24,7 @@ import PubkeyInfo from '../../../components/caesar/user/details/UserCredentialPu
 import RolesInfo from '../../../components/caesar/user/details/UserRBACRolesInfoCard'
 import ServerGroupInfo
   from '../../../components/caesar/user/details/UserPermissionServerGroupInfoCard'
+import UserGroupInfo from '../../../components/caesar/user/details/UserPermissionGroupInfoCard'
 
 export default {
   data () {
@@ -37,7 +39,8 @@ export default {
     UserInfo,
     PubkeyInfo, // Ssh公钥
     RolesInfo,
-    ServerGroupInfo
+    ServerGroupInfo,
+    UserGroupInfo
   },
   methods: {
     fetchData () {

@@ -6,17 +6,22 @@
       <el-button @click="handlerAdd">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
-      <el-table-column label="操作" width="380">
+      <el-table-column prop="name" label="名称" width="200"></el-table-column>
+      <el-table-column prop="userSize" label="成员数量" width="120"></el-table-column>
+      <el-table-column prop="users" label="授权用户">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>
+          <users-tag :users="scope.row.users"></users-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column label="操作" width="120">
+        <template slot-scope="scope">
+<!--          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>-->
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
-    <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
   </div>
 </template>
 
@@ -24,7 +29,7 @@
 
 import { QUERY_USER_GROUP_PAGE } from '@/api/modules/user/user.group.api.js'
 import Pagination from '../common/page/Pagination'
-import UserEditor from './UserEditor'
+import UsersTag from '../common/tag/UsersTag'
 
 export default {
   name: 'UserGroupTable',
@@ -53,7 +58,6 @@ export default {
       },
       queryParam: {
         queryName: '',
-        isActive: true,
         extend: true
       }
     }
@@ -63,7 +67,7 @@ export default {
     this.fetchData()
   },
   components: {
-    UserEditor,
+    UsersTag,
     Pagination
   },
   methods: {
@@ -76,31 +80,31 @@ export default {
       this.fetchData()
     },
     handlerRowUpdate (row) {
-      this.formStatus.user.operationType = false
-      this.formStatus.user.visible = true
-      const user = Object.assign({}, row)
-      this.$refs.userEditor.initData(user)
+      // this.formStatus.user.operationType = false
+      // this.formStatus.user.visible = true
+      // const user = Object.assign({}, row)
+      // this.$refs.userEditor.initData(user)
     },
     handlerAdd () {
-      this.formStatus.user.visible = true
-      this.formStatus.user.operationType = true
-      const user = {
-        id: '',
-        username: '',
-        password: '',
-        name: '',
-        displayName: '',
-        wechat: '',
-        email: '',
-        phone: '',
-        comment: ''
-      }
-      this.$refs.userEditor.initData(user)
+      // this.formStatus.user.visible = true
+      // this.formStatus.user.operationType = true
+      // const user = {
+      //   id: '',
+      //   username: '',
+      //   password: '',
+      //   name: '',
+      //   displayName: '',
+      //   wechat: '',
+      //   email: '',
+      //   phone: '',
+      //   comment: ''
+      // }
+      // this.$refs.userEditor.initData(user)
     },
     fetchData () {
       this.table.loading = true
       const requestBody = {
-        ...this.queryParam.queryName,
+        ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
