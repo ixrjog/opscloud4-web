@@ -50,3 +50,13 @@ export function SET_USER_BUSINESS_PERMISSION (data) {
     params: data
   })
 }
+
+
+// 分页查询用户授权业务对象列表
+export function QUERY_USER_BUSINESS_PERMISSION (data) {
+  return request({
+    url: baseUrl + '/business/permission/query',
+    method: 'post',
+    data
+  })
+}

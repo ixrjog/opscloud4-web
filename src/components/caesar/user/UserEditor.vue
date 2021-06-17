@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
-    <el-tabs v-model="activeName" @tab-click="handlerSel">
+    <el-tabs v-model="activeName" @tab-click="handlerClick">
       <el-tab-pane label="基本信息" name="user">
         <user-tab :operationType="formStatus.operationType" ref="userTab" @close="handlerClose"></user-tab>
       </el-tab-pane>
@@ -9,6 +9,7 @@
         <user-server-group-tab :user="user" ref="userServerGroupTab"></user-server-group-tab>
       </el-tab-pane>
       <el-tab-pane label="用户组授权" name="userGroup" :disabled="user.id === ''">
+        <user-group-tab :user="user" ref="userGroupTab"></user-group-tab>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
@@ -22,6 +23,7 @@
 
 import UserTab from './child/UserTab'
 import UserServerGroupTab from './child/UserServerGroupTab'
+import UserGroupTab from './child/UserGroupTab'
 
 export default {
   data () {
@@ -38,6 +40,7 @@ export default {
   },
   components: {
     UserTab,
+    UserGroupTab,
     UserServerGroupTab
   },
   methods: {
@@ -48,8 +51,15 @@ export default {
         this.$refs.userTab.initData(user)
       })
     },
-    handlerSel () {
-      if (this.activeName === 'serverGroup') this.$refs.userServerGroupTab.fetchData()
+    handlerClick () {
+      switch (this.activeName) {
+        case 'serverGroup':
+          this.$refs.userServerGroupTab.init()
+          break
+        case 'userGroup':
+          this.$refs.userGroupTab.init()
+          break
+      }
     },
     handlerSave () {
       this.$refs.userTab.save()

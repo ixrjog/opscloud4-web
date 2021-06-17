@@ -32,12 +32,3 @@ export function UPDATE_SERVER_GROUP (data) {
     data
   })
 }
-
-// 分页查询用户许可的服务器组列表
-export function QUERY_USER_PERMISSION_SERVER_GROUP_PAGE (data) {
-  return request({
-    url: baseUrl + '/user/permission/page/query',
-    method: 'post',
-    data
-  })
-}
