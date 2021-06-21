@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-left: 0px;">
-      <el-input v-model="queryParam.resourceName" placeholder="资源名称"/>
-      <el-select v-model="queryParam.groupId" filterable clearable
+      <el-input v-model="queryParam.resourceName" @change="fetchData" placeholder="资源名称"/>
+      <el-select v-model="queryParam.groupId" filterable clearable @change="fetchData"
                  remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup"
                  style="margin-left: 5px">
         <el-option v-for="item in groupOptions" :key="item.id" :label="item.groupName" :value="item.id">
@@ -25,7 +25,7 @@
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column prop="groupName" label="资源组">
         <template slot-scope="scope">
-          <span>{{scope.row.group.groupName}}</span>
+          <span>{{ scope.row.group.groupName }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="needAuth" label="鉴权" width="150">
@@ -41,7 +41,6 @@
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
-          <!--                    <el-button type="primary" plain size="mini" @click="editMenu(scope.row)">菜单</el-button>-->
           <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -183,9 +182,9 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
 </style>
