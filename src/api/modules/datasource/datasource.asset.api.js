@@ -11,11 +11,11 @@ export function QUERY_ASSET_PAGE (data) {
   })
 }
 
-export function PULL_ASSET (param) {
+export function PULL_ASSET (data) {
   // 接口请求
   return request({
     url: baseUrl + '/pull',
-    method: 'get',
-    params: param
+    method: 'put',
+    data
   })
 }

@@ -3,7 +3,20 @@
     <h1>Aliyun实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="ECS" name="ecs">
-        <asset-table :instanceId="instanceId" assetType="ECS" :tableLayout="tableLayout"></asset-table>
+        <asset-table :instanceId="instanceId" assetType="ECS" :tableLayout="tableLayout">
+          <template v-slot:extend>
+            <el-table-column prop="properties" label="cpu">
+              <template slot-scope="scope">
+                <span>{{ scope.row.properties.cpu}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="properties" label="内存(GiB)">
+              <template slot-scope="scope">
+                <span>{{ scope.row.properties.memory}}</span>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
       </el-tab-pane>
     </el-tabs>
   </d2-container>

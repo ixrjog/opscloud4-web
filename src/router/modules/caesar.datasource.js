@@ -34,5 +34,14 @@ export default [
       auth: true,
       title: 'Aliyun数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/gitlab',
+    name: 'datasource-instance-gitlab',
+    component: () => import('@/pages/datasource/instance/gitlab'),
+    meta: {
+      auth: true,
+      title: 'Gitlab数据源实例'
+    }
   }
 ]

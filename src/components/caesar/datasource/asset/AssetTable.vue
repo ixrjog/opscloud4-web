@@ -6,11 +6,15 @@
       <el-button @click="handlePull">拉取</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="assetId" :label="tableLayout.assetId.alias"></el-table-column>
-      <el-table-column prop="name" :label="tableLayout.name.alias"></el-table-column>
-      <el-table-column prop="assetKey" :label="tableLayout.assetKey.alias"></el-table-column>
-      <el-table-column prop="assetKey2" :label="tableLayout.assetKey2.alias" v-show="tableLayout.assetKey2.show"></el-table-column>
-      <el-table-column prop="zone" :label="tableLayout.zone.alias" v-show="tableLayout.zone.show"></el-table-column>
+      <el-table-column prop="assetId" width="200px" :label="tableLayout.assetId.alias"></el-table-column>
+      <el-table-column prop="name" width="200px" :label="tableLayout.name.alias"></el-table-column>
+      <el-table-column prop="assetKey" width="300px" :label="tableLayout.assetKey.alias"></el-table-column>
+      <el-table-column prop="assetKey2" width="200px" :label="tableLayout.assetKey2.alias"
+                       v-if="tableLayout.assetKey2.show"></el-table-column>
+      <el-table-column prop="zone" :label="tableLayout.zone.alias" v-if="tableLayout.zone.show"></el-table-column>
+      <slot name="extend">
+        <!--扩展字段-->
+      </slot>
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
         </template>
@@ -28,7 +32,7 @@ import Pagination from '../../common/page/Pagination'
 
 export default {
   name: 'AssetTable',
-  props: ['instanceId', 'assetType','tableLayout'],
+  props: ['instanceId', 'assetType', 'tableLayout'],
   data () {
     return {
       table: {
@@ -44,6 +48,7 @@ export default {
         queryName: '',
         assetType: this.assetType,
         isActive: true,
+        relation: true,
         extend: true
       }
     }
@@ -66,7 +71,7 @@ export default {
     },
     handlePull () {
       PULL_ASSET({
-        id: this.instanceId,
+        instanceId: this.instanceId,
         assetType: this.assetType
       })
         .then(res => {
@@ -77,6 +82,7 @@ export default {
       this.table.loading = true
       const requestBody = {
         instanceId: this.instanceId,
+        assetType: this.assetType,
         ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
