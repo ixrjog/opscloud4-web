@@ -48,7 +48,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handlerAdd" class="button">新增</el-button>
+      <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
@@ -82,9 +82,9 @@
       </el-table-column>
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
-          <el-button type="primary" plain size="mini" @click="handlerRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -111,6 +111,8 @@ import ServerStatusTag from '../common/tag/ServerStatusTag'
 import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import AccountTags from '../common/tag/AccountTags'
 import Pagination from '../common/page/Pagination'
+
+import BusinessType from '@/components/caesar/common/enums/business.type.js'
 
 const activeOptions = [{
   value: true,
@@ -171,7 +173,7 @@ export default {
       tagOptions: [],
       envOptions: [],
       serverGroupOptions: [],
-      businessType: 1,
+      businessType: BusinessType.SERVER,
       activeOptions: activeOptions,
       serverStatusOptions: serverStatusOptions
     }
@@ -239,7 +241,7 @@ export default {
           this.serverGroupOptions = res.body.data
         })
     },
-    handlerRowTagEdit (row) {
+    handleRowTagEdit (row) {
       this.instance.id = row.id
       const businessTags = {
         tagIds: row.tags !== null ? row.tags.map(e => e.id) : []
@@ -247,12 +249,12 @@ export default {
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.formStatus.server.visible = true
       this.formStatus.server.operationType = false
       this.$refs.serverEditor.initData(Object.assign({}, row))
     },
-    handlerAdd () {
+    handleAdd () {
       const server = {
         serverGroup: {},
         id: '',
@@ -274,7 +276,7 @@ export default {
       this.formStatus.server.operationType = true
       this.formStatus.server.visible = true
     },
-    handlerRowDel (row) {
+    handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

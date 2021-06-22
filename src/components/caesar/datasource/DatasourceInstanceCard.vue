@@ -9,6 +9,7 @@
         <el-button style="float: right; padding: 3px 0" type="text" @click="handlerTagEdit"><i class="fa fa-tag"></i>
         </el-button>
       </div>
+      <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
       <business-tags :tags="instance.tags"></business-tags>
     </el-card>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType"
@@ -19,6 +20,7 @@
 <script>
 import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import BusinessTags from '../common/tag/BusinessTags'
+import DsAssetTypes from './common/DsAssetTypes'
 
 export default {
   name: 'DatasourceInstanceCard',
@@ -38,6 +40,7 @@ export default {
   mounted () {
   },
   components: {
+    DsAssetTypes,
     BusinessTagEditor,
     BusinessTags
   },

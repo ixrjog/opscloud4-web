@@ -53,40 +53,8 @@
 
 import { REGISTER_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api.js'
 
-const instanceType = {
-  ldap: [
-    {
-      value: 'LDAP',
-      label: 'LDAP'
-    }
-  ],
-  gitlab: [
-    {
-      value: 'GITLAB',
-      label: 'GITLAB'
-    }
-  ],
-  jenkins: [
-    {
-      value: 'JENKINS',
-      label: 'JENKINS'
-    }
-  ],
-  aliyun: [
-    {
-      value: 'ECS',
-      label: 'ECS'
-    },
-    {
-      value: 'OSS',
-      label: 'OSS'
-    },
-    {
-      value: 'SLS',
-      label: 'SLS'
-    }
-  ]
-}
+
+import DsInstanceType from '@/components/caesar/common/enums/ds.instance.type.js'
 
 export default {
   name: 'DatasourceInstanceRegisterEditor',
@@ -99,7 +67,8 @@ export default {
         config: '',
         instance: ''
       },
-      instanceTypeOptions: []
+      instanceTypeOptions: [],
+      dsInstanceType: DsInstanceType
     }
   },
   mixins: [],
@@ -108,9 +77,13 @@ export default {
     initData (datasource) {
       this.datasource = datasource
       switch (datasource.config.dsType) {
-        case 1:
-          this.instanceTypeOptions = instanceType.ldap
-          this.datasource.instance.instanceType = 'LDAP'
+        case this.dsInstanceType.LDAP.type:
+          this.instanceTypeOptions = this.dsInstanceType.LDAP.instanceType
+          this.datasource.instance.instanceType = this.dsInstanceType.LDAP.name
+          break
+        case this.dsInstanceType.ALIYUN.type:
+          this.instanceTypeOptions = this.dsInstanceType.ALIYUN.instanceType
+          this.datasource.instance.instanceType = this.dsInstanceType.ALIYUN.name
           break
       }
     },

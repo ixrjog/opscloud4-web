@@ -1,12 +1,33 @@
 <template>
   <d2-container>
-    <h1>LDAP实例管理</h1>
+    <h1>Ldap实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="账户" name="account">
-        <account-table :instanceId="instanceId"></account-table>
+        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account">
+          <template v-slot:extend>
+            <el-table-column prop="properties" label="phone">
+              <template slot-scope="scope">
+                <span>{{ scope.row.properties.mobile}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="children" label="成员(账户组)" width="300px">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.GROUP" :type="0"></ds-children-tag>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
       </el-tab-pane>
       <el-tab-pane label="账户组" name="group">
-        <account-group-table ref="accountGroupTable" :instanceId="instanceId"></account-group-table>
+        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.GROUP" :tableLayout="tableLayout.group">
+          <template v-slot:extend>
+            <el-table-column prop="children" label="成员(账户)" width="800px">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.USER" :type="1"></ds-children-tag>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
       </el-tab-pane>
     </el-tabs>
   </d2-container>
@@ -14,14 +35,58 @@
 
 <script>
 
-import AccountTable from '../../../../components/caesar/datasource/account/AccountTable'
-import AccountGroupTable from '../../../../components/caesar/datasource/account/AccountGroupTable'
+import AssetTable from '../../../../components/caesar/datasource/asset/AssetTable'
+import DsInstanceAssetType from '@/components/caesar/common/enums/ds.instance.asset.type.js'
+import DsChildrenTag from '../../../../components/caesar/datasource/common/DsChildrenTag'
+
+const tableLayout = {
+  account: {
+    assetId: {
+      alias: 'cn'
+    },
+    name: {
+      alias: '显示名'
+    },
+    assetKey: {
+      alias: '用户名'
+    },
+    assetKey2: {
+      alias: 'email',
+      show: true
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  group: {
+    assetId: {
+      alias: 'cn'
+    },
+    name: {
+      alias: '显示名'
+    },
+    assetKey: {
+      alias: '组名'
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  }
+}
 
 export default {
   data () {
     return {
       activeName: 'account',
-      instanceId: null
+      instanceId: null,
+      tableLayout: tableLayout,
+      assetType: DsInstanceAssetType
     }
   },
   computed: {},
@@ -30,14 +95,14 @@ export default {
     this.activeName = 'account'
   },
   components: {
-    AccountTable,
-    AccountGroupTable
+    AssetTable,
+    DsChildrenTag
   },
   methods: {
     handleClick () {
-      if (this.activeName === 'group') {
-        this.$refs.accountGroupTable.fetchData()
-      }
+      // if (this.activeName === 'group') {
+      //   this.$refs.accountGroupTable.fetchData()
+      // }
     }
   }
 }
