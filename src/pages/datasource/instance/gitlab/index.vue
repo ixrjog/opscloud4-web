@@ -21,7 +21,7 @@
       <el-tab-pane label="群组" name="group">
         <asset-table id="groupTable" :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_GROUP" :tableLayout="tableLayout.group" ref="groupTable">
           <template v-slot:extend>
-            <el-table-column prop="children" label="成员(项目)" width="400px">
+            <el-table-column prop="children" label="成员(项目)" width="500px">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.GITLAB_PROJECT" :type="2"></ds-children-tag>
               </template>

@@ -19,3 +19,11 @@ export function PULL_ASSET (data) {
     data
   })
 }
+
+export function DELETE_ASSET_BY_ID (id) {
+  return request({
+    url: baseUrl + '/del?id=' + id,
+    method: 'delete'
+  })
+}
+
