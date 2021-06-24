@@ -22,6 +22,10 @@ export function getAssetTypeText (value) {
       return '安全组'
     case DsInstanceAssetType.ALIYUN.V_SWITCH:
       return '交换机'
+    // Kubernetes
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
+      return '命名空间'
+
     default:
       return value
   }
