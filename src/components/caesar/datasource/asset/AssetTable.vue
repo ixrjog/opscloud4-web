@@ -6,11 +6,14 @@
       <el-button @click="handlePull">拉取</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="assetId" width="200px" :label="tableLayout.assetId.alias"></el-table-column>
-      <el-table-column prop="name" width="200px" :label="tableLayout.name.alias"></el-table-column>
-      <el-table-column prop="assetKey" width="300px" :label="tableLayout.assetKey.alias"></el-table-column>
-      <el-table-column prop="assetKey2" width="200px" :label="tableLayout.assetKey2.alias"
-                       v-if="tableLayout.assetKey2.show"></el-table-column>
+      <el-table-column prop="assetId" :label="tableLayout.assetId.alias"
+                       show-overflow-tooltip></el-table-column>
+      <el-table-column prop="name" :label="tableLayout.name.alias"
+                       show-overflow-tooltip></el-table-column>
+      <el-table-column prop="assetKey" :label="tableLayout.assetKey.alias"
+                       v-if="tableLayout.assetKey2.show" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="assetKey2" :label="tableLayout.assetKey2.alias"
+                       v-if="tableLayout.assetKey2.show" show-overflow-tooltip></el-table-column>
       <el-table-column prop="zone" :label="tableLayout.zone.alias" v-if="tableLayout.zone.show"></el-table-column>
       <slot name="extend">
         <!--扩展字段-->
@@ -29,23 +32,56 @@
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
-    <business-tag-editor ref="businessTagEditor" :businessType="businessType" :businessId="businessId" :formStatus="formStatus.businessTag" @close="fetchData"></business-tag-editor>
-
+    <business-tag-editor ref="businessTagEditor" :businessType="businessType" :businessId="businessId"
+                         :formStatus="formStatus.businessTag" @close="fetchData"></business-tag-editor>
   </div>
 </template>
 
 <script>
 
-import { QUERY_ASSET_PAGE, PULL_ASSET,DELETE_ASSET_BY_ID } from '@/api/modules/datasource/datasource.asset.api.js'
+import { QUERY_ASSET_PAGE, PULL_ASSET, DELETE_ASSET_BY_ID } from '@/api/modules/datasource/datasource.asset.api.js'
 import Pagination from '../../common/page/Pagination'
 import BusinessTagEditor from '../../common/tag/BusinessTagEditor'
-
 import BusinessType from '@/components/caesar/common/enums/business.type.js'
 import BusinessTags from '../../common/tag/BusinessTags'
 
+const tableLayout = {
+  assetId: {
+    alias: 'id'
+  },
+  name: {
+    alias: '名称'
+  },
+  assetKey: {
+    alias: 'assetKey'
+  },
+  assetKey2: {
+    alias: 'assetKey2',
+    show: true
+  },
+  zone: {
+    alias: '区',
+    show: true
+  }
+}
+
 export default {
   name: 'AssetTable',
-  props: ['instanceId', 'assetType', 'tableLayout'],
+  props: {
+    instanceId: {
+      type: String,
+      required: true
+    },
+    assetType: {
+      type: String,
+      required: true
+    },
+    tableLayout: {
+      type: Object,
+      required: false,
+      default: () => tableLayout
+    }
+  },
   data () {
     return {
       table: {
@@ -63,7 +99,7 @@ export default {
           title: '编辑数据源实例资产标签'
         }
       },
-      businessId:'',
+      businessId: '',
       businessType: BusinessType.ASSET,
       queryParam: {
         queryName: '',
@@ -76,7 +112,11 @@ export default {
   },
   computed: {},
   mounted () {
+<<<<<<< HEAD
     // this.fetchData()
+=======
+    this.init()
+>>>>>>> 5537031ab9faf8d98228c37e8bf619352322c982
   },
   components: {
     BusinessTagEditor,
@@ -96,10 +136,9 @@ export default {
       PULL_ASSET({
         instanceId: this.instanceId,
         assetType: this.assetType
+      }).then(() => {
+        this.$message.success('后台任务执行中！')
       })
-        .then(res => {
-          this.$message.success('后台任务执行中！')
-        })
     },
     handleRowTagEdit (row) {
       this.businessId = row.id
@@ -115,13 +154,15 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        DELETE_ASSET_BY_ID(row.id).then(res => {
+        DELETE_ASSET_BY_ID(row.id).then(() => {
           this.$message.success('删除成功!')
           this.fetchData()
         })
       }).catch(() => {
         this.$message.info('已取消删除!')
       })
+    },
+    init () {
     },
     fetchData () {
       this.table.loading = true
@@ -145,12 +186,12 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 </style>

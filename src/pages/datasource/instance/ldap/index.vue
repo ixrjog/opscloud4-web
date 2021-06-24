@@ -3,14 +3,15 @@
     <h1>Ldap实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="账户" name="account">
-        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account">
+        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account"
+                     ref="accountTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="phone">
               <template slot-scope="scope">
-                <span>{{ scope.row.properties.mobile}}</span>
+                <span>{{ scope.row.properties.mobile }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="children" label="成员(账户组)" width="300px">
+            <el-table-column prop="children" label="成员(账户组)">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.GROUP" :type="0"></ds-children-tag>
               </template>
@@ -19,9 +20,10 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="账户组" name="group">
-        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.GROUP" :tableLayout="tableLayout.group">
+        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.GROUP" :tableLayout="tableLayout.group"
+                     ref="groupTable">
           <template v-slot:extend>
-            <el-table-column prop="children" label="成员(账户)" width="800px">
+            <el-table-column prop="children" label="成员(账户)">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.USER" :type="1"></ds-children-tag>
               </template>
@@ -92,42 +94,50 @@ export default {
   computed: {},
   mounted () {
     this.instanceId = this.$route.query.id
-    this.activeName = 'account'
+    this.init()
   },
   components: {
     AssetTable,
     DsChildrenTag
   },
   methods: {
-    handleClick () {
-      // if (this.activeName === 'group') {
-      //   this.$refs.accountGroupTable.fetchData()
-      // }
+    handleClick (tab, event) {
+      if (tab.name === 'account') {
+        this.$refs.accountTable.fetchData()
+      }
+      if (tab.name === 'group') {
+        this.$refs.groupTable.fetchData()
+      }
+    },
+    init () {
+      this.$nextTick(() => {
+        this.$refs.accountTable.fetchData()
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 </style>
