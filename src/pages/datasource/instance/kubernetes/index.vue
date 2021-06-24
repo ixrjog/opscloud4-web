@@ -1,0 +1,96 @@
+<template>
+  <d2-container>
+    <h1>Kubernetes实例管理</h1>
+    <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
+      <el-tab-pane label="命名空间" name="namespace">
+        <asset-table :instanceId="instanceId" :assetType="assetType.KUBERNETES.KUBERNETES_NAMESPACE" :tableLayout="tableLayout.namespace" ref="namespaceTable">
+          <template v-slot:extend>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+    </el-tabs>
+  </d2-container>
+</template>
+
+<script>
+
+import AssetTable from '../../../../components/caesar/datasource/asset/AssetTable'
+import DsInstanceAssetType from '@/components/caesar/common/enums/ds.instance.asset.type'
+
+const tableLayout = {
+  namespace: {
+    assetId: {
+      alias: 'uid'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '关键字'
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  }
+}
+
+export default {
+  data () {
+    return {
+      activeName: 'namespace',
+      instanceId: null,
+      tableLayout: tableLayout,
+      assetType: DsInstanceAssetType
+    }
+  },
+  computed: {},
+  mounted () {
+    this.instanceId = this.$route.query.id
+    this.init()
+  },
+  components: {
+    AssetTable
+  },
+  methods: {
+    handleClick (tab, event) {
+      if (tab.name === 'namespace') {
+        this.$refs.namespaceTable.fetchData()
+      }
+    },
+    init () {
+      this.$nextTick(() => {
+        this.$refs.namespaceTable.fetchData()
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
+
+.el-select {
+  margin-left: 5px;
+}
+
+.el-button {
+  margin-left: 5px;
+}
+
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+</style>

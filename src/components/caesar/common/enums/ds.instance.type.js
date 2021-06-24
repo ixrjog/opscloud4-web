@@ -13,6 +13,16 @@ const DsInstanceType = Object.freeze({
   GITLAB: 3,
   SONAR: 4,
   ANSIBLE: 5,
+  KUBERNETES:{
+    type: 6,
+    name: 'KUBERNETES',
+    instanceType: [
+      {
+        value: 'KUBERNETES',
+        label: 'KUBERNETES'
+      }
+    ]
+  },
   ZABBIX: {
     type: 7,
     name: 'ZABBIX',

@@ -43,5 +43,14 @@ export default [
       auth: true,
       title: 'Gitlab数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/kubernetes',
+    name: 'datasource-instance-kubernetes',
+    component: () => import('@/pages/datasource/instance/kubernetes'),
+    meta: {
+      auth: true,
+      title: 'Kubernetes数据源实例'
+    }
   }
 ]

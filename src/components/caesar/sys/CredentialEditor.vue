@@ -115,6 +115,11 @@ export default {
           this.form.credentialLabel = 'AccessKey'
           this.form.credential2Label = 'SecretKey'
           break
+        case 6: // Kube Config
+          this.form.showCredential2 = false
+          this.form.credentialHeight = 500
+          this.form.credentialLabel = 'KubeConfig'
+          break
       }
     },
     handlerUpdate (requestBody) {
