@@ -3,41 +3,44 @@
     <h1>Gitlab实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="项目" name="project">
-        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_PROJECT" :tableLayout="tableLayout.project" ref="projectTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_PROJECT"
+                     :tableLayout="tableLayout.project" ref="projectTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="命名空间" width="100px">
+            <el-table-column prop="properties" label="命名空间">
               <template slot-scope="scope">
-                {{scope.row.properties.namespaceName}}
+                {{ scope.row.properties.namespaceName }}
               </template>
             </el-table-column>
-            <el-table-column prop="description" label="描述" width="100px">
+            <el-table-column prop="description" label="描述">
               <template slot-scope="scope">
-                {{scope.row.description}}
+                {{ scope.row.description }}
               </template>
             </el-table-column>
           </template>
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="群组" name="group">
-        <asset-table id="groupTable" :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_GROUP" :tableLayout="tableLayout.group" ref="groupTable">
+        <asset-table id="groupTable" :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_GROUP"
+                     :tableLayout="tableLayout.group" ref="groupTable">
           <template v-slot:extend>
             <el-table-column prop="children" label="成员(项目)" width="500px">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.GITLAB_PROJECT" :type="2"></ds-children-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="properties" label="描述" width="100px">
+            <el-table-column prop="properties" label="描述">
               <template slot-scope="scope">
-                {{scope.row.properties.description}}
+                {{ scope.row.properties.description }}
               </template>
             </el-table-column>
           </template>
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="用户" name="user">
-        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.USER" :tableLayout="tableLayout.user" ref="userTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.USER" :tableLayout="tableLayout.user"
+                     ref="userTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="管理员" width="100px">
+            <el-table-column prop="properties" label="管理员">
               <template slot-scope="scope">
                 <whether-tag :whether="scope.row.properties.isAdmin"></whether-tag>
               </template>
@@ -112,6 +115,10 @@ const tableLayout = {
     zone: {
       alias: '',
       show: false
+    },
+    description: {
+      alias: '描述',
+      show: false
     }
   }
 }
@@ -128,7 +135,7 @@ export default {
   computed: {},
   mounted () {
     this.instanceId = this.$route.query.id
-    this.activeName = 'project'
+    this.init()
   },
   components: {
     AssetTable,
@@ -136,41 +143,46 @@ export default {
     WhetherTag
   },
   methods: {
-    handleClick () {
-      if (this.activeName === 'group') {
+    handleClick (tab, event) {
+      if (tab.name === 'group') {
         this.$refs.groupTable.fetchData()
       }
-      if (this.activeName === 'project') {
+      if (tab.name === 'project') {
         this.$refs.projectTable.fetchData()
       }
-      if (this.activeName === 'user') {
+      if (tab.name === 'user') {
         this.$refs.userTable.fetchData()
       }
+    },
+    init () {
+      this.$nextTick(() => {
+        this.$refs.projectTable.fetchData()
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 </style>
