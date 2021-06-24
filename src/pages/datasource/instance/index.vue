@@ -15,8 +15,8 @@
         </el-select>
         <el-button @click="fetchData">查询</el-button>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :span="6" v-for="instance in dsInstances" :key="instance.id" >
+      <el-row :gutter="10">
+        <el-col :span="8" v-for="instance in dsInstances" :key="instance.id">
           <datasource-instance-card :instance="instance"></datasource-instance-card>
         </el-col>
       </el-row>
@@ -91,25 +91,25 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 </style>

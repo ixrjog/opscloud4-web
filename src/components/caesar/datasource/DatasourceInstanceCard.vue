@@ -1,16 +1,20 @@
 <template>
   <div>
-    <el-card shadow="hover" style="height: 150px">
+    <el-card shadow="hover">
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
-        <span style="font-size: 14px">{{instance.instanceName}}</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="handlerOpen"><i class="fa fa-cogs"></i>
-        </el-button>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="handlerTagEdit"><i class="fa fa-tag"></i>
-        </el-button>
+        <span style="font-size: 14px">{{ instance.instanceName }}</span>
+        <el-button type="text" icon="fa fa-cogs" @click="handlerOpen"></el-button>
+        <el-button type="text" icon="fa fa-tag" @click="handlerTagEdit"></el-button>
       </div>
-      <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
-      <business-tags :tags="instance.tags"></business-tags>
+      <el-row>
+        <el-col :span="18">
+          <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
+        </el-col>
+        <el-col :span="6">
+          <business-tags :tags="instance.tags" :is-block=true></business-tags>
+        </el-col>
+      </el-row>
     </el-card>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType"
                          :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
@@ -62,25 +66,13 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-button {
+  float: right;
+  padding: 3px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
-
-  .el-button {
-    margin-left: 5px;
-  }
-
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-
+.el-card {
+  height: 200px;
+  margin-bottom: 10px;
+}
 </style>
