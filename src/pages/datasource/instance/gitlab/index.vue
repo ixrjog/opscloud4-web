@@ -3,7 +3,8 @@
     <h1>Gitlab实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="项目" name="project">
-        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_PROJECT" :tableLayout="tableLayout.project" ref="projectTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_PROJECT"
+                     :tableLayout="tableLayout.project" ref="projectTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="命名空间" width="100px">
               <template slot-scope="scope">
@@ -19,7 +20,8 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="群组" name="group">
-        <asset-table id="groupTable" :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_GROUP" :tableLayout="tableLayout.group" ref="groupTable">
+        <asset-table id="groupTable" :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_GROUP"
+                     :tableLayout="tableLayout.group" ref="groupTable">
           <template v-slot:extend>
             <el-table-column prop="children" label="成员(项目)" width="500px">
               <template slot-scope="scope">
@@ -35,7 +37,8 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="用户" name="user">
-        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.USER" :tableLayout="tableLayout.user" ref="userTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.USER" :tableLayout="tableLayout.user"
+                     ref="userTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="管理员" width="100px">
               <template slot-scope="scope">

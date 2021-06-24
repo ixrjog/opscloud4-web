@@ -76,7 +76,7 @@ export default {
   },
   computed: {},
   mounted () {
-    this.fetchData()
+    // this.fetchData()
   },
   components: {
     BusinessTagEditor,
