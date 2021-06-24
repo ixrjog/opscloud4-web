@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-select v-model.trim="serverGroupId" clearable
+      <el-select v-model.trim="serverGroupId" clearable filterable
                  remote reserve-keyword placeholder="选择要授权的服务器组" :remote-method="getServerGroup">
         <el-option
           v-for="item in serverGroupOptions"
