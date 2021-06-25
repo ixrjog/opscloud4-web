@@ -27,6 +27,8 @@ export function getAssetTypeText (value) {
       return '命名空间'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:
       return '容器组'
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
+      return '无状态'
     default:
       return value
   }
