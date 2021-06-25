@@ -178,7 +178,6 @@ export default {
 </script>
 
 <style scoped>
-
 .el-input {
   display: inline-block;
   max-width: 200px;

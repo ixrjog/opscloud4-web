@@ -3,7 +3,8 @@
     <h1>Aliyun实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="ECS" name="ecs">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs" ref="ecsTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
+                     ref="ecsTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="cpu">
               <template slot-scope="scope">
@@ -41,7 +42,23 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="VPC" name="vpc">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.VPC" ref="vpcTable"></asset-table>
+        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.VPC" :tableLayout="tableLayout.vpc"
+                     ref="vpcTable">
+          <template v-slot:extend>
+            <el-table-column label="安全组" width="450">
+              <template slot-scope="scope">
+                <div v-for="sg in getSecurityGroups(scope.row)" :key="sg.id" class="sgLabel">
+                  <el-tag :type="sg.isActive?'success':'info'">{{ sg.name }}</el-tag>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="交换机" width="350">
+              <template slot-scope="scope">
+                <el-tree :data="getVSwitches(scope.row)" accordion></el-tree>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
       </el-tab-pane>
     </el-tabs>
   </d2-container>
@@ -51,6 +68,11 @@
 
 import AssetTable from '../../../../components/caesar/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/caesar/common/enums/ds.instance.asset.type'
+
+const treeObj = {
+  label: '',
+  children: []
+}
 
 const tableLayout = {
   ecs: {
@@ -85,6 +107,26 @@ const tableLayout = {
     },
     assetKey2: {
       show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
+  },
+  vpc: {
+    assetId: {
+      alias: '实例id'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '镜像id',
+      show: false
+    },
+    assetKey2: {
+      alias: '网段',
+      show: true
     },
     zone: {
       alias: '区',
@@ -126,31 +168,45 @@ export default {
       this.$nextTick(() => {
         this.$refs.ecsTable.fetchData()
       })
+    },
+    getVSwitches (row) {
+      const { V_SWITCH } = row.tree
+      const map = new Map()
+      for (const sw of V_SWITCH) {
+        if (map.get(sw.zone) !== undefined && JSON.stringify(map.get(sw.zone)) !== '[]') {
+          map.get(sw.zone).push(sw)
+        } else {
+          const list = []
+          list.push(sw)
+          map.set(sw.zone, list)
+        }
+      }
+      const options = []
+      for (const [key, value] of map.entries()) {
+        const treeNode = Object.assign({}, treeObj)
+        const children = []
+        for (const item of value) {
+          children.push({
+            label: `${item.name} (${item.assetKey2})`
+          })
+        }
+        treeNode.label = `${key} (${children.length})`
+        treeNode.children = children
+        options.push(treeNode)
+      }
+      return options
+    },
+    getSecurityGroups (row) {
+      const { ECS_SG } = row.tree
+      return ECS_SG
     }
   }
 }
 </script>
 
 <style scoped>
-.el-input {
-  display: inline-block;
-  max-width: 200px;
-  margin-left: 10px;
+.sgLabel {
+  float: left;
+  width: 50%;
 }
-
-.el-select {
-  margin-left: 5px;
-}
-
-.el-button {
-  margin-left: 5px;
-}
-
->>> .el-card__header {
-  padding: 10px 10px;
-  border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 </style>

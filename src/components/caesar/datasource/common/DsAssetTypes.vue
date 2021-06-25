@@ -1,6 +1,6 @@
 <template>
   <div class="meta-cardInfo">
-    <div v-for="assetDetail in assetDetails" :key="assetDetail.assetType" ref="div">
+    <div v-for="assetDetail in assetDetails" :key="assetDetail.assetType">
       <p>
         <d2-count-up :end="assetDetail.assetSize"/>
       </p>
