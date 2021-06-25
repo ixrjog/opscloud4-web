@@ -11,7 +11,7 @@
       <el-table-column prop="name" :label="tableLayout.name.alias"
                        show-overflow-tooltip></el-table-column>
       <el-table-column prop="assetKey" :label="tableLayout.assetKey.alias"
-                       v-if="tableLayout.assetKey2.show" show-overflow-tooltip></el-table-column>
+                       v-if="tableLayout.assetKey.show" show-overflow-tooltip></el-table-column>
       <el-table-column prop="assetKey2" :label="tableLayout.assetKey2.alias"
                        v-if="tableLayout.assetKey2.show" show-overflow-tooltip></el-table-column>
       <el-table-column prop="zone" :label="tableLayout.zone.alias" v-if="tableLayout.zone.show"></el-table-column>

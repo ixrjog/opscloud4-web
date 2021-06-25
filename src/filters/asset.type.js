@@ -25,7 +25,8 @@ export function getAssetTypeText (value) {
     // Kubernetes
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
       return '命名空间'
-
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:
+      return '容器组'
     default:
       return value
   }

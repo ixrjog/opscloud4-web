@@ -8,6 +8,19 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="容器组" name="pod">
+        <asset-table :instanceId="instanceId" :assetType="assetType.KUBERNETES.KUBERNETES_POD" :tableLayout="tableLayout.pod" ref="podTable">
+          <template v-slot:extend>
+            <el-table-column label="节点" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-tooltip class="item" effect="dark" :content="scope.row.properties.nodeName" placement="top-start">
+                  <span>{{ scope.row.properties.hostIp }}</span>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -31,6 +44,26 @@ const tableLayout = {
     assetKey2: {
       alias: '',
       show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  pod: {
+    assetId: {
+      alias: 'uid'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: 'podIp',
+      show: true
+    },
+    assetKey2: {
+      alias: '命名空间',
+      show: true
     },
     zone: {
       alias: '',
@@ -60,6 +93,10 @@ export default {
     handleClick (tab, event) {
       if (tab.name === 'namespace') {
         this.$refs.namespaceTable.fetchData()
+        return
+      }
+      if (tab.name === 'pod') {
+        this.$refs.podTable.fetchData()
       }
     },
     init () {
