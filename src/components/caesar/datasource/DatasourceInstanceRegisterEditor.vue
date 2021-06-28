@@ -85,6 +85,10 @@ export default {
           this.instanceTypeOptions = this.dsInstanceType.ALIYUN.instanceType
           this.datasource.instance.instanceType = this.dsInstanceType.ALIYUN.name
           break
+        case this.dsInstanceType.KUBERNETES.type:
+          this.instanceTypeOptions = this.dsInstanceType.KUBERNETES.instanceType
+          this.datasource.instance.instanceType = this.dsInstanceType.KUBERNETES.name
+          break
       }
     },
     handlerRegister () {

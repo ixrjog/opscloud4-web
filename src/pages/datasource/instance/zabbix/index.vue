@@ -2,30 +2,25 @@
   <d2-container>
     <h1>Ldap实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
-      <el-tab-pane label="账户" name="account">
-        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account"
-                     ref="accountTable">
+      <el-tab-pane label="用户" name="user">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_USER" :tableLayout="tableLayout.user"
+                     ref="userTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="phone">
+            <el-table-column prop="children" label="成员(用户组)" width="600">
               <template slot-scope="scope">
-                <span>{{ scope.row.properties.mobile }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column prop="children" label="成员(账户组)" width="800">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.GROUP" :type="0"></ds-children-tag>
+                <ds-children-tag :children="scope.row.children.ZABBIX_USER_GROUP" :type="3"></ds-children-tag>
               </template>
             </el-table-column>
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="账户组" name="group">
-        <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.GROUP" :tableLayout="tableLayout.group"
-                     ref="groupTable">
+      <el-tab-pane label="用户组" name="userGroup">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_USER_GROUP" :tableLayout="tableLayout.userGroup"
+                     ref="userGroupTable">
           <template v-slot:extend>
-            <el-table-column prop="children" label="成员(账户)" width="800">
+            <el-table-column prop="children" label="成员(用户)" width="600">
               <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.USER" :type="1"></ds-children-tag>
+                <ds-children-tag :children="scope.row.children.ZABBIX_USER" :type="4"></ds-children-tag>
               </template>
             </el-table-column>
           </template>
@@ -42,9 +37,9 @@ import DsInstanceAssetType from '@/components/caesar/common/enums/ds.instance.as
 import DsChildrenTag from '../../../../components/caesar/datasource/common/DsChildrenTag'
 
 const tableLayout = {
-  account: {
+  user: {
     assetId: {
-      alias: 'cn'
+      alias: 'userId'
     },
     name: {
       alias: '显示名'
@@ -53,20 +48,20 @@ const tableLayout = {
       alias: '用户名'
     },
     assetKey2: {
-      alias: 'email',
-      show: true
+      alias: '',
+      show: false
     },
     zone: {
       alias: '',
       show: false
     }
   },
-  group: {
+  userGroup: {
     assetId: {
-      alias: 'cn'
+      alias: 'groupId'
     },
     name: {
-      alias: '显示名'
+      alias: '组名'
     },
     assetKey: {
       alias: '组名'
@@ -85,7 +80,7 @@ const tableLayout = {
 export default {
   data () {
     return {
-      activeName: 'account',
+      activeName: 'user',
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
@@ -102,16 +97,16 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      if (tab.name === 'account') {
-        this.$refs.accountTable.fetchData()
+      if (tab.name === 'user') {
+        this.$refs.userTable.fetchData()
       }
-      if (tab.name === 'group') {
-        this.$refs.groupTable.fetchData()
+      if (tab.name === 'userGroup') {
+        this.$refs.userGroupTable.fetchData()
       }
     },
     init () {
       this.$nextTick(() => {
-        this.$refs.accountTable.fetchData()
+        this.$refs.userTable.fetchData()
       })
     }
   }

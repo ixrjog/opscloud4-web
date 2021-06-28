@@ -112,7 +112,6 @@ export default {
   },
   computed: {},
   mounted () {
-    this.init()
   },
   components: {
     BusinessTagEditor,
@@ -157,8 +156,6 @@ export default {
       }).catch(() => {
         this.$message.info('已取消删除!')
       })
-    },
-    init () {
     },
     fetchData () {
       this.table.loading = true

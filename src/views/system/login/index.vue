@@ -125,6 +125,8 @@
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
 import localeMixin from '@/locales/mixin.js'
+import ui from '@/libs/util.ui'
+
 export default {
   mixins: [
     localeMixin
@@ -225,6 +227,8 @@ export default {
             .then(() => {
               // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')
+              // 初始化菜单
+              ui.init()
             })
         } else {
           // 登录表单校验失败

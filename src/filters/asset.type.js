@@ -26,6 +26,12 @@ export function getAssetTypeText (value) {
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:
       return '用户组'
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
+      return '命名空间'
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:
+      return '容器组'
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
+      return '无状态'
     default:
       return value
   }

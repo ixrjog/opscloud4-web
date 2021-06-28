@@ -19,7 +19,7 @@
           </el-form-item>
           <el-form-item label="服务器组" :label-width="labelWidth" required>
             <el-select v-model.trim="server.serverGroupId" filterable clearable
-                       remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup">
+                       remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup" @clear="getGroup('')">
               <el-option
                 v-for="item in serverGroupOptions"
                 :key="item.id"
@@ -109,7 +109,7 @@ const osTypeOptions = [{
 }, {
   value: 'Windows',
   label: 'Windows'
-},{
+}, {
   value: 'MacOS',
   label: 'MacOS'
 }]
@@ -165,10 +165,13 @@ export default {
       this.activeName = 'base'
       this.getEnv()
       // 尝试选择匹配服务器组
-      if (JSON.stringify(this.server.serverGroup) === '{}') {
+      if (this.server.serverGroup === null || JSON.stringify(this.server.serverGroup) === '{}') {
         const queryName = this.server.name.replace(new RegExp('-[0-9]+$'), '')
         this.getGroup(queryName)
+      }else{
+        this.getGroup(this.server.serverGroup.name)
       }
+
       this.$nextTick(() => {
         const accountIds = this.server.accounts !== null ? this.server.accounts.map(e => e.id) : []
         this.$refs.serverAccountTransfer.init(accountIds)
