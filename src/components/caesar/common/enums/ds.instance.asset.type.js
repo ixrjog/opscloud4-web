@@ -14,6 +14,10 @@ const DsInstanceAssetType = Object.freeze({
     V_SWITCH: 'V_SWITCH',
     ECS_IMAGE: 'ECS_IMAGE',
     ECS_SG: 'ECS_SG'
+  },
+  ZABBIX: {
+    ZABBIX_USER: 'ZABBIX_USER',
+    ZABBIX_USER_GROUP: 'ZABBIX_USER_GROUP'
   }
 })
 
