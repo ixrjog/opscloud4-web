@@ -12,7 +12,7 @@ import router from './router'
 // import { menuHeader, menuAside } from '@/menu'
 import { menuHeader } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
-// import ui from '@/libs/util.ui'
+import ui from '@/libs/util.ui'
 
 // 核心插件
 Vue.use(d2Admin)
@@ -27,7 +27,7 @@ new Vue({
     this.$store.commit('d2admin/page/init', frameInRoutes)
     // 设置顶栏菜单
     // this.$store.commit('d2admin/menu/headerSet', menuHeader)
-    // ui.init()
+    ui.init()
     // this.$store.commit('d2admin/menu/asideSet', menuAside)
     // 初始化菜单搜索功能
     this.$store.commit('d2admin/search/init', menuHeader)
