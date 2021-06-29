@@ -23,6 +23,8 @@ function supplementPath (menu) {
 }
 
 ui.init = function () {
+  const token = util.cookies.get('token')
+  if (token === undefined) return // 未登录
   GET_USER_UI_INFO()
     .then(res => {
       const ui = res.body
