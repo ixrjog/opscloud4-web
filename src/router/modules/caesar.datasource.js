@@ -52,5 +52,14 @@ export default [
       auth: true,
       title: 'Kubernetes数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/zabbix',
+    name: 'datasource-instance-zabbix',
+    component: () => import('@/pages/datasource/instance/zabbix'),
+    meta: {
+      auth: true,
+      title: 'Zabbix数据源实例'
+    }
   }
 ]

@@ -25,12 +25,13 @@ export default {
 
 <style lang="less" scoped>
 .meta-cardInfo {
+  display: flex;
+  flex-wrap: wrap;
 
   > div {
-    text-align: left;
-    float: left;
-    width: 33%;
     margin-bottom: 4px;
+    flex-grow: 1;
+    flex-basis: 25%;
 
     p {
       line-height: 32px;

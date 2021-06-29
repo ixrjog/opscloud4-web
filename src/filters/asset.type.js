@@ -22,7 +22,10 @@ export function getAssetTypeText (value) {
       return '安全组'
     case DsInstanceAssetType.ALIYUN.V_SWITCH:
       return '交换机'
-    // Kubernetes
+    case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
+      return '用户'
+    case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:
+      return '用户组'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
       return '命名空间'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:
