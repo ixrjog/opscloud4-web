@@ -6,14 +6,17 @@ const DsInstanceType = Object.freeze({
       {
         value: 'LDAP',
         label: 'LDAP'
-      },
+      }
     ]
   },
-  JENKINS: { type: 2, name: 'JENKINS' },
+  JENKINS: {
+    type: 2,
+    name: 'JENKINS'
+  },
   GITLAB: 3,
   SONAR: 4,
   ANSIBLE: 5,
-  KUBERNETES:{
+  KUBERNETES: {
     type: 6,
     name: 'KUBERNETES',
     instanceType: [
@@ -30,7 +33,7 @@ const DsInstanceType = Object.freeze({
       {
         value: 'ZABBIX',
         label: 'ZABBIX'
-      },
+      }
     ]
   },
   PROMETHEUS: 8,

@@ -4,8 +4,15 @@
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
         <span style="font-size: 14px">{{ instance.instanceName }}</span>
-        <el-button type="text" icon="fa fa-cogs" @click="handlerOpen"></el-button>
-        <el-button type="text" icon="fa fa-tag" @click="handlerTagEdit"></el-button>
+        <el-button type="text" @click="handlerOpen">
+          <i class="fas fa-plane-departure"></i>
+        </el-button>
+        <el-button type="text" @click="handlerTagEdit">
+          <i class="fas fa-tags"></i>
+        </el-button>
+        <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handlerSetConfig">
+          <i class="fas fa-file-import"></i>
+        </el-button>
       </div>
       <el-row>
         <el-col :span="18">
@@ -25,6 +32,7 @@
 import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import BusinessTags from '../common/tag/BusinessTags'
 import DsAssetTypes from './common/DsAssetTypes'
+import { SET_CONFIG } from '@/api/modules/datasource/datasource.asset.api'
 
 export default {
   name: 'DatasourceInstanceCard',
@@ -54,6 +62,20 @@ export default {
         path: '/datasource/instance/' + this.instance.instanceType.toLocaleLowerCase() + '?id=' + this.instance.id
       })
     },
+    needSetDSConfig (instanceType) {
+      if (instanceType === 'KUBERNETES') {
+        return true
+      }
+      return false
+    },
+    handlerSetConfig () {
+      SET_CONFIG({
+        instanceId: this.instance.id,
+        instanceType: this.instance.instanceType
+      }).then(() => {
+        this.$message.success('推送完成')
+      })
+    },
     handlerTagEdit () {
       const businessTags = {
         tagIds: this.instance.tags !== null ? this.instance.tags.map(e => e.id) : []
@@ -65,14 +87,26 @@ export default {
 }
 </script>
 
-<style scoped>
-.el-button {
-  float: right;
-  padding: 3px;
-}
+<style lang="less" scoped>
+//.el-button {
+//  float: right;
+//  padding: 3px;
+//}
+//
+//.el-card {
+//  height: 200px;
+//  margin-bottom: 10px;
+//}
 
-.el-card {
-  height: 200px;
-  margin-bottom: 10px;
+.el- {
+  &button {
+    float: right;
+    margin-left: 5px;
+  }
+
+  &card {
+    height: 200px;
+    margin-bottom: 10px;
+  }
 }
 </style>
