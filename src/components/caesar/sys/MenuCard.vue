@@ -14,8 +14,9 @@
             <el-input v-model.trim="menu.title"></el-input>
           </el-form-item>
           <el-form-item label="图标" required>
-            <el-input v-model.trim="menu.icon"
-                      :suffix-icon="getIcon(menu.icon)"></el-input>
+            <el-input v-model.trim="menu.icon">
+              <i slot="suffix" class="fa fab fas" :class=getIcon(menu.icon) aria-hidden="true"></i>
+            </el-input>
           </el-form-item>
           <span style="float: right">
             <el-form-item>
@@ -73,7 +74,7 @@ export default {
       this.$emit('handlerMenuChild', menu.id, menu.title)
     },
     getIcon (icon) {
-      return `fa fa-${icon}`
+      return `fa-${icon}`
     },
     handlerDel (menu) {
       if (menu.id === '') {
@@ -87,7 +88,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          DELETE_MENU({id: menu.id})
+          DELETE_MENU({ id: menu.id })
             .then(() => {
               this.fetchData()
               this.$message.success('删除成功!')
@@ -108,10 +109,10 @@ export default {
 </script>
 
 <style>
-  .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+.el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 </style>
