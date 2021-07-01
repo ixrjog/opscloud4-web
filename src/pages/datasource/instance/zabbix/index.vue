@@ -32,9 +32,9 @@
 
 <script>
 
-import AssetTable from '../../../../components/caesar/datasource/asset/AssetTable'
-import DsInstanceAssetType from '@/components/caesar/common/enums/ds.instance.asset.type.js'
-import DsChildrenTag from '../../../../components/caesar/datasource/common/DsChildrenTag'
+import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
+import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
+import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
 
 const tableLayout = {
   user: {

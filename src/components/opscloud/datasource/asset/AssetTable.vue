@@ -42,7 +42,7 @@
 import { QUERY_ASSET_PAGE, PULL_ASSET, DELETE_ASSET_BY_ID } from '@/api/modules/datasource/datasource.asset.api.js'
 import Pagination from '../../common/page/Pagination'
 import BusinessTagEditor from '../../common/tag/BusinessTagEditor'
-import BusinessType from '@/components/caesar/common/enums/business.type.js'
+import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import BusinessTags from '../../common/tag/BusinessTags'
 
 const tableLayout = {

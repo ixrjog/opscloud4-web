@@ -41,7 +41,7 @@ import {
   SET_USER_BUSINESS_PERMISSION
 } from '@/api/modules/user/user.api.js'
 
-import BusinessType from '@/components/caesar/common/enums/business.type.js'
+import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 
 import Pagination from '../../common/page/Pagination'
 

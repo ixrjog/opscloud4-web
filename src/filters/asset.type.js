@@ -1,4 +1,4 @@
-import DsInstanceAssetType from '@/components/caesar/common/enums/ds.instance.asset.type.js'
+import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
 
 export function getAssetTypeText (value) {
   switch (value) {

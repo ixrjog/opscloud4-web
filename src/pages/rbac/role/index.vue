@@ -14,8 +14,8 @@
 
 <script>
 
-import RoleTable from '../../../components/caesar/rbac/RoleTable'
-import RoleResourceMaster from '../../../components/caesar/rbac/RoleResourceMaster'
+import RoleTable from '../../../components/opscloud/rbac/RoleTable'
+import RoleResourceMaster from '../../../components/opscloud/rbac/RoleResourceMaster'
 
 export default {
   data () {

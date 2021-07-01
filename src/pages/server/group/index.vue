@@ -14,8 +14,8 @@
 
 <script>
 
-import ServerGroupTypeTable from '../../../components/caesar/server/ServerGroupTypeTable'
-import ServerGroupTable from '../../../components/caesar/server/ServerGroupTable'
+import ServerGroupTypeTable from '../../../components/opscloud/server/ServerGroupTypeTable'
+import ServerGroupTable from '../../../components/opscloud/server/ServerGroupTable'
 
 export default {
   data () {

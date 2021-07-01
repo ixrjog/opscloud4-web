@@ -14,8 +14,8 @@
 
 <script>
 
-import UserTable from '../../components/caesar/user/UserTable'
-import UserGroupTable from '../../components/caesar/user/UserGroupTable'
+import UserTable from '../../components/opscloud/user/UserTable'
+import UserGroupTable from '../../components/opscloud/user/UserGroupTable'
 
 export default {
   data () {

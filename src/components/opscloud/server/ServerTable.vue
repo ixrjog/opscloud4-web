@@ -112,7 +112,7 @@ import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import AccountTags from '../common/tag/AccountTags'
 import Pagination from '../common/page/Pagination'
 
-import BusinessType from '@/components/caesar/common/enums/business.type.js'
+import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 
 const activeOptions = [{
   value: true,

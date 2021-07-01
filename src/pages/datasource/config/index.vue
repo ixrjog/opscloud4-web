@@ -77,12 +77,12 @@ import {
   QUERY_DATASOURCE_CONFIG_PAGE
 } from '@/api/modules/datasource/datasource.config.api.js'
 
-import Pagination from '../../../components/caesar/common/page/Pagination'
-import ActiveTag from '../../../components/caesar/common/tag/ActiveTag'
-import DatasourceTypeTag from '../../../components/caesar/common/tag/DatasourceTypeTag'
-import DatasourceConfigEditor from '../../../components/caesar/datasource/DatasourceConfigEditor'
-import DatasourceInstanceRegisterEditor from '../../../components/caesar/datasource/DatasourceInstanceRegisterEditor'
-import WhetherTag from '../../../components/caesar/common/tag/WhetherTag'
+import Pagination from '../../../components/opscloud/common/page/Pagination'
+import ActiveTag from '../../../components/opscloud/common/tag/ActiveTag'
+import DatasourceTypeTag from '../../../components/opscloud/common/tag/DatasourceTypeTag'
+import DatasourceConfigEditor from '../../../components/opscloud/datasource/DatasourceConfigEditor'
+import DatasourceInstanceRegisterEditor from '../../../components/opscloud/datasource/DatasourceInstanceRegisterEditor'
+import WhetherTag from '../../../components/opscloud/common/tag/WhetherTag'
 
 const activeOptions = [{
   value: true,

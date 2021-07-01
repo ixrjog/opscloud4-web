@@ -14,8 +14,8 @@
 
 <script>
 
-import ServerAccountTable from '../../components/caesar/server/ServerAccountTable'
-import ServerTable from '../../components/caesar/server/ServerTable'
+import ServerAccountTable from '../../components/opscloud/server/ServerAccountTable'
+import ServerTable from '../../components/opscloud/server/ServerTable'
 
 export default {
   data () {

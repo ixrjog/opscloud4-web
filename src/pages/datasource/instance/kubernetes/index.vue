@@ -41,8 +41,8 @@
 
 <script>
 
-import AssetTable from '../../../../components/caesar/datasource/asset/AssetTable'
-import DsInstanceAssetType from '@/components/caesar/common/enums/ds.instance.asset.type'
+import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
+import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 
 const tableLayout = {
   namespace: {

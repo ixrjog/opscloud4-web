@@ -3,7 +3,7 @@
     <div class="d2-page-cover__logo">
       <slot/>
     </div>
-    <p class="d2-page-cover__title">Caesar IaC {{$version}}</p>
+    <p class="d2-page-cover__title">Opscloud IaC {{$version}}</p>
     <p class="d2-page-cover__sub-title">基础架构即代码</p>
     <p class="d2-page-cover__build-time">FINAL BUILD TIME {{$buildTime}}</p>
     <slot name="footer"/>

@@ -17,13 +17,13 @@
 
 <script>
 
-import UserInfo from '../../../components/caesar/user/UserInfoCard'
+import UserInfo from '../../../components/opscloud/user/UserInfoCard'
 import { GET_USER_DETAILS } from '@/api/modules/user/user.details.api.js'
-import PubkeyInfo from '../../../components/caesar/user/details/UserCredentialPubKeyInfoCard'
-import RolesInfo from '../../../components/caesar/user/details/UserRBACRolesInfoCard'
+import PubkeyInfo from '../../../components/opscloud/user/details/UserCredentialPubKeyInfoCard'
+import RolesInfo from '../../../components/opscloud/user/details/UserRBACRolesInfoCard'
 import ServerGroupInfo
-  from '../../../components/caesar/user/details/UserPermissionServerGroupInfoCard'
-import UserGroupInfo from '../../../components/caesar/user/details/UserPermissionGroupInfoCard'
+  from '../../../components/opscloud/user/details/UserPermissionServerGroupInfoCard'
+import UserGroupInfo from '../../../components/opscloud/user/details/UserPermissionGroupInfoCard'
 
 export default {
   data () {

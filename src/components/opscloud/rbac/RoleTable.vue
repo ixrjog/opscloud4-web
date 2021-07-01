@@ -36,7 +36,7 @@ import { QUERY_ROLE_PAGE, DELETE_ROLE_BY_ID } from '@/api/modules/auth/auth.role
 import RoleEditor from './RoleEditor'
 import WhetherTag from '../common/tag/WhetherTag'
 import Pagination from '../common/page/Pagination'
-import RoleMenuEditor from '@/components/caesar/rbac/RoleMenuEditor'
+import RoleMenuEditor from '@/components/opscloud/rbac/RoleMenuEditor'
 
 export default {
   name: 'RbacRoleTable',

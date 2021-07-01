@@ -40,10 +40,10 @@
 
 // API
 import { QUERY_ENV_PAGE, DELETE_ENV_BY_ID } from '@/api/modules/sys/sys.env.api.js'
-import Pagination from '../../../components/caesar/common/page/Pagination'
-import EnvTag from '../../../components/caesar/common/tag/EnvTag'
-import EnvEditor from '../../../components/caesar/sys/EnvEditor'
-import PromptColorTag from '../../../components/caesar/common/tag/PromptColorTag'
+import Pagination from '../../../components/opscloud/common/page/Pagination'
+import EnvTag from '../../../components/opscloud/common/tag/EnvTag'
+import EnvEditor from '../../../components/opscloud/sys/EnvEditor'
+import PromptColorTag from '../../../components/opscloud/common/tag/PromptColorTag'
 
 const promptColorOptions = [{
   value: 0,

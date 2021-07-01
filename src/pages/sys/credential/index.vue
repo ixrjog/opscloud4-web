@@ -44,9 +44,9 @@
 
 import { GET_CREDENTIAL_KIND_OPTIONS, QUERY_CREDENTIAL_PAGE } from '@/api/modules/sys/sys.credential.api.js'
 
-import Pagination from '../../../components/caesar/common/page/Pagination'
-import CredentialKindTag from '../../../components/caesar/common/tag/CredentialKindTag'
-import CredentialEditor from '../../../components/caesar/sys/CredentialEditor'
+import Pagination from '../../../components/opscloud/common/page/Pagination'
+import CredentialKindTag from '../../../components/opscloud/common/tag/CredentialKindTag'
+import CredentialEditor from '../../../components/opscloud/sys/CredentialEditor'
 
 export default {
   data () {

@@ -9,7 +9,7 @@ import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 
 
-import TerminalState from '@/components/caesar/common/enums/terminal.state.js'
+import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 
 export default {
   data () {

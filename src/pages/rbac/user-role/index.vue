@@ -34,9 +34,9 @@
 <script>
 
 import { QUERY_USER_PAGE } from '@/api/modules/user/user.api.js'
-import RoleTags from '../../../components/caesar/rbac/child/RoleTags'
-import UserRoleEditor from '../../../components/caesar/rbac/UserRoleEditor'
-import Pagination from '../../../components/caesar/common/page/Pagination'
+import RoleTags from '../../../components/opscloud/rbac/child/RoleTags'
+import UserRoleEditor from '../../../components/opscloud/rbac/UserRoleEditor'
+import Pagination from '../../../components/opscloud/common/page/Pagination'
 
 export default {
   data () {

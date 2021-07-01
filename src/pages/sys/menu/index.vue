@@ -14,8 +14,8 @@
 
 <script>
 
-import MenuCard from '@/components/caesar/sys/MenuCard'
-import MenuChildCard from '@/components/caesar/sys/MenuChildCard'
+import MenuCard from '@/components/opscloud/sys/MenuCard'
+import MenuChildCard from '@/components/opscloud/sys/MenuChildCard'
 
 export default {
   data () {

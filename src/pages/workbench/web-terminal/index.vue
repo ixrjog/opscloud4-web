@@ -37,9 +37,9 @@
 
 <script>
 
-import ServerTree from '../../../components/caesar/tree/ServerTree'
-import TerminalTools from '../../../components/caesar/terminal/TerminalTools'
-import TerminalLayout from '../../../components/caesar/terminal/TerminalLayout'
+import ServerTree from '../../../components/opscloud/tree/ServerTree'
+import TerminalTools from '../../../components/opscloud/terminal/TerminalTools'
+import TerminalLayout from '../../../components/opscloud/terminal/TerminalLayout'
 
 import { mapState } from 'vuex'
 

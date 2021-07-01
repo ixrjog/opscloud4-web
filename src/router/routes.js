@@ -2,12 +2,12 @@ import playground from './modules/playground'
 import plugins from './modules/plugins'
 import components from './modules/components'
 
-import sys from './modules/caesar.sys'
-import user from './modules/caesar.user'
-import server from './modules/caesar.server'
-import rbac from './modules/caesar.rbac'
-import datasource from './modules/caesar.datasource'
-import workbench from './modules/caesar.workbench'
+import sys from './modules/opscloud.sys'
+import user from './modules/opscloud.user'
+import server from './modules/opscloud.server'
+import rbac from './modules/opscloud.rbac'
+import datasource from './modules/opscloud.datasource'
+import workbench from './modules/opscloud.workbench'
 
 import layoutHeaderAside from '@/layout/header-aside'
 

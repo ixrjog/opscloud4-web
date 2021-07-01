@@ -45,8 +45,8 @@
 <script>
 
 import { GET_TAG_BUSINESS_OPTIONS, QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
-import Pagination from '../../../components/caesar/common/page/Pagination'
-import TagEditor from '../../../components/caesar/tag/TagEditor'
+import Pagination from '../../../components/opscloud/common/page/Pagination'
+import TagEditor from '../../../components/opscloud/tag/TagEditor'
 
 export default {
   data () {

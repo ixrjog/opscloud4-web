@@ -14,8 +14,8 @@
 
 <script>
 
-import ResourceTable from '../../../components/caesar/rbac/ResourceTable'
-import GroupTable from '../../../components/caesar/rbac/GroupTable'
+import ResourceTable from '../../../components/opscloud/rbac/ResourceTable'
+import GroupTable from '../../../components/opscloud/rbac/GroupTable'
 
 export default {
   data () {

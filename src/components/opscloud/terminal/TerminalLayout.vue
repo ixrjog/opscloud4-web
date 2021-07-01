@@ -34,7 +34,7 @@ import util from '@/libs/util'
 import tools from '@/libs/tools'
 import TerminalItem from './TerminalItem'
 
-import TerminalState from '@/components/caesar/common/enums/terminal.state.js'
+import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 import EnvTag from '../common/tag/EnvTag'
 
 const wsUrl = 'ws/terminal'
