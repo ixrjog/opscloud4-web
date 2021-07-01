@@ -20,7 +20,7 @@ export default {
     icon: {
       type: String,
       required: false,
-      default: 'link'
+      default: 'fas fa-link'
     },
     link: {
       type: String,

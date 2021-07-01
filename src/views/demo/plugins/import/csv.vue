@@ -2,14 +2,14 @@
   <d2-container type="card">
     <template slot="header">
       <el-button @click="download">
-        <d2-icon name="download"/>
+        <d2-icon name="fas fa-download"/>
         下载演示 .csv 表格
       </el-button>
     </template>
     <div class="d2-mb">
       <el-upload :before-upload="handleUpload" action="default">
         <el-button type="success">
-          <d2-icon name="file-o"/>
+          <d2-icon name="fas fa-file"/>
           选择要导入的 .csv 表格
         </el-button>
       </el-upload>

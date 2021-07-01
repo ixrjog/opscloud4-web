@@ -1,5 +1,5 @@
 <template>
-  <i class="fa fab fas" :class="`fa-${name}`" aria-hidden="true"></i>
+  <i :class="name" aria-hidden="true"></i>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
     name: {
       type: String,
       required: false,
-      default: 'font-awesome'
+      default: 'fab fa-font-awesome'
     }
   }
 }

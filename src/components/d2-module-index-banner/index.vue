@@ -9,7 +9,7 @@
     <p class="banner--sub-title">{{subTitle}}</p>
     <p v-if="link" class="banner--link" @click="handleLinkClick">
       <span class="banner--link-button">
-        <d2-icon name="link"/>
+        <d2-icon name="fas fa-link"/>
         {{link}}
       </span>
     </p>

@@ -3,13 +3,16 @@
     <div slot="header" style="height: 15px">
       <span>{{ title }}</span>
       <el-row style="float: right">
-          <el-button @click="addMenuChild()" type="text" style="padding: 3px 0;margin-left: 5px;">新增</el-button>
-          <el-button @click="saveMenuChild()" type="text" style="padding: 3px 0; margin-left: 5px;">保存</el-button>
+        <el-button @click="addMenuChild()" type="text" style="padding: 3px 0;margin-left: 5px;">新增</el-button>
+        <el-button @click="saveMenuChild()" type="text" style="padding: 3px 0; margin-left: 5px;">保存</el-button>
       </el-row>
     </div>
-    <draggable :list="menuChildList" @start="dragging = true" @end="dragging = false" :disabled="false">
+    <draggable :list="menuChildList" handle=".handle">
       <div v-for="(menuChild,index) in menuChildList" :key="index">
         <el-form :inline="true" :model="menuChild" label-width="60px">
+          <el-form-item>
+            <i class="fas fa-align-justify handle"></i>
+          </el-form-item>
           <el-form-item label="名称" required>
             <el-input v-model.trim="menuChild.title"></el-input>
           </el-form-item>
@@ -17,11 +20,14 @@
             <el-input v-model.trim="menuChild.path" class="input"></el-input>
           </el-form-item>
           <el-form-item label="图标" required>
-            <el-input v-model.trim="menuChild.icon"
-                      :suffix-icon="getIcon(menuChild.icon)"></el-input>
+            <el-input v-model.trim="menuChild.icon">
+              <i slot="suffix" :class=menuChild.icon aria-hidden="true"></i>
+            </el-input>
           </el-form-item>
           <el-form-item style="float: right">
-            <el-button type="danger" plain @click.prevent="handlerDel(menuChild)">删除</el-button>
+            <el-button type="danger" plain @click.prevent="handlerDel(menuChild)">
+              <i class="fas fa-trash-alt"></i>
+            </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -62,9 +68,6 @@ export default {
       this.title = title
       this.fetchData()
     },
-    getIcon (icon) {
-      return `fa fa-${icon}`
-    },
     addMenuChild () {
       const data = Object.assign({}, menuChild)
       data.menuId = this.menuId
@@ -95,7 +98,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          DELETE_MENU_CHILD({id: menuChild.id})
+          DELETE_MENU_CHILD({ id: menuChild.id })
             .then(() => {
               this.fetchData()
               this.$message.success('删除成功!')
@@ -106,7 +109,7 @@ export default {
       }
     },
     fetchData () {
-      QUERY_MENU_CHILD({ id: this.menuId})
+      QUERY_MENU_CHILD({ id: this.menuId })
         .then(({ body }) => {
           this.menuChildList = body
         })
@@ -116,18 +119,18 @@ export default {
 </script>
 
 <style scoped>
-  .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+.el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  .input {
-    width: 220px;
-  }
+.input {
+  width: 200px;
+}
 </style>

@@ -2,9 +2,9 @@
   <d2-container>
     <template slot="header">图标组件</template>
     <d2-icon class="d2-mr-10"/>
-    <d2-icon name="github" class="d2-mr-10"/>
-    <d2-icon name="github" style="font-size: 100px;" class="d2-mr-10"/>
-    <d2-icon name="github" class="icon-demo"/>
+    <d2-icon name="fab fa-github" class="d2-mr-10"/>
+    <d2-icon name="fab fa-github" style="font-size: 100px;" class="d2-mr-10"/>
+    <d2-icon name="fab fa-github" class="icon-demo"/>
   </d2-container>
 </template>
 

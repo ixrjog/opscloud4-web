@@ -18,9 +18,9 @@
       </el-table-column>
     </el-table>
     <div>
-      <p>尝试激活一个不存在的主题（主题不存在 <d2-icon name="arrow-right"/> 默认主题）</p>
+      <p>尝试激活一个不存在的主题（主题不存在 <d2-icon name="fas fa-arrow-right"/> 默认主题）</p>
       <el-button type="danger" @click="handleSelectTheme('err-theme')">
-        <d2-icon name="hand-o-right" class="d2-mr-10"/>
+        <d2-icon name="fas fa-hand-point-right" class="d2-mr-10"/>
         尝试激活主题 'err-theme'
       </el-button>
     </div>

@@ -7,29 +7,29 @@
     <p>关闭标签页</p>
     <el-button-group>
       <el-button @click="handleCloseCurrent">
-        <d2-icon name="times"/> 当前
+        <d2-icon name="fas fa-times"/> 当前
       </el-button>
       <el-button @click="handleCloseLeft">
-        <d2-icon name="arrow-left"/> 左侧
+        <d2-icon name="fas fa-arrow-left"/> 左侧
       </el-button>
       <el-button @click="handleCloseRight">
-        右侧 <d2-icon name="arrow-right"/>
+        右侧 <d2-icon name="fas fa-arrow-right"/>
       </el-button>
       <el-button @click="handleCloseOther">
-        其它 <d2-icon name="times"/>
+        其它 <d2-icon name="fas fa-times"/>
       </el-button>
       <el-button @click="closeAll">
-        全部 <d2-icon name="times-circle"/>
+        全部 <d2-icon name="fas fa-times-circle"/>
       </el-button>
     </el-button-group>
     <p>刷新</p>
     <el-button-group>
       <el-button @click="handleCleanCacheAndRefreshCurrent">
-        <d2-icon name="refresh"/>
+        <d2-icon name="fas fa-redo"/>
         清空当前页缓存并刷新
       </el-button>
       <el-button @click="handleCleanCacheAndRefreshAll">
-        <d2-icon name="refresh"/>
+        <d2-icon name="fas fa-redo"/>
         清空所有缓存并刷新
       </el-button>
     </el-button-group>

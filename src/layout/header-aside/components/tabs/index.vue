@@ -32,22 +32,22 @@
         split-button
         @click="closeAll"
         @command="command => handleControlItemClick(command)">
-        <d2-icon name="times-circle"/>
+        <d2-icon name="fas fa-times-circle"/>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="left">
-            <d2-icon name="arrow-left" class="d2-mr-10"/>
+            <d2-icon name="fas fa-arrow-left" class="d2-mr-10"/>
             关闭左侧
           </el-dropdown-item>
           <el-dropdown-item command="right">
-            <d2-icon name="arrow-right" class="d2-mr-10"/>
+            <d2-icon name="fas fa-arrow-right" class="d2-mr-10"/>
             关闭右侧
           </el-dropdown-item>
           <el-dropdown-item command="other">
-            <d2-icon name="times" class="d2-mr-10"/>
+            <d2-icon name="fas fa-times" class="d2-mr-10"/>
             关闭其它
           </el-dropdown-item>
           <el-dropdown-item command="all">
-            <d2-icon name="times-circle" class="d2-mr-10"/>
+            <d2-icon name="fas fa-times-circle" class="d2-mr-10"/>
             全部关闭
           </el-dropdown-item>
         </el-dropdown-menu>

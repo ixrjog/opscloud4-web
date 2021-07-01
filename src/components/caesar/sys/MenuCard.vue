@@ -7,23 +7,30 @@
         <el-button @click="saveMenu()" type="text" style="padding: 3px 0; margin-left: 5px;">保存</el-button>
       </el-row>
     </div>
-    <draggable :list="menuList" @start="dragging = true" @end="dragging = false" :disabled="false">
+    <draggable :list="menuList" handle=".handle">
       <div v-for="(menu,index) in menuList" :key="index">
         <el-form :inline="true" :model="menu" label-width="60px">
+          <el-form-item>
+            <i class="fas fa-align-justify handle"></i>
+          </el-form-item>
           <el-form-item label="名称" required>
             <el-input v-model.trim="menu.title"></el-input>
           </el-form-item>
           <el-form-item label="图标" required>
             <el-input v-model.trim="menu.icon">
-              <i slot="suffix" class="fa fab fas" :class=getIcon(menu.icon) aria-hidden="true"></i>
+              <i slot="suffix" :class=menu.icon aria-hidden="true"></i>
             </el-input>
           </el-form-item>
           <span style="float: right">
             <el-form-item>
-              <el-button :disabled="menu.id === ''" @click="handlerMenuChild(menu)" plain>子菜单</el-button>
+              <el-button :disabled="menu.id === ''" @click="handlerMenuChild(menu)">
+                <i class="fas fa-angle-right"></i>
+              </el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="danger" plain @click.prevent="handlerDel(menu)">删除</el-button>
+              <el-button type="danger" plain @click.prevent="handlerDel(menu)">
+                <i class="fas fa-trash-alt"></i>
+              </el-button>
             </el-form-item>
           </span>
         </el-form>
@@ -72,9 +79,6 @@ export default {
     },
     handlerMenuChild (menu) {
       this.$emit('handlerMenuChild', menu.id, menu.title)
-    },
-    getIcon (icon) {
-      return `fa-${icon}`
     },
     handlerDel (menu) {
       if (menu.id === '') {

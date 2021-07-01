@@ -13,10 +13,10 @@
     </el-row>
     <template slot="footer">
       <el-button type="primary" @click="text += text">
-        <d2-icon name="copy"/> 当前内容 x2
+        <d2-icon name="fas fa-copy"/> 当前内容 x2
       </el-button>
       <el-button type="danger" @click="text = ''">
-        <d2-icon name="trash-o"/> 清空
+        <d2-icon name="fas fa-trash"/> 清空
       </el-button>
     </template>
   </d2-container>
