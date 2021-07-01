@@ -8,9 +8,7 @@
         class="d2-ml-0 d2-mr btn-text can-hover"
         type="text"
         @click="dialogVisible = true">
-        <d2-icon
-          name="fas fa-gem"
-          style="font-size: 16px"/>
+        <d2-icon name="fas fa-gem" style="font-size: 16px"/>
       </el-button>
     </el-tooltip>
     <el-dialog
@@ -25,6 +23,7 @@
 
 <script>
 import themeList from './components/d2-theme-list'
+
 export default {
   components: {
     'd2-theme-list': themeList

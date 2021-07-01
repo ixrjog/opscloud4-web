@@ -38,6 +38,7 @@
 <script>
 import draggable from 'vuedraggable'
 import { DELETE_MENU_CHILD, QUERY_MENU_CHILD, SAVE_MENU_CHILD } from '@/api/modules/sys/sys.menu.api'
+import ui from '@/libs/util.ui'
 
 const menuChild = {
   id: '',
@@ -81,6 +82,7 @@ export default {
         .then(() => {
           this.$message.success('保存子菜单成功')
           this.fetchData()
+          ui.init()
         })
     },
     handlerSubmenu (menu) {
