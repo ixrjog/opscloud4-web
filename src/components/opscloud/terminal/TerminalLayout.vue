@@ -129,7 +129,7 @@ export default {
     handlerLogout (args) {
       const logoutMessage = {
         state: this.terminalState.LOGOUT,
-        instanceId: args.server.instanceId,
+        instanceId: args.server.instanceId
       }
       this.sendMessage(logoutMessage)
       this.$refs[`terminal_${args.server.instanceId}`][0].dispose()
@@ -141,14 +141,16 @@ export default {
      */
     handlerDuplicateSession (serverNode) {
       const fitAddon = this.$refs[`terminal_${serverNode.instanceId}`][0].getFitAddon()
-      let newServerNode = Object.assign({}, serverNode)
+      const newServerNode = Object.assign({}, serverNode)
       // 计算 instanceId  源id  server-prod-1#1
       newServerNode.instanceId = tools.instanceId(serverNode.instanceId)
       const duplicateSessionMessage = {
         state: this.terminalState.DUPLICATE_SESSION,
         // duplicateInstanceId: id,
-        duplicateServerNode: serverNode, // 源会话
-        serverNode: newServerNode,  // 目标会话
+        // 源会话
+        duplicateServerNode: serverNode,
+        // 目标会话
+        serverNode: newServerNode,
         token: util.cookies.get('token'),
         loginType: this.loginType,
         terminal: {
@@ -249,8 +251,8 @@ export default {
 </script>
 
 <style scoped>
-  .env {
-    margin-left: 5px;
-  }
+.env {
+  margin-left: 5px;
+}
 
 </style>

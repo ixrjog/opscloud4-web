@@ -52,7 +52,7 @@ export default {
     handlerEdit () {
       this.formStatus.user.visible = true
       this.formStatus.user.operationType = false
-     // this.$refs.userDialog.initData(Object.assign({}, this.userDetail))
+      // this.$refs.userDialog.initData(Object.assign({}, this.userDetail))
     },
     fetchData () {
       this.$emit('fetchData')
@@ -62,10 +62,10 @@ export default {
 </script>
 
 <style scoped>
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 </style>

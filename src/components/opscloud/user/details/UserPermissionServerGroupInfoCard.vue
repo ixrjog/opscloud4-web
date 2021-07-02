@@ -50,7 +50,7 @@ export default {
       const requestBody = {
         ...this.queryParam,
         businessType: this.businessType.SERVERGROUP,
-        userId: this.userId,
+        userId: this.userId
       }
       QUERY_USER_BUSINESS_PERMISSION(requestBody)
         .then(res => {

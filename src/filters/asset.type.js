@@ -32,6 +32,8 @@ export function getAssetTypeText (value) {
       return '主机组'
     case DsInstanceAssetType.ZABBIX.ZABBIX_TEMPLATE:
       return '模板'
+    case DsInstanceAssetType.ZABBIX.ZABBIX_TRIGGER:
+      return '问题'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
       return '命名空间'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:

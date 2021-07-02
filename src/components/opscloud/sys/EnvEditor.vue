@@ -47,9 +47,9 @@ export default {
     }
   },
   name: 'EnvEditor',
-  props: ['formStatus','promptColorOptions'],
+  props: ['formStatus', 'promptColorOptions'],
   mixins: [],
-  components:{
+  components: {
     SelectPromptColorTag
   },
   mounted () {

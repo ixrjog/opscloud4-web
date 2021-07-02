@@ -7,8 +7,6 @@
 import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
-
-
 import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 
 export default {
@@ -16,7 +14,7 @@ export default {
     return {
       terminalState: TerminalState,
       term: null,
-      fitAddon: new FitAddon(),
+      fitAddon: new FitAddon()
     }
   },
   name: 'TerminalItem',

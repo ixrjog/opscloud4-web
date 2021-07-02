@@ -23,7 +23,7 @@
       <el-table-column prop="serverGroupType" label="组类型">
         <template slot-scope="scope">
           <el-tag disable-transitions :style="{ color: scope.row.serverGroupType.color }">
-            {{scope.row.serverGroupType.name}}
+            {{ scope.row.serverGroupType.name }}
           </el-tag>
         </template>
       </el-table-column>
@@ -31,7 +31,7 @@
       <el-table-column prop="userPermission.roleName" label="角色">
         <template slot-scope="scope">
           <el-tag :type=" scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
-            {{scope.row.userPermission.permissionRole === 'admin' ? '管理员' :'普通用户'}}
+            {{ scope.row.userPermission.permissionRole === 'admin' ? '管理员' : '普通用户' }}
           </el-tag>
         </template>
       </el-table-column>
@@ -39,7 +39,7 @@
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handlerRowSet(scope.row)">
-            {{scope.row.userPermission.permissionRole === 'admin' ? '降权' :'提权'}}
+            {{ scope.row.userPermission.permissionRole === 'admin' ? '降权' : '提权' }}
           </el-button>
           <el-button type="danger" plain size="mini" @click="handlerRowRevoke(scope.row)">解除</el-button>
         </template>
@@ -102,7 +102,7 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    init(){
+    init () {
       this.getServerGroup('')
       this.fetchData()
     },
@@ -185,18 +185,18 @@ export default {
 
 <style scoped>
 
-  .el-select {
-    display: inline-block;
-    width: 250px;
-  }
+.el-select {
+  display: inline-block;
+  width: 250px;
+}
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>
