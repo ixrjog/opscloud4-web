@@ -24,7 +24,7 @@ util.title = function (titleText) {
  * @param {String} url 地址
  */
 util.open = function (url) {
-  var a = document.createElement('a')
+  const a = document.createElement('a')
   a.setAttribute('href', url)
   a.setAttribute('target', '_blank')
   a.setAttribute('id', 'd2admin-link-temp')
@@ -45,6 +45,15 @@ util.wsUrl = function (wsUrl) {
     const httpProtocol = window.location.href.split('://')[0]
     return (httpProtocol === 'http' ? 'ws' : 'wss') + '://' + host + process.env.VUE_APP_WS_API + wsUrl
   }
+}
+
+util.bytesToSize = function (bytes) {
+  if (bytes === 0) return '0 B';
+  const k = 1000, // or 1024
+    sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+    i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
 }
 
 export default util

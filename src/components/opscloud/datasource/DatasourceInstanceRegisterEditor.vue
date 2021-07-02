@@ -89,6 +89,10 @@ export default {
           this.instanceTypeOptions = this.dsInstanceType.KUBERNETES.instanceType
           this.datasource.instance.instanceType = this.dsInstanceType.KUBERNETES.name
           break
+        case this.dsInstanceType.JENKINS.type:
+          this.instanceTypeOptions = this.dsInstanceType.JENKINS.instanceType
+          this.datasource.instance.instanceType = this.dsInstanceType.JENKINS.name
+          break
       }
     },
     handlerRegister () {

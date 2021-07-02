@@ -23,6 +23,9 @@ const DsInstanceAssetType = Object.freeze({
   ZABBIX: {
     ZABBIX_USER: 'ZABBIX_USER',
     ZABBIX_USER_GROUP: 'ZABBIX_USER_GROUP'
+  },
+  JENKINS: {
+    JENKINS_COMPUTER: 'JENKINS_COMPUTER'
   }
 })
 

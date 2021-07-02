@@ -11,7 +11,13 @@ const DsInstanceType = Object.freeze({
   },
   JENKINS: {
     type: 2,
-    name: 'JENKINS'
+    name: 'JENKINS',
+    instanceType: [
+      {
+        value: 'JENKINS',
+        label: 'JENKINS'
+      }
+    ]
   },
   GITLAB: 3,
   SONAR: 4,

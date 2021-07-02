@@ -61,5 +61,14 @@ export default [
       auth: true,
       title: 'Zabbix数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/jenkins',
+    name: 'datasource-instance-jenkins',
+    component: () => import('@/pages/datasource/instance/jenkins'),
+    meta: {
+      auth: true,
+      title: 'Jenkins数据源实例'
+    }
   }
 ]
