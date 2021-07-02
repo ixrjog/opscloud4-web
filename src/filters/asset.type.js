@@ -22,6 +22,10 @@ export function getAssetTypeText (value) {
       return '安全组'
     case DsInstanceAssetType.ALIYUN.V_SWITCH:
       return '交换机'
+    case DsInstanceAssetType.ALIYUN.RAM_USER:
+      return 'RAM用户'
+    case DsInstanceAssetType.ALIYUN.RAM_POLICY:
+      return 'RAM策略'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:

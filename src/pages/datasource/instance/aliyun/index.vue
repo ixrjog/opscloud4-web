@@ -60,6 +60,31 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="RAM_USER" name="ramUser">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER" :tableLayout="tableLayout.ramUser"
+                     ref="ramUserTable">
+          <template v-slot:extend>
+            <el-table-column  label="手机">
+              <template slot-scope="scope">
+                <span>{{ scope.row.properties.mobilePhone }}</span>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="RAM_POLICY" name="ramPolicy">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY" :tableLayout="tableLayout.ramPolicy"
+                     ref="ramPolicyTable">
+          <template v-slot:extend>
+            <el-table-column  label="描述">
+              <template slot-scope="scope">
+                <span>{{ scope.row.description }}</span>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+
     </el-tabs>
   </d2-container>
 </template>
@@ -121,12 +146,52 @@ const tableLayout = {
       alias: '名称'
     },
     assetKey: {
-      alias: '镜像id',
+      alias: '手机',
       show: false
     },
     assetKey2: {
       alias: '网段',
       show: true
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
+  },
+  ramUser: {
+    assetId: {
+      alias: 'userId'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '用户名',
+      show: true
+    },
+    assetKey2: {
+      alias: 'email',
+      show: true
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
+  },
+  ramPolicy: {
+    assetId: {
+      alias: '策略名称'
+    },
+    name: {
+      alias: '策略名称'
+    },
+    assetKey: {
+      alias: '策略类型',
+      show: true
+    },
+    assetKey2: {
+      alias: '',
+      show: false
     },
     zone: {
       alias: '区',
@@ -162,6 +227,12 @@ export default {
       }
       if (tab.name === 'vpc') {
         this.$refs.vpcTable.fetchData()
+      }
+      if (tab.name === 'ramUser') {
+        this.$refs.ramUserTable.fetchData()
+      }
+      if (tab.name === 'ramPolicy') {
+        this.$refs.ramPolicyTable.fetchData()
       }
     },
     init () {

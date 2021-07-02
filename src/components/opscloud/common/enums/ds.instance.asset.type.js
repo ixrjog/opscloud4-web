@@ -13,7 +13,9 @@ const DsInstanceAssetType = Object.freeze({
     VPC: 'VPC',
     V_SWITCH: 'V_SWITCH',
     ECS_IMAGE: 'ECS_IMAGE',
-    ECS_SG: 'ECS_SG'
+    ECS_SG: 'ECS_SG',
+    RAM_USER: 'RAM_USER',
+    RAM_POLICY: 'RAM_POLICY'
   },
   KUBERNETES: {
     KUBERNETES_NAMESPACE: 'KUBERNETES_NAMESPACE',
