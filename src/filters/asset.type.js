@@ -10,8 +10,10 @@ export function getAssetTypeText (value) {
       return '群组'
     case DsInstanceAssetType.GITLAB.GITLAB_PROJECT:
       return '项目'
-    case DsInstanceAssetType.GITLAB.USER:
+    case DsInstanceAssetType.GITLAB.GITLAB_USER:
       return '用户'
+    case DsInstanceAssetType.GITLAB.GITLAB_SSHKEY:
+      return '密钥'
     case DsInstanceAssetType.ALIYUN.ECS:
       return 'Ecs'
     case DsInstanceAssetType.ALIYUN.ECS_IMAGE:

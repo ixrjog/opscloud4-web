@@ -8,7 +8,6 @@
         </div>
       <el-tag style="margin-left: 5px" v-if="type === 3">{{ child.name }}</el-tag>
       <el-tag style="margin-left: 5px" v-if="type === 4">{{ child.name }}&lt;{{ child.assetKey }}&gt;</el-tag>
-
     </span>
   </span>
 </template>

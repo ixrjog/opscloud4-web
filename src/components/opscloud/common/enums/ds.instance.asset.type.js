@@ -4,7 +4,8 @@ const DsInstanceAssetType = Object.freeze({
     GROUP: 'GROUP'
   },
   GITLAB: {
-    USER: 'USER',
+    GITLAB_USER: 'GITLAB_USER',
+    GITLAB_SSHKEY: 'GITLAB_SSHKEY',
     GITLAB_PROJECT: 'GITLAB_PROJECT',
     GITLAB_GROUP: 'GITLAB_GROUP'
   },

@@ -37,12 +37,29 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="用户" name="user">
-        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.USER" :tableLayout="tableLayout.user"
+        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_USER" :tableLayout="tableLayout.user"
                      ref="userTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="管理员">
               <template slot-scope="scope">
                 <whether-tag :whether="scope.row.properties.isAdmin"></whether-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="children" label="密钥" width="800">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.GITLAB_SSHKEY" :type="2"></ds-children-tag>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="密钥" name="sshKey">
+        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_SSHKEY" :tableLayout="tableLayout.sshKey"
+                     ref="sshKeyTable">
+          <template v-slot:extend>
+            <el-table-column prop="properties" label="用户名">
+              <template slot-scope="scope">
+                <span>{{ scope.row.properties.username }}</span>
               </template>
             </el-table-column>
           </template>
@@ -100,7 +117,7 @@ const tableLayout = {
   },
   user: {
     assetId: {
-      alias: 'userId'
+      alias: 'User Id'
     },
     name: {
       alias: '显示名'
@@ -109,8 +126,32 @@ const tableLayout = {
       alias: '用户名'
     },
     assetKey2: {
-      alias: 'email',
+      alias: 'Email',
       show: true
+    },
+    zone: {
+      alias: '',
+      show: false
+    },
+    description: {
+      alias: '描述',
+      show: false
+    }
+  },
+  sshKey: {
+    assetId: {
+      alias: 'Key Id'
+    },
+    name: {
+      alias: '标题'
+    },
+    assetKey: {
+      alias: '指纹',
+      show: true
+    },
+    assetKey2: {
+      alias: 'Pub Key',
+      show: false
     },
     zone: {
       alias: '',
@@ -152,6 +193,9 @@ export default {
       }
       if (tab.name === 'user') {
         this.$refs.userTable.fetchData()
+      }
+      if (tab.name === 'sshKey') {
+        this.$refs.sshKeyTable.fetchData()
       }
     },
     init () {
