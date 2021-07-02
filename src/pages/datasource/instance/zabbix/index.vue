@@ -15,7 +15,8 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="用户组" name="userGroup">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_USER_GROUP" :tableLayout="tableLayout.userGroup"
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_USER_GROUP"
+                     :tableLayout="tableLayout.userGroup"
                      ref="userGroupTable">
           <template v-slot:extend>
             <el-table-column prop="children" label="成员(用户)" width="600">
@@ -24,6 +25,18 @@
               </template>
             </el-table-column>
           </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="主机" name="host">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_HOST" ref="hostTable">
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="主机组" name="hostGroup">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_HOST_GROUP" ref="hostGroupTable">
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="模板" name="template">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_TEMPLATE" ref="templateTable">
         </asset-table>
       </el-tab-pane>
     </el-tabs>
@@ -102,6 +115,15 @@ export default {
       }
       if (tab.name === 'userGroup') {
         this.$refs.userGroupTable.fetchData()
+      }
+      if (tab.name === 'host') {
+        this.$refs.hostTable.fetchData()
+      }
+      if (tab.name === 'hostGroup') {
+        this.$refs.hostGroupTable.fetchData()
+      }
+      if (tab.name === 'template') {
+        this.$refs.templateTable.fetchData()
       }
     },
     init () {

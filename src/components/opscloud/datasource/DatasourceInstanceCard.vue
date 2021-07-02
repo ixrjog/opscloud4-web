@@ -5,7 +5,7 @@
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
         <span style="font-size: 14px">{{ instance.instanceName }}</span>
         <el-button type="text" @click="handlerOpen">
-          <i class="fas fa-plane-departure"></i>
+          <i class="fas fa-paper-plane"></i>
         </el-button>
         <el-button type="text" @click="handlerTagEdit">
           <i class="fas fa-tags"></i>
@@ -14,12 +14,17 @@
           <i class="fas fa-file-import"></i>
         </el-button>
       </div>
-      <el-row>
+      <el-row v-if="JSON.stringify(instance.tags) !== '[]'">
         <el-col :span="18">
           <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
         </el-col>
         <el-col :span="6">
           <business-tags :tags="instance.tags" :is-block=true></business-tags>
+        </el-col>
+      </el-row>
+      <el-row v-else>
+        <el-col>
+          <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
         </el-col>
       </el-row>
     </el-card>
