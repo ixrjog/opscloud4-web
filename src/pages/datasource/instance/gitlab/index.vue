@@ -143,7 +143,7 @@ const tableLayout = {
       alias: 'Key Id'
     },
     name: {
-      alias: '标题'
+      alias: '用户名'
     },
     assetKey: {
       alias: '指纹',
@@ -158,8 +158,8 @@ const tableLayout = {
       show: false
     },
     description: {
-      alias: '描述',
-      show: false
+      alias: '标题',
+      show: true
     }
   }
 }
