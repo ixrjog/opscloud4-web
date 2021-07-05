@@ -28,6 +28,7 @@ export function getAssetTypeText (value) {
       return 'RAM用户'
     case DsInstanceAssetType.ALIYUN.RAM_POLICY:
       return 'RAM策略'
+
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:
@@ -39,7 +40,8 @@ export function getAssetTypeText (value) {
     case DsInstanceAssetType.ZABBIX.ZABBIX_TEMPLATE:
       return '模板'
     case DsInstanceAssetType.ZABBIX.ZABBIX_TRIGGER:
-      return '问题'
+      return '触发的问题'
+
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
       return '命名空间'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:
