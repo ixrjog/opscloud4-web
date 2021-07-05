@@ -6,13 +6,9 @@
         <div v-if="type === 2">
           <el-tag>{{ child.name }}&lt;{{ child.assetKey }}&gt;</el-tag>
         </div>
-<<<<<<< HEAD
-      <el-tag style="margin-left: 5px" v-if="type === 3">{{ child.name }}</el-tag>
-      <el-tag style="margin-left: 5px" v-if="type === 4">{{ child.name }}&lt;{{ child.assetKey }}&gt;</el-tag>
-=======
       <el-tag v-if="type === 3">{{ child.name }}</el-tag>
       <el-tag v-if="type === 4">{{ child.name }}&lt;{{ child.assetKey }}&gt;</el-tag>
->>>>>>> feature/xiuyuan
+
     </span>
   </span>
 </template>
