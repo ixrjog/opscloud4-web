@@ -168,7 +168,7 @@ export default {
       if (this.server.serverGroup === null || JSON.stringify(this.server.serverGroup) === '{}') {
         const queryName = this.server.name.replace(new RegExp('-[0-9]+$'), '')
         this.getGroup(queryName)
-      }else{
+      } else {
         this.getGroup(this.server.serverGroup.name)
       }
 

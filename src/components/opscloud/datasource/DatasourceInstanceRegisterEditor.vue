@@ -52,8 +52,6 @@
 <script>
 
 import { REGISTER_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api.js'
-
-
 import DsInstanceType from '@/components/opscloud/common/enums/ds.instance.type.js'
 
 export default {

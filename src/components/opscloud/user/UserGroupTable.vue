@@ -15,9 +15,9 @@
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="120">
-        <template slot-scope="scope">
+<!--        <template slot-scope="scope">-->
 <!--          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>-->
-        </template>
+<!--        </template>-->
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"

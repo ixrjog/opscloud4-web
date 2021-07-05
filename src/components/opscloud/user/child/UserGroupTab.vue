@@ -15,7 +15,7 @@
     </el-row>
     <el-divider></el-divider>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.queryName" placeholder="名称"/>
+      <el-input v-model.trim="queryParam.queryName" placeholder="名称"></el-input>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
@@ -42,7 +42,6 @@ import {
 } from '@/api/modules/user/user.api.js'
 
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
-
 import Pagination from '../../common/page/Pagination'
 
 export default {
@@ -84,7 +83,7 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    init(){
+    init () {
       this.getUserGroup('')
       this.fetchData()
     },
@@ -166,19 +165,18 @@ export default {
 </script>
 
 <style scoped>
+.el-select {
+  display: inline-block;
+  width: 250px;
+}
 
-  .el-select {
-    display: inline-block;
-    width: 250px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
-
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

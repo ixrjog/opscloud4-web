@@ -46,7 +46,7 @@ export default {
     },
     saveInfo () {
       SAVE_USER_CREDENTIAL(this.userCredential)
-        .then(res => {
+        .then(() => {
           this.$message.success('保存成功！')
           this.close()
         })
@@ -55,7 +55,5 @@ export default {
 }
 </script>
 
-
 <style scoped>
-
 </style>

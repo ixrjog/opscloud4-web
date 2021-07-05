@@ -27,6 +27,7 @@
           <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
         </el-col>
       </el-row>
+      <i class="position fas fa-wifi" :style="instance.isActive ? 'color: #67C23A':'color: #909399'"></i>
     </el-card>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType"
                          :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
@@ -93,16 +94,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-//.el-button {
-//  float: right;
-//  padding: 3px;
-//}
-//
-//.el-card {
-//  height: 200px;
-//  margin-bottom: 10px;
-//}
-
 .el- {
   &button {
     float: right;
@@ -112,6 +103,15 @@ export default {
   &card {
     height: 200px;
     margin-bottom: 10px;
+    position: relative;
+
+    .position {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-size: 3em;
+      transform: rotate(-45deg);
+    }
   }
 }
 </style>

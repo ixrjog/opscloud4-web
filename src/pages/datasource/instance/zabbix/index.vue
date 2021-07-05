@@ -1,7 +1,24 @@
 <template>
   <d2-container>
-    <h1>Ldap实例管理</h1>
+    <h1>Zabbix实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
+      <el-tab-pane label="问题" name="problem">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_TRIGGER" ref="problemTable"
+                     :tableLayout="tableLayout.problem">
+          <template v-slot:extend>
+            <el-table-column label="主机">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"></ds-children-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="级别">
+              <template slot-scope="scope">
+                <el-tag>{{ scope.row.kind | getProblemSeverityText }}</el-tag>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
       <el-tab-pane label="用户" name="user">
         <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_USER" :tableLayout="tableLayout.user"
                      ref="userTable">
@@ -28,15 +45,39 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="主机" name="host">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_HOST" ref="hostTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_HOST" ref="hostTable"
+                     :tableLayout="tableLayout.host">
+          <template v-slot:extend>
+            <el-table-column label="主机组" width="600">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST_GROUP" :type="3"></ds-children-tag>
+              </template>
+            </el-table-column>
+          </template>
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="主机组" name="hostGroup">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_HOST_GROUP" ref="hostGroupTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_HOST_GROUP" ref="hostGroupTable"
+                     :tableLayout="tableLayout.hostGroup">
+          <template v-slot:extend>
+            <el-table-column label="主机" width="600">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"></ds-children-tag>
+              </template>
+            </el-table-column>
+          </template>
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="模板" name="template">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_TEMPLATE" ref="templateTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_TEMPLATE" ref="templateTable"
+                     :tableLayout="tableLayout.template">
+          <template v-slot:extend>
+            <el-table-column label="主机" width="600">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"></ds-children-tag>
+              </template>
+            </el-table-column>
+          </template>
         </asset-table>
       </el-tab-pane>
     </el-tabs>
@@ -48,8 +89,28 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
+import { getProblemSeverityText } from '@/filters/asset.zabbix'
 
 const tableLayout = {
+  problem: {
+    assetId: {
+      alias: 'triggerId'
+    },
+    name: {
+      alias: '问题'
+    },
+    assetKey: {
+      alias: '用户名'
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
   user: {
     assetId: {
       alias: 'userId'
@@ -87,19 +148,79 @@ const tableLayout = {
       alias: '',
       show: false
     }
+  },
+  host: {
+    assetId: {
+      alias: 'hostId'
+    },
+    name: {
+      alias: '主机名'
+    },
+    assetKey: {
+      alias: '主机名'
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  hostGroup: {
+    assetId: {
+      alias: 'hostGroupId'
+    },
+    name: {
+      alias: '组名'
+    },
+    assetKey: {
+      alias: '组名'
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  template: {
+    assetId: {
+      alias: 'templateId'
+    },
+    name: {
+      alias: '模板名称'
+    },
+    assetKey: {
+      alias: '模板名称'
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
   }
 }
 
 export default {
   data () {
     return {
-      activeName: 'user',
+      activeName: 'problem',
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
     }
   },
   computed: {},
+  filters: {
+    getProblemSeverityText
+  },
   mounted () {
     this.instanceId = this.$route.query.id
     this.init()
@@ -110,6 +231,9 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
+      if (tab.name === 'problem') {
+        this.$refs.problemTable.fetchData()
+      }
       if (tab.name === 'user') {
         this.$refs.userTable.fetchData()
       }
@@ -128,7 +252,7 @@ export default {
     },
     init () {
       this.$nextTick(() => {
-        this.$refs.userTable.fetchData()
+        this.$refs.problemTable.fetchData()
       })
     }
   }

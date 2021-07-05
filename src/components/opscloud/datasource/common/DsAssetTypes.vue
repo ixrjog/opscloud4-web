@@ -36,13 +36,14 @@ export default {
     p {
       line-height: 32px;
       font-size: 12px;
-      font-weight: 300;
+      font-weight: bolder;
       margin: 0;
       color: #B7B6B6;
 
       &:first-child {
         color: #20A9D9;
         font-size: 24px;
+        font-weight: lighter;
         line-height: 20px;
         margin-bottom: 4px;
       }
