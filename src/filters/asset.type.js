@@ -15,11 +15,11 @@ export function getAssetTypeText (value) {
     case DsInstanceAssetType.GITLAB.GITLAB_SSHKEY:
       return '密钥'
     case DsInstanceAssetType.ALIYUN.ECS:
-      return 'Ecs'
+      return 'ECS'
     case DsInstanceAssetType.ALIYUN.ECS_IMAGE:
       return '镜像'
     case DsInstanceAssetType.ALIYUN.VPC:
-      return 'Vpc'
+      return 'VPC'
     case DsInstanceAssetType.ALIYUN.ECS_SG:
       return '安全组'
     case DsInstanceAssetType.ALIYUN.V_SWITCH:
