@@ -79,7 +79,7 @@ import WhetherTag from '../../../../components/opscloud/common/tag/WhetherTag'
 const tableLayout = {
   project: {
     assetId: {
-      alias: 'projectId'
+      alias: 'Project ID'
     },
     name: {
       alias: '名称'
@@ -98,7 +98,7 @@ const tableLayout = {
   },
   group: {
     assetId: {
-      alias: 'groupId'
+      alias: 'Group ID'
     },
     name: {
       alias: '名称'
@@ -117,7 +117,7 @@ const tableLayout = {
   },
   user: {
     assetId: {
-      alias: 'User Id'
+      alias: 'User ID'
     },
     name: {
       alias: '显示名'
@@ -140,7 +140,7 @@ const tableLayout = {
   },
   sshKey: {
     assetId: {
-      alias: 'Key Id'
+      alias: 'Key ID'
     },
     name: {
       alias: '用户名'

@@ -60,7 +60,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="RAM_USER" name="ramUser">
+      <el-tab-pane label="RAM用户" name="ramUser">
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER" :tableLayout="tableLayout.ramUser"
                      ref="ramUserTable">
           <template v-slot:extend>
@@ -72,7 +72,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="RAM_POLICY" name="ramPolicy">
+      <el-tab-pane label="RAM策略" name="ramPolicy">
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY" :tableLayout="tableLayout.ramPolicy"
                      ref="ramPolicyTable">
           <template v-slot:extend>
@@ -102,16 +102,16 @@ const treeObj = {
 const tableLayout = {
   ecs: {
     assetId: {
-      alias: '实例id'
+      alias: '实例ID'
     },
     name: {
       alias: '实例名称'
     },
     assetKey: {
-      alias: '私网ip'
+      alias: '私网IP'
     },
     assetKey2: {
-      alias: '公网ip',
+      alias: '公网IP',
       show: true
     },
     zone: {
@@ -121,7 +121,7 @@ const tableLayout = {
   },
   image: {
     assetId: {
-      alias: '镜像id'
+      alias: '镜像ID'
     },
     name: {
       alias: '镜像名称'
@@ -140,7 +140,7 @@ const tableLayout = {
   },
   vpc: {
     assetId: {
-      alias: '实例id'
+      alias: '实例ID'
     },
     name: {
       alias: '名称'
@@ -160,7 +160,7 @@ const tableLayout = {
   },
   ramUser: {
     assetId: {
-      alias: 'userId'
+      alias: 'User ID'
     },
     name: {
       alias: '名称'
@@ -170,7 +170,7 @@ const tableLayout = {
       show: true
     },
     assetKey2: {
-      alias: 'email',
+      alias: 'Email',
       show: true
     },
     zone: {

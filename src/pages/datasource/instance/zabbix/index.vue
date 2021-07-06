@@ -94,7 +94,7 @@ import { getProblemSeverityText } from '@/filters/asset.zabbix'
 const tableLayout = {
   problem: {
     assetId: {
-      alias: 'triggerId'
+      alias: 'Trigger ID'
     },
     name: {
       alias: '问题'
@@ -113,7 +113,7 @@ const tableLayout = {
   },
   user: {
     assetId: {
-      alias: 'userId'
+      alias: 'User ID'
     },
     name: {
       alias: '显示名'
@@ -132,7 +132,7 @@ const tableLayout = {
   },
   userGroup: {
     assetId: {
-      alias: 'groupId'
+      alias: 'Group ID'
     },
     name: {
       alias: '组名'
@@ -151,7 +151,7 @@ const tableLayout = {
   },
   host: {
     assetId: {
-      alias: 'hostId'
+      alias: 'Host ID'
     },
     name: {
       alias: '主机名'
@@ -170,7 +170,7 @@ const tableLayout = {
   },
   hostGroup: {
     assetId: {
-      alias: 'hostGroupId'
+      alias: 'HostGroup ID'
     },
     name: {
       alias: '组名'
@@ -189,7 +189,7 @@ const tableLayout = {
   },
   template: {
     assetId: {
-      alias: 'templateId'
+      alias: 'Template ID'
     },
     name: {
       alias: '模板名称'
