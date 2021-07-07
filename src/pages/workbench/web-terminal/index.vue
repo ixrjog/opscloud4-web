@@ -9,11 +9,12 @@
       <terminal-tools ref="terminalTools"
                       :terminal-setting="terminalSetting" :mode="terminalTools.mode"
                       :batch-type="terminalTools.batchType"
-                      @handlerLogin="handlerLogin"
-                      @handlerLogout="handlerLogout"
-                      @handlerChangeLoginUserType="handlerChangeLoginUserType"
-                      @handlerChangeBatch="handlerChangeBatch"
-                      @handlerChangeLayout="handlerChangeLayout"></terminal-tools>
+                      @handleLogin="handleLogin"
+                      @handleLogout="handleLogout"
+                      @handleChangeLoginUserType="handleChangeLoginUserType"
+                      @handleChangeBatch="handleChangeBatch"
+                      @handleChangeLayout="handleChangeLayout"
+                      @handleResize="handleResize"></terminal-tools>
     </el-row>
     <el-row>
       <el-col :span="8">
@@ -28,8 +29,8 @@
                          :uuid="terminalLayout.uuid"
                          :loginType="terminalLayout.loginType"
                          :colSpan="terminalLayout.colSpan"
-                         @handlerLogoutByServerNode="handlerLogoutByServerNode"
-                         @handlerLoginByServerNode="handlerLoginByServerNode"></terminal-layout>
+                         @handleLogoutByServerNode="handleLogoutByServerNode"
+                         @handleLoginByServerNode="handleLoginByServerNode"></terminal-layout>
       </el-col>
     </el-row>
   </d2-container>
@@ -83,7 +84,7 @@ export default {
     this.initTerminalSetting()
   },
   beforeDestroy () {
-    this.handlerLogout()
+    this.handleLogout()
   },
   components: {
     ServerTree,
@@ -101,7 +102,7 @@ export default {
         this.terminalSetting.rows = this.info.terminalSetting.rows
       }
     },
-    handlerChangeBatch () {
+    handleChangeBatch () {
       let isBatch = true
       if (this.terminalTools.batchType === '') {
         this.terminalTools.batchType = 'success'
@@ -109,17 +110,20 @@ export default {
         this.terminalTools.batchType = ''
         isBatch = false
       }
-      this.$refs.terminalLayout.handlerBatch(isBatch)
+      this.$refs.terminalLayout.handleBatch(isBatch)
     },
-    handlerChangeLoginUserType (loginUserType) {
+    handleChangeLoginUserType (loginUserType) {
       this.terminalLayout.loginType = loginUserType
     },
-    handlerChangeLayout (mode) {
+    handleChangeLayout (mode) {
       this.layout.mode = mode
       this.terminalLayout.colSpan = mode === 0 ? 12 : 24 // 双列布局:单列布局
-      this.$refs.terminalLayout.handlerResize()
+      this.handleResize()
     },
-    handlerLogin () {
+    handleResize () {
+      this.$refs.terminalLayout.handleResize()
+    },
+    handleLogin () {
       this.terminalTools.batchType = ''
       /**
        * serverNodes [
@@ -135,7 +139,7 @@ export default {
       // 如果用户只打开一个终端则自动切换为单列模式
       this.$store.dispatch('d2admin/menu/asideCollapseSet', true)
       if (this.terminalLayout.serverNodes.length === 1) {
-        this.handlerChangeLayout(1)
+        this.handleChangeLayout(1)
         this.$refs.terminalTools.setLayoutMode(1)
       }
       this.terminalTools.mode = 1
@@ -153,7 +157,7 @@ export default {
         this.$refs.terminalLayout.open()
       })
     },
-    handlerLoginByServerNode (serverNode) {
+    handleLoginByServerNode (serverNode) {
       this.terminalLayout.terminals.push(serverNode)
       this.$nextTick(() => {
         this.$refs.terminalLayout.openServer(serverNode)
@@ -162,15 +166,15 @@ export default {
     /**
      * 所有终端退出
      */
-    handlerLogout () {
+    handleLogout () {
       if (this.terminalLayout.serverNodes.length === 0) return
       this.terminalLayout.terminals.forEach(serverNode => {
-        const args = {
-          server: serverNode,
-          isNotify: false
+          const args = {
+            server: serverNode,
+            isNotify: false
+          }
+          this.$refs.terminalLayout.handleLogout(args)
         }
-        this.$refs.terminalLayout.handlerLogout(args)
-      }
       )
       this.$message.warning('所有终端已关闭')
       this.recovery()
@@ -183,7 +187,7 @@ export default {
      * 单个终端退出
      * @param id
      */
-    handlerLogoutByServerNode (serverNode) {
+    handleLogoutByServerNode (serverNode) {
       this.terminalLayout.serverNodes = this.terminalLayout.serverNodes.filter(function (n) {
         return n.id !== serverNode.server.instanceId
       })

@@ -9,13 +9,13 @@
               <env-tag :env="server.env" class="env"></env-tag>
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"
-                           @click="handlerLogout( {server:server,isNotify:true})">
+                           @click="handleLogout( {server:server,isNotify:true})">
                   Logout
                 </el-button>
               </el-tooltip>
               <el-tooltip class="item" effect="light" content="复制会话" placement="top-start">
                 <el-button style="float: right; padding: 3px 0;margin-right: 20px" type="text"
-                           @click="handlerDuplicateSession(server)">Duplicate
+                           @click="handleDuplicateSession(server)">Duplicate
                 </el-button>
               </el-tooltip>
             </div>
@@ -72,7 +72,7 @@ export default {
       for (const server of this.terminals) {
         this.initTerminal(server)
       }
-      this.handlerLogin()
+      this.handleLogin()
     },
     openServer (server) {
       this.initTerminal(server)
@@ -96,7 +96,7 @@ export default {
     /**
      * 登录
      */
-    handlerLogin () {
+    handleLogin () {
       this.initSocket()
       this.setTimer()
     },
@@ -107,18 +107,18 @@ export default {
     },
     setTimer () {
       this.timer = setInterval(() => {
-        this.handlerHeartbeat()
+        this.handleHeartbeat()
         // console.log('开始定时...每10秒执行一次')
       }, 10000)
     },
-    handlerHeartbeat () {
+    handleHeartbeat () {
       try {
         this.sendMessage(message.heartbeat)
       } catch (e) {
       }
     },
     /**
-     * handlerLogoutByInstance
+     * handleLogoutByInstance
      * {
      * server : {},
      * isNotify : boolean
@@ -126,20 +126,20 @@ export default {
      * 单个终端退出
      * @param id
      */
-    handlerLogout (args) {
+    handleLogout (args) {
       const logoutMessage = {
         state: this.terminalState.LOGOUT,
         instanceId: args.server.instanceId
       }
       this.sendMessage(logoutMessage)
       this.$refs[`terminal_${args.server.instanceId}`][0].dispose()
-      this.$emit('handlerLogoutByServerNode', args)
+      this.$emit('handleLogoutByServerNode', args)
     },
     /**
      * 复制会话，重开一个终端（支持变更用户类型）
      * @param id
      */
-    handlerDuplicateSession (serverNode) {
+    handleDuplicateSession (serverNode) {
       const fitAddon = this.$refs[`terminal_${serverNode.instanceId}`][0].getFitAddon()
       const newServerNode = Object.assign({}, serverNode)
       // 计算 instanceId  源id  server-prod-1#1
@@ -158,24 +158,24 @@ export default {
           height: document.getElementById(serverNode.instanceId).clientHeight
         }
       }
-      this.$emit('handlerLoginByServerNode', newServerNode)
+      this.$emit('handleLoginByServerNode', newServerNode)
       this.$nextTick(() => {
         this.sendMessage(duplicateSessionMessage)
       })
     },
-    handlerBatch (isBatch) {
+    handleBatch (isBatch) {
       const batchCommandMessage = {
         state: this.terminalState.BATCH_COMMAND,
         isBatch: isBatch
       }
       this.sendMessage(batchCommandMessage)
     },
-    handlerResize () {
+    handleResize () {
       for (const server of this.terminals) {
-        this.handlerResizeByServer(server)
+        this.handleResizeByServer(server)
       }
     },
-    handlerResizeByServer (server) {
+    handleResizeByServer (server) {
       this.$nextTick(() => {
         this.$refs[`terminal_${server.instanceId}`][0].resize()
       })
@@ -196,22 +196,17 @@ export default {
     socketOnOpen () {
       this.socket.onopen = () => { // 链接成功后
         try {
-          this.$nextTick(() => {
-            const initMessage = {
-              token: util.cookies.get('token'),
-              loginType: this.loginType,
-              serverNodes: this.terminals,
-              state: this.terminalState.LOGIN,
-              terminal: {
-                width: 0,
-                height: 308
-              }
+          const initMessage = {
+            token: util.cookies.get('token'),
+            loginType: this.loginType,
+            serverNodes: this.terminals,
+            state: this.terminalState.LOGIN,
+            terminal: {
+              width: 0,
+              height: 308
             }
-            this.sendMessage(initMessage)
-          })
-          this.$nextTick(() => {
-            this.handlerResize()
-          })
+          }
+          this.sendMessage(initMessage)
         } catch (e) {
           this.$message.error('登录失败，未选择服务器或其它原因')
         }
@@ -251,8 +246,8 @@ export default {
 </script>
 
 <style scoped>
-.env {
-  margin-left: 5px;
-}
+  .env {
+    margin-left: 5px;
+  }
 
 </style>

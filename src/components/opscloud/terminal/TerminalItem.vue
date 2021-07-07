@@ -1,5 +1,5 @@
 <template>
-    <div :id="server.instanceId" class="xterm"></div>
+  <div :id="server.instanceId" class="xterm"></div>
 </template>
 
 <script>
@@ -14,7 +14,8 @@ export default {
     return {
       terminalState: TerminalState,
       term: null,
-      fitAddon: new FitAddon()
+      fitAddon: new FitAddon(),
+      isInitSize: false // 是否初始化窗体
     }
   },
   name: 'TerminalItem',
@@ -70,10 +71,12 @@ export default {
       this.$emit('sendMessage', message)
     },
     /**
-       * 后端调整体型
-       */
+     * 后端调整体型
+     */
     resize () {
       if (this.term === null) return
+      this.$nextTick(() => {
+      })
       const id = this.server.instanceId
       this.fitAddon.fit() // 获取对象的高度和宽度
       const resizeMessage = {
@@ -86,16 +89,22 @@ export default {
       }
       this.sendMessage(resizeMessage)
       // 滚动到底部
-      this.term.scrollToBottom()
+      this.scrollToBottom()
     },
     /**
-       * 聚焦
-       */
+     * 聚焦
+     */
     focus () {
       if (this.term !== null) this.term.focus()
     },
     write (output) {
-      if (this.term !== null) this.term.write(output)
+      if (this.term !== null) {
+        this.term.write(output)
+        if (!this.isInitSize) {
+          this.resize()
+          this.isInitSize = true
+        }
+      }
     },
     clear () {
       if (this.term !== null) this.term.clear()
@@ -105,9 +114,9 @@ export default {
       if (this.term !== null) this.term.scrollToBottom()
     },
     /**
-       * 单个终端退出
-       * @param id
-       */
+     * 单个终端退出
+     * @param id
+     */
     logout () {
       this.term.dispose()
       delete (this.term)

@@ -1,9 +1,8 @@
 <template>
   <div>
-    <!--    style="margin-bottom: 5px;margin-left: 2px"-->
     <el-row>
       <el-select v-model="layout.mode" filterable reserve-keyword
-                 @change="handlerChangeLayout()">
+                 @change="handleChangeLayout()">
         <el-option
           v-for="item in layoutModeOptions"
           :key="item.value"
@@ -12,7 +11,7 @@
         </el-option>
       </el-select>
       <el-select v-model="loginUserType" filterable reserve-keyword style="margin-left: 5px"
-                 @change="handlerChangeLoginUserType">
+                 @change="handleChangeLoginUserType">
         <el-option
           v-for="item in loginUserTypeOptions"
           :key="item.value"
@@ -21,19 +20,19 @@
         </el-option>
       </el-select>
       <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
-        <el-button @click="handlerChangeBatch" v-if="mode === 1" :type="batchType"
+        <el-button @click="handleChangeBatch" v-if="mode === 1" :type="batchType"
                    plain>命令同步
         </el-button>
       </el-tooltip>
       <!--      <el-tooltip class="item" effect="light" content="您的个人文档，用于记录常用指令" placement="bottom">-->
       <!--        <el-button @click="handlerPreviewUserDoc">用户文档</el-button>-->
       <!--      </el-tooltip>-->
-      <el-button @click="handlerSetting">终端设置</el-button>
+      <el-button @click="handleSetting">终端设置</el-button>
       <el-tooltip class="item" effect="light" content="修复终端字符错位" placement="bottom">
-        <el-button @click="handlerResize" v-if="mode === 1">调整大小</el-button>
+        <el-button @click="handleResize" v-if="mode === 1">调整大小</el-button>
       </el-tooltip>
-      <el-button @click="handlerLogin" type="primary" v-if="mode === 0">批量登录</el-button>
-      <el-button @click="handlerLogout" type="primary" v-if="mode === 1">全部关闭</el-button>
+      <el-button @click="handleLogin" type="primary" v-if="mode === 0">批量登录</el-button>
+      <el-button @click="handleLogout" type="primary" v-if="mode === 1">全部关闭</el-button>
     </el-row>
     <!--    <doc-dialog ref="docDialog" :formStatus="formStatus.doc"></doc-dialog>-->
     <user-terminal-setting ref="userTerminalSetting"
@@ -102,35 +101,27 @@ export default {
     resetTerminalSetting () {
       this.$emit('resetTerminalSetting')
     },
-    handlerSetting () {
+    handleSetting () {
       this.$refs.userTerminalSetting.init()
       this.formStatus.setting.visible = true
     },
-    // handlerPreviewUserDoc () {
-    //   queryUserDocByType(1)
-    //     .then(res => {
-    //       // 返回数据
-    //       this.formStatus.doc.visible = true
-    //       this.$refs.docDialog.initData(res.body)
-    //     })
-    // },
-    handlerChangeLayout () {
-      this.$emit('handlerChangeLayout', this.layout.mode)
+    handleChangeLayout () {
+      this.$emit('handleChangeLayout', this.layout.mode)
     },
-    handlerChangeLoginUserType () {
-      this.$emit('handlerChangeLoginUserType', this.loginUserType)
+    handleChangeLoginUserType () {
+      this.$emit('handleChangeLoginUserType', this.loginUserType)
     },
-    handlerChangeBatch () {
-      this.$emit('handlerChangeBatch')
+    handleChangeBatch () {
+      this.$emit('handleChangeBatch')
     },
-    handlerResize () {
-      this.$emit('handlerResize')
+    handleResize () {
+      this.$emit('handleResize')
     },
-    handlerLogin () {
-      this.$emit('handlerLogin')
+    handleLogin () {
+      this.$emit('handleLogin')
     },
-    handlerLogout () {
-      this.$emit('handlerLogout')
+    handleLogout () {
+      this.$emit('handleLogout')
     }
   }
 }
