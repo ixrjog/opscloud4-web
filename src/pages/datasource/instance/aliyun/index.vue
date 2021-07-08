@@ -11,7 +11,7 @@
                 <span>{{ scope.row.properties.cpu }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="properties" label="内存(GiB)">
+            <el-table-column prop="properties" label="内存(MiB)">
               <template slot-scope="scope">
                 <span>{{ scope.row.properties.memory }}</span>
               </template>
