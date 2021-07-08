@@ -38,7 +38,7 @@
                     type="text"
                     v-model="formLogin.username"
                     placeholder="用户名">
-                    <i slot="prepend" class="fa fa-user-circle-o"></i>
+                    <i slot="prepend" class="fas fa-user-circle"></i>
                   </el-input>
                 </el-form-item>
                 <el-form-item prop="password">
@@ -46,7 +46,7 @@
                     type="password"
                     v-model="formLogin.password"
                     placeholder="密码">
-                    <i slot="prepend" class="fa fa-keyboard-o"></i>
+                    <i slot="prepend" class="fas fa-keyboard"></i>
                   </el-input>
                 </el-form-item>
 <!--                <el-form-item prop="code">-->

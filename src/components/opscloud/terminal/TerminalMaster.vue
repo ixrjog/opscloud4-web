@@ -9,12 +9,12 @@
               <span><el-tag>{{ s.name }}</el-tag></span>
               <el-tooltip class="item" effect="light" content="退出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text" @click="handlerLogout(s.name)">
-                  <i class="fa fa-sign-out" aria-hidden="true"></i>
+                  <i class="fas fa-sign-out" aria-hidden="true"></i>
                 </el-button>
               </el-tooltip>
               <el-tooltip class="item" effect="light" content="DuplicateSession复制会话" placement="top-start">
                 <el-button style="float: right; padding: 3px 0;margin-right: 20px" type="text"
-                           @click="handlerDuplicateSession()"><i class="fa fa-clone" aria-hidden="true"></i>
+                           @click="handlerDuplicateSession()"><i class="fas fa-clone" aria-hidden="true"></i>
                 </el-button>
               </el-tooltip>
             </div>

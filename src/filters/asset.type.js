@@ -28,7 +28,8 @@ export function getAssetTypeText (value) {
       return 'RAM用户'
     case DsInstanceAssetType.ALIYUN.RAM_POLICY:
       return 'RAM策略'
-
+    case DsInstanceAssetType.ALIYUN.RAM_ACCESS_KEY:
+      return 'RAM-AK'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:
