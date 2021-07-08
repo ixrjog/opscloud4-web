@@ -11,7 +11,7 @@
                 <span>{{ scope.row.properties.cpu }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="properties" label="内存(GiB)">
+            <el-table-column prop="properties" label="内存(MiB)">
               <template slot-scope="scope">
                 <span>{{ scope.row.properties.memory }}</span>
               </template>
@@ -64,19 +64,21 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER" :tableLayout="tableLayout.ramUser"
                      ref="ramUserTable">
           <template v-slot:extend>
-            <el-table-column  label="手机">
+            <el-table-column label="Access Key" width="450">
               <template slot-scope="scope">
-                <span>{{ scope.row.properties.mobilePhone }}</span>
+                <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
+                  <el-tag :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
+                </div>
               </template>
             </el-table-column>
           </template>
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="RAM策略" name="ramPolicy">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY" :tableLayout="tableLayout.ramPolicy"
-                     ref="ramPolicyTable">
+        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
+                     :tableLayout="tableLayout.ramPolicy" ref="ramPolicyTable">
           <template v-slot:extend>
-            <el-table-column  label="描述">
+            <el-table-column label="描述">
               <template slot-scope="scope">
                 <span>{{ scope.row.description }}</span>
               </template>
@@ -171,7 +173,7 @@ const tableLayout = {
     },
     assetKey2: {
       alias: 'Email',
-      show: true
+      show: false
     },
     zone: {
       alias: '区',
@@ -242,6 +244,9 @@ export default {
     },
     getVSwitches (row) {
       const { V_SWITCH } = row.tree
+      if (!V_SWITCH) {
+        return []
+      }
       const map = new Map()
       for (const sw of V_SWITCH) {
         if (map.get(sw.zone) !== undefined && JSON.stringify(map.get(sw.zone)) !== '[]') {
@@ -269,7 +274,17 @@ export default {
     },
     getSecurityGroups (row) {
       const { ECS_SG } = row.tree
-      return ECS_SG
+      if (ECS_SG) {
+        return ECS_SG
+      }
+      return []
+    },
+    getAccessKeys (row) {
+      const { RAM_ACCESS_KEY } = row.tree
+      if (RAM_ACCESS_KEY) {
+        return RAM_ACCESS_KEY
+      }
+      return []
     }
   }
 }

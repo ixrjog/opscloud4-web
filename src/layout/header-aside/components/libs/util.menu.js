@@ -5,9 +5,9 @@
  */
 export function elMenuItem (h, menu) {
   let icon = null
-  if (menu.icon) icon = <i class={ `fa fa-${menu.icon}` }/>
+  if (menu.icon) icon = <i class={ `${menu.icon}` }/>
   else if (menu.iconSvg) icon = <d2-icon-svg name={ menu.iconSvg }/>
-  else icon = <i class="fa fa-file-o"/>
+  else icon = <i class="fas fa-file"/>
   return <el-menu-item
     key={ menu.path }
     index={ menu.path }>
@@ -23,9 +23,9 @@ export function elMenuItem (h, menu) {
  */
 export function elSubmenu (h, menu) {
   let icon = null
-  if (menu.icon) icon = <i slot="title" class={ `fa fa-${menu.icon}` }/>
+  if (menu.icon) icon = <i slot="title" class={ `${menu.icon}` }/>
   else if (menu.iconSvg) icon = <d2-icon-svg slot="title" name={ menu.iconSvg }/>
-  else icon = <i slot="title" class="fa fa-folder-o"/>
+  else icon = <i slot="title" class="fas fa-folder"/>
   return <el-submenu
     key={ menu.path }
     index={ menu.path }>

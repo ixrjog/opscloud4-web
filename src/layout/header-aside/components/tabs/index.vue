@@ -71,14 +71,14 @@ export default {
       contentmenuX: 0,
       contentmenuY: 0,
       contextmenuListIndex: [
-        { icon: 'times-circle', title: '关闭全部', value: 'all' }
+        { icon: 'fas fa-times-circle', title: '关闭全部', value: 'all' }
       ],
       contextmenuList: [
-        { icon: 'refresh', title: '刷新', value: 'refresh' },
-        { icon: 'arrow-left', title: '关闭左侧', value: 'left' },
-        { icon: 'arrow-right', title: '关闭右侧', value: 'right' },
-        { icon: 'times', title: '关闭其它', value: 'other' },
-        { icon: 'times-circle', title: '关闭全部', value: 'all' }
+        { icon: 'fas fa-refresh', title: '刷新', value: 'refresh' },
+        { icon: 'fas fa-arrow-left', title: '关闭左侧', value: 'left' },
+        { icon: 'fas fa-arrow-right', title: '关闭右侧', value: 'right' },
+        { icon: 'fas fa-times', title: '关闭其它', value: 'other' },
+        { icon: 'fas fa-times-circle', title: '关闭全部', value: 'all' }
       ],
       tagName: '/index'
     }

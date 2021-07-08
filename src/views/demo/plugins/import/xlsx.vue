@@ -9,7 +9,7 @@
     <div class="d2-mb">
       <el-upload :before-upload="handleUpload" action="default">
         <el-button type="success">
-          <d2-icon name="fa fa-file"/>
+          <d2-icon name="fas fa-file"/>
           选择要导入的 .xlsx 表格
         </el-button>
       </el-upload>

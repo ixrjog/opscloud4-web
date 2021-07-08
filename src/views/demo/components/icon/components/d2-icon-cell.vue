@@ -7,7 +7,7 @@
       width="300"
       trigger="click">
       <div class="icon-group">
-        <i :class="'fa fa-' + icon"></i>
+        <i :class="icon"></i>
       </div>
       <el-row :gutter="10">
         <el-col :span="8">
@@ -29,7 +29,7 @@
     </el-popover>
     <span v-popover:pop>
       <el-tag type="info" class="icon-tag">
-        <i :class="'fa fa-' + icon"></i>
+        <i :class="icon"></i>
       </el-tag>
       <span style="font-size: 10px;">{{icon}}</span>
     </span>
@@ -48,10 +48,10 @@ export default {
   },
   computed: {
     iconClass () {
-      return `fa fa-${this.icon}`
+      return `${this.icon}`
     },
     iconHtml () {
-      return `<i class="fa fa-${this.icon}" aria-hidden="true"></i>`
+      return `<i class="${this.icon}" aria-hidden="true"></i>`
     },
     iconComponent () {
       return `<d2-icon name="${this.icon}"/>`
