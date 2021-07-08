@@ -26,7 +26,7 @@
           <d2-header-fullscreen/>
           <d2-header-theme/>
           <d2-header-size/>
-          <d2-header-locales v-if="$env === 'development'"/>
+<!--          <d2-header-locales/>-->
           <d2-header-color/>
           <d2-header-user/>
         </div>
