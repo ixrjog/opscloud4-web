@@ -6,7 +6,6 @@
 
 <script>
 import MarkdownItVue from 'markdown-it-vue'
-import 'markdown-it-vue/dist/markdown-it-vue.css'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 const documentKey = 'SSH_SERVER_README'
@@ -50,5 +49,6 @@ export default {
 </script>
 
 <style scoped>
-
+@import "~markdown-it-vue/dist/markdown-it-vue.css";
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
 </style>
