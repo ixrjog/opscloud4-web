@@ -1,7 +1,7 @@
 <template>
   <el-card style="margin-top: 5px" class="box-card" shadow="never">
     <div slot="header" class="clearfix">
-      <span><i class="fa fa-list" aria-hidden="true"></i></span>
+      <span><i class="fas fa-list" aria-hidden="true"></i></span>
       <el-tag style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
     </div>
     <el-row>

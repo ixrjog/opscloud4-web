@@ -26,7 +26,7 @@
         <el-collapse-item v-for="(item, index) in icon" :key="index" :title="item.title" :name="index" class="d2-icon-select--class">
           <el-row class="d2-icon-select--class-row">
             <el-col class="d2-icon-select--class-col" v-for="(iconName, iconIndex) in item.icon" :key="iconIndex" :span="4" @click.native="selectIcon(iconName)">
-              <i :class="'fa fa-' + iconName"></i>
+              <i :class="iconName"></i>
             </el-col>
           </el-row>
         </el-collapse-item>
@@ -36,7 +36,7 @@
           <div class="d2-icon-select--class-title">{{item.title}}</div>
           <el-row class="d2-icon-select--class-row">
             <el-col class="d2-icon-select--class-col" v-for="(iconName, iconIndex) in item.icon" :key="iconIndex" :span="4" @click.native="selectIcon(iconName)">
-              <i :class="'fa fa-' + iconName"></i>
+              <i :class="iconName"></i>
             </el-col>
           </el-row>
         </div>
@@ -49,16 +49,16 @@
       v-bind="bind"
       style="max-width: 240px;">
       <template v-if="value" slot="prepend">
-        <i :class="'fa fa-' + value"></i>
+        <i :class="value"></i>
       </template>
       <el-button v-popover:pop slot="append">
-        <i class="fa fa-list"></i>
+        <i class="fas fa-list"></i>
       </el-button>
     </el-input>
     <!-- 不允许用户输入 -->
     <el-button v-popover:pop v-if="!userInput">
       <template v-if="value">
-        <i :class="'fa fa-' + value"></i>
+        <i :class="value"></i>
       </template>
       {{value ? value : placeholder}}
     </el-button>
