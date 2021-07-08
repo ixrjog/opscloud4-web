@@ -33,6 +33,9 @@ const DsInstanceAssetType = Object.freeze({
   },
   JENKINS: {
     JENKINS_COMPUTER: 'JENKINS_COMPUTER'
+  },
+  GUACAMOLE: {
+    GUACAMOLE: 'GUACAMOLE'
   }
 })
 
