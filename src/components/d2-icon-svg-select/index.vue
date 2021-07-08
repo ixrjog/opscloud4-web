@@ -45,7 +45,7 @@
           :name="value"/>
       </template>
       <el-button v-popover:pop slot="append">
-        <i class="fa fa-list"></i>
+        <i class="fas fa-list"></i>
       </el-button>
     </el-input>
     <!-- 不允许用户输入 -->
