@@ -7,7 +7,7 @@ export function elMenuItem (h, menu) {
   let icon = null
   if (menu.icon) icon = <i class={ `${menu.icon}` }/>
   else if (menu.iconSvg) icon = <d2-icon-svg name={ menu.iconSvg }/>
-  else icon = <i class="fas fa-file-o"/>
+  else icon = <i class="fas fa-file"/>
   return <el-menu-item
     key={ menu.path }
     index={ menu.path }>

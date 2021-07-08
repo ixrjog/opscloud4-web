@@ -6,7 +6,7 @@
       <p class="sub-title">
         <template v-if="icon">
           选择的图标 {{icon}}
-          <i :class="'fa fa-' + icon"></i>
+          <i :class="icon"></i>
         </template>
         <template v-else>未选择</template>
       </p>

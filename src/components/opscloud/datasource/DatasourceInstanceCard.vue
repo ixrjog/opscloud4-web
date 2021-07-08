@@ -101,10 +101,8 @@ export default {
   }
 
   &card {
-    height: 200px;
     margin-bottom: 10px;
     position: relative;
-    //overflow: auto;
 
     .position {
       position: absolute;
