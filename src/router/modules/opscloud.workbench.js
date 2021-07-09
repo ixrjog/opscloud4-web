@@ -16,5 +16,14 @@ export default [
       auth: true,
       title: 'SSH服务器'
     }
+  },
+  {
+    path: '/workbench/remote-desktop',
+    name: 'remote-desktop',
+    component: () => import('@/pages/workbench/remote-desktop'),
+    meta: {
+      auth: true,
+      title: '远程桌面'
+    }
   }
 ]

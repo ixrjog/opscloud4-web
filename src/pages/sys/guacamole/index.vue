@@ -67,6 +67,9 @@ import Guacamole from 'guacamole-common-js'
 import GuacMouse from './GuacMouse'
 import states from './states'
 import clipboard from './clipboard'
+import util from '@/libs/util'
+
+const wsUrl = 'ws/guacamole/tunnel'
 
 Guacamole.Mouse = GuacMouse.mouse
 
@@ -96,17 +99,20 @@ export default {
       errorMessage: '',
       arguments: {},
       query: {
+        serverId: 2,
+        serverAccountId: 4,
+        protocol: 'rdp',
+        token: util.cookies.get('token'),
         guacad_addr: 'guacd.mojotv.cn:4822',
         asset_protocol: 'rdp',
         asset_host: '10.13.5.41',
         asset_port: '3389',
         asset_user: 'Administrator',
-        asset_password: 'Admin123qwe',
         screen_width: 1280,
         screen_height: 640,
         screen_dpi: 128
       },
-      wsUrl: 'ws://127.0.0.1:8081/cs/ws/guacamole/tunnel'
+      wsUrl: util.wsUrl(wsUrl)
     }
   },
   computed: {},
