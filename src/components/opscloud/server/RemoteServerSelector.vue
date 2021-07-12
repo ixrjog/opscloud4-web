@@ -48,9 +48,9 @@
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column prop="account" label="选择账户登录">
+      <el-table-column prop="account" label="授权账户">
         <template slot-scope="scope">
-          <account-tags :accounts="scope.row.accounts"></account-tags>
+          <server-accounts-button :server="scope.row" @handleRemote="handleRemote"></server-accounts-button>
         </template>
       </el-table-column>
 
@@ -67,7 +67,8 @@
 
 <script>
 
-import { QUERY_SERVER_PAGE, DELETE_SERVER_BY_ID } from '@/api/modules/server/server.api.js'
+import { QUERY_USER_REMOTE_SERVER } from '@/api/modules/user/user.server.api.js'
+
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api.js'
@@ -77,11 +78,10 @@ import EnvTag from '../common/tag/EnvTag'
 import ActiveTag from '../common/tag/ActiveTag'
 import BusinessTags from '../common/tag/BusinessTags'
 import ServerStatusTag from '../common/tag/ServerStatusTag'
-import BusinessTagEditor from '../common/tag/BusinessTagEditor'
-import AccountTags from '../common/tag/AccountTags'
 import Pagination from '../common/page/Pagination'
 
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
+import ServerAccountsButton from '../common/button/ServerAccountsButton'
 
 export default {
   name: 'RemoteServerSelector',
@@ -142,7 +142,7 @@ export default {
     EnvTag,
     ActiveTag,
     ServerStatusTag,
-    AccountTags
+    ServerAccountsButton
   },
   filters: {},
   methods: {
@@ -189,6 +189,9 @@ export default {
           this.serverGroupOptions = res.body.data
         })
     },
+    handleRemote(remoteServer){
+      this.$emit('handleRemote',remoteServer)
+    },
     fetchData () {
       this.table.loading = true
       const requestBody = {
@@ -196,7 +199,7 @@ export default {
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
-      QUERY_SERVER_PAGE(requestBody)
+      QUERY_USER_REMOTE_SERVER(requestBody)
         .then(res => {
           this.table.data = res.body.data
           this.table.pagination.total = res.body.totalNum
