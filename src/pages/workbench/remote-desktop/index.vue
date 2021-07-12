@@ -22,7 +22,8 @@
       <remote-item-layout v-if="remoteItemLayout.show"
                           :remoteServer="remoteServer"
                           @logout="handleLogout"
-                          ref="remoteItemLayout"></remote-item-layout>
+                          ref="remoteItemLayout">
+      </remote-item-layout>
     </el-row>
   </d2-container>
 </template>
@@ -41,7 +42,6 @@ export default {
       remoteItemLayout: {
         show: false
       },
-      showVnc: false,
       screenSetting: {
         screenResolution: '1280x640',
         screenDpi: 96
@@ -72,7 +72,6 @@ export default {
       this.layout.status = true
       this.remoteItemLayout.show = true
       this.$nextTick(() => {
-        //this.$refs.remoteItemLayout.initData(remoteServer)
         this.$refs.remoteItemLayout.connect()
       })
     },
@@ -80,18 +79,20 @@ export default {
       this.screenSetting = screenSetting
     },
     handleLogout () {
-      this.layout.status = false
-      this.remoteItemLayout.show = false
+      this.$nextTick(() => {
+        this.layout.status = false
+        this.remoteItemLayout.show = false
+      })
     }
   }
 }
 </script>
 
 <style>
-  .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+.el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 </style>

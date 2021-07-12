@@ -53,14 +53,6 @@
           <server-accounts-button :server="scope.row" @handleRemote="handleRemote"></server-accounts-button>
         </template>
       </el-table-column>
-
-<!--      <el-table-column label="操作" width="280">-->
-<!--        <template slot-scope="scope">-->
-<!--          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>-->
-<!--          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>-->
-<!--          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
     </el-table>
   </div>
 </template>
@@ -73,12 +65,8 @@ import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api.js'
 import SelectItem from '../common/SelectItem'
-import ServerEditor from './ServerEditor'
 import EnvTag from '../common/tag/EnvTag'
-import ActiveTag from '../common/tag/ActiveTag'
 import BusinessTags from '../common/tag/BusinessTags'
-import ServerStatusTag from '../common/tag/ServerStatusTag'
-import Pagination from '../common/page/Pagination'
 
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import ServerAccountsButton from '../common/button/ServerAccountsButton'
@@ -135,13 +123,9 @@ export default {
   },
   computed: {},
   components: {
-    Pagination,
     SelectItem,
-    ServerEditor,
     BusinessTags,
     EnvTag,
-    ActiveTag,
-    ServerStatusTag,
     ServerAccountsButton
   },
   filters: {},
@@ -189,8 +173,8 @@ export default {
           this.serverGroupOptions = res.body.data
         })
     },
-    handleRemote(remoteServer){
-      this.$emit('handleRemote',remoteServer)
+    handleRemote (remoteServer) {
+      this.$emit('handleRemote', remoteServer)
     },
     fetchData () {
       this.table.loading = true
@@ -212,17 +196,17 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

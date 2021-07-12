@@ -2,7 +2,11 @@
   <div>
     <el-card shadow="hover" :style="{ width: itemWidth }">
       <div slot="header" class="clearfix">
-        <span><el-tag>{{ remoteServer.server.name }}-{{ remoteServer.server.serialNumber}}:{{ remoteServer.server.privateIp }}</el-tag></span>
+        <span>
+          <el-tag>
+            {{ remoteServer.server.name }}-{{ remoteServer.server.serialNumber }}:{{ remoteServer.server.privateIp }}
+          </el-tag>
+        </span>
         <env-tag style="margin-left: 5px" :env="remoteServer.server.env" class="env"></env-tag>
         <el-button style="float: right; padding: 3px 0" type="text" @click="logout">Logout</el-button>
       </div>
@@ -42,6 +46,7 @@ export default {
   data () {
     return {
       connected: false,
+      tunnel: null,
       display: null,
       currentAdjustedHeight: null,
       client: null,
@@ -62,10 +67,7 @@ export default {
   computed: {},
   watch: {
     connectionState (state) {
-      this.$notify({
-        title: state,
-        type: 'success'
-      })
+      this.$message.success(state)
     }
   },
   methods: {
@@ -77,6 +79,7 @@ export default {
       this.startGuacamole()
     },
     logout () {
+      this.stopGuacamole()
       this.$emit('logout')
     },
     send (cmd) {
@@ -138,18 +141,18 @@ export default {
       })
     },
     startGuacamole () {
-      const tunnel = new Guacamole.WebSocketTunnel(this.wsUrl)
+      this.tunnel = new Guacamole.WebSocketTunnel(this.wsUrl)
       if (this.client) {
         this.display.scale(0)
         this.uninstallKeyboard()
       }
-      this.client = new Guacamole.Client(tunnel)
+      this.client = new Guacamole.Client(this.tunnel)
       clipboard.install(this.client)
-      tunnel.onerror = status => {
+      this.tunnel.onerror = status => {
         // eslint-disable-next-line no-console
         this.connectionState = states.TUNNEL_ERROR
       }
-      tunnel.onstatechange = state => {
+      this.tunnel.onstatechange = state => {
         switch (state) {
           // Connection is being established
           case Guacamole.Tunnel.State.CONNECTING:
@@ -263,6 +266,12 @@ export default {
         displayElm.focus()
       }, 1000) // $nextTick wasn't enough
     },
+    stopGuacamole () {
+      this.connectionState = states.DISCONNECTED
+      this.display.scale(0)
+      this.uninstallKeyboard()
+      this.tunnel.disconnect()
+    },
     installKeyboard () {
       this.keyboard.onkeydown = keysym => {
         this.client.sendKeyEvent(1, keysym)
@@ -275,35 +284,32 @@ export default {
       this.keyboard.onkeydown = this.keyboard.onkeyup = () => {
       }
     }
-  },
-  mounted () {
-    // this._setScreenSize()
   }
 }
 </script>
 
 <style scoped>
-  .el-input {
-    width: 100% !important;
-  }
+.el-input {
+  width: 100% !important;
+}
 
-  .el-select {
-    width: 100% !important;
-  }
+.el-select {
+  width: 100% !important;
+}
 
-  .el-main {
-    padding: 4px;
-  }
+.el-main {
+  padding: 4px;
+}
 
-  .display {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
+.display {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
 
-  .viewport {
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
-    width: 1280px;
-    height: 640px;
-  }
+.viewport {
+  /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
+  width: 1280px;
+  height: 640px;
+}
 </style>

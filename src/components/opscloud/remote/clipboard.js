@@ -4,7 +4,6 @@ const clipboard = {}
 
 clipboard.install = (client) => {
   clipboard.getLocalClipboard().then(data => clipboard.cache = data)
-
   window.addEventListener('load', clipboard.update(client), true)
   window.addEventListener('copy', clipboard.update(client))
   window.addEventListener('cut', clipboard.update(client))
