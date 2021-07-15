@@ -25,5 +25,14 @@ export default [
       auth: true,
       title: '远程桌面'
     }
+  },
+  {
+    path: '/workbench/kubernetes-web-terminal',
+    name: 'kubernetes-web-terminal',
+    component: () => import('@/pages/workbench/kubernetes-web-terminal'),
+    meta: {
+      auth: true,
+      title: '容器终端'
+    }
   }
 ]
