@@ -14,8 +14,6 @@
 </template>
 
 <script>
-
-import util from '@/libs/util'
 import ApplicationKubernetesSelector
   from '../../../components/opscloud/terminal/kubernetes/ApplicationKubernetesSelector'
 
