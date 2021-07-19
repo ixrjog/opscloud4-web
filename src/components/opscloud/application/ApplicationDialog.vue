@@ -20,73 +20,84 @@
           <el-form-item label="描述">
             <el-input v-model="application.comment" placeholder="请输入内容"></el-input>
           </el-form-item>
+          <el-form-item>
+            <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+            <el-button size="mini" type="primary" @click="handlerSave">确定</el-button>
+          </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="绑定资源" name="resource" v-if="application.id !== ''">
-        <el-row style="margin-bottom: 5px; margin-left: 0px" :gutter="24">
-          <el-select v-model="queryResParam.businessType" filterable placeholder="选择绑定资源业务类型"
-                     @change="handlerSelectBusinessType">
-            <el-option
-              v-for="item in businessTypeOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          <el-select v-model="queryResParam.dsInstance" filterable placeholder="选择资源实例" class="select"
-                     v-if="queryResParam.businessType === businessType.ASSET" value-key="id"
-                     @change="handlerGetAssetType">
-            <el-option
-              v-for="item in dsInstanceOptions"
-              :key="item.id"
-              :label="item.instanceName"
-              :value="item">
-              <span style="float: left">{{ item.instanceType }}</span>
-              <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
+      <el-tab-pane label="绑定资源" name="resource" v-if="application.id !== ''" class="resTabPane">
+        <el-col :span="10">
+          <el-form :model="queryResParam" label-width="80px">
+            <el-form-item label="业务类型">
+              <el-select v-model="queryResParam.businessType" filterable placeholder="选择绑定资源业务类型"
+                         @change="handlerSelectBusinessType">
+                <el-option
+                  v-for="item in businessTypeOptions"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="queryResParam.businessType === businessType.ASSET" label="资源实例">
+              <el-select v-model="queryResParam.dsInstance" filterable placeholder="选择资源实例"
+                         value-key="id" @change="handlerGetAssetType">
+                <el-option
+                  v-for="item in dsInstanceOptions"
+                  :key="item.id"
+                  :label="item.instanceName"
+                  :value="item">
+                  <span style="float: left">{{ item.instanceType }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
                 {{ item.instanceName }}</span>
-            </el-option>
-          </el-select>
-          <el-select v-model="queryResParam.assetType" placeholder="选择资源类型" class="select"
-                     v-if="queryResParam.businessType === businessType.ASSET" @change="clearResOptions">
-            <el-option
-              v-for="item in assetTypeOptions"
-              :key="item.id"
-              :label="item.value"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          <el-select v-model.lazy="queryResParam.resources" filterable class="select" value-key="id"
-                     :disabled="queryResParam.businessType === ''"
-                     remote reserve-keyword placeholder="关键字搜索资源" :remote-method="handlerGetResources">
-            <el-option
-              v-for="item in resOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item">
-              <span style="float: left">{{ resFilter(item) }}</span>
-              <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
-                {{ resFilterPLus(item) }}
-              </span>
-            </el-option>
-          </el-select>
-          <el-button size="mini" type="primary" :disabled="JSON.stringify(queryResParam.resources) === '{}'"
-                     @click="handlerBindResources">绑定
-          </el-button>
-        </el-row>
-        <el-row :gutter="24" style="margin-bottom: 5px;margin-left: 5px">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="queryResParam.businessType === businessType.ASSET" label="资源类型">
+              <el-select v-model="queryResParam.assetType" placeholder="选择资源类型"
+                         @change="clearResOptions">
+                <el-option
+                  v-for="item in assetTypeOptions"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="绑定资源">
+              <el-select v-model.lazy="queryResParam.resources" filterable value-key="id"
+                         :disabled="queryResParam.businessType === ''"
+                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="handlerGetResources">
+                <el-option
+                  v-for="item in resOptions"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item">
+                  <span style="float: left">{{ resFilter(item) }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
+                    {{ resFilterPLus(item) }}
+                  </span>
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button size="mini" type="primary" :disabled="JSON.stringify(queryResParam.resources) === '{}'"
+                         @click="handlerBindResources">绑定
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="14">
           <div v-for="(value,key) in application.resourceMap" :key="key" :label="key" class="resDiv">
-            <p>{{ key | getAssetTypeText }}</p>
+            <p>{{ key | getAppResText }}</p>
             <span v-for="item in value" :key="item.id">
-              <el-tag closable @close="handlerResUnbind(item.id)">{{ item.name }}</el-tag>
+              <el-tag size="small" closable @close="handlerResUnbind(item.id)">{{ item.name }}</el-tag>
             </span>
           </div>
-        </el-row>
+        </el-col>
       </el-tab-pane>
     </el-tabs>
-    <div slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button size="mini" type="primary" @click="handlerSave">确定</el-button>
-    </div>
   </el-dialog>
 </template>
 
@@ -95,18 +106,17 @@
 import {
   ADD_APPLICATION,
   BIND_APPLICATION_RES,
+  GET_APP_BUSINESS_OPTIONS,
   QUERY_APPLICATION_BY_ID,
   UNBIND_APPLICATION_RES,
   UPDATE_APPLICATION
 } from '@/api/modules/application/application.api'
-import { getAssetTypeText } from '@/filters/asset.type'
 import { QUERY_SERVER_PAGE } from '@/api/modules/server/server.api'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
-import { GET_TAG_BUSINESS_OPTIONS } from '@/api/modules/tag/tag.api'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
-import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import { QUERY_ASSET_PAGE } from '@/api/modules/datasource/datasource.asset.api'
+import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 
 const QueryResParam = {
   resources: {},
@@ -132,7 +142,22 @@ export default {
   props: ['formStatus'],
   components: {},
   filters: {
-    getAssetTypeText
+    getAppResText (value) {
+      switch (value) {
+        case AppDsInstanceAssetType.GITLAB.GITLAB_GROUP:
+          return '群组(GITLAB_GROUP)'
+        case AppDsInstanceAssetType.GITLAB.GITLAB_PROJECT:
+          return '项目(GITLAB_PROJECT)'
+        case AppDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
+          return '无状态(DEPLOYMENT)'
+        case 'SERVERGROUP':
+          return '服务器组(SERVER_GROUP)'
+        case 'SERVER':
+          return '服务器(SERVER)'
+        default:
+          return value
+      }
+    }
   },
   mounted () {
   },
@@ -159,8 +184,9 @@ export default {
     },
     handlerGetAssetType () {
       this.clearResOptions()
+      this.queryResParam.assetType = ''
       this.assetTypeOptions = []
-      const obj = DsInstanceAssetType[this.queryResParam.dsInstance.instanceType]
+      const obj = AppDsInstanceAssetType[this.queryResParam.dsInstance.instanceType]
       if (obj) {
         for (const item in obj) {
           this.assetTypeOptions.push({
@@ -173,6 +199,7 @@ export default {
     },
     clearResOptions () {
       this.resOptions = []
+      this.queryResParam.resources = {}
     },
     handlerGetResources (queryName) {
       this.clearResOptions()
@@ -203,7 +230,8 @@ export default {
         applicationId: this.application.id,
         name: this.queryResParam.resources.name,
         businessId: this.queryResParam.resources.id,
-        businessType: this.queryResParam.businessType
+        businessType: this.queryResParam.businessType,
+        resourceType: false
       }
       switch (this.queryResParam.businessType) {
         case BusinessType.SERVER:
@@ -248,7 +276,7 @@ export default {
       }
     },
     handlerGetBusinessType () {
-      GET_TAG_BUSINESS_OPTIONS()
+      GET_APP_BUSINESS_OPTIONS()
         .then(({ body }) => {
           this.businessTypeOptions = body.options
         })
@@ -359,19 +387,23 @@ export default {
   }
 }
 
-.input {
-  display: inline-block;
-  max-width: 200px;
-  margin-left: 10px;
-}
+.resTabPane {
+  & .el-select {
+    max-width: 80%;
+    width: 80%;
+  }
 
-.select {
-  max-width: 200px;
-  width: 200px;
-  margin-left: 5px;
-}
+  .el-col {
+    p {
+      margin: 0px;
+      color: #B7B6B6;
+      font-size: 20px;
+      font-weight: bolder;
+    }
 
-.button {
-  margin-left: 5px;
+    & .el-tag {
+      margin: 5px 5px 10px 0px;
+    }
+  }
 }
 </style>

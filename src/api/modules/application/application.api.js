@@ -2,6 +2,13 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/application'
 
+export function GET_APP_BUSINESS_OPTIONS () {
+  return request({
+    url: baseUrl + '/business/options/get',
+    method: 'get'
+  })
+}
+
 export function QUERY_APPLICATION_KUBERNETES_PAGE (data) {
   return request({
     url: baseUrl + '/kubernetes/page/query',
