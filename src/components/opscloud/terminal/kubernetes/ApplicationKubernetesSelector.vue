@@ -14,9 +14,13 @@
                  <el-tag>Deployment</el-tag>
                  {{ resource.asset.assetKey}}
                   <el-button style="float: right; padding: 3px 0" type="text"
-                             @click="handleLog(resource)">日志</el-button>
+                             @click="handleLog(resource)">
+                    <i class="far fa-file-alt"></i>
+                  </el-button>
                   <el-button style="float: right; padding: 3px 0" type="text"
-                             @click="handleTerminal(resource)">终端</el-button>
+                             @click="handleTerminal(resource)">
+                    <i class="fas fa-terminal"></i>
+                  </el-button>
                </div>
                <el-divider/>
                <div v-for="pod in resource.assetContainers" :key="pod.asset.name">
@@ -93,12 +97,18 @@ export default {
           const pod = {
             name: item.asset.name,
             namespace: item.asset.assetKey2,
-            containers: containers.map(e => e.asset.name)
+            podIp: item.asset.assetKey, // nodeIP     hostIp: item.properties.hostIp
+            containers: containers.map(e => {
+              return {
+                name: e.asset.name,
+                instanceId: e.asset.assetKey + '#' + e.asset.name
+              }
+            })
           }
           pods.push(pod)
         }
       }
-      const param = {
+      const loginParam = {
         state: 'LOGIN',
         sessionType: type,
         data: {
@@ -106,15 +116,17 @@ export default {
           businessId: resource.businessId,
           businessType: resource.businessType,
           resourceType: resource.resourceType,
+          lines: 100,
           pods: pods,
         }
       }
+      this.$emit('handleOpen', loginParam)
     },
     handleLog (resource) {
-      this.handleByType(resource, 'LOG')
+      this.handleByType(resource, 'CONTAINER_LOG')
     },
     handleTerminal (resource) {
-      this.handleByType(resource, 'TERMINAL')
+      this.handleByType(resource, 'CONTAINER_TERMINAL')
     },
     fetchData () {
       this.table.loading = true
