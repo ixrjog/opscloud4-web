@@ -8,6 +8,7 @@ import server from './modules/opscloud.server'
 import rbac from './modules/opscloud.rbac'
 import datasource from './modules/opscloud.datasource'
 import workbench from './modules/opscloud.workbench'
+import application from './modules/opscloud.application'
 
 import layoutHeaderAside from '@/layout/header-aside'
 
@@ -67,7 +68,9 @@ const frameIn = [
       // Datasource 数据源
       ...datasource,
       // RBAC 基于角色的访问控制
-      ...rbac
+      ...rbac,
+      // 应用
+      ...application
     ]
   },
   playground,

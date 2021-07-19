@@ -21,22 +21,6 @@
           <select-item :name="item.envName" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.isActive" clearable placeholder="有效">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-select v-model="queryParam.serverStatus" clearable placeholder="状态">
-        <el-option
-          v-for="item in serverStatusOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
       <el-select
         v-model="queryParam.tagId" filterable clearable remote reserve-keyword
         placeholder="请输入关键词搜索标签" :remote-method="getTag">
@@ -48,7 +32,6 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
@@ -60,81 +43,36 @@
           <env-tag :env="scope.row.env"></env-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="isActive" label="有效" width="80">
-        <template slot-scope="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="serverStatus" label="状态" width="80">
-        <template slot-scope="scope">
-          <server-status-tag :serverStatus="scope.row.serverStatus"></server-status-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="account" label="账户">
-        <template slot-scope="scope">
-          <account-tags :accounts="scope.row.accounts"></account-tags>
-        </template>
-      </el-table-column>
       <el-table-column prop="tags" label="标签">
         <template slot-scope="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="280">
+      <el-table-column prop="account" label="授权账户">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
-          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+          <server-accounts-button :server="scope.row" @handleRemote="handleRemote"></server-accounts-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <server-editor :formStatus="formStatus.server" :activeOptions="activeOptions" ref="serverEditor"
-                   @close="fetchData"></server-editor>
-    <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
   </div>
 </template>
 
 <script>
 
-import { QUERY_SERVER_PAGE, DELETE_SERVER_BY_ID } from '@/api/modules/server/server.api.js'
+import { QUERY_USER_REMOTE_SERVER } from '@/api/modules/user/user.server.api.js'
+
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api.js'
 import SelectItem from '../common/SelectItem'
-import ServerEditor from './ServerEditor'
 import EnvTag from '../common/tag/EnvTag'
-import ActiveTag from '../common/tag/ActiveTag'
 import BusinessTags from '../common/tag/BusinessTags'
-import ServerStatusTag from '../common/tag/ServerStatusTag'
-import BusinessTagEditor from '../common/tag/BusinessTagEditor'
-import AccountTags from '../common/tag/AccountTags'
-import Pagination from '../common/page/Pagination'
 
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
-
-const activeOptions = [{
-  value: true,
-  label: '有效'
-}, {
-  value: false,
-  label: '无效'
-}]
-
-const serverStatusOptions = [{
-  value: 0,
-  label: '离线'
-}, {
-  value: 1,
-  label: '在线'
-}, {
-  value: -1,
-  label: '未知'
-}]
+import ServerAccountsButton from '../common/button/ServerAccountsButton'
 
 export default {
+  name: 'RemoteServerSelector',
   data () {
     return {
       instance: {
@@ -174,9 +112,7 @@ export default {
       tagOptions: [],
       envOptions: [],
       serverGroupOptions: [],
-      businessType: BusinessType.SERVER,
-      activeOptions: activeOptions,
-      serverStatusOptions: serverStatusOptions
+      businessType: BusinessType.SERVER
     }
   },
   mounted () {
@@ -187,15 +123,10 @@ export default {
   },
   computed: {},
   components: {
-    Pagination,
     SelectItem,
-    ServerEditor,
     BusinessTags,
     EnvTag,
-    ActiveTag,
-    ServerStatusTag,
-    BusinessTagEditor,
-    AccountTags
+    ServerAccountsButton
   },
   filters: {},
   methods: {
@@ -242,54 +173,8 @@ export default {
           this.serverGroupOptions = res.body.data
         })
     },
-    handleRowTagEdit (row) {
-      this.instance.id = row.id
-      const businessTags = {
-        tagIds: row.tags !== null ? row.tags.map(e => e.id) : []
-      }
-      this.$refs.businessTagEditor.initData(businessTags)
-      this.formStatus.businessTag.visible = true
-    },
-    handleRowEdit (row) {
-      this.formStatus.server.visible = true
-      this.formStatus.server.operationType = false
-      this.$refs.serverEditor.initData(Object.assign({}, row))
-    },
-    handleAdd () {
-      const server = {
-        serverGroup: {},
-        id: '',
-        name: '',
-        serverGroupId: '',
-        envType: 0,
-        publicIp: '',
-        privateIp: '',
-        serverType: 0,
-        area: '',
-        serialNumber: 0,
-        monitorStatus: -1,
-        serverStatus: 1,
-        isActive: true,
-        comment: '',
-        accounts: null
-      }
-      this.$refs.serverEditor.initData(server)
-      this.formStatus.server.operationType = true
-      this.formStatus.server.visible = true
-    },
-    handleRowDel (row) {
-      this.$confirm('此操作将删除当前配置?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        DELETE_SERVER_BY_ID(row.id).then(res => {
-          this.$message.success('删除成功!')
-          this.fetchData()
-        })
-      }).catch(() => {
-        this.$message.info('已取消删除!')
-      })
+    handleRemote (remoteServer) {
+      this.$emit('handleRemote', remoteServer)
     },
     fetchData () {
       this.table.loading = true
@@ -298,7 +183,7 @@ export default {
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
-      QUERY_SERVER_PAGE(requestBody)
+      QUERY_USER_REMOTE_SERVER(requestBody)
         .then(res => {
           this.table.data = res.body.data
           this.table.pagination.total = res.body.totalNum

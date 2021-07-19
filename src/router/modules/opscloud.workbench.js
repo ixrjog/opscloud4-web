@@ -16,5 +16,23 @@ export default [
       auth: true,
       title: 'SSH服务器'
     }
+  },
+  {
+    path: '/workbench/remote-desktop',
+    name: 'remote-desktop',
+    component: () => import('@/pages/workbench/remote-desktop'),
+    meta: {
+      auth: true,
+      title: '远程桌面'
+    }
+  },
+  {
+    path: '/workbench/kubernetes-web-terminal',
+    name: 'kubernetes-web-terminal',
+    component: () => import('@/pages/workbench/kubernetes-web-terminal'),
+    meta: {
+      auth: true,
+      title: '容器终端'
+    }
   }
 ]

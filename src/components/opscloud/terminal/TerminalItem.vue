@@ -75,8 +75,8 @@ export default {
      */
     resize () {
       if (this.term === null) return
-      this.$nextTick(() => {
-      })
+      // this.$nextTick(() => {
+      // })
       const id = this.server.instanceId
       this.fitAddon.fit() // 获取对象的高度和宽度
       const resizeMessage = {

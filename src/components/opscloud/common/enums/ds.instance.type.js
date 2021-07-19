@@ -43,7 +43,16 @@ const DsInstanceType = Object.freeze({
     ]
   },
   PROMETHEUS: 8,
-  GUACAMOLE: 9,
+  GUACAMOLE: {
+    type: 9,
+    name: 'GUACAMOLE',
+    instanceType: [
+      {
+        value: 'GUACAMOLE',
+        label: 'GUACAMOLE'
+      }
+    ]
+  },
   NEXUS: 10,
   ALIYUN: {
     type: 50,

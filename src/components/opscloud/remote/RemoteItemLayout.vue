@@ -1,64 +1,20 @@
 <template>
-  <d2-container>
-    <el-col>
-      <el-button type="primary" @submit="doGuacdConnect" @click="doGuacdConnect">连接</el-button>
-      <el-card style="width: 1320px">
-        <div ref="viewport" class="viewport">
-          <div ref="display" class="display"></div>
-        </div>
-      </el-card>
-    </el-col>
-    <el-aside style="height: 100vh;width: 350px" v-if="false">
-      <h2 style="text-align: center;margin-top: 20rem;color: crimson">Go桌面(RDP/VNC)</h2>
-      <el-form ref="form" :model="query" label-width="120px" size="mini" style="margin: 2rem 1rem 1rem 0rem"
-               label-position="center">
-        <el-form-item label="guacad">
-          <el-input v-model="query.guacad_addr"></el-input>
-        </el-form-item>
-        <el-form-item label="屏幕Width">
-          <el-input v-model.number="query.screen_width" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="屏幕Height">
-          <el-input v-model.number="query.screen_height" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="屏幕Dpi">
-          <el-input v-model.number="query.screen_dpi" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="资产协议">
-          <el-select v-model="query.asset_protocol" placeholder="请选择资产远程桌面协议种类">
-            <el-option label="RDP" value="rdp"></el-option>
-            <el-option label="VNC" value="vnc"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="资产Host">
-          <el-input v-model="query.asset_host"></el-input>
-        </el-form-item>
-        <el-form-item label="资产Port">
-          <el-input v-model="query.asset_port" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="资产User">
-          <el-input v-model="query.asset_user"></el-input>
-        </el-form-item>
-        <el-form-item label="资产Password">
-          <el-input v-model="query.asset_password"></el-input>
-        </el-form-item>
-
-        <el-form-item label="演示Demo">
-          <el-radio-group v-model="demo" @change="atChangeDemo">
-            <el-radio label="win" value="win"></el-radio>
-            <el-radio label="rdp" value="rdp"></el-radio>
-            <el-radio label="vnc" value="vnc"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" style="width: 45%" @submit="doGuacdConnect" @click="doGuacdConnect">连接</el-button>
-          <el-button style="width: 45%">取消</el-button>
-        </el-form-item>
-      </el-form>
-    </el-aside>
-
-  </d2-container>
+  <div>
+    <el-card shadow="hover" :style="{ width: itemWidth }">
+      <div slot="header" class="clearfix">
+        <span>
+          <el-tag>
+            {{ remoteServer.server.name }}-{{ remoteServer.server.serialNumber }}:{{ remoteServer.server.privateIp }}
+          </el-tag>
+        </span>
+        <env-tag style="margin-left: 5px" :env="remoteServer.server.env" class="env"></env-tag>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="logout">Logout</el-button>
+      </div>
+      <div ref="viewport" class="viewport" :style="{ width: screenWidth }">
+        <div ref="display" class="display"></div>
+      </div>
+    </el-card>
+  </div>
 
 </template>
 
@@ -67,6 +23,7 @@ import Guacamole from 'guacamole-common-js'
 import GuacMouse from './GuacMouse'
 import states from './states'
 import clipboard from './clipboard'
+import EnvTag from '../common/tag/EnvTag'
 import util from '@/libs/util'
 
 const wsUrl = 'ws/guacamole/tunnel'
@@ -84,11 +41,12 @@ function serialize (obj) {
 }
 
 export default {
-  name: 'GuacClient',
+  name: 'RemoteItemLayout',
+  props: ['remoteServer'],
   data () {
     return {
-      demo: 'win',
       connected: false,
+      tunnel: null,
       display: null,
       currentAdjustedHeight: null,
       client: null,
@@ -98,36 +56,31 @@ export default {
       connectionState: states.IDLE,
       errorMessage: '',
       arguments: {},
-      query: {
-        serverId: 2,
-        serverAccountId: 4,
-        protocol: 'rdp',
-        token: util.cookies.get('token'),
-        guacad_addr: 'guacd.mojotv.cn:4822',
-        asset_protocol: 'rdp',
-        asset_host: '10.13.5.41',
-        asset_port: '3389',
-        asset_user: 'Administrator',
-        screen_width: 1280,
-        screen_height: 640,
-        screen_dpi: 128
-      },
-      wsUrl: util.wsUrl(wsUrl)
+      wsUrl: util.wsUrl(wsUrl),
+      itemWidth: '',
+      screenWidth: ''
     }
+  },
+  components: {
+    EnvTag
   },
   computed: {},
   watch: {
     connectionState (state) {
-      this.$notify({
-        title: state,
-        type: 'success'
-      })
+      this.$message.success(state)
     }
   },
   methods: {
-    doGuacdConnect () {
-      // this._setScreenSize()
+    // API
+    connect () {
+      const width = Number(this.remoteServer.params.screenWidth)
+      this.itemWidth = width + 40 + 'px'
+      this.screenWidth = width + 'px'
       this.startGuacamole()
+    },
+    logout () {
+      this.stopGuacamole()
+      this.$emit('logout')
     },
     send (cmd) {
       if (!this.client) {
@@ -163,8 +116,8 @@ export default {
       const pixelDensity = window.devicePixelRatio || 1
       const width = elm.clientWidth * pixelDensity
       const height = elm.clientHeight * pixelDensity
-      this.query.screen_height = height
-      this.query.screen_width = width
+      this.remoteServer.screenHeight = height
+      this.remoteServer.screenWidth = width
     },
     resize () {
       const elm = this.$refs.viewport
@@ -175,8 +128,6 @@ export default {
       const pixelDensity = window.devicePixelRatio || 1
       const width = elm.clientWidth * pixelDensity
       const height = elm.clientHeight * pixelDensity
-      console.log('width :' + width)
-      console.log('height :' + height)
       if (this.display.getWidth() !== width || this.display.getHeight() !== height) {
         this.client.sendSize(width, height)
       }
@@ -186,24 +137,22 @@ export default {
           elm.clientWidth / Math.max(this.display.getWidth(), 1),
           elm.clientHeight / Math.max(this.display.getHeight(), 1)
         )
-        console.log(scale)
         this.display.scale(scale)
       })
     },
     startGuacamole () {
-      const tunnel = new Guacamole.WebSocketTunnel(this.wsUrl)
+      this.tunnel = new Guacamole.WebSocketTunnel(this.wsUrl)
       if (this.client) {
         this.display.scale(0)
         this.uninstallKeyboard()
       }
-      this.client = new Guacamole.Client(tunnel)
+      this.client = new Guacamole.Client(this.tunnel)
       clipboard.install(this.client)
-      tunnel.onerror = status => {
+      this.tunnel.onerror = status => {
         // eslint-disable-next-line no-console
-        console.error(`Tunnel failed ${JSON.stringify(status)}`)
         this.connectionState = states.TUNNEL_ERROR
       }
-      tunnel.onstatechange = state => {
+      this.tunnel.onstatechange = state => {
         switch (state) {
           // Connection is being established
           case Guacamole.Tunnel.State.CONNECTING:
@@ -290,7 +239,7 @@ export default {
         }
         e.returnValue = false
       })
-      const param = serialize(this.query)
+      const param = serialize(this.remoteServer.params)
       this.client.connect(param)
       window.onunload = () => this.client.disconnect()
       this.mouse = new Guacamole.Mouse(displayElm)
@@ -317,6 +266,12 @@ export default {
         displayElm.focus()
       }, 1000) // $nextTick wasn't enough
     },
+    stopGuacamole () {
+      this.connectionState = states.DISCONNECTED
+      this.display.scale(0)
+      this.uninstallKeyboard()
+      this.tunnel.disconnect()
+    },
     installKeyboard () {
       this.keyboard.onkeydown = keysym => {
         this.client.sendKeyEvent(1, keysym)
@@ -329,36 +284,32 @@ export default {
       this.keyboard.onkeydown = this.keyboard.onkeyup = () => {
       }
     }
-  },
-  mounted () {
-    // this._setScreenSize()
-    // this.startGuacamole()
   }
 }
 </script>
 
 <style scoped>
-  .el-input {
-    width: 100% !important;
-  }
+.el-input {
+  width: 100% !important;
+}
 
-  .el-select {
-    width: 100% !important;
-  }
+.el-select {
+  width: 100% !important;
+}
 
-  .el-main {
-    padding: 4px;
-  }
+.el-main {
+  padding: 4px;
+}
 
-  .display {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
+.display {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
 
-  .viewport {
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
-    width: 1280px;
-    height: 640px;
-  }
+.viewport {
+  /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
+  width: 1280px;
+  height: 640px;
+}
 </style>

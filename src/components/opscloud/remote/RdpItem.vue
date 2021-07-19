@@ -1,64 +1,16 @@
 <template>
-  <d2-container>
-    <el-col>
-      <el-button type="primary" @submit="doGuacdConnect" @click="doGuacdConnect">连接</el-button>
-      <el-card style="width: 1320px">
-        <div ref="viewport" class="viewport">
-          <div ref="display" class="display"></div>
-        </div>
-      </el-card>
-    </el-col>
-    <el-aside style="height: 100vh;width: 350px" v-if="false">
-      <h2 style="text-align: center;margin-top: 20rem;color: crimson">Go桌面(RDP/VNC)</h2>
-      <el-form ref="form" :model="query" label-width="120px" size="mini" style="margin: 2rem 1rem 1rem 0rem"
-               label-position="center">
-        <el-form-item label="guacad">
-          <el-input v-model="query.guacad_addr"></el-input>
-        </el-form-item>
-        <el-form-item label="屏幕Width">
-          <el-input v-model.number="query.screen_width" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="屏幕Height">
-          <el-input v-model.number="query.screen_height" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="屏幕Dpi">
-          <el-input v-model.number="query.screen_dpi" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="资产协议">
-          <el-select v-model="query.asset_protocol" placeholder="请选择资产远程桌面协议种类">
-            <el-option label="RDP" value="rdp"></el-option>
-            <el-option label="VNC" value="vnc"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="资产Host">
-          <el-input v-model="query.asset_host"></el-input>
-        </el-form-item>
-        <el-form-item label="资产Port">
-          <el-input v-model="query.asset_port" type="number" min="1"></el-input>
-        </el-form-item>
-        <el-form-item label="资产User">
-          <el-input v-model="query.asset_user"></el-input>
-        </el-form-item>
-        <el-form-item label="资产Password">
-          <el-input v-model="query.asset_password"></el-input>
-        </el-form-item>
-
-        <el-form-item label="演示Demo">
-          <el-radio-group v-model="demo" @change="atChangeDemo">
-            <el-radio label="win" value="win"></el-radio>
-            <el-radio label="rdp" value="rdp"></el-radio>
-            <el-radio label="vnc" value="vnc"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" style="width: 45%" @submit="doGuacdConnect" @click="doGuacdConnect">连接</el-button>
-          <el-button style="width: 45%">取消</el-button>
-        </el-form-item>
-      </el-form>
-    </el-aside>
-
-  </d2-container>
+  <div>
+    <el-card>
+      <div slot="header" class="clearfix">
+        <span><el-tag>{{ server.name }}-{{ server.serialNumber}}:{{ server.privateIp }}</el-tag></span>
+        <env-tag :env="server.env" class="env"></env-tag>
+        <el-button style="float: right; padding: 3px 0" type="text">Logout</el-button>
+      </div>
+      <div ref="viewport" class="viewport">
+        <div ref="display" class="display"></div>
+      </div>
+    </el-card>
+  </div>
 
 </template>
 
@@ -68,6 +20,7 @@ import GuacMouse from './GuacMouse'
 import states from './states'
 import clipboard from './clipboard'
 import util from '@/libs/util'
+import EnvTag from '../common/tag/EnvTag'
 
 const wsUrl = 'ws/guacamole/tunnel'
 
@@ -84,10 +37,10 @@ function serialize (obj) {
 }
 
 export default {
-  name: 'GuacClient',
+  name: 'RdpItem',
+  props: ['server'],
   data () {
     return {
-      demo: 'win',
       connected: false,
       display: null,
       currentAdjustedHeight: null,
@@ -98,22 +51,12 @@ export default {
       connectionState: states.IDLE,
       errorMessage: '',
       arguments: {},
-      query: {
-        serverId: 2,
-        serverAccountId: 4,
-        protocol: 'rdp',
-        token: util.cookies.get('token'),
-        guacad_addr: 'guacd.mojotv.cn:4822',
-        asset_protocol: 'rdp',
-        asset_host: '10.13.5.41',
-        asset_port: '3389',
-        asset_user: 'Administrator',
-        screen_width: 1280,
-        screen_height: 640,
-        screen_dpi: 128
-      },
+      remoteServer: null,
       wsUrl: util.wsUrl(wsUrl)
     }
+  },
+  components: {
+    EnvTag
   },
   computed: {},
   watch: {
@@ -125,8 +68,15 @@ export default {
     }
   },
   methods: {
-    doGuacdConnect () {
-      // this._setScreenSize()
+    initData (remoteServer) {
+      this.remoteServer = {
+        protocol: 'rdp',
+        token: util.cookies.get('token'),
+        ...remoteServer
+      }
+    },
+    // API
+    connect () {
       this.startGuacamole()
     },
     send (cmd) {
@@ -163,8 +113,8 @@ export default {
       const pixelDensity = window.devicePixelRatio || 1
       const width = elm.clientWidth * pixelDensity
       const height = elm.clientHeight * pixelDensity
-      this.query.screen_height = height
-      this.query.screen_width = width
+      this.remoteServer.screenHeight = height
+      this.remoteServer.screenWidth = width
     },
     resize () {
       const elm = this.$refs.viewport
@@ -175,8 +125,6 @@ export default {
       const pixelDensity = window.devicePixelRatio || 1
       const width = elm.clientWidth * pixelDensity
       const height = elm.clientHeight * pixelDensity
-      console.log('width :' + width)
-      console.log('height :' + height)
       if (this.display.getWidth() !== width || this.display.getHeight() !== height) {
         this.client.sendSize(width, height)
       }
@@ -186,7 +134,6 @@ export default {
           elm.clientWidth / Math.max(this.display.getWidth(), 1),
           elm.clientHeight / Math.max(this.display.getHeight(), 1)
         )
-        console.log(scale)
         this.display.scale(scale)
       })
     },
@@ -200,7 +147,6 @@ export default {
       clipboard.install(this.client)
       tunnel.onerror = status => {
         // eslint-disable-next-line no-console
-        console.error(`Tunnel failed ${JSON.stringify(status)}`)
         this.connectionState = states.TUNNEL_ERROR
       }
       tunnel.onstatechange = state => {
@@ -290,7 +236,7 @@ export default {
         }
         e.returnValue = false
       })
-      const param = serialize(this.query)
+      const param = serialize(this.remoteServer)
       this.client.connect(param)
       window.onunload = () => this.client.disconnect()
       this.mouse = new Guacamole.Mouse(displayElm)
@@ -332,7 +278,6 @@ export default {
   },
   mounted () {
     // this._setScreenSize()
-    // this.startGuacamole()
   }
 }
 </script>

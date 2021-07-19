@@ -91,6 +91,10 @@ export default {
           this.instanceTypeOptions = this.dsInstanceType.JENKINS.instanceType
           this.datasource.instance.instanceType = this.dsInstanceType.JENKINS.name
           break
+        case this.dsInstanceType.GUACAMOLE.type:
+          this.instanceTypeOptions = this.dsInstanceType.GUACAMOLE.instanceType
+          this.datasource.instance.instanceType = this.dsInstanceType.GUACAMOLE.name
+          break
       }
     },
     handlerRegister () {
