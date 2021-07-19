@@ -231,7 +231,7 @@ export default {
         name: this.queryResParam.resources.name,
         businessId: this.queryResParam.resources.id,
         businessType: this.queryResParam.businessType,
-        resourceType: false
+        virtualResource: false
       }
       switch (this.queryResParam.businessType) {
         case BusinessType.SERVER:
