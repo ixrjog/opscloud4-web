@@ -92,7 +92,8 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <server-editor :formStatus="formStatus.server" :activeOptions="activeOptions" ref="serverEditor"
                    @close="fetchData"></server-editor>
-    <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id" :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+    <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
+                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
   </div>
 </template>
 
@@ -310,17 +311,17 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>
