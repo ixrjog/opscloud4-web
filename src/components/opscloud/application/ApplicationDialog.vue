@@ -56,7 +56,7 @@
             </el-form-item>
             <el-form-item v-if="queryResParam.businessType === businessType.ASSET" label="资源类型">
               <el-select v-model="queryResParam.assetType" placeholder="选择资源类型"
-                         @change="clearResOptions">
+                         @change="handlerGetResources('')">
                 <el-option
                   v-for="item in assetTypeOptions"
                   :key="item.id"
@@ -92,7 +92,10 @@
           <div v-for="(value,key) in application.resourceMap" :key="key" :label="key" class="resDiv">
             <p>{{ key | getAppResText }}</p>
             <span v-for="item in value" :key="item.id">
-              <el-tag size="small" closable @close="handlerResUnbind(item.id)">{{ item.name }}</el-tag>
+              <el-tooltip effect="dark" :content="item.comment" placement="top-start"
+                          :disabled="!item.comment">
+                <el-tag size="small" closable @close="handlerResUnbind(item.id)">{{ item.name }}</el-tag>
+              </el-tooltip>
             </span>
             <el-divider></el-divider>
           </div>
@@ -120,7 +123,7 @@ import { QUERY_ASSET_PAGE } from '@/api/modules/datasource/datasource.asset.api'
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 
 const QueryResParam = {
-  resources: {},
+  resources: '',
   dsInstance: {},
   assetType: '',
   businessType: ''
@@ -181,6 +184,7 @@ export default {
           this.getAssetInstance()
           break
         default:
+          this.handlerGetResources('')
       }
     },
     handlerGetAssetType () {
@@ -200,7 +204,7 @@ export default {
     },
     clearResOptions () {
       this.resOptions = []
-      this.queryResParam.resources = {}
+      this.queryResParam.resources = ''
     },
     handlerGetResources (queryName) {
       this.clearResOptions()
@@ -237,12 +241,16 @@ export default {
       switch (this.queryResParam.businessType) {
         case BusinessType.SERVER:
           requestBody.resourceType = 'SERVER'
+          requestBody.name = this.queryResParam.resources.displayName
+          requestBody.comment = this.queryResParam.resources.privateIp
           break
         case BusinessType.SERVERGROUP:
           requestBody.resourceType = 'SERVERGROUP'
+          requestBody.comment = this.queryResParam.resources.comment
           break
         case BusinessType.ASSET:
           requestBody.resourceType = this.queryResParam.resources.assetType
+          requestBody.comment = this.queryResParam.resources.description
           break
         default:
           requestBody.resourceType = ''
