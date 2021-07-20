@@ -94,6 +94,7 @@
             <span v-for="item in value" :key="item.id">
               <el-tag size="small" closable @close="handlerResUnbind(item.id)">{{ item.name }}</el-tag>
             </span>
+            <el-divider></el-divider>
           </div>
         </el-col>
       </el-tab-pane>
@@ -402,7 +403,11 @@ export default {
     }
 
     & .el-tag {
-      margin: 5px 5px 10px 0px;
+      margin: 5px 5px 5px 0px;
+    }
+
+    & .el-divider {
+      margin: 5px 0px;
     }
   }
 }
