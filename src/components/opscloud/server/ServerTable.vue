@@ -90,8 +90,7 @@
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
-    <server-editor :formStatus="formStatus.server" :activeOptions="activeOptions" ref="serverEditor"
-                   @close="fetchData"></server-editor>
+    <server-editor :formStatus="formStatus.server" ref="serverEditor" @close="fetchData"></server-editor>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
   </div>
@@ -270,6 +269,7 @@ export default {
         monitorStatus: -1,
         serverStatus: 1,
         isActive: true,
+        osType: 'linux',
         comment: '',
         accounts: null
       }

@@ -17,7 +17,14 @@
               </template>
             </el-table-column>
           </template>
+          <template v-slot:operation="slotProps">
+            <el-dropdown-item v-if="showEcsImportButton(slotProps.row)">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <el-button type="text" @click="handleEcsImport(slotProps.row)">导入</el-button>
+            </el-dropdown-item>
+          </template>
         </asset-table>
+        <server-editor :formStatus="formStatus.server" ref="serverEditor"></server-editor>
       </el-tab-pane>
       <el-tab-pane label="Image" name="image">
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS_IMAGE" :tableLayout="tableLayout.image"
@@ -86,7 +93,6 @@
           </template>
         </asset-table>
       </el-tab-pane>
-
     </el-tabs>
   </d2-container>
 </template>
@@ -95,6 +101,8 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
+import ServerEditor from '@/components/opscloud/server/ServerEditor'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
 
 const treeObj = {
   label: '',
@@ -110,7 +118,8 @@ const tableLayout = {
       alias: '实例名称'
     },
     assetKey: {
-      alias: '私网IP'
+      alias: '私网IP',
+      show: true
     },
     assetKey2: {
       alias: '公网IP',
@@ -208,7 +217,16 @@ export default {
       activeName: 'ecs',
       instanceId: null,
       tableLayout: tableLayout,
-      assetType: DsInstanceAssetType
+      assetType: DsInstanceAssetType,
+      formStatus: {
+        server: {
+          visible: false,
+          labelWidth: '150px',
+          operationType: true,
+          addTitle: '新增服务器配置',
+          updateTitle: '更新服务器配置'
+        }
+      }
     }
   },
   computed: {},
@@ -217,7 +235,8 @@ export default {
     this.init()
   },
   components: {
-    AssetTable
+    AssetTable,
+    ServerEditor
   },
   methods: {
     handleClick (tab, event) {
@@ -238,9 +257,11 @@ export default {
       }
     },
     init () {
-      this.$nextTick(() => {
-        this.$refs.ecsTable.fetchData()
-      })
+      setTimeout(() => {
+        if (this.$refs.ecsTable) {
+          this.$refs.ecsTable.fetchData()
+        }
+      }, 50)
     },
     getVSwitches (row) {
       const { V_SWITCH } = row.tree
@@ -285,6 +306,41 @@ export default {
         return RAM_ACCESS_KEY
       }
       return []
+    },
+    showEcsImportButton (row) {
+      console.log(row)
+      if (JSON.stringify(row.targetBusinessRelations) !== '[]') {
+        const array = row.targetBusinessRelations.filter(targetBusiness => {
+          return (targetBusiness.sourceBusinessType === BusinessType.SERVER &&
+            targetBusiness.sourceBusinessId === row.id)
+        })
+        return JSON.stringify(array) === '[]'
+      }
+      return false
+    },
+    handleEcsImport (row) {
+      debugger
+      const server = {
+        serverGroup: {},
+        id: '',
+        name: row.name,
+        serverGroupId: '',
+        envType: 0,
+        publicIp: row.assetKey2,
+        privateIp: row.assetKey,
+        serverType: 0,
+        area: row.zone,
+        serialNumber: 0,
+        monitorStatus: -1,
+        serverStatus: 1,
+        isActive: true,
+        osType: row.properties.osType,
+        comment: '',
+        accounts: row.description
+      }
+      this.$refs.serverEditor.initData(server)
+      this.formStatus.server.operationType = true
+      this.formStatus.server.visible = true
     }
   }
 }
