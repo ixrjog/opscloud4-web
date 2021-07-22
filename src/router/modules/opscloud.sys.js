@@ -43,5 +43,14 @@ export default [
       auth: true,
       title: '菜单管理'
     }
+  },
+  {
+    path: '/sys/audit',
+    name: 'sys/menu',
+    component: () => import('@/pages/sys/audit'),
+    meta: {
+      auth: true,
+      title: '审计管理'
+    }
   }
 ]
