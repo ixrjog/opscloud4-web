@@ -4,13 +4,32 @@
       <h1>{{title}}</h1>
     </div>
     <!--      应用选择器-->
-    <el-row v-if="layout.status === 0">
-      <el-card shadow="hover">
-        <div slot="header" class="clearfix">
-          <span>应用列表</span>
-        </div>
-        <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>
-      </el-card>
+    <el-row v-if="layout.status === 0" :gutter="20">
+      <el-col :span="18">
+        <el-card shadow="hover">
+          <div slot="header" class="clearfix">
+            <span>应用列表</span>
+          </div>
+          <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-alert
+          title="Tips"
+          type="info"
+          :closable="false"
+          show-icon>
+          <div style="margin-left: 5px">
+            <i style="margin-right: 2px" class="fab fa-artstation"></i>Pod(容器组)
+          </div>
+          <div style="margin-left: 5px">
+            <i style="margin-right: 2px" class="fab fa-docker"></i>Container(容器)
+          </div>
+          <div style="margin-left: 5px">
+            <a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/">打开教程</a>
+          </div>
+        </el-alert>
+      </el-col>
     </el-row>
     <el-row>
       <!--          终端布局-->

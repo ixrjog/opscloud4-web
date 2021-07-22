@@ -238,9 +238,9 @@ export default {
       }
     },
     init () {
-      this.$nextTick(() => {
+      setTimeout(() =>{
         this.$refs.ecsTable.fetchData()
-      })
+      },1000);
     },
     getVSwitches (row) {
       const { V_SWITCH } = row.tree
