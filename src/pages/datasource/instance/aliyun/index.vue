@@ -18,7 +18,7 @@
             </el-table-column>
           </template>
           <template v-slot:operation="slotProps">
-            <el-dropdown-item v-if="showEcsImportButton(slotProps.row)">
+            <el-dropdown-item v-if="!showEcsImportButton(slotProps.row)">
               <i class="fas fa-cloud-upload-alt"></i>
               <el-button type="text" @click="handleEcsImport(slotProps.row)">导入</el-button>
             </el-dropdown-item>
@@ -308,7 +308,6 @@ export default {
       return []
     },
     showEcsImportButton (row) {
-      console.log(row)
       if (JSON.stringify(row.targetBusinessRelations) !== '[]') {
         const array = row.targetBusinessRelations.filter(targetBusiness => {
           return (targetBusiness.sourceBusinessType === BusinessType.SERVER &&
@@ -319,7 +318,6 @@ export default {
       return false
     },
     handleEcsImport (row) {
-      debugger
       const server = {
         serverGroup: {},
         id: '',
@@ -336,7 +334,8 @@ export default {
         isActive: true,
         osType: row.properties.osType,
         comment: '',
-        accounts: row.description
+        accounts: row.description,
+        assetId: row.id
       }
       this.$refs.serverEditor.initData(server)
       this.formStatus.server.operationType = true
