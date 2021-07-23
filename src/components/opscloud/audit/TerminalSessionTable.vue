@@ -21,16 +21,23 @@
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="sessionId" label="会话ID" width="300"></el-table-column>
-      <el-table-column prop="username" label="会话用户" width="100"></el-table-column>
-      <el-table-column prop="sessionType" label="会话类型" width="200" sortable></el-table-column>
-      <el-table-column prop="serverAddr" label="服务端" width="200">
+      <el-table-column prop="sessionId" label="会话ID" width="260"></el-table-column>
+      <el-table-column prop="sessionType" label="会话类型" width="110" sortable>
         <template slot-scope="scope">
-          <el-tag>{{scope.row.serverAddr}}/{{scope.row.serverHostname}}</el-tag>
+          <session-type-tag :sessionType="scope.row.sessionType"></session-type-tag>
         </template>
       </el-table-column>
-      <el-table-column label="实例">
+      <el-table-column prop="username" label="用户端/服务端" width="200">
         <template slot-scope="scope">
+          <el-tag>{{scope.row.username}}<span>@{{scope.row.remoteAddr}}</span></el-tag>
+          <el-tag>{{scope.row.serverHostname}}/{{scope.row.serverAddr}}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="会话实例">
+        <template slot-scope="scope">
+          <span v-for="sessionInstance in scope.row.sessionInstances" :key="sessionInstance.id">
+            <terminal-session-instance-info :sessionInstance="sessionInstance"></terminal-session-instance-info>
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -43,6 +50,8 @@
 
 import { QUERY_TERMINAL_SESSION_PAGE } from '@/api/modules/terminal/terminal.session.api.js'
 import Pagination from '../common/page/Pagination'
+import SessionTypeTag from '../common/tag/SessionTypeTag'
+import TerminalSessionInstanceInfo from '../terminal/TerminalSessionInstanceInfo'
 
 const sessionTypeOptions = [{
   value: 'WEB_TERMINAL',
@@ -80,7 +89,9 @@ export default {
   },
   computed: {},
   components: {
-    Pagination
+    Pagination,
+    SessionTypeTag,
+    TerminalSessionInstanceInfo
   },
   filters: {},
   methods: {

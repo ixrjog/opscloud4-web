@@ -2,7 +2,7 @@
   <d2-container>
       <h1>{{title}}</h1>
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="终端" name="terminal">
+        <el-tab-pane label="终端会话" name="terminal">
           <terminal-session-table></terminal-session-table>
         </el-tab-pane>
       </el-tabs>
