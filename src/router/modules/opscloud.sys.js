@@ -27,21 +27,30 @@ export default [
     }
   },
   {
-    path: '/sys/guacamole',
-    name: 'sys/guacamole',
-    component: () => import('@/pages/sys/guacamole'),
-    meta: {
-      auth: true,
-      title: 'VNC/RDP'
-    }
-  },
-  {
     path: '/sys/menu',
     name: 'sys/menu',
     component: () => import('@/pages/sys/menu'),
     meta: {
       auth: true,
       title: '菜单管理'
+    }
+  },
+  {
+    path: '/sys/audit',
+    name: 'sys/audit',
+    component: () => import('@/pages/sys/audit'),
+    meta: {
+      auth: true,
+      title: '审计管理'
+    }
+  },
+  {
+    path: '/sys/audit/terminal/play',
+    name: 'sys/audit/terminal/play',
+    component: () => import('@/pages/sys/audit/terminal/play'),
+    meta: {
+      auth: true,
+      title: '终端会话播放'
     }
   }
 ]
