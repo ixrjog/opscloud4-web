@@ -23,9 +23,9 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="sessionId" label="会话" width="300">
         <template slot-scope="scope">
-            <user-tag :user="scope.row.user"></user-tag>
-          <el-tag>{{scope.row.createTime}}</el-tag>
-          <span v-if="scope.row.sessionClosed">-><el-tag>{{scope.row.closeTime}}</el-tag></span>
+          <user-tag :user="scope.row.user"></user-tag>
+          <span>{{scope.row.createTime}}</span>
+          <span v-if="scope.row.sessionClosed">->{{scope.row.closeTime}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="sessionType" label="会话类型" width="110" sortable>
@@ -42,10 +42,11 @@
       </el-table-column>
       <el-table-column label="会话实例">
         <template slot-scope="scope">
-          <span v-for="sessionInstance in scope.row.sessionInstances" :key="sessionInstance.id"
-                class="session-instances">
+          <div class="session-instances">
+          <span v-for="sessionInstance in scope.row.sessionInstances" :key="sessionInstance.id">
             <terminal-session-instance-info :sessionInstance="sessionInstance"></terminal-session-instance-info>
           </span>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -136,6 +137,7 @@ export default {
   .session-instances {
     display: flex;
     flex-wrap: wrap;
+
     .terminal-session-instance-info {
       margin-bottom: 4px;
       flex-grow: 1;
