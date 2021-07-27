@@ -21,7 +21,13 @@
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="sessionId" label="会话ID" width="260"></el-table-column>
+      <el-table-column prop="sessionId" label="会话" width="300">
+        <template slot-scope="scope">
+          <user-tag :user="scope.row.user"></user-tag>
+          <span>{{scope.row.createTime}}</span>
+          <span v-if="scope.row.sessionClosed">->{{scope.row.closeTime}}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="sessionType" label="会话类型" width="110" sortable>
         <template slot-scope="scope">
           <session-type-tag :sessionType="scope.row.sessionType"></session-type-tag>
@@ -29,15 +35,18 @@
       </el-table-column>
       <el-table-column prop="username" label="用户端/服务端" width="200">
         <template slot-scope="scope">
-          <el-tag>{{scope.row.username}}<span>@{{scope.row.remoteAddr}}</span></el-tag>
+          <el-tag>{{scope.row.username}}<span v-if="scope.row.remoteAddr !== null">@{{scope.row.remoteAddr}}</span>
+          </el-tag>
           <el-tag>{{scope.row.serverHostname}}/{{scope.row.serverAddr}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="会话实例">
         <template slot-scope="scope">
+          <div class="session-instances">
           <span v-for="sessionInstance in scope.row.sessionInstances" :key="sessionInstance.id">
             <terminal-session-instance-info :sessionInstance="sessionInstance"></terminal-session-instance-info>
           </span>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -52,6 +61,7 @@ import { QUERY_TERMINAL_SESSION_PAGE } from '@/api/modules/terminal/terminal.ses
 import Pagination from '../common/page/Pagination'
 import SessionTypeTag from '../common/tag/SessionTypeTag'
 import TerminalSessionInstanceInfo from '../terminal/TerminalSessionInstanceInfo'
+import UserTag from '../common/tag/UserTag'
 
 const sessionTypeOptions = [{
   value: 'WEB_TERMINAL',
@@ -91,7 +101,8 @@ export default {
   components: {
     Pagination,
     SessionTypeTag,
-    TerminalSessionInstanceInfo
+    TerminalSessionInstanceInfo,
+    UserTag
   },
   filters: {},
   methods: {
@@ -121,7 +132,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+
+  .session-instances {
+    display: flex;
+    flex-wrap: wrap;
+
+    .terminal-session-instance-info {
+      margin-bottom: 4px;
+      flex-grow: 1;
+      flex-basis: 50%;
+    }
+  }
 
   .el-input {
     display: inline-block;

@@ -44,7 +44,7 @@ export default {
 <style scoped>
   .el-card {
     margin-bottom: 5px;
-    width: 420px;
+    margin-right: 10px;
   }
 
   i {
