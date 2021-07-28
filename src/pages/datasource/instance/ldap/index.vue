@@ -110,9 +110,11 @@ export default {
       }
     },
     init () {
-      this.$nextTick(() => {
-        this.$refs.accountTable.fetchData()
-      })
+      setTimeout(() => {
+        if (this.$refs.accountTable) {
+          this.$refs.accountTable.fetchData()
+        }
+      }, 50)
     }
   }
 }
