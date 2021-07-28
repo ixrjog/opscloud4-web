@@ -25,7 +25,14 @@
       </el-table-column>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
+          <el-dropdown split-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)"
+                       v-if="$scopedSlots.operation">标签
+            <el-dropdown-menu slot="dropdown">
+              <slot name="operation" :row="scope.row"></slot>
+            </el-dropdown-menu>
+          </el-dropdown>
+          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)" v-else>标签
+          </el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -53,7 +60,8 @@ const tableLayout = {
     alias: '名称'
   },
   assetKey: {
-    alias: 'assetKey'
+    alias: 'assetKey',
+    show: true
   },
   assetKey2: {
     alias: 'assetKey2',

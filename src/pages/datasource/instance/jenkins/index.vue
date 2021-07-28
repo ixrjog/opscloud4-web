@@ -42,8 +42,6 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
-import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
-import WhetherTag from '../../../../components/opscloud/common/tag/WhetherTag'
 
 import util from '@/libs/util'
 
@@ -86,9 +84,7 @@ export default {
     this.init()
   },
   components: {
-    AssetTable,
-    DsChildrenTag,
-    WhetherTag
+    AssetTable
   },
   methods: {
     handleClick (tab, event) {
@@ -97,9 +93,11 @@ export default {
       }
     },
     init () {
-      this.$nextTick(() => {
-        this.$refs.computerTable.fetchData()
-      })
+      setTimeout(() => {
+        if (this.$refs.computerTable) {
+          this.$refs.computerTable.fetchData()
+        }
+      }, 50)
     }
   }
 }
