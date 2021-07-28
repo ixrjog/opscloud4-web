@@ -1,20 +1,23 @@
 <template>
   <el-card shadow="hover">
     <div>
-      <el-tag>{{sessionInstance.instanceId}}</el-tag>
+      <el-tag :type="sessionInstance.instanceClosed ?  '':'success'">{{sessionInstance.instanceId}}</el-tag>
     </div>
-    <div>
-      <i class="far fa-clock"></i>{{ sessionInstance.openTime }}[{{sessionInstance.sessionDuration}}s]
-      <el-tag type="success" v-if="!sessionInstance.instanceClosed">会话开启</el-tag>
-      <el-tag type="info" v-if="sessionInstance.instanceClosed">会话关闭</el-tag>
-      <div>
-        <i class="fas fa-video"></i>{{ util.bytesToSize(sessionInstance.outputSize) }}
-        <i class="far fa-address-card"></i>{{ sessionInstance.loginUser }}
-        <el-button type="text" style="float: right; padding: 3px 0" @click="handlePlay(sessionInstance)"><i
-          class="fas fa-play"></i>回放
+    <el-row :gutter="10">
+      <el-col :span="20">
+        <i class="far fa-clock"></i>{{ sessionInstance.openTime }}[{{sessionInstance.sessionDuration}}s]
+        <div>
+          <i class="fas fa-video"></i>{{ util.bytesToSize(sessionInstance.outputSize) }}
+          <i class="far fa-address-card"></i>{{ sessionInstance.loginUser }}
+        </div>
+      </el-col>
+      <el-col :span="4">
+        <br/>
+        <el-button type="text" style="float: right; padding: 3px 0"
+                   @click="handlePlay(sessionInstance)"><i class="fas fa-play"></i>回放
         </el-button>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
   </el-card>
 </template>
 
@@ -34,7 +37,7 @@ export default {
     handlePlay (sessionInstance) {
       this.$router.push({
         // path: '/sys/audit/terminal/play?sessionId=' + sessionInstance.sessionId + '&instanceId=' + sessionInstance.instanceId
-        name: 'sys/audit/terminal/play', params:  sessionInstance
+        name: 'sys/audit/terminal/play', params: sessionInstance
       })
     }
   }
