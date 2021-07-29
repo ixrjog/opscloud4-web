@@ -95,6 +95,14 @@ import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api.js'
 import ServerAccountTransfer from './child/ServerAccountTransfer'
 
+const activeOptions = [{
+  value: true,
+  label: '有效'
+}, {
+  value: false,
+  label: '无效'
+}]
+
 const serverTypeOptions = [{
   value: 0,
   label: '虚拟服务器'
@@ -104,13 +112,13 @@ const serverTypeOptions = [{
 }]
 
 const osTypeOptions = [{
-  value: 'Linux',
+  value: 'linux',
   label: 'Linux'
 }, {
-  value: 'Windows',
+  value: 'windows',
   label: 'Windows'
 }, {
-  value: 'MacOS',
+  value: 'macOS',
   label: 'MacOS'
 }]
 
@@ -119,6 +127,7 @@ export default {
     return {
       activeName: 'base',
       serverTypeOptions: serverTypeOptions,
+      activeOptions: activeOptions,
       labelWidth: '150px',
       envOptions: [],
       serverGroupOptions: [],
@@ -127,7 +136,7 @@ export default {
     }
   },
   name: 'ServerEditor',
-  props: ['formStatus', 'activeOptions'],
+  props: ['formStatus'],
   components: {
     ServerAccountTransfer
   },
@@ -171,7 +180,6 @@ export default {
       } else {
         this.getGroup(this.server.serverGroup.name)
       }
-
       this.$nextTick(() => {
         const accountIds = this.server.accounts !== null ? this.server.accounts.map(e => e.id) : []
         this.$refs.serverAccountTransfer.init(accountIds)
@@ -179,7 +187,7 @@ export default {
     },
     handlerUpdate (requestBody) {
       UPDATE_SERVER(requestBody)
-        .then(res => {
+        .then(() => {
           this.$message.success('保存成功!')
           this.formStatus.visible = false
           this.$emit('close')
@@ -187,7 +195,7 @@ export default {
     },
     handlerAdd (requestBody) {
       ADD_SERVER(requestBody)
-        .then(res => {
+        .then(() => {
           this.$message.success('新增成功!')
           this.formStatus.visible = false
           this.$emit('close')

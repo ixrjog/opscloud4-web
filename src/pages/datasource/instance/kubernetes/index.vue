@@ -137,9 +137,11 @@ export default {
       }
     },
     init () {
-      this.$nextTick(() => {
-        this.$refs.namespaceTable.fetchData()
-      })
+      setTimeout(() => {
+        if (this.$refs.namespaceTable) {
+          this.$refs.namespaceTable.fetchData()
+        }
+      }, 50)
     }
   }
 }

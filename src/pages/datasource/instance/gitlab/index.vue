@@ -199,9 +199,11 @@ export default {
       }
     },
     init () {
-      this.$nextTick(() => {
-        this.$refs.projectTable.fetchData()
-      })
+      setTimeout(() => {
+        if (this.$refs.projectTable) {
+          this.$refs.projectTable.fetchData()
+        }
+      }, 50)
     }
   }
 }
