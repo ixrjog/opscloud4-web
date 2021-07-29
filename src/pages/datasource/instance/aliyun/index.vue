@@ -18,6 +18,10 @@
             </el-table-column>
           </template>
           <template v-slot:operation="slotProps">
+            <el-dropdown-item>
+              <i class="fas fa-power-off"></i>
+              <el-button type="text">电源</el-button>
+            </el-dropdown-item>
             <el-dropdown-item v-if="!showEcsImportButton(slotProps.row)">
               <i class="fas fa-cloud-upload-alt"></i>
               <el-button type="text" @click="handleEcsImport(slotProps.row)">导入</el-button>
