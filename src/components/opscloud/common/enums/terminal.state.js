@@ -4,7 +4,9 @@ const TerminalState = Object.freeze({
   LOGOUT: 'LOGOUT',
   RESIZE: 'RESIZE',
   COMMAND: 'COMMAND',
-  BATCH_COMMAND: 'BATCH_COMMAND'
+  BATCH_COMMAND: 'BATCH_COMMAND',
+  PLAY: 'PLAY',
+  CLOSE: 'CLOSE'
 })
 
 export default TerminalState

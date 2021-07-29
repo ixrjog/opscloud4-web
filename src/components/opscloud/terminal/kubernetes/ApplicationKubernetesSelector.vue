@@ -7,7 +7,7 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="应用名称" width="200"></el-table-column>
       <el-table-column prop="resources" label="无状态">
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="scope.row.resources !== null && scope.row.resources.length > 0">
           <span v-for="resource in scope.row.resources" :key="resource.id">
             <el-card shadow="never">
                <div style="margin-top: -10px">
@@ -24,8 +24,8 @@
                </div>
                <el-divider/>
                <div v-for="pod in resource.assetContainers" :key="pod.asset.name">
-                 <el-tag style="margin-left: 10px;vertical-align:top;"><i style="margin-right: 2px"
-                                                                          class="fab fa-artstation"></i>{{ pod.asset.name }}
+                 <el-tag style="margin-left: 10px;vertical-align:top;">
+                   <i style="margin-right: 2px" class="fab fa-artstation"></i>{{ pod.asset.name }}
                     <span style="color: #67C23A">[{{ pod.properties.phase }}]</span>
                  </el-tag>
                  <span style="margin-left: 5px;display: inline-block" v-for="container in pod.children"
