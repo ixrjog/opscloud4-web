@@ -48,7 +48,9 @@ export default {
 }
 </script>
 
-<style scoped>
-@import "~markdown-it-vue/dist/markdown-it-vue.css";
-@import '~@fortawesome/fontawesome-free/css/all.min.css';
+<style src="markdown-it-vue/dist/markdown-it-vue.css">
+  @font-face {
+    font-family: "Font Awesome 5 Free";
+    src: url("~@fortawesome/fontawesome-free/css/all.min.css");
+  }
 </style>

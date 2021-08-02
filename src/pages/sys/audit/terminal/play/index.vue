@@ -60,8 +60,8 @@ export default {
   },
   mounted () {
     try {
-      if( this.$route.params.sessionId === undefined || this.$route.params.instanceId === undefined ){
-         return
+      if (this.$route.params.sessionId === undefined || this.$route.params.instanceId === undefined) {
+        return
       }
       this.initTerminalSetting()
       this.sessionInstance = {
