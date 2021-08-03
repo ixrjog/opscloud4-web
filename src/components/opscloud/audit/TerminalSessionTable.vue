@@ -33,7 +33,7 @@
           <session-type-tag :sessionType="scope.row.sessionType"></session-type-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="username" label="用户端/服务端" width="200">
+      <el-table-column prop="username" label="用户端/服务端" width="250">
         <template slot-scope="scope">
           <el-tag>{{scope.row.username}}<span v-if="scope.row.remoteAddr !== null">@{{scope.row.remoteAddr}}</span>
           </el-tag>

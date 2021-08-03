@@ -17,15 +17,9 @@
               </template>
             </el-table-column>
           </template>
-          <template v-slot:operation="slotProps">
-            <el-dropdown-item>
-              <i class="fas fa-power-off"></i>
-              <el-button type="text">电源</el-button>
-            </el-dropdown-item>
-            <el-dropdown-item v-if="!showEcsImportButton(slotProps.row)">
-              <i class="fas fa-cloud-upload-alt"></i>
-              <el-button type="text" @click="handleEcsImport(slotProps.row)">导入</el-button>
-            </el-dropdown-item>
+          <template v-slot:operation="scope">
+            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"
+                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>
           </template>
         </asset-table>
         <server-editor :formStatus="formStatus.server" ref="serverEditor"></server-editor>
@@ -106,7 +100,6 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import ServerEditor from '@/components/opscloud/server/ServerEditor'
-import BusinessType from '@/components/opscloud/common/enums/business.type'
 
 const treeObj = {
   label: '',
@@ -311,36 +304,7 @@ export default {
       }
       return []
     },
-    showEcsImportButton (row) {
-      if (JSON.stringify(row.targetBusinessRelations) !== '[]') {
-        const array = row.targetBusinessRelations.filter(targetBusiness => {
-          return (targetBusiness.sourceBusinessType === BusinessType.SERVER &&
-            targetBusiness.sourceBusinessId === row.id)
-        })
-        return JSON.stringify(array) === '[]'
-      }
-      return false
-    },
-    handleEcsImport (row) {
-      const server = {
-        serverGroup: {},
-        id: '',
-        name: row.name,
-        serverGroupId: '',
-        envType: 0,
-        publicIp: row.assetKey2,
-        privateIp: row.assetKey,
-        serverType: 0,
-        area: row.zone,
-        serialNumber: 0,
-        monitorStatus: -1,
-        serverStatus: 1,
-        isActive: true,
-        osType: row.properties.osType,
-        comment: '',
-        accounts: row.description,
-        assetId: row.id
-      }
+    handleImportServer (server) {
       this.$refs.serverEditor.initData(server)
       this.formStatus.server.operationType = true
       this.formStatus.server.visible = true
@@ -350,8 +314,8 @@ export default {
 </script>
 
 <style scoped>
-.sgLabel {
-  float: left;
-  width: 50%;
-}
+  .sgLabel {
+    float: left;
+    width: 50%;
+  }
 </style>

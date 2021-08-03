@@ -35,3 +35,12 @@ export function SET_CONFIG (data) {
     data
   })
 }
+
+export function SCAN_ASSET_BUSINESS (data) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/business/scan',
+    method: 'put',
+    data
+  })
+}

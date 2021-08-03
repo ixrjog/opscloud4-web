@@ -52,5 +52,14 @@ export default [
       auth: true,
       title: '终端会话播放'
     }
+  },
+  {
+    path: '/sys/audit/terminal/command',
+    name: 'sys/audit/terminal/command',
+    component: () => import('@/pages/sys/audit/terminal/command'),
+    meta: {
+      auth: true,
+      title: '终端命令审计'
+    }
   }
 ]

@@ -79,6 +79,10 @@ export default {
           this.instanceTypeOptions = this.dsInstanceType.LDAP.instanceType
           this.datasource.instance.instanceType = this.dsInstanceType.LDAP.name
           break
+        case this.dsInstanceType.GITLAB.type:
+          this.instanceTypeOptions = this.dsInstanceType.GITLAB.instanceType
+          this.datasource.instance.instanceType = this.dsInstanceType.GITLAB.name
+          break
         case this.dsInstanceType.ALIYUN.type:
           this.instanceTypeOptions = this.dsInstanceType.ALIYUN.instanceType
           this.datasource.instance.instanceType = this.dsInstanceType.ALIYUN.name
