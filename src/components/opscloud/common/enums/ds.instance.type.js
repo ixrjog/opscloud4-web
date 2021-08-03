@@ -19,8 +19,26 @@ const DsInstanceType = Object.freeze({
       }
     ]
   },
-  GITLAB: 3,
-  SONAR: 4,
+  GITLAB: {
+    type: 3,
+    name: 'GITLAB',
+    instanceType: [
+      {
+        value: 'GITLAB',
+        label: 'GITLAB'
+      }
+    ]
+  },
+  SONAR: {
+    type: 4,
+    name: 'SONAR',
+    instanceType: [
+      {
+        value: 'SONAR',
+        label: 'SONAR'
+      }
+    ]
+  },
   ANSIBLE: 5,
   KUBERNETES: {
     type: 6,

@@ -10,3 +10,12 @@ export function QUERY_TERMINAL_SESSION_PAGE (data) {
     data
   })
 }
+
+export function QUERY_TERMINAL_SESSION_INSTANCE_COMMAND_PAGE (data) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/instance/command/page/query',
+    method: 'post',
+    data
+  })
+}

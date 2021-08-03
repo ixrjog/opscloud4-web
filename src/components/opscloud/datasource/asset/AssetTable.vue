@@ -4,6 +4,8 @@
       <el-input v-model.trim="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handlePull">拉取</el-button>
+      <el-button @click="handleScan">扫描</el-button>
+
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="assetId" :label="tableLayout.assetId.alias"
@@ -23,15 +25,21 @@
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column label="操作" width="280">
+<!--        <template slot-scope="scope">-->
+<!--          <el-dropdown split-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)"-->
+<!--                       v-if="$scopedSlots.operation">标签-->
+<!--            <el-dropdown-menu slot="dropdown">-->
+<!--              <slot name="operation" :row="scope.row"></slot>-->
+<!--            </el-dropdown-menu>-->
+<!--          </el-dropdown>-->
+<!--          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)" v-else>标签-->
+<!--          </el-button>-->
+<!--          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>-->
+<!--        </template>-->
         <template slot-scope="scope">
-          <el-dropdown split-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)"
-                       v-if="$scopedSlots.operation">标签
-            <el-dropdown-menu slot="dropdown">
-              <slot name="operation" :row="scope.row"></slot>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)" v-else>标签
+          <slot name="operation" :row="scope.row"></slot>
+          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签
           </el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
@@ -46,7 +54,7 @@
 
 <script>
 
-import { QUERY_ASSET_PAGE, PULL_ASSET, DELETE_ASSET_BY_ID } from '@/api/modules/datasource/datasource.asset.api.js'
+import { QUERY_ASSET_PAGE, PULL_ASSET,SCAN_ASSET_BUSINESS, DELETE_ASSET_BY_ID } from '@/api/modules/datasource/datasource.asset.api.js'
 import Pagination from '../../common/page/Pagination'
 import BusinessTagEditor from '../../common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
@@ -137,6 +145,14 @@ export default {
     },
     handlePull () {
       PULL_ASSET({
+        instanceId: this.instanceId,
+        assetType: this.assetType
+      }).then(() => {
+        this.$message.success('后台任务执行中！')
+      })
+    },
+    handleScan () {
+      SCAN_ASSET_BUSINESS({
         instanceId: this.instanceId,
         assetType: this.assetType
       }).then(() => {

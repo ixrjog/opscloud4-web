@@ -76,7 +76,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="账户配置" name="account" :disabled="server.id === ''">
+      <el-tab-pane label="账户配置" name="account" :disabled="server.id === '' || server.id === 0">
         <server-account-transfer :serverId="server.id" ref="serverAccountTransfer"></server-account-transfer>
       </el-tab-pane>
     </el-tabs>
@@ -174,7 +174,8 @@ export default {
       this.activeName = 'base'
       this.getEnv()
       // 尝试选择匹配服务器组
-      if (this.server.serverGroup === null || JSON.stringify(this.server.serverGroup) === '{}') {
+      // TODO 此处需要优化 删除服务器中环境标签
+      if (this.server.serverGroup === null || this.server.serverGroup === undefined || JSON.stringify(this.server.serverGroup) === '{}') {
         const queryName = this.server.name.replace(new RegExp('-[0-9]+$'), '')
         this.getGroup(queryName)
       } else {

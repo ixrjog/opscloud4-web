@@ -12,10 +12,16 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <br/>
-        <el-button type="text" style="float: right; padding: 3px 0"
-                   @click="handlePlay(sessionInstance)"><i class="fas fa-play"></i>回放
-        </el-button>
+        <el-row>
+          <el-button type="text" style="float: right; padding: 3px 0"
+                     @click="handleCommand(sessionInstance)"><i class="fas fa-greater-than-equal"></i>Cmd
+          </el-button>
+        </el-row>
+        <el-row>
+          <el-button type="text" style="float: right; padding: 3px 0"
+                     @click="handlePlay(sessionInstance)"><i class="fas fa-play"></i>Play
+          </el-button>
+        </el-row>
       </el-col>
     </el-row>
   </el-card>
@@ -34,6 +40,12 @@ export default {
     }
   },
   methods: {
+    handleCommand (sessionInstance) {
+      this.$router.push({
+        // path: '/sys/audit/terminal/play?sessionId=' + sessionInstance.sessionId + '&instanceId=' + sessionInstance.instanceId
+        name: 'sys/audit/terminal/command', params: sessionInstance
+      })
+    },
     handlePlay (sessionInstance) {
       this.$router.push({
         // path: '/sys/audit/terminal/play?sessionId=' + sessionInstance.sessionId + '&instanceId=' + sessionInstance.instanceId

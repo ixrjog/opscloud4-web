@@ -103,6 +103,7 @@ export default {
         password: '',
         name: '',
         displayName: '',
+        isActive: true,
         wechat: '',
         email: '',
         phone: '',
