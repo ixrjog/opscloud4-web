@@ -22,7 +22,19 @@
       <el-tab-pane label="用户" name="user">
         <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_USER" :tableLayout="tableLayout.user"
                      ref="userTable">
-          <template v-slot:extend>
+          <template v-slot:extend class="user-template">
+            <el-table-column label="告警媒介" width="250">
+              <template slot-scope="scope">
+                <el-row v-if="scope.row.properties && scope.row.properties.email">
+                  <i class="far fa-envelope"></i>
+                  <span style="margin-left: 5px">{{ scope.row.properties.email }}</span>
+                </el-row>
+                <el-row v-if="scope.row.properties && scope.row.properties.phone">
+                  <i class="fas fa-mobile-alt" style="margin-left: 2px"></i>
+                  <span style="margin-left: 7px">{{ scope.row.properties.phone }}</span>
+                </el-row>
+              </template>
+            </el-table-column>
             <el-table-column prop="children" label="成员(用户组)" width="600">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.ZABBIX_USER_GROUP" :type="3"></ds-children-tag>
@@ -160,8 +172,8 @@ const tableLayout = {
       alias: '主机名'
     },
     assetKey2: {
-      alias: '',
-      show: false
+      alias: 'IP',
+      show: true
     },
     zone: {
       alias: '',
