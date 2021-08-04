@@ -17,12 +17,11 @@
               </template>
             </el-table-column>
           </template>
-          <template v-slot:operation="scope">
-            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"
-                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>
-          </template>
+<!--          <template v-slot:operation="scope">-->
+<!--            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"-->
+<!--                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>-->
+<!--          </template>-->
         </asset-table>
-        <server-editor :formStatus="formStatus.server" ref="serverEditor"></server-editor>
       </el-tab-pane>
       <el-tab-pane label="Image" name="image">
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS_IMAGE" :tableLayout="tableLayout.image"
@@ -99,7 +98,6 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
-import ServerEditor from '@/components/opscloud/server/ServerEditor'
 
 const treeObj = {
   label: '',
@@ -214,16 +212,7 @@ export default {
       activeName: 'ecs',
       instanceId: null,
       tableLayout: tableLayout,
-      assetType: DsInstanceAssetType,
-      formStatus: {
-        server: {
-          visible: false,
-          labelWidth: '150px',
-          operationType: true,
-          addTitle: '新增服务器配置',
-          updateTitle: '更新服务器配置'
-        }
-      }
+      assetType: DsInstanceAssetType
     }
   },
   computed: {},
@@ -232,8 +221,7 @@ export default {
     this.init()
   },
   components: {
-    AssetTable,
-    ServerEditor
+    AssetTable
   },
   methods: {
     handleClick (tab, event) {
@@ -303,11 +291,6 @@ export default {
         return RAM_ACCESS_KEY
       }
       return []
-    },
-    handleImportServer (server) {
-      this.$refs.serverEditor.initData(server)
-      this.formStatus.server.operationType = true
-      this.formStatus.server.visible = true
     }
   }
 }

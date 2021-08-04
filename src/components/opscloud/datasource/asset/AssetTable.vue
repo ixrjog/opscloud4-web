@@ -26,19 +26,23 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
-<!--        <template slot-scope="scope">-->
-<!--          <el-dropdown split-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)"-->
-<!--                       v-if="$scopedSlots.operation">标签-->
-<!--            <el-dropdown-menu slot="dropdown">-->
-<!--              <slot name="operation" :row="scope.row"></slot>-->
-<!--            </el-dropdown-menu>-->
-<!--          </el-dropdown>-->
-<!--          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)" v-else>标签-->
-<!--          </el-button>-->
-<!--          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>-->
-<!--        </template>-->
+        <!--        <template slot-scope="scope">-->
+        <!--          <el-dropdown split-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)"-->
+        <!--                       v-if="$scopedSlots.operation">标签-->
+        <!--            <el-dropdown-menu slot="dropdown">-->
+        <!--              <slot name="operation" :row="scope.row"></slot>-->
+        <!--            </el-dropdown-menu>-->
+        <!--          </el-dropdown>-->
+        <!--          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)" v-else>标签-->
+        <!--          </el-button>-->
+        <!--          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>-->
+        <!--        </template>-->
         <template slot-scope="scope">
           <slot name="operation" :row="scope.row"></slot>
+          <el-button type="primary" plain size="mini"
+                     v-if="scope.row.convertBusinessTypes != null && JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"
+                     @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入
+          </el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签
           </el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
@@ -49,16 +53,23 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <business-tag-editor ref="businessTagEditor" :businessType="businessType" :businessId="businessId"
                          :formStatus="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+    <server-editor :formStatus="formStatus.server" ref="serverEditor"></server-editor>
   </div>
 </template>
 
 <script>
 
-import { QUERY_ASSET_PAGE, PULL_ASSET,SCAN_ASSET_BUSINESS, DELETE_ASSET_BY_ID } from '@/api/modules/datasource/datasource.asset.api.js'
+import {
+  QUERY_ASSET_PAGE,
+  PULL_ASSET,
+  SCAN_ASSET_BUSINESS,
+  DELETE_ASSET_BY_ID
+} from '@/api/modules/datasource/datasource.asset.api.js'
 import Pagination from '../../common/page/Pagination'
 import BusinessTagEditor from '../../common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import BusinessTags from '../../common/tag/BusinessTags'
+import ServerEditor from '../../server/ServerEditor'
 
 const tableLayout = {
   assetId: {
@@ -113,6 +124,13 @@ export default {
         businessTag: {
           visible: false,
           title: '编辑数据源实例资产标签'
+        },
+        server: {
+          visible: false,
+          labelWidth: '150px',
+          operationType: true,
+          addTitle: '新增服务器配置',
+          updateTitle: '更新服务器配置'
         }
       },
       businessId: '',
@@ -132,7 +150,8 @@ export default {
   components: {
     BusinessTagEditor,
     BusinessTags,
-    Pagination
+    Pagination,
+    ServerEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -181,6 +200,11 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
+    handleImportServer (server) {
+      this.$refs.serverEditor.initData(server)
+      this.formStatus.server.operationType = true
+      this.formStatus.server.visible = true
+    },
     fetchData () {
       this.table.loading = true
       const requestBody = {
@@ -202,12 +226,12 @@ export default {
 </script>
 
 <style scoped>
-.el-input {
-  display: inline-block;
-  max-width: 200px;
-}
+  .el-input {
+    display: inline-block;
+    max-width: 200px;
+  }
 
-.el-button {
-  margin-left: 5px;
-}
+  .el-button {
+    margin-left: 5px;
+  }
 </style>
