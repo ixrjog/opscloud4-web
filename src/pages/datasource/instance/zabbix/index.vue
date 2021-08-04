@@ -169,11 +169,11 @@ const tableLayout = {
       alias: '主机名'
     },
     assetKey: {
-      alias: '主机名'
-    },
-    assetKey2: {
       alias: 'IP',
       show: true
+    },
+    assetKey2: {
+      show: false
     },
     zone: {
       alias: '',
