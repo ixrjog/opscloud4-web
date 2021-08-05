@@ -10,6 +10,7 @@
         <roles-info :roles="user.roles"></roles-info>
         <user-group-info :userId="user.id"></user-group-info>
         <server-group-info :userId="user.id"></server-group-info>
+        <access-token-info :user="user" @fetchData="fetchData"></access-token-info>
       </el-col>
     </el-row>
   </d2-container>
@@ -24,6 +25,7 @@ import RolesInfo from '../../../components/opscloud/user/details/UserRBACRolesIn
 import ServerGroupInfo
   from '../../../components/opscloud/user/details/UserPermissionServerGroupInfoCard'
 import UserGroupInfo from '../../../components/opscloud/user/details/UserPermissionGroupInfoCard'
+import AccessTokenInfo from '../../../components/opscloud/user/details/UserAccessTokenCard'
 
 export default {
   data () {
@@ -39,7 +41,8 @@ export default {
     PubkeyInfo, // Ssh公钥
     RolesInfo,
     ServerGroupInfo,
-    UserGroupInfo
+    UserGroupInfo,
+    AccessTokenInfo
   },
   methods: {
     fetchData () {

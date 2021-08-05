@@ -16,7 +16,7 @@
         flex="dir:top main:justify cross:stretch box:justify">
         <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
-            欢迎来到白衣的运维世界
+            抱怨身处黑暗，不如提灯前行
           </p>
         </div>
         <div

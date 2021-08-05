@@ -8,7 +8,7 @@
       <el-tab-pane label="用户组" name="group">
         <user-group-table></user-group-table>
       </el-tab-pane>
-    </el-tabs>
+    </el-tabs> 
   </d2-container>
 </template>
 
