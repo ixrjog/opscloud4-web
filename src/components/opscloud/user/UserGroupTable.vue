@@ -3,7 +3,7 @@
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handlerAdd">新建</el-button>
+      <el-button @click="handleAdd">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
@@ -14,37 +14,36 @@
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
-      <el-table-column label="操作" width="120">
-<!--        <template slot-scope="scope">-->
-<!--          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>-->
-<!--        </template>-->
+      <el-table-column label="操作" width="380">
+        <template slot-scope="scope">
+          <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
+    <user-group-editor :formStatus="formStatus.userGroup" ref="userGroupEditor" @close="fetchData"></user-group-editor>
   </div>
 </template>
 
 <script>
 
-import { QUERY_USER_GROUP_PAGE } from '@/api/modules/user/user.group.api.js'
+import { QUERY_USER_GROUP_PAGE,DELETE_USERGROUP_BY_ID } from '@/api/modules/user/user.group.api.js'
 import Pagination from '../common/page/Pagination'
 import UsersTag from '../common/tag/UsersTag'
+import UserGroupEditor from './UserGroupEditor'
 
 export default {
   name: 'UserGroupTable',
   data () {
     return {
       formStatus: {
-        user: {
+        userGroup: {
           visible: false,
           operationType: true,
-          addTitle: '新增用户信息',
-          updateTitle: '更新用户信息'
-        },
-        group: {
-          visible: false,
-          title: '用户授权'
+          addTitle: '新增用户组信息',
+          updateTitle: '更新用户组信息'
         }
       },
       table: {
@@ -67,6 +66,7 @@ export default {
     this.fetchData()
   },
   components: {
+    UserGroupEditor,
     UsersTag,
     Pagination
   },
@@ -79,27 +79,38 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handlerRowUpdate (row) {
-      // this.formStatus.user.operationType = false
-      // this.formStatus.user.visible = true
-      // const user = Object.assign({}, row)
-      // this.$refs.userEditor.initData(user)
+    handleRowUpdate (row) {
+      this.formStatus.userGroup.operationType = false
+      this.formStatus.userGroup.visible = true
+      const userGroup = Object.assign({}, row)
+      this.$refs.userGroupEditor.initData(userGroup)
     },
-    handlerAdd () {
-      // this.formStatus.user.visible = true
-      // this.formStatus.user.operationType = true
-      // const user = {
-      //   id: '',
-      //   username: '',
-      //   password: '',
-      //   name: '',
-      //   displayName: '',
-      //   wechat: '',
-      //   email: '',
-      //   phone: '',
-      //   comment: ''
-      // }
-      // this.$refs.userEditor.initData(user)
+    handleRowDel (row) {
+      this.$confirm('此操作将删除当前配置?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DELETE_USERGROUP_BY_ID(row.id).then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除!')
+      })
+    },
+    handleAdd () {
+      this.formStatus.userGroup.visible = true
+      this.formStatus.userGroup.operationType = true
+      const userGroup = {
+        id: '',
+        name: '',
+        groupType: 0,
+        source: '',
+        allowWorkorder: false,
+        comment: ''
+      }
+      this.$refs.userGroupEditor.initData(userGroup)
     },
     fetchData () {
       this.table.loading = true

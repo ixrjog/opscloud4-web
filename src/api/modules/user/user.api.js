@@ -60,3 +60,11 @@ export function QUERY_USER_BUSINESS_PERMISSION (data) {
     data
   })
 }
+
+export function QUERY_BUSINESS_PERMISSION_USER (data) {
+  return request({
+    url: baseUrl + '/permission/business/query',
+    method: 'post',
+    data
+  })
+}

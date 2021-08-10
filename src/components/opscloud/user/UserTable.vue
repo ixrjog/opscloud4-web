@@ -3,27 +3,23 @@
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData">查询</el-button>
-      <!--        <el-button @click="syncLdapUser" style="margin-left: 5px">同步</el-button>-->
-      <el-button @click="handlerAdd">新建</el-button>
-      <!--        <el-button @click="handlerRevokeToken" style="margin-left: 5px">吊销令牌</el-button>-->
+      <el-button @click="handleAdd">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="displayName" label="显示名"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column label="操作" width="380">
+      <el-table-column prop="username" label="用户名" width="150"></el-table-column>
+      <el-table-column prop="displayName" label="显示名" width="150"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="250"></el-table-column>
+      <el-table-column prop="businessPermissions" label="业务授权">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>
-          <!--          <el-tooltip class="item" effect="light" content="用户组授权" placement="top-start">-->
-          <!--            <el-button type="primary" plain size="mini" icon="el-icon-user-solid" @click="editUserGroup(scope.row)">-->
-          <!--              授权-->
-          <!--            </el-button>-->
-          <!--          </el-tooltip>-->
-          <!--          <el-tooltip class="item" effect="light" content="服务器组授权" placement="top-start">-->
-          <!--            <el-button type="primary" plain size="mini" icon="fa fa-server" @click="editServerGroup(scope.row)">授权-->
-          <!--            </el-button>-->
-          <!--          </el-tooltip>-->
-          <!--          <el-button type="danger" plain size="mini" @click="retireUser(scope.row)">离职</el-button>-->
+          <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
+            <el-divider content-position="left"><b style="color: #9d9fa3">{{key}}</b></el-divider>
+            <el-tag v-for="item in value" :key="item.id" style="margin-right: 5px">{{item.name}}</el-tag>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="180">
+        <template slot-scope="scope">
+          <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,13 +84,13 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handlerRowUpdate (row) {
+    handleRowUpdate (row) {
       this.formStatus.user.operationType = false
       this.formStatus.user.visible = true
       const user = Object.assign({}, row)
       this.$refs.userEditor.initData(user)
     },
-    handlerAdd () {
+    handleAdd () {
       this.formStatus.user.visible = true
       this.formStatus.user.operationType = true
       const user = {

@@ -12,7 +12,7 @@
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column prop="name" label="应用名称"></el-table-column>
-        <el-table-column prop="applicationKey" label="key">
+        <el-table-column prop="applicationKey" label="Key">
           <template slot-scope="props">
             <el-tag disable-transitions type="primary" plain size="mini">{{ props.row.applicationKey }}</el-tag>
           </template>

@@ -53,8 +53,8 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
       <el-table-column prop="serialNumber" label="序号" width="80" sortable></el-table-column>
-      <el-table-column prop="publicIp" label="公网ip" width="120"></el-table-column>
-      <el-table-column prop="privateIp" label="私网ip" width="120"></el-table-column>
+      <el-table-column prop="publicIp" label="公网IP" width="120"></el-table-column>
+      <el-table-column prop="privateIp" label="私网IP" width="120"></el-table-column>
       <el-table-column prop="env" label="环境" width="80">
         <template slot-scope="scope">
           <env-tag :env="scope.row.env"></env-tag>

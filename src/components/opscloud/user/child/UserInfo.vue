@@ -37,7 +37,7 @@ import { ADD_USER, UPDATE_USER } from '@/api/modules/user/user.api.js'
 import tools from '@/libs/tools.js'
 
 export default {
-  name: 'UserTab',
+  name: 'UserInfo',
   props: ['operationType'],
   data () {
     return {
@@ -52,25 +52,27 @@ export default {
     handlerRandomWord () {
       this.user.password = tools.randomWord(false, 20)
     },
-    handlerUpdate (requestBody) {
-      UPDATE_USER(requestBody)
+    handlerUpdate (request) {
+      UPDATE_USER(request)
         .then(res => {
           this.$message.success('保存成功!')
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
-      ADD_USER(requestBody)
+    handlerAdd (request) {
+      ADD_USER(request)
         .then(res => {
           this.$message.success('新增成功!')
           this.$emit('close')
         })
     },
     save () {
+      const user =  Object.assign({}, this.user)
+      delete user.businessPermissions
       if (this.operationType) {
-        this.handlerAdd(this.user)
+        this.handlerAdd(user)
       } else {
-        this.handlerUpdate(this.user)
+        this.handlerUpdate(user)
       }
     }
   }

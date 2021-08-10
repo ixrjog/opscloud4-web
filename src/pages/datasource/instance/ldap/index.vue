@@ -6,7 +6,7 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account"
                      ref="accountTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="phone">
+            <el-table-column prop="properties" label="手机">
               <template slot-scope="scope">
                 <span>{{ scope.row.properties.mobile }}</span>
               </template>
@@ -44,7 +44,7 @@ import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsC
 const tableLayout = {
   account: {
     assetId: {
-      alias: 'cn'
+      alias: '用户名'
     },
     name: {
       alias: '显示名'
@@ -53,7 +53,7 @@ const tableLayout = {
       alias: '用户名'
     },
     assetKey2: {
-      alias: 'email',
+      alias: '邮箱',
       show: true
     },
     zone: {
@@ -63,7 +63,7 @@ const tableLayout = {
   },
   group: {
     assetId: {
-      alias: 'cn'
+      alias: '组名'
     },
     name: {
       alias: '显示名'

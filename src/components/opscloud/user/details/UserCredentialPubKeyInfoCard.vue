@@ -5,21 +5,28 @@
         <span>SSH密钥<i class="header-icon el-icon-info"></i>(SSH-Server专用)</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="handlerEdit">编辑</el-button>
       </div>
-      <!--       local sshPubKey-->
-      <div v-if="JSON.stringify(user.credentialDetails.credentialMap) !== '{}' && user.credentialDetails.credentialMap.PUB_KEY !== null">
-        <el-tag
-          style="margin-left: 5px;margin-bottom: 2px">
-          {{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}<{{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}>
-        </el-tag>
-      </div>
-      <!--      gitlab sshPubKey-->
-      <div  v-if="JSON.stringify(user.credentialDetails.assetCredentialMap) !== '{}' && user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY !== null">
-        <div v-for="item in user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY" :key="item.id">
-          <el-tooltip class="item" effect="light" :content="'Gitlab公钥配置'" placement="top-start">
-            <el-tag type="success" style="margin-left: 5px;margin-bottom: 2px"><i class="fab fa-gitlab"></i> {{ item.description }}<{{ item.assetKey }}></el-tag>
-         </el-tooltip>
-        </div>
-      </div>
+      <span style="display: flex; flex-wrap: wrap;">
+           <!-- local sshPubKey-->
+           <span
+             v-if="JSON.stringify(user.credentialDetails.credentialMap) !== '{}' && user.credentialDetails.credentialMap.PUB_KEY !== null">
+            <el-card shadow="hover" style="margin-right: 10px">
+               <el-tag style="margin-bottom: 2px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}</el-tag>
+               <div style="font-size: 12px">
+                  {{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}
+               </div>
+            </el-card>
+           </span>
+           <!--  gitlab sshPubKey-->
+           <span
+             v-if="JSON.stringify(user.credentialDetails.assetCredentialMap) !== '{}' && user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY !== null">
+            <span v-for="asset in user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY" :key="asset.id">
+               <el-card shadow="hover" style="margin-right: 10px">
+                 <el-tag style="margin-bottom: 2px" type="success"><i class="fab fa-gitlab" style="margin-right: 5px"></i>{{  asset.description }}</el-tag>
+                 <div style="font-size: 12px">{{ asset.assetKey }}</div>
+               </el-card>
+            </span>
+      </span>
+      </span>
     </el-card>
     <pubkey-editor :form-status="formStatus.pubKey" ref="pubkeyEditor" @fetchData="fetchData"></pubkey-editor>
   </div>
@@ -78,4 +85,15 @@ export default {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
+
+  /*.el-card {*/
+  /*  display: flex;*/
+  /*  flex-wrap: wrap;*/
+
+  /*  .terminal-session-instance-info {*/
+  /*    margin-bottom: 4px;*/
+  /*    flex-grow: 1;*/
+  /*    flex-basis: 50%;*/
+  /*  }*/
+  /*}*/
 </style>

@@ -40,8 +40,8 @@
         <template slot-scope="scope">
           <slot name="operation" :row="scope.row"></slot>
           <el-button type="primary" plain size="mini"
-                     v-if="scope.row.convertBusinessTypes != null && JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"
-                     @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入
+                     v-if="scope.row.convertBusinessTypes != null && JSON.stringify(scope.row.convertBusinessTypes) !== '{}'"
+                     @click="handleImport(scope.row.convertBusinessTypes)">导入
           </el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签
           </el-button>
@@ -53,7 +53,8 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <business-tag-editor ref="businessTagEditor" :businessType="businessType" :businessId="businessId"
                          :formStatus="formStatus.businessTag" @close="fetchData"></business-tag-editor>
-    <server-editor :formStatus="formStatus.server" ref="serverEditor"></server-editor>
+    <server-editor :formStatus="formStatus.server" ref="serverEditor" @close="fetchData"></server-editor>
+    <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
   </div>
 </template>
 
@@ -70,6 +71,7 @@ import BusinessTagEditor from '../../common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import BusinessTags from '../../common/tag/BusinessTags'
 import ServerEditor from '../../server/ServerEditor'
+import UserEditor from '../../user/UserEditor'
 
 const tableLayout = {
   assetId: {
@@ -131,6 +133,12 @@ export default {
           operationType: true,
           addTitle: '新增服务器配置',
           updateTitle: '更新服务器配置'
+        },
+        user: {
+          visible: false,
+          operationType: true,
+          addTitle: '新增用户信息',
+          updateTitle: '更新用户信息'
         }
       },
       businessId: '',
@@ -151,7 +159,8 @@ export default {
     BusinessTagEditor,
     BusinessTags,
     Pagination,
-    ServerEditor
+    ServerEditor,
+    UserEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -200,10 +209,19 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handleImportServer (server) {
-      this.$refs.serverEditor.initData(server)
-      this.formStatus.server.operationType = true
-      this.formStatus.server.visible = true
+    handleImport (convertBusinessTypes) {
+      if (convertBusinessTypes.SERVER !== undefined) {
+        this.$refs.serverEditor.initData(convertBusinessTypes.SERVER)
+        this.formStatus.server.operationType = true
+        this.formStatus.server.visible = true
+        return
+      }
+      if (convertBusinessTypes.USER !== undefined) {
+        this.$refs.userEditor.initData(convertBusinessTypes.USER)
+        this.formStatus.user.operationType = true
+        this.formStatus.user.visible = true
+        return
+      }
     },
     fetchData () {
       this.table.loading = true

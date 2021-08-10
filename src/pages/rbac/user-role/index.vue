@@ -13,7 +13,7 @@
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="username" label="用户名" width="250"></el-table-column>
       <el-table-column prop="displayName" label="显示名" width="250"></el-table-column>
-      <el-table-column prop="email" label="email" width="250"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="250"></el-table-column>
       <el-table-column prop="roles" label="角色">
         <template slot-scope="scope">
           <role-tags :roles="scope.row.roles"></role-tags>
@@ -21,7 +21,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="warning" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+          <el-button type="warning" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,7 +81,7 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.$refs.userRoleEditor.initData(row)
       this.formStatus.role.visible = true
     },
