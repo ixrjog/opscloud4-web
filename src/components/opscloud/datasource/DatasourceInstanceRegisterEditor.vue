@@ -74,32 +74,32 @@ export default {
   methods: {
     initData (datasource) {
       this.datasource = datasource
+      let instanceType
       switch (datasource.config.dsType) {
         case this.dsInstanceType.LDAP.type:
-          this.instanceTypeOptions = this.dsInstanceType.LDAP.instanceType
-          this.datasource.instance.instanceType = this.dsInstanceType.LDAP.name
+          instanceType = this.dsInstanceType.LDAP
           break
         case this.dsInstanceType.GITLAB.type:
-          this.instanceTypeOptions = this.dsInstanceType.GITLAB.instanceType
-          this.datasource.instance.instanceType = this.dsInstanceType.GITLAB.name
+          instanceType = this.dsInstanceType.GITLAB
           break
         case this.dsInstanceType.ALIYUN.type:
-          this.instanceTypeOptions = this.dsInstanceType.ALIYUN.instanceType
-          this.datasource.instance.instanceType = this.dsInstanceType.ALIYUN.name
+          instanceType = this.dsInstanceType.ALIYUN
           break
         case this.dsInstanceType.KUBERNETES.type:
-          this.instanceTypeOptions = this.dsInstanceType.KUBERNETES.instanceType
-          this.datasource.instance.instanceType = this.dsInstanceType.KUBERNETES.name
+          instanceType = this.dsInstanceType.KUBERNETES
           break
         case this.dsInstanceType.JENKINS.type:
-          this.instanceTypeOptions = this.dsInstanceType.JENKINS.instanceType
-          this.datasource.instance.instanceType = this.dsInstanceType.JENKINS.name
+          instanceType = this.dsInstanceType.JENKINS
           break
         case this.dsInstanceType.GUACAMOLE.type:
-          this.instanceTypeOptions = this.dsInstanceType.GUACAMOLE.instanceType
-          this.datasource.instance.instanceType = this.dsInstanceType.GUACAMOLE.name
+          instanceType = this.dsInstanceType.GUACAMOLE
+          break
+        case this.dsInstanceType.ANSIBLE.type:
+          instanceType = this.dsInstanceType.ANSIBLE
           break
       }
+      this.instanceTypeOptions = instanceType.instanceType
+      this.datasource.instance.instanceType = instanceType.name
     },
     handlerRegister () {
       REGISTER_DATASOURCE_INSTANCE(this.datasource.instance)

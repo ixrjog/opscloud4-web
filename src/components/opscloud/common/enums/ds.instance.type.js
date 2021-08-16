@@ -39,7 +39,16 @@ const DsInstanceType = Object.freeze({
       }
     ]
   },
-  ANSIBLE: 5,
+  ANSIBLE: {
+    type: 5,
+    name: 'ANSIBLE',
+    instanceType: [
+      {
+        value: 'ANSIBLE',
+        label: 'ANSIBLE'
+      }
+    ]
+  },
   KUBERNETES: {
     type: 6,
     name: 'KUBERNETES',
