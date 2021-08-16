@@ -70,5 +70,14 @@ export default [
       auth: true,
       title: 'Jenkins数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/ansible',
+    name: 'datasource-instance-ansible',
+    component: () => import('@/pages/datasource/instance/ansible'),
+    meta: {
+      auth: true,
+      title: 'Ansible数据源实例'
+    }
   }
 ]
