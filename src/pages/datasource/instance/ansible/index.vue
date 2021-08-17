@@ -2,6 +2,10 @@
   <d2-container>
     <h1>Ansible实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
+      <el-tab-pane label="主机清单" name="hosts">
+        <asset-ansible-hosts-info :instanceId="instanceId" :assetType="assetType.ANSIBLE.ANSIBLE_HOSTS" ref="hostsInfo">
+        </asset-ansible-hosts-info>
+      </el-tab-pane>
       <el-tab-pane label="版本" name="version">
         <asset-table :instanceId="instanceId" :assetType="assetType.ANSIBLE.ANSIBLE_VERSION"
                      :tableLayout="tableLayout.version" ref="versionTable">
@@ -22,6 +26,7 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
+import AssetAnsibleHostsInfo from '../../../../components/opscloud/datasource/asset/AssetAnsibleHostsInfo'
 
 const tableLayout = {
   version: {
@@ -50,7 +55,7 @@ const tableLayout = {
 export default {
   data () {
     return {
-      activeName: 'version',
+      activeName: 'hosts',
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
@@ -62,10 +67,15 @@ export default {
     this.init()
   },
   components: {
-    AssetTable
+    AssetTable,
+    AssetAnsibleHostsInfo
   },
   methods: {
     handleClick (tab, event) {
+      if (tab.name === 'hosts') {
+        this.$refs.hostsInfo.fetchData()
+        return
+      }
       if (tab.name === 'version') {
         this.$refs.versionTable.fetchData()
         return
@@ -73,8 +83,8 @@ export default {
     },
     init () {
       setTimeout(() => {
-        if (this.$refs.versionTable) {
-          this.$refs.versionTable.fetchData()
+        if (this.$refs.hostsInfo) {
+          this.$refs.hostsInfo.fetchData()
         }
       }, 50)
     }

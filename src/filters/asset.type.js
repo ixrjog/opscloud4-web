@@ -50,6 +50,11 @@ export function getAssetTypeText (value) {
       return '无状态'
     case DsInstanceAssetType.JENKINS.JENKINS_COMPUTER:
       return '计算节点'
+    // Ansible
+    case DsInstanceAssetType.ANSIBLE.ANSIBLE_VERSION:
+      return '版本'
+    case DsInstanceAssetType.ANSIBLE.ANSIBLE_HOSTS:
+      return '主机清单'
     default:
       return value
   }

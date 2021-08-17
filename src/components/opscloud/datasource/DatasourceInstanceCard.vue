@@ -72,6 +72,9 @@ export default {
       if (instanceType === 'KUBERNETES') {
         return true
       }
+      if (instanceType === 'ANSIBLE') {
+        return true
+      }
       return false
     },
     handlerSetConfig () {
