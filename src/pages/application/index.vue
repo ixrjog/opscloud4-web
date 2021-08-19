@@ -17,6 +17,19 @@
             <el-tag disable-transitions type="primary" plain size="mini">{{ props.row.applicationKey }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column prop="resourceMap" label="绑定资源">
+          <template slot-scope="props">
+          <div v-for="(value,key) in props.row.resourceMap" :key="key" :label="key" class="resDiv">
+            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
+            <span v-for="item in value" :key="item.id">
+              <el-tooltip effect="dark" :content="item.comment" placement="top-start"
+                          :disabled="!item.comment">
+                <el-tag size="small">{{ item.name }}</el-tag>
+              </el-tooltip>
+            </span>
+          </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>
         <el-table-column prop="tags" label="标签" width="300">
           <template slot-scope="props">
@@ -39,8 +52,8 @@
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                   @handleSizeChange="handleSizeChange"></pagination>
-      <ApplicationDialog ref="applicationDialog" :formStatus="formStatus.dialog"
-                         @closeDialog="fetchData"></ApplicationDialog>
+      <application-editor ref="applicationDialog" :formStatus="formStatus.dialog"
+                         @closeDialog="fetchData"></application-editor>
     </template>
   </d2-container>
 </template>
@@ -49,7 +62,8 @@
 
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import { DELETE_APPLICATION, QUERY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
-import ApplicationDialog from '@/components/opscloud/application/ApplicationDialog'
+import ApplicationEditor from '@/components/opscloud/application/ApplicationEditor'
+import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 
 export default {
   name: 'ApplicationTable',
@@ -84,13 +98,31 @@ export default {
       }
     }
   },
+  filters: {
+    getAppResText (value) {
+      switch (value) {
+        case AppDsInstanceAssetType.GITLAB.GITLAB_GROUP:
+          return '群组(GITLAB_GROUP)'
+        case AppDsInstanceAssetType.GITLAB.GITLAB_PROJECT:
+          return '项目(GITLAB_PROJECT)'
+        case AppDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
+          return '无状态(DEPLOYMENT)'
+        case 'SERVERGROUP':
+          return '服务器组(SERVER_GROUP)'
+        case 'SERVER':
+          return '服务器(SERVER)'
+        default:
+          return value
+      }
+    }
+  },
   computed: {},
   mounted () {
     this.fetchData()
   },
   components: {
     Pagination,
-    ApplicationDialog
+    ApplicationEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {

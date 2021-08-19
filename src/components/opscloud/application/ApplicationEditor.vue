@@ -11,7 +11,7 @@
             <el-input v-model.trim="application.applicationKey" placeholder="请输入内容"
                       :disabled="!formStatus.operationType">
               <template slot="append">
-                <el-button size="mini" type="primary" @click="handlerBuildKey">
+                <el-button size="mini" type="primary" @click="handleBuildKey">
                   <i class="fa fa-arrow-up" aria-hidden="true"></i>
                 </el-button>
               </template>
@@ -22,7 +22,7 @@
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-            <el-button size="mini" type="primary" @click="handlerSave">确定</el-button>
+            <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -31,7 +31,7 @@
           <el-form :model="queryResParam" label-width="80px">
             <el-form-item label="业务类型">
               <el-select v-model="queryResParam.businessType" filterable placeholder="选择绑定资源业务类型"
-                         @change="handlerSelectBusinessType">
+                         @change="handleSelectBusinessType">
                 <el-option
                   v-for="item in businessTypeOptions"
                   :key="item.value"
@@ -42,7 +42,7 @@
             </el-form-item>
             <el-form-item v-if="queryResParam.businessType === businessType.ASSET" label="资源实例">
               <el-select v-model="queryResParam.dsInstance" filterable placeholder="选择资源实例"
-                         value-key="id" @change="handlerGetAssetType">
+                         value-key="id" @change="handleGetAssetType">
                 <el-option
                   v-for="item in dsInstanceOptions"
                   :key="item.id"
@@ -56,7 +56,7 @@
             </el-form-item>
             <el-form-item v-if="queryResParam.businessType === businessType.ASSET" label="资源类型">
               <el-select v-model="queryResParam.assetType" placeholder="选择资源类型"
-                         @change="handlerGetResources('')">
+                         @change="handleGetResources('')">
                 <el-option
                   v-for="item in assetTypeOptions"
                   :key="item.id"
@@ -68,7 +68,7 @@
             <el-form-item label="绑定资源">
               <el-select v-model.lazy="queryResParam.resources" filterable value-key="id"
                          :disabled="queryResParam.businessType === ''"
-                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="handlerGetResources">
+                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="handleGetResources">
                 <el-option
                   v-for="item in resOptions"
                   :key="item.id"
@@ -83,21 +83,20 @@
             </el-form-item>
             <el-form-item>
               <el-button size="mini" type="primary" :disabled="JSON.stringify(queryResParam.resources) === '{}'"
-                         @click="handlerBindResources">绑定
+                         @click="handleBindResources">绑定
               </el-button>
             </el-form-item>
           </el-form>
         </el-col>
         <el-col :span="14">
           <div v-for="(value,key) in application.resourceMap" :key="key" :label="key" class="resDiv">
-            <p>{{ key | getAppResText }}</p>
+            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small" closable @close="handlerResUnbind(item.id)">{{ item.name }}</el-tag>
+                <el-tag size="small" closable @close="handleResUnbind(item.id)">{{ item.name }}</el-tag>
               </el-tooltip>
             </span>
-            <el-divider></el-divider>
           </div>
         </el-col>
       </el-tab-pane>
@@ -111,7 +110,7 @@ import {
   ADD_APPLICATION,
   BIND_APPLICATION_RES,
   GET_APP_BUSINESS_OPTIONS,
-  QUERY_APPLICATION_BY_ID,
+  GET_APPLICATION_BY_ID,
   UNBIND_APPLICATION_RES,
   UPDATE_APPLICATION
 } from '@/api/modules/application/application.api'
@@ -174,20 +173,20 @@ export default {
     handleClick (tab, event) {
       if (tab.name === 'resource') {
         this.getApplicationResource()
-        this.handlerGetBusinessType()
+        this.handleGetBusinessType()
       }
     },
-    handlerSelectBusinessType () {
+    handleSelectBusinessType () {
       this.clearResOptions()
       switch (this.queryResParam.businessType) {
         case BusinessType.ASSET:
           this.getAssetInstance()
           break
         default:
-          this.handlerGetResources('')
+          this.handleGetResources('')
       }
     },
-    handlerGetAssetType () {
+    handleGetAssetType () {
       this.clearResOptions()
       this.queryResParam.assetType = ''
       this.assetTypeOptions = []
@@ -206,7 +205,7 @@ export default {
       this.resOptions = []
       this.queryResParam.resources = ''
     },
-    handlerGetResources (queryName) {
+    handleGetResources (queryName) {
       this.clearResOptions()
       switch (this.queryResParam.businessType) {
         case BusinessType.SERVER:
@@ -230,7 +229,7 @@ export default {
           this.$message.warning('暂不支持绑定该类型')
       }
     },
-    handlerBindResources () {
+    handleBindResources () {
       const requestBody = {
         applicationId: this.application.id,
         name: this.queryResParam.resources.name,
@@ -284,7 +283,7 @@ export default {
           return ''
       }
     },
-    handlerGetBusinessType () {
+    handleGetBusinessType () {
       GET_APP_BUSINESS_OPTIONS()
         .then(({ body }) => {
           this.businessTypeOptions = body.options
@@ -337,22 +336,22 @@ export default {
         })
     },
     getApplicationResource () {
-      QUERY_APPLICATION_BY_ID({ applicationId: this.application.id })
+      GET_APPLICATION_BY_ID({ id: this.application.id })
         .then(({ body }) => {
           this.application.resourceMap = body.resourceMap ? body.resourceMap : {}
         })
     },
-    handlerBuildKey () {
+    handleBuildKey () {
       this.application.applicationKey = this.application.name.toUpperCase()
     },
-    handlerResBind () {
+    handleResBind () {
       BIND_APPLICATION_RES()
         .then(() => {
           this.$message.success('绑定成功')
           this.getApplicationResource()
         })
     },
-    handlerResUnbind (id) {
+    handleResUnbind (id) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -367,7 +366,7 @@ export default {
         this.$message.info('已取消解除绑定')
       })
     },
-    handlerSave () {
+    handleSave () {
       const requestBody = Object.assign({}, this.application)
       if (this.formStatus.operationType) {
         ADD_APPLICATION(requestBody)
@@ -390,11 +389,11 @@ export default {
 </script>
 
 <style scoped lang="less">
-.resDiv {
-  .el-tag {
-    margin-right: 5px;
-  }
-}
+/*.resDiv {*/
+/*  .el-tag {*/
+/*    margin-right: 5px;*/
+/*  }*/
+/*}*/
 
 .resTabPane {
   & .el-select {
@@ -414,9 +413,9 @@ export default {
       margin: 5px 5px 5px 0px;
     }
 
-    & .el-divider {
-      margin: 5px 0px;
-    }
+    /*& .el-divider {*/
+    /*  margin: 5px 0px;*/
+    /*}*/
   }
 }
 </style>

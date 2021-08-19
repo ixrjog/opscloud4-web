@@ -25,11 +25,11 @@ export function QUERY_APPLICATION_PAGE (data) {
   })
 }
 
-export function QUERY_APPLICATION_BY_ID (data) {
+export function GET_APPLICATION_BY_ID (param) {
   return request({
-    url: baseUrl + '/id/query',
-    method: 'post',
-    data
+    url: baseUrl + '/get',
+    method: 'get',
+    params: param
   })
 }
 
