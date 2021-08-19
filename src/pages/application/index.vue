@@ -17,7 +17,7 @@
             <el-tag disable-transitions type="primary" plain size="mini">{{ props.row.applicationKey }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="resourceMap" label="绑定资源">
+        <el-table-column prop="resourceMap" label="绑定资源" width="500">
           <template slot-scope="props">
           <div v-for="(value,key) in props.row.resourceMap" :key="key" :label="key" class="resDiv">
             <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
@@ -31,7 +31,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>
-        <el-table-column prop="tags" label="标签" width="300">
+        <el-table-column prop="tags" label="标签" width="100">
           <template slot-scope="props">
             <div class="tag-group">
               <span v-for="item in props.row.tags" :key="item.id">
