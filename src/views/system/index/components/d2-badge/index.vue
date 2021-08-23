@@ -9,7 +9,7 @@
 </template>
 
 <script>
-const linkD2Admin = 'https://github.com/d2-projects/d2-admin'
+const linkD2Admin = 'https://github.com/ixrjog/opscloud'
 export default {
   data () {
     return {

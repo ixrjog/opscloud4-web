@@ -76,13 +76,17 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
+      <el-tab-pane label="属性配置" name="property" :disabled="server.id === '' || server.id === 0">
+        <business-property-editor :business-type="server.businessType" :business-id="server.businessId"
+                                  ref="businessPropertyEditor"></business-property-editor>
+      </el-tab-pane>
       <el-tab-pane label="账户配置" name="account" :disabled="server.id === '' || server.id === 0">
         <server-account-transfer :serverId="server.id" ref="serverAccountTransfer"></server-account-transfer>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button size="mini" type="primary" @click="handlerSave">确定</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -94,6 +98,7 @@ import { ADD_SERVER, UPDATE_SERVER } from '@/api/modules/server/server.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api.js'
 import ServerAccountTransfer from './child/ServerAccountTransfer'
+import BusinessPropertyEditor from '../business/BusinessPropertyEditor'
 
 const activeOptions = [{
   value: true,
@@ -138,6 +143,7 @@ export default {
   name: 'ServerEditor',
   props: ['formStatus'],
   components: {
+    BusinessPropertyEditor,
     ServerAccountTransfer
   },
   mixins: [],
@@ -184,9 +190,11 @@ export default {
       this.$nextTick(() => {
         const accountIds = this.server.accounts !== null ? this.server.accounts.map(e => e.id) : []
         this.$refs.serverAccountTransfer.init(accountIds)
+        // 业务对象属性
+        this.$refs.businessPropertyEditor.initData(this.server.businessProperty)
       })
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_SERVER(requestBody)
         .then(() => {
           this.$message.success('保存成功!')
@@ -194,7 +202,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_SERVER(requestBody)
         .then(() => {
           this.$message.success('新增成功!')
@@ -202,12 +210,13 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    handleSave () {
       if (this.formStatus.operationType) {
-        this.handlerAdd(this.server)
+        this.handleAdd(this.server)
       } else {
-        this.handlerUpdate(this.server)
+        this.handleUpdate(this.server)
         this.$refs.serverAccountTransfer.save()
+        this.$refs.businessPropertyEditor.save()
       }
     }
   }
