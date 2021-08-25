@@ -90,6 +90,7 @@ export default {
         })
     },
     initData (serverGroup) {
+      this.activeName = 'base'
       this.serverGroup = serverGroup
       if (JSON.stringify(serverGroup.serverGroupType) === '{}') {
         this.getGroupType('')
