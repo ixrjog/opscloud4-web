@@ -28,7 +28,7 @@
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+          <el-button type="danger" plain size="mini"  :disabled="scope.row.serverSize !== 0" @click="handlerRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -130,6 +130,7 @@ export default {
         allowWorkorder: true,
         serverGroupTypeId: '',
         serverGroupType: {},
+        businessProperty: null,
         comment: ''
       }
       this.$refs.serverGroupEditor.initData(serverGroup)
