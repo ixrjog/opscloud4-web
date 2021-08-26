@@ -1,11 +1,18 @@
 <template>
   <div>
     <el-form :model="businessProperty">
-      <el-form-item label="属性(YML)" label-position="top" required>
-        <editor v-model="businessProperty.property" @init="editorInit" lang="yaml" theme="chrome" height="400"
-                :options="options"></editor>
+      <el-form-item label="属性(YML)" label-position="top">
+        <br/>
+        <d2-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"
+                      style="margin-top: 5px;font-size: 10px"></d2-highlight>
+        <editor v-if="editing" v-model="businessProperty.property" @init="editorInit" lang="yaml" theme="chrome" height="400"
+                :options="options" ref="editor"></editor>
       </el-form-item>
     </el-form>
+    <div style="width:100%;text-align:center">
+      <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑属性</el-button>
+      <el-button size="mini" type="primary" @click="save" v-show="editing">保存属性</el-button>
+    </div>
   </div>
 </template>
 
@@ -26,6 +33,7 @@ export default {
   data () {
     return {
       labelWidth: '150px',
+      editing: false,
       businessProperty: {},
       options: options
     }
@@ -50,6 +58,7 @@ export default {
       require('brace/snippets/yaml')
     },
     initData (businessProperty) {
+      this.editing = false
       if (businessProperty !== null) {
         this.businessProperty = businessProperty
       } else {
@@ -76,8 +85,12 @@ export default {
         .then(res => {
         })
     },
+    handleEditing(){
+      this.editing = true
+    },
     save () {
       // const requestBody = Object.assign({}, this.businessProperty)
+      this.editing = false
       if (this.businessProperty.id === '') {
         this.handleAdd()
       } else {

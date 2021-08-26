@@ -77,7 +77,8 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="属性配置" name="property" :disabled="server.id === '' || server.id === 0">
-        <business-property-editor :business-type="server.businessType" :business-id="server.businessId"
+        <business-property-editor :business-type="server.businessType"
+                                  :business-id="server.businessId"
                                   ref="businessPropertyEditor"></business-property-editor>
       </el-tab-pane>
       <el-tab-pane label="账户配置" name="account" :disabled="server.id === '' || server.id === 0">
@@ -216,7 +217,6 @@ export default {
       } else {
         this.handleUpdate(this.server)
         this.$refs.serverAccountTransfer.save()
-        this.$refs.businessPropertyEditor.save()
       }
     }
   }

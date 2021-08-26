@@ -124,7 +124,6 @@ export default {
         this.handlerAdd(this.serverGroup)
       } else {
         this.handlerUpdate(this.serverGroup)
-        this.$refs.businessPropertyEditor.save()
       }
     }
   }
