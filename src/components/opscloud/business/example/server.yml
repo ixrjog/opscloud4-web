@@ -1,0 +1,15 @@
+kind: Server
+metadata:
+  sshPort: 22
+  rdpPort: 3389
+  vncPort: 5901
+  manageIp:
+zabbix:
+  enable: true
+  templateUniformity : false
+  templates:
+    - 'Template OS Linux by Zabbix agent'
+    - 'Template Springboot Service'
+  porxyName:
+  macros:
+    - '{"macro":"{$PORT}","value":"8080"}'

@@ -5,7 +5,8 @@
         <br/>
         <d2-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"
                       style="margin-top: 5px;font-size: 10px"></d2-highlight>
-        <editor v-if="editing" v-model="businessProperty.property" @init="editorInit" lang="yaml" theme="chrome" height="400"
+        <editor v-if="editing" v-model="businessProperty.property" @init="editorInit" lang="yaml" theme="chrome"
+                height="400"
                 :options="options" ref="editor"></editor>
       </el-form-item>
     </el-form>
@@ -20,6 +21,9 @@
 // API
 import { ADD_BUSINESS_PROPERTY, UPDATE_BUSINESS_PROPERTY } from '@/api/modules/business/business.property.api.js'
 import SelectItem from '../common/SelectItem'
+
+//import serverPropertyExample from './example/server.yml'
+//import serverGroupPropertyExample from './example/serverGroup.yml'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -85,7 +89,7 @@ export default {
         .then(res => {
         })
     },
-    handleEditing(){
+    handleEditing () {
       this.editing = true
     },
     save () {
