@@ -17,7 +17,7 @@
             <el-input v-model.trim="menu.title"></el-input>
           </el-form-item>
           <el-form-item label="图标" required>
-            <el-input v-model.trim="menu.icon">
+            <el-input v-model="menu.icon">
               <i slot="suffix" :class=menu.icon aria-hidden="true"></i>
             </el-input>
           </el-form-item>

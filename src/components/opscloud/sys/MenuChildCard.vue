@@ -20,7 +20,7 @@
             <el-input v-model.trim="menuChild.path" class="input"></el-input>
           </el-form-item>
           <el-form-item label="图标" required>
-            <el-input v-model.trim="menuChild.icon">
+            <el-input v-model="menuChild.icon">
               <i slot="suffix" :class=menuChild.icon aria-hidden="true"></i>
             </el-input>
           </el-form-item>

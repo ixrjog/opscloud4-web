@@ -18,6 +18,15 @@ export default [
     }
   },
   {
+    path: '/datasource/asset/subscription',
+    name: 'datasource-asset-subscription',
+    component: () => import('@/pages/datasource/asset/subscription'),
+    meta: {
+      auth: true,
+      title: '资产订阅'
+    }
+  },
+  {
     path: '/datasource/instance/ldap',
     name: 'datasource-instance-ldap',
     component: () => import('@/pages/datasource/instance/ldap'),
