@@ -7,7 +7,7 @@
           <el-form-item label="应用名称" required>
             <el-input v-model.trim="application.name" placeholder="请输入内容"></el-input>
           </el-form-item>
-          <el-form-item label="应用key" :required="true">
+          <el-form-item label="应用Key" :required="true">
             <el-input v-model.trim="application.applicationKey" placeholder="请输入内容"
                       :disabled="!formStatus.operationType">
               <template slot="append">
@@ -28,9 +28,9 @@
       </el-tab-pane>
       <el-tab-pane label="绑定资源" name="resource" v-if="application.id !== ''" class="resTabPane">
         <el-col :span="10">
-          <el-form :model="queryResParam" label-width="80px">
+          <el-form :model="queryParam" label-width="80px">
             <el-form-item label="业务类型">
-              <el-select v-model="queryResParam.businessType" filterable placeholder="选择绑定资源业务类型"
+              <el-select v-model="queryParam.businessType" filterable placeholder="选择绑定资源业务类型"
                          @change="handleSelectBusinessType">
                 <el-option
                   v-for="item in businessTypeOptions"
@@ -40,8 +40,8 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item v-if="queryResParam.businessType === businessType.ASSET" label="资源实例">
-              <el-select v-model="queryResParam.dsInstance" filterable placeholder="选择资源实例"
+            <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源实例">
+              <el-select v-model="queryParam.dsInstance" filterable placeholder="选择资源实例"
                          value-key="id" @change="handleGetAssetType">
                 <el-option
                   v-for="item in dsInstanceOptions"
@@ -54,9 +54,9 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item v-if="queryResParam.businessType === businessType.ASSET" label="资源类型">
-              <el-select v-model="queryResParam.assetType" placeholder="选择资源类型"
-                         @change="handleGetResources('')">
+            <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源类型">
+              <el-select v-model="queryParam.assetType" placeholder="选择资源类型"
+                         @change="getResources('')">
                 <el-option
                   v-for="item in assetTypeOptions"
                   :key="item.id"
@@ -66,9 +66,9 @@
               </el-select>
             </el-form-item>
             <el-form-item label="绑定资源">
-              <el-select v-model.lazy="queryResParam.resources" filterable value-key="id"
-                         :disabled="queryResParam.businessType === ''"
-                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="handleGetResources">
+              <el-select v-model.lazy="queryParam.resources" filterable value-key="id"
+                         :disabled="queryParam.businessType === ''"
+                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getResources">
                 <el-option
                   v-for="item in resOptions"
                   :key="item.id"
@@ -82,7 +82,7 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button size="mini" type="primary" :disabled="JSON.stringify(queryResParam.resources) === '{}'"
+              <el-button size="mini" type="primary" :disabled="JSON.stringify(queryParam.resources) === '{}'"
                          @click="handleBindResources">绑定
               </el-button>
             </el-form-item>
@@ -121,13 +121,6 @@ import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.i
 import { QUERY_ASSET_PAGE } from '@/api/modules/datasource/datasource.asset.api'
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 
-const QueryResParam = {
-  resources: '',
-  dsInstance: {},
-  assetType: '',
-  businessType: ''
-}
-
 export default {
   data () {
     return {
@@ -135,7 +128,13 @@ export default {
       application: {},
       businessTypeOptions: [],
       businessType: BusinessType,
-      queryResParam: QueryResParam,
+      queryParam: {
+        resources: '',
+        dsInstance: {},
+        assetType: '',
+        businessType: ''
+      },
+      appDsInstanceAssetType: AppDsInstanceAssetType,
       resOptions: [],
       dsInstanceOptions: [],
       assetTypeOptions: []
@@ -168,7 +167,6 @@ export default {
     initData (application) {
       this.application = Object.assign({}, application)
       this.activeName = 'config'
-      this.queryResParam = Object.assign({}, QueryResParam)
     },
     handleClick (tab, event) {
       if (tab.name === 'resource') {
@@ -178,19 +176,19 @@ export default {
     },
     handleSelectBusinessType () {
       this.clearResOptions()
-      switch (this.queryResParam.businessType) {
-        case BusinessType.ASSET:
+      switch (this.queryParam.businessType) {
+        case this.businessType.ASSET:
           this.getAssetInstance()
           break
         default:
-          this.handleGetResources('')
+          this.getResources('')
       }
     },
     handleGetAssetType () {
       this.clearResOptions()
-      this.queryResParam.assetType = ''
+      this.queryParam.assetType = ''
       this.assetTypeOptions = []
-      const obj = AppDsInstanceAssetType[this.queryResParam.dsInstance.instanceType]
+      const obj = this.appDsInstanceAssetType[this.queryParam.dsInstance.instanceType]
       if (obj) {
         for (const item in obj) {
           this.assetTypeOptions.push({
@@ -203,23 +201,23 @@ export default {
     },
     clearResOptions () {
       this.resOptions = []
-      this.queryResParam.resources = ''
+      this.queryParam.resources = ''
     },
-    handleGetResources (queryName) {
+    getResources (queryName) {
       this.clearResOptions()
-      switch (this.queryResParam.businessType) {
-        case BusinessType.SERVER:
+      switch (this.queryParam.businessType) {
+        case this.businessType.SERVER:
           this.getServer(queryName)
           break
-        case BusinessType.SERVERGROUP:
+        case this.businessType.SERVERGROUP:
           this.getServerGroup(queryName)
           break
-        case BusinessType.ASSET:
-          if (!this.queryResParam.dsInstance) {
+        case this.businessType.ASSET:
+          if (!this.queryParam.dsInstance) {
             this.$message.warning('请先选择资产实例')
             return
           }
-          if (!this.queryResParam.assetType) {
+          if (!this.queryParam.assetType) {
             this.$message.warning('请先选择资产类型')
             return
           }
@@ -232,24 +230,24 @@ export default {
     handleBindResources () {
       const requestBody = {
         applicationId: this.application.id,
-        name: this.queryResParam.resources.name,
-        businessId: this.queryResParam.resources.id,
-        businessType: this.queryResParam.businessType,
+        name: this.queryParam.resources.name,
+        businessId: this.queryParam.resources.id,
+        businessType: this.queryParam.businessType,
         virtualResource: false
       }
-      switch (this.queryResParam.businessType) {
-        case BusinessType.SERVER:
+      switch (this.queryParam.businessType) {
+        case this.businessType.SERVER:
           requestBody.resourceType = 'SERVER'
-          requestBody.name = this.queryResParam.resources.displayName
-          requestBody.comment = this.queryResParam.resources.privateIp
+          requestBody.name = this.queryParam.resources.displayName
+          requestBody.comment = this.queryParam.resources.privateIp
           break
-        case BusinessType.SERVERGROUP:
+        case this.businessType.SERVERGROUP:
           requestBody.resourceType = 'SERVERGROUP'
-          requestBody.comment = this.queryResParam.resources.comment
+          requestBody.comment = this.queryParam.resources.comment
           break
-        case BusinessType.ASSET:
-          requestBody.resourceType = this.queryResParam.resources.assetType
-          requestBody.comment = this.queryResParam.resources.description
+        case this.businessType.ASSET:
+          requestBody.resourceType = this.queryParam.resources.assetType
+          requestBody.comment = this.queryParam.resources.description
           break
         default:
           requestBody.resourceType = ''
@@ -261,23 +259,23 @@ export default {
         })
     },
     resFilter (res) {
-      switch (this.queryResParam.businessType) {
-        case BusinessType.SERVER:
+      switch (this.queryParam.businessType) {
+        case this.businessType.SERVER:
           return res.displayName
-        case BusinessType.SERVERGROUP:
-        case BusinessType.ASSET:
+        case this.businessType.SERVERGROUP:
+        case this.businessType.ASSET:
           return res.name
         default:
           return ''
       }
     },
     resFilterPLus (res) {
-      switch (this.queryResParam.businessType) {
-        case BusinessType.SERVER:
+      switch (this.queryParam.businessType) {
+        case this.businessType.SERVER:
           return res.privateIp
-        case BusinessType.SERVERGROUP:
+        case this.businessType.SERVERGROUP:
           return res.comment
-        case BusinessType.ASSET:
+        case this.businessType.ASSET:
           return res.assetKey
         default:
           return ''
@@ -324,8 +322,8 @@ export default {
     },
     getAsset (queryName) {
       const requestBody = {
-        instanceId: this.queryResParam.dsInstance.id,
-        assetType: this.queryResParam.assetType,
+        instanceId: this.queryParam.dsInstance.id,
+        assetType: this.queryParam.assetType,
         queryName: queryName,
         page: 1,
         length: 20

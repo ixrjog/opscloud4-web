@@ -12,7 +12,7 @@
           <template v-slot:extend>
             <el-table-column prop="description" label="版本详情" width="700px">
               <template slot-scope="scope">
-                <d2-highlight v-if="scope.row.description != ''" :code="scope.row.description" lang="sh" style="margin-top: 5px"/>
+                <d2-highlight v-if="scope.row.description != ''" :code="scope.row.description" lang="sh"/>
               </template>
             </el-table-column>
           </template>
@@ -105,6 +105,13 @@ export default {
 
   .el-button {
     margin-left: 5px;
+  }
+
+  .d2-highlight {
+    margin-top: 5px;
+    font-size: 10px;
+    background-color: #dad8c8;
+    line-height: 150%;
   }
 
   >>> .el-card__header {

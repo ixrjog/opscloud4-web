@@ -3,8 +3,7 @@
     <el-form :model="businessProperty">
       <el-form-item label="属性(YML)" label-position="top">
         <br/>
-        <d2-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"
-                      style="margin-top: 5px;font-size: 10px"></d2-highlight>
+        <d2-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"></d2-highlight>
         <editor v-if="editing" v-model="businessProperty.property" @init="editorInit" lang="yaml" theme="chrome"
                 height="400"
                 :options="options" ref="editor"></editor>
@@ -104,3 +103,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .d2-highlight {
+    margin-top: 5px;
+    font-size: 10px;
+    background-color: #dad8c8;
+    line-height: 150%;
+  }
+
+</style>

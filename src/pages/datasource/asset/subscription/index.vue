@@ -6,14 +6,14 @@
     <div style="margin-bottom: 5px">
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" placeholder="名称"/>
-<!--        <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">-->
-<!--          <el-option-->
-<!--            v-for="item in dsTypeOptions"-->
-<!--            :key="item.value"-->
-<!--            :label="item.label"-->
-<!--            :value="item.value">-->
-<!--          </el-option>-->
-<!--        </el-select>-->
+        <!--        <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">-->
+        <!--          <el-option-->
+        <!--            v-for="item in dsTypeOptions"-->
+        <!--            :key="item.value"-->
+        <!--            :label="item.label"-->
+        <!--            :value="item.value">-->
+        <!--          </el-option>-->
+        <!--        </el-select>-->
         <el-select v-model="queryParam.isActive" clearable placeholder="有效">
           <el-option
             v-for="item in activeOptions"
@@ -52,32 +52,34 @@
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
-    <datasource-config-editor :form-status="formStatus.config"
-                              :ds-type-options="dsTypeOptions"
-                              :active-options="activeOptions"
-                              ref="datasourceConfigEditor"
-                              @close="fetchData"></datasource-config-editor>
+    <asset-subscription-editor :form-status="formStatus.config"
+                               ref="assetSubscriptionEditor"
+                               @close="fetchData"></asset-subscription-editor>
   </d2-container>
 </template>
 
 <script>
 
 import {
-  QUERY_ASSET_SUBSCRIPTION_PAGE
+  QUERY_ASSET_SUBSCRIPTION_PAGE, DELETE_ASSET_SUBSCRIPTION_BY_ID
 } from '@/api/modules/datasource/datasource.asset.subscription.api.js'
 import Pagination from '../../../../components/opscloud/common/page/Pagination'
 import DatasourceConfigEditor from '../../../../components/opscloud/datasource/DatasourceConfigEditor'
 import DatasourceTypeTag from '../../../../components/opscloud/common/tag/DatasourceTypeTag'
 import ActiveTag from '../../../../components/opscloud/common/tag/ActiveTag'
 import WhetherTag from '../../../../components/opscloud/common/tag/WhetherTag'
+import AssetSubscriptionEditor
+  from '../../../../components/opscloud/datasource/asset/subscription/AssetSubscriptionEditor'
 
 const activeOptions = [{
   value: true,
@@ -104,22 +106,15 @@ export default {
       formStatus: {
         config: {
           visible: false,
-          addTitle: '新增数据源配置',
-          updateTitle: '更新数据源配置',
-          operationType: true
-        },
-        instance: {
-          visible: false,
-          addTitle: '注册数据源实例配置',
-          updateTitle: '更新数据源实例配置',
+          addTitle: '新增资产订阅配置',
+          updateTitle: '更新资产订阅配置',
           operationType: true
         }
       },
       queryParam: {
         isActive: '',
         extend: true
-      },
-      roleOptions: []
+      }
     }
   },
   computed: {},
@@ -131,7 +126,8 @@ export default {
     DatasourceConfigEditor,
     DatasourceTypeTag,
     ActiveTag,
-    WhetherTag
+    WhetherTag,
+    AssetSubscriptionEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -142,41 +138,31 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    // getDsTypeOptions () {
-    //   GET_DATASOURCE_CONFIG_TYPE_OPTIONS()
-    //     .then(res => {
-    //       this.dsTypeOptions = res.body.options
-    //     })
-    // },
-    // handlerAdd () {
-    //   const dsConfig = {
-    //     comment: null,
-    //     credentialId: '',
-    //     dsType: 1,
-    //     dsUrl: '',
-    //     id: '',
-    //     isActive: true,
-    //     kind: '',
-    //     name: '',
-    //     propsYml: '',
-    //     sysCredential: null,
-    //     uuid: '',
-    //     version: '0'
-    //   }
-    //   this.$refs.datasourceConfigEditor.initData(dsConfig)
-    //   this.formStatus.config.operationType = true
-    //   this.formStatus.config.visible = true
-    // },
-    // handlerRowEdit (row) {
-    //   this.$refs.datasourceConfigEditor.initData(Object.assign({}, row))
-    //   this.formStatus.config.operationType = false
-    //   this.formStatus.config.visible = true
-    // },
-    handleAdd(){
-
+    handleAdd () {
+      const assetSubscription = {
+        id: '',
+        instanceUuid: '',
+        datasourceInstanceAssetId: '',
+        isActive: true,
+        playbook: '',
+        vars: '',
+        comment: ''
+      }
+      this.$refs.assetSubscriptionEditor.initData(assetSubscription)
+      this.formStatus.config.operationType = true
+      this.formStatus.config.visible = true
     },
-    handleRowEdit(){
-
+    handleRowEdit (row) {
+      this.$refs.assetSubscriptionEditor.initData(Object.assign({}, row))
+      this.formStatus.config.operationType = false
+      this.formStatus.config.visible = true
+    },
+    handleRowDel (row) {
+      DELETE_ASSET_SUBSCRIPTION_BY_ID(row.id)
+        .then(res => {
+          this.$message.success('删除成功')
+          this.fetchData ()
+        })
     },
     fetchData () {
       this.table.loading = true
@@ -210,5 +196,6 @@ export default {
   .el-button {
     margin-left: 5px;
   }
+
 
 </style>

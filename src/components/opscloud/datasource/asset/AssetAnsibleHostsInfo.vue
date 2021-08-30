@@ -10,7 +10,7 @@
           <el-tag>{{asset.assetKey}}</el-tag>
           <span style="margin-left: 20px;font-size: 12px">{{asset.assetKey2}}</span>
         </div>
-        <d2-highlight v-if="asset.description != null && asset.description != ''" :code="asset.description" lang="sh" style="margin-top: 5px"/>
+        <d2-highlight v-if="asset.description != null && asset.description != ''" :code="asset.description" lang="sh"/>
       </el-card>
     </div>
     <business-tag-editor ref="businessTagEditor" :businessType="businessType" :businessId="businessId"
@@ -99,6 +99,13 @@ export default {
 </script>
 
 <style scoped>
+
+  .d2-highlight {
+    margin-top: 5px;
+    font-size: 10px;
+    background-color: #dad8c8;
+    line-height: 100%;
+  }
 
   >>> .el-card__header {
     padding: 10px 10px;
