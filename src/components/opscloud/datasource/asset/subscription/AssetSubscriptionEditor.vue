@@ -2,10 +2,11 @@
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" :before-close="handleClose">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="基本配置" name="config" v-if="assetSubscription.id === ''">
+      <el-tab-pane label="基本配置" name="config">
         <el-form :model="assetSubscription" label-width="150px">
           <el-form-item label="数据源类型" :label-width="labelWidth" required>
-            <el-select v-model="instanceQueryParam.instanceType" placeholder="选择类型">
+            <el-select v-model="instanceQueryParam.instanceType" placeholder="选择类型"
+                       :disabled="assetSubscription.id !== ''">
               <el-option
                 v-for="item in dsTypeOptions"
                 :key="item.value"
@@ -15,9 +16,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="数据源实例" :label-width="labelWidth" required>
-            <el-select v-model.trim="instance" filterable clearable :disabled="instanceQueryParam.instanceType === ''"
-                       @change="getAsset('')"
-                       remote reserve-keyword placeholder="搜索实例" :remote-method="getInstance" @clear="getInstance('')">
+            <el-select v-model.trim="instance" filterable clearable
+                       :disabled="assetSubscription.id !== '' || instanceQueryParam.instanceType === ''"
+                       @change="changeInstance"
+                       remote reserve-keyword placeholder="搜索实例" :remote-method="getInstance" @clear="clearInstance">
               <el-option
                 v-for="item in dsInstanceOptions"
                 :key="item.uuid"
@@ -27,7 +29,8 @@
             </el-select>
           </el-form-item>
           <el-form-item label="订阅资产" :label-width="labelWidth" required>
-            <el-select v-model.trim="asset" filterable clearable :disabled="instance === ''"
+            <el-select v-model.trim="asset" filterable clearable
+                       :disabled="assetSubscription.id !== '' || instance === ''"
                        remote reserve-keyword placeholder="搜索资产" :remote-method="getAsset" @clear="getAsset('')">
               <el-option
                 v-for="item in dsAssetOptions"
@@ -67,7 +70,7 @@
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="handleClose">关闭</el-button>
-      <el-button size="mini" type="primary" v-if="assetSubscription.id === ''" @click="handleAdd">确定</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -157,11 +160,25 @@ export default {
         this.dsAssetOptions = []
         this.getInstance('')
       } else {
+        this.dsInstanceOptions = []
+        this.instance = assetSubscription.instance
+        this.dsInstanceOptions.push(this.instance)
+        this.asset = assetSubscription.asset
+        this.dsAssetOptions = []
+        this.dsAssetOptions.push(this.asset)
         this.editing = false
         this.activeName = 'playbook'
       }
     },
     handleClick (tab, event) {
+    },
+    changeInstance () {
+      this.getAsset('')
+      this.asset = ''
+    },
+    clearInstance () {
+      this.getInstance('')
+      this.asset = ''
     },
     getInstance () {
       QUERY_DATASOURCE_INSTANCE(this.instanceQueryParam)
@@ -210,6 +227,13 @@ export default {
           this.editing = false
         })
 
+    },
+    handleSave () {
+      if (this.formStatus.operationType) {
+        this.handleAdd()
+      } else {
+        this.handleUpdate()
+      }
     }
   }
 }

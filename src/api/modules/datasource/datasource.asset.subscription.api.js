@@ -29,6 +29,14 @@ export function UPDATE_ASSET_SUBSCRIPTION (data) {
   })
 }
 
+export function PUBLISH_ASSET_SUBSCRIPTION_BY_ID (id) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/publish?id=' + id,
+    method: 'put'
+  })
+}
+
 export function DELETE_ASSET_SUBSCRIPTION_BY_ID (id) {
   return request({
     url: baseUrl + '/del?id=' + id,

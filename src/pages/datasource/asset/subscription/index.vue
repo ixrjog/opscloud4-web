@@ -52,9 +52,12 @@
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="ago" label="Ago" width="80"></el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
+          <el-button type="primary" plain size="mini" @click="handleRowPublish(scope.row)">发布</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowLog(scope.row)">日志</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
@@ -65,13 +68,14 @@
     <asset-subscription-editor :form-status="formStatus.config"
                                ref="assetSubscriptionEditor"
                                @close="fetchData"></asset-subscription-editor>
+    <view-log :formStatus="formStatus.log" ref="viewLog"></view-log>
   </d2-container>
 </template>
 
 <script>
 
 import {
-  QUERY_ASSET_SUBSCRIPTION_PAGE, DELETE_ASSET_SUBSCRIPTION_BY_ID
+  QUERY_ASSET_SUBSCRIPTION_PAGE, PUBLISH_ASSET_SUBSCRIPTION_BY_ID, DELETE_ASSET_SUBSCRIPTION_BY_ID
 } from '@/api/modules/datasource/datasource.asset.subscription.api.js'
 import Pagination from '../../../../components/opscloud/common/page/Pagination'
 import DatasourceConfigEditor from '../../../../components/opscloud/datasource/DatasourceConfigEditor'
@@ -80,6 +84,7 @@ import ActiveTag from '../../../../components/opscloud/common/tag/ActiveTag'
 import WhetherTag from '../../../../components/opscloud/common/tag/WhetherTag'
 import AssetSubscriptionEditor
   from '../../../../components/opscloud/datasource/asset/subscription/AssetSubscriptionEditor'
+import ViewLog from '../../../../components/opscloud/datasource/asset/subscription/ViewLog'
 
 const activeOptions = [{
   value: true,
@@ -109,6 +114,10 @@ export default {
           addTitle: '新增资产订阅配置',
           updateTitle: '更新资产订阅配置',
           operationType: true
+        },
+        log: {
+          visible: false,
+          title: '发布资产订阅日志',
         }
       },
       queryParam: {
@@ -127,7 +136,8 @@ export default {
     DatasourceTypeTag,
     ActiveTag,
     WhetherTag,
-    AssetSubscriptionEditor
+    AssetSubscriptionEditor,
+    ViewLog
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -161,8 +171,23 @@ export default {
       DELETE_ASSET_SUBSCRIPTION_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功')
-          this.fetchData ()
+          this.fetchData()
         })
+    },
+    /**
+     * 发布
+     * @param row
+     */
+    handleRowPublish (row) {
+      this.table.loading = true
+      PUBLISH_ASSET_SUBSCRIPTION_BY_ID(row.id)
+        .then(res => {
+          this.table.loading = false
+        })
+    },
+    handleRowLog (row) {
+      this.$refs.viewLog.initData(row.lastSubscriptionLog, row.ago)
+      this.formStatus.log.visible = true
     },
     fetchData () {
       this.table.loading = true
