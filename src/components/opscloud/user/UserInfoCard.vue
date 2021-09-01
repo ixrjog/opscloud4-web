@@ -29,10 +29,13 @@
         </el-form-item>
       </el-form>
     </el-card>
+    <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
   </div>
 </template>
 
 <script>
+import UserEditor from './UserEditor'
+
 export default {
   name: 'UserInfoCard',
   props: ['user'],
@@ -48,11 +51,14 @@ export default {
       }
     }
   },
+  components:{
+    UserEditor
+  },
   methods: {
     handlerEdit () {
       this.formStatus.user.visible = true
       this.formStatus.user.operationType = false
-      // this.$refs.userDialog.initData(Object.assign({}, this.userDetail))
+      this.$refs.userEditor.initData(Object.assign({}, this.user))
     },
     fetchData () {
       this.$emit('fetchData')

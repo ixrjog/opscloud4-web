@@ -3,7 +3,7 @@
     <h1>个人详情</h1>
     <el-row :gutter="24" style="margin-bottom: 5px" v-if="user !== null">
       <el-col :span="8">
-        <user-info :user="user"></user-info>
+        <user-info :user="user" @fetchData="fetchData"></user-info>
       </el-col>
       <el-col :span="16">
         <pubkey-info :user="user"></pubkey-info>
