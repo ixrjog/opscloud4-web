@@ -50,9 +50,17 @@
             </el-select>
           </el-form-item>
           <el-form-item label="属性(YML)" label-position="top" required>
-            <editor v-model="datasourceConfig.propsYml" @init="editorInit" lang="yaml" theme="chrome" height="400"
+            <br/>
+            <d2-highlight v-if="!editing" :code="datasourceConfig.propsYml" lang="yaml"></d2-highlight>
+            <editor v-if="editing" v-model="datasourceConfig.propsYml" @init="editorInit" lang="yaml" theme="chrome"
+                    height="400"
                     :options="options"></editor>
           </el-form-item>
+
+          <div style="width:100%;text-align:center">
+            <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑属性</el-button>
+            <!--            <el-button size="mini" type="primary" @click="save" v-show="editing">保存属性</el-button>-->
+          </div>
 
         </el-tab-pane>
       </el-tabs>
@@ -91,6 +99,7 @@ export default {
     return {
       activeName: 'dsInfo',
       labelWidth: '150px',
+      editing: false,
       datasourceConfig: {},
       allowOptions: allowOptions,
       options: options,
@@ -123,6 +132,11 @@ export default {
         this.credentialOptions.push(datasourceConfig.credential)
       } else {
         this.getCredential('')
+      }
+      if (datasourceConfig.propsYml === null || datasourceConfig.propsYml === '') {
+        this.editing = true
+      } else {
+        this.editing = false
       }
     },
     handleClick () {
@@ -163,6 +177,9 @@ export default {
           this.$emit('close')
         })
     },
+    handleEditing () {
+      this.editing = true
+    },
     handlerSave () {
       const requestBody = Object.assign({}, this.datasourceConfig)
       if (this.formStatus.operationType) {
@@ -174,3 +191,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .d2-highlight {
+    margin-top: 5px;
+    font-size: 10px;
+    background-color: #dad8c8;
+    line-height: 140%;
+  }
+
+</style>

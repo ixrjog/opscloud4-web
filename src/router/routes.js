@@ -9,6 +9,7 @@ import rbac from './modules/opscloud.rbac'
 import datasource from './modules/opscloud.datasource'
 import workbench from './modules/opscloud.workbench'
 import application from './modules/opscloud.application'
+import task from './modules/opscloud.task'
 
 import layoutHeaderAside from '@/layout/header-aside'
 
@@ -70,7 +71,8 @@ const frameIn = [
       // RBAC 基于角色的访问控制
       ...rbac,
       // 应用
-      ...application
+      ...application,
+      ...task
     ]
   },
   playground,
