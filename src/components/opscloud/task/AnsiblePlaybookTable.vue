@@ -7,9 +7,18 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="250px"></el-table-column>
-      <el-table-column prop="playbook" label="剧本" width="600px">
+      <el-table-column prop="playbook" label="剧本" width="800px">
         <template slot-scope="scope">
+          <el-divider content-position="left"><b style="color: #9d9fa3">Playbook</b></el-divider>
           <d2-highlight :code="scope.row.playbook" lang="yaml"></d2-highlight>
+          <template v-if="scope.row.vars !== null && scope.row.vars !== ''">
+            <el-divider content-position="left"><b style="color: #9d9fa3">Vars</b></el-divider>
+            <d2-highlight :code="scope.row.vars" lang="yaml"></d2-highlight>
+          </template>
+          <template v-if="scope.row.tags !== null && scope.row.tags !== ''">
+            <el-divider content-position="left"><b style="color: #9d9fa3">Tags</b></el-divider>
+            <d2-highlight :code="scope.row.tags" lang="yaml"></d2-highlight>
+          </template>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
@@ -22,8 +31,8 @@
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
-    <server-group-editor :formStatus="formStatus.serverGroup" ref="serverGroupEditor"
-                         @close="fetchData"></server-group-editor>
+    <ansible-playbook-editor :formStatus="formStatus.playbook" ref="playbookEditor"
+                             @close="fetchData"></ansible-playbook-editor>
   </div>
 </template>
 
@@ -31,8 +40,8 @@
 
 // API
 import { QUERY_ANSIBLE_PLAYBOOK_PAGE, DELETE_ANSIBLE_PLAYBOOK_BY_ID } from '@/api/modules/task/task.playbook.api.js'
-import ServerGroupEditor from '../server/ServerGroupEditor'
 import Pagination from '../common/page/Pagination'
+import AnsiblePlaybookEditor from './AnsiblePlaybookEditor'
 
 
 export default {
@@ -49,11 +58,11 @@ export default {
         }
       },
       formStatus: {
-        serverGroup: {
+        playbook: {
           operationType: true,
           visible: false,
-          addTitle: '新增服务器组配置',
-          updateTitle: '更新服务器组配置'
+          addTitle: '新增剧本配置',
+          updateTitle: '更新剧本配置'
         }
       },
       options: {
@@ -70,7 +79,7 @@ export default {
   },
   computed: {},
   components: {
-    ServerGroupEditor,
+    AnsiblePlaybookEditor,
     Pagination
   },
   methods: {
@@ -97,23 +106,23 @@ export default {
       })
     },
     handleAdd () {
-      const serverGroup = {
+      const playbook = {
         id: '',
-        name: 'group_',
-        allowWorkorder: true,
-        serverGroupTypeId: '',
-        serverGroupType: {},
-        businessProperty: null,
+        playbookUuid: '',
+        name: '',
+        playbook: '',
+        vars: '',
+        tags: '',
         comment: ''
       }
-      this.$refs.serverGroupEditor.initData(serverGroup)
-      this.formStatus.serverGroup.operationType = true
-      this.formStatus.serverGroup.visible = true
+      this.$refs.playbookEditor.initData(playbook)
+      this.formStatus.playbook.operationType = true
+      this.formStatus.playbook.visible = true
     },
     handleRowUpdate (row) {
-      this.$refs.serverGroupEditor.initData(Object.assign({}, row))
-      this.formStatus.serverGroup.operationType = false
-      this.formStatus.serverGroup.visible = true
+      this.$refs.playbookEditor.initData(Object.assign({}, row))
+      this.formStatus.playbook.operationType = false
+      this.formStatus.playbook.visible = true
     },
     fetchData () {
       this.table.loading = true

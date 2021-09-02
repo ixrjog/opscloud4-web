@@ -52,7 +52,7 @@
             <d2-highlight v-if="!editing" :code="assetSubscription.playbook" lang="yaml"></d2-highlight>
             <editor v-if="editing" v-model="assetSubscription.playbook" @init="editorInit" lang="yaml" theme="chrome"
                     height="250"
-                    :options="options" ref="editor"></editor>
+                    :options="options"></editor>
           </el-form-item>
           <el-form-item label="VARS" label-position="top">
             <br/>
