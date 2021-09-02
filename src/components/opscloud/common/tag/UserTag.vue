@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tag>
-      {{ user.username }}&lt;{{ user.name !== '' ? user.name + ':' : '' }}{{ user.displayName }}&gt;
+      {{ user.username }}&lt;{{ (user.name !== null && user.name !== '') ? user.name + ':' : '' }}{{ user.displayName }}&gt;
     </el-tag>
   </div>
 </template>
