@@ -14,12 +14,12 @@
                  <el-tag>Deployment</el-tag>
                  {{ resource.asset.assetKey}}
                   <el-button style="float: right; padding: 3px 0" type="text"
-                             @click="handleLog(resource)">
-                    <i class="far fa-file-alt"></i>
+                             @click="handleLog(resource)">Log
+<!--                    <i class="far fa-file-alt"></i>-->
                   </el-button>
                   <el-button style="float: right; padding: 3px 0" type="text"
-                             @click="handleTerminal(resource)">
-                    <i class="fas fa-terminal"></i>
+                             @click="handleTerminal(resource)">Terminal
+<!--                    <i class="fas fa-terminal"></i>-->
                   </el-button>
                </div>
                <el-divider/>
