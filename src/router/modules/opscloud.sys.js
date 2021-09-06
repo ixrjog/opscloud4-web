@@ -61,5 +61,14 @@ export default [
       auth: true,
       title: '终端命令审计'
     }
+  },
+  {
+    path: '/sys/instance',
+    name: 'sys/instance',
+    component: () => import('@/pages/sys/instance'),
+    meta: {
+      auth: true,
+      title: '集群管理'
+    }
   }
 ]
