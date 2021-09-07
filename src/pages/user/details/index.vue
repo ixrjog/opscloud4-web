@@ -10,6 +10,7 @@
         <roles-info :roles="user.roles"></roles-info>
         <user-group-info :userId="user.id"></user-group-info>
         <server-group-info :userId="user.id"></server-group-info>
+        <user-ram-user-info-card :user="user"></user-ram-user-info-card>
         <access-token-info :user="user" @fetchData="fetchData"></access-token-info>
       </el-col>
     </el-row>
@@ -26,6 +27,7 @@ import ServerGroupInfo
   from '../../../components/opscloud/user/details/UserPermissionServerGroupInfoCard'
 import UserGroupInfo from '../../../components/opscloud/user/details/UserPermissionGroupInfoCard'
 import AccessTokenInfo from '../../../components/opscloud/user/details/UserAccessTokenCard'
+import UserRamUserInfoCard from '../../../components/opscloud/user/details/UserRamUserInfoCard'
 
 export default {
   data () {
@@ -42,7 +44,8 @@ export default {
     RolesInfo,
     ServerGroupInfo,
     UserGroupInfo,
-    AccessTokenInfo
+    AccessTokenInfo,
+    UserRamUserInfoCard
   },
   methods: {
     fetchData () {
