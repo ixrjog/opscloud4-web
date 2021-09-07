@@ -68,7 +68,12 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER" :tableLayout="tableLayout.ramUser"
                      ref="ramUserTable">
           <template v-slot:extend>
-            <el-table-column label="Access Key" width="450">
+            <el-table-column prop="children" label="授权的策略" width="500">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.RAM_POLICY" :type="0"></ds-children-tag>
+              </template>
+            </el-table-column>
+            <el-table-column label="Access Key" width="180">
               <template slot-scope="scope">
                 <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
                   <el-tag :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
@@ -82,6 +87,11 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
                      :tableLayout="tableLayout.ramPolicy" ref="ramPolicyTable">
           <template v-slot:extend>
+            <el-table-column prop="children" label="成员用户" width="500">
+              <template slot-scope="scope">
+                <ds-children-tag :children="scope.row.children.RAM_USER" :type="4"></ds-children-tag>
+              </template>
+            </el-table-column>
             <el-table-column label="描述">
               <template slot-scope="scope">
                 <span>{{ scope.row.description }}</span>
@@ -98,6 +108,7 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
+import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
 
 const treeObj = {
   label: '',
@@ -221,7 +232,8 @@ export default {
     this.init()
   },
   components: {
-    AssetTable
+    AssetTable,
+    DsChildrenTag
   },
   methods: {
     handleClick (tab, event) {
