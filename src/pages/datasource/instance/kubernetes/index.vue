@@ -66,7 +66,7 @@ const tableLayout = {
   },
   deployment: {
     assetId: {
-      alias: 'UID'
+      alias: 'ID'
     },
     name: {
       alias: '名称'

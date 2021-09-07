@@ -1,4 +1,4 @@
-<template>
+z<template>
   <el-card style="margin-top: 5px" class="box-card" shadow="never">
     <div slot="header" class="clearfix">
       <span><i class="fas fa-list" aria-hidden="true"></i></span>
@@ -58,6 +58,11 @@ export default {
           this.groupTypeOptions = res.body.data
         })
     },
+    /**
+     * 获取选中节点
+     * @param leafOnly true 只返回子节点（服务器） / false 返回所有节点
+     * @returns {*}
+     */
     getCheckedNodes (leafOnly) {
       return this.$refs.myServerTree.getCheckedNodes(leafOnly)
     },
