@@ -87,7 +87,7 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
                      :tableLayout="tableLayout.ramPolicy" ref="ramPolicyTable">
           <template v-slot:extend>
-            <el-table-column prop="children" label="成员用户" width="500">
+            <el-table-column prop="children" label="成员用户" width="400">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.RAM_USER" :type="4"></ds-children-tag>
               </template>
@@ -197,10 +197,12 @@ const tableLayout = {
   },
   ramPolicy: {
     assetId: {
-      alias: '策略名称'
+      alias: '策略名称',
+      show: false
     },
     name: {
-      alias: '策略名称'
+      alias: '策略名称',
+      show: false
     },
     assetKey: {
       alias: '策略类型',

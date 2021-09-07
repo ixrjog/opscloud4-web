@@ -9,6 +9,7 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="assetId" :label="tableLayout.assetId.alias"
+                       v-if="tableLayout.assetId.show !== undefined ? tableLayout.assetId.show : true"
                        show-overflow-tooltip></el-table-column>
       <el-table-column prop="name" :label="tableLayout.name.alias"
                        show-overflow-tooltip></el-table-column>
@@ -75,7 +76,8 @@ import UserEditor from '../../user/UserEditor'
 
 const tableLayout = {
   assetId: {
-    alias: 'id'
+    alias: 'id',
+    show: true
   },
   name: {
     alias: '名称'
