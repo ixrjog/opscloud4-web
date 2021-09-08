@@ -72,7 +72,7 @@
                 <el-option
                   v-for="item in resOptions"
                   :key="item.id"
-                  :label="item.name"
+                  :label="resFilter(item)"
                   :value="item">
                   <span style="float: left">{{ resFilter(item) }}</span>
                   <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
@@ -228,9 +228,15 @@ export default {
       }
     },
     handleBindResources () {
+      let name
+      if (this.queryParam.businessType === this.businessType.ASSET && this.queryParam.assetType === this.appDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT) {
+        name = this.queryParam.resources.assetId
+      } else {
+        name = this.queryParam.resources.name
+      }
       const requestBody = {
         applicationId: this.application.id,
-        name: this.queryParam.resources.name,
+        name: name,
         businessId: this.queryParam.resources.id,
         businessType: this.queryParam.businessType,
         virtualResource: false
@@ -264,7 +270,12 @@ export default {
           return res.displayName
         case this.businessType.SERVERGROUP:
         case this.businessType.ASSET:
-          return res.name
+          switch (this.queryParam.assetType) {
+            case this.appDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
+              return res.assetId
+            default:
+              return res.name
+          }
         default:
           return ''
       }
@@ -276,7 +287,12 @@ export default {
         case this.businessType.SERVERGROUP:
           return res.comment
         case this.businessType.ASSET:
-          return res.assetKey
+          switch (this.queryParam.assetType) {
+            case this.appDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
+              return res.assetKey2
+            default:
+              return res.assetKey
+          }
         default:
           return ''
       }
@@ -387,33 +403,33 @@ export default {
 </script>
 
 <style scoped lang="less">
-/*.resDiv {*/
-/*  .el-tag {*/
-/*    margin-right: 5px;*/
-/*  }*/
-/*}*/
+  /*.resDiv {*/
+  /*  .el-tag {*/
+  /*    margin-right: 5px;*/
+  /*  }*/
+  /*}*/
 
-.resTabPane {
-  & .el-select {
-    max-width: 80%;
-    width: 80%;
-  }
-
-  .el-col {
-    p {
-      margin: 0px;
-      color: #B7B6B6;
-      font-size: 20px;
-      font-weight: bolder;
+  .resTabPane {
+    & .el-select {
+      max-width: 80%;
+      width: 80%;
     }
 
-    & .el-tag {
-      margin: 5px 5px 5px 0px;
-    }
+    .el-col {
+      p {
+        margin: 0px;
+        color: #B7B6B6;
+        font-size: 20px;
+        font-weight: bolder;
+      }
 
-    /*& .el-divider {*/
-    /*  margin: 5px 0px;*/
-    /*}*/
+      & .el-tag {
+        margin: 5px 5px 5px 0px;
+      }
+
+      /*& .el-divider {*/
+      /*  margin: 5px 0px;*/
+      /*}*/
+    }
   }
-}
 </style>

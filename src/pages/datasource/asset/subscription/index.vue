@@ -32,12 +32,12 @@
           <span>{{ scope.row.instance.instanceName }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="instance" label="实例类型" width="150">
+      <el-table-column prop="instance" label="实例类型" width="120">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.instance.instanceType }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="asset" label="资产类型" width="150">
+      <el-table-column prop="asset" label="资产类型" width="120">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.asset.assetType }}</el-tag>
         </template>
@@ -47,12 +47,16 @@
           <span>{{ scope.row.asset.assetKey2 }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="isActive" label="有效" width="150">
+      <el-table-column prop="isActive" label="有效" width="80">
         <template slot-scope="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="ago" label="Ago" width="80"></el-table-column>
+      <el-table-column prop="lastSubscriptionTime" label="发布时间" width="200">
+        <template slot-scope="scope">
+          <span>{{ scope.row.lastSubscriptionTime }}<{{scope.row.ago}}></span>
+        </template>
+      </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
