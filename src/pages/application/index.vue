@@ -24,7 +24,7 @@
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small">{{ item.name }}</el-tag>
+                <el-tag size="small"><span v-if="item.instance !== null">{{ item.instance.instanceName}}/</span>{{ item.name }}</el-tag>
               </el-tooltip>
             </span>
           </div>
@@ -165,10 +165,6 @@ export default {
         this.$message.info('已取消删除')
       })
     },
-    // handlerRowPermissionEdit (row) {
-    //   this.formPermissionStatus.visible = true
-    //   this.$refs.applicationPermissionDialog.initData(Object.assign({}, row))
-    // },
     fetchData () {
       this.loading = true
       const requestBody = {

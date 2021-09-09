@@ -72,3 +72,11 @@ export function UNBIND_APPLICATION_RES (param) {
     params: param
   })
 }
+
+export function PREVIEW_APPLICATION_RES_PAGE (data) {
+  return request({
+    url: baseUrl + '/res/preview/page/query',
+    method: 'post',
+    data
+  })
+}

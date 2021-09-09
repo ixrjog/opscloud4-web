@@ -42,7 +42,7 @@
             </el-form-item>
             <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源实例">
               <el-select v-model="queryParam.dsInstance" filterable placeholder="选择资源实例"
-                         value-key="id" @change="handleGetAssetType">
+                         value-key="id" @change="getAssetType">
                 <el-option
                   v-for="item in dsInstanceOptions"
                   :key="item.id"
@@ -56,7 +56,7 @@
             </el-form-item>
             <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源类型">
               <el-select v-model="queryParam.assetType" placeholder="选择资源类型"
-                         @change="getResources('')">
+                         @change="getResource('')">
                 <el-option
                   v-for="item in assetTypeOptions"
                   :key="item.id"
@@ -66,23 +66,21 @@
               </el-select>
             </el-form-item>
             <el-form-item label="绑定资源">
-              <el-select v-model.lazy="queryParam.resources" filterable value-key="id"
+              <el-select v-model="queryParam.resource" filterable clearable value-key="businessId"
                          :disabled="queryParam.businessType === ''"
-                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getResources">
+                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getResource">
                 <el-option
                   v-for="item in resOptions"
-                  :key="item.id"
-                  :label="resFilter(item)"
+                  :key="item.businessId"
+                  :label="item.name"
                   :value="item">
-                  <span style="float: left">{{ resFilter(item) }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
-                    {{ resFilterPLus(item) }}
-                  </span>
+                  <span style="float: left">{{ item.name}}</span>
+                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{item.comment}}</span>
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button size="mini" type="primary" :disabled="JSON.stringify(queryParam.resources) === '{}'"
+              <el-button size="mini" type="primary" :disabled="JSON.stringify(queryParam.resource) === '{}'"
                          @click="handleBindResources">绑定
               </el-button>
             </el-form-item>
@@ -94,7 +92,7 @@
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small" closable @close="handleResUnbind(item.id)">{{ item.name }}</el-tag>
+                <el-tag size="small" closable @close="handleResUnbind(item.id)"><span v-if="item.instance !== null">{{ item.instance.instanceName}}/</span>{{ item.name }}</el-tag>
               </el-tooltip>
             </span>
           </div>
@@ -108,17 +106,15 @@
 // API
 import {
   ADD_APPLICATION,
+  PREVIEW_APPLICATION_RES_PAGE,
   BIND_APPLICATION_RES,
   GET_APP_BUSINESS_OPTIONS,
   GET_APPLICATION_BY_ID,
   UNBIND_APPLICATION_RES,
   UPDATE_APPLICATION
 } from '@/api/modules/application/application.api'
-import { QUERY_SERVER_PAGE } from '@/api/modules/server/server.api'
-import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
-import { QUERY_ASSET_PAGE } from '@/api/modules/datasource/datasource.asset.api'
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 
 export default {
@@ -129,7 +125,7 @@ export default {
       businessTypeOptions: [],
       businessType: BusinessType,
       queryParam: {
-        resources: '',
+        resource: '',
         dsInstance: {},
         assetType: '',
         businessType: ''
@@ -171,7 +167,7 @@ export default {
     handleClick (tab, event) {
       if (tab.name === 'resource') {
         this.getApplicationResource()
-        this.handleGetBusinessType()
+        this.getBusinessType()
       }
     },
     handleSelectBusinessType () {
@@ -181,10 +177,10 @@ export default {
           this.getAssetInstance()
           break
         default:
-          this.getResources('')
+          this.getResource('')
       }
     },
-    handleGetAssetType () {
+    getAssetType () {
       this.clearResOptions()
       this.queryParam.assetType = ''
       this.assetTypeOptions = []
@@ -201,129 +197,50 @@ export default {
     },
     clearResOptions () {
       this.resOptions = []
-      this.queryParam.resources = ''
+      this.queryParam.resource = ''
     },
-    getResources (queryName) {
+    getResource (queryName) {
       this.clearResOptions()
+      let applicationResType
       switch (this.queryParam.businessType) {
         case this.businessType.SERVER:
-          this.getServer(queryName)
+          applicationResType = 'SERVER'
           break
         case this.businessType.SERVERGROUP:
-          this.getServerGroup(queryName)
+          applicationResType = 'SERVERGROUP'
           break
         case this.businessType.ASSET:
-          if (!this.queryParam.dsInstance) {
-            this.$message.warning('请先选择资产实例')
-            return
-          }
-          if (!this.queryParam.assetType) {
-            this.$message.warning('请先选择资产类型')
-            return
-          }
-          this.getAsset(queryName)
+          applicationResType = this.queryParam.assetType
           break
         default:
           this.$message.warning('暂不支持绑定该类型')
       }
+      const requestBody = {
+        queryName: queryName,
+        instanceId: this.queryParam.dsInstance !== {} ? this.queryParam.dsInstance.id : '',
+        instanceUuid: this.queryParam.dsInstance !== {} ? this.queryParam.dsInstance.uuid : '',
+        applicationId: this.application.id,
+        businessType: this.queryParam.businessType,
+        applicationResType: applicationResType,
+        page: 1,
+        length: 20
+      }
+      PREVIEW_APPLICATION_RES_PAGE(requestBody)
+        .then(({ body }) => {
+          this.resOptions = body.data
+        })
     },
     handleBindResources () {
-      let name
-      if (this.queryParam.businessType === this.businessType.ASSET && this.queryParam.assetType === this.appDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT) {
-        name = this.queryParam.resources.assetId
-      } else {
-        name = this.queryParam.resources.name
-      }
-      const requestBody = {
-        applicationId: this.application.id,
-        name: name,
-        businessId: this.queryParam.resources.id,
-        businessType: this.queryParam.businessType,
-        virtualResource: false
-      }
-      switch (this.queryParam.businessType) {
-        case this.businessType.SERVER:
-          requestBody.resourceType = 'SERVER'
-          requestBody.name = this.queryParam.resources.displayName
-          requestBody.comment = this.queryParam.resources.privateIp
-          break
-        case this.businessType.SERVERGROUP:
-          requestBody.resourceType = 'SERVERGROUP'
-          requestBody.comment = this.queryParam.resources.comment
-          break
-        case this.businessType.ASSET:
-          requestBody.resourceType = this.queryParam.resources.assetType
-          requestBody.comment = this.queryParam.resources.description
-          break
-        default:
-          requestBody.resourceType = ''
-      }
-      BIND_APPLICATION_RES(requestBody)
+      BIND_APPLICATION_RES(this.queryParam.resource)
         .then(() => {
           this.getApplicationResource()
           this.$message.success('绑定成功')
         })
     },
-    resFilter (res) {
-      switch (this.queryParam.businessType) {
-        case this.businessType.SERVER:
-          return res.displayName
-        case this.businessType.SERVERGROUP:
-        case this.businessType.ASSET:
-          switch (this.queryParam.assetType) {
-            case this.appDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
-              return res.assetId
-            default:
-              return res.name
-          }
-        default:
-          return ''
-      }
-    },
-    resFilterPLus (res) {
-      switch (this.queryParam.businessType) {
-        case this.businessType.SERVER:
-          return res.privateIp
-        case this.businessType.SERVERGROUP:
-          return res.comment
-        case this.businessType.ASSET:
-          switch (this.queryParam.assetType) {
-            case this.appDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
-              return res.assetKey2
-            default:
-              return res.assetKey
-          }
-        default:
-          return ''
-      }
-    },
-    handleGetBusinessType () {
+    getBusinessType () {
       GET_APP_BUSINESS_OPTIONS()
         .then(({ body }) => {
           this.businessTypeOptions = body.options
-        })
-    },
-    getServer (queryName) {
-      const requestBody = {
-        queryName: queryName,
-        page: 1,
-        length: 20
-      }
-      QUERY_SERVER_PAGE(requestBody)
-        .then(({ body }) => {
-          this.resOptions = body.data
-        })
-    },
-    getServerGroup (queryName) {
-      const requestBody = {
-        name: queryName,
-        serverGroupTypeId: '',
-        page: 1,
-        length: 20
-      }
-      QUERY_SERVER_GROUP_PAGE(requestBody)
-        .then(({ body }) => {
-          this.resOptions = body.data
         })
     },
     getAssetInstance () {
@@ -334,19 +251,6 @@ export default {
       QUERY_DATASOURCE_INSTANCE(requestBody)
         .then(({ body }) => {
           this.dsInstanceOptions = body
-        })
-    },
-    getAsset (queryName) {
-      const requestBody = {
-        instanceId: this.queryParam.dsInstance.id,
-        assetType: this.queryParam.assetType,
-        queryName: queryName,
-        page: 1,
-        length: 20
-      }
-      QUERY_ASSET_PAGE(requestBody)
-        .then(({ body }) => {
-          this.resOptions = body.data
         })
     },
     getApplicationResource () {

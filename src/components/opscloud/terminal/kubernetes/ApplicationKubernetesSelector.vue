@@ -11,8 +11,8 @@
           <span v-for="resource in scope.row.resources" :key="resource.id">
             <el-card shadow="never">
                <div style="margin-top: -10px">
-                 <el-tag>Deployment</el-tag>
-                 {{ resource.asset.assetKey}}
+                 <el-tag style="margin-right: 5px">Deployment</el-tag>
+                  <span v-if="resource.instance !== null">{{ resource.instance.instanceName}}/</span>{{ resource.asset.assetKey}}
                   <el-button style="float: right; padding: 3px 0" type="text"
                              @click="handleLog(resource)">Log
 <!--                    <i class="far fa-file-alt"></i>-->
