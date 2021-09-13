@@ -98,6 +98,10 @@
           </div>
         </el-col>
       </el-tab-pane>
+      <el-tab-pane label="用户授权" name="permissionUser" :disabled="JSON.stringify(application) == '{}'">
+        <permission-user-tab :businessType="8" :businessId="application.id"
+                             ref="permissionUserTab"></permission-user-tab>
+      </el-tab-pane>
     </el-tabs>
   </el-dialog>
 </template>
@@ -116,6 +120,7 @@ import {
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
+import PermissionUserTab from '../user/child/BusinessPermissionUserTab'
 
 export default {
   data () {
@@ -138,7 +143,9 @@ export default {
   },
   name: 'ApplicationDialog',
   props: ['formStatus'],
-  components: {},
+  components: {
+    PermissionUserTab
+  },
   filters: {
     getAppResText (value) {
       switch (value) {

@@ -30,6 +30,11 @@
           </div>
           </template>
         </el-table-column>
+        <el-table-column prop="users" label="授权用户">
+          <template slot-scope="scope">
+            <users-tag :users="scope.row.users"></users-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>
         <el-table-column prop="tags" label="标签" width="100">
           <template slot-scope="props">
@@ -64,6 +69,7 @@ import Pagination from '@/components/opscloud/common/page/Pagination'
 import { DELETE_APPLICATION, QUERY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import ApplicationEditor from '@/components/opscloud/application/ApplicationEditor'
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
+import UsersTag from '../../components/opscloud/common/tag/UsersTag'
 
 export default {
   name: 'ApplicationTable',
@@ -122,7 +128,8 @@ export default {
   },
   components: {
     Pagination,
-    ApplicationEditor
+    ApplicationEditor,
+    UsersTag
   },
   methods: {
     paginationCurrentChange (currentPage) {
