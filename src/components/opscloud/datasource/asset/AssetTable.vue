@@ -56,6 +56,7 @@
                          :formStatus="formStatus.businessTag" @close="fetchData"></business-tag-editor>
     <server-editor :formStatus="formStatus.server" ref="serverEditor" @close="fetchData"></server-editor>
     <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
+    <user-group-editor :formStatus="formStatus.userGroup" ref="userGroupEditor" @close="fetchData"></user-group-editor>
   </div>
 </template>
 
@@ -73,6 +74,7 @@ import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import BusinessTags from '../../common/tag/BusinessTags'
 import ServerEditor from '../../server/ServerEditor'
 import UserEditor from '../../user/UserEditor'
+import UserGroupEditor from '../../user/UserGroupEditor'
 
 const tableLayout = {
   assetId: {
@@ -141,6 +143,12 @@ export default {
           operationType: true,
           addTitle: '新增用户信息',
           updateTitle: '更新用户信息'
+        },
+        userGroup: {
+          visible: false,
+          operationType: true,
+          addTitle: '新增用户组信息',
+          updateTitle: '更新用户组信息'
         }
       },
       businessId: '',
@@ -162,7 +170,8 @@ export default {
     BusinessTags,
     Pagination,
     ServerEditor,
-    UserEditor
+    UserEditor,
+    UserGroupEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -222,6 +231,12 @@ export default {
         this.$refs.userEditor.initData(convertBusinessTypes.USER)
         this.formStatus.user.operationType = true
         this.formStatus.user.visible = true
+        return
+      }
+      if (convertBusinessTypes.USERGROUP !== undefined) {
+        this.$refs.userGroupEditor.initData(convertBusinessTypes.USERGROUP)
+        this.formStatus.userGroup.operationType = true
+        this.formStatus.userGroup.visible = true
         return
       }
     },
