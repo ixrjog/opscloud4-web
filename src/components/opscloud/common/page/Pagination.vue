@@ -34,6 +34,7 @@ export default {
     initPageSize () {
       if (typeof (this.info.pageSize) !== 'undefined') {
         this.pageSize = this.info.pageSize
+        this.handleSizeChange(this.pageSize)
       }
     },
     handleSizeChange (size) {
