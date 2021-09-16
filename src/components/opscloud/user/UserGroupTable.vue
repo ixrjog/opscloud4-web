@@ -13,8 +13,8 @@
           <users-tag :users="scope.row.users"></users-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
-      <el-table-column label="操作" width="380">
+      <el-table-column prop="comment" label="描述" width="300"></el-table-column>
+      <el-table-column label="操作" width="220">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
