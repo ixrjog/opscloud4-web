@@ -4,6 +4,7 @@
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新建</el-button>
+      <el-button @click="handleSync">同步</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="username" label="用户名" width="150"></el-table-column>
@@ -31,7 +32,7 @@
 
 <script>
 
-import { QUERY_USER_PAGE } from '@/api/modules/user/user.api.js'
+import { QUERY_USER_PAGE, SYNC_USER } from '@/api/modules/user/user.api.js'
 import Pagination from '../common/page/Pagination'
 import UserEditor from './UserEditor'
 
@@ -106,6 +107,12 @@ export default {
         comment: ''
       }
       this.$refs.userEditor.initData(user)
+    },
+    handleSync () {
+      SYNC_USER()
+        .then(res => {
+          this.$message.success('后台同步中!')
+        })
     },
     fetchData () {
       this.table.loading = true

@@ -68,3 +68,10 @@ export function QUERY_BUSINESS_PERMISSION_USER (data) {
     data
   })
 }
+
+export function SYNC_USER () {
+  return request({
+    url: baseUrl + '/sync',
+    method: 'put'
+  })
+}
