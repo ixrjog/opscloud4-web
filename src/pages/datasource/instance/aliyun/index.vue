@@ -17,10 +17,10 @@
               </template>
             </el-table-column>
           </template>
-<!--          <template v-slot:operation="scope">-->
-<!--            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"-->
-<!--                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>-->
-<!--          </template>-->
+          <!--          <template v-slot:operation="scope">-->
+          <!--            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"-->
+          <!--                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>-->
+          <!--          </template>-->
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="Image" name="image">
@@ -100,6 +100,21 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="Log日志服务" name="log">
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-card shadow="never">
+              <aliyun-log-table :instanceId="instanceId" ref="aliyunLogTable"
+                                @handleSelLog="handleSelLog"></aliyun-log-table>
+            </el-card>
+          </el-col>
+          <el-col :span="14">
+            <el-card shadow="never">
+              <aliyun-log-member-table ref="aliyunLogMemberTable"></aliyun-log-member-table>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -109,6 +124,8 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
+import AliyunLogTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogTable'
+import AliyunLogMemberTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogMemberTable'
 
 const treeObj = {
   label: '',
@@ -235,24 +252,35 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag
+    DsChildrenTag,
+    AliyunLogTable,
+    AliyunLogMemberTable
   },
   methods: {
     handleClick (tab, event) {
       if (tab.name === 'ecs') {
         this.$refs.ecsTable.fetchData()
+        return
       }
       if (tab.name === 'image') {
         this.$refs.imageTable.fetchData()
+        return
       }
       if (tab.name === 'vpc') {
         this.$refs.vpcTable.fetchData()
+        return
       }
       if (tab.name === 'ramUser') {
         this.$refs.ramUserTable.fetchData()
+        return
       }
       if (tab.name === 'ramPolicy') {
         this.$refs.ramPolicyTable.fetchData()
+        return
+      }
+      if (tab.name === 'log') {
+        this.$refs.aliyunLogTable.fetchData()
+        return
       }
     },
     init () {
@@ -305,6 +333,9 @@ export default {
         return RAM_ACCESS_KEY
       }
       return []
+    },
+    handleSelLog (logId) {
+      this.$refs.aliyunLogMemberTable.initData(logId)
     }
   }
 }
