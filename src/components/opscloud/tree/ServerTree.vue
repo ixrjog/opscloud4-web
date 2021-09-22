@@ -1,5 +1,5 @@
 z<template>
-  <el-card style="margin-top: 5px" class="box-card" shadow="never">
+  <el-card style="margin-top: 5px" class="box-card" shadow="hover">
     <div slot="header" class="clearfix">
       <span><i class="fas fa-list" aria-hidden="true"></i></span>
       <el-tag style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
