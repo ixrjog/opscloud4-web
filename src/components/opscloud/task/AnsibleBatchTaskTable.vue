@@ -10,6 +10,21 @@
           <span style="margin-left: 20px;font-size: 12px">任务配置</span>
         </div>
         <el-form :model="serverTask">
+          <el-form-item label="Ansible实例" :label-width="labelWidth" required>
+            <el-select v-model="dsInstance" filterable placeholder="选择Ansible实例"
+                       value-key="id">
+              <el-option
+                v-for="item in dsInstanceOptions"
+                :key="item.id"
+                :label="item.instanceName"
+                :value="item">
+                <span style="float: left">{{ item.instanceType }}</span>
+                <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
+                {{ item.instanceName }}</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
+
           <el-form-item label="剧本" :label-width="labelWidth" required>
             <el-select v-model.trim="playbook" filterable clearable
                        remote reserve-keyword placeholder="搜索剧本" :remote-method="getPlaybook"
@@ -44,7 +59,10 @@
 import ServerTree from '../tree/ServerTree'
 import { QUERY_ANSIBLE_PLAYBOOK_PAGE } from '@/api/modules/task/task.playbook.api.js'
 import { SUBMIT_SERVER_TASK } from '@/api/modules/task/server.task.api.js'
+import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 import AnsiblePlaybookEditor from './AnsiblePlaybookEditor'
+import DsInstanceType from '@/components/opscloud/common/enums/ds.instance.type.js'
+import tools from '@/libs/tools.js'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -60,8 +78,11 @@ export default {
     return {
       activeName: 'batchTask',
       labelWidth: '100px',
+      dsInstanceType: DsInstanceType,
       playbook: '',
       playbookOptions: [],
+      dsInstance: '',
+      dsInstanceOptions: [],
       options: options,
       formStatus: {
         playbook: {
@@ -77,6 +98,7 @@ export default {
     }
   },
   mounted () {
+    this.getDsInstance()
     this.getPlaybook('')
   },
   components: {
@@ -93,6 +115,20 @@ export default {
       require('brace/theme/chrome')
       // snippet
       require('brace/snippets/yaml')
+    },
+    getDsInstance () {
+      const requestBody = {
+        instanceType: this.dsInstanceType.ANSIBLE.name,
+        isActive: true,
+        extend: true
+      }
+      QUERY_DATASOURCE_INSTANCE(requestBody)
+        .then(({ body }) => {
+          this.dsInstanceOptions = body
+          if (this.dsInstanceOptions.length !== 0) {
+            this.dsInstance = this.dsInstanceOptions[0]
+          }
+        })
     },
     handleOpenPlaybook () {
       this.$refs.playbookEditor.initData(Object.assign({}, this.playbook))
@@ -115,6 +151,9 @@ export default {
       if (this.playbook === '') {
         this.$message.warning('未指定剧本！')
       }
+      if (this.dsInstance === '') {
+        this.$message.warning('未指定Ansible实例！')
+      }
       let nodes = this.$refs.serverTree.getCheckedNodes(true)
       if (nodes === [] || nodes.length === 0) {
         this.$message.warning('未指定服务器！')
@@ -126,6 +165,8 @@ export default {
       let requestBody = {
         vars: this.serverTask.vars,
         ansiblePlaybookId: this.playbook.id,
+        instanceUuid: this.dsInstance.uuid,
+        taskUuid: tools.uuid(),
         taskType: 'PLAYBOOK',
         servers: servers
       }
