@@ -46,9 +46,13 @@
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
-          <el-button size="mini" type="primary" @click="submitServerTask">提交任务</el-button>
+          <el-button size="mini" type="primary" :disabled="submitting" @click="submitServerTask"><i
+            class="el-icon-loading" v-show="submitting"></i>提交任务
+          </el-button>
         </div>
       </el-card>
+      <server-task-info-card v-if="serverTaskInfo !== ''" :serverTaskInfo="serverTaskInfo"
+                             @close="close"></server-task-info-card>
     </el-col>
     <ansible-playbook-editor :formStatus="formStatus.playbook" ref="playbookEditor"></ansible-playbook-editor>
   </el-row>
@@ -63,6 +67,7 @@ import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.i
 import AnsiblePlaybookEditor from './AnsiblePlaybookEditor'
 import DsInstanceType from '@/components/opscloud/common/enums/ds.instance.type.js'
 import tools from '@/libs/tools.js'
+import ServerTaskInfoCard from './child/ServerTaskInfoCard'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -84,6 +89,7 @@ export default {
       dsInstance: '',
       dsInstanceOptions: [],
       options: options,
+      taskUuid: tools.uuid(),
       formStatus: {
         playbook: {
           operationType: true,
@@ -94,7 +100,9 @@ export default {
       },
       serverTask: {
         vars: ''
-      }
+      },
+      submitting: false,
+      serverTaskInfo: ''
     }
   },
   mounted () {
@@ -104,7 +112,8 @@ export default {
   components: {
     editor: require('vue2-ace-editor'),
     ServerTree,
-    AnsiblePlaybookEditor
+    AnsiblePlaybookEditor,
+    ServerTaskInfoCard
   },
   methods: {
     editorInit: function () {
@@ -147,33 +156,41 @@ export default {
           this.playbookOptions = res.body.data
         })
     },
+    close () {
+      this.serverTaskInfo = ''
+    },
     submitServerTask () {
-      if (this.playbook === '') {
-        this.$message.warning('未指定剧本！')
-      }
       if (this.dsInstance === '') {
         this.$message.warning('未指定Ansible实例！')
+        return
+      }
+      if (this.playbook === '') {
+        this.$message.warning('未指定剧本！')
+        return
       }
       let nodes = this.$refs.serverTree.getCheckedNodes(true)
       if (nodes === [] || nodes.length === 0) {
         this.$message.warning('未指定服务器！')
+        return
       }
-      let servers = nodes.map(function (item) {
-        // return item['hours']
-        return item.server
-      })
+      this.submitting = true
       let requestBody = {
         vars: this.serverTask.vars,
         ansiblePlaybookId: this.playbook.id,
         instanceUuid: this.dsInstance.uuid,
-        taskUuid: tools.uuid(),
+        taskUuid: this.taskUuid,
         taskType: 'PLAYBOOK',
-        servers: servers
+        servers: nodes.map(function (item) {
+          return item.server
+        })
       }
-      // console.log(requestBody)
       SUBMIT_SERVER_TASK(requestBody)
         .then(res => {
           this.$message.success('任务提交成功！')
+          // 重置uuid
+          this.taskUuid = tools.uuid()
+          this.serverTaskInfo = requestBody
+          this.submitting = false
         })
     }
   }
