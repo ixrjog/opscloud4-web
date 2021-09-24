@@ -30,7 +30,7 @@
                  </el-tag>
                  <span style="margin-left: 5px;display: inline-block" v-for="container in pod.children"
                        :key="container.asset.name">
-                    <el-tag><i style="margin-right: 2px" class="fab fa-docker"></i>{{ container.asset.name}} [ {{pod.properties.startTime}} ]<el-checkbox
+                    <el-tag><i style="margin-right: 2px" class="fab fa-docker"></i>{{ container.asset.name}} [ 启动时间: {{pod.properties.startTime}} / 重启次数: {{pod.properties.restartCount }} ]<el-checkbox
                             style="margin-left: 5px" v-model="container.checked"></el-checkbox></el-tag>
                  </span>
                </div>
