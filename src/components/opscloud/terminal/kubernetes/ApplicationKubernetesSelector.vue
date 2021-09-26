@@ -23,16 +23,20 @@
                   </el-button>
                </div>
                <el-divider/>
+                <!--Pod-->
                <div v-for="pod in resource.assetContainers" :key="pod.asset.name">
-                 <el-tag style="margin-left: 10px;vertical-align:top;">
-                   <i class="fab fa-artstation"></i>{{ pod.asset.name }}
+                 <el-tooltip :content="pod.properties.image" placement="bottom" effect="light">
+                   <el-tag style="margin-left: 10px;vertical-align:top;">
+                     <i class="fab fa-artstation"></i>{{ pod.asset.name }}
                      <span style="margin-left: 5px;color: #67C23A">[{{ pod.properties.phase }}]</span>
                      <span style="margin-left: 5px">[ 启动时间: {{pod.properties.startTime}} / 重启次数: {{pod.properties.restartCount }} ]</span>
-                 </el-tag>
+                   </el-tag>
+                 </el-tooltip>
+                   <!--容器-->
                  <span style="margin-left: 5px;display: inline-block" v-for="container in pod.children"
                        :key="container.asset.name">
-                    <el-tag><i style="margin-right: 2px" class="fab fa-docker"></i>{{ container.asset.name}}<el-checkbox
-                            style="margin-left: 5px" v-model="container.checked"></el-checkbox></el-tag>
+                           <el-tag><i style="margin-right: 2px" class="fab fa-docker"></i>{{ container.asset.name}}<el-checkbox
+                                   style="margin-left: 5px" v-model="container.checked"></el-checkbox></el-tag>
                  </span>
                </div>
             </el-card>
