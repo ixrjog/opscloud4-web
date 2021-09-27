@@ -24,10 +24,11 @@
               </el-option>
             </el-select>
           </el-form-item>
-
           <el-form-item label="剧本" :label-width="labelWidth" required>
             <el-select v-model.trim="playbook" filterable clearable
-                       remote reserve-keyword placeholder="搜索剧本" :remote-method="getPlaybook"
+                       remote reserve-keyword placeholder="搜索剧本"
+                       :remote-method="getPlaybook"
+                       @change="handleSelPlaybook"
                        @clear="getPlaybook('')">
               <el-option
                 v-for="item in playbookOptions"
@@ -40,7 +41,7 @@
             </el-button>
           </el-form-item>
           <el-form-item label="变量(Vars)" :label-width="labelWidth">
-            <editor v-model="serverTask.tags" @init="editorInit" lang="yaml" theme="chrome"
+            <editor v-model="serverTask.vars" @init="editorInit" lang="yaml" theme="chrome"
                     height="80"
                     :options="options"></editor>
           </el-form-item>
@@ -155,6 +156,11 @@ export default {
         .then(res => {
           this.playbookOptions = res.body.data
         })
+    },
+    handleSelPlaybook(){
+      if(this.playbook.vars !== ''){
+        this.serverTask.vars = this.playbook.vars
+      }
     },
     close () {
       this.serverTaskInfo = ''
