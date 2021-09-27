@@ -180,7 +180,12 @@ export default {
         const messageJson = JSON.parse(message.data)
         if (this.$refs[`terminal_${messageJson.instanceId}`] !== null) {
           try {
-            this.$refs[`terminal_${messageJson.instanceId}`][0].write(messageJson.output)
+            if(messageJson.error !== ''){
+              this.$refs[`terminal_${messageJson.instanceId}`][0].write(messageJson.error)
+            }
+            if(messageJson.output !== ''){
+              this.$refs[`terminal_${messageJson.instanceId}`][0].write(messageJson.output)
+            }
           } catch (e) {
           }
         }
