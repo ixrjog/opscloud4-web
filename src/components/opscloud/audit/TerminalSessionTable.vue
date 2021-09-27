@@ -2,14 +2,6 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.username" placeholder="输入关键字查询"/>
-      <!--      <el-select v-model="queryParam.isActive" clearable placeholder="有效">-->
-      <!--        <el-option-->
-      <!--          v-for="item in activeOptions"-->
-      <!--          :key="item.value"-->
-      <!--          :label="item.label"-->
-      <!--          :value="item.value">-->
-      <!--        </el-option>-->
-      <!--      </el-select>-->
       <el-select v-model="queryParam.sessionType" clearable placeholder="会话类型">
         <el-option
           v-for="item in sessionTypeOptions"
