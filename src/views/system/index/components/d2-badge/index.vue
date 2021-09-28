@@ -9,11 +9,20 @@
 </template>
 
 <script>
-const linkD2Admin = 'https://github.com/ixrjog/opscloud'
+const linkD2Admin = 'https://github.com/ixrjog/opscloud4'
 export default {
   data () {
     return {
       badges: [
+        [
+          { img: 'https://img.shields.io/github/stars/ixrjog/opscloud4.svg', link: `${linkD2Admin}/stargazers` },
+          { img: 'https://img.shields.io/github/forks/ixrjog/opscloud4.svg', link: `${linkD2Admin}/network/members` },
+          { img: 'https://img.shields.io/github/issues/ixrjog/opscloud4.svg', link: `${linkD2Admin}/issues` },
+          { img: 'https://img.shields.io/github/issues-closed/ixrjog/opscloud4.svg', link: `${linkD2Admin}/issues?q=is%3Aissue+is%3Aclosed` },
+          { img: 'https://img.shields.io/github/issues-pr/ixrjog/opscloud4.svg', link: `${linkD2Admin}/pulls` },
+          { img: 'https://img.shields.io/github/issues-pr-closed/ixrjog/opscloud4.svg', link: `${linkD2Admin}/pulls?q=is%3Apr+is%3Aclosed` },
+          { img: 'https://img.shields.io/github/last-commit/ixrjog/opscloud4.svg', link: linkD2Admin }
+        ],
         [
          // { img: 'https://img.shields.io/github/stars/d2-projects/d2-admin.svg', link: `${linkD2Admin}/stargazers` },
         //  { img: 'https://img.shields.io/github/forks/d2-projects/d2-admin.svg', link: `${linkD2Admin}/network/members` },
