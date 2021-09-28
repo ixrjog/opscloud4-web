@@ -45,7 +45,7 @@
                 <whether-tag :whether="scope.row.properties.isAdmin"></whether-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="children" label="密钥" width="800">
+            <el-table-column prop="children" label="密钥" width="200" v-if="false">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.GITLAB_SSHKEY" :type="2"></ds-children-tag>
               </template>
