@@ -34,6 +34,12 @@ export function getAssetTypeText (value) {
       return 'MYSQL实例'
     case DsInstanceAssetType.ALIYUN.RDS_MYSQL_DATABASE:
       return 'MYSQL数据库'
+    case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_INSTANCE:
+      return 'MQ实例'
+    case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_TOPIC:
+      return 'MQ-TOPIC'
+    case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_GROUP:
+      return 'MQ-GROUP'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:

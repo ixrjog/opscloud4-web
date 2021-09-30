@@ -139,6 +139,44 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+      <el-tab-pane label="ONS消息服务" name="ons">
+        <el-tabs tab-position="left" v-model="onsActiveName" @tab-click="handleClick">
+          <el-tab-pane label="RocketMQ实例" name="onsRocketMqInstance">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_INSTANCE"
+                         :tableLayout="tableLayout.onsRocketMqInstance"
+                         ref="onsRocketMqInstanceTable">
+              <template v-slot:extend>
+                <el-table-column prop="children" label="Topic" width="400">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.ONS_ROCKETMQ_TOPIC" :type="3"></ds-children-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="children" label="Group" width="400">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.ONS_ROCKETMQ_GROUP" :type="3"></ds-children-tag>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="RocketMQTopic" name="onsRocketMqTopic">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_TOPIC"
+                         :tableLayout="tableLayout.onsRocketMqTopic"
+                         ref="onsRocketMqTopicTable">
+              <template v-slot:extend>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="RocketMQGroup" name="onsRocketMqGroup">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_GROUP"
+                         :tableLayout="tableLayout.onsRocketMqGroup"
+                         ref="onsRocketMqGroupTable">
+              <template v-slot:extend>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
       <el-tab-pane label="Log日志服务" name="log">
         <el-row :gutter="20">
           <el-col :span="10">
@@ -316,6 +354,72 @@ const tableLayout = {
       alias: '区',
       show: false
     }
+  },
+  onsRocketMqInstance: {
+    assetId: {
+      alias: '实例ID',
+      show: true
+    },
+    name: {
+      alias: '实例名称',
+      show: true
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  onsRocketMqTopic:{
+    assetId: {
+      alias: '实例ID',
+      show: true
+    },
+    name: {
+      alias: 'Topic',
+      show: true
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  onsRocketMqGroup:{
+    assetId: {
+      alias: '实例ID',
+      show: true
+    },
+    name: {
+      alias: 'Group',
+      show: true
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
   }
 }
 
@@ -326,6 +430,7 @@ export default {
       cloudServerActiveName: 'ecs',
       ramActiveName: 'ramUser',
       rdsActiveName: 'rdsMysqlInstance',
+      onsActiveName: 'onsRocketMqInstance',
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
@@ -372,6 +477,18 @@ export default {
         this.$refs.rdsMysqlDatabaseTable.fetchData()
         return
       }
+      if (tab.name === 'onsRocketMqInstance') {
+        this.$refs.onsRocketMqInstanceTable.fetchData()
+        return
+      }
+      if (tab.name === 'onsRocketMqTopic') {
+        this.$refs.onsRocketMqTopicTable.fetchData()
+        return
+      }
+      if (tab.name === 'onsRocketMqGroup') {
+        this.$refs.onsRocketMqGroupTable.fetchData()
+        return
+      }
       if (tab.name === 'log') {
         this.$refs.aliyunLogTable.fetchData()
         return
@@ -387,6 +504,9 @@ export default {
         }
         if (this.$refs.rdsMysqlInstanceTable) {
           this.$refs.rdsMysqlInstanceTable.fetchData()
+        }
+        if (this.$refs.onsRocketMqInstanceTable) {
+          this.$refs.onsRocketMqInstanceTable.fetchData()
         }
       }, 50)
     },
