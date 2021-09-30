@@ -30,6 +30,10 @@ export function getAssetTypeText (value) {
       return 'RAM策略'
     case DsInstanceAssetType.ALIYUN.RAM_ACCESS_KEY:
       return 'RAM-AK'
+    case DsInstanceAssetType.ALIYUN.RDS_MYSQL_INSTANCE:
+      return 'MYSQL实例'
+    case DsInstanceAssetType.ALIYUN.RDS_MYSQL_DATABASE:
+      return 'MYSQL数据库'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:

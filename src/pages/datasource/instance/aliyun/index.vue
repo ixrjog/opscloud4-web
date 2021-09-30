@@ -2,103 +2,142 @@
   <d2-container>
     <h1>Aliyun实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
-      <el-tab-pane label="ECS" name="ecs">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
-                     ref="ecsTable">
-          <template v-slot:extend>
-            <el-table-column prop="properties" label="cpu">
-              <template slot-scope="scope">
-                <span>{{ scope.row.properties.cpu }}</span>
+      <el-tab-pane label="云服务器" name="cloudServer">
+        <el-tabs tab-position="left" v-model="cloudServerActiveName" @tab-click="handleClick">
+          <el-tab-pane label="ECS" name="ecs">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
+                         ref="ecsTable">
+              <template v-slot:extend>
+                <el-table-column prop="properties" label="CPU">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.cpu }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="properties" label="内存(MiB)">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.memory }}</span>
+                  </template>
+                </el-table-column>
               </template>
-            </el-table-column>
-            <el-table-column prop="properties" label="内存(MiB)">
-              <template slot-scope="scope">
-                <span>{{ scope.row.properties.memory }}</span>
+              <!--          <template v-slot:operation="scope">-->
+              <!--            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"-->
+              <!--                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>-->
+              <!--          </template>-->
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="Image" name="image">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS_IMAGE"
+                         :tableLayout="tableLayout.image"
+                         ref="imageTable">
+              <template v-slot:extend>
+                <el-table-column label="操作系统" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.oSName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="系统大小(GiB)">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.size }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="描述" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
               </template>
-            </el-table-column>
-          </template>
-          <!--          <template v-slot:operation="scope">-->
-          <!--            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"-->
-          <!--                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>-->
-          <!--          </template>-->
-        </asset-table>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="VPC" name="vpc">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.VPC" :tableLayout="tableLayout.vpc"
+                         ref="vpcTable">
+              <template v-slot:extend>
+                <el-table-column label="安全组" width="450">
+                  <template slot-scope="scope">
+                    <div v-for="sg in getSecurityGroups(scope.row)" :key="sg.id" class="sgLabel">
+                      <el-tag :type="sg.isActive?'success':'info'">{{ sg.name }}</el-tag>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="交换机" width="350">
+                  <template slot-scope="scope">
+                    <el-tree :data="getVSwitches(scope.row)" accordion></el-tree>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="Image" name="image">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS_IMAGE" :tableLayout="tableLayout.image"
-                     ref="imageTable">
-          <template v-slot:extend>
-            <el-table-column label="操作系统" show-overflow-tooltip>
-              <template slot-scope="scope">
-                <span>{{ scope.row.properties.oSName }}</span>
+      <el-tab-pane label="RAM访问控制" name="ram">
+        <el-tabs tab-position="left" v-model="ramActiveName" @tab-click="handleClick">
+          <el-tab-pane label="RAM用户" name="ramUser">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER"
+                         :tableLayout="tableLayout.ramUser"
+                         ref="ramUserTable">
+              <template v-slot:extend>
+                <el-table-column prop="children" label="授权的策略" width="500">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.RAM_POLICY" :type="0"></ds-children-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Access Key" width="180">
+                  <template slot-scope="scope">
+                    <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
+                      <el-tag :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
+                    </div>
+                  </template>
+                </el-table-column>
               </template>
-            </el-table-column>
-            <el-table-column label="系统大小(GiB)">
-              <template slot-scope="scope">
-                <span>{{ scope.row.properties.size }}</span>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="RAM策略" name="ramPolicy">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
+                         :tableLayout="tableLayout.ramPolicy" ref="ramPolicyTable">
+              <template v-slot:extend>
+                <el-table-column prop="children" label="成员用户" width="400">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.RAM_USER" :type="4"></ds-children-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="描述">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
               </template>
-            </el-table-column>
-            <el-table-column label="描述" show-overflow-tooltip>
-              <template slot-scope="scope">
-                <span>{{ scope.row.description }}</span>
-              </template>
-            </el-table-column>
-          </template>
-        </asset-table>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="VPC" name="vpc">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.VPC" :tableLayout="tableLayout.vpc"
-                     ref="vpcTable">
-          <template v-slot:extend>
-            <el-table-column label="安全组" width="450">
-              <template slot-scope="scope">
-                <div v-for="sg in getSecurityGroups(scope.row)" :key="sg.id" class="sgLabel">
-                  <el-tag :type="sg.isActive?'success':'info'">{{ sg.name }}</el-tag>
-                </div>
+      <el-tab-pane label="RDS云数据库" name="rds">
+        <el-tabs tab-position="left" v-model="rdsActiveName" @tab-click="handleClick">
+          <el-tab-pane label="Mysql实例" name="rdsMysqlInstance">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_MYSQL_INSTANCE"
+                         :tableLayout="tableLayout.rdsMysqlInstance"
+                         ref="rdsMysqlInstanceTable">
+              <template v-slot:extend>
+                <el-table-column prop="children" label="Database" width="400">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.RDS_MYSQL_DATABASE" :type="5"></ds-children-tag>
+                  </template>
+                </el-table-column>
               </template>
-            </el-table-column>
-            <el-table-column label="交换机" width="350">
-              <template slot-scope="scope">
-                <el-tree :data="getVSwitches(scope.row)" accordion></el-tree>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="MysqlDatabase" name="rdsMysqlDatabase">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_MYSQL_DATABASE"
+                         :tableLayout="tableLayout.rdsMysqlDatabase" ref="rdsMysqlDatabaseTable">
+              <template v-slot:extend>
+                <el-table-column prop="children" label="Mysql实例" width="350">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.RDS_MYSQL_INSTANCE" :type="4"></ds-children-tag>
+                  </template>
+                </el-table-column>
               </template>
-            </el-table-column>
-          </template>
-        </asset-table>
-      </el-tab-pane>
-      <el-tab-pane label="RAM用户" name="ramUser">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER" :tableLayout="tableLayout.ramUser"
-                     ref="ramUserTable">
-          <template v-slot:extend>
-            <el-table-column prop="children" label="授权的策略" width="500">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.RAM_POLICY" :type="0"></ds-children-tag>
-              </template>
-            </el-table-column>
-            <el-table-column label="Access Key" width="180">
-              <template slot-scope="scope">
-                <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
-                  <el-tag :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
-                </div>
-              </template>
-            </el-table-column>
-          </template>
-        </asset-table>
-      </el-tab-pane>
-      <el-tab-pane label="RAM策略" name="ramPolicy">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
-                     :tableLayout="tableLayout.ramPolicy" ref="ramPolicyTable">
-          <template v-slot:extend>
-            <el-table-column prop="children" label="成员用户" width="400">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.RAM_USER" :type="4"></ds-children-tag>
-              </template>
-            </el-table-column>
-            <el-table-column label="描述">
-              <template slot-scope="scope">
-                <span>{{ scope.row.description }}</span>
-              </template>
-            </el-table-column>
-          </template>
-        </asset-table>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="Log日志服务" name="log">
         <el-row :gutter="20">
@@ -233,13 +272,60 @@ const tableLayout = {
       alias: '区',
       show: false
     }
+  },
+  rdsMysqlInstance: {
+    assetId: {
+      alias: '实例ID',
+      show: true
+    },
+    name: {
+      alias: '实例名称',
+      show: true
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
+  },
+  rdsMysqlDatabase: {
+    assetId: {
+      alias: '实例ID',
+      show: true,
+    },
+    name: {
+      alias: '实例名称',
+      show: true,
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
   }
 }
 
 export default {
   data () {
     return {
-      activeName: 'ecs',
+      activeName: 'cloudServer',
+      cloudServerActiveName: 'ecs',
+      ramActiveName: 'ramUser',
+      rdsActiveName: 'rdsMysqlInstance',
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
@@ -278,6 +364,14 @@ export default {
         this.$refs.ramPolicyTable.fetchData()
         return
       }
+      if (tab.name === 'rdsMysqlInstance') {
+        this.$refs.rdsMysqlInstanceTable.fetchData()
+        return
+      }
+      if (tab.name === 'rdsMysqlDatabase') {
+        this.$refs.rdsMysqlDatabaseTable.fetchData()
+        return
+      }
       if (tab.name === 'log') {
         this.$refs.aliyunLogTable.fetchData()
         return
@@ -287,6 +381,12 @@ export default {
       setTimeout(() => {
         if (this.$refs.ecsTable) {
           this.$refs.ecsTable.fetchData()
+        }
+        if (this.$refs.ramUserTable) {
+          this.$refs.ramUserTable.fetchData()
+        }
+        if (this.$refs.rdsMysqlInstanceTable) {
+          this.$refs.rdsMysqlInstanceTable.fetchData()
         }
       }, 50)
     },
@@ -342,8 +442,8 @@ export default {
 </script>
 
 <style scoped>
-  .sgLabel {
-    float: left;
-    width: 50%;
-  }
+.sgLabel {
+  float: left;
+  width: 50%;
+}
 </style>
