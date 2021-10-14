@@ -46,7 +46,10 @@ const DsInstanceAssetType = Object.freeze({
   },
   GUACAMOLE: {
     GUACAMOLE: 'GUACAMOLE'
-  }
+  },
+  TENCENT_EXMAIL: {
+    TENCENT_EXMAIL_USER: 'TENCENT_EXMAIL_USER'
+  },
 })
 
 export default DsInstanceAssetType

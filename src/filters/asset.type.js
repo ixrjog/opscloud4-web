@@ -65,6 +65,8 @@ export function getAssetTypeText (value) {
       return '版本'
     case DsInstanceAssetType.ANSIBLE.ANSIBLE_HOSTS:
       return '主机清单'
+    case DsInstanceAssetType.TENCENT_EXMAIL.TENCENT_EXMAIL_USER:
+      return '邮箱'
     default:
       return value
   }

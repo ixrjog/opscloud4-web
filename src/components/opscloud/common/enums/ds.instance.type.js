@@ -81,6 +81,16 @@ const DsInstanceType = Object.freeze({
     ]
   },
   NEXUS: 10,
+  TENCENT_EXMAIL:{
+    type: 11,
+    name: 'TENCENT_EXMAIL',
+    instanceType: [
+      {
+        value: 'TENCENT_EXMAIL',
+        label: 'TENCENT_EXMAIL'
+      }
+    ]
+  },
   ALIYUN: {
     type: 50,
     name: 'ALIYUN',

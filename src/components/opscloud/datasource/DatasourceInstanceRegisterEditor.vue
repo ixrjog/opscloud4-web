@@ -97,6 +97,9 @@ export default {
         case this.dsInstanceType.ANSIBLE.type:
           instanceType = this.dsInstanceType.ANSIBLE
           break
+        case this.dsInstanceType.TENCENT_EXMAIL.type:
+          instanceType = this.dsInstanceType.TENCENT_EXMAIL
+          break
       }
       this.instanceTypeOptions = instanceType.instanceType
       this.datasource.instance.instanceType = instanceType.name

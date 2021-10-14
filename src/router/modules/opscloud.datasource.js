@@ -88,5 +88,14 @@ export default [
       auth: true,
       title: 'Ansible数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/tencent_exmail',
+    name: 'datasource-instance-tencent-exmail',
+    component: () => import('@/pages/datasource/instance/tencent/exmail'),
+    meta: {
+      auth: true,
+      title: '腾讯企业邮箱数据源实例'
+    }
   }
 ]
