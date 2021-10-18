@@ -150,7 +150,7 @@ export default {
   mixins: [],
   mounted () {
     this.getEnv('')
-    this.getGroup('')
+    //this.getGroup('')
   },
   methods: {
     getEnv (name) {
@@ -164,7 +164,7 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    getGroup (name) {
+    getGroup (name, autoSel) {
       const requestBody = {
         name: name,
         serverGroupTypeId: '',
@@ -174,6 +174,11 @@ export default {
       QUERY_SERVER_GROUP_PAGE(requestBody)
         .then(res => {
           this.serverGroupOptions = res.body.data
+          if(autoSel){
+            if(this.serverGroupOptions.length === 1){
+              this.server.serverGroupId = this.serverGroupOptions[0].id
+            }
+          }
         })
     },
     initData (server) {
@@ -184,9 +189,9 @@ export default {
       // TODO 此处需要优化 删除服务器中环境标签
       if (this.server.serverGroup === null || this.server.serverGroup === undefined || JSON.stringify(this.server.serverGroup) === '{}') {
         const queryName = this.server.name.replace(new RegExp('-[0-9]+$'), '')
-        this.getGroup(queryName)
+        this.getGroup(queryName, true)
       } else {
-        this.getGroup(this.server.serverGroup.name)
+        this.getGroup(this.server.serverGroup.name, false)
       }
       this.$nextTick(() => {
         const accountIds = this.server.accounts !== null ? this.server.accounts.map(e => e.id) : []
