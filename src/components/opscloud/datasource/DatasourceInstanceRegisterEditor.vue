@@ -100,6 +100,14 @@ export default {
         case this.dsInstanceType.TENCENT_EXMAIL.type:
           instanceType = this.dsInstanceType.TENCENT_EXMAIL
           break
+        case this.dsInstanceType.NEXUS.type:
+          instanceType = this.dsInstanceType.NEXUS
+          break
+        default:
+          this.$message({
+            message: '未知的实例类型',
+            type: 'warning'
+          })
       }
       this.instanceTypeOptions = instanceType.instanceType
       this.datasource.instance.instanceType = instanceType.name

@@ -50,6 +50,9 @@ const DsInstanceAssetType = Object.freeze({
   TENCENT_EXMAIL: {
     TENCENT_EXMAIL_USER: 'TENCENT_EXMAIL_USER'
   },
+  NEXUS: {
+    NEXUS_ASSET: 'NEXUS_ASSET'
+  }
 })
 
 export default DsInstanceAssetType

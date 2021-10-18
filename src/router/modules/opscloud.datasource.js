@@ -97,5 +97,14 @@ export default [
       auth: true,
       title: '腾讯企业邮箱数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/nexus',
+    name: 'datasource-instance-nexus',
+    component: () => import('@/pages/datasource/instance/nexus'),
+    meta: {
+      auth: true,
+      title: 'Nexus数据源实例'
+    }
   }
 ]
