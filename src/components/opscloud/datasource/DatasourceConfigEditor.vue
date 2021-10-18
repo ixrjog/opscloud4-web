@@ -42,12 +42,18 @@
         </el-tab-pane>
         <el-tab-pane label="数据源属性" name="dsProps">
           <el-form-item label="凭据配置" label-position="top" required>
-            <el-select v-model="datasourceConfig.credentialId" filterable clearable
+            <el-select v-model="credential" filterable clearable
                        remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential">
-              <el-option v-for="item in credentialOptions" :key="item.id" :label="item.title" :value="item.id">
+              <el-option v-for="item in credentialOptions"
+                         :key="item.id"
+                         :label="item.title"
+                         :value="item">
                 <select-item :name="item.title" :comment="item.username"></select-item>
               </el-option>
             </el-select>
+            <el-card shadow="never" style="margin-top: 5px" v-if="credential !== ''">
+              <credential-kind-example-tag :kinds="credentialKindOptions" :kind="credential.kind"></credential-kind-example-tag>
+            </el-card>
           </el-form-item>
           <el-form-item label="属性(YML)" label-position="top" required>
             <br/>
@@ -56,7 +62,6 @@
                     height="400"
                     :options="options"></editor>
           </el-form-item>
-
           <div style="width:100%;text-align:center">
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑属性</el-button>
             <!--            <el-button size="mini" type="primary" @click="save" v-show="editing">保存属性</el-button>-->
@@ -74,9 +79,11 @@
 
 <script>
 // API
-import { QUERY_CREDENTIAL_PAGE } from '@/api/modules/sys/sys.credential.api.js'
+import { GET_CREDENTIAL_KIND_OPTIONS, QUERY_CREDENTIAL_PAGE } from '@/api/modules/sys/sys.credential.api.js'
 import { ADD_DATASOURCE_CONFIG, UPDATE_DATASOURCE_CONFIG } from '@/api/modules/datasource/datasource.config.api.js'
 import SelectItem from '../common/SelectItem'
+import CredentialKindTag from '@/components/opscloud/common/tag/CredentialKindTag'
+import CredentialKindExampleTag from '@/components/opscloud/common/tag/CredentialKindExampleTag'
 
 const allowOptions = [{
   value: false,
@@ -103,7 +110,9 @@ export default {
       datasourceConfig: {},
       allowOptions: allowOptions,
       options: options,
-      credentialOptions: []
+      credential: '',
+      credentialOptions: [],
+      credentialKindOptions: []
     }
   },
   name: 'DatasourceConfigEditor',
@@ -111,9 +120,12 @@ export default {
   mixins: [],
   components: {
     editor: require('vue2-ace-editor'),
-    SelectItem
+    SelectItem,
+    CredentialKindTag,
+    CredentialKindExampleTag
   },
   mounted () {
+    this.getCredentialKindOptions()
   },
   methods: {
     editorInit: function () {
@@ -125,11 +137,18 @@ export default {
       // snippet
       require('brace/snippets/yaml')
     },
+    getCredentialKindOptions () {
+      GET_CREDENTIAL_KIND_OPTIONS()
+        .then(res => {
+          this.credentialKindOptions = res.body.options
+        })
+    },
     initData (datasourceConfig) {
       this.datasourceConfig = datasourceConfig
       if (datasourceConfig.credential !== undefined && datasourceConfig.credential !== null) {
         this.credentialOptions = []
-        this.credentialOptions.push(datasourceConfig.credential)
+        this.credential = datasourceConfig.credential
+        this.credentialOptions.push(this.credential)
       } else {
         this.getCredential('')
       }
@@ -182,6 +201,12 @@ export default {
     },
     handlerSave () {
       const requestBody = Object.assign({}, this.datasourceConfig)
+      // credentialId
+      if (this.credential !== null && this.credential !== '') {
+        requestBody.credentialId = this.credential.id
+      } else {
+        requestBody.credentialId = ''
+      }
       if (this.formStatus.operationType) {
         this.handlerAdd(requestBody)
       } else {
@@ -193,11 +218,11 @@ export default {
 </script>
 
 <style scoped>
-  .d2-highlight {
-    margin-top: 5px;
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 140%;
-  }
+.d2-highlight {
+  margin-top: 5px;
+  font-size: 10px;
+  background-color: #dad8c8;
+  line-height: 140%;
+}
 
 </style>
