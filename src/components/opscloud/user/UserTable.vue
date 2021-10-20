@@ -18,8 +18,14 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="tags" label="标签" width="200">
+        <template slot-scope="scope">
+          <business-tags :tags="scope.row.tags"></business-tags>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="180">
         <template slot-scope="scope">
+          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
@@ -27,6 +33,8 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
     <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
+    <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
+                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
   </div>
 </template>
 
@@ -35,12 +43,22 @@
 import { QUERY_USER_PAGE, SYNC_USER } from '@/api/modules/user/user.api.js'
 import Pagination from '../common/page/Pagination'
 import UserEditor from './UserEditor'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
+import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
 
 export default {
   name: 'UserTable',
   data () {
     return {
+      instance: {
+        id: ''
+      },
       formStatus: {
+        businessTag: {
+          visible: false,
+          title: '编辑用户标签'
+        },
         user: {
           visible: false,
           operationType: true,
@@ -65,7 +83,8 @@ export default {
         queryName: '',
         isActive: true,
         extend: true
-      }
+      },
+      businessType: BusinessType.USER
     }
   },
   computed: {},
@@ -74,7 +93,9 @@ export default {
   },
   components: {
     UserEditor,
-    Pagination
+    Pagination,
+    BusinessTags,
+    BusinessTagEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -84,6 +105,14 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    handleRowTagEdit (row) {
+      this.instance.id = row.id
+      const businessTags = {
+        tagIds: row.tags !== null ? row.tags.map(e => e.id) : []
+      }
+      this.$refs.businessTagEditor.initData(businessTags)
+      this.formStatus.businessTag.visible = true
     },
     handleRowUpdate (row) {
       this.formStatus.user.operationType = false
