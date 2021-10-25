@@ -106,5 +106,14 @@ export default [
       auth: true,
       title: 'Nexus数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/sonar',
+    name: 'datasource-instance-sonar',
+    component: () => import('@/pages/datasource/instance/sonar'),
+    meta: {
+      auth: true,
+      title: 'Sonar数据源实例'
+    }
   }
 ]

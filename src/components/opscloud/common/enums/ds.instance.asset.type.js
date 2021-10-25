@@ -52,6 +52,9 @@ const DsInstanceAssetType = Object.freeze({
   },
   NEXUS: {
     NEXUS_ASSET: 'NEXUS_ASSET'
+  },
+  SONAR: {
+    SONAR_PROJECT: 'SONAR_PROJECT'
   }
 })
 

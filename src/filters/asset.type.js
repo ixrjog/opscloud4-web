@@ -67,6 +67,9 @@ export function getAssetTypeText (value) {
       return '主机清单'
     case DsInstanceAssetType.TENCENT_EXMAIL.TENCENT_EXMAIL_USER:
       return '邮箱'
+    case DsInstanceAssetType.SONAR.SONAR_PROJECT:
+      return '项目'
+
     default:
       return value
   }
