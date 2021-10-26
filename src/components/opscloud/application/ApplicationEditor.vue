@@ -74,8 +74,9 @@
                   :key="item.businessId"
                   :label="item.name"
                   :value="item">
-                  <span style="float: left">{{ item.name}}</span>
-                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{item.comment}}</span>
+                  <span style="float: left">{{ item.name }}</span>
+                  <span
+                    style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{ item.comment }}</span>
                 </el-option>
               </el-select>
             </el-form-item>
@@ -92,14 +93,15 @@
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small" closable @close="handleResUnbind(item.id)"><span v-if="item.instance !== null">{{ item.instance.instanceName}}/</span>{{ item.name }}</el-tag>
+                <el-tag size="small" closable @close="handleResUnbind(item.id)"><span
+                  v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}</el-tag>
               </el-tooltip>
             </span>
           </div>
         </el-col>
       </el-tab-pane>
       <el-tab-pane label="用户授权" name="permissionUser" :disabled="JSON.stringify(application) == '{}'">
-        <permission-user-tab :businessType="8" :businessId="application.id"
+        <permission-user-tab :businessType="businessType.APPLICATION" :businessId="application.id"
                              ref="permissionUserTab"></permission-user-tab>
       </el-tab-pane>
     </el-tabs>
@@ -175,6 +177,9 @@ export default {
       if (tab.name === 'resource') {
         this.getApplicationResource()
         this.getBusinessType()
+      }
+      if (tab.name === 'permissionUser') {
+        this.$refs.permissionUserTab.fetchData()
       }
     },
     handleSelectBusinessType () {
@@ -314,33 +319,33 @@ export default {
 </script>
 
 <style scoped lang="less">
-  /*.resDiv {*/
-  /*  .el-tag {*/
-  /*    margin-right: 5px;*/
-  /*  }*/
-  /*}*/
+/*.resDiv {*/
+/*  .el-tag {*/
+/*    margin-right: 5px;*/
+/*  }*/
+/*}*/
 
-  .resTabPane {
-    & .el-select {
-      max-width: 80%;
-      width: 80%;
-    }
-
-    .el-col {
-      p {
-        margin: 0px;
-        color: #B7B6B6;
-        font-size: 20px;
-        font-weight: bolder;
-      }
-
-      & .el-tag {
-        margin: 5px 5px 5px 0px;
-      }
-
-      /*& .el-divider {*/
-      /*  margin: 5px 0px;*/
-      /*}*/
-    }
+.resTabPane {
+  & .el-select {
+    max-width: 80%;
+    width: 80%;
   }
+
+  .el-col {
+    p {
+      margin: 0px;
+      color: #B7B6B6;
+      font-size: 20px;
+      font-weight: bolder;
+    }
+
+    & .el-tag {
+      margin: 5px 5px 5px 0px;
+    }
+
+    /*& .el-divider {*/
+    /*  margin: 5px 0px;*/
+    /*}*/
+  }
+}
 </style>

@@ -3,7 +3,8 @@ const BusinessType = Object.freeze({
   SERVERGROUP: 2,
   USER: 3,
   USERGROUP: 4,
-  ASSET: 5
+  ASSET: 5,
+  APPLICATION: 8
 })
 
 export default BusinessType
