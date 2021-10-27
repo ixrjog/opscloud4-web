@@ -34,3 +34,10 @@ export function UPDATE_CREDENTIAL (data) {
     data
   })
 }
+
+export function DELETE_CREDENTIAL_BY_ID (id) {
+  return request({
+    url: baseUrl + '/del?id=' + id,
+    method: 'delete'
+  })
+}

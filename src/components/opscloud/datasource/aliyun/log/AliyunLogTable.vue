@@ -33,7 +33,7 @@
           </el-button>
           <el-button @click="handleRowEdit(scope.row)" type="primary" plain size="mini" style="margin-left: 5px">编辑
           </el-button>
-          <el-popconfirm title="确定删除改配置吗？" @confirm="handleRowDel(scope.row)">
+          <el-popconfirm title="确定删除该配置吗？" @confirm="handleRowDel(scope.row)">
             <el-button slot="reference" type="danger" plain size="mini" style="margin-left: 5px">删除</el-button>
           </el-popconfirm>
         </template>
@@ -122,7 +122,7 @@ export default {
     handleRowDel (row) {
       DELETE_LOG_BY_ID(row.id)
         .then(res => {
-          this.$message.success('删除成功')
+          this.$message.success('删除成功!')
           this.fetchData()
         })
     },

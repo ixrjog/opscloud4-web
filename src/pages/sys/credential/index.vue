@@ -19,8 +19,9 @@
       </el-row>
     </div>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="username" label="凭据账户" width="250"></el-table-column>
       <el-table-column prop="title" label="凭据标题" width="250"></el-table-column>
+      <el-table-column prop="quantityUsed" label="使用数量" width="80"></el-table-column>
+      <el-table-column prop="username" label="凭据账户" width="250"></el-table-column>
       <el-table-column prop="kind" label="凭据分类" width="150">
         <template slot-scope="scope">
           <credential-kind-tag :kinds="kindOptions" :kind="scope.row.kind"></credential-kind-tag>
@@ -29,7 +30,12 @@
       <el-table-column prop="fingerprint" label="指纹" width="250"></el-table-column>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+
+          <el-popconfirm title="确定删除该配置吗？" @confirm="handleRowDel(scope.row)">
+            <el-button slot="reference" type="danger" plain size="mini" style="margin-left: 5px"
+                       :disabled="scope.row.quantityUsed !== 0">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -42,7 +48,7 @@
 
 <script>
 
-import { GET_CREDENTIAL_KIND_OPTIONS, QUERY_CREDENTIAL_PAGE } from '@/api/modules/sys/sys.credential.api.js'
+import { GET_CREDENTIAL_KIND_OPTIONS,DELETE_CREDENTIAL_BY_ID, QUERY_CREDENTIAL_PAGE } from '@/api/modules/sys/sys.credential.api.js'
 
 import Pagination from '../../../components/opscloud/common/page/Pagination'
 import CredentialKindTag from '../../../components/opscloud/common/tag/CredentialKindTag'
@@ -116,10 +122,17 @@ export default {
       this.formStatus.credential.operationType = true
       this.formStatus.credential.visible = true
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.$refs.credentialEditor.initData(Object.assign({}, row))
       this.formStatus.credential.operationType = false
       this.formStatus.credential.visible = true
+    },
+    handleRowDel(row){
+      DELETE_CREDENTIAL_BY_ID(row.id)
+        .then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
     },
     fetchData () {
       this.table.loading = true
