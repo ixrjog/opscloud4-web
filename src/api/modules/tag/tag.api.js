@@ -51,3 +51,11 @@ export function UPDATE_TAG (data) {
     data
   })
 }
+
+export function DELETE_TAG_BY_ID (id) {
+  return request({
+    url: baseUrl + '/del?id=' + id,
+    method: 'delete'
+  })
+}
+

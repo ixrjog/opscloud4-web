@@ -14,7 +14,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handlerAdd" class="button">新增</el-button>
+      <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="tagKey" label="标签关键字">
@@ -27,11 +27,15 @@
           <el-tag disable-transitions>{{scope.row.businessTypeEnum}}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="quantityUsed" label="使用数量" width="100"></el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>
-          <!--          <el-button type="danger" plain size="mini" @click="delItem(scope.row)">删除</el-button>-->
+          <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
+          <el-popconfirm title="确定删除该配置吗？" @confirm="handleRowDel(scope.row)">
+            <el-button slot="reference" type="danger" plain size="mini" style="margin-left: 5px"
+                       :disabled="scope.row.quantityUsed !== 0">删除</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -44,7 +48,7 @@
 
 <script>
 
-import { GET_TAG_BUSINESS_OPTIONS, QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
+import { GET_TAG_BUSINESS_OPTIONS, DELETE_TAG_BY_ID, QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import Pagination from '../../../components/opscloud/common/page/Pagination'
 import TagEditor from '../../../components/opscloud/tag/TagEditor'
 
@@ -102,7 +106,7 @@ export default {
           this.businessTypeOptions = res.body.options
         })
     },
-    handlerAdd () {
+    handleAdd () {
       const tag = {
         id: '',
         tagKey: '',
@@ -114,10 +118,17 @@ export default {
       this.formStatus.tag.visible = true
       this.$refs.tagEditor.initData(tag)
     },
-    handlerRowUpdate (row) {
+    handleRowUpdate (row) {
       this.$refs.tagEditor.initData(row)
       this.formStatus.tag.operationType = false
       this.formStatus.tag.visible = true
+    },
+    handleRowDel(row){
+      DELETE_TAG_BY_ID(row.id)
+        .then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
     },
     fetchData () {
       this.table.loading = true
