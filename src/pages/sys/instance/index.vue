@@ -63,14 +63,6 @@ import util from '@/libs/util'
 export default {
   data () {
     return {
-      // formStatus: {
-      //   tag: {
-      //     visible: false,
-      //     addTitle: '新增标签配置',
-      //     updateTitle: '更新标签配置',
-      //     operationType: true
-      //   }
-      // },
       table: {
         data: [],
         loading: false,
@@ -86,7 +78,11 @@ export default {
       },
       queryParam: {
         extend: true
-      }
+      },
+      businessTypeOptions: [{
+        label:'OPSCLOUD实例',
+        value: 'OPSCLOUD'
+      }]
     }
   },
   mounted () {

@@ -31,7 +31,6 @@
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
-
           <el-popconfirm title="确定删除该配置吗？" @confirm="handleRowDel(scope.row)">
             <el-button slot="reference" type="danger" plain size="mini" style="margin-left: 5px"
                        :disabled="scope.row.quantityUsed !== 0">删除</el-button>
