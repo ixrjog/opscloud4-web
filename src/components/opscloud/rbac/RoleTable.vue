@@ -8,9 +8,9 @@
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
       <el-table-column prop="roleName" label="名称" width="300"></el-table-column>
       <el-table-column prop="accessLevel" label="访问等级" width="200"></el-table-column>
-      <el-table-column prop="inWorkorder" label="工单申请" width="200">
+      <el-table-column prop="allowOrder" label="工单申请" width="200">
         <template slot-scope="scope">
-          <whether-tag :whether="scope.row.allowWorkorder"></whether-tag>
+          <allow-tag :allow="scope.row.allowOrder"></allow-tag>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
@@ -34,9 +34,9 @@
 
 import { QUERY_ROLE_PAGE, DELETE_ROLE_BY_ID } from '@/api/modules/auth/auth.role.api.js'
 import RoleEditor from './RoleEditor'
-import WhetherTag from '../common/tag/WhetherTag'
 import Pagination from '../common/page/Pagination'
 import RoleMenuEditor from '@/components/opscloud/rbac/RoleMenuEditor'
+import AllowTag from '@/components/opscloud/common/tag/AllowTag'
 
 export default {
   name: 'RbacRoleTable',
@@ -76,7 +76,7 @@ export default {
   },
   components: {
     Pagination,
-    WhetherTag,
+    AllowTag,
     RoleEditor,
     RoleMenuEditor
   },
@@ -103,7 +103,7 @@ export default {
         id: '',
         roleName: '',
         accessLevel: 0,
-        allowWorkorder: false,
+        allowOrder: false,
         comment: ''
       }
       this.$refs.roleEditor.initData(role)

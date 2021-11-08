@@ -7,6 +7,11 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
+      <el-table-column prop="allowOrder" label="工单申请" width="200">
+        <template slot-scope="scope">
+          <allow-tag :allow="scope.row.allowOrder"></allow-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="userSize" label="成员数量" width="120"></el-table-column>
       <el-table-column prop="users" label="授权用户">
         <template slot-scope="scope">
@@ -33,6 +38,7 @@ import { QUERY_USER_GROUP_PAGE,DELETE_USERGROUP_BY_ID } from '@/api/modules/user
 import Pagination from '../common/page/Pagination'
 import UsersTag from '../common/tag/UsersTag'
 import UserGroupEditor from './UserGroupEditor'
+import AllowTag from '@/components/opscloud/common/tag/AllowTag'
 
 export default {
   name: 'UserGroupTable',
@@ -67,6 +73,7 @@ export default {
   },
   components: {
     UserGroupEditor,
+    AllowTag,
     UsersTag,
     Pagination
   },
@@ -107,7 +114,7 @@ export default {
         name: '',
         groupType: 0,
         source: '',
-        allowWorkorder: false,
+        allowOrder: false,
         comment: ''
       }
       this.$refs.userGroupEditor.initData(userGroup)

@@ -57,11 +57,11 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_SSHKEY" :tableLayout="tableLayout.sshKey"
                      ref="sshKeyTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="用户名">
-              <template slot-scope="scope">
-                <span>{{ scope.row.properties.username }}</span>
-              </template>
-            </el-table-column>
+<!--            <el-table-column prop="properties" label="用户名">-->
+<!--              <template slot-scope="scope">-->
+<!--                <span>{{ scope.row.properties.username }}</span>-->
+<!--              </template>-->
+<!--            </el-table-column>-->
           </template>
         </asset-table>
       </el-tab-pane>

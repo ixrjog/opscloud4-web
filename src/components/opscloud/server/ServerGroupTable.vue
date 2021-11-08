@@ -23,6 +23,11 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="allowOrder" label="工单申请" width="200">
+        <template slot-scope="scope">
+          <allow-tag :allow="scope.row.allowOrder"></allow-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="serverSize" label="服务器数量"></el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="280">
@@ -47,6 +52,7 @@ import { QUERY_SERVER_GROUP_PAGE, DELETE_SERVER_GROUP_BY_ID } from '@/api/module
 
 import Pagination from '../common/page/Pagination'
 import ServerGroupEditor from './ServerGroupEditor'
+import AllowTag from '@/components/opscloud/common/tag/AllowTag'
 
 export default {
   name: 'ServerGroupTable',
@@ -87,6 +93,7 @@ export default {
   computed: {},
   components: {
     ServerGroupEditor,
+    AllowTag,
     Pagination
   },
   methods: {
@@ -127,7 +134,7 @@ export default {
       const serverGroup = {
         id: '',
         name: 'group_',
-        allowWorkorder: true,
+        allowOrder: true,
         serverGroupTypeId: '',
         serverGroupType: {},
         businessProperty: null,

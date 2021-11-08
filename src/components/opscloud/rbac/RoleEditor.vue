@@ -13,7 +13,7 @@
     </el-form>
     <el-form :model="role">
       <el-form-item label="工单申请" :label-width="labelWidth">
-        <el-select v-model="role.allowWorkorder" placeholder="选择类型">
+        <el-select v-model="role.allowOrder" placeholder="选择类型">
           <el-option
             v-for="item in allowOptions"
             :key="item.value"

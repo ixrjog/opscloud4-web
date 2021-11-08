@@ -5,9 +5,9 @@
         <el-input v-model="userGroup.name" placeholder="请输入内容" :disabled="!operationType"></el-input>
       </el-form-item>
       <el-form-item label="工单申请" :label-width="labelWidth" :required="true">
-        <el-select v-model="userGroup.allowWorkorder" placeholder="选择类型">
+        <el-select v-model="userGroup.allowOrder" placeholder="选择类型">
           <el-option
-            v-for="item in allowWorkorderOptions"
+            v-for="item in allowOrderOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -40,7 +40,7 @@ export default {
     return {
       userGroup: {},
       labelWidth: '150px',
-      allowWorkorderOptions: allowOptions
+      allowOrderOptions: allowOptions
     }
   },
   methods: {
