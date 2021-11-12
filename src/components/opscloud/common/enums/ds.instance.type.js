@@ -81,22 +81,32 @@ const DsInstanceType = Object.freeze({
     ]
   },
   NEXUS: {
-  type: 10,
+    type: 10,
     name: 'NEXUS',
     instanceType: [
-    {
-      value: 'NEXUS',
-      label: 'NEXUS'
-    }
-  ]
-},
-  TENCENT_EXMAIL:{
+      {
+        value: 'NEXUS',
+        label: 'NEXUS'
+      }
+    ]
+  },
+  TENCENT_EXMAIL: {
     type: 11,
     name: 'TENCENT_EXMAIL',
     instanceType: [
       {
         value: 'TENCENT_EXMAIL',
         label: 'TENCENT_EXMAIL'
+      }
+    ]
+  },
+  NACOS: {
+    type: 12,
+    name: 'NACOS',
+    instanceType: [
+      {
+        value: 'NACOS',
+        label: 'NACOS'
       }
     ]
   },

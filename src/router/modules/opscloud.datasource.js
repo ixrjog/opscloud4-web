@@ -115,5 +115,14 @@ export default [
       auth: true,
       title: 'Sonar数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/nacos',
+    name: 'datasource-instance-nacos',
+    component: () => import('@/pages/datasource/instance/nacos'),
+    meta: {
+      auth: true,
+      title: 'Nacos数据源实例'
+    }
   }
 ]

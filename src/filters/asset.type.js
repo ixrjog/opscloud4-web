@@ -70,6 +70,9 @@ export function getAssetTypeText (value) {
     case DsInstanceAssetType.SONAR.SONAR_PROJECT:
       return '项目'
 
+    case DsInstanceAssetType.NACOS.NACOS_CLUSTER_NODE:
+      return '集群节点'
+
     default:
       return value
   }

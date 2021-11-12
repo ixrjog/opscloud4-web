@@ -106,6 +106,9 @@ export default {
         case this.dsInstanceType.SONAR.type:
           instanceType = this.dsInstanceType.SONAR
           break
+        case this.dsInstanceType.NACOS.type:
+          instanceType = this.dsInstanceType.NACOS
+          break
         default:
           this.$message({
             message: '未知的实例类型',

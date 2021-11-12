@@ -55,7 +55,12 @@ const DsInstanceAssetType = Object.freeze({
   },
   SONAR: {
     SONAR_PROJECT: 'SONAR_PROJECT'
-  }
+  },
+  NACOS: {
+    NACOS_CLUSTER_NODE: 'NACOS_CLUSTER_NODE',
+    NACOS_PERMISSION: 'NACOS_PERMISSION',
+    NACOS_ROLE: 'NACOS_ROLE',
+  },
 })
 
 export default DsInstanceAssetType
