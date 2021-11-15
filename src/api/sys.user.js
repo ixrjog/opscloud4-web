@@ -36,3 +36,10 @@ export function SYS_USER_LOGIN (data = {}) {
     data: data
   })
 }
+
+export function SYS_USER_LOGOUT () {
+  return request({
+    url: '/log/logout',
+    method: 'get'
+  })
+}

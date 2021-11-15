@@ -1,7 +1,7 @@
 import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
-import { SYS_USER_LOGIN } from '@/api/sys.user.js'
+import { SYS_USER_LOGIN, SYS_USER_LOGOUT } from '@/api/sys.user.js'
 
 export default {
   namespaced: true,
@@ -48,8 +48,10 @@ export default {
         // 跳转路由
         router.push({ name: 'login' })
       }
+
       // 判断是否需要确认
       if (confirm) {
+        SYS_USER_LOGOUT()
         commit('d2admin/gray/set', true, { root: true })
         MessageBox.confirm('确定要注销当前用户吗', '注销用户', { type: 'warning' })
           .then(() => {
