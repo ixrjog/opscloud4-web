@@ -142,6 +142,9 @@ export default {
       if (tab.name === 'permission') {
         this.$refs.permissionTable.fetchData()
       }
+      if (tab.name === 'user') {
+        this.$refs.userTable.fetchData()
+      }
     },
     init () {
       setTimeout(() => {
