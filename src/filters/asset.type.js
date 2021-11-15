@@ -72,6 +72,8 @@ export function getAssetTypeText (value) {
 
     case DsInstanceAssetType.NACOS.NACOS_CLUSTER_NODE:
       return '集群节点'
+    case DsInstanceAssetType.NACOS.NACOS_PERMISSION:
+      return '权限'
 
     default:
       return value
