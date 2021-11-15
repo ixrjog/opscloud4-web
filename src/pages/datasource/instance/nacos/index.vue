@@ -33,6 +33,13 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="用户" name="user">
+        <asset-table :instanceId="instanceId" :assetType="assetType.NACOS.NACOS_USER" :tableLayout="tableLayout.user"
+                     ref="userTable">
+          <template v-slot:extend>
+          </template>
+        </asset-table>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -80,6 +87,27 @@ const tableLayout = {
     assetKey2: {
       alias: '',
       show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  user: {
+    assetId: {
+      alias: '节点地址',
+      show: false
+    },
+    name: {
+      alias: '用户名',
+      show: true
+    },
+    assetKey: {
+      alias: ''
+    },
+    assetKey2: {
+      alias: '角色',
+      show: true
     },
     zone: {
       alias: '',

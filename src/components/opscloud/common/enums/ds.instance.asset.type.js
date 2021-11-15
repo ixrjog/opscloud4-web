@@ -59,7 +59,8 @@ const DsInstanceAssetType = Object.freeze({
   NACOS: {
     NACOS_CLUSTER_NODE: 'NACOS_CLUSTER_NODE',
     NACOS_PERMISSION: 'NACOS_PERMISSION',
-    NACOS_ROLE: 'NACOS_ROLE',
+    NACOS_USER: 'NACOS_USER',
+    NACOS_ROLE: 'NACOS_ROLE'
   },
 })
 
