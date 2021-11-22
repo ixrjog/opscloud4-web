@@ -7,10 +7,10 @@
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: -5px">
         <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">
           <el-option
-            v-for="item in dsTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            v-for="item in dsInstanceType"
+            :key="item.type"
+            :label="item.name"
+            :value="item.type">
           </el-option>
         </el-select>
         <el-button @click="fetchData">查询</el-button>
@@ -28,6 +28,7 @@
 
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api.js'
 import DatasourceInstanceCard from '../../../components/opscloud/datasource/DatasourceInstanceCard'
+import DsInstanceType from '@/components/opscloud/common/enums/ds.instance.type.js'
 
 const activeOptions = [{
   value: true,
@@ -48,6 +49,7 @@ export default {
       dsInstances: [],
       activeOptions: activeOptions,
       dsTypeOptions: dsTypeOptions,
+      dsInstanceType: DsInstanceType,
       formStatus: {
         config: {
           visible: false,
