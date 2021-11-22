@@ -109,6 +109,9 @@ export default {
         case this.dsInstanceType.NACOS.type:
           instanceType = this.dsInstanceType.NACOS
           break
+        case this.dsInstanceType.ZABBIX.type:
+          instanceType = this.dsInstanceType.ZABBIX
+          break
         default:
           this.$message({
             message: '未知的实例类型',

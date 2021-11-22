@@ -29,7 +29,8 @@
                        remote reserve-keyword placeholder="搜索剧本"
                        :remote-method="getPlaybook"
                        @change="handleSelPlaybook"
-                       @clear="getPlaybook('')">
+                       @clear="getPlaybook('')"
+                       value-key="id">
               <el-option
                 v-for="item in playbookOptions"
                 :key="item.id"
