@@ -42,7 +42,7 @@
         </el-tab-pane>
         <el-tab-pane label="数据源属性" name="dsProps">
           <el-form-item label="凭据配置" label-position="top" required>
-            <el-select v-model="credential" filterable clearable
+            <el-select v-model.trim="credential" value-key="id" filterable clearable
                        remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential">
               <el-option v-for="item in credentialOptions"
                          :key="item.id"
