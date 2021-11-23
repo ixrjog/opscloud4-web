@@ -14,8 +14,8 @@
       <el-table-column prop="businessPermissions" label="业务授权">
         <template slot-scope="scope">
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
-            <el-divider content-position="left"><b style="color: #9d9fa3">{{key}}</b></el-divider>
-            <el-tag v-for="item in value" :key="item.id" style="margin-right: 5px">{{item.name}}</el-tag>
+            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key }}</b></el-divider>
+            <el-tag v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}</el-tag>
           </div>
         </template>
       </el-table-column>
@@ -24,9 +24,14 @@
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="180">
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
+          <el-button :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
+                     @click="handleSetActive(scope.row)">{{ scope.row.isActive ? '无效' : '有效' }}
+          </el-button>
+          <el-button type="danger" plain size="mini" v-show="!scope.row.isActive" @click="handleRowDel(scope.row)">删除
+          </el-button>
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
@@ -41,7 +46,7 @@
 
 <script>
 
-import { QUERY_USER_PAGE, SYNC_USER } from '@/api/modules/user/user.api.js'
+import { QUERY_USER_PAGE, SET_USER_ACTIVE, DELETE_USER_BY_ID, SYNC_USER } from '@/api/modules/user/user.api.js'
 import Pagination from '../common/page/Pagination'
 import UserEditor from './UserEditor'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
@@ -116,6 +121,20 @@ export default {
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
     },
+    handleRowDel (row) {
+      DELETE_USER_BY_ID(row.id)
+        .then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
+    },
+    handleSetActive (row) {
+      SET_USER_ACTIVE({ username: row.username })
+        .then(res => {
+          this.$message.success('设置成功!')
+          this.fetchData()
+        })
+    },
     handleRowUpdate (row) {
       this.formStatus.user.operationType = false
       this.formStatus.user.visible = true
@@ -165,12 +184,12 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 </style>

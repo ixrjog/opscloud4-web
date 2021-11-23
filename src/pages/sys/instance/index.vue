@@ -38,7 +38,7 @@
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
-          <el-button :type=" scope.row.isActive ? 'danger' : 'success'" plain size="mini"
+          <el-button :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
                      @click="handleSetActive(scope.row)">{{ scope.row.isActive ?
             '无效':'有效'}}
           </el-button>

@@ -27,6 +27,21 @@ export function UPDATE_USER (data) {
   })
 }
 
+export function SET_USER_ACTIVE (data) {
+  return request({
+    url: baseUrl + '/active/set',
+    method: 'put',
+    params: data
+  })
+}
+
+export function DELETE_USER_BY_ID (id) {
+  return request({
+    url: baseUrl + '/del?id=' + id,
+    method: 'delete'
+  })
+}
+
 export function REVOKE_USER_BUSINESS_PERMISSION (data) {
   return request({
     url: baseUrl + '/business/permission/revoke',
