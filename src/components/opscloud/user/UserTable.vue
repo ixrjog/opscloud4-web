@@ -2,6 +2,7 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询"/>
+      <el-checkbox label="过滤系统用户" v-model="queryParam.filterSystemUser" style="margin-left: 5px"></el-checkbox>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新建</el-button>
       <el-button @click="handleSync">同步</el-button>
@@ -81,6 +82,7 @@ export default {
       },
       queryParam: {
         queryName: '',
+        filterSystemUser: true,
         isActive: true,
         extend: true
       },
