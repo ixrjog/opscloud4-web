@@ -6,17 +6,23 @@
     <div style="margin-bottom: 5px">
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" placeholder="用户名" class="input-search-bar"/>
+        <el-checkbox label="过滤系统用户" v-model="queryParam.filterSystemUser" style="margin-left: 5px"></el-checkbox>
         <el-button @click="fetchData" class="search-bar">查询</el-button>
         <!--          <el-button @click="handlerSyncUserRole" class="search-bar">同步</el-button>-->
       </el-row>
     </div>
     <el-table :data="table.data" style="width: 100%">
-      <el-table-column prop="username" label="用户名" width="250"></el-table-column>
-      <el-table-column prop="displayName" label="显示名" width="250"></el-table-column>
+      <el-table-column prop="username" label="用户名" width="100"></el-table-column>
+      <el-table-column prop="displayName" label="显示名" width="100"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="250"></el-table-column>
       <el-table-column prop="roles" label="角色">
         <template slot-scope="scope">
           <role-tags :roles="scope.row.roles"></role-tags>
+        </template>
+      </el-table-column>
+      <el-table-column prop="tags" label="标签" width="200">
+        <template slot-scope="scope">
+          <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
@@ -37,6 +43,7 @@ import { QUERY_USER_PAGE } from '@/api/modules/user/user.api.js'
 import RoleTags from '../../../components/opscloud/rbac/child/RoleTags'
 import UserRoleEditor from '../../../components/opscloud/rbac/UserRoleEditor'
 import Pagination from '../../../components/opscloud/common/page/Pagination'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 
 export default {
   data () {
@@ -57,20 +64,21 @@ export default {
       },
       queryParam: {
         queryName: '',
+        filterSystemUser: true,
         extend: true
       },
       roleOptions: []
     }
   },
-  computed: {
-  },
+  computed: {},
   mounted () {
     this.fetchData()
   },
   components: {
     Pagination,
     UserRoleEditor,
-    RoleTags
+    RoleTags,
+    BusinessTags
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -104,14 +112,14 @@ export default {
 </script>
 
 <style scoped>
-  .input-search-bar {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.input-search-bar {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .search-bar {
-    margin-left: 5px;
-  }
+.search-bar {
+  margin-left: 5px;
+}
 
 </style>
