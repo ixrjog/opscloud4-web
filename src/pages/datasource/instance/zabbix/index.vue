@@ -131,7 +131,8 @@ const tableLayout = {
       alias: '显示名'
     },
     assetKey: {
-      alias: '用户名'
+      alias: '用户名',
+      show: true,
     },
     assetKey2: {
       alias: '',
