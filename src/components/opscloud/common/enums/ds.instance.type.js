@@ -69,7 +69,11 @@ const DsInstanceType = Object.freeze({
       }
     ]
   },
-  PROMETHEUS: 8,
+  PROMETHEUS: {
+    type: 8,
+    name: 'PROMETHEUS',
+    instanceType: []
+  },
   GUACAMOLE: {
     type: 9,
     name: 'GUACAMOLE',
@@ -132,7 +136,11 @@ const DsInstanceType = Object.freeze({
       }
     ]
   },
-  AWS: 51
+  AWS: {
+    type: 51,
+    name: 'AWS',
+    instanceType: []
+  }
 })
 
 export default DsInstanceType
