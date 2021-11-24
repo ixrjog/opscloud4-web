@@ -48,12 +48,23 @@ util.wsUrl = function (wsUrl) {
 }
 
 util.bytesToSize = function (bytes) {
-  if (bytes === 0) return '0 B';
+  if (bytes === 0) return '0 B'
   const k = 1024, // or 1024
     sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-    i = Math.floor(Math.log(bytes) / Math.log(k));
+    i = Math.floor(Math.log(bytes) / Math.log(k))
 
-  return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+  return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
+}
+
+/**
+ * 取反色，用于终端字符提示前端展示
+ * @param color
+ * @returns {string}
+ */
+util.colorReverse = function (color) {
+  const reversedColor = '0x' + color.replace(/#/g, '')
+  const str = '000000' + (0xFFFFFF - reversedColor).toString(16)
+  return '#' + str.substring(str.length - 6, str.length)
 }
 
 export default util
