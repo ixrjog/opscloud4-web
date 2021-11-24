@@ -5,12 +5,12 @@
     </div>
     <div>
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: -5px">
-        <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">
+        <el-select v-model="queryParam.instanceType" clearable placeholder="数据源类型">
           <el-option
             v-for="item in dsInstanceType"
-            :key="item.type"
+            :key="item.name"
             :label="item.name"
-            :value="item.type">
+            :value="item.name">
           </el-option>
         </el-select>
         <el-button @click="fetchData">查询</el-button>
