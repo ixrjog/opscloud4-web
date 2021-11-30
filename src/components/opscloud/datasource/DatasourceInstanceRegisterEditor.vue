@@ -109,8 +109,8 @@ export default {
         case this.dsInstanceType.NACOS.type:
           instanceType = this.dsInstanceType.NACOS
           break
-        case this.dsInstanceType.ZABBIX.type:
-          instanceType = this.dsInstanceType.ZABBIX
+        case this.dsInstanceType.DINGTALK_APP.type:
+          instanceType = this.dsInstanceType.DINGTALK_APP
           break
         default:
           this.$message({

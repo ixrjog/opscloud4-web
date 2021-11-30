@@ -124,5 +124,15 @@ export default [
       auth: true,
       title: 'Nacos数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/dingtalk_app',
+    name: 'datasource-instance-dingtalk-app',
+    component: () => import('@/pages/datasource/instance/dingtalk/app'),
+    meta: {
+      auth: true,
+      title: '钉钉应用数据源实例'
+    }
   }
+
 ]
