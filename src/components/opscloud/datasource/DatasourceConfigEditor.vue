@@ -52,7 +52,8 @@
               </el-option>
             </el-select>
             <el-card shadow="never" style="margin-top: 5px" v-if="credential !== ''">
-              <credential-kind-example-tag :kinds="credentialKindOptions" :kind="credential.kind"></credential-kind-example-tag>
+              <credential-kind-example-tag :kinds="credentialKindOptions"
+                                           :kind="credential.kind"></credential-kind-example-tag>
             </el-card>
           </el-form-item>
           <el-form-item label="属性(YML)" label-position="top" required>
@@ -82,7 +83,6 @@
 import { GET_CREDENTIAL_KIND_OPTIONS, QUERY_CREDENTIAL_PAGE } from '@/api/modules/sys/sys.credential.api.js'
 import { ADD_DATASOURCE_CONFIG, UPDATE_DATASOURCE_CONFIG } from '@/api/modules/datasource/datasource.config.api.js'
 import SelectItem from '../common/SelectItem'
-import CredentialKindTag from '@/components/opscloud/common/tag/CredentialKindTag'
 import CredentialKindExampleTag from '@/components/opscloud/common/tag/CredentialKindExampleTag'
 
 const allowOptions = [{
@@ -121,7 +121,6 @@ export default {
   components: {
     editor: require('vue2-ace-editor'),
     SelectItem,
-    CredentialKindTag,
     CredentialKindExampleTag
   },
   mounted () {

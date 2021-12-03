@@ -25,7 +25,7 @@
         <template slot-scope="scope">
           <span v-for="item in scope.row.serverTaskMembers" :key="item.id">
               <el-card shadow="hover" style="  margin-bottom: 4px; flex-grow: 1 ;flex-basis: 50%;">
-                <div>{{item.serverName}} {{item.manageIp}}  <env-tag :env="item.env"></env-tag>
+                <div>{{ item.serverName }} {{ item.manageIp }}  <env-tag :env="item.env"></env-tag>
                    <span style="float: right;">
                         <task-status-tag style="margin-right: 5px" :task-status="item.taskStatus"></task-status-tag>
                         <task-result-tag :task-result="item.taskResult"></task-result-tag>
@@ -33,8 +33,8 @@
                 </div>
                 <el-row>
                   <el-col :span="20">
-                    <div>开始: {{item.startTime}}</div>
-                    <div v-if="item.endTime !== null">结束: {{item.endTime}}</div>
+                    <div>开始: {{ item.startTime }}</div>
+                    <div v-if="item.endTime !== null">结束: {{ item.endTime }}</div>
                   </el-col>
                   <el-col :span="4" style="margin-top: 10px">
                      <el-button type="text" style="float: right; padding: 3px 0"
@@ -49,14 +49,14 @@
       <el-table-column prop="finalized" label="任务状态" width="50">
         <template slot-scope="scope">
           <el-tag :type="scope.row.finalized ? 'success' : 'warning'">
-            <i class="el-icon-loading" v-show="!scope.row.finalized"/>{{ scope.row.finalized ? '完成': '执行中' }}
+            <i class="el-icon-loading" v-show="!scope.row.finalized"/>{{ scope.row.finalized ? '完成' : '执行中' }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="startTime" label="任务时间" width="120">
         <template slot-scope="scope">
-          <div>开始: {{scope.row.startTime}}<{{scope.row.ago}}></div>
-          <div v-if="scope.row.endTime !== null">结束: {{scope.row.endTime}}<{{scope.row.duration}}></div>
+          <div>开始: {{ scope.row.startTime }}<{{ scope.row.ago }}></div>
+          <div v-if="scope.row.endTime !== null">结束: {{ scope.row.endTime }}<{{ scope.row.duration }}></div>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="80">
@@ -83,7 +83,6 @@ import AnsiblePlaybookEditor from './AnsiblePlaybookEditor'
 import UserTag from '../common/tag/UserTag'
 import TaskStatusTag from '../common/tag/TaskStatusTag'
 import TaskResultTag from '../common/tag/TaskResultTag'
-
 
 const taskEndOptions = [{
   value: true,
@@ -156,7 +155,7 @@ export default {
         ...serverTaskMember,
         instanceId: serverTaskMember.serverName
       }
-      let serverTaskMembers = []
+      const serverTaskMembers = []
       serverTaskMembers.push(member)
       this.taskPlay(serverTaskMembers)
     },
@@ -195,17 +194,17 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

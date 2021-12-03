@@ -13,9 +13,11 @@ import router from './router'
 import { menuHeader } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
 import ui from '@/libs/util.ui'
+import VueClipboard from 'vue-clipboard2'
 
 // 核心插件
 Vue.use(d2Admin)
+Vue.use(VueClipboard)
 
 new Vue({
   router,

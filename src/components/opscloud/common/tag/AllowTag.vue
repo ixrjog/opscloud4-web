@@ -26,7 +26,6 @@ export function getAllowText (value) {
   }
 }
 
-
 export default {
   name: 'AllowTag',
   props: ['allow'],
@@ -39,4 +38,3 @@ export default {
 <style scoped>
 
 </style>
-

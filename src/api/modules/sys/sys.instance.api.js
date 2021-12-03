@@ -11,7 +11,6 @@ export function QUERY_INSTANCE_PAGE (data) {
   })
 }
 
-
 export function SET_INSTANCE_ACTIVE (param) {
   // 接口请求
   return request({

@@ -44,7 +44,6 @@ export default {
       util: util,
       socketURI: util.wsUrl(wsUrl),
       serverTaskMembers: [],
-      //serverTaskMemberIds: [],
       terminalState: TerminalState,
       terminalSetting: { // 终端主题
         theme: theme,
@@ -64,7 +63,7 @@ export default {
   mounted () {
     try {
       // 校验参数
-      let serverTaskMembers = JSON.parse(this.$route.query.serverTaskMembers)
+      const serverTaskMembers = JSON.parse(this.$route.query.serverTaskMembers)
       if (serverTaskMembers === undefined || serverTaskMembers.length === 0) {
         return
       }

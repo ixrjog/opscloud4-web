@@ -2,7 +2,6 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/task/ansible'
 
-
 export function QUERY_ANSIBLE_PLAYBOOK_PAGE (data) {
   // 接口请求
   return request({

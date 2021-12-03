@@ -54,7 +54,7 @@
               <template v-slot:extend>
                 <el-table-column label="安全组" width="450">
                   <template slot-scope="scope">
-                    <div v-for="sg in getSecurityGroups(scope.row)" :key="sg.id" class="sgLabel">
+                    <div v-for="sg in getSecurityGroups(scope.row)" :key="sg.id">
                       <el-tag :type="sg.isActive?'success':'info'">{{ sg.name }}</el-tag>
                     </div>
                   </template>
@@ -141,7 +141,7 @@
       </el-tab-pane>
       <el-tab-pane label="ONS消息服务" name="ons">
         <el-tabs tab-position="left" v-model="onsActiveName" @tab-click="handleClick">
-          <el-tab-pane label="RocketMQ实例" name="onsRocketMqInstance">
+          <el-tab-pane label="实例" name="onsRocketMqInstance">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_INSTANCE"
                          :tableLayout="tableLayout.onsRocketMqInstance"
                          ref="onsRocketMqInstanceTable">
@@ -159,7 +159,7 @@
               </template>
             </asset-table>
           </el-tab-pane>
-          <el-tab-pane label="RocketMQTopic" name="onsRocketMqTopic">
+          <el-tab-pane label="Topic" name="onsRocketMqTopic">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_TOPIC"
                          :tableLayout="tableLayout.onsRocketMqTopic"
                          ref="onsRocketMqTopicTable">
@@ -167,7 +167,7 @@
               </template>
             </asset-table>
           </el-tab-pane>
-          <el-tab-pane label="RocketMQGroup" name="onsRocketMqGroup">
+          <el-tab-pane label="Group" name="onsRocketMqGroup">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_GROUP"
                          :tableLayout="tableLayout.onsRocketMqGroup"
                          ref="onsRocketMqGroupTable">
@@ -562,8 +562,4 @@ export default {
 </script>
 
 <style scoped>
-.sgLabel {
-  float: left;
-  width: 50%;
-}
 </style>

@@ -21,9 +21,6 @@
 import { ADD_BUSINESS_PROPERTY, UPDATE_BUSINESS_PROPERTY } from '@/api/modules/business/business.property.api.js'
 import SelectItem from '../common/SelectItem'
 
-//import serverPropertyExample from './example/server.yml'
-//import serverGroupPropertyExample from './example/serverGroup.yml'
-
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
   enableBasicAutocompletion: true,
@@ -45,8 +42,7 @@ export default {
   props: ['businessType', 'businessId'],
   mixins: [],
   components: {
-    editor: require('vue2-ace-editor'),
-    SelectItem
+    editor: require('vue2-ace-editor')
   },
   mounted () {
   },

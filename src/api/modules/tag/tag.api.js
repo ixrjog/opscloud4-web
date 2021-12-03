@@ -58,4 +58,3 @@ export function DELETE_TAG_BY_ID (id) {
     method: 'delete'
   })
 }
-

@@ -1,6 +1,8 @@
 <template>
-  <el-tag v-if="taskResult !== null && taskResult !== ''" class="filters" :type="taskResult | getTaskResultType" size="small">
-    {{taskResult | getTaskResultText }}</el-tag>
+  <el-tag v-if="taskResult !== null && taskResult !== ''" class="filters" :type="taskResult | getTaskResultType"
+          size="small">
+    {{ taskResult | getTaskResultText }}
+  </el-tag>
 </template>
 
 <script>
@@ -36,7 +38,7 @@ export default {
   props: ['taskResult'],
   filters: {
     getTaskResultType, getTaskResultText
-}
+  }
 }
 </script>
 

@@ -64,8 +64,8 @@ const DsInstanceAssetType = Object.freeze({
   },
   DINGTALK_APP: {
     DINGTALK_USER: 'DINGTALK_USER',
-    DINGTALK_DEPARTMENT: 'DINGTALK_DEPARTMENT',
-  },
+    DINGTALK_DEPARTMENT: 'DINGTALK_DEPARTMENT'
+  }
 })
 
 export default DsInstanceAssetType
