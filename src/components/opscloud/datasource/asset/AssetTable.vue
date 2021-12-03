@@ -5,7 +5,6 @@
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handlePull">拉取</el-button>
       <el-button @click="handleScan">扫描</el-button>
-
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="assetId" :label="tableLayout.assetId.alias"
