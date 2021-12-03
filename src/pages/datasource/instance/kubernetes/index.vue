@@ -35,6 +35,9 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="模版" name="template">
+
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
