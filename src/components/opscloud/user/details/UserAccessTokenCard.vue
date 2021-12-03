@@ -10,7 +10,7 @@
         <el-table-column prop="token" label="Access Token"></el-table-column>
         <el-table-column prop="token" label="过期时间">
           <template slot-scope="scope">
-            <span>{{scope.row.expiredTime}}<<b>{{scope.row.later}}</b>></span>
+            <span>{{ scope.row.expiredTime }}<<b>{{ scope.row.later }}</b>></span>
           </template>
         </el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>
@@ -21,7 +21,8 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <access-token-editor ref="accessTokenEditor" :form-status="formStatus.accessToken" @fetchData="fetchData"></access-token-editor>
+    <access-token-editor ref="accessTokenEditor" :form-status="formStatus.accessToken"
+                         @fetchData="fetchData"></access-token-editor>
   </div>
 </template>
 
@@ -72,10 +73,14 @@ export default {
 </script>
 
 <style scoped>
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+>>> .el-card__body {
+  padding: 10px 10px;
+}
 </style>

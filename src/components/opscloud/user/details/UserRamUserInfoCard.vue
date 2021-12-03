@@ -8,7 +8,7 @@
           <el-row>
             <span>{{ props.row.instanceName }}</span>
           </el-row>
-          <el-row>
+          <el-row class="ramInfo">
             <el-tooltip class="item" effect="light" content="点击打开登录连接" placement="top-start">
               <el-button style="padding: 3px 0" type="text" @click="openUrl(props.row.loginUrl)">
                 {{ props.row.loginUser }}
@@ -16,8 +16,8 @@
             </el-tooltip>
             <span v-clipboard:copy="props.row.loginUser" v-clipboard:success="onCopy"
                   v-clipboard:error="onError">
-                <i style="margin-left: 5px" class="el-icon-copy-document"></i>
-              </span>
+              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
+            </span>
           </el-row>
         </template>
       </el-table-column>
@@ -67,5 +67,17 @@ export default {
   border-bottom: 1px solid #EBEEF5;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+>>> .el-card__body {
+  padding: 10px 10px;
+}
+
+.ramInfo i {
+  display: none;
+}
+
+.ramInfo:hover i {
+  display: inline;
 }
 </style>

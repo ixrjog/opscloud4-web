@@ -2,10 +2,10 @@
   <d2-container>
     <h1>个人详情</h1>
     <el-row :gutter="24" style="margin-bottom: 5px" v-if="user !== null">
-      <el-col :span="8">
+      <el-col :span="7">
         <user-info :user="user" @fetchData="fetchData"></user-info>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="17">
         <pubkey-info :user="user"></pubkey-info>
         <roles-info :roles="user.roles"></roles-info>
         <user-group-info :userId="user.id"></user-group-info>

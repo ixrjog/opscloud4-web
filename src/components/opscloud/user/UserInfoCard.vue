@@ -5,7 +5,7 @@
         <span>个人信息</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="handlerEdit()">修改基本信息</el-button>
       </div>
-      <el-form :model="user" label-width="80px">
+      <el-form :model="user" label-width="60px">
         <el-form-item label="用户名">
           <el-input v-model="user.username" readonly></el-input>
         </el-form-item>
@@ -51,7 +51,7 @@ export default {
       }
     }
   },
-  components:{
+  components: {
     UserEditor
   },
   methods: {
@@ -73,5 +73,9 @@ export default {
   border-bottom: 1px solid #EBEEF5;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+>>> .el-card__body {
+  padding: 10px 10px;
 }
 </style>

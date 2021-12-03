@@ -10,19 +10,26 @@
            <span
              v-if="JSON.stringify(user.credentialDetails.credentialMap) !== '{}' && user.credentialDetails.credentialMap.PUB_KEY !== null">
             <el-card shadow="hover" style="margin-right: 10px">
-               <el-tag style="margin-bottom: 2px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}</el-tag>
-               <div style="font-size: 12px">
-                  {{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}
+               <el-tag style="margin-bottom: 5px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}</el-tag>
+               <div style="font-size: 12px"><i class="fas fa-fingerprint"></i>
+                 <span style="color: #B7B6B6">
+                   {{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}
+                 </span>
                </div>
             </el-card>
            </span>
-           <!--  gitlab sshPubKey-->
+        <!--  gitlab sshPubKey-->
            <span
              v-if="JSON.stringify(user.credentialDetails.assetCredentialMap) !== '{}' && user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY !== null">
             <span v-for="asset in user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY" :key="asset.id">
                <el-card shadow="hover" style="margin-right: 10px">
-                 <el-tag style="margin-bottom: 2px" type="success"><i class="fab fa-gitlab" style="margin-right: 5px"></i>{{  asset.description }}</el-tag>
-                 <div style="font-size: 12px">{{ asset.assetKey }}</div>
+                 <el-tag style="margin-bottom: 5px" type="success">{{ asset.description }}</el-tag>
+                 <i class="fab fa-gitlab" style="float: right"></i>
+                 <div style="font-size: 12px"><i class="fas fa-fingerprint"></i>
+                   <span style="color: #B7B6B6">
+                     {{ asset.assetKey }}
+                   </span>
+                 </div>
                </el-card>
             </span>
       </span>
@@ -79,21 +86,24 @@ export default {
 </script>
 
 <style scoped>
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__body {
+  padding: 10px 10px;
+}
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
-  /*.el-card {*/
-  /*  display: flex;*/
-  /*  flex-wrap: wrap;*/
+/*.el-card {*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
 
-  /*  .terminal-session-instance-info {*/
-  /*    margin-bottom: 4px;*/
-  /*    flex-grow: 1;*/
-  /*    flex-basis: 50%;*/
-  /*  }*/
-  /*}*/
+/*  .terminal-session-instance-info {*/
+/*    margin-bottom: 4px;*/
+/*    flex-grow: 1;*/
+/*    flex-basis: 50%;*/
+/*  }*/
+/*}*/
 </style>
