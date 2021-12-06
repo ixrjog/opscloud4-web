@@ -5,24 +5,24 @@
         <span>SSH密钥<i class="header-icon el-icon-info"></i>(SSH-Server专用)</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="handlerEdit">编辑</el-button>
       </div>
-      <span style="display: flex; flex-wrap: wrap;">
-           <!-- local sshPubKey-->
-           <span
-             v-if="JSON.stringify(user.credentialDetails.credentialMap) !== '{}' && user.credentialDetails.credentialMap.PUB_KEY !== null">
-            <el-card shadow="hover" style="margin-right: 10px">
+      <div>
+        <!-- local sshPubKey-->
+        <span
+          v-if="JSON.stringify(user.credentialDetails.credentialMap) !== '{}' && user.credentialDetails.credentialMap.PUB_KEY !== null">
+             <el-card shadow="hover" style="margin-right: 10px;margin-bottom: 10px;float: left;width: 305px">
                <el-tag style="margin-bottom: 5px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}</el-tag>
                <div style="font-size: 12px"><i class="fas fa-fingerprint"></i>
                  <span style="color: #B7B6B6">
                    {{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}
                  </span>
                </div>
-            </el-card>
+             </el-card>
            </span>
         <!--  gitlab sshPubKey-->
-           <span
-             v-if="JSON.stringify(user.credentialDetails.assetCredentialMap) !== '{}' && user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY !== null">
-            <span v-for="asset in user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY" :key="asset.id">
-               <el-card shadow="hover" style="margin-right: 10px">
+        <span
+          v-if="JSON.stringify(user.credentialDetails.assetCredentialMap) !== '{}' && user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY !== null">
+             <span v-for="asset in user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY" :key="asset.id">
+               <el-card shadow="hover" style="margin-right: 10px;margin-bottom: 10px;float: left;width: 305px">
                  <el-tag style="margin-bottom: 5px" type="success">{{ asset.description }}</el-tag>
                  <i class="fab fa-gitlab" style="float: right"></i>
                  <div style="font-size: 12px"><i class="fas fa-fingerprint"></i>
@@ -31,9 +31,9 @@
                    </span>
                  </div>
                </el-card>
-            </span>
-      </span>
-      </span>
+             </span>
+           </span>
+      </div>
     </el-card>
     <pubkey-editor :form-status="formStatus.pubKey" ref="pubkeyEditor" @fetchData="fetchData"></pubkey-editor>
   </div>
@@ -89,6 +89,7 @@ export default {
 >>> .el-card__body {
   padding: 10px 10px;
 }
+
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
