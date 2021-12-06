@@ -1,4 +1,4 @@
-<template>
+  <template>
   <d2-container>
     <div>
       <h1>数据源实例</h1>

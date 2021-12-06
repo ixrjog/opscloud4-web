@@ -27,7 +27,7 @@ export default {
 .meta-cardInfo {
   display: flex;
   flex-wrap: wrap;
-  height: 150px;
+  height: 120px;
   overflow: auto;
 
   > div {

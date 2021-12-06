@@ -107,11 +107,15 @@ export default {
     margin-bottom: 10px;
     position: relative;
 
+    /deep/ .el-card__body {
+      padding: 10px;
+    }
+
     .position {
       position: absolute;
-      right: 10px;
-      bottom: 10px;
-      font-size: 3em;
+      right: 20px;
+      bottom: 0px;
+      font-size: 2em;
       transform: rotate(-45deg);
     }
   }
