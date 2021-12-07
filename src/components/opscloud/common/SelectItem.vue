@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'SelectItem',
-  props: ['name', 'comment', 'left']
+  props: ['name', 'comment']
 }
 </script>
 
