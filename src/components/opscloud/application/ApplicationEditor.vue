@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
-             :visible.sync="formStatus.visible">
+             :visible.sync="formStatus.visible" :before-close="handleClose">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="应用配置" name="config">
         <el-form :model="application" label-width="150px">
@@ -313,6 +313,10 @@ export default {
             this.$emit('closeDialog')
           })
       }
+    },
+    handleClose () {
+      this.formStatus.visible = false
+      this.$emit('closeDialog')
     }
   }
 }

@@ -14,10 +14,10 @@
             <el-select v-model="dsInstance" filterable placeholder="选择Ansible实例"
                        value-key="id">
               <el-option
-                v-for="item in dsInstanceOptions"
-                :key="item.id"
-                :label="item.instanceName"
-                :value="item">
+                  v-for="item in dsInstanceOptions"
+                  :key="item.id"
+                  :label="item.instanceName"
+                  :value="item">
                 <span style="float: left">{{ item.instanceType }}</span>
                 <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
                 {{ item.instanceName }}</span>
@@ -32,10 +32,10 @@
                        @clear="getPlaybook('')"
                        value-key="id">
               <el-option
-                v-for="item in playbookOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item">
+                  v-for="item in playbookOptions"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item">
               </el-option>
             </el-select>
             <el-button type="primary" plain size="mini" @click="handleOpenPlaybook" :disabled="playbook === ''">查看
@@ -49,7 +49,7 @@
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" :disabled="submitting" @click="submitServerTask"><i
-            class="el-icon-loading" v-show="submitting"></i>提交任务
+              class="el-icon-loading" v-show="submitting"></i>提交任务
           </el-button>
         </div>
       </el-card>
@@ -133,13 +133,12 @@ export default {
         isActive: true,
         extend: true
       }
-      QUERY_DATASOURCE_INSTANCE(requestBody)
-        .then(({ body }) => {
-          this.dsInstanceOptions = body
-          if (this.dsInstanceOptions.length !== 0) {
-            this.dsInstance = this.dsInstanceOptions[0]
-          }
-        })
+      QUERY_DATASOURCE_INSTANCE(requestBody).then(({ body }) => {
+        this.dsInstanceOptions = body
+        if (this.dsInstanceOptions.length !== 0) {
+          this.dsInstance = this.dsInstanceOptions[0]
+        }
+      })
     },
     handleOpenPlaybook () {
       this.$refs.playbookEditor.initData(Object.assign({}, this.playbook))
@@ -153,13 +152,12 @@ export default {
         page: 1,
         length: 10
       }
-      QUERY_ANSIBLE_PLAYBOOK_PAGE(requestBody)
-        .then(res => {
-          this.playbookOptions = res.body.data
-        })
+      QUERY_ANSIBLE_PLAYBOOK_PAGE(requestBody).then(res => {
+        this.playbookOptions = res.body.data
+      })
     },
-    handleSelPlaybook(){
-      if(this.playbook.vars !== ''){
+    handleSelPlaybook () {
+      if (this.playbook.vars !== '') {
         this.serverTask.vars = this.playbook.vars
       }
     },
@@ -175,13 +173,13 @@ export default {
         this.$message.warning('未指定剧本！')
         return
       }
-      let nodes = this.$refs.serverTree.getCheckedNodes(true)
+      const nodes = this.$refs.serverTree.getCheckedNodes(true)
       if (nodes === [] || nodes.length === 0) {
         this.$message.warning('未指定服务器！')
         return
       }
       this.submitting = true
-      let requestBody = {
+      const requestBody = {
         vars: this.serverTask.vars,
         ansiblePlaybookId: this.playbook.id,
         instanceUuid: this.dsInstance.uuid,
@@ -191,14 +189,13 @@ export default {
           return item.server
         })
       }
-      SUBMIT_SERVER_TASK(requestBody)
-        .then(res => {
-          this.$message.success('任务提交成功！')
-          // 重置uuid
-          this.taskUuid = tools.uuid()
-          this.serverTaskInfo = requestBody
-          this.submitting = false
-        })
+      SUBMIT_SERVER_TASK(requestBody).then(res => {
+        this.$message.success('任务提交成功！')
+        // 重置uuid
+        this.taskUuid = tools.uuid()
+        this.serverTaskInfo = requestBody
+        this.submitting = false
+      })
     }
   }
 }
@@ -206,8 +203,8 @@ export default {
 
 <style scoped>
 
-  /*.server-tree {*/
-  /*  margin-top: 5px;*/
-  /*}*/
+/*.server-tree {*/
+/*  margin-top: 5px;*/
+/*}*/
 
 </style>

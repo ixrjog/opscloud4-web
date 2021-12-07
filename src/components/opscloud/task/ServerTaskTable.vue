@@ -55,16 +55,14 @@
       </el-table-column>
       <el-table-column prop="startTime" label="任务时间" width="120">
         <template slot-scope="scope">
-          <div>开始: {{ scope.row.startTime }}<{{ scope.row.ago }}></div>
-          <div v-if="scope.row.endTime !== null">结束: {{ scope.row.endTime }}<{{ scope.row.duration }}></div>
+          <div>开始: {{ scope.row.startTime }}&lt;{{ scope.row.ago }}></div>
+          <div v-if="scope.row.endTime !== null">结束: {{ scope.row.endTime }}&lt;{{ scope.row.duration }}></div>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="80">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowOpenPlaybook(scope.row)">剧本</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowPlay(scope.row)">播放</el-button>
-          <!--                  <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>-->
-          <!--                  <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>

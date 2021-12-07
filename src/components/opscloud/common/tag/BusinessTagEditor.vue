@@ -1,6 +1,5 @@
 <template>
-  <el-dialog :title="formStatus.title"
-             :visible.sync="formStatus.visible">
+  <el-dialog :title="formStatus.title" :visible.sync="formStatus.visible">
     <el-form :model="businessTags">
       <el-transfer v-model="businessTags.tagIds"
                    :props="{ key: 'id', label: 'tagKey' }"

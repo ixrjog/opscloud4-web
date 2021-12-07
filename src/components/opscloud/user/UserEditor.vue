@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
-             :visible.sync="formStatus.visible">
+             :visible.sync="formStatus.visible" :before-close="handleClose">
     <el-tabs v-model="activeName" @tab-click="handlerClick">
       <el-tab-pane label="基本信息" name="user">
         <user-info :operationType="formStatus.operationType" ref="userInfo" @close="handleClose"></user-info>
