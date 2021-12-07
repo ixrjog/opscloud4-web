@@ -65,7 +65,7 @@ export default {
   methods: {
     handlerOpen () {
       this.$router.push({
-        path: '/datasource/instance/' + this.instance.instanceType.toLocaleLowerCase() + '?id=' + this.instance.id
+        path: '/datasource/instance/' + this.instance.instanceType.toLocaleLowerCase() + '?id=' + this.instance.id + '&uuid=' + this.instance.uuid
       })
     },
     needSetDSConfig (instanceType) {

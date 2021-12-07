@@ -1,16 +1,16 @@
 <template>
   <d2-container>
     <h1>Kubernetes实例管理</h1>
-    <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
+    <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="命名空间" name="namespace">
-        <asset-table :instanceId="instanceId" :assetType="assetType.KUBERNETES.KUBERNETES_NAMESPACE"
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NAMESPACE"
                      :tableLayout="tableLayout.namespace" ref="namespaceTable">
           <template v-slot:extend>
           </template>
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="无状态" name="deployment">
-        <asset-table :instanceId="instanceId" :assetType="assetType.KUBERNETES.KUBERNETES_DEPLOYMENT"
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_DEPLOYMENT"
                      :tableLayout="tableLayout.deployment" ref="deploymentTable">
           <template v-slot:extend>
             <el-table-column label="容器组数量" show-overflow-tooltip>
@@ -22,7 +22,7 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="容器组" name="pod">
-        <asset-table :instanceId="instanceId" :assetType="assetType.KUBERNETES.KUBERNETES_POD"
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_POD"
                      :tableLayout="tableLayout.pod" ref="podTable">
           <template v-slot:extend>
             <el-table-column label="节点" show-overflow-tooltip>
@@ -36,7 +36,8 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="模版" name="template">
-
+        <kubernetes-template-table :instanceUuid="instance.uuid" ref="templateTable">
+        </kubernetes-template-table>
       </el-tab-pane>
     </el-tabs>
   </d2-container>
@@ -46,6 +47,7 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
+import KubernetesTemplateTable from '@/components/opscloud/datasource/template/KubernetesTemplateTable'
 
 const tableLayout = {
   namespace: {
@@ -113,18 +115,23 @@ export default {
   data () {
     return {
       activeName: 'namespace',
-      instanceId: null,
+      instance: {
+        id: null,
+        uuid: null
+      },
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
     }
   },
   computed: {},
   mounted () {
-    this.instanceId = this.$route.query.id
+    this.instance.id = this.$route.query.id
+    this.instance.uuid = this.$route.query.uuid
     this.init()
   },
   components: {
-    AssetTable
+    AssetTable,
+    KubernetesTemplateTable
   },
   methods: {
     handleClick (tab, event) {
@@ -137,6 +144,9 @@ export default {
       }
       if (tab.name === 'pod') {
         this.$refs.podTable.fetchData()
+      }
+      if (tab.name === 'template') {
+        this.$refs.templateTable.fetchData()
       }
     },
     init () {
