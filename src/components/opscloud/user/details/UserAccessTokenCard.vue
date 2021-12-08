@@ -10,7 +10,7 @@
         <el-table-column prop="token" label="Access Token"></el-table-column>
         <el-table-column prop="token" label="过期时间">
           <template slot-scope="scope">
-            <span>{{ scope.row.expiredTime }}<<b>{{ scope.row.later }}</b>></span>
+            <span>{{ scope.row.expiredTime }}<b>{{ scope.row.later }}</b></span>
           </template>
         </el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>

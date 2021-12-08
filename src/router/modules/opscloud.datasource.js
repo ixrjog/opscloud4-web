@@ -18,6 +18,15 @@ export default [
     }
   },
   {
+    path: '/template',
+    name: 'template',
+    component: () => import('@/pages/template'),
+    meta: {
+      auth: true,
+      title: '模板管理'
+    }
+  },
+  {
     path: '/datasource/asset/subscription',
     name: 'datasource-asset-subscription',
     component: () => import('@/pages/datasource/asset/subscription'),
