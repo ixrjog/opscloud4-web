@@ -44,12 +44,16 @@
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
           <slot name="operation" :row="scope.row"></slot>
-          <el-button type="primary" plain size="mini" @click="handleRowCreate(scope.row)"
-                     v-show="scope.row.businessId === 0">创建</el-button>
+          <el-button :type="scope.row.businessId === 0 ? 'success' : 'warning'" plain size="mini"
+                     @click="handleRowCreate(scope.row)"
+                     :loading="scope.row.creating"><span v-text="scope.row.businessId === 0 ? '创建' : '更新'" ></span>
+          </el-button>
           <el-button type="primary" plain size="mini"
-                     @click="handleRowEdit(scope.row)">编辑</el-button>
+                     @click="handleRowEdit(scope.row)">编辑
+          </el-button>
           <el-button type="danger" plain size="mini"
-                     @click="handleRowDel(scope.row)">删除</el-button>
+                     @click="handleRowDel(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -147,12 +151,19 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    handleRowCreate(row) {
+    handleRowCreate (row) {
       this.$confirm('是否从模版配置创建资产?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        for (let i = 0; i < this.table.data.length; i++) {
+          if (this.table.data[i].id === row.id) {
+            this.table.data[i].creating = true
+            break
+          }
+        }
+        row.creating = true
         CREATE_ASSET_BY_BUSINESS_TEMPLATE_ID(row.id).then(() => {
           this.$message.success('创建成功!')
           this.fetchData()
