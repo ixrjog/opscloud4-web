@@ -1,11 +1,11 @@
 <template>
   <d2-container>
     <h1>{{ title }}</h1>
-    <el-row :gutter="20">
-      <el-col :span="10">
+    <el-row :gutter="40">
+      <el-col :span="9">
         <menu-card @handlerMenuChild="handlerMenuChild"></menu-card>
       </el-col>
-      <el-col :span="14">
+      <el-col :span="12">
         <menu-child-card ref="menuChildCard"></menu-child-card>
       </el-col>
     </el-row>
