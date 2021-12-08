@@ -3,33 +3,33 @@
     <div slot="header" style="height: 15px">
       <span>菜单目录</span>
       <el-row style="float: right">
-        <el-button @click="addMenu()" type="text" style="padding: 3px 0;margin-left: 5px;">新增</el-button>
-        <el-button @click="saveMenu()" type="text" style="padding: 3px 0; margin-left: 5px;">保存</el-button>
+        <el-button @click="addMenu()" type="text" style="padding: 3px 0;margin-left: 5px">新增</el-button>
+        <el-button @click="saveMenu()" type="text" style="padding: 3px 0;margin-left: 5px">保存</el-button>
       </el-row>
     </div>
     <draggable :list="menuList" handle=".handle">
       <div v-for="(menu,index) in menuList" :key="index">
         <el-form :inline="true" :model="menu" label-width="60px">
-          <el-form-item>
-            <i class="fas fa-align-justify handle"></i>
+          <el-form-item style="margin-left: 20px">
+            <i class="fas fa-align-justify handle" style="margin-right: 10px;"></i>
           </el-form-item>
-          <el-form-item label="名称" required>
-            <el-input v-model.trim="menu.title"></el-input>
+          <el-form-item required>
+            <el-input v-model.trim="menu.title" placeholder="请输入名称"></el-input>
           </el-form-item>
-          <el-form-item label="图标" required>
-            <el-input v-model="menu.icon">
+          <el-form-item required>
+            <el-input v-model="menu.icon" placeholder="请输入图标">
               <i slot="suffix" :class=menu.icon aria-hidden="true"></i>
             </el-input>
           </el-form-item>
           <span style="float: right">
             <el-form-item>
-              <el-button :disabled="menu.id === ''" @click="handlerMenuChild(menu)">
-                <i class="fas fa-angle-right"></i>
+              <el-button :disabled="menu.id === ''" @click="handlerMenuChild(menu)" type="text">
+                子菜单
               </el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="danger" plain @click.prevent="handlerDel(menu)">
-                <i class="fas fa-trash-alt"></i>
+              <el-button @click.prevent="handlerDel(menu)" type="text" style="color: #F56C6C">
+                删除
               </el-button>
             </el-form-item>
           </span>
