@@ -9,7 +9,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="无状态" name="deployment">
+      <el-tab-pane label="无状态(Deployment)" name="deployment">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_DEPLOYMENT"
                      :tableLayout="tableLayout.deployment" ref="deploymentTable">
           <template v-slot:extend>
@@ -21,7 +21,19 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="容器组" name="pod">
+      <el-tab-pane label="服务(Service)" name="service">
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_SERVICE"
+                     :tableLayout="tableLayout.service" ref="serviceTable">
+          <template v-slot:extend>
+            <el-table-column label="容器组数量" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <span>{{ scope.row.properties.replicas }}</span>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="容器组(Pod)" name="pod">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_POD"
                      :tableLayout="tableLayout.pod" ref="podTable">
           <template v-slot:extend>
@@ -70,6 +82,26 @@ const tableLayout = {
     }
   },
   deployment: {
+    assetId: {
+      alias: 'ID'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '命名空间',
+      show: true
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  service: {
     assetId: {
       alias: 'ID'
     },
@@ -141,6 +173,9 @@ export default {
       }
       if (tab.name === 'deployment') {
         this.$refs.deploymentTable.fetchData()
+      }
+      if (tab.name === 'service') {
+        this.$refs.serviceTable.fetchData()
       }
       if (tab.name === 'pod') {
         this.$refs.podTable.fetchData()

@@ -65,10 +65,10 @@
             </d2-highlight>
           </el-form-item>
           <el-form-item label="变量" :label-width="labelWidth">
-            <d2-highlight v-show="!editing" :code="businessTemplate.vars" class="vars"
+            <d2-highlight v-show="!button.editing" :code="businessTemplate.vars" class="vars"
                           :lang="businessTemplate.template.templateType">
             </d2-highlight>
-            <editor v-show="editing" v-model="businessTemplate.vars"
+            <editor v-show="button.editing" v-model="businessTemplate.vars"
                     @init="editorInit"
                     :lang="businessTemplate.template.templateType"
                     theme="chrome"
@@ -77,14 +77,18 @@
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
-          <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑属性</el-button>
+          <el-button size="mini" type="primary" @click="handleEditing" v-show="!button.editing">编辑属性</el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button size="mini" type="primary" @click="handleAdd" v-show="businessTemplate.id === ''">新增</el-button>
-      <el-button size="mini" type="primary" @click="handleUpdate" v-show="businessTemplate.id !== ''">确定</el-button>
+      <el-button size="mini" type="primary" @click="handleAdd"
+                 :disabled="button.creating" :loading="button.creating" v-show="businessTemplate.id === ''">新增
+      </el-button>
+      <el-button size="mini" type="primary" @click="handleUpdate"
+                 :disabled="button.ok" :loading="button.ok" v-show="businessTemplate.id !== ''">确定
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -118,7 +122,6 @@ export default {
     return {
       activeName: 'base',
       labelWidth: '150px',
-      editing: false,
       options: options,
       envOptions: [],
       templateOptions: [],
@@ -128,6 +131,11 @@ export default {
         envType: '',
         instanceType: '',
         templateKey: 'DEPLOYMENT'
+      },
+      button: {
+        editing: false,
+        ok: false,
+        creating: false
       }
     }
   },
@@ -181,7 +189,12 @@ export default {
       this.getTemplate('')
     },
     initData (businessTemplate, instanceType) {
-      this.editing = false
+      this.activeName = 'base'
+      this.button = {
+        editing: false,
+        ok: false,
+        creating: false
+      }
       this.businessTemplate = businessTemplate
       this.queryParam.instanceType = instanceType
       this.queryParam.envType = this.businessTemplate.envType
@@ -193,9 +206,10 @@ export default {
       }
     },
     handleEditing () {
-      this.editing = true
+      this.button.editing = true
     },
     handleUpdate () {
+      this.button.ok = true
       UPDATE_BUSINESS_TEMPLATE(this.businessTemplate)
         .then(() => {
           this.$message.success('保存成功!')
@@ -204,6 +218,7 @@ export default {
         })
     },
     handleAdd () {
+      this.button.creating = true
       ADD_BUSINESS_TEMPLATE(this.businessTemplate)
         .then((res) => {
           this.businessTemplate = res.body
