@@ -3,23 +3,14 @@
              :visible.sync="formStatus.visible">
     <el-tabs v-model="activeName">
       <el-tab-pane label="基本信息" name="base">
-        <el-form :model="businessTemplate">
+        <el-form :model="template">
           <el-form-item label="名称" :label-width="labelWidth">
-            <el-input v-model.trim="businessTemplate.name" placeholder="不填写则自动生成"></el-input>
-          </el-form-item>
-          <el-form-item label="实例类型" :label-width="labelWidth" required>
-            <el-select v-model="queryParam.instanceType" placeholder="选择类型">
-              <el-option
-                v-for="item in instanceTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
+            <el-input v-model.trim="template.name" placeholder="不填写则自动生成"></el-input>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
-            <el-select v-model.trim="queryParam.envType" clearable
-                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv" @change="handleChangeTemplate">
+            <el-select v-model.trim="template.envType" clearable
+                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"
+                       :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
               <el-option
                 v-for="item in envOptions"
                 :key="item.envType"
@@ -29,8 +20,20 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="实例类型" :label-width="labelWidth" required>
+            <el-select v-model="template.instanceType" placeholder="选择类型" @change="handleChangeInstanceType"
+                       :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
+              <el-option
+                v-for="item in instanceTypeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="模板Key" :label-width="labelWidth" required>
-            <el-select v-model="queryParam.templateKey" placeholder="选择类型" @change="handleChangeTemplate">
+            <el-select v-model="template.templateKey" placeholder="选择类型"
+                       :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
               <el-option
                 v-for="item in keyOptions"
                 :key="item.value"
@@ -39,40 +42,31 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="模板" :label-width="labelWidth" required>
-            <el-select v-model="businessTemplate.templateId" filterable clearable
-                       :disabled="queryParam.templateKey === '' || businessTemplate.envType === ''"
-                       remote reserve-keyword placeholder="选择模板" :remote-method="getTemplate" @clear="getTemplate('')">
-              <el-option
-                v-for="item in templateOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <select-item :name="item.name" :comment="item.templateKey"></select-item>
-              </el-option>
-            </el-select>
-          </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model.trim="businessTemplate.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model.trim="template.comment" placeholder="请输入内容"></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="Template" name="template" v-if="businessTemplate !== '' && businessTemplate.id !== ''">
-        <el-form :model="businessTemplate" label-position="top">
+      <el-tab-pane label="Template" name="template" v-if="template !== '' && template.id !== ''">
+        <el-form :model="template" label-position="top">
           <el-form-item label="模板">
-            <d2-highlight :code="businessTemplate.template.content" class="content"
-                          :lang="businessTemplate.template.templateType">
-            </d2-highlight>
+            <d2-highlight v-show="!button.editing" :code="template.content" class="content"
+                          :lang="template.templateType"></d2-highlight>
+            <editor v-show="button.editing" v-model="template.content"
+                    @init="editorInit"
+                    :lang="template.templateType"
+                    theme="chrome"
+                    height="300"
+                    :options="options"></editor>
           </el-form-item>
           <el-form-item label="变量">
-            <d2-highlight v-show="!button.editing" :code="businessTemplate.vars" class="vars"
-                          :lang="businessTemplate.template.templateType">
-            </d2-highlight>
-            <editor v-show="button.editing" v-model="businessTemplate.vars"
+            <d2-highlight v-show="!button.editing" :code="template.vars" class="vars"
+                          :lang="template.templateType"></d2-highlight>
+            <editor v-show="button.editing" v-model="template.vars"
                     @init="editorInit"
-                    :lang="businessTemplate.template.templateType"
+                    :lang="template.templateType"
                     theme="chrome"
-                    height="200"
+                    height="150"
                     :options="options"></editor>
           </el-form-item>
         </el-form>
@@ -84,10 +78,10 @@
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
       <el-button size="mini" type="primary" @click="handleAdd"
-                 :disabled="button.creating" :loading="button.creating" v-show="businessTemplate.id === ''">新增
+                 :disabled="button.creating" :loading="button.creating" v-show="template.id === ''">新增
       </el-button>
       <el-button size="mini" type="primary" @click="handleUpdate"
-                 :disabled="button.ok" :loading="button.ok" v-show="businessTemplate.id !== ''">确定
+                 :disabled="button.ok" :loading="button.ok" v-show="template.id !== ''">确定
       </el-button>
     </div>
   </el-dialog>
@@ -96,8 +90,7 @@
 <script>
 
 // API
-import { ADD_BUSINESS_TEMPLATE, UPDATE_BUSINESS_TEMPLATE } from '@/api/modules/template/business.template.api.js'
-import { QUERY_TEMPLATE_PAGE } from '@/api/modules/template/template.api.js'
+import { QUERY_TEMPLATE_PAGE, ADD_TEMPLATE, UPDATE_TEMPLATE } from '@/api/modules/template/template.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 
@@ -124,14 +117,8 @@ export default {
       labelWidth: '150px',
       options: options,
       envOptions: [],
-      templateOptions: [],
       keyOptions: keyOptions,
-      businessTemplate: '',
-      queryParam: {
-        envType: '',
-        instanceType: '',
-        templateKey: 'DEPLOYMENT'
-      },
+      template: '',
       button: {
         editing: false,
         ok: false,
@@ -139,7 +126,7 @@ export default {
       }
     }
   },
-  name: 'BusinessTemplateEditor',
+  name: 'TemplateEditor',
   props: ['formStatus', 'instanceTypeOptions'],
   components: {
     SelectItem,
@@ -184,33 +171,24 @@ export default {
           this.templateOptions = res.body.data
         })
     },
-    handleChangeTemplate () {
-      this.businessTemplate.templateId = ''
-      this.getTemplate('')
+    handleChangeInstanceType () {
+
     },
-    initData (businessTemplate, instanceType) {
+    initData (template) {
       this.activeName = 'base'
       this.button = {
         editing: false,
         ok: false,
         creating: false
       }
-      this.businessTemplate = businessTemplate
-      this.queryParam.instanceType = instanceType
-      this.queryParam.envType = this.businessTemplate.envType
-      if (this.businessTemplate.template === undefined) {
-        this.getTemplate('')
-      } else {
-        this.templateOptions = []
-        this.templateOptions.push(this.businessTemplate.template)
-      }
+      this.template = template
     },
     handleEditing () {
       this.button.editing = true
     },
     handleUpdate () {
       this.button.ok = true
-      UPDATE_BUSINESS_TEMPLATE(this.businessTemplate)
+      UPDATE_TEMPLATE(this.template)
         .then(() => {
           this.$message.success('保存成功!')
           this.formStatus.visible = false
@@ -220,9 +198,9 @@ export default {
     },
     handleAdd () {
       this.button.creating = true
-      ADD_BUSINESS_TEMPLATE(this.businessTemplate)
+      ADD_TEMPLATE(this.template)
         .then((res) => {
-          this.businessTemplate = res.body
+          this.template = res.body
           this.$message.success('新增成功!')
         })
         .catch((err) => this.button.creating = false)
