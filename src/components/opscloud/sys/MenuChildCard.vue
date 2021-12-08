@@ -25,7 +25,7 @@
             </el-input>
           </el-form-item>
           <el-form-item style="float: right">
-            <el-button type="text" style="color: #F56C6C" @click.prevent="handlerDel(menuChild)">
+            <el-button type="danger" plain size="mini" @click.prevent="handlerDel(menuChild)">
               删除
             </el-button>
           </el-form-item>

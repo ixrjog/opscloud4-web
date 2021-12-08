@@ -23,12 +23,12 @@
           </el-form-item>
           <span style="float: right">
             <el-form-item>
-              <el-button :disabled="menu.id === ''" @click="handlerMenuChild(menu)" type="text">
-                子菜单
+              <el-button :disabled="menu.id === ''" @click="handlerMenuChild(menu)" plain type="primary" size="mini">
+                下级
               </el-button>
             </el-form-item>
             <el-form-item>
-              <el-button @click.prevent="handlerDel(menu)" type="text" style="color: #F56C6C">
+              <el-button @click.prevent="handlerDel(menu)" type="danger" plain size="mini">
                 删除
               </el-button>
             </el-form-item>
