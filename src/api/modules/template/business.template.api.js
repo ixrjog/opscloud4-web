@@ -33,6 +33,13 @@ export function CREATE_ASSET_BY_BUSINESS_TEMPLATE_ID (id) {
   })
 }
 
+export function SCAN_BUSINESS_TEMPLATE_BY_INSTANCE (instanceUuid) {
+  return request({
+    url: baseUrl + '/scan?instanceUuid=' + instanceUuid,
+    method: 'put'
+  })
+}
+
 export function DELETE_BUSINESS_TEMPLATE_BY_ID (id) {
   return request({
     url: baseUrl + '/del?id=' + id,

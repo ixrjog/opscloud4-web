@@ -9,7 +9,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="无状态(Deployment)" name="deployment">
+      <el-tab-pane label="Deployment无状态" name="deployment">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_DEPLOYMENT"
                      :tableLayout="tableLayout.deployment" ref="deploymentTable">
           <template v-slot:extend>
@@ -21,7 +21,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="服务(Service)" name="service">
+      <el-tab-pane label="Service服务" name="service">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_SERVICE"
                      :tableLayout="tableLayout.service" ref="serviceTable">
           <template v-slot:extend>
@@ -33,7 +33,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="容器组(Pod)" name="pod">
+      <el-tab-pane label="Pod容器组" name="pod">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_POD"
                      :tableLayout="tableLayout.pod" ref="podTable">
           <template v-slot:extend>
@@ -47,7 +47,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="模版" name="template">
+      <el-tab-pane label="业务模版" name="template">
         <kubernetes-template-table :instanceUuid="instance.uuid" ref="templateTable">
         </kubernetes-template-table>
       </el-tab-pane>

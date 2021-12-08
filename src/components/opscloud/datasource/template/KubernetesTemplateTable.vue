@@ -14,6 +14,7 @@
       </el-select>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
+      <el-button @click="handleScan" class="button">扫描</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
@@ -46,7 +47,7 @@
           <slot name="operation" :row="scope.row"></slot>
           <el-button :type="scope.row.businessId === 0 ? 'success' : 'warning'" plain size="mini"
                      @click="handleRowCreate(scope.row)"
-                     :loading="scope.row.creating"><span v-text="scope.row.businessId === 0 ? '创建' : '更新'" ></span>
+                     :loading="scope.row.creating"><span v-text="scope.row.businessId === 0 ? '创建' : '更新'"></span>
           </el-button>
           <el-button type="primary" plain size="mini"
                      @click="handleRowEdit(scope.row)">编辑
@@ -68,7 +69,9 @@
 <script>
 
 import {
-  QUERY_BUSINESS_TEMPLATE_PAGE, CREATE_ASSET_BY_BUSINESS_TEMPLATE_ID, DELETE_BUSINESS_TEMPLATE_BY_ID
+  QUERY_BUSINESS_TEMPLATE_PAGE, CREATE_ASSET_BY_BUSINESS_TEMPLATE_ID,
+  SCAN_BUSINESS_TEMPLATE_BY_INSTANCE,
+  DELETE_BUSINESS_TEMPLATE_BY_ID
 } from '@/api/modules/template/business.template.api.js'
 import Pagination from '../../common/page/Pagination'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
@@ -202,6 +205,12 @@ export default {
       this.$refs.businessTemplateEditor.initData(businessTemplate, 'KUBERNETES')
       this.formStatus.businessTemplate.operationType = true
       this.formStatus.businessTemplate.visible = true
+    },
+    handleScan () {
+      SCAN_BUSINESS_TEMPLATE_BY_INSTANCE(this.instanceUuid)
+        .then(res => {
+          this.$message.success('后台执行中!')
+        })
     },
     handleRowEdit (row) {
       this.$refs.businessTemplateEditor.initData(row, row.template.instanceType)
