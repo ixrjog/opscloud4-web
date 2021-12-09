@@ -65,6 +65,7 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <template-editor :formStatus="formStatus.template"
                      :instanceTypeOptions="instanceTypeOptions"
+                     :templateTypeOptions="templateTypeOptions"
                      ref="templateEditor" @close="fetchData"></template-editor>
   </div>
 </template>
@@ -83,6 +84,11 @@ import TemplateEditor from '@/components/opscloud/template/TemplateEditor'
 const instanceTypeOptions = [{
   value: 'KUBERNETES',
   label: 'KUBERNETES'
+}]
+
+const templateTypeOptions = [{
+  value: 'yaml',
+  label: 'YAML'
 }]
 
 export default {
@@ -110,6 +116,7 @@ export default {
         }
       },
       instanceTypeOptions: instanceTypeOptions,
+      templateTypeOptions: templateTypeOptions,
       queryParam: {
         envType: '',
         queryName: '',
@@ -168,7 +175,7 @@ export default {
         envType: this.queryParam.envType === '' ? 0 : this.queryParam.envType,
         instanceType: this.queryParam.instanceType === '' ? '' : this.queryParam.instanceType,
         templateKey: '',
-        templateType: '',
+        templateType: 'yaml',
         content: '',
         vars: '',
         comment: ''
