@@ -58,6 +58,8 @@ export function getAssetTypeText (value) {
       return '容器组'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
       return '无状态'
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_SERVICE:
+      return '服务'
     case DsInstanceAssetType.JENKINS.JENKINS_COMPUTER:
       return '计算节点'
     // Ansible
