@@ -6,7 +6,7 @@
     <div style="margin-bottom: 5px">
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" placeholder="用户名" class="input-search-bar"/>
-        <el-checkbox label="过滤系统用户" v-model="queryParam.filterSystemUser" style="margin-left: 5px"></el-checkbox>
+        <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
         <el-button @click="fetchData" class="search-bar">查询</el-button>
         <!--          <el-button @click="handlerSyncUserRole" class="search-bar">同步</el-button>-->
       </el-row>
@@ -64,7 +64,7 @@ export default {
       },
       queryParam: {
         queryName: '',
-        filterSystemUser: true,
+        filterTag: true,
         extend: true
       },
       roleOptions: []

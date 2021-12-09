@@ -11,6 +11,7 @@
           <select-item :name="item.username" :comment="item.displayName"></select-item>
         </el-option>
       </el-select>
+      <el-checkbox label="过滤系统用户" v-model="queryUserParam.filterTag" @change="getUser('')" style="margin-left: 5px"></el-checkbox>
       <el-button type="primary" plain size="mini" @click="handleGrant()" :disabled="userId === ''">授权
       </el-button>
     </el-row>
@@ -68,6 +69,15 @@ export default {
         extend: true,
         authorized: true
       },
+      queryUserParam: {
+        filterTag: true,
+        businessType: this.businessType,
+        businessId: this.businessId,
+        extend: false,
+        authorized: false,
+        page: 1,
+        length: 20
+      },
       userId: '',
       userOptions: []
     }
@@ -94,12 +104,7 @@ export default {
     getUser (name) {
       const requestBody = {
         queryName: name,
-        businessType: this.businessType,
-        businessId: this.businessId,
-        extend: false,
-        authorized: false,
-        page: 1,
-        length: 20
+        ...this.queryUserParam
       }
       QUERY_BUSINESS_PERMISSION_USER(requestBody)
         .then(res => {
@@ -162,18 +167,18 @@ export default {
 
 <style scoped>
 
-  .el-select {
-    display: inline-block;
-    width: 250px;
-  }
+.el-select {
+  display: inline-block;
+  width: 250px;
+}
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>
