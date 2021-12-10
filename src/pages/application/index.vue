@@ -11,32 +11,43 @@
         <el-button style="margin-left: 5px" @click="handlerAdd">新增</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column prop="name" label="应用名称"></el-table-column>
-        <el-table-column prop="applicationKey" label="Key">
+        <el-table-column label="应用" width="250px">
           <template slot-scope="props">
-            <el-tag disable-transitions type="primary" plain size="mini">{{ props.row.applicationKey }}</el-tag>
+            <el-row>
+              <el-tag disable-transitions type="primary" plain size="mini">{{ props.row.applicationKey }}</el-tag>
+            </el-row>
+            <el-row class="nameCopy">
+              <span>{{ props.row.name }}</span>
+              <span v-clipboard:copy="props.row.name" v-clipboard:success="onCopy"
+                    v-clipboard:error="onError">
+              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
+              </span>
+            </el-row>
+            <el-row>
+              <b style="color: #9d9fa3">{{ props.row.comment }}</b>
+            </el-row>
           </template>
         </el-table-column>
-        <el-table-column prop="resourceMap" label="绑定资源" width="500">
+        <el-table-column prop="resourceMap" label="绑定资源">
           <template slot-scope="props">
-          <div v-for="(value,key) in props.row.resourceMap" :key="key" :label="key" class="resDiv">
-            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
-            <span v-for="item in value" :key="item.id">
+            <div v-for="(value,key) in props.row.resourceMap" :key="key" :label="key" class="resDiv">
+              <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
+              <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small"><span v-if="item.instance !== null">{{ item.instance.instanceName}}/</span>{{ item.name }}</el-tag>
+                <el-tag size="small" style="margin-left: 5px;margin-bottom: 5px"><span
+                  v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}</el-tag>
               </el-tooltip>
             </span>
-          </div>
+            </div>
           </template>
         </el-table-column>
-        <el-table-column prop="users" label="授权用户">
+        <el-table-column prop="users" label="授权用户" width="450px">
           <template slot-scope="scope">
             <users-tag :users="scope.row.users"></users-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="comment" label="描述"></el-table-column>
-        <el-table-column prop="tags" label="标签" width="100">
+        <el-table-column prop="tags" label="标签" width="150px">
           <template slot-scope="props">
             <div class="tag-group">
               <span v-for="item in props.row.tags" :key="item.id">
@@ -47,9 +58,8 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="280">
+        <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
-            <!--            <el-button type="primary" plain size="mini" @click="handlerRowPermissionEdit(scope.row)">权限</el-button>-->
             <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
             <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
           </template>
@@ -58,7 +68,7 @@
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                   @handleSizeChange="handleSizeChange"></pagination>
       <application-editor ref="applicationDialog" :formStatus="formStatus.dialog"
-                         @closeDialog="fetchData"></application-editor>
+                          @closeDialog="fetchData"></application-editor>
     </template>
   </d2-container>
 </template>
@@ -186,12 +196,18 @@ export default {
           this.table.pagination.total = res.body.totalNum
           this.table.loading = false
         })
+    },
+    onCopy (e) {
+      this.$message.success('内容已复制到剪切板！')
+    },
+    onError (e) {
+      this.$message.error('抱歉，复制失败！')
     }
   }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 
 .input {
   display: inline-block;
@@ -201,5 +217,13 @@ export default {
 
 .select {
   margin-right: 5px;
+}
+
+.nameCopy i {
+  display: none;
+}
+
+.nameCopy:hover i {
+  display: inline;
 }
 </style>
