@@ -12,14 +12,13 @@
         <el-tree :data="menuOptions" show-checkbox node-key="value" ref="menuTree"></el-tree>
       </el-col>
       <el-col :span="18">
-        <editor v-model="menuContent" @init="editorInit" lang="json" theme="kuroir"
-                width="100%" height="600" disabled=""></editor>
+        <d2-highlight v-if="editing" class="content" :code="menuContent" lang="json"></d2-highlight>
       </el-col>
     </el-row>
     <div slot="footer" class="dialog-footer">
       <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="saveAuthRoleMenu">确定</el-button>
-      <el-button type="primary" @click="getAuthRoleMenuDetail">预览</el-button>
+      <el-button type="primary" @click="saveAuthRoleMenu" :loading="loading">保存</el-button>
+      <el-button type="primary" @click="formStatus.visible = false">关闭</el-button>
     </div>
   </el-dialog>
 </template>
@@ -45,25 +44,18 @@ export default {
       },
       roleId: '',
       roleName: '',
-      menuContent: ''
+      menuContent: '',
+      loading: false,
+      editing: false
     }
   },
   name: 'RoleMenuEditor',
   props: ['formStatus'],
-  components: {
-    editor: require('vue2-ace-editor')
-  },
+  components: {},
   mounted () {
     this.fetchData()
   },
   methods: {
-    editorInit: function (ed) {
-      require('brace/ext/language_tools')
-      require('brace/mode/json')
-      require('brace/mode/ejs')
-      require('brace/theme/kuroir')
-      ed.setReadOnly(true)
-    },
     fetchData () {
       QUERY_MENU_TREE()
         .then(({ body }) => {
@@ -81,9 +73,13 @@ export default {
         roleId: this.roleId,
         menuChildIdList: menuChildIdList
       }
+      this.loading = true
       SAVE_AUTH_ROLE_MENU(param)
         .then(() => {
           this.$message.success('保存成功')
+          this.getAuthRoleMenuDetail()
+        }).catch(() => {
+          this.loading = false
         })
     },
     initData (role) {
@@ -101,9 +97,12 @@ export default {
       this.getAuthRoleMenuDetail()
     },
     getAuthRoleMenuDetail () {
+      this.editing = false
       QUERY_AUTH_ROLE_MENU_DETAIL({ roleId: this.roleId })
         .then(({ body }) => {
           this.menuContent = JSON.stringify(body, null, 4)
+          this.editing = true
+          this.loading = false
         })
     }
   }
@@ -111,4 +110,13 @@ export default {
 </script>
 
 <style scoped>
+
+.content {
+  margin-top: 5px;
+  font-size: 10px;
+  background-color: #dad8c8;
+  line-height: 110%;
+  height: 600px;
+}
+
 </style>
