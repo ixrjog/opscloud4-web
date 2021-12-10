@@ -116,7 +116,7 @@ export default {
   font-size: 10px;
   background-color: #dad8c8;
   line-height: 110%;
-  height: 600px;
+  height: 400px;
 }
 
 </style>
