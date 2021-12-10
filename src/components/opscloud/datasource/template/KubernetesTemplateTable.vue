@@ -155,7 +155,7 @@ export default {
         })
     },
     handleRowCreate (row) {
-      this.$confirm('是否从模版配置创建资产?', '提示', {
+      this.$confirm('是否从模版配置创建/更新资产?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -172,7 +172,7 @@ export default {
           this.fetchData()
         })
       }).catch(() => {
-        this.$message.info('已取消删除!')
+        this.$message.info('已取消!')
       })
     },
     handleRowDel (row) {

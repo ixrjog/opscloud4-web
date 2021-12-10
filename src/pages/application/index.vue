@@ -67,8 +67,8 @@
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                   @handleSizeChange="handleSizeChange"></pagination>
-      <application-editor ref="applicationDialog" :formStatus="formStatus.dialog"
-                          @closeDialog="fetchData"></application-editor>
+      <application-editor ref="applicationEditor" :formStatus="formStatus.application"
+                          @close="fetchData"></application-editor>
     </template>
   </d2-container>
 </template>
