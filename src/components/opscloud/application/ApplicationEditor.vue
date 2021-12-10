@@ -100,7 +100,7 @@
           </div>
         </el-col>
       </el-tab-pane>
-      <el-tab-pane label="用户授权" name="permissionUser" :disabled="JSON.stringify(application) == '{}'">
+      <el-tab-pane label="用户授权" name="permissionUser" v-if="JSON.stringify(application) !== '{}'">
         <permission-user-tab :businessType="businessType.APPLICATION" :businessId="application.id"
                              ref="permissionUserTab"></permission-user-tab>
       </el-tab-pane>
@@ -170,7 +170,7 @@ export default {
   },
   methods: {
     initData (application) {
-      this.application = Object.assign({}, application)
+      this.application = application
       this.activeName = 'config'
     },
     handleClick (tab, event) {
@@ -179,7 +179,7 @@ export default {
         this.getBusinessType()
       }
       if (tab.name === 'permissionUser') {
-        this.$refs.permissionUserTab.fetchData()
+        this.$refs.permissionUserTab.init()
       }
     },
     handleSelectBusinessType () {
@@ -303,20 +303,21 @@ export default {
           .then(() => {
             this.$message.success('成功')
             this.formStatus.visible = false
-            this.$emit('closeDialog')
+            this.$emit('close')
           })
       } else {
         UPDATE_APPLICATION(requestBody)
           .then(() => {
             this.$message.success('成功')
             this.formStatus.visible = false
-            this.$emit('closeDialog')
+            this.$emit('close')
           })
       }
     },
     handleClose () {
+      this.application = {}
       this.formStatus.visible = false
-      this.$emit('closeDialog')
+      this.$emit('close')
     }
   }
 }

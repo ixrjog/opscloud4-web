@@ -2,8 +2,8 @@
   <div>
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix">
-        <span>个人信息</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="handlerEdit()">修改基本信息</el-button>
+        <span>我的信息</span>
+        <el-button style="float: right; padding: 3px 0" type="text" @click="handleEdit()">编辑</el-button>
       </div>
       <el-form :model="user" label-width="60px">
         <el-form-item label="用户名">
@@ -55,7 +55,7 @@ export default {
     UserEditor
   },
   methods: {
-    handlerEdit () {
+    handleEdit () {
       this.formStatus.user.visible = true
       this.formStatus.user.operationType = false
       this.$refs.userEditor.initData(Object.assign({}, this.user))

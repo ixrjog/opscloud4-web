@@ -68,7 +68,7 @@
             <d2-highlight v-show="!button.editing" :code="businessTemplate.vars" class="vars"
                           :lang="businessTemplate.template.templateType">
             </d2-highlight>
-            <editor v-show="button.editing" v-model="businessTemplate.vars"
+            <editor v-if="button.editing" v-model="businessTemplate.vars"
                     @init="editorInit"
                     :lang="businessTemplate.template.templateType"
                     theme="chrome"

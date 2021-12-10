@@ -52,7 +52,7 @@
           <el-form-item label="模板">
             <d2-highlight v-show="!button.editing" :code="template.content" class="content"
                           :lang="template.templateType"></d2-highlight>
-            <editor v-show="button.editing" v-model="template.content"
+            <editor v-if="button.editing" v-model="template.content"
                     @init="editorInit"
                     :lang="template.templateType"
                     theme="chrome"
@@ -62,7 +62,7 @@
           <el-form-item label="变量">
             <d2-highlight v-show="!button.editing" :code="template.vars" class="vars"
                           :lang="template.templateType"></d2-highlight>
-            <editor v-show="button.editing" v-model="template.vars"
+            <editor v-if="button.editing" v-model="template.vars"
                     @init="editorInit"
                     :lang="template.templateType"
                     theme="chrome"

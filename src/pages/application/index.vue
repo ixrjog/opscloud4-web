@@ -102,7 +102,7 @@ export default {
         queryName: ''
       },
       formStatus: {
-        dialog: {
+        application: {
           visible: false,
           operationType: true,
           addTitle: '新增应用配置',
@@ -151,7 +151,7 @@ export default {
       this.fetchData()
     },
     handlerAdd () {
-      this.formStatus.dialog.operationType = true
+      this.formStatus.application.operationType = true
       const application = {
         id: '',
         name: '',
@@ -159,13 +159,13 @@ export default {
         applicationType: 0,
         comment: ''
       }
-      this.$refs.applicationDialog.initData(application)
-      this.formStatus.dialog.visible = true
+      this.$refs.applicationEditor.initData(application)
+      this.formStatus.application.visible = true
     },
     handlerRowEdit (row) {
-      this.formStatus.dialog.operationType = false
-      this.formStatus.dialog.visible = true
-      this.$refs.applicationDialog.initData(Object.assign({}, row))
+      this.formStatus.application.operationType = false
+      this.formStatus.application.visible = true
+      this.$refs.applicationEditor.initData(Object.assign({}, row))
     },
     handlerRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {

@@ -1,6 +1,9 @@
 <template>
   <d2-container>
-    <h1>个人详情</h1>
+    <h1>
+      <el-avatar v-if="user !== null && user.avatar !== null && user.avatar !== undefined" :src="user.avatar"
+                 :size="50"></el-avatar>
+    </h1>
     <el-row :gutter="24" style="margin-bottom: 5px" v-if="user !== null">
       <el-col :span="7">
         <user-info :user="user" @fetchData="fetchData"></user-info>
