@@ -22,7 +22,7 @@
       <el-table-column label="操作" width="220">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+          <el-button type="danger" plain size="mini" :disabled="scope.row.userSize !== 0" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
