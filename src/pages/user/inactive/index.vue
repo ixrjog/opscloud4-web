@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <d2-container>
+    <h1>无效用户管理</h1>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新建</el-button>
-      <el-button @click="handleSync">同步</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="username" label="用户名" width="150"></el-table-column>
@@ -24,7 +24,7 @@
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="250">
+      <el-table-column label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
@@ -41,17 +41,17 @@
     <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
-  </div>
+  </d2-container>
 </template>
 
 <script>
 
-import { QUERY_USER_PAGE, SET_USER_ACTIVE, DELETE_USER_BY_ID, SYNC_USER } from '@/api/modules/user/user.api.js'
-import Pagination from '../common/page/Pagination'
-import UserEditor from './UserEditor'
+import { QUERY_USER_PAGE, SET_USER_ACTIVE, DELETE_USER_BY_ID } from '@/api/modules/user/user.api.js'
+import Pagination from '@/components/opscloud/common/page/Pagination'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
+import UserEditor from '@/components/opscloud/user/UserEditor'
 
 export default {
   name: 'UserTable',
@@ -88,7 +88,7 @@ export default {
       queryParam: {
         queryName: '',
         filterTag: true,
-        isActive: true,
+        isActive: false,
         extend: true
       },
       businessType: BusinessType.USER
@@ -157,12 +157,6 @@ export default {
         comment: ''
       }
       this.$refs.userEditor.initData(user)
-    },
-    handleSync () {
-      SYNC_USER()
-        .then(res => {
-          this.$message.success('后台同步中!')
-        })
     },
     fetchData () {
       this.table.loading = true
