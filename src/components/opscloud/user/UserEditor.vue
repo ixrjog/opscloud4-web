@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" :before-close="handleClose">
-    <el-tabs v-model="activeName" @tab-click="handlerClick">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="user">
         <user-info :operationType="formStatus.operationType" ref="userInfo" @close="handleClose"></user-info>
       </el-tab-pane>
@@ -10,6 +10,9 @@
       </el-tab-pane>
       <el-tab-pane label="用户组授权" name="userGroup" :disabled="user.id === '' || user.id === 0">
         <user-group-tab :user="user" ref="userGroupTab"></user-group-tab>
+      </el-tab-pane>
+      <el-tab-pane label="RAM授权" name="ram" :disabled="user.id === '' || user.id === 0">
+        <ram-tab :user="user" ref="ramTab"></ram-tab>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
@@ -24,6 +27,7 @@
 import UserServerGroupTab from './child/UserServerGroupTab'
 import UserGroupTab from './child/UserGroupTab'
 import UserInfo from './child/UserInfo'
+import RamTab from '@/components/opscloud/user/child/RamTab'
 
 export default {
   data () {
@@ -41,7 +45,8 @@ export default {
   components: {
     UserInfo,
     UserGroupTab,
-    UserServerGroupTab
+    UserServerGroupTab,
+    RamTab
   },
   methods: {
     initData (user) {
@@ -51,14 +56,18 @@ export default {
         this.$refs.userInfo.initData(user)
       })
     },
-    handlerClick () {
-      switch (this.activeName) {
-        case 'serverGroup':
-          this.$refs.userServerGroupTab.init()
-          break
-        case 'userGroup':
-          this.$refs.userGroupTab.init()
-          break
+    handleClick (tab, event) {
+      if (tab.name === 'serverGroup') {
+        this.$refs.userServerGroupTab.init()
+        return
+      }
+      if (tab.name === 'userGroup') {
+        this.$refs.userGroupTab.init()
+        return
+      }
+      if (tab.name === 'ram') {
+        this.$refs.ramTab.init()
+        return
       }
     },
     handleSave () {
