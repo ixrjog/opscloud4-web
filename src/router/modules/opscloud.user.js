@@ -26,4 +26,13 @@ export default [
       title: '无效用户配置'
     }
   },
+  {
+    path: '/user/info',
+    name: 'user-info',
+    component: () => import('@/pages/user/info'),
+    meta: {
+      auth: true,
+      title: '用户详情'
+    }
+  }
 ]

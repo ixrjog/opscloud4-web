@@ -8,9 +8,32 @@
       <el-button @click="handleSync">同步</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="username" label="用户名" width="150"></el-table-column>
+      <el-table-column label="用户名" width="150">
+        <template slot-scope="scope">
+          <span class="copyClass">
+            <span>{{ scope.row.username }}</span>
+            <span v-clipboard:copy="scope.row.username" v-clipboard:success="onCopy"
+                v-clipboard:error="onError">
+              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
+            </span>
+            <el-button type="text" style="float:right" @click="openUserDetail(scope.row.username)">
+              <i style="margin-left: 5px" class="el-icon-position"></i>
+            </el-button>
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column prop="displayName" label="显示名" width="150"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="250"></el-table-column>
+      <el-table-column label="邮箱" width="250">
+        <template slot-scope="scope">
+          <span class="copyClass">
+            <span>{{ scope.row.email }}</span>
+            <span v-clipboard:copy="scope.row.email" v-clipboard:success="onCopy"
+                  v-clipboard:error="onError">
+              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
+            </span>
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column prop="businessPermissions" label="业务授权">
         <template slot-scope="scope">
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
@@ -52,6 +75,7 @@ import UserEditor from './UserEditor'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
+import util from '@/libs/util'
 
 export default {
   name: 'UserTable',
@@ -177,13 +201,24 @@ export default {
           this.table.pagination.total = res.body.totalNum
           this.table.loading = false
         })
+    },
+    onCopy (e) {
+      this.$message.success('内容已复制到剪切板！')
+    },
+    onError (e) {
+      this.$message.error('抱歉，复制失败！')
+    },
+    openUserDetail (username) {
+      const host = window.location.host
+      const httpProtocol = window.location.href.split('://')[0]
+      const buildDetailsUrl = httpProtocol + '://' + host + '/#/user/info?username=' + username
+      util.open(buildDetailsUrl)
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
 .el-input {
   display: inline-block;
   max-width: 200px;
@@ -191,5 +226,13 @@ export default {
 
 .el-button {
   margin-left: 5px;
+}
+
+.copyClass i {
+  display: none;
+}
+
+.copyClass:hover i {
+  display: inline;
 }
 </style>

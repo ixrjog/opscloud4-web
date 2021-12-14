@@ -11,7 +11,6 @@ export function QUERY_USER_SERVER_TREE (data) {
   })
 }
 
-
 export function QUERY_USER_REMOTE_SERVER (data) {
   // 接口请求
   return request({
