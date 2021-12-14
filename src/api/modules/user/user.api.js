@@ -89,18 +89,3 @@ export function SYNC_USER () {
     method: 'put'
   })
 }
-
-export function GET_USER_RAM (username) {
-  return request({
-    url: baseUrl + '/ram/get?username=' + username,
-    method: 'get'
-  })
-}
-
-export function CREATE_RAM_USER (data) {
-  return request({
-    url: baseUrl + '/ram/user/create',
-    method: 'post',
-    data
-  })
-}

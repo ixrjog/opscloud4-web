@@ -28,7 +28,8 @@
               <select-item :name="item.name" :comment="item.description"></select-item>
             </el-option>
           </el-select>
-          <el-button @click="handleGrantPolicy" :disabled="policy === null">授权</el-button>
+          <el-button @click="handleGrantPolicy" :disabled="policy === null" :loading="button.grant.granting">授权
+          </el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -55,7 +56,7 @@
           <div class="tag-group">
             <div v-for="policy in scope.row.ramPolicies" :key="policy.assetId">
               <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
-                <el-tag style="margin-left: 5px">{{ policy.name }}</el-tag>
+                <el-tag style="margin-left: 5px" closable @close="handleRevokePolicy(policy)">{{ policy.name }}</el-tag>
               </el-tooltip>
             </div>
           </div>
@@ -67,7 +68,7 @@
 
 <script>
 
-import { GET_USER_RAM, CREATE_RAM_USER } from '@/api/modules/user/user.api.js'
+import { GET_USER_RAM, CREATE_RAM_USER, GRANT_RAM_POLICY, REVOKE_RAM_POLICY } from '@/api/modules/user/user.ram.api.js'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import {
@@ -101,6 +102,9 @@ export default {
         create: {
           disabled: false,
           creating: false
+        },
+        grant: {
+          granting: false
         }
       }
     }
@@ -124,6 +128,9 @@ export default {
         create: {
           disabled: false,
           creating: false
+        },
+        grant: {
+          granting: false
         }
       }
       this.fetchData()
@@ -145,12 +152,15 @@ export default {
     checkCreateRamUser () {
       if (this.dsInstance === null || this.table.data === []) {
         this.button.create.disabled = false
+        return
       }
       let isCreated = false
-      for (const ramUser of this.table.data) {
-        if (this.dsInstance.uuid === ramUser.instanceUuid) {
-          isCreated = true
-          break
+      if (this.table.data.length !== 0) {
+        for (const ramUser of this.table.data) {
+          if (this.dsInstance.uuid === ramUser.instanceUuid) {
+            isCreated = true
+            break
+          }
         }
       }
       this.button.create.disabled = !isCreated
@@ -189,7 +199,43 @@ export default {
           this.policyOptions = res.body.data
         })
     },
+    /**
+     * 授权
+     */
     handleGrantPolicy () {
+      if (this.policy === null) return
+      const requestBody = {
+        policy: {
+          policyName: this.policy.assetId,
+          policyType: this.policy.assetKey
+        },
+        instanceId: this.dsInstance !== {} ? this.dsInstance.id : '',
+        instanceUuid: this.dsInstance !== {} ? this.dsInstance.uuid : '',
+        username: this.user.username
+      }
+      this.button.grant.granting = true
+      GRANT_RAM_POLICY(requestBody)
+        .then(res => {
+          this.fetchData()
+          this.button.grant.granting = false
+        })
+    },
+    /**
+     * 撤销
+     */
+    handleRevokePolicy (policy) {
+      const requestBody = {
+        policy: {
+          policyName: policy.assetId,
+          policyType: policy.assetKey
+        },
+        instanceUuid: policy.instanceUuid,
+        username: this.user.username
+      }
+      REVOKE_RAM_POLICY(requestBody)
+        .then(res => {
+          this.fetchData()
+        })
     },
     fetchData () {
       this.table.loading = true
