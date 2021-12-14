@@ -44,3 +44,11 @@ export function SCAN_ASSET_BUSINESS (data) {
     data
   })
 }
+
+export function SET_ASSET_ACTIVE (data) {
+  return request({
+    url: baseUrl + '/active/set',
+    method: 'put',
+    params: data
+  })
+}

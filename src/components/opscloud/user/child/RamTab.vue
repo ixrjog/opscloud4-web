@@ -24,7 +24,8 @@
               v-for="item in policyOptions"
               :key="item.id"
               :label="item.name"
-              :value="item">
+              :value="item"
+              :disabled="!item.isActive">
               <select-item :name="item.name" :comment="item.description"></select-item>
             </el-option>
           </el-select>
