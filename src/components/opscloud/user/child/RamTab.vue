@@ -123,7 +123,6 @@ export default {
     //     })
     // },
     init () {
-      //this.getUserGroup('')
       this.button = {
         create: {
           disabled: false,
@@ -133,7 +132,12 @@ export default {
           granting: false
         }
       }
+      this.dsInstance = null
+      this.dsInstanceOptions = []
+      this.policy = null
+      this.policyOptions = []
       this.fetchData()
+      this.getDsInstance()
     },
     getDsInstance () {
       const requestBody = {
