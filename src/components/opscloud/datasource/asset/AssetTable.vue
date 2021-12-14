@@ -20,28 +20,26 @@
       <slot name="extend">
         <!--扩展字段-->
       </slot>
+      <el-table-column prop="isActive" label="有效" v-show="60">
+        <template slot-scope="scope">
+          <i class="fas fa-circle" :style="{ color: scope.row.isActive? '#0ca80c' : '#ce3f13' }"></i>
+        </template>
+      </el-table-column>
       <el-table-column prop="tags" label="标签">
         <template slot-scope="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
-        <!--        <template slot-scope="scope">-->
-        <!--          <el-dropdown split-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)"-->
-        <!--                       v-if="$scopedSlots.operation">标签-->
-        <!--            <el-dropdown-menu slot="dropdown">-->
-        <!--              <slot name="operation" :row="scope.row"></slot>-->
-        <!--            </el-dropdown-menu>-->
-        <!--          </el-dropdown>-->
-        <!--          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)" v-else>标签-->
-        <!--          </el-button>-->
-        <!--          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>-->
-        <!--        </template>-->
         <template slot-scope="scope">
           <slot name="operation" :row="scope.row"></slot>
           <el-button type="primary" plain size="mini"
                      v-if="scope.row.convertBusinessTypes != null && JSON.stringify(scope.row.convertBusinessTypes) !== '{}'"
                      @click="handleImport(scope.row.convertBusinessTypes)">导入
+          </el-button>
+
+          <el-button v-show="enableActive" :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
+                     @click="handleSetActive(scope.row)">{{ scope.row.isActive ? '无效' : '有效' }}
           </el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签
           </el-button>
@@ -65,6 +63,7 @@ import {
   QUERY_ASSET_PAGE,
   PULL_ASSET,
   SCAN_ASSET_BUSINESS,
+  SET_ASSET_ACTIVE,
   DELETE_ASSET_BY_ID
 } from '@/api/modules/datasource/datasource.asset.api.js'
 import Pagination from '../../common/page/Pagination'
@@ -112,6 +111,11 @@ export default {
       type: Object,
       required: false,
       default: () => tableLayout
+    },
+    enableActive: {
+      type: Boolean,
+      required: false,
+      default: () => false
     }
   },
   data () {
@@ -155,7 +159,7 @@ export default {
       queryParam: {
         queryName: '',
         assetType: this.assetType,
-        isActive: true,
+        isActive: null,
         relation: true,
         extend: true
       }
@@ -219,6 +223,13 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
+    handleSetActive (row) {
+      SET_ASSET_ACTIVE({ assetId: row.id })
+        .then(res => {
+          this.$message.success('设置成功!')
+          this.fetchData()
+        })
+    },
     handleImport (convertBusinessTypes) {
       if (convertBusinessTypes.SERVER !== undefined) {
         this.$refs.serverEditor.initData(convertBusinessTypes.SERVER)
@@ -260,12 +271,12 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 </style>

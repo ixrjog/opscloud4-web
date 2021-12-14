@@ -93,7 +93,7 @@
           </el-tab-pane>
           <el-tab-pane label="RAM策略" name="ramPolicy">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
-                         :tableLayout="tableLayout.ramPolicy" ref="ramPolicyTable">
+                         :tableLayout="tableLayout.ramPolicy" :enableActive="true" ref="ramPolicyTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="成员用户" width="400">
                   <template slot-scope="scope">
