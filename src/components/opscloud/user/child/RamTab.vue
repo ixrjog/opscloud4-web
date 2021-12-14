@@ -218,11 +218,12 @@ export default {
         username: this.user.username
       }
       this.button.grant.granting = true
-      GRANT_RAM_POLICY(requestBody)
-        .then(res => {
-          this.fetchData()
-          this.button.grant.granting = false
-        })
+      GRANT_RAM_POLICY(requestBody).then(() => {
+        this.fetchData()
+        this.button.grant.granting = false
+      }).catch(() => {
+        this.button.grant.granting = false
+      })
     },
     /**
      * 撤销

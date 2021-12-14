@@ -31,7 +31,7 @@ export function GRANT_RAM_POLICY (data) {
   })
 }
 
-/**
+/*
  * 撤销用户RAM策略
  * @param data
  * @returns {*}
@@ -44,4 +44,3 @@ export function REVOKE_RAM_POLICY (data) {
     data
   })
 }
-

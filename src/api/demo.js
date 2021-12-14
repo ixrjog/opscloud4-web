@@ -10,7 +10,7 @@ const db = [
   { id: '4', name: '用户 4', address: '上海市普陀区金沙江路 1516 弄' }
 ]
 
-/**
+/*
  * @description 列表
  */
 export function DEMO_MOCK_LIST () {
