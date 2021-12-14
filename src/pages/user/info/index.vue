@@ -12,6 +12,10 @@
         </el-option>
       </el-select>
     </el-row>
+    <h1>
+      <el-avatar v-if="user !== null && user.avatar !== null && user.avatar !== undefined" :src="user.avatar"
+                 :size="50"></el-avatar>
+    </h1>
     <el-row :gutter="24" style="margin-top: 10px" v-if="user !== null">
       <el-col :span="7">
         <user-info :user="user" @fetchData="fetchData"></user-info>
@@ -65,7 +69,7 @@ export default {
   },
   methods: {
     fetchData () {
-      if (this.username === '') {
+      if (this.username === '' || this.username === undefined) {
         GET_USER_DETAILS()
           .then(res => {
             this.user = res.body
