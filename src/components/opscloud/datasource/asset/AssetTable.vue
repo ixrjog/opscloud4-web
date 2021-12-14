@@ -20,7 +20,7 @@
       <slot name="extend">
         <!--扩展字段-->
       </slot>
-      <el-table-column prop="isActive" label="有效" v-show="60">
+      <el-table-column prop="isActive" label="有效" v-if="enableActive" width="70">
         <template slot-scope="scope">
           <i class="fas fa-circle" :style="{ color: scope.row.isActive? '#0ca80c' : '#ce3f13' }"></i>
         </template>

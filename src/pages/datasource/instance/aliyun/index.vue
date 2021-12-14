@@ -76,12 +76,12 @@
                          :tableLayout="tableLayout.ramUser"
                          ref="ramUserTable">
               <template v-slot:extend>
-                <el-table-column prop="children" label="授权的策略" width="500">
+                <el-table-column prop="children" label="授权的策略" width="300">
                   <template slot-scope="scope">
                     <ds-children-tag :children="scope.row.children.RAM_POLICY" :type="0"></ds-children-tag>
                   </template>
                 </el-table-column>
-                <el-table-column label="Access Key" width="180">
+                <el-table-column label="Access Key" width="200">
                   <template slot-scope="scope">
                     <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
                       <el-tag :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
@@ -95,7 +95,7 @@
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
                          :tableLayout="tableLayout.ramPolicy" :enableActive="true" ref="ramPolicyTable">
               <template v-slot:extend>
-                <el-table-column prop="children" label="成员用户" width="400">
+                <el-table-column prop="children" label="成员用户" width="300">
                   <template slot-scope="scope">
                     <ds-children-tag :children="scope.row.children.RAM_USER" :type="4"></ds-children-tag>
                   </template>
@@ -146,14 +146,18 @@
                          :tableLayout="tableLayout.onsRocketMqInstance"
                          ref="onsRocketMqInstanceTable">
               <template v-slot:extend>
-                <el-table-column prop="children" label="Topic" width="400">
+                <el-table-column label="Topic" width="300">
                   <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.ONS_ROCKETMQ_TOPIC" :type="3"></ds-children-tag>
+                    <div v-for="topic in scope.row.tree.ONS_ROCKETMQ_TOPIC" :key="topic.id">
+                      <el-tag>{{ topic.name }}</el-tag>
+                    </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="children" label="Group" width="400">
+                <el-table-column label="Group ID" width="300">
                   <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.ONS_ROCKETMQ_GROUP" :type="3"></ds-children-tag>
+                    <div v-for="group in scope.row.tree.ONS_ROCKETMQ_GROUP" :key="group.id">
+                      <el-tag>{{ group.name }}</el-tag>
+                    </div>
                   </template>
                 </el-table-column>
               </template>
@@ -377,7 +381,7 @@ const tableLayout = {
       show: false
     }
   },
-  onsRocketMqTopic:{
+  onsRocketMqTopic: {
     assetId: {
       alias: '实例ID',
       show: true
@@ -399,7 +403,7 @@ const tableLayout = {
       show: false
     }
   },
-  onsRocketMqGroup:{
+  onsRocketMqGroup: {
     assetId: {
       alias: '实例ID',
       show: true
