@@ -247,7 +247,6 @@ export default {
         this.$refs.userGroupEditor.initData(convertBusinessTypes.USERGROUP)
         this.formStatus.userGroup.operationType = true
         this.formStatus.userGroup.visible = true
-        return
       }
     },
     fetchData () {

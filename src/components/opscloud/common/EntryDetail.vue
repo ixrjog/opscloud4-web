@@ -3,7 +3,7 @@
     <span class="name">{{ name }}</span>
     <span class="value">
       {{ value }}
-      <span v-if="unit !== null || unit !== undefined"> {{ unit }}</span>
+      <span v-if="unit !== undefined && unit !== null"> {{ unit }}</span>
     </span>
   </div>
 </template>
@@ -20,14 +20,11 @@ export default {
 .name {
   float: left;
   color: #8492a6;
-  fontSize: 12px;
-  marginLeft: 15px;
+  font-size: 12px;
 }
 
 .value {
   float: right;
-  fontSize: 12px;
+  font-size: 12px;
 }
-
-
 </style>

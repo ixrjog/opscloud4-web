@@ -2,13 +2,6 @@
   <d2-container>
     <h1>钉钉应用实例管理</h1>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
-      <el-tab-pane label="部门" name="department">
-        <asset-table :instanceId="instanceId" :assetType="assetType.DINGTALK_APP.DINGTALK_DEPARTMENT"
-                     :tableLayout="tableLayout.department" ref="departmentTable">
-          <template v-slot:extend>
-          </template>
-        </asset-table>
-      </el-tab-pane>
       <el-tab-pane label="通讯录用户" name="user">
         <asset-table :instanceId="instanceId" :assetType="assetType.DINGTALK_APP.DINGTALK_USER"
                      :tableLayout="tableLayout.user" ref="userTable">
@@ -28,6 +21,13 @@
                 {{ scope.row.description }}
               </template>
             </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="部门" name="department">
+        <asset-table :instanceId="instanceId" :assetType="assetType.DINGTALK_APP.DINGTALK_DEPARTMENT"
+                     :tableLayout="tableLayout.department" ref="departmentTable">
+          <template v-slot:extend>
           </template>
         </asset-table>
       </el-tab-pane>

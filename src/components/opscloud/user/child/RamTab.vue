@@ -85,7 +85,7 @@ export default {
     return {
       table: {
         data: [],
-        loading: false,
+        loading: false
       },
       queryParam: {
         queryName: '',
@@ -197,7 +197,7 @@ export default {
         length: 15,
         page: 1,
         queryName: queryName,
-        relation: true,
+        relation: true
       }
       QUERY_ASSET_PAGE(requestBody)
         .then(res => {

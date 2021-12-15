@@ -149,8 +149,6 @@ export default {
   },
   mixins: [],
   mounted () {
-    this.getEnv('')
-    //this.getGroup('')
   },
   methods: {
     getEnv (name) {
@@ -174,8 +172,8 @@ export default {
       QUERY_SERVER_GROUP_PAGE(requestBody)
         .then(res => {
           this.serverGroupOptions = res.body.data
-          if(autoSel){
-            if(this.serverGroupOptions.length === 1){
+          if (autoSel) {
+            if (this.serverGroupOptions.length === 1) {
               this.server.serverGroupId = this.serverGroupOptions[0].id
             }
           }

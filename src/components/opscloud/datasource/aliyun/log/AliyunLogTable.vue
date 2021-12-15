@@ -83,8 +83,7 @@ export default {
   props: ['instanceId'],
   mounted () {
   },
-  computed: {
-  },
+  computed: {},
   components: {
     Pagination,
     AliyunLogEditor
@@ -99,7 +98,7 @@ export default {
       this.fetchData()
     },
     handleRowAdd () {
-      let aliyunLog = {
+      const aliyunLog = {
         id: '',
         datasourceInstanceId: this.instanceId,
         project: '',
@@ -128,7 +127,7 @@ export default {
     },
     fetchData () {
       this.table.loading = true
-      let requestBody = {
+      const requestBody = {
         ...this.queryParam,
         instanceId: this.instanceId,
         page: this.table.pagination.currentPage,
@@ -146,32 +145,32 @@ export default {
 </script>
 
 <style scoped>
-  .table-expand {
-    font-size: 0;
-  }
+.table-expand {
+  font-size: 0;
+}
 
-  .table-expand label {
-    width: 150px;
-    color: #99a9bf;
-  }
+.table-expand label {
+  width: 150px;
+  color: #99a9bf;
+}
 
-  .table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
+.table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
 
-  .input {
-    display: inline-block;
-    max-width: 200px;
-    margin-right: 5px;
-  }
+.input {
+  display: inline-block;
+  max-width: 200px;
+  margin-right: 5px;
+}
 
-  .select {
-    margin-right: 5px;
-  }
+.select {
+  margin-right: 5px;
+}
 
-  .button {
-    margin-right: 5px;
-  }
+.button {
+  margin-right: 5px;
+}
 </style>

@@ -14,6 +14,9 @@
       <el-tab-pane label="RAM授权" name="ram" :disabled="user.id === '' || user.id === 0">
         <ram-tab :user="user" ref="ramTab"></ram-tab>
       </el-tab-pane>
+      <el-tab-pane label="角色授权" name="role" :disabled="user.id === '' || user.id === 0">
+        <role-tab :user="user" ref="roleTab"></role-tab>
+      </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
@@ -28,6 +31,7 @@ import UserServerGroupTab from './child/UserServerGroupTab'
 import UserGroupTab from './child/UserGroupTab'
 import UserInfo from './child/UserInfo'
 import RamTab from '@/components/opscloud/user/child/RamTab'
+import RoleTab from '@/components/opscloud/user/child/RoleTab'
 
 export default {
   data () {
@@ -46,7 +50,8 @@ export default {
     UserInfo,
     UserGroupTab,
     UserServerGroupTab,
-    RamTab
+    RamTab,
+    RoleTab
   },
   methods: {
     initData (user) {
@@ -68,6 +73,9 @@ export default {
       if (tab.name === 'ram') {
         this.$refs.ramTab.init()
         return
+      }
+      if (tab.name === 'role') {
+        this.$refs.roleTab.init()
       }
     },
     handleSave () {

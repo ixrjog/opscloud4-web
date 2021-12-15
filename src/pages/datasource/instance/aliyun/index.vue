@@ -19,10 +19,6 @@
                   </template>
                 </el-table-column>
               </template>
-              <!--          <template v-slot:operation="scope">-->
-              <!--            <el-button type="primary" plain size="mini" v-if="JSON.stringify(scope.row.convertBusinessTypes) !== '{}' && scope.row.convertBusinessTypes.SERVER !== null"-->
-              <!--                       @click="handleImportServer(scope.row.convertBusinessTypes.SERVER)">导入</el-button>-->
-              <!--          </template>-->
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="Image" name="image">
@@ -126,8 +122,8 @@
                   <template slot-scope="scope">
                     <span>{{ scope.row.properties.instanceCPU }} 核</span>
                     <span> / {{ scope.row.properties.instanceMemory }} G</span>
-                    <el-popover placement="right" width="450" trigger="hover">
-                      <i class="el-icon-info" style="color: green" slot="reference"></i>
+                    <el-popover placement="right" trigger="hover">
+                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                       <entry-detail name="CPU" :value="scope.row.properties.instanceCPU" unit="核"></entry-detail>
                       <br/>
                       <entry-detail name="数据库内存" :value="scope.row.properties.instanceMemory"
@@ -139,9 +135,13 @@
                       <entry-detail name="最大IOPS" :value="scope.row.properties.maxIOPS"></entry-detail>
                       <br/>
                       <entry-detail name="最大连接数" :value="scope.row.properties.maxConnections"></entry-detail>
-                      <!--                      <entry-detail name="内网地址" value=" "></entry-detail>-->
-                      <el-divider><span style="color: #8492a6 ; fontSize: 12px;">内网地址</span></el-divider>
-                      <span>{{ scope.row.properties.connectionString }}</span>
+                      <el-divider>
+                        <span style="color: #8492a6 ; font-size: 12px">内网地址</span>
+                      </el-divider>
+                      <span v-clipboard:copy="scope.row.properties.connectionString" v-clipboard:success="onCopy"
+                            v-clipboard:error="onError">
+                        <span>{{ scope.row.properties.connectionString }}</span>
+                      </span>
                     </el-popover>
                   </template>
                 </el-table-column>
@@ -180,14 +180,17 @@
                   <template slot-scope="scope">
                     <span>{{ scope.row.kind }}</span>
                     <el-popover placement="right" width="650" trigger="hover">
-                      <i class="el-icon-info" style="color: green" slot="reference"></i>
-                      <el-divider><span style="color: #8492a6 ; fontSize: 12px;">TCP 协议客户端接入点</span></el-divider>
-                      <br/>
+                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                      <el-divider>
+                        <span style="color: #8492a6; font-size: 12px">TCP 协议客户端接入点</span>
+                      </el-divider>
                       <entry-detail name="公网" :value="scope.row.properties.tcpEndpoint"></entry-detail>
                       <br/>
-                      <el-divider><span style="color: #8492a6 ; fontSize: 12px;">HTTP 协议客户端接入点</span></el-divider>
-                      <br/>
+                      <el-divider>
+                        <span style="color: #8492a6; font-size: 12px">HTTP 协议客户端接入点</span>
+                      </el-divider>
                       <entry-detail name="内网" :value="scope.row.properties.httpInternetEndpoint"></entry-detail>
+                      <br/>
                       <entry-detail name="公网" :value="scope.row.properties.httpInternalEndpoint"></entry-detail>
                     </el-popover>
                   </template>
@@ -387,11 +390,11 @@ const tableLayout = {
   rdsDatabase: {
     assetId: {
       alias: '实例ID',
-      show: true,
+      show: true
     },
     name: {
-      alias: '实例名称',
-      show: true,
+      alias: '数据库名称',
+      show: true
     },
     assetKey: {
       alias: '',
@@ -501,7 +504,7 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      if (tab.name === 'ecs') {
+      if (tab.name === 'ecs' || tab.name === 'cloudServer') {
         this.$refs.ecsTable.fetchData()
         return
       }
@@ -513,7 +516,7 @@ export default {
         this.$refs.vpcTable.fetchData()
         return
       }
-      if (tab.name === 'ramUser') {
+      if (tab.name === 'ramUser' || tab.name === 'ram') {
         this.$refs.ramUserTable.fetchData()
         return
       }
@@ -521,7 +524,7 @@ export default {
         this.$refs.ramPolicyTable.fetchData()
         return
       }
-      if (tab.name === 'rdsInstance') {
+      if (tab.name === 'rdsInstance' || tab.name === 'rds') {
         this.$refs.rdsInstanceTable.fetchData()
         return
       }
@@ -529,7 +532,7 @@ export default {
         this.$refs.rdsDatabaseTable.fetchData()
         return
       }
-      if (tab.name === 'onsRocketMqInstance') {
+      if (tab.name === 'onsRocketMqInstance' || tab.name === 'ons') {
         this.$refs.onsRocketMqInstanceTable.fetchData()
         return
       }
@@ -543,23 +546,11 @@ export default {
       }
       if (tab.name === 'log') {
         this.$refs.aliyunLogTable.fetchData()
-        return
       }
     },
     init () {
       setTimeout(() => {
-        if (this.$refs.ecsTable) {
-          this.$refs.ecsTable.fetchData()
-        }
-        if (this.$refs.ramUserTable) {
-          this.$refs.ramUserTable.fetchData()
-        }
-        if (this.$refs.rdsInstanceTable) {
-          this.$refs.rdsInstanceTable.fetchData()
-        }
-        if (this.$refs.onsRocketMqInstanceTable) {
-          this.$refs.onsRocketMqInstanceTable.fetchData()
-        }
+        this.$refs.ecsTable.fetchData()
       }, 50)
     },
     getVSwitches (row) {
@@ -608,10 +599,22 @@ export default {
     },
     handleSelLog (logId) {
       this.$refs.aliyunLogMemberTable.initData(logId)
+    },
+    onCopy (e) {
+      this.$message.success('内容已复制到剪切板！')
+    },
+    onError (e) {
+      this.$message.error('抱歉，复制失败！')
     }
   }
 }
 </script>
 
 <style scoped>
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 24px 0 12px;
+}
 </style>
