@@ -30,10 +30,10 @@ export function getAssetTypeText (value) {
       return 'RAM策略'
     case DsInstanceAssetType.ALIYUN.RAM_ACCESS_KEY:
       return 'RAM-AK'
-    case DsInstanceAssetType.ALIYUN.RDS_MYSQL_INSTANCE:
-      return 'MYSQL实例'
-    case DsInstanceAssetType.ALIYUN.RDS_MYSQL_DATABASE:
-      return 'MYSQL数据库'
+    case DsInstanceAssetType.ALIYUN.RDS_INSTANCE:
+      return 'RDS实例'
+    case DsInstanceAssetType.ALIYUN.RDS_DATABASE:
+      return 'RDS数据库'
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_INSTANCE:
       return 'MQ实例'
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_TOPIC:

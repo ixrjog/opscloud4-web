@@ -112,26 +112,56 @@
       </el-tab-pane>
       <el-tab-pane label="RDS云数据库" name="rds">
         <el-tabs tab-position="left" v-model="rdsActiveName" @tab-click="handleClick">
-          <el-tab-pane label="Mysql实例" name="rdsMysqlInstance">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_MYSQL_INSTANCE"
-                         :tableLayout="tableLayout.rdsMysqlInstance"
-                         ref="rdsMysqlInstanceTable">
+          <el-tab-pane label="RDS实例" name="rdsInstance">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_INSTANCE"
+                         :tableLayout="tableLayout.rdsInstance"
+                         ref="rdsInstanceTable">
               <template v-slot:extend>
-                <el-table-column prop="children" label="Database" width="400">
+                <el-table-column prop="properties" label="数据库类型">
                   <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.RDS_MYSQL_DATABASE" :type="5"></ds-children-tag>
+                    <span>{{ scope.row.properties.engine }} {{ scope.row.properties.engineVersion }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="properties" label="实例详情">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.instanceCPU }} 核</span>
+                    <span> / {{ scope.row.properties.instanceMemory }} G</span>
+                    <el-popover placement="right" width="450" trigger="hover">
+                      <i class="el-icon-info" style="color: green" slot="reference"></i>
+                      <entry-detail name="CPU" :value="scope.row.properties.instanceCPU" unit="核"></entry-detail>
+                      <br/>
+                      <entry-detail name="数据库内存" :value="scope.row.properties.instanceMemory"
+                                    unit="M"></entry-detail>
+                      <br/>
+                      <entry-detail name="存储空间" :value="scope.row.properties.instanceStorage"
+                                    unit="G"></entry-detail>
+                      <br/>
+                      <entry-detail name="最大IOPS" :value="scope.row.properties.maxIOPS"></entry-detail>
+                      <br/>
+                      <entry-detail name="最大连接数" :value="scope.row.properties.maxConnections"></entry-detail>
+<!--                      <entry-detail name="内网地址" value=" "></entry-detail>-->
+                      <el-divider><span style="color: #8492a6 ; fontSize: 12px;">内网地址</span></el-divider>
+                      <span>{{ scope.row.properties.connectionString }}</span>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column label="数据库" width="300">
+                  <template slot-scope="scope">
+                    <div v-for="database in scope.row.tree.RDS_DATABASE" :key="database.id">
+                      <el-tag>{{ database.name }}</el-tag>
+                    </div>
                   </template>
                 </el-table-column>
               </template>
             </asset-table>
           </el-tab-pane>
-          <el-tab-pane label="MysqlDatabase" name="rdsMysqlDatabase">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_MYSQL_DATABASE"
-                         :tableLayout="tableLayout.rdsMysqlDatabase" ref="rdsMysqlDatabaseTable">
+          <el-tab-pane label="RDS数据库" name="rdsDatabase">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_DATABASE"
+                         :tableLayout="tableLayout.rdsDatabase" ref="rdsDatabaseTable">
               <template v-slot:extend>
-                <el-table-column prop="children" label="Mysql实例" width="350">
+                <el-table-column prop="children" label="RDS实例" width="350">
                   <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.RDS_MYSQL_INSTANCE" :type="4"></ds-children-tag>
+                    <ds-children-tag :children="scope.row.children.RDS_INSTANCE" :type="4"></ds-children-tag>
                   </template>
                 </el-table-column>
               </template>
@@ -207,6 +237,7 @@ import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
 import AliyunLogTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogTable'
 import AliyunLogMemberTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogMemberTable'
+import EntryDetail from '@/components/opscloud/common/EntryDetail'
 
 const treeObj = {
   label: '',
@@ -315,7 +346,7 @@ const tableLayout = {
       show: false
     }
   },
-  rdsMysqlInstance: {
+  rdsInstance: {
     assetId: {
       alias: '实例ID',
       show: true
@@ -337,7 +368,7 @@ const tableLayout = {
       show: false
     }
   },
-  rdsMysqlDatabase: {
+  rdsDatabase: {
     assetId: {
       alias: '实例ID',
       show: true,
@@ -433,7 +464,7 @@ export default {
       activeName: 'cloudServer',
       cloudServerActiveName: 'ecs',
       ramActiveName: 'ramUser',
-      rdsActiveName: 'rdsMysqlInstance',
+      rdsActiveName: 'rdsInstance',
       onsActiveName: 'onsRocketMqInstance',
       instanceId: null,
       tableLayout: tableLayout,
@@ -449,7 +480,8 @@ export default {
     AssetTable,
     DsChildrenTag,
     AliyunLogTable,
-    AliyunLogMemberTable
+    AliyunLogMemberTable,
+    EntryDetail
   },
   methods: {
     handleClick (tab, event) {
@@ -473,12 +505,12 @@ export default {
         this.$refs.ramPolicyTable.fetchData()
         return
       }
-      if (tab.name === 'rdsMysqlInstance') {
-        this.$refs.rdsMysqlInstanceTable.fetchData()
+      if (tab.name === 'rdsInstance') {
+        this.$refs.rdsInstanceTable.fetchData()
         return
       }
-      if (tab.name === 'rdsMysqlDatabase') {
-        this.$refs.rdsMysqlDatabaseTable.fetchData()
+      if (tab.name === 'rdsDatabase') {
+        this.$refs.rdsDatabaseTable.fetchData()
         return
       }
       if (tab.name === 'onsRocketMqInstance') {
@@ -506,8 +538,8 @@ export default {
         if (this.$refs.ramUserTable) {
           this.$refs.ramUserTable.fetchData()
         }
-        if (this.$refs.rdsMysqlInstanceTable) {
-          this.$refs.rdsMysqlInstanceTable.fetchData()
+        if (this.$refs.rdsInstanceTable) {
+          this.$refs.rdsInstanceTable.fetchData()
         }
         if (this.$refs.onsRocketMqInstanceTable) {
           this.$refs.onsRocketMqInstanceTable.fetchData()
