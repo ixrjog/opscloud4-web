@@ -126,8 +126,8 @@
                   <template slot-scope="scope">
                     <span>{{ scope.row.properties.instanceCPU }} 核</span>
                     <span> / {{ scope.row.properties.instanceMemory }} G</span>
-                    <el-popover placement="right" width="450" trigger="hover">
-                      <i class="el-icon-info" style="color: green" slot="reference"></i>
+                    <el-popover placement="right" trigger="hover">
+                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                       <entry-detail name="CPU" :value="scope.row.properties.instanceCPU" unit="核"></entry-detail>
                       <br/>
                       <entry-detail name="数据库内存" :value="scope.row.properties.instanceMemory"
@@ -139,9 +139,13 @@
                       <entry-detail name="最大IOPS" :value="scope.row.properties.maxIOPS"></entry-detail>
                       <br/>
                       <entry-detail name="最大连接数" :value="scope.row.properties.maxConnections"></entry-detail>
-<!--                      <entry-detail name="内网地址" value=" "></entry-detail>-->
-                      <el-divider><span style="color: #8492a6 ; fontSize: 12px;">内网地址</span></el-divider>
-                      <span>{{ scope.row.properties.connectionString }}</span>
+                      <el-divider style="margin: 12px 0px 12px">
+                        <span style="color: #8492a6 ; font-size: 12px">内网地址</span>
+                      </el-divider>
+                      <span v-clipboard:copy="scope.row.properties.connectionString" v-clipboard:success="onCopy"
+                            v-clipboard:error="onError">
+                        <span>{{ scope.row.properties.connectionString }}</span>
+                      </span>
                     </el-popover>
                   </template>
                 </el-table-column>
@@ -371,11 +375,11 @@ const tableLayout = {
   rdsDatabase: {
     assetId: {
       alias: '实例ID',
-      show: true,
+      show: true
     },
     name: {
-      alias: '实例名称',
-      show: true,
+      alias: '数据库名称',
+      show: true
     },
     assetKey: {
       alias: '',
@@ -527,7 +531,6 @@ export default {
       }
       if (tab.name === 'log') {
         this.$refs.aliyunLogTable.fetchData()
-        return
       }
     },
     init () {
@@ -592,10 +595,22 @@ export default {
     },
     handleSelLog (logId) {
       this.$refs.aliyunLogMemberTable.initData(logId)
+    },
+    onCopy (e) {
+      this.$message.success('内容已复制到剪切板！')
+    },
+    onError (e) {
+      this.$message.error('抱歉，复制失败！')
     }
   }
 }
 </script>
 
 <style scoped>
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 24px 0 12px;
+}
 </style>
