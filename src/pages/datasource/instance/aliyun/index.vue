@@ -139,7 +139,7 @@
                       <entry-detail name="最大IOPS" :value="scope.row.properties.maxIOPS"></entry-detail>
                       <br/>
                       <entry-detail name="最大连接数" :value="scope.row.properties.maxConnections"></entry-detail>
-<!--                      <entry-detail name="内网地址" value=" "></entry-detail>-->
+                      <!--                      <entry-detail name="内网地址" value=" "></entry-detail>-->
                       <el-divider><span style="color: #8492a6 ; fontSize: 12px;">内网地址</span></el-divider>
                       <span>{{ scope.row.properties.connectionString }}</span>
                     </el-popover>
@@ -176,15 +176,31 @@
                          :tableLayout="tableLayout.onsRocketMqInstance"
                          ref="onsRocketMqInstanceTable">
               <template v-slot:extend>
-                <el-table-column label="Topic" width="300">
+                <el-table-column prop="properties" label="实例详情">
                   <template slot-scope="scope">
+                    <span>{{ scope.row.kind }}</span>
+                    <el-popover placement="right" width="650" trigger="hover">
+                      <i class="el-icon-info" style="color: green" slot="reference"></i>
+                      <el-divider><span style="color: #8492a6 ; fontSize: 12px;">TCP 协议客户端接入点</span></el-divider>
+                      <br/>
+                      <entry-detail name="公网" :value="scope.row.properties.tcpEndpoint"></entry-detail>
+                      <br/>
+                      <el-divider><span style="color: #8492a6 ; fontSize: 12px;">HTTP 协议客户端接入点</span></el-divider>
+                      <br/>
+                      <entry-detail name="内网" :value="scope.row.properties.httpInternetEndpoint"></entry-detail>
+                      <entry-detail name="公网" :value="scope.row.properties.httpInternalEndpoint"></entry-detail>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column label="资源" width="300">
+                  <template slot-scope="scope">
+                    <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_TOPIC !== undefined"><b
+                      style="color: #9d9fa3">Topic</b></el-divider>
                     <div v-for="topic in scope.row.tree.ONS_ROCKETMQ_TOPIC" :key="topic.id">
                       <el-tag>{{ topic.name }}</el-tag>
                     </div>
-                  </template>
-                </el-table-column>
-                <el-table-column label="Group ID" width="300">
-                  <template slot-scope="scope">
+                    <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_GROUP !== undefined"><b
+                      style="color: #9d9fa3">Group</b></el-divider>
                     <div v-for="group in scope.row.tree.ONS_ROCKETMQ_GROUP" :key="group.id">
                       <el-tag>{{ group.name }}</el-tag>
                     </div>
