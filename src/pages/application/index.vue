@@ -35,8 +35,10 @@
               <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small" style="margin-left: 5px;margin-bottom: 5px"><span
-                  v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}</el-tag>
+                <el-tag size="small" style="margin-left: 5px;margin-bottom: 5px">
+                  <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>
+                  {{ item.name }}
+                </el-tag>
               </el-tooltip>
             </span>
             </div>
@@ -225,5 +227,12 @@ export default {
 
 .nameCopy:hover i {
   display: inline;
+}
+
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 12px 0;
 }
 </style>

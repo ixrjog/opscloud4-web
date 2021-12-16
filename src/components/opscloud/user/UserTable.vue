@@ -235,4 +235,11 @@ export default {
 .copyClass:hover i {
   display: inline;
 }
+
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 12px 0;
+}
 </style>

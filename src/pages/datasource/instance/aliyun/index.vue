@@ -135,6 +135,7 @@
                       <entry-detail name="最大IOPS" :value="scope.row.properties.maxIOPS"></entry-detail>
                       <br/>
                       <entry-detail name="最大连接数" :value="scope.row.properties.maxConnections"></entry-detail>
+                      <br/>
                       <el-divider>
                         <span style="color: #8492a6 ; font-size: 12px">内网地址</span>
                       </el-divider>
@@ -184,14 +185,16 @@
                       <el-divider>
                         <span style="color: #8492a6; font-size: 12px">TCP 协议客户端接入点</span>
                       </el-divider>
-                      <entry-detail name="公网" :value="scope.row.properties.tcpEndpoint"></entry-detail>
+                      <entry-detail name="接入点" :value="scope.row.properties.tcpEndpoint" :copy="true"></entry-detail>
                       <br/>
                       <el-divider>
                         <span style="color: #8492a6; font-size: 12px">HTTP 协议客户端接入点</span>
                       </el-divider>
-                      <entry-detail name="内网" :value="scope.row.properties.httpInternetEndpoint"></entry-detail>
+                      <entry-detail name="内网" :value="scope.row.properties.httpInternetEndpoint"
+                                    :copy="true"></entry-detail>
                       <br/>
-                      <entry-detail name="公网" :value="scope.row.properties.httpInternalEndpoint"></entry-detail>
+                      <entry-detail name="公网" :value="scope.row.properties.httpInternalEndpoint"
+                                    :copy="true"></entry-detail>
                     </el-popover>
                   </template>
                 </el-table-column>
@@ -615,6 +618,6 @@ export default {
   display: block;
   height: 1px;
   width: 100%;
-  margin: 24px 0 12px;
+  margin: 12px 0;
 }
 </style>
