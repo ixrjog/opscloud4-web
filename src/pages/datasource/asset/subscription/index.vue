@@ -6,14 +6,6 @@
     <div style="margin-bottom: 5px">
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" placeholder="名称"/>
-        <!--        <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">-->
-        <!--          <el-option-->
-        <!--            v-for="item in dsTypeOptions"-->
-        <!--            :key="item.value"-->
-        <!--            :label="item.label"-->
-        <!--            :value="item.value">-->
-        <!--          </el-option>-->
-        <!--        </el-select>-->
         <el-select v-model="queryParam.isActive" clearable placeholder="有效">
           <el-option
             v-for="item in activeOptions"
@@ -29,7 +21,12 @@
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="instance" label="实例名称" width="200">
         <template slot-scope="scope">
-          <span>{{ scope.row.instance.instanceName }}</span>
+          <el-row>
+            <span>{{ scope.row.instance.instanceName }}</span>
+          </el-row>
+          <el-row>
+            <span>{{ scope.row.instance.comment }}</span>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column prop="instance" label="实例类型" width="120">
@@ -37,7 +34,7 @@
           <el-tag>{{ scope.row.instance.instanceType }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="asset" label="资产类型" width="120">
+      <el-table-column prop="asset" label="资产类型" width="150">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.asset.assetType }}</el-tag>
         </template>
@@ -54,10 +51,9 @@
       </el-table-column>
       <el-table-column prop="lastSubscriptionTime" label="发布时间" width="200">
         <template slot-scope="scope">
-          <span>{{ scope.row.lastSubscriptionTime }}<{{scope.row.ago}}></span>
+          <span>{{ scope.row.lastSubscriptionTime }}&lt;{{scope.row.ago}}&gt;</span>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowPublish(scope.row)">发布</el-button>
@@ -82,10 +78,7 @@ import {
   QUERY_ASSET_SUBSCRIPTION_PAGE, PUBLISH_ASSET_SUBSCRIPTION_BY_ID, DELETE_ASSET_SUBSCRIPTION_BY_ID
 } from '@/api/modules/datasource/datasource.asset.subscription.api.js'
 import Pagination from '../../../../components/opscloud/common/page/Pagination'
-import DatasourceConfigEditor from '../../../../components/opscloud/datasource/DatasourceConfigEditor'
-import DatasourceTypeTag from '../../../../components/opscloud/common/tag/DatasourceTypeTag'
 import ActiveTag from '../../../../components/opscloud/common/tag/ActiveTag'
-import WhetherTag from '../../../../components/opscloud/common/tag/WhetherTag'
 import AssetSubscriptionEditor
   from '../../../../components/opscloud/datasource/asset/subscription/AssetSubscriptionEditor'
 import ViewLog from '../../../../components/opscloud/datasource/asset/subscription/ViewLog'
@@ -121,7 +114,7 @@ export default {
         },
         log: {
           visible: false,
-          title: '发布资产订阅日志',
+          title: '发布资产订阅日志'
         }
       },
       queryParam: {
@@ -136,10 +129,7 @@ export default {
   },
   components: {
     Pagination,
-    DatasourceConfigEditor,
-    DatasourceTypeTag,
     ActiveTag,
-    WhetherTag,
     AssetSubscriptionEditor,
     ViewLog
   },
@@ -212,19 +202,18 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
-
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

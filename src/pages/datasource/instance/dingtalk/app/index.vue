@@ -39,8 +39,6 @@
 
 import AssetTable from '@/components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
-import DsChildrenTag from '@/components/opscloud/datasource/common/DsChildrenTag'
-import WhetherTag from '@/components/opscloud/common/tag/WhetherTag'
 
 const tableLayout = {
   department: {
@@ -90,7 +88,7 @@ const tableLayout = {
 export default {
   data () {
     return {
-      activeName: 'department',
+      activeName: 'user',
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
@@ -102,9 +100,7 @@ export default {
     this.init()
   },
   components: {
-    AssetTable,
-    DsChildrenTag,
-    WhetherTag
+    AssetTable
   },
   methods: {
     handleClick (tab, event) {
@@ -117,9 +113,7 @@ export default {
     },
     init () {
       setTimeout(() => {
-        if (this.$refs.departmentTable) {
-          this.$refs.departmentTable.fetchData()
-        }
+        this.$refs.userTable.fetchData()
       }, 50)
     }
   }

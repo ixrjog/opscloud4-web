@@ -42,7 +42,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="users" label="授权用户" width="450px">
+        <el-table-column prop="users" label="授权用户" width="350">
           <template slot-scope="scope">
             <users-tag :users="scope.row.users"></users-tag>
           </template>
