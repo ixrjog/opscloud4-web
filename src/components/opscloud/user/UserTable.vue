@@ -10,19 +10,21 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column label="用户名" width="150">
         <template slot-scope="scope">
-          <span class="copyClass">
+          <el-row class="copyClass">
             <span>{{ scope.row.username }}</span>
             <span v-clipboard:copy="scope.row.username" v-clipboard:success="onCopy"
-                v-clipboard:error="onError">
-              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
-            </span>
+                  v-clipboard:error="onError">
+                <i style="margin-left: 5px" class="el-icon-copy-document"></i>
+              </span>
             <el-button type="text" style="float:right" @click="openUserDetail(scope.row.username)">
               <i style="margin-left: 5px" class="el-icon-position"></i>
             </el-button>
-          </span>
+          </el-row>
+          <el-row>
+            <span>{{ scope.row.displayName }}</span>
+          </el-row>
         </template>
       </el-table-column>
-      <el-table-column prop="displayName" label="显示名" width="150"></el-table-column>
       <el-table-column label="邮箱" width="250">
         <template slot-scope="scope">
           <span class="copyClass">
@@ -39,6 +41,32 @@
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
             <el-divider content-position="left"><b style="color: #9d9fa3">{{ key }}</b></el-divider>
             <el-tag v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}</el-tag>
+          </div>
+          <div v-if="JSON.stringify(scope.row.ramUsers) !== '[]'">
+            <el-divider content-position="left"><b style="color: #9d9fa3">RAM</b></el-divider>
+            <el-table :data="scope.row.ramUsers">
+              <el-table-column label="实例 / 账户">
+                <template slot-scope="props">
+                  <el-row>
+                    <span>{{ props.row.instanceName }}</span>
+                  </el-row>
+                  <el-row class="ramInfo">
+                    <span>{{ props.row.loginUser }}</span>
+                  </el-row>
+                </template>
+              </el-table-column>
+              <el-table-column prop="ramPolicies" label="策略">
+                <template slot-scope="props">
+                  <div class="tag-group">
+                    <div v-for="policy in props.row.ramPolicies" :key="policy.assetId">
+                      <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
+                        <el-tag style="margin-left: 5px">{{ policy.name }}</el-tag>
+                      </el-tooltip>
+                    </div>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
         </template>
       </el-table-column>
