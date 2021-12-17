@@ -2,7 +2,19 @@
   <d2-container>
     <h1>Kubernetes实例管理</h1>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
-      <el-tab-pane label="命名空间" name="namespace">
+      <el-tab-pane label="Node节点" name="node">
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NODE"
+                     :tableLayout="tableLayout.node" ref="nodeTable">
+          <template v-slot:extend>
+            <el-table-column label="容量" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <span>CPU {{ scope.row.properties.cpu }} / Memory {{ scope.row.properties.memory }}</span>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="Namespace命名空间" name="namespace">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NAMESPACE"
                      :tableLayout="tableLayout.namespace" ref="namespaceTable">
           <template v-slot:extend>
@@ -62,6 +74,26 @@ import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.
 import KubernetesTemplateTable from '@/components/opscloud/datasource/template/KubernetesTemplateTable'
 
 const tableLayout = {
+  node: {
+    assetId: {
+      alias: 'UID'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: 'IP',
+      show: true
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
   namespace: {
     assetId: {
       alias: 'UID'
@@ -83,7 +115,7 @@ const tableLayout = {
   },
   deployment: {
     assetId: {
-      alias: 'ID'
+      alias: 'UID'
     },
     name: {
       alias: '名称'
@@ -103,7 +135,7 @@ const tableLayout = {
   },
   service: {
     assetId: {
-      alias: 'ID'
+      alias: 'UID'
     },
     name: {
       alias: '名称'
@@ -146,7 +178,7 @@ const tableLayout = {
 export default {
   data () {
     return {
-      activeName: 'namespace',
+      activeName: 'node',
       instance: {
         id: null,
         uuid: null
@@ -167,6 +199,10 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
+      if (tab.name === 'node') {
+        this.$refs.nodeTable.fetchData()
+        return
+      }
       if (tab.name === 'namespace') {
         this.$refs.namespaceTable.fetchData()
         return
@@ -186,8 +222,8 @@ export default {
     },
     init () {
       setTimeout(() => {
-        if (this.$refs.namespaceTable) {
-          this.$refs.namespaceTable.fetchData()
+        if (this.$refs.nodeTable) {
+          this.$refs.nodeTable.fetchData()
         }
       }, 50)
     }
@@ -196,25 +232,25 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 </style>

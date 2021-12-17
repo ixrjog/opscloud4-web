@@ -34,6 +34,11 @@ export function getAssetTypeText (value) {
       return 'RDS实例'
     case DsInstanceAssetType.ALIYUN.RDS_DATABASE:
       return 'RDS数据库'
+    case DsInstanceAssetType.ALIYUN.DMS_USER:
+      return 'DMS用户'
+    case DsInstanceAssetType.ALIYUN.REDIS_INSTANCE:
+      return 'Redis实例'
+
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_INSTANCE:
       return 'MQ实例'
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_TOPIC:
@@ -52,6 +57,8 @@ export function getAssetTypeText (value) {
       return '模板'
     case DsInstanceAssetType.ZABBIX.ZABBIX_TRIGGER:
       return '触发的问题'
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_NODE:
+      return '节点'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
       return '命名空间'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:
