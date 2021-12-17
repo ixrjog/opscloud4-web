@@ -3,7 +3,6 @@ import { request } from '@/api/_service.js'
 const baseUrl = '/datasource/instance/asset'
 
 export function QUERY_ASSET_PAGE (data) {
-  // 接口请求
   return request({
     url: baseUrl + '/page/query',
     method: 'post',
@@ -12,9 +11,16 @@ export function QUERY_ASSET_PAGE (data) {
 }
 
 export function PULL_ASSET (data) {
-  // 接口请求
   return request({
     url: baseUrl + '/pull',
+    method: 'put',
+    data
+  })
+}
+
+export function PUSH_ASSET (data) {
+  return request({
+    url: baseUrl + '/push',
     method: 'put',
     data
   })
@@ -28,7 +34,6 @@ export function DELETE_ASSET_BY_ID (id) {
 }
 
 export function SET_CONFIG (data) {
-  // 接口请求
   return request({
     url: baseUrl + '/set/config',
     method: 'put',
@@ -37,7 +42,6 @@ export function SET_CONFIG (data) {
 }
 
 export function SCAN_ASSET_BUSINESS (data) {
-  // 接口请求
   return request({
     url: baseUrl + '/business/scan',
     method: 'put',

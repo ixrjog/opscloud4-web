@@ -1,9 +1,9 @@
 <template>
   <d2-container>
     <h1>Aliyun实例管理</h1>
-    <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
+    <el-tabs v-model="activeName.name" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="云服务器" name="cloudServer">
-        <el-tabs tab-position="left" v-model="cloudServerActiveName" @tab-click="handleClick">
+        <el-tabs tab-position="left" v-model="activeName.ecs" @tab-click="handleClick">
           <el-tab-pane label="ECS" name="ecs">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
                          ref="ecsTable">
@@ -66,7 +66,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="RAM访问控制" name="ram">
-        <el-tabs tab-position="left" v-model="ramActiveName" @tab-click="handleClick">
+        <el-tabs tab-position="left" v-model="activeName.ram" @tab-click="handleClick">
           <el-tab-pane label="RAM用户" name="ramUser">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER"
                          :tableLayout="tableLayout.ramUser"
@@ -106,8 +106,8 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="RDS云数据库" name="rds">
-        <el-tabs tab-position="left" v-model="rdsActiveName" @tab-click="handleClick">
+      <el-tab-pane label="云数据库" name="rds">
+        <el-tabs tab-position="left" v-model="activeName.rds" @tab-click="handleClick">
           <el-tab-pane label="RDS实例" name="rdsInstance">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_INSTANCE"
                          :tableLayout="tableLayout.rdsInstance"
@@ -168,10 +168,59 @@
               </template>
             </asset-table>
           </el-tab-pane>
+          <el-tab-pane label="Redis实例" name="redisInstance">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.REDIS_INSTANCE"
+                         :tableLayout="tableLayout.redisInstance" ref="redisInstanceTable">
+              <template v-slot:extend>
+                <el-table-column prop="properties" label="数据库类型">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.kind }} {{ scope.row.properties.engineVersion }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="properties" label="实例详情">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.capacity }} MB</span>
+                    <el-popover placement="right" trigger="hover">
+                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                      <entry-detail name="实例容量" :value="scope.row.properties.capacity"
+                                    unit="MB"></entry-detail>
+                      <br/>
+                      <entry-detail name="最大私网带宽" :value="scope.row.properties.bandwidth" unit="MB/s"></entry-detail>
+                      <br/>
+                      <entry-detail name="QPS" :value="scope.row.properties.qps"></entry-detail>
+                      <br/>
+                      <entry-detail name="最大连接数" :value="scope.row.properties.connections"></entry-detail>
+                      <el-divider>
+                        <span style="color: #8492a6 ; font-size: 12px">连接信息-专有网络</span>
+                      </el-divider>
+                      <span v-clipboard:copy="scope.row.properties.connectionDomain" v-clipboard:success="onCopy"
+                            v-clipboard:error="onError">
+                        <span>{{ scope.row.properties.connectionDomain }}</span>
+                      </span>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="DMS数据管理" name="dms">
+        <el-tabs tab-position="left" v-model="activeName.dms" @tab-click="handleClick">
+          <el-tab-pane label="用户管理" name="dmsUser">
+            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.DMS_USER"
+                         :tableLayout="tableLayout.dmsUser" ref="dmsUserTable">
+              <template v-slot:button>
+                <el-button @click="handlePushRamUser">推送RAM用户</el-button>
+              </template>
+              <template v-slot:extend>
+              </template>
+            </asset-table>
+          </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="ONS消息服务" name="ons">
-        <el-tabs tab-position="left" v-model="onsActiveName" @tab-click="handleClick">
+        <el-tabs tab-position="left" v-model="activeName.ons" @tab-click="handleClick">
           <el-tab-pane label="实例" name="onsRocketMqInstance">
             <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_INSTANCE"
                          :tableLayout="tableLayout.onsRocketMqInstance"
@@ -254,6 +303,8 @@
 
 <script>
 
+
+import { PULL_ASSET, PUSH_ASSET } from '@/api/modules/datasource/datasource.asset.api.js'
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
@@ -412,6 +463,50 @@ const tableLayout = {
       show: false
     }
   },
+  redisInstance: {
+    assetId: {
+      alias: '实例ID',
+      show: true
+    },
+    name: {
+      alias: '实例名称',
+      show: true
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
+  },
+  dmsUser: {
+    assetId: {
+      alias: '用户ID',
+      show: false
+    },
+    name: {
+      alias: '显示名',
+      show: true
+    },
+    assetKey: {
+      alias: 'UID',
+      show: true
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
   onsRocketMqInstance: {
     assetId: {
       alias: '实例ID',
@@ -483,11 +578,14 @@ const tableLayout = {
 export default {
   data () {
     return {
-      activeName: 'cloudServer',
-      cloudServerActiveName: 'ecs',
-      ramActiveName: 'ramUser',
-      rdsActiveName: 'rdsInstance',
-      onsActiveName: 'onsRocketMqInstance',
+      activeName: {
+        name: 'cloudServer',
+        ecs: 'ecs',
+        ram: 'ramUser',
+        rds: 'rdsInstance',
+        ons: 'onsRocketMqInstance',
+        dms: 'dmsUser'
+      },
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
@@ -533,6 +631,14 @@ export default {
       }
       if (tab.name === 'rdsDatabase') {
         this.$refs.rdsDatabaseTable.fetchData()
+        return
+      }
+      if (tab.name === 'redisInstance') {
+        this.$refs.redisInstanceTable.fetchData()
+        return
+      }
+      if (tab.name === 'dmsUser' || tab.name === 'dms') {
+        this.$refs.dmsUserTable.fetchData()
         return
       }
       if (tab.name === 'onsRocketMqInstance' || tab.name === 'ons') {
@@ -599,6 +705,14 @@ export default {
         return RAM_ACCESS_KEY
       }
       return []
+    },
+    handlePushRamUser () {
+      PUSH_ASSET({
+        instanceId: this.instanceId,
+        assetType: this.assetType.ALIYUN.DMS_USER
+      }).then(() => {
+        this.$message.success('后台任务执行中！')
+      })
     },
     handleSelLog (logId) {
       this.$refs.aliyunLogMemberTable.initData(logId)
