@@ -244,7 +244,7 @@ export default {
       util.open(buildDetailsUrl)
     },
     showName (row) {
-      return !(row.name === '' || row.name === row.displayName)
+      return !(row.name === null || row.name === '' || row.name === row.displayName)
     }
   }
 }
