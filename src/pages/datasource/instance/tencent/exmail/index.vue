@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>腾讯企业邮箱实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="腾讯企业邮箱实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="邮箱用户" name="user">
         <asset-table :instanceId="instanceId" :assetType="assetType.TENCENT_EXMAIL.TENCENT_EXMAIL_USER" :tableLayout="tableLayout.user"
@@ -22,7 +23,7 @@
 
 import AssetTable from '@/components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
-import DsChildrenTag from '@/components/opscloud/datasource/common/DsChildrenTag'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   user: {
@@ -62,18 +63,18 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {
       if (tab.name === 'user') {
-        this.$refs.userTable.fetchData()
+        this.$refs.accountTable.fetchData()
       }
     },
     init () {
       setTimeout(() => {
-        if (this.$refs.userTable) {
-          this.$refs.userTable.fetchData()
+        if (this.$refs.accountTable) {
+          this.$refs.accountTable.fetchData()
         }
       }, 50)
     }

@@ -1,11 +1,12 @@
 <template>
   <d2-container>
-    <h1>Aliyun实例管理</h1>
-    <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
+    <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
+                               datasource-nane="Aliyun实例管理"></datasource-instance-title>
+    <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="云服务器" name="cloudServer">
         <el-tabs tab-position="left" v-model="cloudServerActiveName" @tab-click="handleClick">
           <el-tab-pane label="ECS" name="ecs">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
                          ref="ecsTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="CPU">
@@ -22,7 +23,7 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="Image" name="image">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ECS_IMAGE"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ECS_IMAGE"
                          :tableLayout="tableLayout.image"
                          ref="imageTable">
               <template v-slot:extend>
@@ -45,7 +46,7 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="VPC" name="vpc">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.VPC" :tableLayout="tableLayout.vpc"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.VPC" :tableLayout="tableLayout.vpc"
                          ref="vpcTable">
               <template v-slot:extend>
                 <el-table-column label="安全组" width="450">
@@ -68,7 +69,7 @@
       <el-tab-pane label="RAM访问控制" name="ram">
         <el-tabs tab-position="left" v-model="ramActiveName" @tab-click="handleClick">
           <el-tab-pane label="RAM用户" name="ramUser">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_USER"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RAM_USER"
                          :tableLayout="tableLayout.ramUser"
                          ref="ramUserTable">
               <template v-slot:extend>
@@ -88,7 +89,7 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="RAM策略" name="ramPolicy">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RAM_POLICY"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RAM_POLICY"
                          :tableLayout="tableLayout.ramPolicy" :enableActive="true" ref="ramPolicyTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="成员用户" width="300">
@@ -109,7 +110,7 @@
       <el-tab-pane label="RDS云数据库" name="rds">
         <el-tabs tab-position="left" v-model="rdsActiveName" @tab-click="handleClick">
           <el-tab-pane label="RDS实例" name="rdsInstance">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_INSTANCE"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RDS_INSTANCE"
                          :tableLayout="tableLayout.rdsInstance"
                          ref="rdsInstanceTable">
               <template v-slot:extend>
@@ -157,7 +158,7 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="RDS数据库" name="rdsDatabase">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.RDS_DATABASE"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RDS_DATABASE"
                          :tableLayout="tableLayout.rdsDatabase" ref="rdsDatabaseTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="RDS实例" width="350">
@@ -173,7 +174,7 @@
       <el-tab-pane label="ONS消息服务" name="ons">
         <el-tabs tab-position="left" v-model="onsActiveName" @tab-click="handleClick">
           <el-tab-pane label="实例" name="onsRocketMqInstance">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_INSTANCE"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_INSTANCE"
                          :tableLayout="tableLayout.onsRocketMqInstance"
                          ref="onsRocketMqInstanceTable">
               <template v-slot:extend>
@@ -216,7 +217,7 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="Topic" name="onsRocketMqTopic">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_TOPIC"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_TOPIC"
                          :tableLayout="tableLayout.onsRocketMqTopic"
                          ref="onsRocketMqTopicTable">
               <template v-slot:extend>
@@ -224,7 +225,7 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="Group" name="onsRocketMqGroup">
-            <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_GROUP"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_GROUP"
                          :tableLayout="tableLayout.onsRocketMqGroup"
                          ref="onsRocketMqGroupTable">
               <template v-slot:extend>
@@ -237,7 +238,7 @@
         <el-row :gutter="20">
           <el-col :span="10">
             <el-card shadow="never">
-              <aliyun-log-table :instanceId="instanceId" ref="aliyunLogTable"
+              <aliyun-log-table :instanceId="instance.id" ref="aliyunLogTable"
                                 @handleSelLog="handleSelLog"></aliyun-log-table>
             </el-card>
           </el-col>
@@ -260,6 +261,7 @@ import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsC
 import AliyunLogTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogTable'
 import AliyunLogMemberTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogMemberTable'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const treeObj = {
   label: '',
@@ -488,14 +490,16 @@ export default {
       ramActiveName: 'ramUser',
       rdsActiveName: 'rdsInstance',
       onsActiveName: 'onsRocketMqInstance',
-      instanceId: null,
+      instance: {
+        id: null
+      },
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType
     }
   },
   computed: {},
   mounted () {
-    this.instanceId = this.$route.query.id
+    this.instance.id = this.$route.query.id
     this.init()
   },
   components: {
@@ -503,7 +507,8 @@ export default {
     DsChildrenTag,
     AliyunLogTable,
     AliyunLogMemberTable,
-    EntryDetail
+    EntryDetail,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

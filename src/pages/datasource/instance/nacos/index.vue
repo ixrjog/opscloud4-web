@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Nacos实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="Nacos实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="集群节点" name="node">
         <asset-table :instanceId="instanceId" :assetType="assetType.NACOS.NACOS_CLUSTER_NODE" :tableLayout="tableLayout.node"
@@ -48,7 +49,7 @@
 
 import AssetTable from '@/components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
-import DsChildrenTag from '@/components/opscloud/datasource/common/DsChildrenTag'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   node: {
@@ -132,7 +133,7 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

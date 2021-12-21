@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Kubernetes实例管理</h1>
+    <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
+                               datasource-nane="Kubernetes实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="命名空间" name="namespace">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NAMESPACE"
@@ -60,6 +61,7 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import KubernetesTemplateTable from '@/components/opscloud/datasource/template/KubernetesTemplateTable'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   namespace: {
@@ -163,7 +165,8 @@ export default {
   },
   components: {
     AssetTable,
-    KubernetesTemplateTable
+    KubernetesTemplateTable,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {
@@ -196,25 +199,25 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 </style>

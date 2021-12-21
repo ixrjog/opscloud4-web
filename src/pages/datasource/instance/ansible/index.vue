@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Ansible实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="Ansible实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="主机清单" name="hosts">
         <asset-ansible-hosts-info :instanceId="instanceId" :assetType="assetType.ANSIBLE.ANSIBLE_HOSTS" ref="hostsInfo">
@@ -27,6 +28,7 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import AssetAnsibleHostsInfo from '../../../../components/opscloud/datasource/asset/AssetAnsibleHostsInfo'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   version: {
@@ -68,7 +70,8 @@ export default {
   },
   components: {
     AssetTable,
-    AssetAnsibleHostsInfo
+    AssetAnsibleHostsInfo,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {
@@ -78,7 +81,6 @@ export default {
       }
       if (tab.name === 'version') {
         this.$refs.versionTable.fetchData()
-        return
       }
     },
     init () {
@@ -93,32 +95,32 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  .d2-highlight {
-    margin-top: 5px;
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 150%;
-  }
+.d2-highlight {
+  margin-top: 5px;
+  font-size: 10px;
+  background-color: #dad8c8;
+  line-height: 150%;
+}
 
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 </style>
