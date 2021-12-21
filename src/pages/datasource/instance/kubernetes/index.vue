@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Kubernetes实例管理</h1>
+    <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
+                               datasource-nane="Kubernetes实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="Node节点" name="node">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NODE"
@@ -72,6 +73,7 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import KubernetesTemplateTable from '@/components/opscloud/datasource/template/KubernetesTemplateTable'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   node: {
@@ -195,7 +197,8 @@ export default {
   },
   components: {
     AssetTable,
-    KubernetesTemplateTable
+    KubernetesTemplateTable,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

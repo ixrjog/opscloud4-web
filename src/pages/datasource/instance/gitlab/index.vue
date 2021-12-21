@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Gitlab实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="Gitlab实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="项目" name="project">
         <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_PROJECT"
@@ -75,6 +76,7 @@ import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTa
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
 import WhetherTag from '../../../../components/opscloud/common/tag/WhetherTag'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   project: {
@@ -181,7 +183,8 @@ export default {
   components: {
     AssetTable,
     DsChildrenTag,
-    WhetherTag
+    WhetherTag,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

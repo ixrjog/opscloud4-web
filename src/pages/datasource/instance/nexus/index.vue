@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Sonatype Nexus Repository实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="Sonatype Nexus Repository实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="资产管理" name="asset">
         <asset-table :instanceId="instanceId" :assetType="assetType.NEXUS.NEXUS_ASSET" :tableLayout="tableLayout.user"
@@ -22,7 +23,7 @@
 
 import AssetTable from '@/components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
-import DsChildrenTag from '@/components/opscloud/datasource/common/DsChildrenTag'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   user: {
@@ -62,7 +63,7 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

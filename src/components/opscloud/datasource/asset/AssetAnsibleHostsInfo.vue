@@ -7,8 +7,8 @@
     <div v-for="asset in table.data" :key="asset.id">
       <el-card shadow="hover">
         <div slot="header" class="clearfix">
-          <el-tag>{{asset.assetKey}}</el-tag>
-          <span style="margin-left: 20px;font-size: 12px">{{asset.assetKey2}}</span>
+          <el-tag>{{ asset.assetKey }}</el-tag>
+          <span style="margin-left: 20px;font-size: 12px">{{ asset.assetKey2 }}</span>
         </div>
         <d2-highlight v-if="asset.description != null && asset.description != ''" :code="asset.description" lang="sh"/>
       </el-card>
@@ -22,12 +22,10 @@
 
 import {
   QUERY_ASSET_PAGE,
-  PULL_ASSET,
-  DELETE_ASSET_BY_ID
+  PULL_ASSET
 } from '@/api/modules/datasource/datasource.asset.api.js'
 import BusinessTagEditor from '../../common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
-import BusinessTags from '../../common/tag/BusinessTags'
 
 export default {
   name: 'AssetAnsibleHostsInfo',
@@ -42,8 +40,7 @@ export default {
     }
   },
   components: {
-    BusinessTagEditor,
-    BusinessTags
+    BusinessTagEditor
   },
   data () {
     return {
@@ -100,18 +97,18 @@ export default {
 
 <style scoped>
 
-  .d2-highlight {
-    margin-top: 5px;
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 100%;
-  }
+.d2-highlight {
+  margin-top: 5px;
+  font-size: 10px;
+  background-color: #dad8c8;
+  line-height: 100%;
+}
 
-  >>> .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 </style>

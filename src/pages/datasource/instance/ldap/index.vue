@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Ldap实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="Ldap实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="账户" name="account">
         <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account"
@@ -40,6 +41,7 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   account: {
@@ -98,7 +100,8 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag
+    DsChildrenTag,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

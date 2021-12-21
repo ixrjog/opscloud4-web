@@ -22,6 +22,7 @@
           </el-row>
           <el-row>
             <span>{{ scope.row.displayName }}</span>
+            <span v-if="showName(scope.row)" style="margin-left: 5px">&lt;{{ scope.row.name }}&gt;</span>
           </el-row>
         </template>
       </el-table-column>
@@ -241,6 +242,9 @@ export default {
       const httpProtocol = window.location.href.split('://')[0]
       const buildDetailsUrl = httpProtocol + '://' + host + '/#/user/info?username=' + username
       util.open(buildDetailsUrl)
+    },
+    showName (row) {
+      return !(row.name === '' || row.name === row.displayName)
     }
   }
 }

@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Zabbix实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="Zabbix实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="问题" name="problem">
         <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_TRIGGER" ref="problemTable"
@@ -102,6 +103,7 @@ import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTa
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
 import { getProblemSeverityText } from '@/filters/asset.zabbix'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   problem: {
@@ -132,7 +134,7 @@ const tableLayout = {
     },
     assetKey: {
       alias: '用户名',
-      show: true,
+      show: true
     },
     assetKey2: {
       alias: '',
@@ -240,7 +242,8 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag
+    DsChildrenTag,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

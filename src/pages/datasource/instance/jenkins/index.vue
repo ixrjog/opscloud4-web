@@ -1,6 +1,7 @@
 <template>
   <d2-container>
-    <h1>Jenkins实例管理</h1>
+    <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
+                               datasource-nane="Jenkins实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="计算节点" name="computer">
         <asset-table :instanceId="instanceId" :assetType="assetType.JENKINS.JENKINS_COMPUTER"
@@ -44,6 +45,7 @@ import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTa
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
 
 import util from '@/libs/util'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
 
 const tableLayout = {
   computer: {
@@ -84,7 +86,8 @@ export default {
     this.init()
   },
   components: {
-    AssetTable
+    AssetTable,
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {
