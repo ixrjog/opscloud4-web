@@ -7,6 +7,13 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.DINGTALK_APP.DINGTALK_USER"
                      :tableLayout="tableLayout.user" ref="userTable">
           <template v-slot:extend>
+            <el-table-column prop="properties" label="头像">
+              <template slot-scope="scope">
+                <el-avatar :src="scope.row.properties.avatar" :size="35">
+                  <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
+                </el-avatar>
+              </template>
+            </el-table-column>
             <el-table-column prop="properties" label="手机">
               <template slot-scope="scope">
                 {{ scope.row.properties.mobile }}
