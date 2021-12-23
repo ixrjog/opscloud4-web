@@ -31,21 +31,22 @@
                    <span>
                    <i class="fab fa-artstation" style="margin-right: 2px"></i>
                    {{ pod.asset.name }}
-                   <span style="margin-left: 5px">[ 启动时间: {{ pod.properties.startTime }} / 重启次数: {{
-                       pod.properties.restartCount
-                     }} ]</span>
+                   <span style="margin-left: 5px">[ 启动时间: {{ pod.properties.startTime }} / 重启次数: {{pod.properties.restartCount}} ]</span>
+                     <el-popover placement="right" trigger="hover">
+                         <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                         <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
+                      </el-popover>
                     <el-tag style="float: right;margin-right: 5px"
-                            :type=" pod.properties.status === 'true'? 'success': 'warning'">
-                      {{ pod.properties.phase }}
+                            :type=" pod.properties.status === 'true'? 'success': 'warning'">{{ pod.properties.phase }}
                        <el-popover placement="right" trigger="hover">
-                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
-                      <entry-detail name="Initialized" :value="pod.properties.initialized" ></entry-detail>
-                      <br/>
-                      <entry-detail name="Ready" :value="pod.properties.ready" ></entry-detail>
-                      <br/>
-                      <entry-detail name="ContainersReady" :value="pod.properties.containersReady" ></entry-detail>
-                      <br/>
-                      <entry-detail name="PodScheduled" :value="pod.properties.podScheduled" ></entry-detail>
+                         <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                         <entry-detail name="Initialized" :value="pod.properties.initialized"></entry-detail>
+                         <br/>
+                         <entry-detail name="Ready" :value="pod.properties.ready"></entry-detail>
+                         <br/>
+                         <entry-detail name="ContainersReady" :value="pod.properties.containersReady"></entry-detail>
+                         <br/>
+                       <entry-detail name="PodScheduled" :value="pod.properties.podScheduled"></entry-detail>
                     </el-popover>
 
                     </el-tag>
