@@ -35,6 +35,7 @@
                      <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
+                         <br/>
                          <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey}}</span>
                       </el-popover>
                     <el-tag style="float: right;margin-right: 5px"
