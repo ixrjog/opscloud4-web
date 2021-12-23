@@ -25,6 +25,14 @@
           <div style="margin-left: 5px">
             <i style="margin-right: 2px" class="fab fa-docker"></i>Container(容器)
           </div>
+          <div>
+            <div style="margin-left: 5px">容器运行状态:
+              <li>PodScheduled：Pod 已经被调度到某节点</li>
+              <li>ContainersReady：Pod 中所有容器都已就绪</li>
+              <li>Initialized：所有的 Init 容器都已成功启动</li>
+              <li>Ready：Pod 可以为请求提供服务</li>
+            </div>
+          </div>
           <div style="margin-left: 5px">
             <a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/">打开教程</a>
           </div>
