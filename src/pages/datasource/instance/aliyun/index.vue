@@ -253,12 +253,16 @@
                     <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_TOPIC !== undefined"><b
                       style="color: #9d9fa3">Topic</b></el-divider>
                     <div v-for="topic in scope.row.tree.ONS_ROCKETMQ_TOPIC" :key="topic.id">
-                      <el-tag>{{ topic.name }}</el-tag>
+                      <el-tooltip class="item" :content="topic.description" placement="bottom" effect="light">
+                         <el-tag>{{ topic.name }}</el-tag>
+                      </el-tooltip>
                     </div>
                     <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_GROUP !== undefined"><b
                       style="color: #9d9fa3">Group</b></el-divider>
                     <div v-for="group in scope.row.tree.ONS_ROCKETMQ_GROUP" :key="group.id">
-                      <el-tag>{{ group.name }}</el-tag>
+                      <el-tooltip class="item" :content="group.description" placement="bottom" effect="light">
+                        <el-tag>{{ group.name }}</el-tag>
+                      </el-tooltip>
                     </div>
                   </template>
                 </el-table-column>
@@ -270,6 +274,11 @@
                          :tableLayout="tableLayout.onsRocketMqTopic"
                          ref="onsRocketMqTopicTable">
               <template v-slot:extend>
+                <el-table-column prop="description" label="备注">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
               </template>
             </asset-table>
           </el-tab-pane>
@@ -278,6 +287,11 @@
                          :tableLayout="tableLayout.onsRocketMqGroup"
                          ref="onsRocketMqGroupTable">
               <template v-slot:extend>
+                <el-table-column prop="description" label="备注">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
               </template>
             </asset-table>
           </el-tab-pane>
