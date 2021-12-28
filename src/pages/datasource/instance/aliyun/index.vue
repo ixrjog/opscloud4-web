@@ -274,6 +274,11 @@
                          :tableLayout="tableLayout.onsRocketMqTopic"
                          ref="onsRocketMqTopicTable">
               <template v-slot:extend>
+                <el-table-column prop="kind" label="消息类型">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.kind }}</span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="description" label="备注">
                   <template slot-scope="scope">
                     <span>{{ scope.row.description }}</span>
@@ -287,6 +292,11 @@
                          :tableLayout="tableLayout.onsRocketMqGroup"
                          ref="onsRocketMqGroupTable">
               <template v-slot:extend>
+                <el-table-column prop="kind" label="客户端协议">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.kind }}</span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="description" label="备注">
                   <template slot-scope="scope">
                     <span>{{ scope.row.description }}</span>
