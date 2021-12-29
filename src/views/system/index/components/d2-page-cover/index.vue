@@ -4,7 +4,7 @@
       <slot/>
     </div>
 <!--    <p class="d2-page-cover__title">Opscloud {{$version}}</p>-->
-    <p class="d2-page-cover__title">OPSCLOUD 4.0.3</p>
+    <p class="d2-page-cover__title">OPSCLOUD 4.0.6</p>
     <p class="d2-page-cover__sub-title">IaC 基础架构即代码</p>
     <p class="d2-page-cover__build-time">FINAL BUILD TIME {{$buildTime}}</p>
     <slot name="footer"/>
