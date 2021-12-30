@@ -11,7 +11,7 @@
           <span v-for="resource in scope.row.resources" :key="resource.id">
             <el-card shadow="never" style="margin-bottom: 5px">
                <div style="margin-top: -10px">
-                 <!-- 无状态-->
+                 <!-- Deployment无状态 -->
                  <el-tag style="margin-right: 5px">Deployment</el-tag>
                   <span
                     v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
@@ -23,21 +23,21 @@
                   </el-button>
                </div>
                <el-divider/>
-              <!--Pod-->
+              <!-- Pod容器组 -->
               <div>
-               <span v-for="pod in resource.assetContainers" :key="pod.asset.name"
-                     style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)">
+               <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name" style="width: 350px">
                  <div>
                    <span>
                    <i class="fab fa-artstation" style="margin-right: 2px"></i>
                    {{ pod.asset.name }}
-                   <span style="margin-left: 5px">[ 启动时间: {{ pod.properties.startTime }} / 重启次数: {{pod.properties.restartCount}} ]</span>
+                   <div style="margin-left: 5px">[ 启动时间: {{pod.properties.startTime}} / 重启次数: {{ pod.properties.restartCount }} ]
                      <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
                          <br/>
-                         <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey}}</span>
+                         <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
                       </el-popover>
+                     </div>
                     <el-tag style="float: right;margin-right: 5px"
                             :type=" pod.properties.status === 'true'? 'success': 'warning'">{{ pod.properties.phase }}
                        <el-popover placement="right" trigger="hover">
@@ -63,7 +63,7 @@
                              {{ container.asset.name }}
                  </span>
                  </div>
-               </span>
+               </el-card>
               </div>
             </el-card>
           </span>
