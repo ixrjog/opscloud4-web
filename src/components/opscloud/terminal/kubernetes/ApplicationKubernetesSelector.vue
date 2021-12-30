@@ -95,7 +95,7 @@ export default {
         }
       },
       queryParam: {
-        queryName: 'rss',
+        queryName: '',
         extend: true
       }
     }
