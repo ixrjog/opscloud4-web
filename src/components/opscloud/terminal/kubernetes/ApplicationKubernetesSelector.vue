@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字查询"/>
+      <el-input v-model.trim="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
@@ -9,36 +9,41 @@
       <el-table-column prop="resources" label="无状态">
         <template slot-scope="scope" v-if="scope.row.resources !== null && scope.row.resources.length > 0">
           <span v-for="resource in scope.row.resources" :key="resource.id">
-            <el-card shadow="never" style="margin-bottom: 5px">
+            <el-card shadow="never" class="deploymentClass">
                <div style="margin-top: -10px">
                  <!-- Deployment无状态 -->
                  <el-tag style="margin-right: 5px">Deployment</el-tag>
-                  <span
-                    v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
-                  <el-button style="float: right; padding: 3px 0" type="text"
-                             @click="handleLog(resource)">Log
-                  </el-button>
-                  <el-button style="float: right; padding: 3px 0" type="text"
-                             @click="handleTerminal(resource)">Terminal
-                  </el-button>
+                 <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
+                 <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)">
+                   Log
+                 </el-button>
+                 <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)">
+                   Terminal
+                 </el-button>
                </div>
                <el-divider/>
               <!-- Pod容器组 -->
-              <div>
-               <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name" style="width: 350px">
+              <div class="podClass">
+               <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name"
+                        style="width: 400px">
                  <div>
                    <span>
                    <i class="fab fa-artstation" style="margin-right: 2px"></i>
                    {{ pod.asset.name }}
-                   <div style="margin-left: 5px">[ 启动时间: {{pod.properties.startTime}} / 重启次数: {{ pod.properties.restartCount }} ]
                      <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
                          <br/>
                          <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
                       </el-popover>
-                     </div>
-                    <el-tag style="float: right;margin-right: 5px"
+                   <div style="margin-left: 5px;color: #B7B6B6">
+                     启动时间: {{ pod.properties.startTime }}
+                     <span style="color: #20A9D9">[{{ pod.ago }}]</span>
+                     / 重启次数:
+                     <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
+                       {{ pod.properties.restartCount }}</span>
+                   </div>
+                    <el-tag style="float: right;margin-right: 5px" class="position"
                             :type=" pod.properties.status === 'true'? 'success': 'warning'">{{ pod.properties.phase }}
                        <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
@@ -50,18 +55,16 @@
                          <br/>
                        <entry-detail name="PodScheduled" :value="pod.properties.podScheduled"></entry-detail>
                     </el-popover>
-
                     </el-tag>
                  </span>
                    <!--容器-->
-                   <br/>
                    <span v-for="container in pod.children"
                          :key="container.asset.name"
-                         style="margin-left: 10px;display: inline-block">
-                             <el-checkbox style="margin-left: 5px" v-model="container.checked"></el-checkbox>
-                             <i style="margin-left: 5px;margin-right: 2px" class="fab fa-docker"></i>
-                             {{ container.asset.name }}
-                 </span>
+                         style="margin-left: 5px">
+                     <el-checkbox style="margin-right: 5px" v-model="container.checked"></el-checkbox>
+                     <i style="margin-right: 2px" class="fab fa-docker"></i>
+                     {{ container.asset.name }}
+                   </span>
                  </div>
                </el-card>
               </div>
@@ -69,11 +72,6 @@
           </span>
         </template>
       </el-table-column>
-      <!--      <el-table-column prop="env" label="环境" width="80">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <env-tag :env="scope.row.env"></env-tag>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
     </el-table>
   </div>
 </template>
@@ -97,10 +95,9 @@ export default {
         }
       },
       queryParam: {
-        queryName: '',
+        queryName: 'rss',
         extend: true
       }
-      // businessType: BusinessType.SERVER
     }
   },
   mounted () {
@@ -124,8 +121,8 @@ export default {
       this.$emit('handleRemote', remoteServer)
     },
     handleByType (resource, type) {
-      let pods = []
-      for (let item of resource.assetContainers) {
+      const pods = []
+      for (const item of resource.assetContainers) {
         const containers = item.children.filter(e => e.checked)
         if (containers.length > 0) {
           const pod = {
@@ -155,7 +152,7 @@ export default {
           businessType: resource.businessType,
           resourceType: resource.resourceType,
           lines: 100,
-          pods: pods,
+          pods: pods
         }
       }
       this.$emit('handleOpen', loginParam)
@@ -184,27 +181,58 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+.el- {
+  &divider--horizontal {
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 10px 0;
+  }
 
-.el-divider--horizontal {
-  display: block;
-  height: 1px;
-  width: 100%;
-  margin: 1px 0;
-  margin-bottom: 8px;
+  &input {
+    display: inline-block;
+    max-width: 200px;
+  }
+
+  &select {
+    margin-left: 5px;
+  }
+
+  &button {
+    margin-left: 5px;
+  }
 }
 
-.el-input {
-  display: inline-block;
-  max-width: 200px;
+.podClass {
+  display: flex;
+
+  .el- {
+    &card {
+      margin-bottom: 10px;
+      margin-right: 10px;
+      position: relative;
+
+      /deep/ .el-card__body {
+        padding: 10px;
+      }
+
+      .position {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        font-size: 12px;
+      }
+    }
+  }
 }
 
-.el-select {
-  margin-left: 5px;
-}
+.deploymentClass {
+  margin-bottom: 5px;
+  position: relative;
 
-.el-button {
-  margin-left: 5px;
+  /deep/ .el-card__body {
+    padding: 20px 10px 0;
+  }
 }
-
 </style>

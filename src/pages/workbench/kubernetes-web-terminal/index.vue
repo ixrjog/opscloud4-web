@@ -1,7 +1,7 @@
 <template>
   <d2-container>
     <div v-show="layout.status === 0">
-      <h1>{{title}}</h1>
+      <h1>{{ title }}</h1>
     </div>
     <!--      应用选择器-->
     <el-row v-if="layout.status === 0" :gutter="20">
@@ -54,8 +54,6 @@
 
 <script>
 
-import TerminalTools from '../../../components/opscloud/terminal/TerminalTools'
-
 import { mapState } from 'vuex'
 import ApplicationKubernetesSelector
   from '../../../components/opscloud/terminal/kubernetes/ApplicationKubernetesSelector'
@@ -104,7 +102,6 @@ export default {
   },
   components: {
     ApplicationKubernetesSelector,
-    TerminalTools,
     KubernetesTerminalLayout
   },
   methods: {
@@ -123,7 +120,7 @@ export default {
       this.$store.dispatch('d2admin/menu/asideCollapseSet', true)
       this.terminalLayout.loginParam = loginParam
       // 转换容器终端数据
-      let containers = []
+      const containers = []
       loginParam.data.pods.forEach(pod => {
         pod.containers.forEach(c => {
           const container = {
@@ -160,7 +157,7 @@ export default {
       this.$refs.terminalLayout.handleResize()
     },
     handleLogin () {
-      //this.terminalTools.batchType = ''
+      // this.terminalTools.batchType = ''
       // this.terminalLayout.serverNodes = this.$refs.serverTree.getCheckedNodes(true)
       // if (this.terminalLayout.serverNodes.length === 0) return
       // // 如果用户只打开一个终端则自动切换为单列模式
@@ -196,13 +193,12 @@ export default {
     handleLogout () {
       if (this.terminalLayout.containers.length === 0) return
       this.terminalLayout.containers.forEach(container => {
-          const args = {
-            container: container,
-            isNotify: false
-          }
-          this.$refs.terminalLayout.handleLogout(args)
+        const args = {
+          container: container,
+          isNotify: false
         }
-      )
+        this.$refs.terminalLayout.handleLogout(args)
+      })
       this.$message.warning('所有终端已关闭')
       this.recovery()
     },
@@ -234,15 +230,15 @@ export default {
 </script>
 
 <style scoped>
-  .el-button {
-    margin-left: 5px
-  }
+.el-button {
+  margin-left: 5px
+}
 
-  .server-tree {
-    margin-top: 5px;
-  }
+.server-tree {
+  margin-top: 5px;
+}
 
-  .terminal-layout {
-    margin-top: 5px;
-  }
+.terminal-layout {
+  margin-top: 5px;
+}
 </style>
