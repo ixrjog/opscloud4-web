@@ -14,6 +14,10 @@
                  <!-- Deployment无状态 -->
                  <el-tag style="margin-right: 5px">Deployment</el-tag>
                  <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
+                 <el-checkbox style="margin-left: 5px" v-model="resource.checked"
+                              @change="handleCheckAllChange(resource)">
+                   <span style="font-size: 12px">所有容器</span>
+                 </el-checkbox>
                  <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)">
                    Log
                  </el-button>
@@ -57,14 +61,12 @@
                     </el-popover>
                     </el-tag>
                  </span>
-                   <!--容器-->
-                   <span v-for="container in pod.children"
-                         :key="container.asset.name"
-                         style="margin-left: 5px">
-                     <el-checkbox style="margin-right: 5px" v-model="container.checked"></el-checkbox>
-                     <i style="margin-right: 2px" class="fab fa-docker"></i>
-                     {{ container.asset.name }}
-                   </span>
+                     <el-checkbox v-for="container in pod.children"
+                                  :key="container.asset.name" style="margin-right: 5px;margin-left: 5px"
+                                  v-model="container.checked">
+                       <i style="margin-right: 2px" class="fab fa-docker"></i>
+                       {{ container.asset.name }}
+                     </el-checkbox>
                  </div>
                </el-card>
               </div>
@@ -95,7 +97,7 @@ export default {
         }
       },
       queryParam: {
-        queryName: '',
+        queryName: 'rss',
         extend: true
       }
     }
@@ -176,6 +178,13 @@ export default {
           this.table.pagination.total = res.body.totalNum
           this.table.loading = false
         })
+    },
+    handleCheckAllChange (resource) {
+      for (const assetContainer of resource.assetContainers) {
+        for (const children of assetContainer.children) {
+          children.checked = resource.checked
+        }
+      }
     }
   }
 }
