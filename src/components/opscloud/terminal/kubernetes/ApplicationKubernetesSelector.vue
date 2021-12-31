@@ -64,8 +64,10 @@
                      <el-checkbox v-for="container in pod.children"
                                   :key="container.asset.name" style="margin-right: 5px;margin-left: 5px"
                                   v-model="container.checked">
-                       <i style="margin-right: 2px" class="fab fa-docker"></i>
-                       {{ container.asset.name }}
+                       <span style="font-size: 12px">
+                         <i class="fab fa-docker"></i>
+                         {{ container.asset.name }}
+                       </span>
                      </el-checkbox>
                  </div>
                </el-card>
