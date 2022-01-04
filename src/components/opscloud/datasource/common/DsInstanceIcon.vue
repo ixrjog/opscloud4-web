@@ -15,6 +15,10 @@ const iconUrl = {
   dingtalk: require('@/static/icons/ds-dingtalk.svg'),
   ansible: require('@/static/icons/ds-ansible.svg'),
   sonar: require('@/static/icons/ds-sonar.svg'),
+  guacamole: require('@/static/icons/ds-guacamole.svg'),
+  jenkins: require('@/static/icons/ds-jenkins.svg'),
+  nexus: require('@/static/icons/ds-nexus.svg'),
+  prometheus: require('@/static/icons/ds-prometheus.svg'),
   common: require('@/static/icons/ds-common.svg')
 }
 
@@ -54,7 +58,7 @@ export default {
           break
         case DsInstanceType.NACOS.name:
           this.icon = iconUrl.nacos
-          this.style = 'width: 70px'
+          this.style = 'width: 90px'
           break
         case DsInstanceType.KUBERNETES.name:
           this.icon = iconUrl.kubernetes
@@ -62,7 +66,7 @@ export default {
           break
         case DsInstanceType.GITLAB.name:
           this.icon = iconUrl.gitlab
-          this.style = 'width: 50px'
+          this.style = 'width: 90px'
           break
         case DsInstanceType.ZABBIX.name:
           this.icon = iconUrl.zabbix
@@ -74,11 +78,27 @@ export default {
           break
         case DsInstanceType.ANSIBLE.name:
           this.icon = iconUrl.ansible
-          this.style = 'width: 50px;'
+          this.style = 'width: 90px;'
           break
         case DsInstanceType.SONAR.name:
           this.icon = iconUrl.sonar
           this.style = 'width: 90px'
+          break
+        case DsInstanceType.GUACAMOLE.name:
+          this.icon = iconUrl.guacamole
+          this.style = 'width: 150px'
+          break
+        case DsInstanceType.JENKINS.name:
+          this.icon = iconUrl.jenkins
+          this.style = 'width: 90px'
+          break
+        case DsInstanceType.NEXUS.name:
+          this.icon = iconUrl.nexus
+          this.style = 'width: 90px'
+          break
+        case DsInstanceType.PROMETHEUS.name:
+          this.icon = iconUrl.prometheus
+          this.style = 'width: 150px'
           break
         default:
           this.icon = iconUrl.common
