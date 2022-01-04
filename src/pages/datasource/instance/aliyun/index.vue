@@ -334,7 +334,7 @@ import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsC
 import AliyunLogTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogTable'
 import AliyunLogMemberTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogMemberTable'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
-import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 
 const treeObj = {
   label: '',

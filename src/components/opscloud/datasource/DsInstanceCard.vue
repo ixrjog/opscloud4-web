@@ -3,7 +3,7 @@
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
-        <span style="font-size: 14px">{{ instance.instanceName }}</span>
+        <span style="font-size: 14px;color: #B7B6B6">{{ instance.instanceName }}</span>
         <el-button type="text" @click="handlerOpen">
           <i class="fas fa-paper-plane"></i>
         </el-button>
@@ -27,7 +27,8 @@
           <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
         </el-col>
       </el-row>
-      <i class="position fas fa-wifi" :style="instance.isActive ? 'color: #67C23A':'color: #909399'"></i>
+<!--      <i class="position fas fa-wifi" :style="instance.isActive ? 'color: #67C23A':'color: #909399'"></i>-->
+      <ds-instance-icon :is-active="instance.isActive" :instance-type="instance.instanceType" class="position"></ds-instance-icon>
     </el-card>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType"
                          :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
@@ -39,6 +40,7 @@ import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import BusinessTags from '../common/tag/BusinessTags'
 import DsAssetTypes from './common/DsAssetTypes'
 import { SET_CONFIG } from '@/api/modules/datasource/datasource.asset.api'
+import DsInstanceIcon from '@/components/opscloud/datasource/common/DsInstanceIcon'
 
 export default {
   name: 'DatasourceInstanceCard',
@@ -60,7 +62,8 @@ export default {
   components: {
     DsAssetTypes,
     BusinessTagEditor,
-    BusinessTags
+    BusinessTags,
+    DsInstanceIcon
   },
   methods: {
     handlerOpen () {
@@ -113,10 +116,11 @@ export default {
 
     .position {
       position: absolute;
-      right: 20px;
-      bottom: 0px;
-      font-size: 2em;
-      transform: rotate(-45deg);
+      right: 0;
+      bottom: 10%;
+      left: 0;
+      margin: auto;
+      opacity: 0.3;
     }
   }
 }

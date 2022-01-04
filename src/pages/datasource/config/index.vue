@@ -80,8 +80,8 @@ import {
 import Pagination from '../../../components/opscloud/common/page/Pagination'
 import ActiveTag from '../../../components/opscloud/common/tag/ActiveTag'
 import DatasourceTypeTag from '../../../components/opscloud/common/tag/DatasourceTypeTag'
-import DatasourceConfigEditor from '../../../components/opscloud/datasource/DatasourceConfigEditor'
-import DatasourceInstanceRegisterEditor from '../../../components/opscloud/datasource/DatasourceInstanceRegisterEditor'
+import DatasourceConfigEditor from '../../../components/opscloud/datasource/DsConfigEditor'
+import DatasourceInstanceRegisterEditor from '../../../components/opscloud/datasource/DsInstanceRegisterEditor'
 import WhetherTag from '../../../components/opscloud/common/tag/WhetherTag'
 
 const activeOptions = [{

@@ -45,7 +45,7 @@ import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTa
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
 
 import util from '@/libs/util'
-import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 
 const tableLayout = {
   computer: {

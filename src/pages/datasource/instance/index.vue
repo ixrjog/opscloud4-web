@@ -27,7 +27,7 @@
 <script>
 
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api.js'
-import DatasourceInstanceCard from '../../../components/opscloud/datasource/DatasourceInstanceCard'
+import DatasourceInstanceCard from '../../../components/opscloud/datasource/DsInstanceCard'
 import DsInstanceType from '@/components/opscloud/common/enums/ds.instance.type.js'
 
 const activeOptions = [{

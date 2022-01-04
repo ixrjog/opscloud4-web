@@ -73,7 +73,7 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import KubernetesTemplateTable from '@/components/opscloud/datasource/template/KubernetesTemplateTable'
-import DatasourceInstanceTitle from '@/components/opscloud/datasource/DatasourceInstanceTitle'
+import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 
 const tableLayout = {
   node: {
