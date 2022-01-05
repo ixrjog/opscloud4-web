@@ -1,7 +1,7 @@
 <template>
   <div>
     <span v-for="item in server.accounts" :key="item.id">
-      <el-button type="primary" plain size="mini" @click="handleRemote(item)">
+      <el-button type="primary" plain size="mini" @click="handleRemote(item)" style="margin-right: 5px;margin-bottom: 5px">
         <i class="fas fa-desktop" aria-hidden="true" v-show="item.protocol=== 'vnc'"></i>
         <i class="fas fa-terminal" aria-hidden="true" v-show="item.protocol=== 'ssh'"></i>
         <i class="fab fa-windows" aria-hidden="true" v-show="item.protocol=== 'rdp'"></i>
@@ -18,7 +18,7 @@ export default {
   methods: {
     handleRemote (account) {
       const removeServer = {
-        params:{
+        params: {
           serverId: this.server.id,
           serverAccountId: account.id,
           protocol: account.protocol
