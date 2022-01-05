@@ -24,7 +24,8 @@ export default {
   },
   computed: {
     ...mapState('d2admin', {
-      searchActive: state => state.search.active,
+     // searchActive: state => state.search.active,
+      searchActive: state => false,
       searchHotkey: state => state.search.hotkey
     })
   },
