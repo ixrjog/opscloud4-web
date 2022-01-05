@@ -99,7 +99,6 @@ export default {
     d2MenuHeader,
     d2Tabs,
     d2HeaderFullscreen,
-    d2HeaderLocales,
     d2HeaderSearch,
     d2HeaderSize,
     d2HeaderTheme,
