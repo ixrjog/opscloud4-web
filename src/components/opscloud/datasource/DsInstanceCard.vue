@@ -3,7 +3,7 @@
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
-        <span style="font-size: 14px;color: #B7B6B6">{{ instance.instanceName }}</span>
+        <my-span :content="instance.instanceName" style="font-size: 14px"></my-span>
         <el-button type="text" @click="handlerOpen">
           <i class="fas fa-paper-plane"></i>
         </el-button>
@@ -27,8 +27,8 @@
           <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
         </el-col>
       </el-row>
-<!--      <i class="position fas fa-wifi" :style="instance.isActive ? 'color: #67C23A':'color: #909399'"></i>-->
-      <ds-instance-icon :is-active="instance.isActive" :instance-type="instance.instanceType" class="position"></ds-instance-icon>
+      <ds-instance-icon :is-active="instance.isActive" :instance-type="instance.instanceType"
+                        class="position"></ds-instance-icon>
     </el-card>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType"
                          :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
@@ -41,6 +41,7 @@ import BusinessTags from '../common/tag/BusinessTags'
 import DsAssetTypes from './common/DsAssetTypes'
 import { SET_CONFIG } from '@/api/modules/datasource/datasource.asset.api'
 import DsInstanceIcon from '@/components/opscloud/datasource/common/DsInstanceIcon'
+import MySpan from '@/components/opscloud/common/mySpan'
 
 export default {
   name: 'DatasourceInstanceCard',
@@ -63,7 +64,8 @@ export default {
     DsAssetTypes,
     BusinessTagEditor,
     BusinessTags,
-    DsInstanceIcon
+    DsInstanceIcon,
+    MySpan
   },
   methods: {
     handlerOpen () {
