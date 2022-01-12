@@ -8,10 +8,12 @@ import server from './modules/opscloud.server'
 import rbac from './modules/opscloud.rbac'
 import datasource from './modules/opscloud.datasource'
 import workbench from './modules/opscloud.workbench'
+import workorder from './modules/opscloud.workorder'
 import application from './modules/opscloud.application'
 import task from './modules/opscloud.task'
 
 import layoutHeaderAside from '@/layout/header-aside'
+
 
 // 由于懒加载页面太多的话会造成webpack热更新太慢，所以开发环境不使用懒加载，只有生产环境使用懒加载
 const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
@@ -61,7 +63,10 @@ const frameIn = [
       },
       // 系统配置
       ...sys,
+      // 工作台
       ...workbench,
+      // 我的工单
+      ...workorder,
       // 用户
       ...user,
       // 服务器
