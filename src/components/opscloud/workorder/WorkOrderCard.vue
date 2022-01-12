@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-card shadow="hover">
-<!--      accordion-->
-      <el-collapse  v-model="activeNames">
+      <!--      accordion-->
+      <el-collapse v-model="activeNames">
         <div v-for="(group,index) in workOrderView.workOrderGroups" :key="group.id">
           <el-collapse-item :name="index">
             <template slot="title">
@@ -11,8 +11,8 @@
             <el-table :data="group.workOrders" stripe :show-header=false style="width: 100%">
               <el-table-column label="工单名称">
                 <template slot-scope="scope">
-                  <span>{{ scope.row.name }}</span><i v-if="scope.row.icon !== null && scope.row.icon !== ''"
-                                                      :class="scope.row.icon"></i>
+                  <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"></i>
+                  <span>{{ scope.row.name }}</span>
                 </template>
               </el-table-column>
               <!--              fixed="right"-->
