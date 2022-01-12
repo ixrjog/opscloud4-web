@@ -85,6 +85,9 @@ export default {
         case this.dsInstanceType.ALIYUN.type:
           instanceType = this.dsInstanceType.ALIYUN
           break
+        case this.dsInstanceType.AWS.type:
+          instanceType = this.dsInstanceType.AWS
+          break
         case this.dsInstanceType.KUBERNETES.type:
           instanceType = this.dsInstanceType.KUBERNETES
           break

@@ -4,13 +4,13 @@
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
         <span style="font-size: 14px;color: #B7B6B6">{{ instance.instanceName }}</span>
-        <el-button type="text" @click="handlerOpen">
+        <el-button type="text" @click="handleOpen">
           <i class="fas fa-paper-plane"></i>
         </el-button>
-        <el-button type="text" @click="handlerTagEdit">
+        <el-button type="text" @click="handleTagEdit">
           <i class="fas fa-tags"></i>
         </el-button>
-        <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handlerSetConfig">
+        <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handleSetConfig">
           <i class="fas fa-file-import"></i>
         </el-button>
       </div>
@@ -66,7 +66,7 @@ export default {
     DsInstanceIcon
   },
   methods: {
-    handlerOpen () {
+    handleOpen () {
       this.$router.push({
         path: '/datasource/instance/' + this.instance.instanceType.toLocaleLowerCase() + '?id=' + this.instance.id + '&uuid=' + this.instance.uuid
       })
@@ -80,7 +80,7 @@ export default {
       }
       return false
     },
-    handlerSetConfig () {
+    handleSetConfig () {
       SET_CONFIG({
         instanceId: this.instance.id,
         instanceType: this.instance.instanceType
@@ -88,7 +88,7 @@ export default {
         this.$message.success('推送完成')
       })
     },
-    handlerTagEdit () {
+    handleTagEdit () {
       const businessTags = {
         tagIds: this.instance.tags !== null ? this.instance.tags.map(e => e.id) : []
       }
