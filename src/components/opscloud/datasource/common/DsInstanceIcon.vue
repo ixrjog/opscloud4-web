@@ -7,6 +7,7 @@ import DsInstanceType from '@/components/opscloud/common/enums/ds.instance.type'
 
 const iconUrl = {
   aliyun: require('@/static/icons/ds-aliyun.svg'),
+  aws: require('@/static/icons/ds-aws.svg'),
   ldap: require('@/static/icons/ds-ldap.svg'),
   nacos: require('@/static/icons/ds-nacos.svg'),
   kubernetes: require('@/static/icons/ds-kubernetes.svg'),
@@ -50,6 +51,10 @@ export default {
       switch (this.instanceType) {
         case DsInstanceType.ALIYUN.name:
           this.icon = iconUrl.aliyun
+          this.style = 'width: 90px'
+          break
+        case DsInstanceType.AWS.name:
+          this.icon = iconUrl.aws
           this.style = 'width: 90px'
           break
         case DsInstanceType.LDAP.name:

@@ -149,7 +149,12 @@ const DsInstanceType = Object.freeze({
   AWS: {
     type: 51,
     name: 'AWS',
-    instanceType: []
+    instanceType: [
+      {
+        value: 'EC2',
+        label: 'EC2'
+      }
+    ]
   }
 })
 
