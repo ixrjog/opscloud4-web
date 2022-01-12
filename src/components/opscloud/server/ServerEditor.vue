@@ -208,10 +208,10 @@ export default {
     },
     handleAdd (requestBody) {
       ADD_SERVER(requestBody)
-        .then(() => {
+        .then(({ body }) => {
           this.$message.success('新增成功!')
-          this.formStatus.visible = false
-          this.$emit('close')
+          this.initData(body)
+          this.formStatus.operationType = false
         })
     },
     handleSave () {

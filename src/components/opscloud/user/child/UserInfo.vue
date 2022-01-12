@@ -61,13 +61,13 @@ export default {
     },
     handlerAdd (request) {
       ADD_USER(request)
-        .then(res => {
+        .then(({ body }) => {
           this.$message.success('新增成功!')
-          this.$emit('close')
+          this.$emit('refreshData', body)
         })
     },
     save () {
-      const user =  Object.assign({}, this.user)
+      const user = Object.assign({}, this.user)
       delete user.businessPermissions
       if (this.operationType) {
         this.handlerAdd(user)
