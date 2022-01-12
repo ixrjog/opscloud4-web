@@ -33,12 +33,16 @@
         </div>
       </el-collapse>
     </el-card>
+    <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverTicketEditor"></server-group-ticket-editor>
   </div>
 </template>
 
 <script>
 
 import { GET_WORK_ORDER_VIEW } from '@/api/modules/workorder/workorder.api.js'
+import { CREATE_WORK_ORDER_TICKET } from '@/api/modules/workorder/workorder.ticket.api.js'
+import ServerGroupTicketEditor from '@/components/opscloud/workorder/ticket/ServerGroupTicketEditor'
+import WorkOrderKeyConstants from '@/components/opscloud/common/enums/workorder.key.constants'
 
 export default {
   name: 'WorkOrderCard',
@@ -48,21 +52,49 @@ export default {
       activeNames: [0],
       workOrderView: {},
       ticketCreating: false,
+      workOrderKeyConstants: WorkOrderKeyConstants,
       formStatus: {
-        accessToken: {
-          visible: false,
-          labelWidth: '100px'
+        ticket: {
+          serverGroup: {
+            visible: false,
+            operationType: true
+          }
         }
       }
     }
   },
-  components: {},
+  components: {
+    ServerGroupTicketEditor
+  },
   mounted () {
     this.fetchData()
   },
   methods: {
     createTicket (row) {
-
+      this.ticketCreating = true
+      const workOrderKey = row.workOrderKey
+      const requestBody = {
+        workOrderKey: workOrderKey
+      }
+      CREATE_WORK_ORDER_TICKET(requestBody)
+        .then(res => {
+          const ticket = res.body
+          switch (workOrderKey) {
+            case this.workOrderKeyConstants.SERVER_GROUP:
+              this.$refs.serverTicketEditor.initData(ticket)
+              this.handleOpenTicketEditor(this.formStatus.ticket.serverGroup)
+              break
+            default:
+              this.$message.error('工单类型错误或未配置!')
+          }
+          this.ticketCreating = false
+        })
+    },
+    handleOpenTicketEditor (formStatus) {
+      this.$nextTick(() => {
+        formStatus.visible = true
+        formStatus.operationType = false
+      })
     },
     fetchData () {
       GET_WORK_ORDER_VIEW()
