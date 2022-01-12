@@ -3,7 +3,8 @@
              :visible.sync="formStatus.visible" :before-close="handleClose">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="user">
-        <user-info :operationType="formStatus.operationType" ref="userInfo" @close="handleClose"></user-info>
+        <user-info :operationType="formStatus.operationType" ref="userInfo" @close="handleClose"
+                   @refreshData="refreshData"></user-info>
       </el-tab-pane>
       <el-tab-pane label="服务器授权" name="serverGroup" :disabled="user.id === '' || user.id === 0">
         <user-server-group-tab :user="user" ref="userServerGroupTab"></user-server-group-tab>
@@ -55,8 +56,9 @@ export default {
   },
   methods: {
     initData (user) {
+      console.log(user)
       this.activeName = 'user'
-      this.user = user
+      this.user = Object.assign({}, user)
       this.$nextTick(() => {
         this.$refs.userInfo.initData(user)
       })
@@ -84,6 +86,10 @@ export default {
     handleClose () {
       this.formStatus.visible = false
       this.$emit('close')
+    },
+    refreshData (user) {
+      this.initData(user)
+      this.formStatus.operationType = false
     }
   }
 }
