@@ -94,6 +94,9 @@ export default {
         case this.dsInstanceType.JENKINS.type:
           instanceType = this.dsInstanceType.JENKINS
           break
+        case this.dsInstanceType.ZABBIX.type:
+          instanceType = this.dsInstanceType.ZABBIX
+          break
         case this.dsInstanceType.GUACAMOLE.type:
           instanceType = this.dsInstanceType.GUACAMOLE
           break
