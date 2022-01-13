@@ -7,8 +7,10 @@
       </span>
     </template>
     <!--    <el-divider></el-divider>-->
-    <ticket-entry-selector :workOrderTicketId="ticketView === null ? 0: ticketView.ticketId" :entryDesc="'服务器组'"
-                           ref="entrySelector" @handleNotify="fetchData"></ticket-entry-selector>
+    <ticket-asset-entry-selector :instanceType="'NACOS'" :assetType="'NACOS_PERMISSION'"
+                                 :workOrderTicketId="ticketView === null ? 0: ticketView.ticketId"
+                                 :entryDesc="'Nacos角色'"
+                                 ref="entrySelector" @handleNotify="fetchData"></ticket-asset-entry-selector>
     <el-divider></el-divider>
     <ticket-entry-table :ticketId="ticketView === null ? 0: ticketView.ticketId"
                         :tableLayout="tableLayout"
@@ -24,11 +26,11 @@
 <script>
 
 const TableLayout = {
-  instance: false,
-  entryName: '服务器组名称',
+  instance: true,
+  entryName: 'Nacos角色',
 }
 
-import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
+import TicketAssetEntrySelector from '@/components/opscloud/workorder/child/TicketAssetEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 
 export default {
@@ -39,10 +41,10 @@ export default {
       loading: false
     }
   },
-  name: 'ServerGroupTicketEditor',
+  name: 'NacosTicketEditor',
   props: ['formStatus'],
   components: {
-    TicketEntrySelector,
+    TicketAssetEntrySelector,
     TicketEntryTable
   },
   mixins: [],

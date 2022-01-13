@@ -6,7 +6,8 @@ const WorkOrderKeyConstants = Object.freeze({
   APPLICATION_PERMISSION: 'APPLICATION_PERMISSION',
   VPN: 'VPN',
   NEXUS: 'NEXUS',
-  CONFLUENCE: 'CONFLUENCE'
+  CONFLUENCE: 'CONFLUENCE',
+  NACOS: 'NACOS'
 })
 
 export default WorkOrderKeyConstants
