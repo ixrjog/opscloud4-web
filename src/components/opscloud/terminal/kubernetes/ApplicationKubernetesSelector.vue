@@ -100,6 +100,7 @@ export default {
       },
       queryParam: {
         queryName: '',
+        authorized: true,
         extend: true
       }
     }

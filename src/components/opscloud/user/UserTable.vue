@@ -8,7 +8,7 @@
       <el-button @click="handleSync">同步</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column label="用户名" width="150">
+      <el-table-column label="用户名" width="200">
         <template slot-scope="scope">
           <el-row class="copyClass">
             <span>{{ scope.row.username }}</span>
@@ -41,7 +41,7 @@
         <template slot-scope="scope">
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
             <el-divider content-position="left"><b style="color: #9d9fa3">{{ key }}</b></el-divider>
-            <el-tag v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}</el-tag>
+            <el-tag :type="item.userPermission.permissionRole === 'admin' ? 'danger': '' " v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}</el-tag>
           </div>
           <div v-if="JSON.stringify(scope.row.ramUsers) !== '[]'">
             <el-divider content-position="left"><b style="color: #9d9fa3">RAM</b></el-divider>
@@ -262,10 +262,12 @@ export default {
 
 .copyClass i {
   display: none;
+  font-size: 10px;
 }
 
 .copyClass:hover i {
   display: inline;
+  font-size: 10px;
 }
 
 .el-divider--horizontal {

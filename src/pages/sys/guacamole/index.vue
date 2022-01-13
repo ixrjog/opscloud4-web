@@ -186,7 +186,6 @@ export default {
           elm.clientWidth / Math.max(this.display.getWidth(), 1),
           elm.clientHeight / Math.max(this.display.getHeight(), 1)
         )
-        console.log(scale)
         this.display.scale(scale)
       })
     },

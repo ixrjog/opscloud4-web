@@ -23,6 +23,7 @@
       <el-col :span="17">
         <pubkey-info :user="user"></pubkey-info>
         <roles-info :roles="user.roles"></roles-info>
+        <application-info :userId="user.id"></application-info>
         <user-group-info :userId="user.id"></user-group-info>
         <server-group-info :userId="user.id"></server-group-info>
         <user-ram-user-info-card :user="user"></user-ram-user-info-card>
@@ -39,6 +40,7 @@ import { GET_USER_DETAILS, GET_USER_DETAILS_BY_USERNAME } from '@/api/modules/us
 import PubkeyInfo from '../../../components/opscloud/user/details/UserCredentialPubKeyInfoCard'
 import RolesInfo from '../../../components/opscloud/user/details/UserRBACRolesInfoCard'
 import ServerGroupInfo from '../../../components/opscloud/user/details/UserPermissionServerGroupInfoCard'
+import ApplicationInfo from '../../../components/opscloud/user/details/UserPermissionApplicationInfoCard'
 import UserGroupInfo from '../../../components/opscloud/user/details/UserPermissionGroupInfoCard'
 import AccessTokenInfo from '../../../components/opscloud/user/details/UserAccessTokenCard'
 import UserRamUserInfoCard from '../../../components/opscloud/user/details/UserRamUserInfoCard'
@@ -63,6 +65,7 @@ export default {
     PubkeyInfo, // Ssh公钥
     RolesInfo,
     ServerGroupInfo,
+    ApplicationInfo,
     UserGroupInfo,
     AccessTokenInfo,
     UserRamUserInfoCard
