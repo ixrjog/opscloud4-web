@@ -9,9 +9,6 @@
 
 <script>
 
-// import RoleTable from '../../../components/opscloud/rbac/RoleTable'
-// import RoleResourceMaster from '../../../components/opscloud/rbac/RoleResourceMaster'
-
 import WorkOrderCard from '@/components/opscloud/workorder/WorkOrderCard'
 
 export default {

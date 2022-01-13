@@ -12,7 +12,7 @@
               <el-table-column label="工单名称">
                 <template slot-scope="scope">
                   <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"></i>
-                  <span>{{ scope.row.name }}</span>
+                  <span style="margin-left: 5px">{{ scope.row.name }}</span>
                 </template>
               </el-table-column>
               <!--              fixed="right"-->
@@ -33,12 +33,41 @@
         </div>
       </el-collapse>
     </el-card>
+    <server-group-ticket-editor
+      :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor"></server-group-ticket-editor>
+    <application-permission-ticket-editor
+      :formStatus="formStatus.ticket.applicationPermission"
+      ref="applicationPermissionTicketEditor"></application-permission-ticket-editor>
+    <confluence-ticket-editor
+      :formStatus="formStatus.ticket.confluence"
+      ref="confluenceTicketEditor"></confluence-ticket-editor>
+    <vpn-ticket-editor
+      :formStatus="formStatus.ticket.vpn"
+      ref="vpnTicketEditor"></vpn-ticket-editor>
+    <nexus-ticket-editor
+      :formStatus="formStatus.ticket.nexus"
+      ref="nexusTicketEditor"></nexus-ticket-editor>
+    <ram-policy-ticket-editor
+      :formStatus="formStatus.ticket.ramPolicy"
+      ref="ramPolicyTicketEditor"></ram-policy-ticket-editor>
+    <nacos-ticket-editor
+      :formStatus="formStatus.ticket.nacos"
+      ref="nacosTicketEditor"></nacos-ticket-editor>
   </div>
 </template>
 
 <script>
 
 import { GET_WORK_ORDER_VIEW } from '@/api/modules/workorder/workorder.api.js'
+import { CREATE_WORK_ORDER_TICKET } from '@/api/modules/workorder/workorder.ticket.api.js'
+import ServerGroupTicketEditor from '@/components/opscloud/workorder/ticket/ServerGroupTicketEditor'
+import WorkOrderKeyConstants from '@/components/opscloud/common/enums/workorder.key.constants'
+import ApplicationPermissionTicketEditor from '@/components/opscloud/workorder/ticket/ApplicationPermissionTicketEditor'
+import ConfluenceTicketEditor from '@/components/opscloud/workorder/ticket/ConfluenceTicketEditor'
+import VpnTicketEditor from '@/components/opscloud/workorder/ticket/VpnTicketEditor'
+import NexusTicketEditor from '@/components/opscloud/workorder/ticket/NexusTicketEditor'
+import RamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/RamPolicyTicketEditor'
+import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicketEditor'
 
 export default {
   name: 'WorkOrderCard',
@@ -48,21 +77,96 @@ export default {
       activeNames: [0],
       workOrderView: {},
       ticketCreating: false,
+      workOrderKeyConstants: WorkOrderKeyConstants,
       formStatus: {
-        accessToken: {
-          visible: false,
-          labelWidth: '100px'
+        ticket: {
+          serverGroup: {
+            visible: false
+          },
+          applicationPermission: {
+            visible: false
+          },
+          confluence: {
+            visible: false
+          },
+          vpn: {
+            visible: false
+          },
+          nexus: {
+            visible: false
+          },
+          ramPolicy: {
+            visible: false
+          },
+          nacos:{
+            visible: false
+          }
         }
       }
     }
   },
-  components: {},
+  components: {
+    ServerGroupTicketEditor,
+    ApplicationPermissionTicketEditor,
+    ConfluenceTicketEditor,
+    VpnTicketEditor,
+    NexusTicketEditor,
+    RamPolicyTicketEditor,
+    NacosTicketEditor
+  },
   mounted () {
     this.fetchData()
   },
   methods: {
     createTicket (row) {
-
+      this.ticketCreating = true
+      const workOrderKey = row.workOrderKey
+      const requestBody = {
+        workOrderKey: workOrderKey
+      }
+      CREATE_WORK_ORDER_TICKET(requestBody)
+        .then(res => {
+          const ticket = res.body
+          switch (workOrderKey) {
+            case this.workOrderKeyConstants.SERVER_GROUP:
+              this.handleOpenTicketEditor(this.formStatus.ticket.serverGroup)
+              this.$refs.serverGroupTicketEditor.initData(ticket)
+              break
+            case this.workOrderKeyConstants.APPLICATION_PERMISSION:
+              this.handleOpenTicketEditor(this.formStatus.ticket.applicationPermission)
+              this.$refs.applicationPermissionTicketEditor.initData(ticket)
+              break
+            case this.workOrderKeyConstants.CONFLUENCE:
+              this.handleOpenTicketEditor(this.formStatus.ticket.confluence)
+              this.$refs.confluenceTicketEditor.initData(ticket)
+              break
+            case this.workOrderKeyConstants.VPN:
+              this.handleOpenTicketEditor(this.formStatus.ticket.vpn)
+              this.$refs.vpnTicketEditor.initData(ticket)
+              break
+            case this.workOrderKeyConstants.NEXUS:
+              this.handleOpenTicketEditor(this.formStatus.ticket.nexus)
+              this.$refs.nexusTicketEditor.initData(ticket)
+              break
+            case this.workOrderKeyConstants.RAM_POLICY:
+              this.handleOpenTicketEditor(this.formStatus.ticket.ramPolicy)
+              this.$refs.ramPolicyTicketEditor.initData(ticket)
+              break
+            case this.workOrderKeyConstants.NACOS:
+              this.handleOpenTicketEditor(this.formStatus.ticket.nacos)
+              this.$refs.nacosTicketEditor.initData(ticket)
+              break
+            default:
+              this.$message.error('工单类型错误或未配置!')
+          }
+          this.ticketCreating = false
+        })
+    },
+    handleOpenTicketEditor (formStatus) {
+      this.$nextTick(() => {
+        formStatus.visible = true
+        formStatus.operationType = false
+      })
     },
     fetchData () {
       GET_WORK_ORDER_VIEW()

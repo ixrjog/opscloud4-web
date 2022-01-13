@@ -6,8 +6,7 @@
          <span style="margin-left: 5px">{{ ticketView.workOrder.name }}工单</span>
       </span>
     </template>
-    <!--    <el-divider></el-divider>-->
-    <ticket-entry-selector :workOrderTicketId="ticketView === null ? 0: ticketView.ticketId" :entryDesc="'服务器组'"
+    <ticket-entry-selector :workOrderTicketId="ticketView === null ? 0: ticketView.ticketId" :entryDesc="'应用'"
                            ref="entrySelector" @handleNotify="fetchData"></ticket-entry-selector>
     <el-divider></el-divider>
     <ticket-entry-table :ticketId="ticketView === null ? 0: ticketView.ticketId"
@@ -25,7 +24,7 @@
 
 const TableLayout = {
   instance: false,
-  entryName: '服务器组名称',
+  entryName: '应用名称',
 }
 
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
@@ -39,7 +38,7 @@ export default {
       loading: false
     }
   },
-  name: 'ServerGroupTicketEditor',
+  name: 'ApplicationPermissionTicketEditor',
   props: ['formStatus'],
   components: {
     TicketEntrySelector,
