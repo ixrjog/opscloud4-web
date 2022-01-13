@@ -56,7 +56,6 @@ export default {
   },
   methods: {
     initData (user) {
-      console.log(user)
       this.activeName = 'user'
       this.user = Object.assign({}, user)
       this.$nextTick(() => {

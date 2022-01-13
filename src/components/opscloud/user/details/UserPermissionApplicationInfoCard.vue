@@ -1,12 +1,12 @@
 <template>
   <div>
-    <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(groups) !== '[]'">
+    <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(apps) !== '[]'">
       <div slot="header" class="clearfix">
-        <span>授权的服务器组<i class="header-icon el-icon-info"></i>(深色标签拥有管理员权限)</span>
+        <span>授权的应用<i class="header-icon el-icon-info"></i>(深色标签拥有管理员权限)</span>
       </div>
       <div>
         <span class="tag-group">
-          <span v-for="item in groups" :key="item.id">
+          <span v-for="item in apps" :key="item.id">
               <el-tooltip class="item" effect="light" :content="item.comment || '没有填写'" placement="bottom">
                  <el-tag style="margin-left: 5px"
                          :type=" item.userPermission.permissionRole === 'admin' ? 'danger': '' ">
@@ -34,11 +34,11 @@ const queryParam = {
 }
 
 export default {
-  name: 'UserPermissionServerGroupInfoCard',
+  name: 'UserPermissionApplicationInfoCard',
   props: ['userId'],
   data () {
     return {
-      groups: [],
+      apps: [],
       businessType: BusinessType,
       queryParam: queryParam
     }
@@ -50,12 +50,12 @@ export default {
     fetchData () {
       const requestBody = {
         ...this.queryParam,
-        businessType: this.businessType.SERVERGROUP,
+        businessType: this.businessType.APPLICATION,
         userId: this.userId
       }
       QUERY_USER_BUSINESS_PERMISSION(requestBody)
         .then(res => {
-          this.groups = res.body.data
+          this.apps = res.body.data
         })
     }
   }

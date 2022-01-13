@@ -2,7 +2,12 @@
   <span class="tag-group">
     <span v-for="item in users" :key="item.id">
         <el-tag style="margin-left: 5px">
-          {{ item.username }}&lt;{{ item.name !== null && item.name !== ''  ? item.name + ':' : '' }}{{ item.displayName }}&gt;
+          <span v-if="showName(item)">
+            {{ item.username }}&lt;{{ item.displayName }}&gt;
+          </span>
+          <span v-else>
+            {{ item.username }}&lt;{{ item.name}}:{{ item.displayName }}&gt;
+          </span>
         </el-tag>
     </span>
   </span>
@@ -11,7 +16,12 @@
 <script>
 export default {
   name: 'UsersTag',
-  props: ['users']
+  props: ['users'],
+  methods: {
+    showName (user) {
+      return (user.name === null || user.name === '' || user.name === user.displayName)
+    }
+  }
 }
 </script>
 
