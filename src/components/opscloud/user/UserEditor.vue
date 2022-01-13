@@ -12,6 +12,9 @@
       <el-tab-pane label="用户组授权" name="userGroup" :disabled="user.id === '' || user.id === 0">
         <user-group-tab :user="user" ref="userGroupTab"></user-group-tab>
       </el-tab-pane>
+      <el-tab-pane label="应用授权" name="application" :disabled="user.id === '' || user.id === 0">
+        <user-application-tab :user="user" ref="userApplicationTab"></user-application-tab>
+      </el-tab-pane>
       <el-tab-pane label="RAM授权" name="ram" :disabled="user.id === '' || user.id === 0">
         <ram-tab :user="user" ref="ramTab"></ram-tab>
       </el-tab-pane>
@@ -33,6 +36,7 @@ import UserGroupTab from './child/UserGroupTab'
 import UserInfo from './child/UserInfo'
 import RamTab from '@/components/opscloud/user/child/RamTab'
 import RoleTab from '@/components/opscloud/user/child/RoleTab'
+import UserApplicationTab from '@/components/opscloud/user/child/UserApplicationTab'
 
 export default {
   data () {
@@ -51,6 +55,7 @@ export default {
     UserInfo,
     UserGroupTab,
     UserServerGroupTab,
+    UserApplicationTab,
     RamTab,
     RoleTab
   },
@@ -69,6 +74,10 @@ export default {
       }
       if (tab.name === 'userGroup') {
         this.$refs.userGroupTab.init()
+        return
+      }
+      if (tab.name === 'application') {
+        this.$refs.userApplicationTab.init()
         return
       }
       if (tab.name === 'ram') {
