@@ -15,16 +15,14 @@
                   <span style="margin-left: 5px">{{ scope.row.name }}</span>
                 </template>
               </el-table-column>
-              <!--              fixed="right"-->
               <el-table-column label="操作" width="160">
                 <template slot-scope="scope">
-                  <!--                  <el-button type="success" plain size="mini" @click="handlerPreviewDoc(scope.row)">帮助</el-button>-->
                   <el-button type="primary" plain size="mini" @click="createTicket(scope.row)"
                              v-if="scope.row.status === 0"
                              :loading="ticketCreating">新建
                   </el-button>
                   <el-button type="warning" plain size="mini" v-if="scope.row.status === 1"
-                             :loading="ticketCreating">开发
+                             :loading="ticketCreating">开发中
                   </el-button>
                 </template>
               </el-table-column>

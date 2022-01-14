@@ -2,7 +2,8 @@
   <div>
     <el-row :gutter="24">
       <el-select v-model="instanceUuid" filterable clearable value-key="instanceName"
-                 placeholder="选择数据源实例" style="display: inline-block; width: 250px; margin-left: 10px" reserve-keyword>
+                 placeholder="选择数据源实例" style="display: inline-block; width: 250px; margin-left: 10px" reserve-keyword
+                 @change="selInstance">
         <el-option
           v-for="item in dsInstanceOptions"
           :key="item.uuid"
@@ -107,9 +108,13 @@ export default {
             // 默认选择第一个数据源实例
             if (this.dsInstanceOptions.length !== 0) {
               this.instanceUuid = this.dsInstanceOptions[0].uuid
+              this.fetchData('')
             }
           }
         })
+    },
+    selInstance(){
+      this.fetchData('')
     },
     fetchData (name) {
       this.searchLoading = true
