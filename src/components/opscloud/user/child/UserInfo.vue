@@ -50,7 +50,7 @@ export default {
       this.user = user
     },
     handlerRandomWord () {
-      this.user.password = tools.randomWord(false, 20)
+      this.user.password = tools.randomWord(20)
     },
     handlerUpdate (request) {
       UPDATE_USER(request)
