@@ -29,9 +29,8 @@ tools.arrayEquals = function (arr1, arr2) {
 ** randomWord 产生任意长度随机字母数字组合
 ** randomFlag 是否任意长度 min 任意长度最小位[固定位数] max 任意长度最大位
 */
-tools.randomWord = function (randomFlag, min, max) {
-  let str = ''
-  let range = min
+tools.randomWord = function (length) {
+  const s = []
   const arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
     'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
@@ -39,11 +38,28 @@ tools.randomWord = function (randomFlag, min, max) {
     'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     '@', '!', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+', '-',
     '[', ']', '|', ':', ';', ',', '.', '<', '>', '?']
+  const numArr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+  const upperArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+    'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+  const lowerArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+    'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+  const syblArr = ['@', '!', '#', '$', '%', '^', '&', '*', '(', ')', '_', '=', '+', '-',
+    '[', ']', '|', ':', ';', ',', '.', '<', '>', '?']
+  s[0] = this.getChar(upperArr, 1)
+  s[1] = this.getChar(lowerArr, 1)
+  s[2] = this.getChar(numArr, 1)
+  s[3] = this.getChar(syblArr, 1)
+  return s.join('') + this.getChar(arr, length - 4)
+}
 
-  if (randomFlag) {
-    range = Math.round(Math.random() * (max - min)) + min// 任意长度
-  }
-  for (let i = 0; i < range; i++) {
+/**
+ * 取随机长度，1 ～ maxLength
+ * @param arr
+ * @param max
+ */
+tools.getChar = function (arr, max) {
+  let str = ''
+  for (let i = 0; i < max; i++) {
     const pos = Math.round(Math.random() * (arr.length - 1))
     str += arr[pos]
   }
@@ -63,8 +79,7 @@ tools.uuid = function () {
   s[14] = '4' // bits 12-15 of the time_hi_and_version field to 0010
   s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1) // bits 6-7 of the clock_seq_hi_and_reserved to 01
   s[8] = s[13] = s[18] = s[23] = '-'
-  const uuid = s.join('')
-  return uuid
+  return s.join('')
 }
 
 /**
