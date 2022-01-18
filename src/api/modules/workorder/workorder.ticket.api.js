@@ -2,6 +2,14 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/workorder/ticket'
 
+export function QUERY_MY_WORK_ORDER_TICKET_PAGE (data) {
+  return request({
+    url: baseUrl + '/my/page/query',
+    method: 'post',
+    data
+  })
+}
+
 export function GET_WORK_ORDER_TICKET_VIEW (ticketId) {
   return request({
     url: baseUrl + '/view/get?ticketId=' + ticketId,
@@ -12,6 +20,30 @@ export function GET_WORK_ORDER_TICKET_VIEW (ticketId) {
 export function CREATE_WORK_ORDER_TICKET (data) {
   return request({
     url: baseUrl + '/create',
+    method: 'post',
+    data
+  })
+}
+
+export function SAVE_WORK_ORDER_TICKET (data) {
+  return request({
+    url: baseUrl + '/save',
+    method: 'post',
+    data
+  })
+}
+
+export function SUBMIT_WORK_ORDER_TICKET (data) {
+  return request({
+    url: baseUrl + '/submit',
+    method: 'post',
+    data
+  })
+}
+
+export function APPROVE_WORK_ORDER_TICKET (data) {
+  return request({
+    url: baseUrl + '/approve',
     method: 'post',
     data
   })
