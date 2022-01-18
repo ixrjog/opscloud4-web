@@ -27,9 +27,12 @@
         <el-table-column prop="ago" label="申请时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="180">
           <template slot-scope="scope">
-            <el-button type="success" plain size="mini" @click="previewTicket(scope.row)">查看
+            <el-button type="success" v-if="scope.row.ticketPhase !== 'NEW'"
+                       plain size="mini"
+                       :loading="previewing"
+                       @click="previewTicket(scope.row)">查看
             </el-button>
-            <el-button type="primary" v-if="!scope.row.isInApproval"
+            <el-button type="primary" v-if="scope.row.ticketPhase === 'NEW'"
                        plain size="mini"
                        :loading="editing"
                        @click="editTicket(scope.row)">编辑
@@ -92,7 +95,8 @@ export default {
         workOrderId: '',
         ticketPhase: ''
       },
-      editing: false
+      editing: false,
+      previewing: false
     }
   },
   computed: {},
@@ -117,9 +121,15 @@ export default {
     },
     delTicket (id) {
     },
-    // previewTicket (ticket) {
-    //   this.operationTicket(ticket, 2)
-    // },
+    previewTicket (row) {
+      this.previewing = true
+      GET_WORK_ORDER_TICKET_VIEW(row.id)
+        .then(res => {
+          const ticket = res.body
+          this.$emit('previewTicket', ticket)
+          this.previewing = false
+        })
+    },
     editTicket (row) {
       this.editing = true
       GET_WORK_ORDER_TICKET_VIEW(row.id)

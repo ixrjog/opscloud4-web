@@ -7,18 +7,19 @@
          <el-divider><b style="font-size: 10px;color: #909399">{{ node.comment }}</b></el-divider>
            <span v-if="node.type === 0">
              <el-form-item label="审批人" :required="true">
-                <el-select v-model="node.auditUser" filterable placeholder="选择审批人" value-key="id"
-                           style="display: inline-block; width: 250px; margin-right: 10px">
-                <el-option v-for="auditUser in node.auditUsers"
-                           :key="auditUser.id"
-                           :label="auditUser.displayName"
-                           :value="auditUser">
-                  <select-item :name="auditUser.username" :comment="auditUser.displayName"></select-item>
+                <el-select v-if="ticketPhase !== null && ticketPhase === 'NEW'"
+                  v-model="node.auditUser" filterable placeholder="选择审批人" value-key="id"
+                  style="display: inline-block; width: 250px; margin-right: 10px">
+                  <el-option v-for="auditUser in node.auditUsers"
+                             :key="auditUser.id"
+                             :label="auditUser.displayName"
+                             :value="auditUser"><select-item :name="auditUser.username"
+                                                             :comment="auditUser.displayName"></select-item>
                 </el-option>
-         </el-select>
-                  <span style="display: inline-block">
+              </el-select>
+               <span style="display: inline-block">
                      <user-avatar :user="node.auditUser" :size="avatar.size"></user-avatar>
-                  </span>
+               </span>
              </el-form-item>
          </span>
       <span v-if="node.type === 1">
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import UserTag from '@/components/opscloud/common/tag/UserTag'
+
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import UserAvatar from '@/components/opscloud/workorder/child/UserAvatar'
 
@@ -49,6 +50,10 @@ export default {
       default: function () {
         return { nodes: [] }
       }
+    },
+    ticketPhase :{
+      type: String,
+      required: false
     }
   },
   data () {

@@ -6,7 +6,8 @@
         <work-order-card @createTicket="createTicket"></work-order-card>
       </el-col>
       <el-col :span="18">
-        <my-ticket-card @editTicket="editTicket"></my-ticket-card>
+        <my-ticket-card @editTicket="editTicket"
+                        @previewTicket="previewTicket"></my-ticket-card>
       </el-col>
     </el-row>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup"
@@ -38,7 +39,7 @@ import RamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/RamPol
 import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicketEditor'
 
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
-import { CREATE_WORK_ORDER_TICKET, GET_WORK_ORDER_TICKET_VIEW } from '@/api/modules/workorder/workorder.ticket.api'
+// import { CREATE_WORK_ORDER_TICKET, GET_WORK_ORDER_TICKET_VIEW } from '@/api/modules/workorder/workorder.ticket.api'
 
 export default {
   data () {
@@ -76,6 +77,9 @@ export default {
      * }
      * @param param
      */
+    previewTicket (ticket) {
+      this.openTicketEditor(ticket.workOrderKey, ticket)
+    },
     createTicket (param) {
       this.openTicketEditor(param.workOrderKey, param.ticket)
     },

@@ -41,6 +41,14 @@ export function SUBMIT_WORK_ORDER_TICKET (data) {
   })
 }
 
+export function APPROVE_WORK_ORDER_TICKET (data) {
+  return request({
+    url: baseUrl + '/approve',
+    method: 'post',
+    data
+  })
+}
+
 export function ADD_WORK_ORDER_TICKET_ENTRY (data) {
   return request({
     url: baseUrl + '/entry/add',

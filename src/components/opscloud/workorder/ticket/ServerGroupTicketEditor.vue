@@ -20,19 +20,39 @@
           </el-card>
         </el-timeline-item>
         <el-timeline-item timestamp="审批选项" placement="top">
-          <workflow-nodes :workflowView="ticketView.workflowView"></workflow-nodes>
+          <workflow-nodes :workflowView="ticketView.workflowView"
+                          :ticketPhase="ticketView.ticketPhase"></workflow-nodes>
         </el-timeline-item>
         <el-timeline-item timestamp="申请说明" placement="top">
-          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ticketView.comment" :disabled="ticketView.ticketPhase !== 'NEW'"></el-input>
+          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ticketView.comment"
+                    :readonly="ticketView.ticketPhase !== 'NEW'"></el-input>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
           <node-view :nodeView="ticketView.nodeView"></node-view>
         </el-timeline-item>
       </el-timeline>
     </div>
-    <div slot="footer" class="dialog-footer">
-      <el-button size="mini" type="primary" :loading="submitting" @click="handleSubmit">提交</el-button>
-      <el-button size="mini" type="primary" :loading="saving" @click="handleSave">暂存</el-button>
+    <div slot="footer" class="dialog-footer" v-if="ticketView !== null">
+      <el-button v-if="ticketView.ticketPhase === 'NEW'"
+                 size="mini" type="primary"
+                 :loading="submitting"
+                 @click="submitTicket">提交
+      </el-button>
+      <el-button v-if="ticketView.ticketPhase === 'NEW'"
+                 size="mini" type="primary"
+                 :loading="saving"
+                 @click="saveTicket">暂存
+      </el-button>
+      <el-button v-if="ticketView.isApproval"
+                 type="success" plain size="mini"
+                 :loading="approving"
+                 @click="approveTicket('AGREE')">同意
+      </el-button>
+      <el-button v-if="ticketView.isApproval"
+                 type="danger" plain size="mini"
+                 :loading="approving"
+                 @click="approveTicket('REJECT')">拒绝
+      </el-button>
       <el-button size="mini" @click="closeEditor">关闭</el-button>
     </div>
   </el-dialog>
@@ -49,7 +69,8 @@ const TableLayout = {
 
 import {
   SAVE_WORK_ORDER_TICKET,
-  SUBMIT_WORK_ORDER_TICKET
+  SUBMIT_WORK_ORDER_TICKET,
+  APPROVE_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
 
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
@@ -61,9 +82,10 @@ export default {
     return {
       ticketView: null,
       tableLayout: TableLayout,
+      approvalComment: '', // 审批说明
       submitting: false,
       saving: false,
-      loading: false
+      approving: false
     }
   },
   name: 'ServerGroupTicketEditor',
@@ -85,7 +107,10 @@ export default {
         _this.$refs.ticketEntryTable.initData(this.ticketView)
       }, 200)
     },
-    handleSubmit () {
+    /**
+     * 提交工单
+     */
+    submitTicket () {
       this.submitting = true
       const requestBody = {
         ticketId: this.ticketView.ticketId,
@@ -102,7 +127,31 @@ export default {
         this.$message.error(res.msg)
       })
     },
-    handleSave () {
+    /**
+     * 审批工单
+     * approvalType: 审批动作
+     */
+    approveTicket (approvalType) {
+      this.approving = true
+      const requestBody = {
+        ticketId: this.ticketView.ticketId,
+        approvalType: approvalType,
+        approvalComment: this.approvalComment
+      }
+      APPROVE_WORK_ORDER_TICKET(requestBody)
+        .then(res => {
+          this.ticketView = res.body
+          this.approving = false
+          this.closeEditor()
+        }).catch((res) => {
+        this.approving = false
+        this.$message.error(res.msg)
+      })
+    },
+    /**
+     * 保存（暂存）工单
+     */
+    saveTicket () {
       this.saving = true
       const requestBody = {
         ticketId: this.ticketView.ticketId,
