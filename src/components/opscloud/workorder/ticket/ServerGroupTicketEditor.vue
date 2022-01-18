@@ -22,8 +22,11 @@
         <el-timeline-item timestamp="审批选项" placement="top">
           <workflow-nodes :workflowView="ticketView.workflowView"></workflow-nodes>
         </el-timeline-item>
-        <el-timeline-item timestamp="工单说明" placement="top" v-if="ticketView.comment !== null">
-          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ticketView.comment"></el-input>
+        <el-timeline-item timestamp="申请说明" placement="top">
+          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ticketView.comment" :disabled="ticketView.ticketPhase !== 'NEW'"></el-input>
+        </el-timeline-item>
+        <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
+          <node-view :nodeView="ticketView.nodeView"></node-view>
         </el-timeline-item>
       </el-timeline>
     </div>
@@ -45,11 +48,13 @@ const TableLayout = {
 }
 
 import {
-  SAVE_WORK_ORDER_TICKET, SUBMIT_WORK_ORDER_TICKET
+  SAVE_WORK_ORDER_TICKET,
+  SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
 
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
+import NodeView from '@/components/opscloud/workorder/child/NodeView'
 
 export default {
   data () {
@@ -64,9 +69,10 @@ export default {
   name: 'ServerGroupTicketEditor',
   props: ['formStatus'],
   components: {
+    NodeView,
     TicketEntrySelector,
     TicketEntryTable,
-    WorkflowNodes
+    WorkflowNodes,
   },
   mixins: [],
   mounted () {
@@ -112,7 +118,7 @@ export default {
         this.$message.error(res.msg)
       })
     },
-    closeEditor(){
+    closeEditor () {
       this.formStatus.visible = false
       this.$emit('close')
     },
