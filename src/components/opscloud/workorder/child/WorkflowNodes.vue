@@ -1,52 +1,66 @@
 <template>
-  <div>
-    <span v-for="node in workflowView.nodes" :key="node.name">
-      <!--节点标题-->
-      <el-divider><b style="font-size: 10px;color: #909399">{{ node.comment }}</b></el-divider>
-      <span v-if="node.type === 0">
-         <el-select v-model="node.auditUser" filterable placeholder="选择审批人" value-key="id"
-                    style="display: inline-block; width: 250px; margin-right: 10px">
-                <el-option
-                  v-for="auditUser in node.auditUsers"
-                  :key="auditUser.id"
-                  :label="auditUser.displayName"
-                  :value="auditUser">
+  <div v-if="workflowView.nodes.length !== 0">
+    <el-card shadow="hover">
+      <el-form ref="form" label-width="80px">
+         <span v-for="node in workflowView.nodes" :key="node.name">
+         <!--节点标题-->
+         <el-divider><b style="font-size: 10px;color: #909399">{{ node.comment }}</b></el-divider>
+           <span v-if="node.type === 0">
+             <el-form-item label="审批人" :required="true">
+                <el-select v-model="node.auditUser" filterable placeholder="选择审批人" value-key="id"
+                           style="display: inline-block; width: 250px; margin-right: 10px">
+                <el-option v-for="auditUser in node.auditUsers"
+                           :key="auditUser.id"
+                           :label="auditUser.displayName"
+                           :value="auditUser">
                   <select-item :name="auditUser.username" :comment="auditUser.displayName"></select-item>
                 </el-option>
          </el-select>
-         <span v-if="node.auditUser !== null" style="display: inline-block">
-           <el-avatar
-             v-if="node.auditUser !== null && node.auditUser.avatar !== null && node.auditUser.avatar !== undefined"
-             :src="node.auditUser.avatar" :size="20"></el-avatar>
-             <user-tag :user="node.auditUser"></user-tag>
+                  <span style="display: inline-block">
+                     <user-avatar :user="node.auditUser" :size="avatar.size"></user-avatar>
+                  </span>
+             </el-form-item>
          </span>
-      </span>
       <span v-if="node.type === 1">
+           <el-form-item label="自动分配">
              <span v-for="auditUser in node.auditUsers" :key="auditUser.id"
                    style="margin-right: 5px;display: inline-block">
-               <el-avatar v-if="auditUser !== null && auditUser.avatar !== null && auditUser.avatar !== undefined"
-                          :src="auditUser.avatar" :size="20"></el-avatar>
-               <user-tag :user="auditUser"></user-tag>
+               <user-avatar :user="auditUser" :size="avatar.size"></user-avatar>
              </span>
+           </el-form-item>
       </span>
     </span>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <script>
 import UserTag from '@/components/opscloud/common/tag/UserTag'
 import SelectItem from '@/components/opscloud/common/SelectItem'
+import UserAvatar from '@/components/opscloud/workorder/child/UserAvatar'
 
 export default {
   name: 'WorkflowNodes',
-  props: ['workflowView'],
+  props: {
+    workflowView: {
+      type: Object,
+      required: false,
+      default: function () {
+        return { nodes: [] }
+      }
+    }
+  },
   data () {
     return {
+      avatar: {
+        size: 20
+      },
       auditUser: ''
     }
   },
   components: {
-    UserTag,
+    UserAvatar,
     SelectItem
   }
 }
