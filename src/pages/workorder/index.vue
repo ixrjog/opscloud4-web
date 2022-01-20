@@ -7,20 +7,32 @@
       </el-col>
       <el-col :span="18">
         <my-ticket-card @editTicket="editTicket"
-                        @previewTicket="previewTicket"></my-ticket-card>
+                        @previewTicket="previewTicket"
+                        @approvalTicket="approvalTicket"
+                        ref="myTicketCard"></my-ticket-card>
       </el-col>
     </el-row>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup"
-                                ref="serverGroupTicketEditor"></server-group-ticket-editor>
+                                ref="serverGroupTicketEditor"
+                                @close="fetchData"></server-group-ticket-editor>
     <application-permission-ticket-editor :formStatus="formStatus.ticket.applicationPermission"
-                                          ref="applicationPermissionTicketEditor"></application-permission-ticket-editor>
+                                          ref="applicationPermissionTicketEditor"
+                                          @close="fetchData"></application-permission-ticket-editor>
     <confluence-ticket-editor :formStatus="formStatus.ticket.confluence"
-                              ref="confluenceTicketEditor"></confluence-ticket-editor>
-    <vpn-ticket-editor :formStatus="formStatus.ticket.vpn" ref="vpnTicketEditor"></vpn-ticket-editor>
-    <nexus-ticket-editor :formStatus="formStatus.ticket.nexus" ref="nexusTicketEditor"></nexus-ticket-editor>
+                              ref="confluenceTicketEditor"
+                              @close="fetchData"></confluence-ticket-editor>
+    <vpn-ticket-editor :formStatus="formStatus.ticket.vpn"
+                       ref="vpnTicketEditor"
+                       @close="fetchData"></vpn-ticket-editor>
+    <nexus-ticket-editor :formStatus="formStatus.ticket.nexus"
+                         ref="nexusTicketEditor"
+                         @close="fetchData"></nexus-ticket-editor>
     <ram-policy-ticket-editor :formStatus="formStatus.ticket.ramPolicy"
-                              ref="ramPolicyTicketEditor"></ram-policy-ticket-editor>
-    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor"></nacos-ticket-editor>
+                              ref="ramPolicyTicketEditor"
+                              @close="fetchData"></ram-policy-ticket-editor>
+    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos"
+                         ref="nacosTicketEditor"
+                         @close="fetchData"></nacos-ticket-editor>
   </d2-container>
 </template>
 
@@ -80,6 +92,9 @@ export default {
     previewTicket (ticket) {
       this.openTicketEditor(ticket.workOrderKey, ticket)
     },
+    approvalTicket (ticket) {
+      this.openTicketEditor(ticket.workOrderKey, ticket)
+    },
     createTicket (param) {
       this.openTicketEditor(param.workOrderKey, param.ticket)
     },
@@ -119,6 +134,9 @@ export default {
         default:
           this.$message.error('工单类型错误或未配置!')
       }
+    },
+    fetchData () {
+      this.$refs.myTicketCard.fetchData()
     }
   }
 }

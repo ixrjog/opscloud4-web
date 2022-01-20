@@ -8,21 +8,18 @@
             <template slot="title">
               {{ group.name }}<i :class="group.icon"></i>
             </template>
-            <el-table :data="group.workOrders" stripe :show-header=false style="width: 100%">
-              <el-table-column label="工单名称">
+<!--            style="width: 100%"-->
+            <el-table :data="group.workOrders" stripe :show-header=false>
+              <el-table-column label="工单" >
                 <template slot-scope="scope">
                   <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"></i>
                   <span style="margin-left: 5px">{{ scope.row.name }}</span>
-                </template>
-              </el-table-column>
-              <el-table-column label="操作" width="160">
-                <template slot-scope="scope">
-                  <el-button type="primary" plain size="mini" @click="createTicket(scope.row)"
-                             v-if="scope.row.status === 0"
-                             :loading="ticketCreating">新建
-                  </el-button>
-                  <el-button type="warning" plain size="mini" v-if="scope.row.status === 1"
-                             :loading="ticketCreating">开发中
+
+                  <el-button :type="scope.row.status === 0 ? 'primary' :'warning'"
+                             style="float: right"
+                             plain size="mini"
+                             @click="createTicket(scope.row)"
+                             :loading="ticketCreating">{{ scope.row.status === 0 ? '新建' : '开发中' }}
                   </el-button>
                 </template>
               </el-table-column>

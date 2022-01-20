@@ -20,6 +20,7 @@
         <el-table-column prop="ticketPhase" label="进度">
           <template slot-scope="scope">
             <el-tag class="filters" :type="scope.row.ticketPhase | toPhaseType" size="small">
+              <i class="el-icon-loading" v-show="scope.row.ticketPhase === 'PROCESSING'"></i>
               {{ scope.row.ticketPhase | toPhaseText }}
             </el-tag>
           </template>
@@ -27,21 +28,23 @@
         <el-table-column prop="ago" label="申请时间"></el-table-column>
         <el-table-column fixed="right" label="操作" width="180">
           <template slot-scope="scope">
-            <el-button type="success" v-if="scope.row.ticketPhase !== 'NEW'"
+            <el-button v-if="scope.row.ticketPhase !== 'NEW' && !scope.row.isApprover"
+                       type="success"
                        plain size="mini"
                        :loading="previewing"
                        @click="previewTicket(scope.row)">查看
             </el-button>
-            <el-button type="primary" v-if="scope.row.ticketPhase === 'NEW'"
+            <el-button v-if="scope.row.ticketPhase === 'NEW'"
+                       type="primary"
                        plain size="mini"
                        :loading="editing"
                        @click="editTicket(scope.row)">编辑
             </el-button>
-            <el-button type="success" v-if="scope.row.isInApproval && scope.row.isAllowApproval" plain size="mini"
+            <el-button v-if="scope.row.isApprover"
+                       type="primary"
+                       plain size="mini"
+                       :loading="approving"
                        @click="approvalTicket(scope.row)">审批
-            </el-button>
-            <el-button type="danger" v-if="scope.row.isAllowDelete" plain size="mini" @click="delTicket(scope.row.id)">
-              删除
             </el-button>
           </template>
         </el-table-column>
@@ -53,8 +56,6 @@
 </template>
 
 <script>
-
-import { mapState, mapActions } from 'vuex'
 
 // Filters
 import { toPhaseText, toPhaseType } from '@/filters/ticket.js'
@@ -96,7 +97,8 @@ export default {
         ticketPhase: ''
       },
       editing: false,
-      previewing: false
+      previewing: false,
+      approving: false
     }
   },
   computed: {},
@@ -120,6 +122,15 @@ export default {
       this.fetchData()
     },
     delTicket (id) {
+    },
+    approvalTicket (row) {
+      this.approving = true
+      GET_WORK_ORDER_TICKET_VIEW(row.id)
+        .then(res => {
+          const ticket = res.body
+          this.$emit('approvalTicket', ticket)
+          this.approving = false
+        })
     },
     previewTicket (row) {
       this.previewing = true

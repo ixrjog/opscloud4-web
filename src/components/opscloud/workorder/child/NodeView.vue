@@ -1,7 +1,8 @@
 <template>
   <div>
     <el-card shadow="hover">
-      <div style="height: 100px">
+<!--      style="height: 100px"-->
+      <div>
         <node-stage :stages="nodeView.stages" :layout="layout" style="font-size: 12px"
                     :selectedStage="selectedNode"/>
       </div>

@@ -30,6 +30,10 @@
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
           <node-view :nodeView="ticketView.nodeView"></node-view>
         </el-timeline-item>
+        <!--        审批意见只展示给当前审批人-->
+        <el-timeline-item timestamp="审批意见" placement="top" v-if="ticketView.isApprover">
+          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="approvalComment"></el-input>
+        </el-timeline-item>
       </el-timeline>
     </div>
     <div slot="footer" class="dialog-footer" v-if="ticketView !== null">
@@ -43,12 +47,12 @@
                  :loading="saving"
                  @click="saveTicket">暂存
       </el-button>
-      <el-button v-if="ticketView.isApproval"
+      <el-button v-if="ticketView.isApprover"
                  type="success" plain size="mini"
                  :loading="approving"
                  @click="approveTicket('AGREE')">同意
       </el-button>
-      <el-button v-if="ticketView.isApproval"
+      <el-button v-if="ticketView.isApprover"
                  type="danger" plain size="mini"
                  :loading="approving"
                  @click="approveTicket('REJECT')">拒绝
@@ -101,6 +105,10 @@ export default {
   },
   methods: {
     initData (ticketView) {
+      this.approvalComment = ''
+      this.submitting = false
+      this.saving = false
+      this.approving = false
       this.ticketView = ticketView
       const _this = this
       this.$nextTick(() => {
