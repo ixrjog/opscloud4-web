@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--    v-loading="configuring" element-loading-text="工单配置中"  element-loading-spinner="el-icon-loading"-->
     <el-table :data="ticketView.ticketEntries" style="width: 100%" v-loading="loading">
       <el-table-column label="实例名称" v-if="tableLayout.instance">
         <template slot-scope="scope">
