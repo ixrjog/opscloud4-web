@@ -14,7 +14,7 @@
         </el-table-column>
         <el-table-column prop="createUser" label="申请人">
           <template slot-scope="scope">
-            <user-avatar :user="scope.row.createUser" :size="20"></user-avatar>
+            <user-avatar :user="scope.row.createUser" :size="24"></user-avatar>
           </template>
         </el-table-column>
         <el-table-column prop="ticketPhase" label="进度">

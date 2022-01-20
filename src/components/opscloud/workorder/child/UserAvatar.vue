@@ -1,8 +1,8 @@
 <template>
-  <div style="margin: auto">
-    <el-avatar v-if="user !== null && user.avatar !== null && user.avatar !== undefined"
-               :src="user.avatar" :size="size"></el-avatar>
-    <user-tag v-if="user !== null" :user="user"></user-tag>
+  <div class="userAvatar">
+      <el-avatar v-if="user !== null && user.avatar !== null && user.avatar !== undefined"
+                 :src="user.avatar" :size="size"></el-avatar>
+      <user-tag v-if="user !== null" :user="user"></user-tag>
   </div>
 </template>
 
@@ -18,6 +18,13 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+.userAvatar {
+  display: flex;
+  .el-avatar {
+    position: relative;
+    bottom: 0;
+    margin-right: 3px;
+  }
+}
 </style>

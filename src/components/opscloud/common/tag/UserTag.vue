@@ -1,5 +1,5 @@
 <template>
-    <el-tag>
+    <el-tag size="small">
       {{ user.username }}&lt;{{ (user.name !== null && user.name !== '') ? user.name + ':' : '' }}{{ user.displayName }}&gt;
     </el-tag>
 </template>
