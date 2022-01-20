@@ -6,20 +6,21 @@
         <div v-for="(group,index) in workOrderView.workOrderGroups" :key="group.id">
           <el-collapse-item :name="index">
             <template slot="title">
-              {{ group.name }}<i :class="group.icon"></i>
+              <i :class="group.icon" style="margin-right: 5px"></i>{{ group.name }}
             </template>
-<!--            style="width: 100%"-->
+            <!--            style="width: 100%"-->
             <el-table :data="group.workOrders" stripe :show-header=false>
-              <el-table-column label="工单" >
+              <el-table-column label="工单">
                 <template slot-scope="scope">
-                  <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"></i>
-                  <span style="margin-left: 5px">{{ scope.row.name }}</span>
-
+                  <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"
+                     style="margin-right: 5px"></i>
+                  <span>{{ scope.row.name }}</span>
                   <el-button :type="scope.row.status === 0 ? 'primary' :'warning'"
                              style="float: right"
                              plain size="mini"
                              @click="createTicket(scope.row)"
-                             :loading="ticketCreating">{{ scope.row.status === 0 ? '新建' : '开发中' }}
+                             :disabled="disabled"
+                             :loading="scope.row.loading">{{ scope.row.status === 0 ? '新建' : '开发中' }}
                   </el-button>
                 </template>
               </el-table-column>
@@ -36,8 +37,6 @@
 import { GET_WORK_ORDER_VIEW } from '@/api/modules/workorder/workorder.api.js'
 import { CREATE_WORK_ORDER_TICKET } from '@/api/modules/workorder/workorder.ticket.api.js'
 
-import ticketFormStatus from './child/ticket.form'
-
 export default {
   name: 'WorkOrderCard',
   props: ['user'],
@@ -45,7 +44,7 @@ export default {
     return {
       activeNames: [0],
       workOrderView: {},
-      ticketCreating: false
+      disabled: false
     }
   },
   components: {},
@@ -54,21 +53,25 @@ export default {
   },
   methods: {
     createTicket (row) {
-      this.ticketCreating = true
+      row.loading = true
+      this.disabled = true
       const workOrderKey = row.workOrderKey
       const requestBody = {
         workOrderKey: workOrderKey
       }
-      CREATE_WORK_ORDER_TICKET(requestBody)
-        .then(res => {
-          const ticket = res.body
-          const param = {
-            workOrderKey: workOrderKey,
-            ticket: ticket
-          }
-          this.$emit('createTicket', param)
-          this.ticketCreating = false
-        })
+      CREATE_WORK_ORDER_TICKET(requestBody).then(res => {
+        const ticket = res.body
+        const param = {
+          workOrderKey: workOrderKey,
+          ticket: ticket
+        }
+        this.$emit('createTicket', param)
+        row.loading = false
+        this.disabled = false
+      }).catch(() => {
+        row.loading = false
+        this.disabled = false
+      })
     },
     fetchData () {
       GET_WORK_ORDER_VIEW()

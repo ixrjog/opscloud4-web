@@ -74,23 +74,21 @@
 </template>
 
 <script>
-
-const TableLayout = {
-  instance: true,
-  entryName: 'Nacos角色',
-}
-
 import TicketAssetEntrySelector from '@/components/opscloud/workorder/child/TicketAssetEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
 import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
-
 import {
   SAVE_WORK_ORDER_TICKET,
   SUBMIT_WORK_ORDER_TICKET,
   APPROVE_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
+
+const TableLayout = {
+  instance: true,
+  entryName: 'Nacos角色'
+}
 
 export default {
   data () {

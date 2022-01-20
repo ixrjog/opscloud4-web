@@ -1,7 +1,7 @@
 <template>
   <div>
-    <span>#{{ id }}</span>
-    <span style="margin-left: 5px">{{ title }}工单</span>
+    <span>No.{{ id }}</span>
+    <span style="margin-left: 5px">{{ title }}</span>
   </div>
 </template>
 
@@ -12,12 +12,12 @@ export default {
     id: {
       type: Number,
       required: false,
-      default: () => 0
+      default: 0
     },
     title: {
       type: String,
       required: false,
-      default: () => ''
+      default: ''
     }
   }
 }

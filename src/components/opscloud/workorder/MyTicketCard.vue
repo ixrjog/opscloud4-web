@@ -31,19 +31,22 @@
             <el-button v-if="scope.row.ticketPhase !== 'NEW' && !scope.row.isApprover"
                        type="success"
                        plain size="mini"
-                       :loading="previewing"
+                       :loading="scope.row.loading"
+                       :disabled="disabled"
                        @click="previewTicket(scope.row)">查看
             </el-button>
             <el-button v-if="scope.row.ticketPhase === 'NEW'"
                        type="primary"
                        plain size="mini"
-                       :loading="editing"
+                       :loading="scope.row.loading"
+                       :disabled="disabled"
                        @click="editTicket(scope.row)">编辑
             </el-button>
             <el-button v-if="scope.row.isApprover"
                        type="primary"
                        plain size="mini"
-                       :loading="approving"
+                       :loading="scope.row.loading"
+                       :disabled="disabled"
                        @click="approvalTicket(scope.row)">审批
             </el-button>
           </template>
@@ -57,7 +60,6 @@
 
 <script>
 
-// Filters
 import { toPhaseText, toPhaseType } from '@/filters/ticket.js'
 
 import {
@@ -68,11 +70,6 @@ import UserAvatar from '@/components/opscloud/workorder/child/UserAvatar'
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import WorkOrderKeyConstants from '@/components/opscloud/common/enums/workorder.key.constants'
-
-// const defaultFormStatus = {
-//   visible: false,
-//   operationType: 1
-// }
 
 export default {
   name: 'MyTicketCard',
@@ -96,9 +93,7 @@ export default {
         workOrderId: '',
         ticketPhase: ''
       },
-      editing: false,
-      previewing: false,
-      approving: false
+      disabled: false
     }
   },
   computed: {},
@@ -124,35 +119,47 @@ export default {
     delTicket (id) {
     },
     approvalTicket (row) {
-      this.approving = true
-      GET_WORK_ORDER_TICKET_VIEW(row.id)
-        .then(res => {
-          const ticket = res.body
-          this.$emit('approvalTicket', ticket)
-          this.approving = false
-        })
+      row.loading = true
+      this.disabled = true
+      GET_WORK_ORDER_TICKET_VIEW(row.id).then(res => {
+        const ticket = res.body
+        this.$emit('approvalTicket', ticket)
+        row.loading = false
+        this.disabled = false
+      }).catch(() => {
+        row.loading = false
+        this.disabled = false
+      })
     },
     previewTicket (row) {
-      this.previewing = true
-      GET_WORK_ORDER_TICKET_VIEW(row.id)
-        .then(res => {
-          const ticket = res.body
-          this.$emit('previewTicket', ticket)
-          this.previewing = false
-        })
+      row.loading = true
+      this.disabled = true
+      GET_WORK_ORDER_TICKET_VIEW(row.id).then(res => {
+        const ticket = res.body
+        this.$emit('previewTicket', ticket)
+        row.loading = false
+        this.disabled = true
+      }).catch(() => {
+        row.loading = false
+        this.disabled = false
+      })
     },
     editTicket (row) {
-      this.editing = true
-      GET_WORK_ORDER_TICKET_VIEW(row.id)
-        .then(res => {
-          const ticket = res.body
-          this.$emit('editTicket', ticket)
-          this.editing = false
-        })
+      row.loading = true
+      this.disabled = true
+      GET_WORK_ORDER_TICKET_VIEW(row.id).then(res => {
+        const ticket = res.body
+        this.$emit('editTicket', ticket)
+        row.loading = false
+        this.disabled = false
+      }).catch(() => {
+        row.loading = false
+        this.disabled = false
+      })
     },
     fetchData () {
       this.table.loading = true
-      let requestBody = {
+      const requestBody = {
         ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize

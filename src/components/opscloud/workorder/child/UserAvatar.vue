@@ -22,8 +22,6 @@ export default {
 .userAvatar {
   display: flex;
   .el-avatar {
-    position: relative;
-    bottom: 0;
     margin-right: 3px;
   }
 }
