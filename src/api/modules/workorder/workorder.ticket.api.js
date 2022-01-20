@@ -17,6 +17,15 @@ export function GET_WORK_ORDER_TICKET_VIEW (ticketId) {
   })
 }
 
+// 查询工单所有配置条目
+export function GET_WORK_ORDER_TICKET_ENTRIES (param) {
+  return request({
+    url: baseUrl + '/entries/get',
+    method: 'get',
+    params: param
+  })
+}
+
 export function CREATE_WORK_ORDER_TICKET (data) {
   return request({
     url: baseUrl + '/create',

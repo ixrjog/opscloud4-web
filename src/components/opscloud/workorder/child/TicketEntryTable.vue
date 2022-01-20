@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="ticketView.ticketEntries" style="width: 100%" v-loading="loading">
+    <el-table :data="ticketEntries" style="width: 100%" v-loading="loading">
       <el-table-column label="实例名称" v-if="tableLayout.instance">
         <template slot-scope="scope">
           <span>{{ scope.row.instance.instanceName }}</span>
@@ -10,7 +10,7 @@
       <el-table-column prop="comment" label="描述">
       </el-table-column>
       <!--      <el-table-column prop="entryResult" label="执行结果" v-if="ticket.ticketPhase === 'FINALIZED'"></el-table-column>-->
-      <el-table-column label="操作" width="120">
+      <el-table-column label="操作" width="120" v-if="ticketPhase === 'NEW'">
         <template slot-scope="scope">
           <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">移除</el-button>
         </template>
@@ -22,23 +22,22 @@
 <script>
 
 import {
-  DELETE_WORK_ORDER_TICKET_ENTRY_BY_ID, GET_WORK_ORDER_TICKET_VIEW
+  DELETE_WORK_ORDER_TICKET_ENTRY_BY_ID, GET_WORK_ORDER_TICKET_ENTRIES
 } from '@/api/modules/workorder/workorder.ticket.api'
 
 export default {
   name: 'TicketEntryTable',
-  props: ['ticketId', 'tableLayout'],
+  props: ['ticketId', 'workOrderKey', 'ticketPhase', 'tableLayout'],
   data () {
     return {
-      ticketView: {
-        ticketEntries: []
-      },
+      ticketEntries: [],
       loading: false
     }
   },
   methods: {
     initData (ticketView) {
-      this.ticketView = ticketView
+      //this.ticketView = ticketView
+      this.ticketEntries = ticketView.ticketEntries
     },
     removeEntry (entry) {
       this.loading = true
@@ -58,9 +57,13 @@ export default {
     },
     fetchData () {
       this.loading = true
-      GET_WORK_ORDER_TICKET_VIEW(this.ticketId)
+      const requestParam = {
+        ticketId: this.ticketId,
+        workOrderKey: this.workOrderKey
+      }
+      GET_WORK_ORDER_TICKET_ENTRIES(requestParam)
         .then(res => {
-          this.ticketView = res.body
+          this.ticketEntries = res.body.ticketEntries
           this.loading = false
         })
     }

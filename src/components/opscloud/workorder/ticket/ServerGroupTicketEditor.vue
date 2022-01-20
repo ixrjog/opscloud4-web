@@ -1,22 +1,26 @@
 <template>
-  <el-dialog :visible.sync="formStatus.visible">
-    <template slot="title">
-      <span v-if="ticketView !== null">
-         <span>#{{ ticketView.ticketId }}</span>
-         <span style="margin-left: 5px">{{ ticketView.workOrder.name }}工单</span>
-      </span>
+  <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '70%': '50%'"
+             :before-close="beforeClose">
+    <!--页眉-->
+    <template slot="title" v-if="ticketView !== null">
+      <ticket-title :id="ticketView.ticketId"
+                    :title="ticketView.workOrder.name"></ticket-title>
     </template>
+    <!--页眉-->
     <!--工单视图-->
-    <div class="block">
-      <el-timeline v-if="ticketView !== null">
+    <div class="block" v-if="ticketView !== null">
+      <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-entry-selector :workOrderTicketId="ticketView === null ? 0: ticketView.ticketId" :entryDesc="'服务器组'"
-                                   ref="entrySelector" @handleNotify="fetchData"></ticket-entry-selector>
-            <ticket-entry-table :ticketId="ticketView === null ? 0: ticketView.ticketId"
+            <ticket-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
+                                   :workOrderTicketId="ticketView.ticketId"
+                                   :entryDesc="tableLayout.entryName"
+                                   @handleNotify="fetchData"></ticket-entry-selector>
+            <ticket-entry-table :ticketId="ticketView.ticketId"
+                                :workOrderKey="ticketView.workOrderKey"
+                                :ticketPhase="ticketView.ticketPhase"
                                 :tableLayout="tableLayout"
-                                ref="ticketEntryTable">
-            </ticket-entry-table>
+                                ref="ticketEntryTable"></ticket-entry-table>
           </el-card>
         </el-timeline-item>
         <el-timeline-item timestamp="审批选项" placement="top">
@@ -24,7 +28,8 @@
                           :ticketPhase="ticketView.ticketPhase"></workflow-nodes>
         </el-timeline-item>
         <el-timeline-item timestamp="申请说明" placement="top">
-          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="ticketView.comment"
+          <el-input type="textarea" :rows="2" v-model="ticketView.comment"
+                    :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
                     :readonly="ticketView.ticketPhase !== 'NEW'"></el-input>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
@@ -36,6 +41,8 @@
         </el-timeline-item>
       </el-timeline>
     </div>
+    <!--工单视图-->
+    <!--页脚-->
     <div slot="footer" class="dialog-footer" v-if="ticketView !== null">
       <el-button v-if="ticketView.ticketPhase === 'NEW'"
                  size="mini" type="primary"
@@ -59,27 +66,28 @@
       </el-button>
       <el-button size="mini" @click="closeEditor">关闭</el-button>
     </div>
+    <!--页脚-->
   </el-dialog>
 </template>
 
 <script>
 
-import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
-
 const TableLayout = {
   instance: false,
-  entryName: '服务器组名称'
+  entryName: '服务器组'
 }
+
+import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
+import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
+import NodeView from '@/components/opscloud/workorder/child/NodeView'
+import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
+import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
 
 import {
   SAVE_WORK_ORDER_TICKET,
   SUBMIT_WORK_ORDER_TICKET,
   APPROVE_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
-
-import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
-import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
-import NodeView from '@/components/opscloud/workorder/child/NodeView'
 
 export default {
   data () {
@@ -95,10 +103,11 @@ export default {
   name: 'ServerGroupTicketEditor',
   props: ['formStatus'],
   components: {
+    TicketTitle,
     NodeView,
     TicketEntrySelector,
     TicketEntryTable,
-    WorkflowNodes,
+    WorkflowNodes
   },
   mixins: [],
   mounted () {
@@ -110,9 +119,8 @@ export default {
       this.saving = false
       this.approving = false
       this.ticketView = ticketView
-      const _this = this
       this.$nextTick(() => {
-        _this.$refs.ticketEntryTable.initData(this.ticketView)
+        this.fetchData()
       }, 200)
     },
     /**
@@ -174,6 +182,15 @@ export default {
         this.saving = false
         this.$message.error(res.msg)
       })
+    },
+    beforeClose (done) {
+      this.$confirm('确定关闭工单?')
+        .then(_ => {
+          done()
+          this.closeEditor()
+        })
+        .catch(_ => {
+        })
     },
     closeEditor () {
       this.formStatus.visible = false
