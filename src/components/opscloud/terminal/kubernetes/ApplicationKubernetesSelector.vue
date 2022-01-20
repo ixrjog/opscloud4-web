@@ -28,8 +28,7 @@
                <el-divider/>
               <!-- Pod容器组 -->
               <div class="podClass">
-               <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name"
-                        style="width: 400px">
+               <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name">
                  <div>
                    <span>
                    <i class="fab fa-artstation" style="margin-right: 2px"></i>
@@ -217,13 +216,13 @@ export default {
 }
 
 .podClass {
-  display: flex;
-
   .el- {
     &card {
       margin-bottom: 10px;
       margin-right: 10px;
       position: relative;
+      width: 400px;
+      display: inline-block;
 
       /deep/ .el-card__body {
         padding: 10px;
