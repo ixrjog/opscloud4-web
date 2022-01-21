@@ -54,6 +54,15 @@ export default [
     }
   },
   {
+    path: '/datasource/instance/aws',
+    name: 'datasource-instance-aws',
+    component: () => import('@/pages/datasource/instance/aws'),
+    meta: {
+      auth: true,
+      title: 'AWS数据源实例'
+    }
+  },
+  {
     path: '/datasource/instance/gitlab',
     name: 'datasource-instance-gitlab',
     component: () => import('@/pages/datasource/instance/gitlab'),
