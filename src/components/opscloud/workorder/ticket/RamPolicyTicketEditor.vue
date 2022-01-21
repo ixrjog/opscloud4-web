@@ -88,7 +88,7 @@ import {
 
 const TableLayout = {
   instance: true,
-  entryName: 'RAM策略',
+  entryName: 'RAM策略'
 }
 
 export default {

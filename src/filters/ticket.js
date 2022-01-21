@@ -1,15 +1,17 @@
+import WorkOrderTicketPhase from '@/components/opscloud/common/enums/workorder.ticket.phase'
+
 export function toPhaseType (value) {
   switch (value) {
-    case 'NEW':
-    case 'CLOSED':
+    case WorkOrderTicketPhase.NEW:
+    case WorkOrderTicketPhase.CLOSED:
       return 'info'
-    case 'TOAUDIT':
+    case WorkOrderTicketPhase.TOAUDIT:
       return 'warning'
-    case 'REJECT':
-    case 'FAILED':
+    case WorkOrderTicketPhase.REJECT:
+    case WorkOrderTicketPhase.FAILED:
       return 'danger'
-    case 'PROCESSING':
-    case 'SUCCESS':
+    case WorkOrderTicketPhase.PROCESSING:
+    case WorkOrderTicketPhase.SUCCESS:
       return 'success'
     default:
       return 'info'
@@ -18,19 +20,19 @@ export function toPhaseType (value) {
 
 export function toPhaseText (value) {
   switch (value) {
-    case 'NEW':
+    case WorkOrderTicketPhase.NEW:
       return '新建'
-    case 'TOAUDIT':
+    case WorkOrderTicketPhase.TOAUDIT:
       return '审批中'
-    case 'REJECT':
+    case WorkOrderTicketPhase.REJECT:
       return '审批拒绝'
-    case 'PROCESSING':
+    case WorkOrderTicketPhase.PROCESSING:
       return '执行中'
-    case 'SUCCESS':
+    case WorkOrderTicketPhase.SUCCESS:
       return '执行成功'
-    case 'FAILED':
+    case WorkOrderTicketPhase.FAILED:
       return '执行失败'
-    case 'CLOSED':
+    case WorkOrderTicketPhase.CLOSED:
       return '关闭'
     default:
       return '未定义'

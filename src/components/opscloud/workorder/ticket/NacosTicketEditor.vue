@@ -1,5 +1,6 @@
 <template>
-  <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '70%': '50%'" :before-close="beforeClose">
+  <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '70%': '50%'"
+             :before-close="beforeClose">
     <!--页眉-->
     <template slot="title">
       <ticket-title v-if="ticketView !== null" :id="ticketView.ticketId"
@@ -137,12 +138,11 @@ export default {
         comment: this.ticketView.comment,
         workflowView: this.ticketView.workflowView
       }
-      SUBMIT_WORK_ORDER_TICKET(requestBody)
-        .then(res => {
-          this.ticketView = res.body
-          this.submitting = false
-          this.closeEditor()
-        }).catch((res) => {
+      SUBMIT_WORK_ORDER_TICKET(requestBody).then(res => {
+        this.ticketView = res.body
+        this.submitting = false
+        this.closeEditor()
+      }).catch((res) => {
         this.submitting = false
         this.$message.error(res.msg)
       })
@@ -158,12 +158,11 @@ export default {
         approvalType: approvalType,
         approvalComment: this.approvalComment
       }
-      APPROVE_WORK_ORDER_TICKET(requestBody)
-        .then(res => {
-          this.ticketView = res.body
-          this.approving = false
-          this.closeEditor()
-        }).catch((res) => {
+      APPROVE_WORK_ORDER_TICKET(requestBody).then(res => {
+        this.ticketView = res.body
+        this.approving = false
+        this.closeEditor()
+      }).catch((res) => {
         this.approving = false
         this.$message.error(res.msg)
       })
@@ -178,23 +177,20 @@ export default {
         comment: this.ticketView.comment,
         workflowView: this.ticketView.workflowView
       }
-      SAVE_WORK_ORDER_TICKET(requestBody)
-        .then(res => {
-          this.ticketView = res.body
-          this.saving = false
-        }).catch((res) => {
+      SAVE_WORK_ORDER_TICKET(requestBody).then(res => {
+        this.ticketView = res.body
+        this.saving = false
+      }).catch((res) => {
         this.saving = false
         this.$message.error(res.msg)
       })
     },
     beforeClose (done) {
-      this.$confirm('确定关闭工单?')
-        .then(_ => {
-          done()
-          this.closeEditor()
-        })
-        .catch(_ => {
-        })
+      this.$confirm('确定关闭工单?').then(_ => {
+        done()
+        this.closeEditor()
+      }).catch(_ => {
+      })
     },
     closeEditor () {
       this.formStatus.visible = false

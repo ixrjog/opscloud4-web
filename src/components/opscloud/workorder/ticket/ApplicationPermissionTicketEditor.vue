@@ -70,14 +70,7 @@
 </template>
 
 <script>
-
 import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
-
-const TableLayout = {
-  instance: false,
-  entryName: '应用',
-}
-
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
@@ -87,6 +80,11 @@ import {
   SAVE_WORK_ORDER_TICKET,
   SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
+
+const TableLayout = {
+  instance: false,
+  entryName: '应用'
+}
 
 export default {
   data () {

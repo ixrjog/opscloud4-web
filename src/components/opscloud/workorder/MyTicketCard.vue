@@ -5,6 +5,17 @@
         <span>我的工单</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="fetchData">刷新</el-button>
       </div>
+      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+        <el-radio-group v-model="queryParam.ticketPhase" size="mini" @change="fetchData">
+          <el-radio-button :label="ticketPhase.ALL">全部</el-radio-button>
+          <el-radio-button :label="ticketPhase.NEW">{{ ticketPhase.NEW | toPhaseText }}</el-radio-button>
+          <el-radio-button :label="ticketPhase.TOAUDIT">{{ ticketPhase.TOAUDIT | toPhaseText }}</el-radio-button>
+          <el-radio-button :label="ticketPhase.REJECT">{{ ticketPhase.REJECT | toPhaseText }}</el-radio-button>
+          <el-radio-button :label="ticketPhase.SUCCESS">{{ ticketPhase.SUCCESS | toPhaseText }}</el-radio-button>
+          <el-radio-button :label="ticketPhase.FAILED">{{ ticketPhase.FAILED | toPhaseText }}</el-radio-button>
+          <el-radio-button :label="ticketPhase.CLOSED">{{ ticketPhase.CLOSED | toPhaseText }}</el-radio-button>
+        </el-radio-group>
+      </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column prop="id" label="编号" width="80"></el-table-column>
         <el-table-column prop="workorder" label="工单">
@@ -61,7 +72,6 @@
 <script>
 
 import { toPhaseText, toPhaseType } from '@/filters/ticket.js'
-
 import {
   GET_WORK_ORDER_TICKET_VIEW,
   QUERY_MY_WORK_ORDER_TICKET_PAGE
@@ -70,6 +80,7 @@ import UserAvatar from '@/components/opscloud/workorder/child/UserAvatar'
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import WorkOrderKeyConstants from '@/components/opscloud/common/enums/workorder.key.constants'
+import WorkOrderTicketPhase from '@/components/opscloud/common/enums/workorder.ticket.phase'
 
 export default {
   name: 'MyTicketCard',
@@ -84,6 +95,7 @@ export default {
           total: 0
         }
       },
+      ticketPhase: WorkOrderTicketPhase,
       workOrderKeyConstants: WorkOrderKeyConstants,
       formStatus: {
         ticket: Object.assign({}, ticketFormStatus.ticket)

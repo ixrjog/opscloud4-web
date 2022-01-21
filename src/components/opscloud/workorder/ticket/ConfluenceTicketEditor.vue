@@ -73,23 +73,20 @@
 <script>
 
 import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
-
-
-const TableLayout = {
-  instance: false,
-  entryName: 'Confluence权限',
-}
-
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
-
 import {
   APPROVE_WORK_ORDER_TICKET,
   SAVE_WORK_ORDER_TICKET,
   SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
+
+const TableLayout = {
+  instance: false,
+  entryName: 'Confluence权限'
+}
 
 export default {
   data () {
@@ -135,12 +132,11 @@ export default {
         comment: this.ticketView.comment,
         workflowView: this.ticketView.workflowView
       }
-      SUBMIT_WORK_ORDER_TICKET(requestBody)
-        .then(res => {
-          this.ticketView = res.body
-          this.submitting = false
-          this.closeEditor()
-        }).catch((res) => {
+      SUBMIT_WORK_ORDER_TICKET(requestBody).then(res => {
+        this.ticketView = res.body
+        this.submitting = false
+        this.closeEditor()
+      }).catch((res) => {
         this.submitting = false
         this.$message.error(res.msg)
       })
@@ -156,12 +152,11 @@ export default {
         approvalType: approvalType,
         approvalComment: this.approvalComment
       }
-      APPROVE_WORK_ORDER_TICKET(requestBody)
-        .then(res => {
-          this.ticketView = res.body
-          this.approving = false
-          this.closeEditor()
-        }).catch((res) => {
+      APPROVE_WORK_ORDER_TICKET(requestBody).then(res => {
+        this.ticketView = res.body
+        this.approving = false
+        this.closeEditor()
+      }).catch((res) => {
         this.approving = false
         this.$message.error(res.msg)
       })
@@ -176,23 +171,20 @@ export default {
         comment: this.ticketView.comment,
         workflowView: this.ticketView.workflowView
       }
-      SAVE_WORK_ORDER_TICKET(requestBody)
-        .then(res => {
-          this.ticketView = res.body
-          this.saving = false
-        }).catch((res) => {
+      SAVE_WORK_ORDER_TICKET(requestBody).then(res => {
+        this.ticketView = res.body
+        this.saving = false
+      }).catch((res) => {
         this.saving = false
         this.$message.error(res.msg)
       })
     },
     beforeClose (done) {
-      this.$confirm('确定关闭工单?')
-        .then(_ => {
-          done()
-          this.closeEditor()
-        })
-        .catch(_ => {
-        })
+      this.$confirm('确定关闭工单?').then(_ => {
+        done()
+        this.closeEditor()
+      }).catch(_ => {
+      })
     },
     closeEditor () {
       this.formStatus.visible = false
