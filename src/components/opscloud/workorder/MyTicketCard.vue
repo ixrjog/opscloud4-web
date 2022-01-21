@@ -138,7 +138,7 @@ export default {
         const ticket = res.body
         this.$emit('previewTicket', ticket)
         row.loading = false
-        this.disabled = true
+        this.disabled = false
       }).catch(() => {
         row.loading = false
         this.disabled = false
