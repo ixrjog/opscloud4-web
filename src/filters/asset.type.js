@@ -38,13 +38,16 @@ export function getAssetTypeText (value) {
       return 'DMS用户'
     case DsInstanceAssetType.ALIYUN.REDIS_INSTANCE:
       return 'Redis实例'
-
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_INSTANCE:
       return 'MQ实例'
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_TOPIC:
       return 'MQ-TOPIC'
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_GROUP:
       return 'MQ-GROUP'
+    case DsInstanceAssetType.AWS.IAM_USER:
+      return 'IAM用户'
+    case DsInstanceAssetType.AWS.IAM_POLICY:
+      return 'IAM策略'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:
