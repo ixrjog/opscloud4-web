@@ -9,8 +9,16 @@
       <el-table-column prop="name" :label="tableLayout.entryName"></el-table-column>
       <el-table-column prop="comment" label="描述">
       </el-table-column>
-      <!--      <el-table-column prop="entryResult" label="执行结果" v-if="ticket.ticketPhase === 'FINALIZED'"></el-table-column>-->
-      <el-table-column label="操作" width="120" v-if="ticketPhase === 'NEW'">
+      <el-table-column label="执行结果" v-if="ticketPhase === orderPhase.SUCCESS || ticketPhase === orderPhase.FAILED">
+        <template slot-scope="scope">
+          <el-tooltip class="item" effect="dark" :content="scope.row.result === null ? 'success': scope.row.result" placement="top-start">
+            <el-tag :type="scope.row.entryStatus === 1 ? 'success' : 'danger'">
+              {{ scope.row.entryStatus === 1 ? '执行成功' : '执行失败' }}
+            </el-tag>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="120" v-if="ticketPhase ===  orderPhase.NEW">
         <template slot-scope="scope">
           <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">移除</el-button>
         </template>
@@ -24,12 +32,14 @@
 import {
   DELETE_WORK_ORDER_TICKET_ENTRY_BY_ID, GET_WORK_ORDER_TICKET_ENTRIES
 } from '@/api/modules/workorder/workorder.ticket.api'
+import WorkOrderTicketPhase from '@/components/opscloud/common/enums/workorder.ticket.phase'
 
 export default {
   name: 'TicketEntryTable',
   props: ['ticketId', 'workOrderKey', 'ticketPhase', 'tableLayout'],
   data () {
     return {
+      orderPhase: WorkOrderTicketPhase,
       ticketEntries: [],
       loading: false
     }
