@@ -22,7 +22,9 @@
       <el-table-column label="操作" width="220">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini" :disabled="scope.row.userSize !== 0" @click="handleRowDel(scope.row)">删除</el-button>
+          <el-button type="danger" plain size="mini" :disabled="scope.row.userSize !== 0"
+                     @click="handleRowDel(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -34,7 +36,7 @@
 
 <script>
 
-import { QUERY_USER_GROUP_PAGE,DELETE_USERGROUP_BY_ID } from '@/api/modules/user/user.group.api.js'
+import { QUERY_USER_GROUP_PAGE, DELETE_USERGROUP_BY_ID } from '@/api/modules/user/user.group.api.js'
 import Pagination from '../common/page/Pagination'
 import UsersTag from '../common/tag/UsersTag'
 import UserGroupEditor from './UserGroupEditor'
@@ -139,12 +141,12 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 </style>

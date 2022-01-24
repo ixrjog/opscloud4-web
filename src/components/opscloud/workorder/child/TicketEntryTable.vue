@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     initData (ticketView) {
-      //this.ticketView = ticketView
       this.ticketEntries = ticketView.ticketEntries
     },
     removeEntry (entry) {
