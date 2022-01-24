@@ -83,6 +83,7 @@ import {
 
 const TableLayout = {
   instance: false,
+  role: true,
   entryName: '应用'
 }
 

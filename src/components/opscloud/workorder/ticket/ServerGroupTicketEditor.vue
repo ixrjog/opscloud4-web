@@ -84,6 +84,7 @@ import {
 
 const TableLayout = {
   instance: false,
+  role: true,
   entryName: '服务器组'
 }
 
