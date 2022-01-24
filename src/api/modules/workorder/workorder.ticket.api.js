@@ -73,6 +73,14 @@ export function DELETE_WORK_ORDER_TICKET_BY_ID (ticketId) {
   })
 }
 
+export function UPDATE_WORK_ORDER_TICKET_ENTRY (data) {
+  return request({
+    url: baseUrl + '/entry/update',
+    method: 'post',
+    data
+  })
+}
+
 export function DELETE_WORK_ORDER_TICKET_ENTRY_BY_ID (ticketEntryId) {
   return request({
     url: baseUrl + '/entry/del?ticketEntryId=' + ticketEntryId,
