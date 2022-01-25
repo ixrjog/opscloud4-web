@@ -46,6 +46,8 @@ export function getAssetTypeText (value) {
       return 'MQ-GROUP'
     case DsInstanceAssetType.AWS.IAM_USER:
       return 'IAM用户'
+    case DsInstanceAssetType.AWS.IAM_ACCESS_KEY:
+      return 'IAM-AK'
     case DsInstanceAssetType.AWS.IAM_POLICY:
       return 'IAM策略'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:

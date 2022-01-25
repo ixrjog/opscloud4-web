@@ -29,7 +29,8 @@ const DsInstanceAssetType = Object.freeze({
   AWS: {
     EC2: 'EC2',
     IAM_POLICY: 'IAM_POLICY',
-    IAM_USER: 'IAM_USER'
+    IAM_USER: 'IAM_USER',
+    IAM_ACCESS_KEY: 'IAM_ACCESS_KEY'
   },
   KUBERNETES: {
     KUBERNETES_NODE: 'KUBERNETES_NODE',
