@@ -9,6 +9,11 @@
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.EC2" :tableLayout="tableLayout.ec2"
                          ref="ec2Table">
               <template v-slot:extend>
+                <el-table-column prop="regionId" label="Region ID">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.regionId }}</span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="properties" label="CPU">
                   <template slot-scope="scope">
                     <span>{{ scope.row.properties.cpu }}</span>
@@ -93,7 +98,7 @@ const tableLayout = {
     },
     zone: {
       alias: '区',
-      show: true
+      show: false
     }
   },
   iamUser: {
