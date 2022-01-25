@@ -23,9 +23,19 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="displayName" label="显示名"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column label="角色">
         <template slot-scope="scope">
+          <el-tag :type=" scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
+            {{ scope.row.userPermission.permissionRole === 'admin' ? '管理员' : '普通用户' }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="email" label="邮箱"></el-table-column>
+      <el-table-column label="操作" width="180">
+        <template slot-scope="scope">
+          <el-button type="primary" plain size="mini" @click="handlerRowSet(scope.row)">
+            {{ scope.row.userPermission.permissionRole === 'admin' ? '降权' : '提权' }}
+          </el-button>
           <el-button type="danger" plain size="mini" @click="handleRowRevoke(scope.row)">解除</el-button>
         </template>
       </el-table-column>
@@ -40,10 +50,8 @@
 import {
   QUERY_BUSINESS_PERMISSION_USER,
   GRANT_USER_BUSINESS_PERMISSION,
-  REVOKE_USER_BUSINESS_PERMISSION,
+  REVOKE_USER_BUSINESS_PERMISSION, SET_USER_BUSINESS_PERMISSION
 } from '@/api/modules/user/user.api.js'
-
-import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 
 import Pagination from '../../common/page/Pagination'
 import SelectItem from '../../common/SelectItem'
@@ -128,6 +136,13 @@ export default {
           this.fetchData()
         })
     },
+    handlerRowSet (row) {
+      SET_USER_BUSINESS_PERMISSION({ id: row.userPermission.id })
+        .then(() => {
+          this.$message.success('设置角色成功!')
+          this.fetchData()
+        })
+    },
     /**
      * 解除
      * @param row
@@ -139,7 +154,7 @@ export default {
         businessId: this.businessId
       }
       REVOKE_USER_BUSINESS_PERMISSION(requestBody)
-        .then(res => {
+        .then(() => {
           this.$message.success('解除成功!')
           this.getUser('')
           this.fetchData()

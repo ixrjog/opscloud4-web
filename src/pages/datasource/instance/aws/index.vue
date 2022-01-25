@@ -3,6 +3,27 @@
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
                                datasource-nane="AWS实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName.name" v-if="instance.id !== null" @tab-click="handleClick">
+      <el-tab-pane label="云服务器" name="cloudServer">
+        <el-tabs tab-position="left" v-model="activeName.ec2" @tab-click="handleClick">
+          <el-tab-pane label="EC2" name="ec2">
+            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.EC2" :tableLayout="tableLayout.ec2"
+                         ref="ec2Table">
+              <template v-slot:extend>
+                <el-table-column prop="properties" label="CPU">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.cpu }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="properties" label="内存(MiB)">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.memory }}</span>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
       <el-tab-pane label="IAM访问控制" name="iam">
         <el-tabs tab-position="left" v-model="activeName.iam" @tab-click="handleClick">
           <el-tab-pane label="IAM用户" name="iamUser">
@@ -55,6 +76,26 @@ import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsC
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 
 const tableLayout = {
+  ec2: {
+    assetId: {
+      alias: '实例ID'
+    },
+    name: {
+      alias: '实例名称'
+    },
+    assetKey: {
+      alias: '私网IP',
+      show: true
+    },
+    assetKey2: {
+      alias: '公网IP',
+      show: true
+    },
+    zone: {
+      alias: '区',
+      show: true
+    }
+  },
   iamUser: {
     assetId: {
       alias: 'User ID'
@@ -103,7 +144,8 @@ export default {
   data () {
     return {
       activeName: {
-        name: 'iam',
+        name: 'cloudServer',
+        ec2: 'ec2',
         iam: 'iamUser'
       },
       instance: {
@@ -125,6 +167,10 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
+      if (tab.name === 'cloudServer' || tab.name === 'ec2') {
+        this.$refs.ec2Table.fetchData()
+        return
+      }
       if (tab.name === 'iamUser' || tab.name === 'iam') {
         this.$refs.iamUserTable.fetchData()
         return
@@ -135,7 +181,7 @@ export default {
     },
     init () {
       setTimeout(() => {
-        this.$refs.iamUserTable.fetchData()
+        this.$refs.ec2Table.fetchData()
       }, 50)
     },
     getAccessKeys (row) {
