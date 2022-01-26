@@ -2,7 +2,7 @@
   <div>
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
-        <span>我的工单</span>
+        <span>{{title}}</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="fetchData">刷新</el-button>
       </div>
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
@@ -60,6 +60,11 @@
                        :disabled="disabled"
                        @click="approvalTicket(scope.row)">审批
             </el-button>
+            <el-button v-if="isAdmin"
+                       type="danger"
+                       plain size="mini"
+                       @click="delTicket(scope.row)">删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -74,7 +79,8 @@
 import { toPhaseText, toPhaseType } from '@/filters/ticket.js'
 import {
   GET_WORK_ORDER_TICKET_VIEW,
-  QUERY_MY_WORK_ORDER_TICKET_PAGE
+  QUERY_WORK_ORDER_TICKET_PAGE,
+  QUERY_MY_WORK_ORDER_TICKET_PAGE, DELETE_WORK_ORDER_TICKET_BY_ID
 } from '@/api/modules/workorder/workorder.ticket.api.js'
 import UserAvatar from '@/components/opscloud/workorder/child/UserAvatar'
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
@@ -84,6 +90,18 @@ import WorkOrderTicketPhase from '@/components/opscloud/common/enums/workorder.t
 
 export default {
   name: 'MyTicketCard',
+  props: {
+    title : {
+      type: String,
+      required: false,
+      default: '我的工单'
+    },
+    isAdmin: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   data () {
     return {
       table: {
@@ -128,7 +146,20 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    delTicket (id) {
+    delTicket (ticket) {
+      this.$confirm('此操作将删除当前工单?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.table.loading = true
+        DELETE_WORK_ORDER_TICKET_BY_ID(ticket.id).then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除!')
+      })
     },
     approvalTicket (row) {
       row.loading = true
@@ -176,12 +207,22 @@ export default {
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
-      QUERY_MY_WORK_ORDER_TICKET_PAGE(requestBody)
-        .then(res => {
-          this.table.data = res.body.data
-          this.table.pagination.total = res.body.totalNum
-          this.table.loading = false
-        })
+      if (this.isAdmin) {
+        QUERY_WORK_ORDER_TICKET_PAGE(requestBody)
+          .then(res => {
+            this.table.data = res.body.data
+            this.table.pagination.total = res.body.totalNum
+            this.table.loading = false
+          })
+      } else {
+        QUERY_MY_WORK_ORDER_TICKET_PAGE(requestBody)
+          .then(res => {
+            this.table.data = res.body.data
+            this.table.pagination.total = res.body.totalNum
+            this.table.loading = false
+          })
+      }
+
     }
   }
 }

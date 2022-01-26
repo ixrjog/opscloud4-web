@@ -70,5 +70,14 @@ export default [
       auth: true,
       title: '集群管理'
     }
+  },
+  {
+    path: '/sys/workorder',
+    name: 'sys/workorder',
+    component: () => import('@/pages/sys/workorder'),
+    meta: {
+      auth: true,
+      title: '工单管理'
+    }
   }
 ]

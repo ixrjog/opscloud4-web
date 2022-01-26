@@ -2,6 +2,14 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/workorder/ticket'
 
+export function QUERY_WORK_ORDER_TICKET_PAGE (data) {
+  return request({
+    url: baseUrl + '/page/query',
+    method: 'post',
+    data
+  })
+}
+
 export function QUERY_MY_WORK_ORDER_TICKET_PAGE (data) {
   return request({
     url: baseUrl + '/my/page/query',
