@@ -18,6 +18,9 @@
       <el-tab-pane label="RAM授权" name="ram" :disabled="user.id === '' || user.id === 0">
         <ram-tab :user="user" ref="ramTab"></ram-tab>
       </el-tab-pane>
+      <el-tab-pane label="IAM授权" name="iam" :disabled="user.id === '' || user.id === 0">
+        <iam-tab :user="user" ref="iamTab"></iam-tab>
+      </el-tab-pane>
       <el-tab-pane label="角色授权" name="role" :disabled="user.id === '' || user.id === 0">
         <role-tab :user="user" ref="roleTab"></role-tab>
       </el-tab-pane>
@@ -37,6 +40,7 @@ import UserInfo from './child/UserInfo'
 import RamTab from '@/components/opscloud/user/child/RamTab'
 import RoleTab from '@/components/opscloud/user/child/RoleTab'
 import UserApplicationTab from '@/components/opscloud/user/child/UserApplicationTab'
+import IamTab from '@/components/opscloud/user/child/IamTab'
 
 export default {
   data () {
@@ -57,6 +61,7 @@ export default {
     UserServerGroupTab,
     UserApplicationTab,
     RamTab,
+    IamTab,
     RoleTab
   },
   methods: {
@@ -82,6 +87,10 @@ export default {
       }
       if (tab.name === 'ram') {
         this.$refs.ramTab.init()
+        return
+      }
+      if (tab.name === 'iam') {
+        this.$refs.iamTab.init()
         return
       }
       if (tab.name === 'role') {

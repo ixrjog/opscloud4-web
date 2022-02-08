@@ -2,12 +2,12 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/user/ram'
 
-export function GET_USER_RAM (username) {
-  return request({
-    url: baseUrl + '/get?username=' + username,
-    method: 'get'
-  })
-}
+// export function GET_USER_RAM (username) {
+//   return request({
+//     url: baseUrl + '/get?username=' + username,
+//     method: 'get'
+//   })
+// }
 
 export function CREATE_RAM_USER (data) {
   return request({

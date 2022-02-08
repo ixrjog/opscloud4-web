@@ -2,8 +2,8 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-form label-width="100px">
-        <el-form-item label="阿里云实例">
-          <el-select v-model="dsInstance" filterable placeholder="选择阿里云实例" style="width: 300px"
+        <el-form-item label="AWS实例">
+          <el-select v-model="dsInstance" filterable placeholder="选择AWS实例" style="width: 300px"
                      value-key="id" @change="selInstance">
             <el-option
               v-for="item in dsInstanceOptions"
@@ -17,9 +17,9 @@
             新建
           </el-button>
         </el-form-item>
-        <el-form-item label="RAM策略">
+        <el-form-item label="IAM策略">
           <el-select v-model.trim="policy" filterable clearable style="width: 300px" :disabled="dsInstance === null"
-                     remote reserve-keyword placeholder="选择RAM策略" value-key="id" :remote-method="getAsset">
+                     remote reserve-keyword placeholder="选择IAM策略" value-key="id" :remote-method="getAsset">
             <el-option
               v-for="item in policyOptions"
               :key="item.id"
@@ -80,7 +80,7 @@ import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.
 import SelectItem from '@/components/opscloud/common/SelectItem'
 
 export default {
-  name: 'ramTable',
+  name: 'iamTable',
   props: ['user'],
   data () {
     return {
@@ -143,7 +143,7 @@ export default {
     },
     getDsInstance () {
       const requestBody = {
-        instanceType: 'ALIYUN',
+        instanceType: 'AWS',
         isActive: true,
         extend: true
       }
@@ -246,7 +246,7 @@ export default {
     },
     fetchData () {
       this.table.loading = true
-      GET_AM({ username: this.user.username, amType: this.dsInstanceAssetType.ALIYUN.RAM_USER })
+      GET_AM({ username: this.user.username, amType: this.dsInstanceAssetType.AWS.IAM_USER })
         .then(res => {
           this.table.data = res.body
           this.table.loading = false
