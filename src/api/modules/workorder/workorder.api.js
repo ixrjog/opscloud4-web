@@ -9,3 +9,12 @@ export function GET_WORK_ORDER_VIEW () {
     method: 'get'
   })
 }
+
+export function QUERY_WORK_ORDER_PAGE (data) {
+  return request({
+    url: baseUrl + '/page/query',
+    method: 'post',
+    data
+  })
+}
+

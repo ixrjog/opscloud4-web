@@ -37,7 +37,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="ago" label="申请时间"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="180">
+        <el-table-column label="操作" width="180">
           <template slot-scope="scope">
             <el-button v-if="scope.row.ticketPhase !== 'NEW' && !scope.row.isApprover"
                        type="success"

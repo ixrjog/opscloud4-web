@@ -2,15 +2,23 @@
   <d2-container>
     <h1>{{ title }}</h1>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="工单票据" name="ticket">
+      <el-tab-pane label="票据" name="ticket">
         <my-ticket-card :isAdmin="true" :title="'所有工单'" @editTicket="editTicket"
                         @previewTicket="previewTicket"
                         @approvalTicket="approvalTicket"
                         ref="myTicketCard"></my-ticket-card>
       </el-tab-pane>
-      <el-tab-pane label="工单配置" name="workorder">
+      <el-tab-pane label="配置" name="workorder">
+        <el-tabs tab-position="left">
+          <el-tab-pane label="群组配置">
+            <work-order-group-table></work-order-group-table>
+          </el-tab-pane>
+          <el-tab-pane label="工单配置">
+            <work-order-table></work-order-table>
+          </el-tab-pane>
+        </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="工单报表" name="report">
+      <el-tab-pane label="报表" name="report">
       </el-tab-pane>
     </el-tabs>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup"
@@ -49,6 +57,8 @@ import RamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/RamPol
 import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicketEditor'
 import WorkOrderKeyConstants from '@/components/opscloud/common/enums/workorder.key.constants'
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
+import WorkOrderGroupTable from '@/components/opscloud/workorder/WorkOrderGroupTable'
+import WorkOrderTable from '@/components/opscloud/workorder/WorkOrderTable'
 
 export default {
   data () {
@@ -62,6 +72,8 @@ export default {
     }
   },
   components: {
+    WorkOrderGroupTable,
+    WorkOrderTable,
     MyTicketCard,
     ServerGroupTicketEditor,
     ApplicationPermissionTicketEditor,
