@@ -58,7 +58,7 @@ export default {
       this.ticketEntries = ticketView.ticketEntries
     },
     updateEntry (entry) {
-      let requestBody = Object.assign({}, entry)
+      const requestBody = Object.assign({}, entry)
       if (requestBody.role === null || requestBody.role === '') {
         requestBody.role = 'admin'
       } else {

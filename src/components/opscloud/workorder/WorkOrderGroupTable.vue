@@ -3,39 +3,35 @@
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.name" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handlerAdd">新增</el-button>
+      <el-button @click="handleAdd">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称"></el-table-column>
-<!--      <el-table-column prop="serverGroupType" label="组类型">-->
-<!--        <template slot-scope="scope">-->
-<!--          <el-tag disable-transitions :style="{ color: scope.row.serverGroupType.color }">-->
-<!--            {{scope.row.serverGroupType.name}}-->
-<!--          </el-tag>-->
-<!--        </template>-->
-<!--      </el-table-column>-->
       <el-table-column prop="seq" label="顺序" width="80">
       </el-table-column>
       <el-table-column prop="workOrderSize" label="工单数量"></el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini"  :disabled="scope.row.serverSize !== 0" @click="handlerRowDel(scope.row)">删除</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
+          <el-button type="danger" plain size="mini" :disabled="scope.row.workOrderSize !== 0"
+                     @click="handleRowDel(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
+    <work-order-group-editor ref="workOrderGroupEditor" :formStatus="formStatus"
+                             @close="fetchData"></work-order-group-editor>
   </div>
 </template>
 
 <script>
 
-
 import Pagination from '../common/page/Pagination'
-import AllowTag from '@/components/opscloud/common/tag/AllowTag'
-import { QUERY_WORK_ORDER_GROUP_PAGE } from '@/api/modules/workorder/workorder.group.api'
+import { DELETE_WORK_ORDER_GROUP, QUERY_WORK_ORDER_GROUP_PAGE } from '@/api/modules/workorder/workorder.group.api'
+import WorkOrderGroupEditor from '@/components/opscloud/workorder/WorkOrderGroupEditor'
 
 export default {
   name: 'WorkOrderGroupTable',
@@ -51,31 +47,27 @@ export default {
         }
       },
       formStatus: {
-        serverGroup: {
-          operationType: true,
-          visible: false,
-          addTitle: '新增服务器组配置',
-          updateTitle: '更新服务器组配置'
-        }
+        operationType: true,
+        visible: false,
+        addTitle: '新增工单群组配置',
+        updateTitle: '更新工单群组配置'
       },
       options: {
         stripe: true
       },
       queryParam: {
         name: '',
-        serverGroupTypeId: '',
         extend: true
       },
       groupTypeOptions: []
     }
   },
   mounted () {
-    this.getGroupType('')
     this.fetchData()
   },
   computed: {},
   components: {
-    AllowTag,
+    WorkOrderGroupEditor,
     Pagination
   },
   methods: {
@@ -87,38 +79,36 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    // handleRowDel (row) {
-    //   this.$confirm('此操作将删除当前配置?', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning'
-    //   }).then(() => {
-    //     DELETE_SERVER_GROUP_BY_ID(row.id).then(res => {
-    //       this.$message.success('删除成功!')
-    //       this.fetchData()
-    //     })
-    //   }).catch(() => {
-    //     this.$message.info('已取消删除!')
-    //   })
-    // },
+    handleRowDel (row) {
+      this.$confirm('此操作将删除当前配置?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DELETE_WORK_ORDER_GROUP({ workOrderGroupId: row.id }).then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除!')
+      })
+    },
     handleAdd () {
-      const serverGroup = {
-        id: '',
-        name: 'group_',
-        allowOrder: true,
-        serverGroupTypeId: '',
-        serverGroupType: {},
-        businessProperty: null,
+      const workOrderGroup = {
+        name: '',
+        groupType: 0,
+        seq: '',
+        icon: '',
         comment: ''
       }
-      //this.$refs.serverGroupEditor.initData(serverGroup)
-      this.formStatus.serverGroup.operationType = true
-      this.formStatus.serverGroup.visible = true
+      this.formStatus.operationType = true
+      this.formStatus.visible = true
+      this.$refs.workOrderGroupEditor.initData(workOrderGroup)
     },
     handleRowUpdate (row) {
-      // this.$refs.serverGroupEditor.initData(Object.assign({}, row))
-      this.formStatus.serverGroup.operationType = false
-      this.formStatus.serverGroup.visible = true
+      this.formStatus.operationType = false
+      this.formStatus.visible = true
+      this.$refs.workOrderGroupEditor.initData(Object.assign({}, row))
     },
     fetchData () {
       this.table.loading = true
@@ -127,12 +117,11 @@ export default {
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
-      QUERY_WORK_ORDER_GROUP_PAGE(requestBody)
-        .then(res => {
-          this.table.data = res.body.data
-          this.table.pagination.total = res.body.totalNum
-          this.table.loading = false
-        })
+      QUERY_WORK_ORDER_GROUP_PAGE(requestBody).then(res => {
+        this.table.data = res.body.data
+        this.table.pagination.total = res.body.totalNum
+        this.table.loading = false
+      })
     }
   }
 }
@@ -154,4 +143,3 @@ export default {
 }
 
 </style>
-

@@ -107,7 +107,7 @@ export default {
     },
     saveInfo () {
       setTimeout(() => {
-        let requestBody = Object.assign({}, this.logMember)
+        const requestBody = Object.assign({}, this.logMember)
         if (this.formStatus.operationType) {
           requestBody.serverGroupId = this.serverGroup.id
           ADD_LOG_MEMBER(requestBody)

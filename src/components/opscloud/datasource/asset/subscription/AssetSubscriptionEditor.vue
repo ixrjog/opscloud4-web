@@ -84,7 +84,6 @@ import {
   ADD_ASSET_SUBSCRIPTION, UPDATE_ASSET_SUBSCRIPTION
 } from '@/api/modules/datasource/datasource.asset.subscription.api.js'
 
-
 const dsTypeOptions = [{
   value: 'ANSIBLE',
   label: 'ANSIBLE'
@@ -210,7 +209,7 @@ export default {
       this.$emit('close')
     },
     handleAdd () {
-      let requestBody = Object.assign({}, this.assetSubscription)
+      const requestBody = Object.assign({}, this.assetSubscription)
       requestBody.instanceUuid = this.instance.uuid
       requestBody.datasourceInstanceAssetId = this.asset.id
       ADD_ASSET_SUBSCRIPTION(requestBody)
@@ -220,13 +219,12 @@ export default {
         })
     },
     handleUpdate () {
-      let requestBody = Object.assign({}, this.assetSubscription)
+      const requestBody = Object.assign({}, this.assetSubscription)
       UPDATE_ASSET_SUBSCRIPTION(requestBody)
         .then(() => {
           this.$message.success('成功')
           this.editing = false
         })
-
     },
     handleSave () {
       if (this.formStatus.operationType) {
@@ -240,39 +238,39 @@ export default {
 </script>
 
 <style scoped lang="less">
-  /*.resDiv {*/
-  /*  .el-tag {*/
-  /*    margin-right: 5px;*/
-  /*  }*/
-  /*}*/
-  .d2-highlight {
-    margin-top: 5px;
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 150%;
+/*.resDiv {*/
+/*  .el-tag {*/
+/*    margin-right: 5px;*/
+/*  }*/
+/*}*/
+.d2-highlight {
+  margin-top: 5px;
+  font-size: 10px;
+  background-color: #dad8c8;
+  line-height: 150%;
+}
+
+.resTabPane {
+  & .el-select {
+    max-width: 80%;
+    width: 80%;
   }
 
-  .resTabPane {
-    & .el-select {
-      max-width: 80%;
-      width: 80%;
+  .el-col {
+    p {
+      margin: 0px;
+      color: #B7B6B6;
+      font-size: 20px;
+      font-weight: bolder;
     }
 
-    .el-col {
-      p {
-        margin: 0px;
-        color: #B7B6B6;
-        font-size: 20px;
-        font-weight: bolder;
-      }
-
-      & .el-tag {
-        margin: 5px 5px 5px 0px;
-      }
-
-      /*& .el-divider {*/
-      /*  margin: 5px 0px;*/
-      /*}*/
+    & .el-tag {
+      margin: 5px 5px 5px 0px;
     }
+
+    /*& .el-divider {*/
+    /*  margin: 5px 0px;*/
+    /*}*/
   }
+}
 </style>

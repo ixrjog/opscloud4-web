@@ -3,15 +3,23 @@
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.name" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column label="群组">
+        <template slot-scope="scope">
+          <span>{{ scope.row.workOrderGroup.name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="workOrderKey" label="KEY"></el-table-column>
-      <el-table-column prop="seq" label="顺序" width="80"></el-table-column>
-      <el-table-column prop="status" label="状态" width="100"></el-table-column>
+      <el-table-column prop="seq" label="顺序"></el-table-column>
+      <el-table-column prop="status" label="状态">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status | toStatusColor">{{ scope.row.status | toStatusDesc }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
-      <el-table-column label="操作" width="280">
+      <el-table-column label="操作" width="180">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
         </template>
@@ -19,15 +27,16 @@
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
+    <work-order-editor ref="workOrderEditor" :formStatus="formStatus" @close="fetchData"></work-order-editor>
   </div>
 </template>
 
 <script>
 
-
 import Pagination from '../common/page/Pagination'
-import AllowTag from '@/components/opscloud/common/tag/AllowTag'
 import { QUERY_WORK_ORDER_PAGE } from '@/api/modules/workorder/workorder.api'
+import { toStatusColor, toStatusDesc } from '@/filters/workorder'
+import WorkOrderEditor from '@/components/opscloud/workorder/WorkOrderEditor'
 
 export default {
   name: 'WorkOrderTable',
@@ -43,12 +52,10 @@ export default {
         }
       },
       formStatus: {
-        serverGroup: {
-          operationType: true,
-          visible: false,
-          addTitle: '新增服务器组配置',
-          updateTitle: '更新服务器组配置'
-        }
+        operationType: true,
+        visible: false,
+        addTitle: '新增工单配置',
+        updateTitle: '更新工单配置'
       },
       options: {
         stripe: true
@@ -62,13 +69,16 @@ export default {
     }
   },
   mounted () {
-    this.getGroupType('')
     this.fetchData()
   },
   computed: {},
   components: {
-    AllowTag,
+    WorkOrderEditor,
     Pagination
+  },
+  filters: {
+    toStatusDesc,
+    toStatusColor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -79,38 +89,10 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    // handleRowDel (row) {
-    //   this.$confirm('此操作将删除当前配置?', '提示', {
-    //     confirmButtonText: '确定',
-    //     cancelButtonText: '取消',
-    //     type: 'warning'
-    //   }).then(() => {
-    //     DELETE_SERVER_GROUP_BY_ID(row.id).then(res => {
-    //       this.$message.success('删除成功!')
-    //       this.fetchData()
-    //     })
-    //   }).catch(() => {
-    //     this.$message.info('已取消删除!')
-    //   })
-    // },
-    handleAdd () {
-      const serverGroup = {
-        id: '',
-        name: 'group_',
-        allowOrder: true,
-        serverGroupTypeId: '',
-        serverGroupType: {},
-        businessProperty: null,
-        comment: ''
-      }
-      //this.$refs.serverGroupEditor.initData(serverGroup)
-      this.formStatus.serverGroup.operationType = true
-      this.formStatus.serverGroup.visible = true
-    },
     handleRowUpdate (row) {
-      // this.$refs.serverGroupEditor.initData(Object.assign({}, row))
-      this.formStatus.serverGroup.operationType = false
-      this.formStatus.serverGroup.visible = true
+      this.formStatus.operationType = false
+      this.formStatus.visible = true
+      this.$refs.workOrderEditor.initData(Object.assign({}, row))
     },
     fetchData () {
       this.table.loading = true
@@ -146,4 +128,3 @@ export default {
 }
 
 </style>
-
