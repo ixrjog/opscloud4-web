@@ -18,3 +18,10 @@ export function QUERY_WORK_ORDER_PAGE (data) {
   })
 }
 
+export function UPDATE_WORK_ORDER (data) {
+  return request({
+    url: baseUrl + '/update',
+    method: 'post',
+    data
+  })
+}

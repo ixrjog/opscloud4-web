@@ -1,0 +1,137 @@
+<template>
+  <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
+             :visible.sync="formStatus.visible" :before-close="closeEditor">
+    <el-form :model="workOrder" label-width="120px">
+      <el-form-item label="名称" :required="true">
+        <el-input v-model.trim="workOrder.name" placeholder="请输入工单名称"></el-input>
+      </el-form-item>
+      <el-form-item label="Key" :required="true">
+        <el-input v-model.trim="workOrder.workOrderKey" disabled></el-input>
+      </el-form-item>
+      <el-form-item label="群组">
+        <el-select v-model="workOrder.workOrderGroupId" filterable remote reserve-keyword placeholder="关键字搜索群组"
+                   :remote-method="getWorkOrderGroups">
+          <el-option
+            v-for="item in workOrderGroupOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="顺序">
+        <el-input v-model.number="workOrder.seq" placeholder="请输入工单顺序"></el-input>
+      </el-form-item>
+      <el-form-item label="图标">
+        <el-input v-model="workOrder.icon" placeholder="请输入工单图标">
+          <i slot="suffix" :class=workOrder.icon aria-hidden="true"></i>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="工作流(YML)" label-position="top">
+        <br/>
+        <d2-highlight v-if="!editing" :code="workOrder.workflow" lang="yaml"></d2-highlight>
+        <editor v-if="editing" v-model="workOrder.workflow" @init="editorInit" lang="yaml" theme="chrome"
+                height="250" :options="options"></editor>
+      </el-form-item>
+      <el-form-item label="状态">
+        <el-radio-group v-model="workOrder.status">
+          <el-radio :label="workOrderStatus.NORMAL.type">{{ workOrderStatus.NORMAL.desc }}</el-radio>
+          <el-radio :label="workOrderStatus.DEVELOPING.type">{{ workOrderStatus.DEVELOPING.desc }}</el-radio>
+          <el-radio :label="workOrderStatus.SYS.type">{{ workOrderStatus.SYS.desc }}</el-radio>
+          <el-radio :label="workOrderStatus.INACTIVE.type">{{ workOrderStatus.INACTIVE.desc }}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="描述">
+        <el-input v-model.trim="workOrder.comment" placeholder="请输入工单描述"></el-input>
+      </el-form-item>
+    </el-form>
+    <div style="width:100%;text-align:center">
+      <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑工作流</el-button>
+      <el-button size="mini" type="primary" @click="handleUpdate" v-show="editing">保存工作流</el-button>
+    </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="formStatus.visible = false">取消</el-button>
+      <el-button type="primary" @click="handleUpdate">保存</el-button>
+    </div>
+  </el-dialog>
+</template>
+
+<script>
+import { QUERY_WORK_ORDER_GROUP_PAGE } from '@/api/modules/workorder/workorder.group.api'
+import { UPDATE_WORK_ORDER } from '@/api/modules/workorder/workorder.api'
+import workorderStatus from '@/components/opscloud/common/enums/workorder.status'
+
+const options = {
+  // vue2-ace-editor编辑器配置自动补全等
+  enableBasicAutocompletion: true,
+  enableSnippets: true,
+  // 自动补全
+  enableLiveAutocompletion: true
+}
+
+export default {
+  data () {
+    return {
+      workOrder: {},
+      workOrderGroupOptions: [],
+      options: options,
+      editing: false,
+      workOrderStatus: workorderStatus
+    }
+  },
+  name: 'WorkOrderEditor',
+  props: ['formStatus'],
+  components: {
+    editor: require('vue2-ace-editor')
+  },
+  methods: {
+    editorInit: function () {
+      // language extension prerequsite...
+      require('brace/ext/language_tools')
+      // language
+      require('brace/mode/yaml')
+      require('brace/theme/chrome')
+      // snippet
+      require('brace/snippets/yaml')
+    },
+    initData (workOrder) {
+      this.workOrder = workOrder
+      this.getWorkOrderGroups('')
+    },
+    getWorkOrderGroups (queryName) {
+      const requestBody = {
+        name: queryName,
+        extend: false,
+        page: 1,
+        length: 10
+      }
+      QUERY_WORK_ORDER_GROUP_PAGE(requestBody).then(res => {
+        this.workOrderGroupOptions = res.body.data
+      })
+    },
+    handleUpdate () {
+      UPDATE_WORK_ORDER(this.workOrder).then(() => {
+        this.$message.success('保存成功')
+        this.editing = false
+      }).catch(() => {
+        this.editing = false
+      })
+    },
+    closeEditor () {
+      this.formStatus.visible = false
+      this.$emit('close')
+    },
+    handleEditing () {
+      this.editing = true
+    }
+  }
+}
+</script>
+
+<style scoped>
+.d2-highlight {
+  font-size: 10px;
+  background-color: #dad8c8;
+  line-height: 110%;
+}
+</style>

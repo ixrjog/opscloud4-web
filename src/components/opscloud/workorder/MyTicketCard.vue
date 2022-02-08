@@ -2,7 +2,7 @@
   <div>
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
-        <span>{{title}}</span>
+        <span>{{ title }}</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="fetchData">刷新</el-button>
       </div>
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
@@ -91,7 +91,7 @@ import WorkOrderTicketPhase from '@/components/opscloud/common/enums/workorder.t
 export default {
   name: 'MyTicketCard',
   props: {
-    title : {
+    title: {
       type: String,
       required: false,
       default: '我的工单'
@@ -222,7 +222,6 @@ export default {
             this.table.loading = false
           })
       }
-
     }
   }
 }
