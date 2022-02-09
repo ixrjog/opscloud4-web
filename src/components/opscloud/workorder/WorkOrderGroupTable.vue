@@ -6,7 +6,12 @@
       <el-button @click="handleAdd">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column label="名称">
+        <template slot-scope="scope">
+          <i :class="scope.row.icon"></i>
+          <span style="margin-left: 10px">{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="seq" label="顺序" width="80">
       </el-table-column>
       <el-table-column prop="workOrderSize" label="工单数量"></el-table-column>

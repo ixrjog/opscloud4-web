@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(user.amMap) !== '{}'">
     <div slot="header" class="clearfix">云账户</div>
-    <div v-for="(value,key) in user.amMap" :key="key" :label="key" class="resDiv">
+    <div v-for="(value,key) in user.amMap" :key="key" :label="key">
       <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAmTypeText }}</b></el-divider>
       <el-table :data="value" style="width: 100%">
         <el-table-column label="实例 / 账户">
@@ -109,25 +109,5 @@ export default {
 
 .amInfo:hover i {
   display: inline;
-}
-
-.resTabPane {
-  & .el-select {
-    max-width: 80%;
-    width: 80%;
-  }
-
-  .el-col {
-    p {
-      margin: 0px;
-      color: #B7B6B6;
-      font-size: 20px;
-      font-weight: bolder;
-    }
-
-    & .el-tag {
-      margin: 5px 5px 5px 0px;
-    }
-  }
 }
 </style>

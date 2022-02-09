@@ -27,6 +27,7 @@
         <user-group-info :userId="user.id"></user-group-info>
         <server-group-info :userId="user.id"></server-group-info>
         <user-ram-user-info-card :user="user"></user-ram-user-info-card>
+        <user-am-info-card :user="user"></user-am-info-card>
         <access-token-info :user="user" @fetchData="fetchData"></access-token-info>
       </el-col>
     </el-row>
@@ -46,6 +47,7 @@ import AccessTokenInfo from '../../../components/opscloud/user/details/UserAcces
 import UserRamUserInfoCard from '../../../components/opscloud/user/details/UserRamUserInfoCard'
 import { QUERY_USER_PAGE } from '@/api/modules/user/user.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
+import UserAmInfoCard from '@/components/opscloud/user/details/UserAmInfoCard'
 
 export default {
   data () {
@@ -68,6 +70,7 @@ export default {
     ApplicationInfo,
     UserGroupInfo,
     AccessTokenInfo,
+    UserAmInfoCard,
     UserRamUserInfoCard
   },
   methods: {

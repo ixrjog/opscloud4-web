@@ -5,7 +5,12 @@
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column label="名称">
+        <template slot-scope="scope">
+          <i :class="scope.row.icon"></i>
+          <span style="margin-left: 10px">{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="群组">
         <template slot-scope="scope">
           <span>{{ scope.row.workOrderGroup.name }}</span>
