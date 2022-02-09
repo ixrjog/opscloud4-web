@@ -4,7 +4,7 @@
     <div slot="header" class="clearfix">阿里云RAM账户</div>
     <el-table :data="user.ramUsers" style="width: 100%">
       <el-table-column label="实例 / 账户">
-        <template slot-scope="props">
+        <template v-slot="props">
           <el-row>
             <span>{{ props.row.instanceName }}</span>
           </el-row>
@@ -22,7 +22,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="accessKeys" label="Access Key">
-        <template slot-scope="props">
+        <template v-scope="props">
           <el-tag v-for="ak in props.row.accessKeys" :key="ak.assetId">
             {{ ak.assetId }}
           </el-tag>
