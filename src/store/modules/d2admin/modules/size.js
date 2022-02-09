@@ -59,7 +59,7 @@ export default {
       state.value = await dispatch('d2admin/db/get', {
         dbName: 'sys',
         path: 'size.value',
-        defaultValue: 'default',
+        defaultValue: 'mini',
         user: true
       }, { root: true })
       // 应用

@@ -1,6 +1,5 @@
 <template>
-  <el-card class="box-card" shadow="hover" style="margin-bottom: 10px"
-           v-if="JSON.stringify(user.amMap) !== '{}'">
+  <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(user.amMap) !== '{}'">
     <div slot="header" class="clearfix">云账户</div>
     <div v-for="(value,key) in user.amMap" :key="key" :label="key" class="resDiv">
       <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAmTypeText }}</b></el-divider>
@@ -85,16 +84,22 @@ export default {
 </script>
 
 <style scoped lang="less">
-.el-card {
-   /deep/ .el-card__body {
-     padding: 10px 10px;
+.el- {
+  &card {
+    /deep/ .el-card__body {
+      padding: 10px 10px;
+    }
+
+    /deep/ .el-card__header {
+      padding: 10px 10px;
+      border-bottom: 1px solid #EBEEF5;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
   }
 
-  /deep/.el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  &divider--horizontal {
+    margin: 12px 0;
   }
 }
 
@@ -105,7 +110,6 @@ export default {
 .amInfo:hover i {
   display: inline;
 }
-
 
 .resTabPane {
   & .el-select {
@@ -124,8 +128,6 @@ export default {
     & .el-tag {
       margin: 5px 5px 5px 0px;
     }
-
-
   }
 }
 </style>
