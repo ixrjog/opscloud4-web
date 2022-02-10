@@ -33,6 +33,9 @@
     <nacos-ticket-editor :formStatus="formStatus.ticket.nacos"
                          ref="nacosTicketEditor"
                          @close="fetchData"></nacos-ticket-editor>
+    <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic"
+                             ref="onsTopicTicketEditor"
+                             @close="fetchData"></ons-topic-ticket-editor>
   </d2-container>
 </template>
 
@@ -50,6 +53,7 @@ import NexusTicketEditor from '@/components/opscloud/workorder/ticket/NexusTicke
 import RamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/RamPolicyTicketEditor'
 import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicketEditor'
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
+import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
 // import { CREATE_WORK_ORDER_TICKET, GET_WORK_ORDER_TICKET_VIEW } from '@/api/modules/workorder/workorder.ticket.api'
 
 export default {
@@ -72,7 +76,8 @@ export default {
     VpnTicketEditor,
     NexusTicketEditor,
     RamPolicyTicketEditor,
-    NacosTicketEditor
+    NacosTicketEditor,
+    OnsTopicTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -129,6 +134,10 @@ export default {
         case this.workOrderKeyConstants.NACOS:
           this.handleOpenTicketEditor(this.formStatus.ticket.nacos)
           this.$refs.nacosTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.ONS_ROCKETMQ_TOPIC:
+          this.handleOpenTicketEditor(this.formStatus.ticket.onsTopic)
+          this.$refs.onsTopicTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

@@ -2,17 +2,29 @@ export default {
   ticket: {
     serverGroup: {
       visible: false
-    }, applicationPermission: {
+    },
+    applicationPermission: {
       visible: false
-    }, confluence: {
+    },
+    confluence: {
       visible: false
-    }, vpn: {
+    },
+    vpn: {
       visible: false
-    }, nexus: {
+    },
+    nexus: {
       visible: false
-    }, ramPolicy: {
+    },
+    ramPolicy: {
       visible: false
-    }, nacos: {
+    },
+    nacos: {
+      visible: false
+    },
+    onsTopic: {
+      visible: false
+    },
+    onsGroup: {
       visible: false
     }
   }
