@@ -2,22 +2,31 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model.trim="queryParam.name" placeholder="名称"/>
+      <el-select v-model.trim="queryParam.workOrderGroupId" filterable clearable
+                 remote reserve-keyword placeholder="搜索工单组" :remote-method="getGroup" @clear="fetchData">
+        <el-option
+          v-for="item in workOrderGroupOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+      <el-table-column prop="seq" label="顺序" width="80"></el-table-column>
+      <el-table-column prop="workOrderGroup" label="群组">
+        <template slot-scope="scope">
+          <span>{{ scope.row.workOrderGroup.name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="名称">
         <template slot-scope="scope">
           <i :class="scope.row.icon"></i>
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="群组">
-        <template slot-scope="scope">
-          <span>{{ scope.row.workOrderGroup.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="workOrderKey" label="KEY"></el-table-column>
-      <el-table-column prop="seq" label="顺序"></el-table-column>
+      <el-table-column prop="workOrderKey" label="Key"></el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | toStatusColor">{{ scope.row.status | toStatusDesc }}</el-tag>
@@ -40,6 +49,7 @@
 
 import Pagination from '../common/page/Pagination'
 import { QUERY_WORK_ORDER_PAGE } from '@/api/modules/workorder/workorder.api'
+import { QUERY_WORK_ORDER_GROUP_PAGE } from '@/api/modules/workorder/workorder.group.api'
 import { toStatusColor, toStatusDesc } from '@/filters/workorder'
 import WorkOrderEditor from '@/components/opscloud/workorder/WorkOrderEditor'
 
@@ -67,14 +77,15 @@ export default {
       },
       queryParam: {
         name: '',
-        serverGroupTypeId: '',
+        workOrderGroupId: '',
         extend: true
       },
-      groupTypeOptions: []
+      workOrderGroupOptions: []
     }
   },
   mounted () {
     this.fetchData()
+    this.getGroup('')
   },
   computed: {},
   components: {
@@ -93,6 +104,18 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    getGroup (name) {
+      const requestBody = {
+        name: name,
+        extend: false,
+        page: 1,
+        length: 10
+      }
+      QUERY_WORK_ORDER_GROUP_PAGE(requestBody)
+        .then(res => {
+          this.workOrderGroupOptions = res.body.data
+        })
     },
     handleRowUpdate (row) {
       this.formStatus.operationType = false
