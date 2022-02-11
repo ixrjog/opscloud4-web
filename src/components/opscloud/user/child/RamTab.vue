@@ -69,8 +69,7 @@
 
 <script>
 
-import { CREATE_RAM_USER, GRANT_RAM_POLICY, REVOKE_RAM_POLICY } from '@/api/modules/user/user.ram.api.js'
-import { GET_AM } from '@/api/modules/user/user.am.api.js'
+import { GET_AM, CREATE_AM_USER, GRANT_AM_POLICY, REVOKE_AM_POLICY } from '@/api/modules/user/user.am.api.js'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import {
@@ -80,7 +79,7 @@ import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.
 import SelectItem from '@/components/opscloud/common/SelectItem'
 
 export default {
-  name: 'ramTable',
+  name: 'ramTab',
   props: ['user'],
   data () {
     return {
@@ -117,13 +116,6 @@ export default {
   },
   components: { SelectItem },
   methods: {
-    // handleRowDel (row) {
-    //   DELETE_USER_BY_ID(row.id)
-    //     .then(res => {
-    //       this.$message.success('删除成功!')
-    //       this.fetchData()
-    //     })
-    // },
     init () {
       this.button = {
         create: {
@@ -177,7 +169,7 @@ export default {
         username: this.user.username
       }
       this.button.create.creating = true
-      CREATE_RAM_USER(requestBody)
+      CREATE_AM_USER(requestBody)
         .then(res => {
           this.fetchData()
           this.button.create.creating = false
@@ -220,7 +212,7 @@ export default {
         username: this.user.username
       }
       this.button.grant.granting = true
-      GRANT_RAM_POLICY(requestBody).then(() => {
+      GRANT_AM_POLICY(requestBody).then(() => {
         this.fetchData()
         this.button.grant.granting = false
       }).catch(() => {
@@ -239,7 +231,7 @@ export default {
         instanceUuid: policy.instanceUuid,
         username: this.user.username
       }
-      REVOKE_RAM_POLICY(requestBody)
+      REVOKE_AM_POLICY(requestBody)
         .then(res => {
           this.fetchData()
         })

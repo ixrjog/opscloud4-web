@@ -56,7 +56,7 @@
         <template slot-scope="scope">
           <div class="tag-group">
             <div v-for="policy in scope.row.policies" :key="policy.assetId">
-              <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
+              <el-tooltip class="item" effect="light" :content="policy.assetKey2" placement="top-start">
                 <el-tag style="margin-left: 5px" closable @close="handleRevokePolicy(policy)">{{ policy.name }}</el-tag>
               </el-tooltip>
             </div>
@@ -69,8 +69,7 @@
 
 <script>
 
-import { CREATE_RAM_USER, GRANT_RAM_POLICY, REVOKE_RAM_POLICY } from '@/api/modules/user/user.ram.api.js'
-import { GET_AM } from '@/api/modules/user/user.am.api.js'
+import { GET_AM, CREATE_AM_USER, GRANT_AM_POLICY, REVOKE_AM_POLICY } from '@/api/modules/user/user.am.api.js'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import {
@@ -80,7 +79,7 @@ import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.
 import SelectItem from '@/components/opscloud/common/SelectItem'
 
 export default {
-  name: 'iamTable',
+  name: 'iamTab',
   props: ['user'],
   data () {
     return {
@@ -177,7 +176,7 @@ export default {
         username: this.user.username
       }
       this.button.create.creating = true
-      CREATE_RAM_USER(requestBody)
+      CREATE_AM_USER(requestBody)
         .then(res => {
           this.fetchData()
           this.button.create.creating = false
@@ -190,7 +189,7 @@ export default {
     },
     getAsset (queryName) {
       const requestBody = {
-        assetType: this.dsInstanceAssetType.ALIYUN.RAM_POLICY,
+        assetType: this.dsInstanceAssetType.AWS.IAM_POLICY,
         extend: true,
         instanceId: this.dsInstance !== {} ? this.dsInstance.id : '',
         instanceUuid: this.dsInstance !== {} ? this.dsInstance.uuid : '',
@@ -213,14 +212,15 @@ export default {
       const requestBody = {
         policy: {
           policyName: this.policy.assetId,
-          policyType: this.policy.assetKey
+          policyType: this.policy.assetKey,
+          policyArn: this.policy.assetKey2
         },
         instanceId: this.dsInstance !== {} ? this.dsInstance.id : '',
         instanceUuid: this.dsInstance !== {} ? this.dsInstance.uuid : '',
         username: this.user.username
       }
       this.button.grant.granting = true
-      GRANT_RAM_POLICY(requestBody).then(() => {
+      GRANT_AM_POLICY(requestBody).then(() => {
         this.fetchData()
         this.button.grant.granting = false
       }).catch(() => {
@@ -234,12 +234,13 @@ export default {
       const requestBody = {
         policy: {
           policyName: policy.assetId,
-          policyType: policy.assetKey
+          policyType: policy.assetKey,
+          policyArn: policy.assetKey2
         },
         instanceUuid: policy.instanceUuid,
         username: this.user.username
       }
-      REVOKE_RAM_POLICY(requestBody)
+      REVOKE_AM_POLICY(requestBody)
         .then(res => {
           this.fetchData()
         })
