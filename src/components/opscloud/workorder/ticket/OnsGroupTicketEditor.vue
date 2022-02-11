@@ -11,9 +11,9 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-ons-topic-form :workOrderTicketId="ticketView.ticketId" ref="ticketOnsTopicForm"
+            <ticket-ons-group-form :workOrderTicketId="ticketView.ticketId" ref="ticketOnsGroupForm"
                                    v-if="ticketView.ticketPhase === 'NEW'"
-                                   @handleNotify="fetchData"></ticket-ons-topic-form>
+                                   @handleNotify="fetchData"></ticket-ons-group-form>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
@@ -22,7 +22,7 @@
               <template v-slot:extend>
                 <el-table-column label="消息类型">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.entry.messageType | getMessageTypeText }}</span>
+                    <span>{{ scope.row.entry.groupType }}</span>
                   </template>
                 </el-table-column>
               </template>
@@ -87,12 +87,11 @@ import {
   SUBMIT_WORK_ORDER_TICKET,
   APPROVE_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
-import TicketOnsTopicForm from '@/components/opscloud/workorder/child/TicketOnsTopicForm'
-import OnsTopicMessageType from '@/components/opscloud/workorder/child/ticket.ons'
+import TicketOnsGroupForm from '@/components/opscloud/workorder/child/TicketOnsGroupForm'
 
 const TableLayout = {
   instance: true,
-  entryName: 'ONS Topic'
+  entryName: 'ONS Group'
 }
 
 export default {
@@ -106,35 +105,17 @@ export default {
       approving: false
     }
   },
-  name: 'OnsTopicTicketEditor',
+  name: 'OnsGroupTicketEditor',
   props: ['formStatus'],
   components: {
     TicketTitle,
     NodeView,
-    TicketOnsTopicForm,
+    TicketOnsGroupForm,
     TicketEntryTable,
     WorkflowNodes
   },
   mixins: [],
   mounted () {
-  },
-  filters: {
-    getMessageTypeText (value) {
-      switch (value) {
-        case OnsTopicMessageType.topic.type0.type:
-          return OnsTopicMessageType.topic.type0.desc
-        case OnsTopicMessageType.topic.type1.type:
-          return OnsTopicMessageType.topic.type1.desc
-        case OnsTopicMessageType.topic.type2.type:
-          return OnsTopicMessageType.topic.type2.desc
-        case OnsTopicMessageType.topic.type4.type:
-          return OnsTopicMessageType.topic.type4.desc
-        case OnsTopicMessageType.topic.type5.type:
-          return OnsTopicMessageType.topic.type5.desc
-        default:
-          return value
-      }
-    }
   },
   methods: {
     initData (ticketView) {
@@ -145,7 +126,7 @@ export default {
       this.approving = false
       this.$nextTick(() => {
         if (this.ticketView.ticketPhase === 'NEW') {
-          this.$refs.ticketOnsTopicForm.getDsInstance()
+          this.$refs.ticketOnsGroupForm.getDsInstance()
         }
         this.fetchData()
       }, 200)
@@ -224,7 +205,7 @@ export default {
       this.$refs.ticketEntryTable.fetchData()
     },
     ticketEntriesChanged (ticketEntries) {
-      this.$refs.ticketOnsTopicForm.initDate(ticketEntries)
+      this.$refs.ticketOnsGroupForm.initDate(ticketEntries)
     }
   }
 }

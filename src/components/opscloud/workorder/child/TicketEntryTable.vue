@@ -12,8 +12,10 @@
           <span>{{ scope.row.role }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述">
-      </el-table-column>
+      <slot name="extend">
+        <!--扩展字段-->
+      </slot>
+      <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="执行结果" v-if="ticketPhase === orderPhase.SUCCESS || ticketPhase === orderPhase.FAILED">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.result === null ? 'success': scope.row.result"
@@ -103,6 +105,7 @@ export default {
       GET_WORK_ORDER_TICKET_ENTRIES(requestParam)
         .then(res => {
           this.ticketEntries = res.body.ticketEntries
+          this.$emit('ticketEntriesChanged', this.ticketEntries)
           this.loading = false
         })
     }
