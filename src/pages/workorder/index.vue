@@ -36,6 +36,9 @@
     <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic"
                              ref="onsTopicTicketEditor"
                              @close="fetchData"></ons-topic-ticket-editor>
+    <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup"
+                             ref="onsGroupTicketEditor"
+                             @close="fetchData"></ons-group-ticket-editor>
   </d2-container>
 </template>
 
@@ -54,7 +57,7 @@ import RamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/RamPol
 import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicketEditor'
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
-// import { CREATE_WORK_ORDER_TICKET, GET_WORK_ORDER_TICKET_VIEW } from '@/api/modules/workorder/workorder.ticket.api'
+import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
 
 export default {
   data () {
@@ -77,7 +80,8 @@ export default {
     NexusTicketEditor,
     RamPolicyTicketEditor,
     NacosTicketEditor,
-    OnsTopicTicketEditor
+    OnsTopicTicketEditor,
+    OnsGroupTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -138,6 +142,10 @@ export default {
         case this.workOrderKeyConstants.ONS_ROCKETMQ_TOPIC:
           this.handleOpenTicketEditor(this.formStatus.ticket.onsTopic)
           this.$refs.onsTopicTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.ONS_ROCKETMQ_GROUP:
+          this.handleOpenTicketEditor(this.formStatus.ticket.onsGroup)
+          this.$refs.onsGroupTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
