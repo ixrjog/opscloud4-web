@@ -46,6 +46,12 @@
     <nacos-ticket-editor :formStatus="formStatus.ticket.nacos"
                          ref="nacosTicketEditor"
                          @close="fetchData"></nacos-ticket-editor>
+    <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic"
+                             ref="onsTopicTicketEditor"
+                             @close="fetchData"></ons-topic-ticket-editor>
+    <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup"
+                             ref="onsGroupTicketEditor"
+                             @close="fetchData"></ons-group-ticket-editor>
   </d2-container>
 </template>
 
@@ -65,6 +71,9 @@ import WorkOrderGroupTable from '@/components/opscloud/workorder/WorkOrderGroupT
 import WorkOrderTable from '@/components/opscloud/workorder/WorkOrderTable'
 import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPolicyTicketEditor'
 import WorkOrderReport from '@/components/opscloud/workorder/WorkOrderReport'
+import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
+import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
+
 
 export default {
   data () {
@@ -89,7 +98,9 @@ export default {
     NexusTicketEditor,
     RamPolicyTicketEditor,
     IamPolicyTicketEditor,
-    NacosTicketEditor
+    NacosTicketEditor,
+    OnsTopicTicketEditor,
+    OnsGroupTicketEditor
   },
   computed: {},
   mounted () {
@@ -159,6 +170,14 @@ export default {
         case this.workOrderKeyConstants.NACOS:
           this.handleOpenTicketEditor(this.formStatus.ticket.nacos)
           this.$refs.nacosTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.ONS_ROCKETMQ_TOPIC:
+          this.handleOpenTicketEditor(this.formStatus.ticket.onsTopic)
+          this.$refs.onsTopicTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.ONS_ROCKETMQ_GROUP:
+          this.handleOpenTicketEditor(this.formStatus.ticket.onsGroup)
+          this.$refs.onsGroupTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

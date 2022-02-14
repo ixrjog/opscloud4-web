@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item label="GID" required>
         <el-input v-model="groupData.groupId" :disabled="added"></el-input>
-        <el-alert type="warning" show-icon :closable="false" style="margin-top: 10px">
+        <el-alert type="info" show-icon :closable="false" style="margin-top: 10px">
           <li>以 “GID_”开头，只能包含大写字母、数字和下划线（_）</li>
           <li>长度限制在 7~64 字符之间</li>
           <li>Group ID 一旦创建，则无法修改</li>
@@ -41,7 +41,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="描述" required>
-        <el-input v-model="groupData.remark" :disabled="added"></el-input>
+        <el-input v-model="groupData.remark" :disabled="added"  placeholder="请输入备注，例如:营销 - 促销优惠"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">添加
@@ -129,7 +129,6 @@ export default {
         return
       }
       this.buttonAdding = true
-      this.added = true
       const requestBody = {
         ...this.ticketEntry,
         instanceUuid: this.ticketEntry.entry.instanceUuid
@@ -141,9 +140,9 @@ export default {
         this.buttonAdding = false
         this.ticketEntry = ''
         this.handleNotify()
+        this.added = true
       }).catch(() => {
         this.buttonAdding = false
-        this.added = false
       })
     },
     getDsInstance () {
