@@ -30,10 +30,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="policies" label="策略" width="400">
-          <template slot-scope="props">
+          <template slot-scope="scope">
             <div class="tag-group">
-              <div v-for="policy in props.row.policies" :key="policy.assetId">
-                <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
+              <div v-for="policy in scope.row.policies" :key="policy.assetId">
+                <el-tooltip class="item" effect="light"
+                            :content="policy.description !==  null? policy.description : policy.assetKey2"
+                            placement="top-start">
                   <el-tag style="margin-left: 5px">{{ policy.name }}</el-tag>
                 </el-tooltip>
               </div>

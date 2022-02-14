@@ -30,6 +30,9 @@
     <ram-policy-ticket-editor :formStatus="formStatus.ticket.ramPolicy"
                               ref="ramPolicyTicketEditor"
                               @close="fetchData"></ram-policy-ticket-editor>
+    <iam-policy-ticket-editor :formStatus="formStatus.ticket.iamPolicy"
+                              ref="iamPolicyTicketEditor"
+                              @close="fetchData"></iam-policy-ticket-editor>
     <nacos-ticket-editor :formStatus="formStatus.ticket.nacos"
                          ref="nacosTicketEditor"
                          @close="fetchData"></nacos-ticket-editor>
@@ -58,6 +61,7 @@ import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicke
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
+import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPolicyTicketEditor'
 
 export default {
   data () {
@@ -79,6 +83,7 @@ export default {
     VpnTicketEditor,
     NexusTicketEditor,
     RamPolicyTicketEditor,
+    IamPolicyTicketEditor,
     NacosTicketEditor,
     OnsTopicTicketEditor,
     OnsGroupTicketEditor
@@ -134,6 +139,10 @@ export default {
         case this.workOrderKeyConstants.RAM_POLICY:
           this.handleOpenTicketEditor(this.formStatus.ticket.ramPolicy)
           this.$refs.ramPolicyTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.IAM_POLICY:
+          this.handleOpenTicketEditor(this.formStatus.ticket.iamPolicy)
+          this.$refs.iamPolicyTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.NACOS:
           this.handleOpenTicketEditor(this.formStatus.ticket.nacos)

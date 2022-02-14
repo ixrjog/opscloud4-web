@@ -18,6 +18,9 @@ export default {
     ramPolicy: {
       visible: false
     },
+    iamPolicy: {
+      visible: false
+    },
     nacos: {
       visible: false
     },
