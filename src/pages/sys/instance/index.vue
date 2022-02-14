@@ -39,8 +39,10 @@
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <el-button :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
-                     @click="handleSetActive(scope.row)">{{ scope.row.isActive ?
-            '无效':'有效'}}
+                     @click="handleSetActive(scope.row)">{{
+              scope.row.isActive ?
+                '无效' : '有效'
+            }}
           </el-button>
 
           <!--          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>-->
@@ -80,7 +82,7 @@ export default {
         extend: true
       },
       businessTypeOptions: [{
-        label:'OPSCLOUD实例',
+        label: 'OPSCLOUD实例',
         value: 'OPSCLOUD'
       }]
     }
@@ -128,18 +130,18 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

@@ -37,17 +37,12 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      // if (tab.name === 'batchTask') {
-      //   this.$refs.ansbileBatchTaskTable.fetchData()
-      //   return
-      // }
       if (tab.name === 'serverTask') {
         this.$refs.serverTaskTable.fetchData()
         return
       }
       if (tab.name === 'playbook') {
         this.$refs.ansiblePlaybookTable.fetchData()
-        return
       }
     }
   }

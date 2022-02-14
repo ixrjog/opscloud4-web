@@ -1,7 +1,7 @@
 <template>
   <d2-container>
     <div>
-      <h1>{{title}}</h1>
+      <h1>{{ title }}</h1>
     </div>
     <div style="margin-bottom: 5px">
       <el-row :gutter="24" style="margin-bottom: 5px">
@@ -33,7 +33,8 @@
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-popconfirm title="确定删除该配置吗？" @confirm="handleRowDel(scope.row)">
             <el-button slot="reference" type="danger" plain size="mini" style="margin-left: 5px"
-                       :disabled="scope.row.quantityUsed !== 0">删除</el-button>
+                       :disabled="scope.row.quantityUsed !== 0">删除
+            </el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -41,13 +42,17 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
     <credential-editor ref="credentialEditor" :formStatus="formStatus.credential" :kind-options="kindOptions"
-                     @close="fetchData"></credential-editor>
+                       @close="fetchData"></credential-editor>
   </d2-container>
 </template>
 
 <script>
 
-import { GET_CREDENTIAL_KIND_OPTIONS,DELETE_CREDENTIAL_BY_ID, QUERY_CREDENTIAL_PAGE } from '@/api/modules/sys/sys.credential.api.js'
+import {
+  GET_CREDENTIAL_KIND_OPTIONS,
+  DELETE_CREDENTIAL_BY_ID,
+  QUERY_CREDENTIAL_PAGE
+} from '@/api/modules/sys/sys.credential.api.js'
 
 import Pagination from '../../../components/opscloud/common/page/Pagination'
 import CredentialKindTag from '../../../components/opscloud/common/tag/CredentialKindTag'
@@ -126,7 +131,7 @@ export default {
       this.formStatus.credential.operationType = false
       this.formStatus.credential.visible = true
     },
-    handleRowDel(row){
+    handleRowDel (row) {
       DELETE_CREDENTIAL_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功!')
@@ -152,18 +157,18 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

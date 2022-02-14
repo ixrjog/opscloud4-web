@@ -5,7 +5,8 @@
       <template>
         <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
           <div slot="header" class="clearfix" style="height: 15px">
-            <el-tag>{{ s.instanceId }}</el-tag><env-tag style="margin-left: 5px" :env="s.env"></env-tag>
+            <el-tag>{{ s.instanceId }}</el-tag>
+            <env-tag style="margin-left: 5px" :env="s.env"></env-tag>
           </div>
           <terminal-item :terminalSetting="terminalSetting"
                          :server="s"
@@ -105,7 +106,7 @@ export default {
      */
     play () {
       setTimeout(() => {
-        this.serverTaskMembers.forEach(s=>{
+        this.serverTaskMembers.forEach(s => {
           this.$refs[`terminal_${s.serverName}`][0].init()
         })
       }, 500)
@@ -179,10 +180,10 @@ export default {
         const messageJson = JSON.parse(message.data)
         if (this.$refs[`terminal_${messageJson.instanceId}`] !== null) {
           try {
-            if(messageJson.error !== ''){
+            if (messageJson.error !== '') {
               this.$refs[`terminal_${messageJson.instanceId}`][0].write(messageJson.error)
             }
-            if(messageJson.output !== ''){
+            if (messageJson.output !== '') {
               this.$refs[`terminal_${messageJson.instanceId}`][0].write(messageJson.output)
             }
           } catch (e) {

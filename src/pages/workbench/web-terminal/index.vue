@@ -1,7 +1,7 @@
 <template>
   <d2-container>
     <div v-show="terminalLayout.terminals.length === 0">
-      <h1>{{title}}</h1>
+      <h1>{{ title }}</h1>
     </div>
     <!--      顶部工具栏-->
     <el-row style="margin-left: -5px">
@@ -168,7 +168,8 @@ export default {
      */
     handleLogout () {
       if (this.terminalLayout.serverNodes.length === 0) return
-      this.terminalLayout.terminals.forEach(serverNode => {
+      this.terminalLayout.terminals.forEach(
+        serverNode => {
           const args = {
             server: serverNode,
             isNotify: false
@@ -210,15 +211,15 @@ export default {
 </script>
 
 <style scoped>
-  .el-button {
-    margin-left: 5px
-  }
+.el-button {
+  margin-left: 5px
+}
 
-  .server-tree {
-    margin-top: 5px;
-  }
+.server-tree {
+  margin-top: 5px;
+}
 
-  .terminal-layout {
-    margin-top: 5px;
-  }
+.terminal-layout {
+  margin-top: 5px;
+}
 </style>

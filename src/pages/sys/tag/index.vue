@@ -19,12 +19,12 @@
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="tagKey" label="标签关键字">
         <template slot-scope="scope">
-          <el-tag disable-transitions :style="{ color: scope.row.color }">{{scope.row.tagKey}}</el-tag>
+          <el-tag disable-transitions :style="{ color: scope.row.color }">{{ scope.row.tagKey }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="businessTypeEnum" label="标签业务类型">
         <template slot-scope="scope">
-          <el-tag disable-transitions>{{scope.row.businessTypeEnum}}</el-tag>
+          <el-tag disable-transitions>{{ scope.row.businessTypeEnum }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="quantityUsed" label="使用数量" width="100"></el-table-column>
@@ -34,7 +34,8 @@
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-popconfirm title="确定删除该配置吗？" @confirm="handleRowDel(scope.row)">
             <el-button slot="reference" type="danger" plain size="mini" style="margin-left: 5px"
-                       :disabled="scope.row.quantityUsed !== 0">删除</el-button>
+                       :disabled="scope.row.quantityUsed !== 0">删除
+            </el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -123,7 +124,7 @@ export default {
       this.formStatus.tag.operationType = false
       this.formStatus.tag.visible = true
     },
-    handleRowDel(row){
+    handleRowDel (row) {
       DELETE_TAG_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功!')
@@ -149,18 +150,18 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>
