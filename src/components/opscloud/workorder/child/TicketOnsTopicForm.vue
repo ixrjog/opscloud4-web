@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item label="Topic" required>
         <el-input v-model="topicData.topic" :disabled="added"></el-input>
-        <el-alert type="warning" show-icon :closable="false" style="margin-top: 10px">
+        <el-alert type="info" show-icon :closable="false" style="margin-top: 10px">
           <li>Topic只能以 “TOPIC_”开头，包含大写英文、数字和下划线（_）</li>
           <li>长度限制在3~64个字符之间</li>
           <li>Topic一旦创建，则无法修改</li>
@@ -42,16 +42,33 @@
           <el-radio-button :label="messageType.type4.type">{{ messageType.type4.desc }}</el-radio-button>
           <el-radio-button :label="messageType.type5.type">{{ messageType.type5.desc }}</el-radio-button>
         </el-radio-group>
-        <el-tooltip class="item" effect="dark" content="消息类型概述，点击查看" placement="right">
-          <el-link
-            href="https://help.aliyun.com/document_detail/172114.html?spm=5176.11065259.1996646101.searchclickresult.38ad6704oBWYjo"
-            :underline="false" target="_blank">
+        <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right">
+          <el-link href="https://help.aliyun.com/document_detail/155952.html" :underline="false" target="_blank">
             <i class="el-icon-info" style="margin-left: 5px;height: 200%"></i>
           </el-link>
         </el-tooltip>
+        <el-alert type="info" show-icon :closable="false" style="margin-top: 10px">
+          <template v-slot:default>
+            <span v-if="topicData.messageType === messageType.type0.type">
+              普通消息适用于系统间异步解耦、削峰填谷、日志服务、大规模机器的Cache同步以及实时计算分析等场景。
+            </span>
+            <span v-if="topicData.messageType === messageType.type1.type">
+              消息根据Sharding Key进行分区，同一个分区的消息将严格按照先入先出的方式进行顺序发布和顺序消费，可以提高并发度和整体性能。
+            </span>
+            <span v-if="topicData.messageType === messageType.type2.type">
+              所有消息将严格按照先入先出的顺序，进行顺序发布和顺序消费。
+            </span>
+            <span v-if="topicData.messageType === messageType.type4.type">
+              事务消息提供类似 X/Open XA 的分布事务功能，通过事务消息能达到分布式事务的最终一致。
+            </span>
+            <span v-if="topicData.messageType === messageType.type5.type">
+              定时消息是指将消息发送到MQ服务端，在消息发送时间（当前时间）之后的指定时间点进行投递，例如指定在2016/01/01 15:00:00进行消息投递。延时消息是指将消息发送到MQ服务端，在消息发送时间（当前时间）之后的指定延迟时间点进行投递，比如指定在消息发送时间的30分钟之后进行投递。
+            </span>
+          </template>
+        </el-alert>
       </el-form-item>
       <el-form-item label="描述" required>
-        <el-input v-model="topicData.remark" :disabled="added"></el-input>
+        <el-input v-model="topicData.remark" :disabled="added" placeholder="请输入备注，例如：用户 - 领券消息"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">添加
@@ -140,7 +157,6 @@ export default {
         return
       }
       this.buttonAdding = true
-      this.added = true
       const requestBody = {
         ...this.ticketEntry,
         instanceUuid: this.ticketEntry.entry.instanceUuid
@@ -151,10 +167,10 @@ export default {
       ADD_WORK_ORDER_TICKET_ENTRY(requestBody).then(() => {
         this.buttonAdding = false
         this.ticketEntry = ''
+        this.added = true
         this.handleNotify()
       }).catch(() => {
         this.buttonAdding = false
-        this.added = false
       })
     },
     getDsInstance () {
