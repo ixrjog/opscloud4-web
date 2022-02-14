@@ -28,11 +28,9 @@
       </el-form-item>
       <el-form-item label="Topic" required>
         <el-input v-model="topicData.topic" :disabled="added"></el-input>
-        <el-alert type="info" show-icon :closable="false" style="margin-top: 10px">
-          <li>Topic只能以 “TOPIC_”开头，包含大写英文、数字和下划线（_）</li>
-          <li>长度限制在3~64个字符之间</li>
-          <li>Topic一旦创建，则无法修改</li>
-        </el-alert>
+        <span style="height: 18px;font-size: 10px;color: #909399">
+          以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,长度限制在3~64个字符之间
+        </span>
       </el-form-item>
       <el-form-item label="消息类型" required>
         <el-radio-group v-model="topicData.messageType" :disabled="added">
@@ -215,6 +213,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 
 </style>
