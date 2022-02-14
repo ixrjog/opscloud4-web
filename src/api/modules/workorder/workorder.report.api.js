@@ -8,3 +8,10 @@ export function QUERY_WORK_ORDER_REPORT_BY_NAME () {
     method: 'get'
   })
 }
+
+export function QUERY_WORK_ORDER_REPORT_BY_MONTH () {
+  return request({
+    url: baseUrl + '/month',
+    method: 'get'
+  })
+}

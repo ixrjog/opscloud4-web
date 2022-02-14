@@ -1,7 +1,7 @@
 <template>
   <d2-container>
     <h1>{{ title }}</h1>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName.name" @tab-click="handleClick">
       <el-tab-pane label="票据" name="ticket">
         <my-ticket-card :isAdmin="true" :title="'所有工单'" @editTicket="editTicket"
                         @previewTicket="previewTicket"
@@ -9,17 +9,17 @@
                         ref="myTicketCard"></my-ticket-card>
       </el-tab-pane>
       <el-tab-pane label="配置" name="workorder">
-        <el-tabs tab-position="left">
-          <el-tab-pane label="群组配置">
-            <work-order-group-table></work-order-group-table>
+        <el-tabs tab-position="left" v-model="activeName.workorder">
+          <el-tab-pane label="群组配置" name="groupMgmt">
+            <work-order-group-table ref="workOrderGroupTable"></work-order-group-table>
           </el-tab-pane>
-          <el-tab-pane label="工单配置">
-            <work-order-table></work-order-table>
+          <el-tab-pane label="工单配置" name="workOrderMgmt">
+            <work-order-table ref="workOrderTable"></work-order-table>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="报表" name="report">
-        <work-order-report></work-order-report>
+        <work-order-report ref="workOrderReport"></work-order-report>
       </el-tab-pane>
     </el-tabs>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup"
@@ -74,12 +74,14 @@ import WorkOrderReport from '@/components/opscloud/workorder/WorkOrderReport'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
 
-
 export default {
   data () {
     return {
       title: '工单管理',
-      activeName: 'ticket',
+      activeName: {
+        name: 'ticket',
+        workorder: 'groupMgmt'
+      },
       workOrderKeyConstants: WorkOrderKeyConstants,
       formStatus: {
         ticket: Object.assign({}, ticketFormStatus.ticket)
@@ -104,12 +106,20 @@ export default {
   },
   computed: {},
   mounted () {
-    // this.fetchData()
   },
   methods: {
     handleClick (tab, event) {
+      console.log(tab)
       if (tab.name === 'ticket') {
         this.$refs.myTicketCard.fetchData()
+      }
+      if (tab.name === 'workorder') {
+        this.$refs.workOrderGroupTable.fetchData()
+        this.$refs.workOrderTable.fetchData()
+        this.$refs.workOrderTable.getGroup('')
+      }
+      if (tab.name === 'report') {
+        this.$refs.workOrderReport.initData()
       }
     },
     handleOpenTicketEditor (formStatus) {

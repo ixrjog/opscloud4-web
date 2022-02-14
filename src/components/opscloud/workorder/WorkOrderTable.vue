@@ -84,8 +84,6 @@ export default {
     }
   },
   mounted () {
-    this.fetchData()
-    this.getGroup('')
   },
   computed: {},
   components: {
