@@ -19,6 +19,7 @@
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="报表" name="report">
+        <work-order-report></work-order-report>
       </el-tab-pane>
     </el-tabs>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup"
@@ -63,6 +64,7 @@ import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import WorkOrderGroupTable from '@/components/opscloud/workorder/WorkOrderGroupTable'
 import WorkOrderTable from '@/components/opscloud/workorder/WorkOrderTable'
 import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPolicyTicketEditor'
+import WorkOrderReport from '@/components/opscloud/workorder/WorkOrderReport'
 
 export default {
   data () {
@@ -76,6 +78,7 @@ export default {
     }
   },
   components: {
+    WorkOrderReport,
     WorkOrderGroupTable,
     WorkOrderTable,
     MyTicketCard,
