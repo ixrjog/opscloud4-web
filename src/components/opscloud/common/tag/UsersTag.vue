@@ -1,7 +1,7 @@
 <template>
   <span class="tag-group">
     <span v-for="item in users" :key="item.id">
-        <el-tag style="margin-left: 5px" :type="tagColor(item)">
+        <el-tag style="margin-left: 5px" :type="tagColor(item)" size="small">
           <span v-if="showName(item)">
             {{ item.username }}&lt;{{ item.displayName }}&gt;
           </span>
