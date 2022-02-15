@@ -1,7 +1,11 @@
 <template>
   <d2-container class="page">
     <d2-page-cover>
-      <d2-icon-svg class="logo" name="d2-admin"/>
+      <div class="d2-page-cover__logo">
+        <d2-icon-svg class="logo" name="d2-admin"/>
+      </div>
+
+      <echarts-font text="opscloud" font-size="60"></echarts-font>
       <template slot="footer">
         <div class="btn-group">
 <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
@@ -27,11 +31,14 @@
 import D2Badge from './components/d2-badge'
 import D2Help from './components/d2-help'
 import D2PageCover from './components/d2-page-cover'
+import EchartsFont from '@/components/opscloud/common/echartsFont'
+
 export default {
   components: {
     D2Badge,
     D2Help,
-    D2PageCover
+    D2PageCover,
+    EchartsFont
   }
 }
 </script>

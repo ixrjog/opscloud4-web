@@ -1,5 +1,5 @@
 <template>
-  <div id="echartsFont" style="height: 100%"></div>
+  <div id="echartsFont" style="height: 100px;width: 400px"></div>
 </template>
 
 <script>
