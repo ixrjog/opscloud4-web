@@ -2,7 +2,7 @@
   <d2-container>
     <template>
       <div>
-        <h1>{{title}}</h1>
+        <h1>{{ title }}</h1>
       </div>
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model.trim="queryParam.envName" clearable placeholder="名称" class="input-bar"/>
@@ -17,10 +17,11 @@
         </el-table-column>
         <el-table-column prop="name" label="终端提示色">
           <template slot-scope="scope">
-            <prompt-color-tag v-if="scope.row.promptColor !== null" :env="scope.row" :promptColorOptions="promptColorOptions"></prompt-color-tag>
+            <prompt-color-tag v-if="scope.row.promptColor !== null" :env="scope.row"
+                              :promptColorOptions="promptColorOptions"></prompt-color-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="envType" label="类型值"></el-table-column>
+        <el-table-column prop="envType" label="类型值" sortable></el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>
         <el-table-column fixed="right" label="操作" width="280">
           <template slot-scope="scope">
@@ -31,7 +32,8 @@
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                   @handleSizeChange="handleSizeChange"></pagination>
-      <env-editor :formStatus="formStatus.env" ref="envEditor" :promptColorOptions="promptColorOptions" @close="fetchData"></env-editor>
+      <env-editor :formStatus="formStatus.env" ref="envEditor" :promptColorOptions="promptColorOptions"
+                  @close="fetchData"></env-editor>
     </template>
   </d2-container>
 </template>
@@ -170,13 +172,13 @@ export default {
 </script>
 
 <style scoped>
-  .input-bar {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.input-bar {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .button {
-    margin-left: 5px;
-  }
+.button {
+  margin-left: 5px;
+}
 </style>

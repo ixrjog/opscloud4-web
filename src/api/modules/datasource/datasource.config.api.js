@@ -3,7 +3,6 @@ import { request } from '@/api/_service.js'
 const baseUrl = '/datasource/config'
 
 export function GET_DATASOURCE_CONFIG_TYPE_OPTIONS () {
-  // 接口请求
   return request({
     url: baseUrl + '/type/options/get',
     method: 'get'
@@ -11,11 +10,18 @@ export function GET_DATASOURCE_CONFIG_TYPE_OPTIONS () {
 }
 
 export function QUERY_DATASOURCE_CONFIG_PAGE (data) {
-  // 接口请求
   return request({
     url: baseUrl + '/page/query',
     method: 'post',
     data
+  })
+}
+
+export function QUERY_DATASOURCE_BY_ID (param) {
+  return request({
+    url: baseUrl + '/id/query',
+    method: 'get',
+    params: param
   })
 }
 

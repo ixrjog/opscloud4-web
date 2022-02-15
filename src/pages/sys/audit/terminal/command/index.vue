@@ -43,7 +43,6 @@ import { FitAddon } from 'xterm-addon-fit'
 // import { FitAddon } from 'xterm-addon-fit'
 // import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 
-
 const theme = {
   foreground: '#f3f3f3',
   background: '#000000',

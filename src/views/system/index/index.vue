@@ -4,8 +4,7 @@
       <div class="d2-page-cover__logo">
         <d2-icon-svg class="logo" name="d2-admin"/>
       </div>
-
-      <echarts-font text="opscloud" font-size="60"></echarts-font>
+      <echarts-font text="OPSCLOUD" :font-size="60"></echarts-font>
       <template slot="footer">
         <div class="btn-group">
 <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
@@ -31,7 +30,7 @@
 import D2Badge from './components/d2-badge'
 import D2Help from './components/d2-help'
 import D2PageCover from './components/d2-page-cover'
-import EchartsFont from '@/components/opscloud/common/echartsFont'
+import EchartsFont from '@/components/opscloud/common/EchartsFont'
 
 export default {
   components: {

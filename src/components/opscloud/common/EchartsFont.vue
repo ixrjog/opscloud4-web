@@ -16,6 +16,11 @@ export default {
       type: Number,
       required: false,
       default: 12
+    },
+    fontColor: {
+      type: String,
+      required: false,
+      default: '#000'
     }
   },
   mounted () {
@@ -38,8 +43,8 @@ export default {
                 lineDash: [0, 200],
                 lineDashOffset: 0,
                 fill: 'transparent',
-                stroke: '#000',
-                lineWidth: 1
+                stroke: this.fontColor,
+                lineWidth: 2
               },
               keyframeAnimation: {
                 duration: 3000,

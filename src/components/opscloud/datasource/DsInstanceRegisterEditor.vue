@@ -44,7 +44,9 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" size="mini" @click="handlerRegister">注册</el-button>
+      <el-button type="primary" size="mini" @click="handlerRegister"
+                 v-text="datasource.instance.uuid === ''? '注册':'更新'">
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -124,17 +126,18 @@ export default {
             type: 'warning'
           })
       }
+      debugger
       this.instanceTypeOptions = instanceType.instanceType
       this.datasource.instance.instanceType = instanceType.name
     },
     handlerRegister () {
       REGISTER_DATASOURCE_INSTANCE(this.datasource.instance)
-        .then(res => {
-          // 返回数据
-          this.$message({
-            message: '注册成功',
-            type: 'success'
-          })
+        .then(() => {
+          if (this.formStatus.operationType) {
+            this.$message.success('注册成功')
+          } else {
+            this.$message.success('更新成功')
+          }
           this.formStatus.visible = false
           this.$emit('close')
         })

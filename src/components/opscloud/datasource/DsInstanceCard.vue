@@ -4,15 +4,31 @@
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
         <my-span :content="instance.instanceName" style="font-size: 14px"></my-span>
-        <el-button type="text" @click="handleOpen">
-          <i class="fas fa-paper-plane"></i>
-        </el-button>
-        <el-button type="text" @click="handleTagEdit">
-          <i class="fas fa-tags"></i>
-        </el-button>
-        <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handleSetConfig">
-          <i class="fas fa-file-import"></i>
-        </el-button>
+        <el-tooltip class="item" effect="dark" content="实例资产详情" placement="top-start">
+          <el-button type="text" @click="handleOpen">
+            <i class="far fa-paper-plane"></i>
+          </el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="实例标签" placement="top-start">
+          <el-button type="text" @click="handleTagEdit">
+            <i class="far fa-bookmark"></i>
+          </el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="下发配置文件" placement="top-start">
+          <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handleSetConfig">
+            <i class="far fa-clipboard"></i>
+          </el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="实例配置文件" placement="top-start">
+          <el-button type="text" @click="handleEditor">
+            <i class="far fa-sun"></i>
+          </el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="实例配置" placement="top-start">
+          <el-button type="text" @click="handleRegistered">
+            <i class="far fa-id-card"></i>
+          </el-button>
+        </el-tooltip>
       </div>
       <el-row v-if="JSON.stringify(instance.tags) !== '[]'">
         <el-col :span="18">
@@ -32,6 +48,14 @@
     </el-card>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType"
                          :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
+    <ds-config-editor :form-status="formStatus.config"
+                      :ds-type-options="dsTypeOptions"
+                      :active-options="activeOptions"
+                      ref="dsConfigEditor"></ds-config-editor>
+    <ds-instance-register-editor :form-status="formStatus.instance"
+                                 :ds-type-options="dsTypeOptions"
+                                 :active-options="activeOptions"
+                                 ref="dsInstanceRegisterEditor"></ds-instance-register-editor>
   </div>
 </template>
 
@@ -42,6 +66,20 @@ import DsAssetTypes from './common/DsAssetTypes'
 import { SET_CONFIG } from '@/api/modules/datasource/datasource.asset.api'
 import DsInstanceIcon from '@/components/opscloud/datasource/common/DsInstanceIcon'
 import MySpan from '@/components/opscloud/common/mySpan'
+import DsConfigEditor from '@/components/opscloud/datasource/DsConfigEditor'
+import {
+  GET_DATASOURCE_CONFIG_TYPE_OPTIONS,
+  QUERY_DATASOURCE_BY_ID
+} from '@/api/modules/datasource/datasource.config.api'
+import DsInstanceRegisterEditor from '@/components/opscloud/datasource/DsInstanceRegisterEditor'
+
+const activeOptions = [{
+  value: true,
+  label: '有效'
+}, {
+  value: false,
+  label: '无效'
+}]
 
 export default {
   name: 'DatasourceInstanceCard',
@@ -49,10 +87,22 @@ export default {
   data () {
     return {
       businessType: 16,
+      dsTypeOptions: [],
+      activeOptions: activeOptions,
       formStatus: {
         businessTag: {
           visible: false,
           title: '编辑数据源实例标签'
+        },
+        config: {
+          visible: false,
+          updateTitle: '更新数据源配置',
+          operationType: true
+        },
+        instance: {
+          visible: false,
+          updateTitle: '更新数据源实例配置',
+          operationType: true
         }
       }
     }
@@ -65,6 +115,8 @@ export default {
     BusinessTagEditor,
     BusinessTags,
     DsInstanceIcon,
+    DsConfigEditor,
+    DsInstanceRegisterEditor,
     MySpan
   },
   methods: {
@@ -74,13 +126,14 @@ export default {
       })
     },
     needSetDSConfig (instanceType) {
-      if (instanceType === 'KUBERNETES') {
-        return true
+      switch (instanceType) {
+        case 'KUBERNETES':
+          return true
+        case 'ANSIBLE':
+          return true
+        default:
+          return false
       }
-      if (instanceType === 'ANSIBLE') {
-        return true
-      }
-      return false
     },
     handleSetConfig () {
       SET_CONFIG({
@@ -96,6 +149,35 @@ export default {
       }
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
+    },
+    getDsTypeOptions () {
+      GET_DATASOURCE_CONFIG_TYPE_OPTIONS()
+        .then(res => {
+          this.dsTypeOptions = res.body.options
+        })
+    },
+    handleEditor () {
+      this.getDsTypeOptions()
+      QUERY_DATASOURCE_BY_ID({ configId: this.instance.configId })
+        .then(({ body }) => {
+          this.$refs.dsConfigEditor.initData(Object.assign({}, body))
+          this.formStatus.config.operationType = false
+          this.formStatus.config.visible = true
+        })
+    },
+    handleRegistered () {
+      this.getDsTypeOptions()
+      QUERY_DATASOURCE_BY_ID({ configId: this.instance.configId })
+        .then(({ body }) => {
+          const datasource = {
+            config: body,
+            instance: this.instance
+          }
+          this.$refs.dsInstanceRegisterEditor.initData(datasource)
+          this.formStatus.instance.operationType = false
+          this.formStatus.instance.visible = true
+        })
+
     }
   }
 }
