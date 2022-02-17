@@ -9,7 +9,9 @@
       <el-table-column prop="name" :label="tableLayout.entryName"></el-table-column>
       <el-table-column label="角色" v-if="tableLayout.role !== null && tableLayout.role">
         <template slot-scope="scope">
-          <span>{{ scope.row.role }}</span>
+          <el-tag :type=" scope.row.role === 'admin' ?   'danger' :'info'">
+            {{ scope.row.role === 'admin' ? '管理员' : '普通用户' }}
+          </el-tag>
         </template>
       </el-table-column>
       <slot name="extend">
@@ -29,7 +31,8 @@
       <el-table-column label="操作" width="160" v-if="ticketPhase === orderPhase.NEW">
         <template slot-scope="scope">
           <el-button v-if="tableLayout.role !== null && tableLayout.role" type="warning" plain size="mini"
-                     @click="updateEntry(scope.row)">角色
+                     @click="updateEntry(scope.row)">
+            {{ scope.row.role === 'admin' ? '降权' : '提权' }}
           </el-button>
           <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">移除</el-button>
         </template>

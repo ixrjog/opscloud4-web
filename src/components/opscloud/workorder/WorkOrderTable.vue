@@ -26,7 +26,11 @@
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="workOrderKey" label="Key"></el-table-column>
+      <el-table-column prop="workOrderKey" label="Key">
+        <template slot-scope="scope">
+          <el-tag size="mini">{{ scope.row.workOrderKey }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | toStatusColor">{{ scope.row.status | toStatusDesc }}</el-tag>

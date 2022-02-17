@@ -1,5 +1,5 @@
 <template>
-  <el-tag size="small">
+  <el-tag size="mini">
       <span v-if="showName(user)">
             {{ user.username }}&lt;{{ user.displayName }}&gt;
           </span>
