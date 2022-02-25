@@ -14,11 +14,7 @@
         </el-card>
       </el-col>
       <el-col :span="6">
-        <el-alert
-          title="Tips"
-          type="info"
-          :closable="false"
-          show-icon>
+        <el-alert title="Tips" type="info" :closable="false">
           <div style="margin-left: 5px">
             <i style="margin-right: 2px" class="fab fa-artstation"></i>Pod(容器组)
           </div>

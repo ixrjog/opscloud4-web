@@ -221,7 +221,7 @@ export default {
       margin-bottom: 10px;
       margin-right: 10px;
       position: relative;
-      width: 400px;
+      width: 450px;
       display: inline-block;
 
       /deep/ .el-card__body {
