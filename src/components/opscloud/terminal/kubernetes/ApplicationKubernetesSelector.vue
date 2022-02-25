@@ -5,7 +5,7 @@
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="应用名称" width="200"></el-table-column>
+      <el-table-column prop="name" label="应用名称" width="180"></el-table-column>
       <el-table-column prop="resources" label="无状态">
         <template slot-scope="scope" v-if="scope.row.resources !== null && scope.row.resources.length > 0">
           <span v-for="resource in scope.row.resources" :key="resource.id">
@@ -218,10 +218,10 @@ export default {
 .podClass {
   .el- {
     &card {
-      margin-bottom: 10px;
-      margin-right: 10px;
+      margin-bottom: 5px;
+      margin-right: 5px;
       position: relative;
-      width: 450px;
+      width: 460px;
       display: inline-block;
 
       /deep/ .el-card__body {

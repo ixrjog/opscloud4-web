@@ -4,8 +4,8 @@
       <h1>{{ title }}</h1>
     </div>
     <!--      应用选择器-->
-    <el-row v-if="layout.status === 0" :gutter="20">
-      <el-col :span="18">
+    <el-row v-if="layout.status === 0" :gutter="10">
+      <el-col :span="19">
         <el-card shadow="hover">
           <div slot="header" class="clearfix">
             <span>应用列表</span>
@@ -13,7 +13,7 @@
           <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>
         </el-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
         <el-alert title="Tips" type="info" :closable="false">
           <div style="margin-left: 5px">
             <i style="margin-right: 2px" class="fab fa-artstation"></i>Pod(容器组)
