@@ -1,5 +1,5 @@
 <template>
-  <el-tag disable-transitions
+  <el-tag disable-transitions size="mini"
           :style="{ backgroundColor: promptColorOptions.find(e=> e.value === env.promptColor).label }">
     <span :style="{color: util.colorReverse(env.color)}">
           {{ promptColorOptions.find(e => e.value === env.promptColor).label }}

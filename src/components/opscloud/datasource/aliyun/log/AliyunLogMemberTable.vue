@@ -10,7 +10,7 @@
       <el-table-column prop="serverGroupName" label="服务器组名称"></el-table-column>
       <el-table-column prop="topic" label="自定义Topic">
         <template slot-scope="props">
-          <el-tag style="margin-left: 5px" v-show="props.row.topic != null && props.row.topic != ''">
+          <el-tag size="mini" style="margin-left: 5px" v-show="props.row.topic != null && props.row.topic != ''">
             {{ props.row.topic }}
           </el-tag>
         </template>
@@ -117,7 +117,7 @@ export default {
       this.$refs.aliyunLogMemberEditor.initData(aliyunLogMember)
     },
     handlePush () {
-       PUSH_LOG_BY_ID(this.queryParam.aliyunLogId)
+      PUSH_LOG_BY_ID(this.queryParam.aliyunLogId)
         .then(res => {
           // 返回数据
           if (res.success) {
@@ -176,32 +176,32 @@ export default {
 </script>
 
 <style scoped>
-  .table-expand {
-    font-size: 0;
-  }
+.table-expand {
+  font-size: 0;
+}
 
-  .table-expand label {
-    width: 150px;
-    color: #99a9bf;
-  }
+.table-expand label {
+  width: 150px;
+  color: #99a9bf;
+}
 
-  .table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
+.table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
 
-  .input {
-    display: inline-block;
-    max-width: 200px;
-    margin-right: 5px;
-  }
+.input {
+  display: inline-block;
+  max-width: 200px;
+  margin-right: 5px;
+}
 
-  .select {
-    margin-right: 5px;
-  }
+.select {
+  margin-right: 5px;
+}
 
-  .button {
-    margin-right: 5px;
-  }
+.button {
+  margin-right: 5px;
+}
 </style>

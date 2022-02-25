@@ -1,5 +1,5 @@
 <template>
-  <el-tag class="filters" :type="whether | getWhetherType" size="small">{{whether| getWhetherText}}</el-tag>
+  <el-tag size="mini" class="filters" :type="whether | getWhetherType">{{whether| getWhetherText}}</el-tag>
 </template>
 
 <script>

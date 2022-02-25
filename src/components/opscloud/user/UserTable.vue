@@ -41,7 +41,9 @@
         <template slot-scope="scope">
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
             <el-divider content-position="left"><b style="color: #9d9fa3">{{ key }}</b></el-divider>
-            <el-tag :type="item.userPermission.permissionRole === 'admin' ? 'danger': '' " v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}</el-tag>
+            <el-tag size="mini" :type="item.userPermission.permissionRole === 'admin' ? 'danger': '' "
+                    v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}
+            </el-tag>
           </div>
           <div v-if="JSON.stringify(scope.row.ramUsers) !== '[]'">
             <el-divider content-position="left"><b style="color: #9d9fa3">RAM</b></el-divider>
@@ -61,7 +63,7 @@
                   <div class="tag-group">
                     <div v-for="policy in props.row.ramPolicies" :key="policy.assetId">
                       <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
-                        <el-tag style="margin-left: 5px">{{ policy.name }}</el-tag>
+                        <el-tag size="mini" style="margin-left: 5px">{{ policy.name }}</el-tag>
                       </el-tooltip>
                     </div>
                   </div>

@@ -11,7 +11,8 @@
           <select-item :name="item.username" :comment="item.displayName"></select-item>
         </el-option>
       </el-select>
-      <el-checkbox label="过滤系统用户" v-model="queryUserParam.filterTag" @change="getUser('')" style="margin-left: 5px"></el-checkbox>
+      <el-checkbox label="过滤系统用户" v-model="queryUserParam.filterTag" @change="getUser('')"
+                   style="margin-left: 5px"></el-checkbox>
       <el-button type="primary" plain size="mini" @click="handleGrant()" :disabled="userId === ''">授权
       </el-button>
     </el-row>
@@ -25,7 +26,7 @@
       <el-table-column prop="displayName" label="显示名"></el-table-column>
       <el-table-column label="角色">
         <template slot-scope="scope">
-          <el-tag :type=" scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
+          <el-tag size="mini" :type="scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '管理员' : '普通用户' }}
           </el-tag>
         </template>

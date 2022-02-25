@@ -6,7 +6,9 @@
         <el-col :span="24">
           <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
             <div slot="header" class="clearfix" style="height: 15px">
-              <span><el-tag>{{ s.name }}</el-tag></span>
+              <span>
+                <el-tag size="mini">{{ s.name }}</el-tag>
+              </span>
               <el-tooltip class="item" effect="light" content="退出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text" @click="handlerLogout(s.name)">
                   <i class="fas fa-sign-out" aria-hidden="true"></i>
@@ -270,10 +272,10 @@ export default {
 </script>
 
 <style>
-  .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+.el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 </style>

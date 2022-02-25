@@ -14,7 +14,7 @@
             </el-table-column>
             <el-table-column label="级别">
               <template slot-scope="scope">
-                <el-tag>{{ scope.row.kind | getProblemSeverityText }}</el-tag>
+                <el-tag size="mini">{{ scope.row.kind | getProblemSeverityText }}</el-tag>
               </template>
             </el-table-column>
           </template>

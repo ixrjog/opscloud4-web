@@ -8,7 +8,7 @@
         <span class="tag-group">
           <span v-for="item in groups" :key="item.id">
               <el-tooltip class="item" effect="light" :content="item.comment || '没有填写'" placement="bottom">
-          <el-tag style="margin-left: 5px">{{ item.name }}</el-tag>
+          <el-tag size="mini" style="margin-left: 5px">{{ item.name }}</el-tag>
         </el-tooltip>
          </span>
        </span>

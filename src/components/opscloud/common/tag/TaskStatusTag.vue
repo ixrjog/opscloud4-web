@@ -1,5 +1,5 @@
 <template>
-  <el-tag class="filters" :type="taskStatus | getTaskStatusType" size="small">
+  <el-tag class="filters" :type="taskStatus | getTaskStatusType" size="mini">
     <i class="el-icon-loading" v-show="taskStatus === 'EXECUTING'"/>{{taskStatus| getTaskStatusText}}
   </el-tag>
 </template>

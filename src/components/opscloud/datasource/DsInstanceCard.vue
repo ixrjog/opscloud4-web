@@ -2,7 +2,7 @@
   <div>
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
-        <el-tag style="margin-right: 5px" size="small">{{ instance.instanceType }}</el-tag>
+        <el-tag style="margin-right: 5px" size="mini">{{ instance.instanceType }}</el-tag>
         <my-span :content="instance.instanceName" style="font-size: 14px"></my-span>
         <el-tooltip class="item" effect="dark" content="实例资产详情" placement="top-start">
           <el-button type="text" @click="handleOpen">

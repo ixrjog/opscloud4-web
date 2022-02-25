@@ -1,5 +1,5 @@
 <template>
-  <el-tag disable-transitions :style="{ color: env.color }">{{env.envName}}</el-tag>
+  <el-tag size="mini" disable-transitions :style="{ color: env.color }">{{env.envName}}</el-tag>
 </template>
 
 <script>

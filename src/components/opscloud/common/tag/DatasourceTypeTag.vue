@@ -1,5 +1,5 @@
 <template>
-  <el-tag size="small">{{ dsTypeOptions.find(e=> e.value === dsType).label }}</el-tag>
+  <el-tag size="mini">{{ dsTypeOptions.find(e=> e.value === dsType).label }}</el-tag>
 </template>
 
 <script>

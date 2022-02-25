@@ -47,7 +47,7 @@
       </el-table-column>
       <el-table-column prop="accessKeys" label="Access Key">
         <template slot-scope="scope">
-          <el-tag v-for="ak in scope.row.accessKeys" :key="ak.assetId">
+          <el-tag size="mini" v-for="ak in scope.row.accessKeys" :key="ak.assetId">
             {{ ak.assetId }}
           </el-tag>
         </template>
@@ -57,7 +57,9 @@
           <div class="tag-group">
             <div v-for="policy in scope.row.policies" :key="policy.assetId">
               <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
-                <el-tag style="margin-left: 5px" closable @close="handleRevokePolicy(policy)">{{ policy.name }}</el-tag>
+                <el-tag size="mini" style="margin-left: 5px" closable @close="handleRevokePolicy(policy)">
+                  {{ policy.name }}
+                </el-tag>
               </el-tooltip>
             </div>
           </div>

@@ -1,8 +1,9 @@
-z<template>
+z
+<template>
   <el-card style="margin-top: 5px" class="box-card" shadow="hover">
     <div slot="header" class="clearfix">
       <span><i class="fas fa-list" aria-hidden="true"></i></span>
-      <el-tag style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
+      <el-tag size="mini" style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
     </div>
     <el-row>
       <el-input v-model="queryParam.name" placeholder="名称" style="display: inline-block; maxWidth: 200px;"/>
@@ -88,18 +89,18 @@ export default {
 
 <style scope>
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
-  .el-card__header {
-    padding: 10px 10px;
-    border-bottom: 1px solid #EBEEF5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+.el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 </style>

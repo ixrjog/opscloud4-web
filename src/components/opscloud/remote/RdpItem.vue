@@ -2,7 +2,9 @@
   <div>
     <el-card>
       <div slot="header" class="clearfix">
-        <span><el-tag>{{ server.name }}-{{ server.serialNumber}}:{{ server.privateIp }}</el-tag></span>
+        <span>
+          <el-tag size="mini">{{ server.name }}-{{ server.serialNumber }}:{{ server.privateIp }}</el-tag>
+        </span>
         <env-tag :env="server.env" class="env"></env-tag>
         <el-button style="float: right; padding: 3px 0" type="text">Logout</el-button>
       </div>
@@ -283,27 +285,27 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    width: 100% !important;
-  }
+.el-input {
+  width: 100% !important;
+}
 
-  .el-select {
-    width: 100% !important;
-  }
+.el-select {
+  width: 100% !important;
+}
 
-  .el-main {
-    padding: 4px;
-  }
+.el-main {
+  padding: 4px;
+}
 
-  .display {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
+.display {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
 
-  .viewport {
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
-    width: 1280px;
-    height: 640px;
-  }
+.viewport {
+  /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
+  width: 1280px;
+  height: 640px;
+}
 </style>

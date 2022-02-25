@@ -3,7 +3,9 @@
     <h1>会话播放</h1>
     <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
       <div slot="header" class="clearfix" style="height: 15px">
-        <span><el-tag>{{ sessionInstance.instanceId }}</el-tag></span>
+        <span>
+          <el-tag size="mini">{{ sessionInstance.instanceId }}</el-tag>
+        </span>
         <el-tooltip class="item" effect="light" content="关闭" placement="top-start">
           <el-button style="float: right; padding: 3px 0" type="text"
                      @click="handleClose">

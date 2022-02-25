@@ -9,7 +9,7 @@
       <el-table-column prop="id" label="类型ID"></el-table-column>
       <el-table-column prop="name" label="名称">
         <template slot-scope="scope">
-          <el-tag disable-transitions :style="{ color: scope.row.color }">{{scope.row.name}}</el-tag>
+          <el-tag size="mini" disable-transitions :style="{ color: scope.row.color }">{{ scope.row.name }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="serverGroupSize" label="服务器组数量"></el-table-column>
@@ -137,13 +137,13 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

@@ -28,7 +28,7 @@
       </el-row>
     </el-popover>
     <span v-popover:pop>
-      <el-tag type="info" class="icon-tag">
+      <el-tag type="info" class="icon-tag" size="mini">
         <i :class="icon"></i>
       </el-tag>
       <span style="font-size: 10px;">{{icon}}</span>

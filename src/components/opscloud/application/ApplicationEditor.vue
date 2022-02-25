@@ -93,7 +93,7 @@
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small" closable @close="handleResUnbind(item.id)"><span
+                <el-tag size="mini" closable @close="handleResUnbind(item.id)"><span
                   v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}</el-tag>
               </el-tooltip>
             </span>

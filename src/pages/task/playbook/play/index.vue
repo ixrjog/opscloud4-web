@@ -5,7 +5,7 @@
       <template>
         <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
           <div slot="header" class="clearfix" style="height: 15px">
-            <el-tag>{{ s.instanceId }}</el-tag>
+            <el-tag size="mini">{{ s.instanceId }}</el-tag>
             <env-tag style="margin-left: 5px" :env="s.env"></env-tag>
           </div>
           <terminal-item :terminalSetting="terminalSetting"

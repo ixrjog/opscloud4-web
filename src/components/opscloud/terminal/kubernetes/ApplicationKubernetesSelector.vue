@@ -12,7 +12,7 @@
             <el-card shadow="never" class="deploymentClass">
                <div style="margin-top: -10px">
                  <!-- Deployment无状态 -->
-                 <el-tag style="margin-right: 5px">Deployment</el-tag>
+                 <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>
                  <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked"
                               @change="handleCheckAllChange(resource)">
@@ -46,7 +46,7 @@
                      <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
                        {{ pod.properties.restartCount }}</span>
                    </div>
-                    <el-tag style="float: right;margin-right: 5px" class="position"
+                    <el-tag size="mini" style="float: right;margin-right: 5px" class="position"
                             :type=" pod.properties.status === 'true'? 'success': 'warning'">{{ pod.properties.phase }}
                        <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>

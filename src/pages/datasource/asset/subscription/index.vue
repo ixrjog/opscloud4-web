@@ -31,12 +31,12 @@
       </el-table-column>
       <el-table-column prop="instance" label="实例类型" width="120">
         <template slot-scope="scope">
-          <el-tag>{{ scope.row.instance.instanceType }}</el-tag>
+          <el-tag size="mini">{{ scope.row.instance.instanceType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="asset" label="资产类型" width="150">
         <template slot-scope="scope">
-          <el-tag>{{ scope.row.asset.assetType }}</el-tag>
+          <el-tag size="mini">{{ scope.row.asset.assetType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="asset" label="资产详情">
@@ -51,7 +51,7 @@
       </el-table-column>
       <el-table-column prop="lastSubscriptionTime" label="发布时间" width="200">
         <template slot-scope="scope">
-          <span>{{ scope.row.lastSubscriptionTime }}&lt;{{scope.row.ago}}&gt;</span>
+          <span>{{ scope.row.lastSubscriptionTime }}&lt;{{ scope.row.ago }}&gt;</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">

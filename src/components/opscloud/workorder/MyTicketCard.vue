@@ -30,7 +30,7 @@
         </el-table-column>
         <el-table-column prop="ticketPhase" label="进度">
           <template slot-scope="scope">
-            <el-tag class="filters" :type="scope.row.ticketPhase | toPhaseType" size="small">
+            <el-tag class="filters" :type="scope.row.ticketPhase | toPhaseType" size="mini">
               <i class="el-icon-loading" v-show="scope.row.ticketPhase === 'PROCESSING'"></i>
               {{ scope.row.ticketPhase | toPhaseText }}
             </el-tag>

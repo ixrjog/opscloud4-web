@@ -5,7 +5,9 @@
         <el-col :span="colSpan">
           <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
             <div slot="header" class="clearfix" style="height: 15px">
-              <span><el-tag>{{ server.label }}</el-tag></span>
+              <span>
+                <el-tag size="mini">{{ server.label }}</el-tag>
+              </span>
               <env-tag :env="server.env" class="env"></env-tag>
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"
@@ -246,8 +248,8 @@ export default {
 </script>
 
 <style scoped>
-  .env {
-    margin-left: 5px;
-  }
+.env {
+  margin-left: 5px;
+}
 
 </style>

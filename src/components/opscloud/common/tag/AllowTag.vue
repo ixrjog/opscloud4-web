@@ -1,5 +1,5 @@
 <template>
-  <el-tag class="filters" :type="allow | getAllowType" size="small">{{allow| getAllowText}}</el-tag>
+  <el-tag class="filters" :type="allow | getAllowType" size="mini">{{allow| getAllowText}}</el-tag>
 </template>
 
 <script>

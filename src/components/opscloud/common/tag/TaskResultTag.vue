@@ -1,6 +1,6 @@
 <template>
   <el-tag v-if="taskResult !== null && taskResult !== ''" class="filters" :type="taskResult | getTaskResultType"
-          size="small">
+          size="mini">
     {{ taskResult | getTaskResultText }}
   </el-tag>
 </template>

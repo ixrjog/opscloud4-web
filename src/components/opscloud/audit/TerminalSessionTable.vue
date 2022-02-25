@@ -27,9 +27,9 @@
       </el-table-column>
       <el-table-column prop="username" label="用户端/服务端" width="250">
         <template slot-scope="scope">
-          <el-tag style="margin-right: 5px">{{scope.row.username}}<span v-if="scope.row.remoteAddr !== null">@{{scope.row.remoteAddr}}</span>
+          <el-tag size="mini" style="margin-right: 5px">{{scope.row.username}}<span v-if="scope.row.remoteAddr !== null">@{{scope.row.remoteAddr}}</span>
           </el-tag>
-          <el-tag>{{scope.row.serverHostname}}/{{scope.row.serverAddr}}</el-tag>
+          <el-tag size="mini">{{scope.row.serverHostname}}/{{scope.row.serverAddr}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="会话实例">

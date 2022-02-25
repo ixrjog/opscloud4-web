@@ -48,7 +48,7 @@
       </el-table-column>
       <el-table-column prop="finalized" label="任务状态" width="50">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.finalized ? 'success' : 'warning'">
+          <el-tag size="mini" :type="scope.row.finalized ? 'success' : 'warning'">
             <i class="el-icon-loading" v-show="!scope.row.finalized"/>{{ scope.row.finalized ? '完成' : '执行中' }}
           </el-tag>
         </template>

@@ -23,7 +23,7 @@
         align="center"
         min-width="200">
         <template slot-scope="scope">
-          {{get(scope.row, 'meta.url')}}
+          {{ get(scope.row, 'meta.url') }}
         </template>
       </el-table-column>
       <!-- 触发组件 -->
@@ -32,11 +32,9 @@
         align="center"
         min-width="120">
         <template slot-scope="scope">
-          <el-tag
-            v-if="get(scope.row, 'meta.instance.$vnode.componentOptions.tag')"
-            type="info"
-            size="mini">
-            &#60;{{get(scope.row, 'meta.instance.$vnode.componentOptions.tag')}}&gt;
+          <el-tag v-if="get(scope.row, 'meta.instance.$vnode.componentOptions.tag')"
+                  type="info" size="mini">
+            &#60;{{ get(scope.row, 'meta.instance.$vnode.componentOptions.tag') }}&gt;
           </el-tag>
         </template>
       </el-table-column>
@@ -63,7 +61,7 @@
       :loading="uploading"
       @click="handleUpload">
       <d2-icon name="fas fa-cloud-upload"/>
-      Upload {{log.length}} log data
+      Upload {{ log.length }} log data
     </el-button>
   </d2-container>
 </template>
@@ -71,6 +69,7 @@
 <script>
 import { mapState } from 'vuex'
 import { get } from 'lodash'
+
 export default {
   data () {
     return {
