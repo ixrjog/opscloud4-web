@@ -51,6 +51,15 @@
                     <i slot="prepend" class="fas fa-keyboard"></i>
                   </el-input>
                 </el-form-item>
+                <el-form-item prop="code">
+                  <el-input type="text"
+                            v-model="formLogin.code"
+                            placeholder="OTP Access Code">
+                    <!--                    <template slot="append">-->
+                    <!--                      <img class="login-code" src="./image/login-code.png">-->
+                    <!--                    </template>-->
+                  </el-input>
+                </el-form-item>
                 <!--                <el-form-item prop="code">-->
                 <!--                  <el-input-->
                 <!--                    type="text"-->
@@ -132,16 +141,8 @@ import EchartsFont from '@/components/opscloud/common/EchartsFont'
 
 const wordcloud = [
   '抱怨身处黑暗 不如提灯前行',
-  '大鹏一日同风起 扶摇直上直上九万里',
-  '莫忘少年凌云志 曾许人间第一流',
-  '同是风华正茂 怎能甘拜下风',
-  '乾坤未定 你我皆是黑马',
-  '在繁华中自律 在落魄中自愈',
-  '越痛越不动神色 越苦越保持沉默',
   '纵使无人伴身旁 也要一展少年狂',
-  '你所看到的惊艳 都曾被平庸历练',
-  '金麟岂是池中物 一遇风云上九霄',
-  '人有冲天之志 非运不可自通'
+  '你所看到的惊艳 都曾被平庸历练'
 ]
 
 export default {
@@ -177,7 +178,7 @@ export default {
       formLogin: {
         username: '',
         password: '',
-        code: 'v9am'
+        code: ''
       },
       // 表单校验
       rules: {
@@ -241,7 +242,8 @@ export default {
           // 具体需要传递的数据请自行修改代码
           this.login({
             username: this.formLogin.username,
-            password: this.formLogin.password
+            password: this.formLogin.password,
+            otp: this.formLogin.code
           })
             .then(() => {
               // 重定向对象不存在则返回顶层路径

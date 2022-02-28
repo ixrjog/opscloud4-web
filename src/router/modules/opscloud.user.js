@@ -18,6 +18,15 @@ export default [
     }
   },
   {
+    path: '/user/mfa',
+    name: 'user-mfa',
+    component: () => import('@/pages/user/mfa'),
+    meta: {
+      auth: true,
+      title: 'MFA'
+    }
+  },
+  {
     path: '/user/inactive',
     name: 'user-inactive',
     component: () => import('@/pages/user/inactive'),
