@@ -8,3 +8,11 @@ export function GET_USER_MFA () {
     method: 'get'
   })
 }
+
+
+export function RESET_USER_MFA () {
+  return request({
+    url: baseUrl + '/reset',
+    method: 'get'
+  })
+}

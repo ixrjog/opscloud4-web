@@ -5,11 +5,27 @@
       <el-col :span="8">
         <el-card class="box-card" shadow="hover" style="margin-bottom: 10px">
           <div slot="header" class="clearfix">
-            <span>MFA QR code</span>
+            <span>认证管理</span>
+            <el-button type="primary" size="mini" style="float: right" @click="handleReset">重置MFA</el-button>
           </div>
-          <!--          :logoSrc=""-->
-          <vue-qr v-if="mfa !== null && mfa.userMfa.show" :text="mfa.userMfa.qrcode" :size="150"></vue-qr>
-          <span v-else>验证通过后不再显示</span>
+          <div>
+            <span style="font-size: 10px">虚拟 MFA，是遵循 TOTP 标准算法产生 6 位数字验证码的应用程序</span>
+          </div>
+          <div v-if="mfa !== null">
+            <span style="font-size: 10px; margin-top: 15px">设备状态 <el-tag :type="mfa.mfa ? 'success': 'info'">{{
+                mfa.mfa ? '已启用' : '未启用'
+              }}</el-tag></span>
+            <br/>
+            <span style="font-size: 10px; margin-top: 15px">强制启用MFA <el-tag
+              :type="mfa.forceMfa ? 'success': 'info'">{{ mfa.mfa ? '是' : '否' }}</el-tag></span>
+          </div>
+          <el-card class="box-card" shadow="hover" style="margin-top: 15px" v-if="mfa !== null && mfa.userMfa.show">
+            <div slot="header" class="clearfix">
+              <span>QR code</span>
+            </div>
+            <!--          :logoSrc=""-->
+            <vue-qr :text="mfa.userMfa.qrcode" :size="150"></vue-qr>
+          </el-card>
         </el-card>
       </el-col>
       <el-col :span="16">
@@ -25,7 +41,7 @@
 import VueQr from 'vue-qr'
 import MarkdownItVue from 'markdown-it-vue'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
-import { GET_USER_MFA } from '@/api/modules/user/user.mfa.api'
+import { GET_USER_MFA, RESET_USER_MFA } from '@/api/modules/user/user.mfa.api'
 
 const documentKey = 'MFA_README'
 
@@ -36,7 +52,7 @@ export default {
       doc: null,
       documentKey: documentKey,
       dict: {
-       // sshServerHost: window.location.hostname
+        // sshServerHost: window.location.hostname
       },
       options: {
         markdownIt: {
@@ -55,6 +71,12 @@ export default {
     MarkdownItVue
   },
   methods: {
+    handleReset () {
+      RESET_USER_MFA()
+        .then(res => {
+          this.mfa = res.body
+        })
+    },
     fetchMfa () {
       GET_USER_MFA()
         .then(res => {
