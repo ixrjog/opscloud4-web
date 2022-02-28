@@ -7,7 +7,7 @@
     <div v-for="asset in table.data" :key="asset.id">
       <el-card shadow="hover">
         <div slot="header" class="clearfix">
-          <el-tag>{{ asset.assetKey }}</el-tag>
+          <el-tag size="mini">{{ asset.assetKey }}</el-tag>
           <span style="margin-left: 20px;font-size: 12px">{{ asset.assetKey2 }}</span>
         </div>
         <d2-highlight v-if="asset.description != null && asset.description != ''" :code="asset.description" lang="sh"/>

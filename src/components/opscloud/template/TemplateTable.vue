@@ -34,9 +34,9 @@
       </el-table-column>
       <el-table-column prop="env" label="实例类型/模板Key" width="170">
         <template slot-scope="scope">
-          <el-tag>{{ scope.row.instanceType }}</el-tag>
+          <el-tag size="mini">{{ scope.row.instanceType }}</el-tag>
           <br/>
-          <el-tag>{{ scope.row.templateKey }}</el-tag>
+          <el-tag size="mini">{{ scope.row.templateKey }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="content" label="模板内容">

@@ -1,5 +1,6 @@
 <template>
-  <el-tag disable-transitions :type="serverStatus | getServerStatusType">{{serverStatus | getServerStatusText}}
+  <el-tag size="mini" disable-transitions :type="serverStatus | getServerStatusType">
+    {{ serverStatus | getServerStatusText }}
   </el-tag>
 </template>
 

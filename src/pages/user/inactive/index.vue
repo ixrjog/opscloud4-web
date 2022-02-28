@@ -15,7 +15,9 @@
         <template slot-scope="scope">
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
             <el-divider content-position="left"><b style="color: #9d9fa3">{{ key }}</b></el-divider>
-            <el-tag :type="item.userPermission.permissionRole === 'admin' ? 'danger': '' " v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}</el-tag>
+            <el-tag size="mini" :type="item.userPermission.permissionRole === 'admin' ? 'danger': '' "
+                    v-for="item in value" :key="item.id" style="margin-right: 5px">{{ item.name }}
+            </el-tag>
           </div>
         </template>
       </el-table-column>

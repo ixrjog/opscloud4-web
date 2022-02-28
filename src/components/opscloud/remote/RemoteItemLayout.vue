@@ -3,7 +3,7 @@
     <el-card shadow="hover" :style="{ width: itemWidth }">
       <div slot="header" class="clearfix">
         <span>
-          <el-tag>
+          <el-tag size="mini">
             {{ remoteServer.server.name }}-{{ remoteServer.server.serialNumber }}:{{ remoteServer.server.privateIp }}
           </el-tag>
         </span>

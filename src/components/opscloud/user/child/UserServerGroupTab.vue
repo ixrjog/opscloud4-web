@@ -22,7 +22,7 @@
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="serverGroupType" label="组类型">
         <template slot-scope="scope">
-          <el-tag disable-transitions :style="{ color: scope.row.serverGroupType.color }">
+          <el-tag size="mini" disable-transitions :style="{ color: scope.row.serverGroupType.color }">
             {{ scope.row.serverGroupType.name }}
           </el-tag>
         </template>
@@ -30,7 +30,7 @@
       <el-table-column prop="serverSize" label="服务器数量"></el-table-column>
       <el-table-column prop="userPermission.roleName" label="角色">
         <template slot-scope="scope">
-          <el-tag :type=" scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
+          <el-tag size="mini" :type=" scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '管理员' : '普通用户' }}
           </el-tag>
         </template>

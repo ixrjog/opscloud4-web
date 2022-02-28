@@ -10,7 +10,7 @@
         <span
           v-if="JSON.stringify(user.credentialDetails.credentialMap) !== '{}' && user.credentialDetails.credentialMap.PUB_KEY !== null">
              <el-card shadow="hover" style="margin-right: 10px;margin-bottom: 10px;float: left;width: 305px">
-               <el-tag style="margin-bottom: 5px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}</el-tag>
+               <el-tag size="mini" style="margin-bottom: 5px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}</el-tag>
                <div style="font-size: 12px"><i class="fas fa-fingerprint"></i>
                  <span style="color: #B7B6B6">
                    {{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}
@@ -23,7 +23,7 @@
           v-if="JSON.stringify(user.credentialDetails.assetCredentialMap) !== '{}' && user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY !== null">
              <span v-for="asset in user.credentialDetails.assetCredentialMap.GITLAB_SSHKEY" :key="asset.id">
                <el-card shadow="hover" style="margin-right: 10px;margin-bottom: 10px;float: left;width: 305px">
-                 <el-tag style="margin-bottom: 5px" type="success">{{ asset.description }}</el-tag>
+                 <el-tag size="mini" style="margin-bottom: 5px" type="success">{{ asset.description }}</el-tag>
                  <i class="fab fa-gitlab" style="float: right"></i>
                  <div style="font-size: 12px"><i class="fas fa-fingerprint"></i>
                    <span style="color: #B7B6B6">

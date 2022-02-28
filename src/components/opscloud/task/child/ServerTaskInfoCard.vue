@@ -1,8 +1,9 @@
 <template>
   <el-card shadow="hover" style="margin-top: 5px">
     <div slot="header" class="clearfix">
-      <span style="margin-left: 20px;font-size: 12px">执行任务详情<el-tag
-          style="margin-left: 5px">TaskUUID : {{ serverTaskInfo.taskUuid }}</el-tag></span>
+      <span style="margin-left: 20px;font-size: 12px">执行任务详情
+        <el-tag size="mini" style="margin-left: 5px">TaskUUID : {{ serverTaskInfo.taskUuid }}</el-tag>
+      </span>
     </div>
     <el-table :data="serverTaskInfo.servers" style="width: 100%">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>

@@ -4,13 +4,16 @@
                                datasource-nane="Nacos实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="集群节点" name="node">
-        <asset-table :instanceId="instanceId" :assetType="assetType.NACOS.NACOS_CLUSTER_NODE" :tableLayout="tableLayout.node"
+        <asset-table :instanceId="instanceId" :assetType="assetType.NACOS.NACOS_CLUSTER_NODE"
+                     :tableLayout="tableLayout.node"
                      ref="nodeTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="节点状态">
               <template slot-scope="scope">
                 <span>
-                 <el-tag :type="scope.row.properties.state === 'UP' ? 'success' : 'info'">{{ scope.row.properties.state }}</el-tag>
+                 <el-tag size="mini" :type="scope.row.properties.state === 'UP' ? 'success' : 'info'">
+                   {{ scope.row.properties.state }}
+                 </el-tag>
                 </span>
               </template>
             </el-table-column>
@@ -18,7 +21,8 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="权限" name="permission">
-        <asset-table :instanceId="instanceId" :assetType="assetType.NACOS.NACOS_PERMISSION" :tableLayout="tableLayout.permission"
+        <asset-table :instanceId="instanceId" :assetType="assetType.NACOS.NACOS_PERMISSION"
+                     :tableLayout="tableLayout.permission"
                      ref="permissionTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="资源">

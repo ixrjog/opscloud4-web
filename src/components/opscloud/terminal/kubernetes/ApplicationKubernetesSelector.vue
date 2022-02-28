@@ -5,14 +5,14 @@
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="应用名称" width="200"></el-table-column>
+      <el-table-column prop="name" label="应用名称" width="180"></el-table-column>
       <el-table-column prop="resources" label="无状态">
         <template slot-scope="scope" v-if="scope.row.resources !== null && scope.row.resources.length > 0">
           <span v-for="resource in scope.row.resources" :key="resource.id">
             <el-card shadow="never" class="deploymentClass">
                <div style="margin-top: -10px">
                  <!-- Deployment无状态 -->
-                 <el-tag style="margin-right: 5px">Deployment</el-tag>
+                 <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>
                  <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked"
                               @change="handleCheckAllChange(resource)">
@@ -46,7 +46,7 @@
                      <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
                        {{ pod.properties.restartCount }}</span>
                    </div>
-                    <el-tag style="float: right;margin-right: 5px" class="position"
+                    <el-tag size="mini" style="float: right;margin-right: 5px" class="position"
                             :type=" pod.properties.status === 'true'? 'success': 'warning'">{{ pod.properties.phase }}
                        <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
@@ -218,10 +218,10 @@ export default {
 .podClass {
   .el- {
     &card {
-      margin-bottom: 10px;
-      margin-right: 10px;
+      margin-bottom: 5px;
+      margin-right: 5px;
       position: relative;
-      width: 400px;
+      width: 460px;
       display: inline-block;
 
       /deep/ .el-card__body {

@@ -18,8 +18,8 @@
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="serverGroupType" label="组类型">
         <template slot-scope="scope">
-          <el-tag disable-transitions :style="{ color: scope.row.serverGroupType.color }">
-            {{scope.row.serverGroupType.name}}
+          <el-tag size="mini" disable-transitions :style="{ color: scope.row.serverGroupType.color }">
+            {{ scope.row.serverGroupType.name }}
           </el-tag>
         </template>
       </el-table-column>
@@ -33,7 +33,9 @@
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini"  :disabled="scope.row.serverSize !== 0" @click="handleRowDel(scope.row)">删除</el-button>
+          <el-button type="danger" plain size="mini" :disabled="scope.row.serverSize !== 0"
+                     @click="handleRowDel(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -169,17 +171,17 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

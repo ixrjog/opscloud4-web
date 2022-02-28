@@ -10,13 +10,13 @@
       <el-table-column prop="project" label="日志服务配置">
         <template slot-scope="scope">
           <div>日志项目:
-            <el-tag>{{ scope.row.project }}</el-tag>
+            <el-tag size="mini">{{ scope.row.project }}</el-tag>
           </div>
           <div>日志库:
-            <el-tag>{{ scope.row.logstore }}</el-tag>
+            <el-tag size="mini">{{ scope.row.logstore }}</el-tag>
           </div>
           <div>Logtail配置:
-            <el-tag>{{ scope.row.config }}</el-tag>
+            <el-tag size="mini">{{ scope.row.config }}</el-tag>
           </div>
         </template>
       </el-table-column>
@@ -24,7 +24,7 @@
       <el-table-column prop="config" label="Logtail配置" v-if="false"></el-table-column>
       <el-table-column prop="memberSize" label="成员" width="80">
         <template slot-scope="props">
-          <el-tag style="margin-left: 5px">{{ props.row.memberSize }}</el-tag>
+          <el-tag style="margin-left: 5px" size="mini">{{ props.row.memberSize }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="240">

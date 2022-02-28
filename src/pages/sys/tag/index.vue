@@ -19,12 +19,12 @@
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="tagKey" label="标签关键字">
         <template slot-scope="scope">
-          <el-tag disable-transitions :style="{ color: scope.row.color }">{{ scope.row.tagKey }}</el-tag>
+          <el-tag size="mini" disable-transitions :style="{ color: scope.row.color }">{{ scope.row.tagKey }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="businessTypeEnum" label="标签业务类型">
         <template slot-scope="scope">
-          <el-tag disable-transitions>{{ scope.row.businessTypeEnum }}</el-tag>
+          <el-tag size="mini" disable-transitions>{{ scope.row.businessTypeEnum }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="quantityUsed" label="使用数量" width="100"></el-table-column>

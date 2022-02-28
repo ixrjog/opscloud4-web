@@ -1,15 +1,15 @@
 <template>
   <div>
     <span style="margin-right: 5px">可注入变量:</span>
-    <el-tag v-if="kind === 1" size="small" :type="tag.type" style="margin-right: 5px"
+    <el-tag v-if="kind === 1" size="mini" :type="tag.type" style="margin-right: 5px"
             v-for="tag in examples.USERNAME_WITH_PASSWORD" :key="tag.name">
       {{ tag.name }}
     </el-tag>
-    <el-tag v-if="kind === 4" size="small" :type="tag.type" style="margin-right: 5px"
+    <el-tag v-if="kind === 4" size="mini" :type="tag.type" style="margin-right: 5px"
             v-for="tag in examples.TOKEN" :key="tag.name">
       {{ tag.name }}
     </el-tag>
-    <el-tag v-if="kind === 5" size="small" :type="tag.type" style="margin-right: 5px"
+    <el-tag v-if="kind === 5" size="mini" :type="tag.type" style="margin-right: 5px"
             v-for="tag in examples.ACCESS_KEY" :key="tag.name">
       {{ tag.name }}
     </el-tag>

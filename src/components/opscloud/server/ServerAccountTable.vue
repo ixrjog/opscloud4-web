@@ -17,12 +17,12 @@
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="protocol" label="协议">
         <template slot-scope="scope">
-          <el-tag disable-transitions>{{scope.row.protocol}}</el-tag>
+          <el-tag size="mini" disable-transitions>{{ scope.row.protocol }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="accountType" label="账户类型">
         <template slot-scope="scope">
-          <el-tag disable-transitions>{{scope.row.accountType === 0? '普通账户':'管理员账户'}}</el-tag>
+          <el-tag size="mini" disable-transitions>{{ scope.row.accountType === 0 ? '普通账户' : '管理员账户' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="serverSize" label="服务器数量"></el-table-column>
@@ -175,17 +175,17 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

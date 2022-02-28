@@ -52,7 +52,7 @@
                 <el-table-column label="安全组" width="450">
                   <template slot-scope="scope">
                     <div v-for="sg in getSecurityGroups(scope.row)" :key="sg.id">
-                      <el-tag :type="sg.isActive?'success':'info'">{{ sg.name }}</el-tag>
+                      <el-tag size="mini" :type="sg.isActive?'success':'info'">{{ sg.name }}</el-tag>
                     </div>
                   </template>
                 </el-table-column>
@@ -81,7 +81,7 @@
                 <el-table-column label="Access Key" width="200">
                   <template slot-scope="scope">
                     <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
-                      <el-tag :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
+                      <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
                     </div>
                   </template>
                 </el-table-column>
@@ -150,7 +150,7 @@
                 <el-table-column label="数据库" width="300">
                   <template slot-scope="scope">
                     <div v-for="database in scope.row.tree.RDS_DATABASE" :key="database.id">
-                      <el-tag>{{ database.name }}</el-tag>
+                      <el-tag size="mini">{{ database.name }}</el-tag>
                     </div>
                   </template>
                 </el-table-column>
@@ -254,14 +254,14 @@
                       style="color: #9d9fa3">Topic</b></el-divider>
                     <div v-for="topic in scope.row.tree.ONS_ROCKETMQ_TOPIC" :key="topic.id">
                       <el-tooltip class="item" :content="topic.description" placement="bottom" effect="light">
-                         <el-tag>{{ topic.name }}</el-tag>
+                        <el-tag size="mini">{{ topic.name }}</el-tag>
                       </el-tooltip>
                     </div>
                     <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_GROUP !== undefined"><b
                       style="color: #9d9fa3">Group</b></el-divider>
                     <div v-for="group in scope.row.tree.ONS_ROCKETMQ_GROUP" :key="group.id">
                       <el-tooltip class="item" :content="group.description" placement="bottom" effect="light">
-                        <el-tag>{{ group.name }}</el-tag>
+                        <el-tag size="mini">{{ group.name }}</el-tag>
                       </el-tooltip>
                     </div>
                   </template>

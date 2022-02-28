@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column prop="accessKeys" label="Access Key">
         <template v-scope="props">
-          <el-tag v-for="ak in props.row.accessKeys" :key="ak.assetId">
+          <el-tag size="mini" v-for="ak in props.row.accessKeys" :key="ak.assetId">
             {{ ak.assetId }}
           </el-tag>
         </template>
@@ -33,7 +33,7 @@
           <div class="tag-group">
             <div v-for="policy in props.row.ramPolicies" :key="policy.assetId">
               <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
-                <el-tag style="margin-left: 5px">{{ policy.name }}</el-tag>
+                <el-tag size="mini" style="margin-left: 5px">{{ policy.name }}</el-tag>
               </el-tooltip>
             </div>
           </div>

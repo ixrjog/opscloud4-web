@@ -35,7 +35,7 @@
               <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="small" style="margin-left: 5px;margin-bottom: 5px">
+                <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
                   <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>
                   {{ item.name }}
                 </el-tag>
@@ -54,7 +54,7 @@
             <div class="tag-group">
               <span v-for="item in props.row.tags" :key="item.id">
                 <el-tooltip class="item" effect="light" :content="item.comment" placement="top-start">
-                  <el-tag style="margin-left: 5px" :style="{ color: item.color }">{{ item.tagKey }}</el-tag>
+                  <el-tag size="mini" style="margin-left: 5px" :style="{ color: item.color }">{{ item.tagKey }}</el-tag>
                 </el-tooltip>
               </span>
             </div>

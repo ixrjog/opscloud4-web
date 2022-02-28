@@ -1,7 +1,9 @@
 <template>
   <el-card shadow="hover">
     <div>
-      <el-tag :type="sessionInstance.instanceClosed ?  '':'success'">{{ sessionInstance.instanceId }}</el-tag>
+      <el-tag size="mini" :type="sessionInstance.instanceClosed ?  '':'success'">
+        {{ sessionInstance.instanceId }}
+      </el-tag>
     </div>
     <el-row :gutter="10">
       <el-col :span="20">

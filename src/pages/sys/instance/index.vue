@@ -30,11 +30,6 @@
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
-      <!--      <el-table-column prop="name" label="名称">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <el-tag disable-transitions :style="{ color: scope.row.color }">{{scope.row.tagKey}}</el-tag>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
@@ -44,9 +39,6 @@
                 '无效' : '有效'
             }}
           </el-button>
-
-          <!--          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>-->
-          <!--          <el-button type="danger" plain size="mini" @click="delItem(scope.row)">删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>

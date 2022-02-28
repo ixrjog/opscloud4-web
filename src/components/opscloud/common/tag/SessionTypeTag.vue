@@ -1,5 +1,5 @@
 <template>
-  <el-tag disable-transitions>{{sessionType | getSessionTypeText}}
+  <el-tag size="mini" disable-transitions>{{ sessionType | getSessionTypeText }}
   </el-tag>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="formStatus.title"
              :visible.sync="formStatus.visible">
-    <el-tag style="margin-bottom: 10px">{{ ago }}</el-tag>
+    <el-tag style="margin-bottom: 10px" size="mini">{{ ago }}</el-tag>
     <d2-highlight :code="log" lang="yaml"></d2-highlight>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>

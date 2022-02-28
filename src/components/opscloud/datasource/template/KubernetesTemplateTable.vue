@@ -25,15 +25,15 @@
       </el-table-column>
       <el-table-column prop="asset" label="关联资产" width="200">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.asset === null">未创建</el-tag>
-          <el-tag v-if="scope.row.asset !== null" type="success">{{ scope.row.asset.assetKey }}</el-tag>
+          <el-tag size="mini" v-if="scope.row.asset === null">未创建</el-tag>
+          <el-tag size="mini" v-if="scope.row.asset !== null" type="success">{{ scope.row.asset.assetKey }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="template" label="模板" width="250">
         <template slot-scope="scope">
           <span>{{ scope.row.template.name }}</span>
           <div>
-            <el-tag>{{ scope.row.template.templateKey }}</el-tag>
+            <el-tag size="mini">{{ scope.row.template.templateKey }}</el-tag>
           </div>
         </template>
       </el-table-column>

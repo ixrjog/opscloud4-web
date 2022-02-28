@@ -33,7 +33,7 @@
       </el-table-column>
       <el-table-column prop="status" label="状态">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | toStatusColor">{{ scope.row.status | toStatusDesc }}</el-tag>
+          <el-tag size="mini" :type="scope.row.status | toStatusColor">{{ scope.row.status | toStatusDesc }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>

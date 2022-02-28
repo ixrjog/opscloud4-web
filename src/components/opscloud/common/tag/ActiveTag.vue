@@ -1,5 +1,5 @@
 <template>
-  <el-tag disable-transitions :type="isActive ? 'success' : 'info'">{{ isActive ?
+  <el-tag size="mini" disable-transitions :type="isActive ? 'success' : 'info'">{{ isActive ?
     '有效':'无效'}}
   </el-tag>
 </template>

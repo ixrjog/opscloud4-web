@@ -44,7 +44,7 @@
                 <el-table-column label="Access Key" width="200">
                   <template slot-scope="scope">
                     <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
-                      <el-tag :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
+                      <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
                     </div>
                   </template>
                 </el-table-column>
@@ -57,7 +57,7 @@
               <template v-slot:extend>
                 <el-table-column prop="assetKey2" label="ARN" width="400">
                   <template slot-scope="scope">
-                    <el-tag>{{ scope.row.assetKey2 }}</el-tag>
+                    <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
                   </template>
                 </el-table-column>
                 <el-table-column prop="children" label="成员用户" width="200">
@@ -65,11 +65,11 @@
                     <ds-children-tag :children="scope.row.children.IAM_USER" :type="4"></ds-children-tag>
                   </template>
                 </el-table-column>
-<!--                <el-table-column label="描述">-->
-<!--                  <template slot-scope="scope">-->
-<!--                    <span>{{ scope.row.description }}</span>-->
-<!--                  </template>-->
-<!--                </el-table-column>-->
+                <!--                <el-table-column label="描述">-->
+                <!--                  <template slot-scope="scope">-->
+                <!--                    <span>{{ scope.row.description }}</span>-->
+                <!--                  </template>-->
+                <!--                </el-table-column>-->
               </template>
             </asset-table>
           </el-tab-pane>
