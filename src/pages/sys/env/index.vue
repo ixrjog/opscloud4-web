@@ -9,7 +9,8 @@
         <el-button @click="fetchData" class="button">查询</el-button>
         <el-button @click="handlerAdd" class="button">新增</el-button>
       </el-row>
-      <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+      <el-table :data="table.data" style="width: 100%" v-loading="table.loading"
+                :default-sort="{prop: 'envType', order: 'ascending'}">
         <el-table-column prop="name" label="名称">
           <template slot-scope="scope">
             <env-tag :env="scope.row"></env-tag>

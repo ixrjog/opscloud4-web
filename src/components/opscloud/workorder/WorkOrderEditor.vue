@@ -44,8 +44,7 @@
       </el-tab-pane>
       <el-tab-pane label="工作流" name="workflow">
         <el-form :model="workOrder" label-position="top">
-          <el-form-item label="工作流(YML)" label-position="top">
-            <br/>
+          <el-form-item label="工作流(YML)" required>
             <d2-highlight v-if="!editing" :code="workOrder.workflow" lang="yaml"></d2-highlight>
             <editor v-if="editing" v-model="workOrder.workflow" @init="editorInit" lang="yaml" theme="chrome"
                     height="250" :options="options"></editor>
