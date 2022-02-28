@@ -52,14 +52,14 @@ export default {
     handlerRandomWord () {
       this.user.password = tools.randomWord(20)
     },
-    handlerUpdate (request) {
+    handleUpdate (request) {
       UPDATE_USER(request)
         .then(res => {
           this.$message.success('保存成功!')
           this.$emit('close')
         })
     },
-    handlerAdd (request) {
+    handleAdd (request) {
       ADD_USER(request)
         .then(({ body }) => {
           this.$message.success('新增成功!')
@@ -69,10 +69,11 @@ export default {
     save () {
       const user = Object.assign({}, this.user)
       delete user.businessPermissions
+      delete user.amMap
       if (this.operationType) {
-        this.handlerAdd(user)
+        this.handleAdd(user)
       } else {
-        this.handlerUpdate(user)
+        this.handleUpdate(user)
       }
     }
   }
