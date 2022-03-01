@@ -8,16 +8,16 @@
             <span>认证管理</span>
             <el-button type="primary" size="mini" style="float: right" @click="handleReset">重置MFA</el-button>
           </div>
-          <div>
+          <div style="line-height: 150%">
             <span style="font-size: 10px">虚拟 MFA，是遵循 TOTP 标准算法产生 6 位数字验证码的应用程序</span>
           </div>
-          <div v-if="mfa !== null">
-            <span style="font-size: 10px; margin-top: 15px">设备状态 <el-tag :type="mfa.mfa ? 'success': 'info'">{{
+          <div v-if="mfa !== null" style="line-height: 150%">
+            <span style="font-size: 10px">设备状态 <el-tag :type="mfa.mfa ? 'success': 'info'" size="mini">{{
                 mfa.mfa ? '已启用' : '未启用'
               }}</el-tag></span>
             <br/>
-            <span style="font-size: 10px; margin-top: 15px">强制启用MFA <el-tag
-              :type="mfa.forceMfa ? 'success': 'info'">{{ mfa.mfa ? '是' : '否' }}</el-tag></span>
+            <span style="font-size: 10px">强制启用MFA <el-tag
+              :type="mfa.forceMfa ? 'success': 'info'" size="mini">{{ mfa.forceMfa ? '是' : '否' }}</el-tag></span>
           </div>
           <el-card class="box-card" shadow="hover" style="margin-top: 15px" v-if="mfa !== null && mfa.userMfa.show">
             <div slot="header" class="clearfix">
