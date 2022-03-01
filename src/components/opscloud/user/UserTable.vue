@@ -24,6 +24,12 @@
             <span>{{ scope.row.displayName }}</span>
             <span v-if="showName(scope.row)" style="margin-left: 5px">&lt;{{ scope.row.name }}&gt;</span>
           </el-row>
+          <el-row>
+            <el-tag :type="scope.row.mfa ? 'success': 'info'" size="mini">{{
+                scope.row.forceMfa ? 'MFA(Force)' : 'MFA'
+              }}
+            </el-tag>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column label="邮箱" width="250">
