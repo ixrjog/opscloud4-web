@@ -29,6 +29,9 @@ export default {
     },
     onsGroup: {
       visible: false
+    },
+    employeeResign: {
+      visible: false
     }
   }
 }

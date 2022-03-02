@@ -52,6 +52,9 @@
     <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup"
                              ref="onsGroupTicketEditor"
                              @close="fetchData"></ons-group-ticket-editor>
+    <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign"
+                                   ref="employeeResignTicketEditor"
+                                   @close="fetchData"></employee-resign-ticket-editor>
   </d2-container>
 </template>
 
@@ -73,6 +76,7 @@ import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPol
 import WorkOrderReport from '@/components/opscloud/workorder/WorkOrderReport'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
+import EmployeeResignTicketEditor from '@/components/opscloud/workorder/ticket/EmployeeResignTicketEditor'
 
 export default {
   data () {
@@ -102,7 +106,8 @@ export default {
     IamPolicyTicketEditor,
     NacosTicketEditor,
     OnsTopicTicketEditor,
-    OnsGroupTicketEditor
+    OnsGroupTicketEditor,
+    EmployeeResignTicketEditor
   },
   computed: {},
   mounted () {
@@ -188,6 +193,10 @@ export default {
         case this.workOrderKeyConstants.ONS_ROCKETMQ_GROUP:
           this.handleOpenTicketEditor(this.formStatus.ticket.onsGroup)
           this.$refs.onsGroupTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.SYS_EMPLOYEE_RESIGN:
+          this.handleOpenTicketEditor(this.formStatus.ticket.employeeResign)
+          this.$refs.employeeResignTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
