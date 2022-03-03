@@ -34,14 +34,14 @@ export default {
           trigger: 'item'
         },
         legend: {
-          top: '5%',
-          left: 'center'
+          orient: 'vertical',
+          left: 'left'
         },
         series: [
           {
             name: '工单名称',
             type: 'pie',
-            radius: ['40%', '60%'],
+            radius: ['70%', '80%'],
             avoidLabelOverlap: false,
             label: {
               show: false,
