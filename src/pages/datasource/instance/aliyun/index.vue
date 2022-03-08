@@ -266,6 +266,11 @@
                     </div>
                   </template>
                 </el-table-column>
+                <el-table-column prop="description" label="备注">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
               </template>
             </asset-table>
           </el-tab-pane>
