@@ -33,7 +33,20 @@
         </el-card>
       </el-col>
       <el-col :span="16">
-        <markdown-it-vue v-if="doc !== null" :content="doc.content" :options="options"></markdown-it-vue>
+        <el-tabs type="border-card">
+          <el-tab-pane>
+            <span slot="label"><i class="fab fa-chrome"></i> Chrome</span>
+            <markdown-it-vue v-if="docs.chrome !== null" :content="docs.chrome.content" :options="options"></markdown-it-vue>
+          </el-tab-pane>
+          <el-tab-pane>
+            <span slot="label"><i class="fab fa-apple"></i> iOS</span>
+            <markdown-it-vue v-if="docs.ios !== null" :content="docs.ios.content" :options="options"></markdown-it-vue>
+          </el-tab-pane>
+          <el-tab-pane>
+            <span slot="label"><i class="fab fa-android"></i> Android</span>
+            <markdown-it-vue v-if="docs.android !== null" :content="docs.android.content" :options="options"></markdown-it-vue>
+          </el-tab-pane>
+        </el-tabs>
       </el-col>
     </el-row>
   </d2-container>
@@ -47,14 +60,22 @@ import MarkdownItVue from 'markdown-it-vue'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 import { GET_USER_MFA, RESET_USER_MFA } from '@/api/modules/user/user.mfa.api'
 
-const documentKey = 'MFA_README'
+const docKeys = {
+  MFA_CHROME_README: 'MFA_CHROME_README',
+  MFA_IOS_README: 'MFA_IOS_README',
+  MFA_ANDROID_README: 'MFA_ANDROID_README'
+}
 
 export default {
   data () {
     return {
       mfa: null,
-      doc: null,
-      documentKey: documentKey,
+      docs: {
+        chrome: null,
+        ios: null,
+        android: null
+      },
+      docKeys: docKeys,
       dict: {
         // sshServerHost: window.location.hostname
       },
@@ -68,7 +89,9 @@ export default {
   },
   mounted () {
     this.fetchMfa()
-    this.fetchDoc()
+    this.fetchDoc(this.docKeys.MFA_CHROME_README)
+    this.fetchDoc(this.docKeys.MFA_IOS_README)
+    this.fetchDoc(this.docKeys.MFA_ANDROID_README)
   },
   components: {
     VueQr,
@@ -87,14 +110,24 @@ export default {
           this.mfa = res.body
         })
     },
-    fetchDoc () {
+    fetchDoc (key) {
       const requestBody = {
         dict: this.dict,
-        documentKey: this.documentKey
+        documentKey: key
       }
       PREVIEW_DOCUMENT(requestBody)
         .then(res => {
-          this.doc = res.body
+          switch (key) {
+            case this.docKeys.MFA_CHROME_README:
+              this.docs.chrome = res.body
+              break
+            case this.docKeys.MFA_IOS_README:
+              this.docs.ios =  res.body
+              break
+            case this.docKeys.MFA_ANDROID_README:
+              this.docs.android = res.body
+              break
+          }
         })
     }
   }
