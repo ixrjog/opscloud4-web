@@ -27,6 +27,15 @@ export default [
     }
   },
   {
+    path: '/user/mfa/iam',
+    name: 'user-mfa-iam',
+    component: () => import('@/pages/user/mfa/iam'),
+    meta: {
+      auth: true,
+      title: 'IAM MFA'
+    }
+  },
+  {
     path: '/user/inactive',
     name: 'user-inactive',
     component: () => import('@/pages/user/inactive'),

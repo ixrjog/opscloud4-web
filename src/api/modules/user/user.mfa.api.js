@@ -9,6 +9,12 @@ export function GET_USER_MFA () {
   })
 }
 
+export function GET_USER_IAM_MFA () {
+  return request({
+    url: baseUrl + '/iam/get',
+    method: 'get'
+  })
+}
 
 export function RESET_USER_MFA () {
   return request({
