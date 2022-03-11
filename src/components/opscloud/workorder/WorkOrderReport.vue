@@ -1,18 +1,18 @@
 <template>
   <el-row :gutter="20">
     <el-col :span="8">
-      <workorder-name-stats-report ref="workorderNameStatsReport"></workorder-name-stats-report>
+      <work-order-name-stats-report ref="workOrderNameStatsReport"></work-order-name-stats-report>
     </el-col>
     <el-col :span="16">
-      <workorder-month-stats-report ref="workorderMonthStatsReport"></workorder-month-stats-report>
+      <work-order-month-stats-report ref="workOrderMonthStatsReport"></work-order-month-stats-report>
     </el-col>
   </el-row>
 </template>
 
 <script>
 
-import WorkorderNameStatsReport from '@/components/opscloud/workorder/WorkorderNameStatsReport'
-import WorkorderMonthStatsReport from '@/components/opscloud/workorder/WorkorderMonthStatsReport'
+import WorkOrderNameStatsReport from '@/components/opscloud/workorder/WorkOrderNameStatsReport'
+import WorkOrderMonthStatsReport from '@/components/opscloud/workorder/WorkOrderMonthStatsReport'
 
 export default {
   name: 'WorkOrderReport',
@@ -20,15 +20,15 @@ export default {
     return {}
   },
   components: {
-    WorkorderNameStatsReport,
-    WorkorderMonthStatsReport
+    WorkOrderNameStatsReport,
+    WorkOrderMonthStatsReport
   },
   mounted () {
   },
   methods: {
     initData () {
-      this.$refs.workorderNameStatsReport.fetchData()
-      this.$refs.workorderMonthStatsReport.fetchData()
+      this.$refs.workOrderNameStatsReport.fetchData()
+      this.$refs.workOrderMonthStatsReport.fetchData()
     }
   }
 }

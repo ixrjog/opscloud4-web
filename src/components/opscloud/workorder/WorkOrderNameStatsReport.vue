@@ -7,7 +7,7 @@
                      @click="fetchData" size="mini" plain></el-button>
         </span>
       </el-row>
-      <div id="workorderNameStatsReport" style="height:500px;width: 100%"></div>
+      <div id="workOrderNameStatsReport" style="height:500px;width: 100%"></div>
     </el-card>
   </div>
 </template>
@@ -18,7 +18,7 @@ import * as echarts from 'echarts'
 import { QUERY_WORK_ORDER_REPORT_BY_NAME } from '@/api/modules/workorder/workorder.report.api'
 
 export default {
-  name: 'WorkorderNameStatsReport',
+  name: 'WorkOrderNameStatsReport',
   data () {
     return {
       option: Option
@@ -27,9 +27,10 @@ export default {
   mounted () {
   },
   methods: {
-    initChart (data) {
-      const myChart = echarts.init(document.getElementById('workorderNameStatsReport'))
+    initChart (data, color) {
+      const myChart = echarts.init(document.getElementById('workOrderNameStatsReport'))
       const option = {
+        color: color,
         tooltip: {
           trigger: 'item'
         },
@@ -66,14 +67,9 @@ export default {
     fetchData () {
       QUERY_WORK_ORDER_REPORT_BY_NAME()
         .then(({ body }) => {
-          const data = []
-          for (const i of body) {
-            data.push({
-              name: i.cname,
-              value: i.value
-            })
-          }
-          this.initChart(data)
+          const data = body.map(e => ({ name: e.cname, value: e.value }))
+          const color = body.map(e => (e.color))
+          this.initChart(data, color)
         })
     }
   }

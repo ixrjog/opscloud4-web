@@ -7,7 +7,7 @@
                      @click="fetchData" size="mini" plain></el-button>
         </span>
       </el-row>
-      <div id="workorderMonthStatsReport" style="height:500px;width: 100%"></div>
+      <div id="workOrderMonthStatsReport" style="height:500px;width: 100%"></div>
     </el-card>
   </div>
 </template>
@@ -17,35 +17,18 @@
 import * as echarts from 'echarts'
 import { QUERY_WORK_ORDER_REPORT_BY_MONTH } from '@/api/modules/workorder/workorder.report.api'
 
-const data = {
-  name: '',
-  type: 'bar',
-  stack: '',
-  emphasis: {
-    focus: 'series'
-  },
-  data: []
-}
-
 export default {
   name: 'WorkorderMonthStatsReport',
   data () {
-    return {
-      monthStatistics: {},
-      legendData: [],
-      xData: [],
-      yData: []
-    }
+    return {}
   },
   mounted () {
   },
   methods: {
-    initChart () {
-      const myChart = echarts.init(document.getElementById('workorderMonthStatsReport'))
-      const xData = this.xData
-      const yData = this.yData
-      const legendDate = this.legendDate
+    initChart (chartData) {
+      const myChart = echarts.init(document.getElementById('workOrderMonthStatsReport'))
       const option = {
+        color: chartData.color,
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -53,7 +36,7 @@ export default {
           }
         },
         legend: {
-          data: legendDate
+          data: chartData.legendDate
         },
         grid: {
           left: '3%',
@@ -64,7 +47,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: xData
+            data: chartData.xData
           }
         ],
         yAxis: [
@@ -72,39 +55,41 @@ export default {
             type: 'value'
           }
         ],
-        series: yData
+        series: chartData.yData
       }
       myChart.setOption(option, true)
     },
     fetchData () {
       QUERY_WORK_ORDER_REPORT_BY_MONTH()
         .then(res => {
-          this.monthStatistics = res.body
-          this.initData()
-          this.initChart()
+          this.initData(res.body)
         })
     },
-    initData () {
-      this.xData = []
-      this.yData = []
-      this.legendData = []
-      this.xData = this.monthStatistics.dateCatList
-      const nameMap = this.objToMap(this.monthStatistics.nameStatistics)
-      nameMap.forEach((value, key) => {
-        this.legendData.push(key)
-        const type = Object.assign({}, data)
-        type.name = key
-        type.stack = 'type'
-        type.data = value
-        this.yData.push(type)
-      })
-    },
-    objToMap (obj) {
-      const map = new Map()
-      for (const k in obj) {
-        map.set(k, obj[k])
+    initData (body) {
+      const chartData = {
+        xData: [],
+        yData: [],
+        legendData: [],
+        color: []
       }
-      return map
+      // 日期类目
+      chartData.xData = body.dateCat
+      for (const name in body.nameCat) {
+        const item = body.nameCat[name]
+        chartData.color.push(item.color)
+        chartData.legendData.push(name)
+        const type = {
+          name: name,
+          type: 'bar',
+          stack: 'type',
+          emphasis: {
+            focus: 'series'
+          },
+          data: item.values
+        }
+        chartData.yData.push(type)
+      }
+      this.initChart(chartData)
     }
   }
 }
