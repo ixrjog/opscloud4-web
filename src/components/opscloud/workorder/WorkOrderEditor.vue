@@ -7,6 +7,9 @@
           <el-form-item label="名称" :required="true">
             <el-input v-model.trim="workOrder.name" placeholder="请输入工单名称"></el-input>
           </el-form-item>
+          <el-form-item label="类目颜色" :required="true">
+            <el-color-picker v-model="workOrder.color"></el-color-picker>
+          </el-form-item>
           <el-form-item label="Key" :required="true">
             <el-input v-model.trim="workOrder.workOrderKey" disabled></el-input>
           </el-form-item>

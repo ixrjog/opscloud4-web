@@ -26,6 +26,11 @@
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="类目颜色">
+        <template slot-scope="scope">
+          <el-color-picker v-model="scope.row.color"></el-color-picker>
+        </template>
+      </el-table-column>
       <el-table-column prop="workOrderKey" label="Key">
         <template slot-scope="scope">
           <el-tag size="mini">{{ scope.row.workOrderKey }}</el-tag>
