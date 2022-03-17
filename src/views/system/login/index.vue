@@ -74,6 +74,7 @@
                   size="default"
                   @click="submit"
                   type="primary"
+                  :loading="loading"
                   class="button-login">
                   登录
                 </el-button>
@@ -154,6 +155,7 @@ export default {
     return {
       wordcloud: wordcloud[Math.floor((Math.random() * wordcloud.length))],
       timeInterval: null,
+      loading: false,
       time: dayjs().format('HH:mm:ss'),
       // 快速选择用户
       // dialogVisible: false,
@@ -237,6 +239,7 @@ export default {
     submit () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
+          this.loading = true
           // 登录
           // 注意 这里的演示没有传验证码
           // 具体需要传递的数据请自行修改代码
@@ -244,13 +247,15 @@ export default {
             username: this.formLogin.username,
             password: this.formLogin.password,
             otp: this.formLogin.code
+          }).then(() => {
+            // 重定向对象不存在则返回顶层路径
+            this.$router.replace(this.$route.query.redirect || '/')
+            // 初始化菜单
+            ui.init()
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
           })
-            .then(() => {
-              // 重定向对象不存在则返回顶层路径
-              this.$router.replace(this.$route.query.redirect || '/')
-              // 初始化菜单
-              ui.init()
-            })
         } else {
           // 登录表单校验失败
           this.$message.error('表单校验失败，请检查')
