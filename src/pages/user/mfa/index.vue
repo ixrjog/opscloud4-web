@@ -60,6 +60,9 @@
 
 import VueQr from 'vue-qr'
 import MarkdownItVue from 'markdown-it-vue'
+import 'markdown-it-vue/dist/markdown-it-vue-light.css'
+import 'highlight.js/scss/default.scss'
+import 'highlight.js/styles/vs2015.css'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 import { GET_USER_MFA, RESET_USER_MFA } from '@/api/modules/user/user.mfa.api'
 
@@ -139,7 +142,7 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
@@ -150,4 +153,19 @@ export default {
 >>> .el-card__body {
   padding: 10px 10px;
 }
+
+
+pre {
+  /*控制代码不换行*/
+  white-space: pre;
+  word-wrap: normal;
+  background: #535353 !important;
+  border-radius: 4px;
+  font-size: 8px;
+}
+
+.markdown-body {
+  font-size: 10px;
+}
+
 </style>
