@@ -95,9 +95,9 @@ export default {
   },
   mounted () {
     this.fetchMfa()
-    this.fetchDoc(this.docKeys.MFA_CHROME_README)
-    this.fetchDoc(this.docKeys.MFA_IOS_README)
-    this.fetchDoc(this.docKeys.MFA_ANDROID_README)
+    for (let key in this.docKeys) {
+      this.fetchDoc(this.docKeys[key])
+    }
   },
   components: {
     VueQr,
