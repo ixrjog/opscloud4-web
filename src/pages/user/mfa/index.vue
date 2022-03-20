@@ -39,15 +39,15 @@
         <el-tabs type="border-card">
           <el-tab-pane>
             <span slot="label"><i class="fab fa-chrome"></i> Chrome</span>
-            <markdown-it-vue v-if="docs.chrome !== null" :content="docs.chrome.content" :options="options"></markdown-it-vue>
+            <my-markdown v-if="docs.chrome !== null" :content="docs.chrome.content"></my-markdown>
           </el-tab-pane>
           <el-tab-pane>
             <span slot="label"><i class="fab fa-apple"></i> iOS</span>
-            <markdown-it-vue v-if="docs.ios !== null" :content="docs.ios.content" :options="options"></markdown-it-vue>
+            <my-markdown v-if="docs.ios !== null" :content="docs.ios.content"></my-markdown>
           </el-tab-pane>
           <el-tab-pane>
             <span slot="label"><i class="fab fa-android"></i> Android</span>
-            <markdown-it-vue v-if="docs.android !== null" :content="docs.android.content" :options="options"></markdown-it-vue>
+            <my-markdown v-if="docs.android !== null" :content="docs.android.content"></my-markdown>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -57,12 +57,8 @@
 
 <script>
 
-
 import VueQr from 'vue-qr'
-import MarkdownItVue from 'markdown-it-vue'
-import 'markdown-it-vue/dist/markdown-it-vue-light.css'
-import 'highlight.js/scss/default.scss'
-import 'highlight.js/styles/vs2015.css'
+import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 import { GET_USER_MFA, RESET_USER_MFA } from '@/api/modules/user/user.mfa.api'
 
@@ -84,12 +80,6 @@ export default {
       docKeys: docKeys,
       dict: {
         // sshServerHost: window.location.hostname
-      },
-      options: {
-        markdownIt: {
-          html: true,
-          linkify: true
-        }
       }
     }
   },
@@ -101,7 +91,7 @@ export default {
   },
   components: {
     VueQr,
-    MarkdownItVue
+    MyMarkdown
   },
   methods: {
     handleReset () {
@@ -142,7 +132,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
@@ -153,19 +143,4 @@ export default {
 >>> .el-card__body {
   padding: 10px 10px;
 }
-
-
-pre {
-  /*控制代码不换行*/
-  white-space: pre;
-  word-wrap: normal;
-  background: #535353 !important;
-  border-radius: 4px;
-  font-size: 8px;
-}
-
-.markdown-body {
-  font-size: 10px;
-}
-
 </style>

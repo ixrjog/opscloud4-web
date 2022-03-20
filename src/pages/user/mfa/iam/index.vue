@@ -31,17 +31,15 @@
         <el-tabs type="border-card">
           <el-tab-pane>
             <span slot="label"><i class="fab fa-chrome"></i> Chrome</span>
-            <markdown-it-vue v-if="docs.chrome !== null" :content="docs.chrome.content"
-                             :options="options"></markdown-it-vue>
+            <my-markdown v-if="docs.chrome !== null" :content="docs.chrome.content"></my-markdown>
           </el-tab-pane>
           <el-tab-pane>
             <span slot="label"><i class="fab fa-apple"></i> iOS</span>
-            <markdown-it-vue v-if="docs.ios !== null" :content="docs.ios.content" :options="options"></markdown-it-vue>
+            <my-markdown v-if="docs.ios !== null" :content="docs.ios.content"></my-markdown>
           </el-tab-pane>
           <el-tab-pane>
             <span slot="label"><i class="fab fa-android"></i> Android</span>
-            <markdown-it-vue v-if="docs.android !== null" :content="docs.android.content"
-                             :options="options"></markdown-it-vue>
+            <my-markdown v-if="docs.android !== null" :content="docs.android.content"></my-markdown>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -51,11 +49,10 @@
 
 <script>
 
-
 import VueQr from 'vue-qr'
-import MarkdownItVue from 'markdown-it-vue'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 import { GET_USER_IAM_MFA } from '@/api/modules/user/user.mfa.api'
+import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 
 const docKeys = {
   MFA_CHROME_README: 'MFA_CHROME_README',
@@ -75,12 +72,6 @@ export default {
       docKeys: docKeys,
       dict: {
         // sshServerHost: window.location.hostname
-      },
-      options: {
-        markdownIt: {
-          html: true,
-          linkify: true
-        }
       }
     }
   },
@@ -92,7 +83,7 @@ export default {
   },
   components: {
     VueQr,
-    MarkdownItVue
+    MyMarkdown
   },
   methods: {
     fetchMfa () {

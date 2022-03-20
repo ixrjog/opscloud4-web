@@ -1,8 +1,15 @@
 <template>
-  <markdown-it-vue :content="content"></markdown-it-vue>
+  <div>
+    <markdown-it-vue :content="content" :options="options"></markdown-it-vue>
+  </div>
 </template>
 
 <script>
+
+import MarkdownItVue from 'markdown-it-vue'
+import 'markdown-it-vue/dist/markdown-it-vue-light.css'
+import 'highlight.js/scss/default.scss'
+import 'highlight.js/styles/vs2015.css'
 
 const options = {
   markdownIt: {
@@ -38,11 +45,6 @@ const options = {
   }
 }
 
-import MarkdownItVue from 'markdown-it-vue'
-import 'markdown-it-vue/dist/markdown-it-vue-light.css'
-import 'highlight.js/scss/default.scss'
-import 'highlight.js/styles/vs2015.css'
-
 export default {
   name: 'MyMarkdown',
   props: ['content'],
@@ -58,9 +60,9 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 
-pre {
+>>> pre {
   /*控制代码不换行*/
   white-space: pre;
   word-wrap: normal;
@@ -69,7 +71,7 @@ pre {
   font-size: 8px;
 }
 
-.markdown-body {
+>>>.markdown-body {
   font-size: 10px;
 }
 
