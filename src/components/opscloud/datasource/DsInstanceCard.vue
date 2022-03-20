@@ -65,7 +65,7 @@ import BusinessTags from '../common/tag/BusinessTags'
 import DsAssetTypes from './common/DsAssetTypes'
 import { SET_CONFIG } from '@/api/modules/datasource/datasource.asset.api'
 import DsInstanceIcon from '@/components/opscloud/datasource/common/DsInstanceIcon'
-import MySpan from '@/components/opscloud/common/mySpan'
+import MySpan from '@/components/opscloud/common/MySpan'
 import DsConfigEditor from '@/components/opscloud/datasource/DsConfigEditor'
 import {
   GET_DATASOURCE_CONFIG_TYPE_OPTIONS,
