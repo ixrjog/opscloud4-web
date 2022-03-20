@@ -1,6 +1,7 @@
 <template>
-  <d2-container class="page">
-    <d2-page-cover>
+<!--  class="page"-->
+  <d2-container>
+<!--    <d2-page-cover>-->
       <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane :name="docKeys.OPSCLOUD_README">
           <span slot="label"><i class="fas fa-home"></i> 平台帮助</span>
@@ -11,12 +12,15 @@
           <my-markdown v-if="docs.vpn !== null" :content="docs.vpn.content"></my-markdown>
         </el-tab-pane>
       </el-tabs>
-      <div class="d2-page-cover__logo">
-        <d2-icon-svg class="logo" name="d2-admin"/>
-      </div>
-      <echarts-font text="OPSCLOUD" :font-size="60"></echarts-font>
+<!--    logo-->
+<!--      <div class="d2-page-cover__logo">-->
+<!--        <d2-icon-svg class="logo" name="d2-admin"/>-->
+<!--      </div>-->
       <template slot="footer">
         <div class="btn-group">
+          <div align="center">
+            <echarts-font text="OPSCLOUD" :font-size="60"></echarts-font>
+          </div>
           <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
           <!--          <span class="btn-group__btn" @click="$open('https://d2.pub/zh/doc/d2-admin')">文档</span> |-->
           <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects/d2-admin-start-kit')">简化版</span> |-->
@@ -32,7 +36,7 @@
         <d2-badge/>
         <d2-help/>
       </template>
-    </d2-page-cover>
+<!--    </d2-page-cover>-->
   </d2-container>
 </template>
 
