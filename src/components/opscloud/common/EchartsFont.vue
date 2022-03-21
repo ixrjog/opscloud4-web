@@ -47,8 +47,8 @@ export default {
                 lineWidth: 2
               },
               keyframeAnimation: {
-                duration: 3000,
-                loop: true,
+                duration: 7000,
+                loop: false,
                 keyframes: [
                   {
                     percent: 0.7,
