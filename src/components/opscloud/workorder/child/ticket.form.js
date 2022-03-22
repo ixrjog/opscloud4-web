@@ -12,6 +12,9 @@ export default {
     vpn: {
       visible: false
     },
+    grafana: {
+      visible: false
+    },
     nexus: {
       visible: false
     },

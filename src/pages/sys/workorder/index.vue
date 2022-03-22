@@ -22,39 +22,18 @@
         <work-order-report ref="workOrderReport"></work-order-report>
       </el-tab-pane>
     </el-tabs>
-    <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup"
-                                ref="serverGroupTicketEditor"
-                                @close="fetchData"></server-group-ticket-editor>
-    <application-permission-ticket-editor :formStatus="formStatus.ticket.applicationPermission"
-                                          ref="applicationPermissionTicketEditor"
-                                          @close="fetchData"></application-permission-ticket-editor>
-    <confluence-ticket-editor :formStatus="formStatus.ticket.confluence"
-                              ref="confluenceTicketEditor"
-                              @close="fetchData"></confluence-ticket-editor>
-    <vpn-ticket-editor :formStatus="formStatus.ticket.vpn"
-                       ref="vpnTicketEditor"
-                       @close="fetchData"></vpn-ticket-editor>
-    <nexus-ticket-editor :formStatus="formStatus.ticket.nexus"
-                         ref="nexusTicketEditor"
-                         @close="fetchData"></nexus-ticket-editor>
-    <ram-policy-ticket-editor :formStatus="formStatus.ticket.ramPolicy"
-                              ref="ramPolicyTicketEditor"
-                              @close="fetchData"></ram-policy-ticket-editor>
-    <iam-policy-ticket-editor :formStatus="formStatus.ticket.iamPolicy"
-                              ref="iamPolicyTicketEditor"
-                              @close="fetchData"></iam-policy-ticket-editor>
-    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos"
-                         ref="nacosTicketEditor"
-                         @close="fetchData"></nacos-ticket-editor>
-    <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic"
-                             ref="onsTopicTicketEditor"
-                             @close="fetchData"></ons-topic-ticket-editor>
-    <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup"
-                             ref="onsGroupTicketEditor"
-                             @close="fetchData"></ons-group-ticket-editor>
-    <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign"
-                                   ref="employeeResignTicketEditor"
-                                   @close="fetchData"></employee-resign-ticket-editor>
+    <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor" @close="fetchData"></server-group-ticket-editor>
+    <application-permission-ticket-editor :formStatus="formStatus.ticket.applicationPermission" ref="applicationPermissionTicketEditor" @close="fetchData"></application-permission-ticket-editor>
+    <confluence-ticket-editor :formStatus="formStatus.ticket.confluence" ref="confluenceTicketEditor" @close="fetchData"></confluence-ticket-editor>
+    <vpn-ticket-editor :formStatus="formStatus.ticket.vpn" ref="vpnTicketEditor" @close="fetchData"></vpn-ticket-editor>
+    <grafana-ticket-editor :formStatus="formStatus.ticket.grafana" ref="grafanaTicketEditor" @close="fetchData"></grafana-ticket-editor>
+    <nexus-ticket-editor :formStatus="formStatus.ticket.nexus" ref="nexusTicketEditor" @close="fetchData"></nexus-ticket-editor>
+    <ram-policy-ticket-editor :formStatus="formStatus.ticket.ramPolicy" ref="ramPolicyTicketEditor" @close="fetchData"></ram-policy-ticket-editor>
+    <iam-policy-ticket-editor :formStatus="formStatus.ticket.iamPolicy" ref="iamPolicyTicketEditor" @close="fetchData"></iam-policy-ticket-editor>
+    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor" @close="fetchData"></nacos-ticket-editor>
+    <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic" ref="onsTopicTicketEditor" @close="fetchData"></ons-topic-ticket-editor>
+    <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup" ref="onsGroupTicketEditor" @close="fetchData"></ons-group-ticket-editor>
+    <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor" @close="fetchData"></employee-resign-ticket-editor>
   </d2-container>
 </template>
 
@@ -77,6 +56,7 @@ import WorkOrderReport from '@/components/opscloud/workorder/WorkOrderReport'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
 import EmployeeResignTicketEditor from '@/components/opscloud/workorder/ticket/EmployeeResignTicketEditor'
+import GrafanaTicketEditor from '@/components/opscloud/workorder/ticket/GrafanaTicketEditor'
 
 export default {
   data () {
@@ -101,6 +81,7 @@ export default {
     ApplicationPermissionTicketEditor,
     ConfluenceTicketEditor,
     VpnTicketEditor,
+    GrafanaTicketEditor,
     NexusTicketEditor,
     RamPolicyTicketEditor,
     IamPolicyTicketEditor,
@@ -169,6 +150,10 @@ export default {
         case this.workOrderKeyConstants.VPN:
           this.handleOpenTicketEditor(this.formStatus.ticket.vpn)
           this.$refs.vpnTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.GRAFANA:
+          this.handleOpenTicketEditor(this.formStatus.ticket.grafana)
+          this.$refs.grafanaTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.NEXUS:
           this.handleOpenTicketEditor(this.formStatus.ticket.nexus)
