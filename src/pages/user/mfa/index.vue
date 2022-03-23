@@ -39,7 +39,8 @@
         <el-tabs type="border-card">
           <el-tab-pane>
             <span slot="label"><i class="fab fa-chrome"></i> Chrome</span>
-            <markdown-it-vue v-if="docs.chrome !== null" :content="docs.chrome.content" :options="options"></markdown-it-vue>
+            <markdown-it-vue v-if="docs.chrome !== null" :content="docs.chrome.content"
+                             :options="options"></markdown-it-vue>
           </el-tab-pane>
           <el-tab-pane>
             <span slot="label"><i class="fab fa-apple"></i> iOS</span>
@@ -47,7 +48,8 @@
           </el-tab-pane>
           <el-tab-pane>
             <span slot="label"><i class="fab fa-android"></i> Android</span>
-            <markdown-it-vue v-if="docs.android !== null" :content="docs.android.content" :options="options"></markdown-it-vue>
+            <markdown-it-vue v-if="docs.android !== null" :content="docs.android.content"
+                             :options="options"></markdown-it-vue>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -56,7 +58,6 @@
 </template>
 
 <script>
-
 
 import VueQr from 'vue-qr'
 import MarkdownItVue from 'markdown-it-vue'
@@ -125,7 +126,7 @@ export default {
               this.docs.chrome = res.body
               break
             case this.docKeys.MFA_IOS_README:
-              this.docs.ios =  res.body
+              this.docs.ios = res.body
               break
             case this.docKeys.MFA_ANDROID_README:
               this.docs.android = res.body
@@ -137,7 +138,6 @@ export default {
 }
 
 </script>
-
 
 <style scoped>
 >>> .el-card__header {

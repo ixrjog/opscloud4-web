@@ -51,7 +51,6 @@
 
 <script>
 
-
 import VueQr from 'vue-qr'
 import MarkdownItVue from 'markdown-it-vue'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
@@ -125,7 +124,6 @@ export default {
 }
 
 </script>
-
 
 <style scoped>
 >>> .el-card__header {
