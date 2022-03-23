@@ -53,7 +53,7 @@
 <script>
 import D2Badge from './components/d2-badge'
 import D2Help from './components/d2-help'
-import D2PageCover from './components/d2-page-cover'
+// import D2PageCover from './components/d2-page-cover'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
@@ -80,7 +80,7 @@ export default {
   components: {
     D2Badge,
     D2Help,
-    D2PageCover,
+    // D2PageCover,
     EchartsFont,
     MyMarkdown
   },
