@@ -1,6 +1,6 @@
 <template>
   <div>
-    <markdown-it-vue :content="content" :options="options"></markdown-it-vue>
+    <markdown-it-vue class="md-body" :content="content" :options="options"></markdown-it-vue>
   </div>
 </template>
 
@@ -9,8 +9,8 @@
 import MarkdownItVue from 'markdown-it-vue'
 import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 // import 'highlight.js/scss/default.scss'
-import 'highlight.js/styles/vs2015.css'
-
+//import 'highlight.js/styles/vs2015.css'
+import 'highlight.js/styles/github-gist.css'
 const options = {
   markdownIt: {
     html: true,
@@ -61,11 +61,11 @@ export default {
 
 <style scoped>
 
->>> pre {
+.md-body >>> pre {
   /*控制代码不换行*/
   white-space: pre;
   word-wrap: normal;
-  background: #535353 !important;
+  background: #f3f3f3 !important;
   border-radius: 4px;
   font-size: 9px;
 }
