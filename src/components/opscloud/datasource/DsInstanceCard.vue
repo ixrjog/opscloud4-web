@@ -29,6 +29,11 @@
             <i class="far fa-id-card"></i>
           </el-button>
         </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="实例任务" placement="top-start">
+          <el-button type="text" @click="handleSchedule">
+            <i class="fas fa-recycle"></i>
+          </el-button>
+        </el-tooltip>
       </div>
       <el-row v-if="JSON.stringify(instance.tags) !== '[]'">
         <el-col :span="18">
@@ -56,6 +61,8 @@
                                  :ds-type-options="dsTypeOptions"
                                  :active-options="activeOptions"
                                  ref="dsInstanceRegisterEditor"></ds-instance-register-editor>
+    <ds-instance-schedule-editor :form-status="formStatus.schedule"
+                                 ref="dsInstanceScheduleEditor"></ds-instance-schedule-editor>
   </div>
 </template>
 
@@ -72,6 +79,8 @@ import {
   QUERY_DATASOURCE_BY_ID
 } from '@/api/modules/datasource/datasource.config.api'
 import DsInstanceRegisterEditor from '@/components/opscloud/datasource/DsInstanceRegisterEditor'
+import { QUERY_DATASOURCE_INSTANCE_SCHEDULE_BY_ID } from '@/api/modules/datasource/datasource.schedule.api'
+import DsInstanceScheduleEditor from '@/components/opscloud/datasource/DsInstanceScheduleEditor'
 
 const activeOptions = [{
   value: true,
@@ -103,6 +112,9 @@ export default {
           visible: false,
           updateTitle: '更新数据源实例配置',
           operationType: true
+        },
+        schedule: {
+          visible: false
         }
       }
     }
@@ -117,7 +129,8 @@ export default {
     DsInstanceIcon,
     DsConfigEditor,
     DsInstanceRegisterEditor,
-    MySpan
+    MySpan,
+    DsInstanceScheduleEditor
   },
   methods: {
     handleOpen () {
@@ -176,6 +189,17 @@ export default {
           this.$refs.dsInstanceRegisterEditor.initData(datasource)
           this.formStatus.instance.operationType = false
           this.formStatus.instance.visible = true
+        })
+    },
+    handleSchedule () {
+      QUERY_DATASOURCE_INSTANCE_SCHEDULE_BY_ID({ id: this.instance.id })
+        .then(({ body }) => {
+          const instanceSchedule = {
+            schedules: body,
+            instance: this.instance
+          }
+          this.$refs.dsInstanceScheduleEditor.initData(instanceSchedule)
+          this.formStatus.schedule.visible = true
         })
     }
   }

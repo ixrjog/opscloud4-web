@@ -126,7 +126,6 @@ export default {
             type: 'warning'
           })
       }
-      debugger
       this.instanceTypeOptions = instanceType.instanceType
       this.datasource.instance.instanceType = instanceType.name
     },
