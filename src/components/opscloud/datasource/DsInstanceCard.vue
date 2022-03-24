@@ -79,7 +79,6 @@ import {
   QUERY_DATASOURCE_BY_ID
 } from '@/api/modules/datasource/datasource.config.api'
 import DsInstanceRegisterEditor from '@/components/opscloud/datasource/DsInstanceRegisterEditor'
-import { QUERY_DATASOURCE_INSTANCE_SCHEDULE_BY_ID } from '@/api/modules/datasource/datasource.schedule.api'
 import DsInstanceScheduleEditor from '@/components/opscloud/datasource/DsInstanceScheduleEditor'
 
 const activeOptions = [{
@@ -192,15 +191,8 @@ export default {
         })
     },
     handleSchedule () {
-      QUERY_DATASOURCE_INSTANCE_SCHEDULE_BY_ID({ id: this.instance.id })
-        .then(({ body }) => {
-          const instanceSchedule = {
-            schedules: body,
-            instance: this.instance
-          }
-          this.$refs.dsInstanceScheduleEditor.initData(instanceSchedule)
-          this.formStatus.schedule.visible = true
-        })
+      this.$refs.dsInstanceScheduleEditor.initData(this.instance)
+      this.formStatus.schedule.visible = true
     }
   }
 }

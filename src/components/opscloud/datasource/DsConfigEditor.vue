@@ -65,7 +65,6 @@
           </el-form-item>
           <div style="width:100%;text-align:center">
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑属性</el-button>
-            <!--            <el-button size="mini" type="primary" @click="save" v-show="editing">保存属性</el-button>-->
           </div>
 
         </el-tab-pane>
@@ -126,7 +125,6 @@ export default {
     CredentialKindExampleTag
   },
   mounted () {
-    this.getCredentialKindOptions()
   },
   methods: {
     editorInit: function () {
@@ -145,6 +143,7 @@ export default {
         })
     },
     initData (datasourceConfig) {
+      this.getCredentialKindOptions()
       this.datasourceConfig = datasourceConfig
       if (datasourceConfig.credential !== undefined && datasourceConfig.credential !== null) {
         this.credentialOptions = []
