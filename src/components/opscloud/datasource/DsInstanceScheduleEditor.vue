@@ -8,9 +8,7 @@
             <span>{{ scope.row.cronExpression }}</span>
             <el-popover placement="right" trigger="hover" title="最近5次执行时间">
               <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
-              <div v-for="time in scope.row.executionTime">
-                <span>{{ time }}</span>
-              </div>
+              <div v-for="time in scope.row.executionTime" :key="time">{{ time }}</div>
             </el-popover>
           </template>
         </el-table-column>
