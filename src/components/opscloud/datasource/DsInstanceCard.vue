@@ -177,7 +177,6 @@ export default {
           this.formStatus.instance.operationType = false
           this.formStatus.instance.visible = true
         })
-
     }
   }
 }

@@ -8,7 +8,7 @@
 
 import MarkdownItVue from 'markdown-it-vue'
 import 'markdown-it-vue/dist/markdown-it-vue-light.css'
-import 'highlight.js/scss/default.scss'
+// import 'highlight.js/scss/default.scss'
 import 'highlight.js/styles/vs2015.css'
 
 const options = {
@@ -59,7 +59,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 
 >>> pre {
@@ -71,7 +70,7 @@ export default {
   font-size: 9px;
 }
 
->>>.markdown-body {
+>>> .markdown-body {
   font-size: 10px;
 }
 

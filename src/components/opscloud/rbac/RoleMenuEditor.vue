@@ -12,7 +12,7 @@
         <el-tree :data="menuOptions" show-checkbox node-key="value" ref="menuTree"></el-tree>
       </el-col>
       <el-col :span="18">
-        <d2-highlight v-if="editing" class="content" :code="menuContent" lang="json"></d2-highlight>
+        <my-highlight v-if="editing" :code="menuContent" lang="json" :myStyle="style"></my-highlight>
       </el-col>
     </el-row>
     <div slot="footer" class="dialog-footer">
@@ -31,6 +31,7 @@ import {
   QUERY_MENU_TREE,
   SAVE_AUTH_ROLE_MENU
 } from '@/api/modules/sys/sys.menu.api'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 export default {
   data () {
@@ -46,12 +47,15 @@ export default {
       roleName: '',
       menuContent: '',
       loading: false,
-      editing: false
+      editing: false,
+      style: { height: '400px' }
     }
   },
   name: 'RoleMenuEditor',
   props: ['formStatus'],
-  components: {},
+  components: {
+    MyHighlight
+  },
   mounted () {
     this.fetchData()
   },
@@ -110,13 +114,5 @@ export default {
 </script>
 
 <style scoped>
-
-.content {
-  margin-top: 5px;
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 110%;
-  height: 400px;
-}
 
 </style>

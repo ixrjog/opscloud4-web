@@ -6,19 +6,19 @@
         <el-input v-model="playbook.name" placeholder="请输入内容"></el-input>
       </el-form-item>
       <el-form-item label="Playbook" :label-width="labelWidth" :required="true">
-        <d2-highlight v-show="!editing" :code="playbook.playbook" lang="yaml"></d2-highlight>
+        <my-highlight v-show="!editing" :code="playbook.playbook" lang="yaml"></my-highlight>
         <editor v-show="editing" v-model="playbook.playbook" @init="editorInit" lang="yaml" theme="chrome"
                 height="250"
                 :options="options"></editor>
       </el-form-item>
       <el-form-item label="Vars" :label-width="labelWidth">
-        <d2-highlight v-show="!editing" :code="playbook.vars" lang="yaml"></d2-highlight>
+        <my-highlight v-show="!editing" :code="playbook.vars" lang="yaml"></my-highlight>
         <editor v-show="editing" v-model="playbook.vars" @init="editorInit" lang="yaml" theme="chrome"
                 height="80"
                 :options="options"></editor>
       </el-form-item>
       <el-form-item label="Tags" :label-width="labelWidth">
-        <d2-highlight v-show="!editing" :code="playbook.tags" lang="yaml"></d2-highlight>
+        <my-highlight v-show="!editing" :code="playbook.tags" lang="yaml"></my-highlight>
         <editor v-show="editing" v-model="playbook.tags" @init="editorInit" lang="yaml" theme="chrome"
                 height="80"
                 :options="options"></editor>
@@ -40,6 +40,7 @@
 <script>
 // API
 import { ADD_ANSIBLE_PLAYBOOK, UPDATE_ANSIBLE_PLAYBOOK } from '@/api/modules/task/task.playbook.api.js'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -61,6 +62,7 @@ export default {
     }
   },
   components: {
+    MyHighlight,
     editor: require('vue2-ace-editor')
   },
   mounted () {
@@ -114,9 +116,4 @@ export default {
 </script>
 
 <style scoped>
-  .d2-highlight {
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 110%;
-  }
 </style>

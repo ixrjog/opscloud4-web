@@ -58,7 +58,7 @@
           </el-form-item>
           <el-form-item label="属性(YML)" label-position="top" required>
             <br/>
-            <d2-highlight v-if="!editing" :code="datasourceConfig.propsYml" lang="yaml"></d2-highlight>
+            <my-highlight v-if="!editing" :code="datasourceConfig.propsYml" lang="yaml"></my-highlight>
             <editor v-if="editing" v-model="datasourceConfig.propsYml" @init="editorInit" lang="yaml" theme="chrome"
                     height="400"
                     :options="options"></editor>
@@ -84,6 +84,7 @@ import { GET_CREDENTIAL_KIND_OPTIONS, QUERY_CREDENTIAL_PAGE } from '@/api/module
 import { ADD_DATASOURCE_CONFIG, UPDATE_DATASOURCE_CONFIG } from '@/api/modules/datasource/datasource.config.api.js'
 import SelectItem from '../common/SelectItem'
 import CredentialKindExampleTag from '@/components/opscloud/common/tag/CredentialKindExampleTag'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const allowOptions = [{
   value: false,
@@ -119,6 +120,7 @@ export default {
   props: ['formStatus', 'activeOptions', 'dsTypeOptions'],
   mixins: [],
   components: {
+    MyHighlight,
     editor: require('vue2-ace-editor'),
     SelectItem,
     CredentialKindExampleTag
@@ -217,11 +219,4 @@ export default {
 </script>
 
 <style scoped>
-.d2-highlight {
-  margin-top: 5px;
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 140%;
-}
-
 </style>

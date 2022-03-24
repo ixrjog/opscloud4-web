@@ -85,7 +85,7 @@ export default {
   },
   mounted () {
     this.fetchMfa()
-    for (let key in this.docKeys) {
+    for (const key in this.docKeys) {
       this.fetchDoc(this.docKeys[key])
     }
   },
@@ -118,7 +118,7 @@ export default {
               this.docs.chrome = res.body
               break
             case this.docKeys.MFA_IOS_README:
-              this.docs.ios =  res.body
+              this.docs.ios = res.body
               break
             case this.docKeys.MFA_ANDROID_README:
               this.docs.android = res.body
@@ -130,7 +130,6 @@ export default {
 }
 
 </script>
-
 
 <style scoped>
 >>> .el-card__header {

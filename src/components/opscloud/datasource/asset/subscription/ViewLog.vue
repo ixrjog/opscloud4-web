@@ -2,7 +2,7 @@
   <el-dialog :title="formStatus.title"
              :visible.sync="formStatus.visible">
     <el-tag style="margin-bottom: 10px" size="mini">{{ ago }}</el-tag>
-    <d2-highlight :code="log" lang="yaml"></d2-highlight>
+    <my-highlight :code="log" lang="yaml"></my-highlight>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>
     </div>
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 export default {
   name: 'ViewLog',
@@ -21,7 +23,9 @@ export default {
       ago: ''
     }
   },
-  components: {},
+  components: {
+    MyHighlight
+  },
   filters: {},
   mounted () {
   },
@@ -36,39 +40,23 @@ export default {
 </script>
 
 <style scoped lang="less">
-  /*.resDiv {*/
-  /*  .el-tag {*/
-  /*    margin-right: 5px;*/
-  /*  }*/
-  /*}*/
-  .d2-highlight {
-    margin-top: 5px;
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 150%;
+.resTabPane {
+  & .el-select {
+    max-width: 80%;
+    width: 80%;
   }
 
-  .resTabPane {
-    & .el-select {
-      max-width: 80%;
-      width: 80%;
+  .el-col {
+    p {
+      margin: 0px;
+      color: #B7B6B6;
+      font-size: 20px;
+      font-weight: bolder;
     }
 
-    .el-col {
-      p {
-        margin: 0px;
-        color: #B7B6B6;
-        font-size: 20px;
-        font-weight: bolder;
-      }
-
-      & .el-tag {
-        margin: 5px 5px 5px 0px;
-      }
-
-      /*& .el-divider {*/
-      /*  margin: 5px 0px;*/
-      /*}*/
+    & .el-tag {
+      margin: 5px 5px 5px 0px;
     }
   }
+}
 </style>

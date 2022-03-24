@@ -49,14 +49,14 @@
         <el-form :model="assetSubscription">
           <el-form-item label="PLAYBOOK(YML)" label-position="top">
             <br/>
-            <d2-highlight v-if="!editing" :code="assetSubscription.playbook" lang="yaml"></d2-highlight>
+            <my-highlight v-if="!editing" :code="assetSubscription.playbook" lang="yaml"></my-highlight>
             <editor v-if="editing" v-model="assetSubscription.playbook" @init="editorInit" lang="yaml" theme="chrome"
                     height="250"
                     :options="options"></editor>
           </el-form-item>
           <el-form-item label="VARS" label-position="top">
             <br/>
-            <d2-highlight v-if="!editing" :code="assetSubscription.vars" lang="yaml"></d2-highlight>
+            <my-highlight v-if="!editing" :code="assetSubscription.vars" lang="yaml"></my-highlight>
             <editor v-if="editing" v-model="assetSubscription.vars" @init="editorInit" lang="yaml" theme="chrome"
                     height="80"
                     :options="options" ref="editor"></editor>
@@ -83,6 +83,7 @@ import { QUERY_ASSET_PAGE } from '@/api/modules/datasource/datasource.asset.api'
 import {
   ADD_ASSET_SUBSCRIPTION, UPDATE_ASSET_SUBSCRIPTION
 } from '@/api/modules/datasource/datasource.asset.subscription.api.js'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const dsTypeOptions = [{
   value: 'ANSIBLE',
@@ -134,6 +135,7 @@ export default {
   name: 'AssetSubscriptionEditor',
   props: ['formStatus'],
   components: {
+    MyHighlight,
     editor: require('vue2-ace-editor')
   },
   filters: {},
@@ -238,17 +240,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-/*.resDiv {*/
-/*  .el-tag {*/
-/*    margin-right: 5px;*/
-/*  }*/
-/*}*/
-.d2-highlight {
-  margin-top: 5px;
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 150%;
-}
 
 .resTabPane {
   & .el-select {
@@ -267,10 +258,6 @@ export default {
     & .el-tag {
       margin: 5px 5px 5px 0px;
     }
-
-    /*& .el-divider {*/
-    /*  margin: 5px 0px;*/
-    /*}*/
   }
 }
 </style>

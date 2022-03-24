@@ -10,14 +10,14 @@
       <el-table-column prop="playbook" label="剧本" width="800px">
         <template slot-scope="scope">
           <el-divider content-position="left"><b style="color: #9d9fa3">Playbook</b></el-divider>
-          <d2-highlight :code="scope.row.playbook" lang="yaml"></d2-highlight>
+          <my-highlight :code="scope.row.playbook" lang="yaml"></my-highlight>
           <template v-if="scope.row.vars !== null && scope.row.vars !== ''">
             <el-divider content-position="left"><b style="color: #9d9fa3">Vars</b></el-divider>
-            <d2-highlight :code="scope.row.vars" lang="yaml"></d2-highlight>
+            <my-highlight :code="scope.row.vars" lang="yaml"></my-highlight>
           </template>
           <template v-if="scope.row.tags !== null && scope.row.tags !== ''">
             <el-divider content-position="left"><b style="color: #9d9fa3">Tags</b></el-divider>
-            <d2-highlight :code="scope.row.tags" lang="yaml"></d2-highlight>
+            <my-highlight :code="scope.row.tags" lang="yaml"></my-highlight>
           </template>
         </template>
       </el-table-column>
@@ -42,7 +42,7 @@
 import { QUERY_ANSIBLE_PLAYBOOK_PAGE, DELETE_ANSIBLE_PLAYBOOK_BY_ID } from '@/api/modules/task/task.playbook.api.js'
 import Pagination from '../common/page/Pagination'
 import AnsiblePlaybookEditor from './AnsiblePlaybookEditor'
-
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 export default {
   name: 'AnsiblePlaybookTable',
@@ -79,6 +79,7 @@ export default {
   },
   computed: {},
   components: {
+    MyHighlight,
     AnsiblePlaybookEditor,
     Pagination
   },

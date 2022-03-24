@@ -41,12 +41,12 @@
       </el-table-column>
       <el-table-column prop="content" label="模板内容">
         <template slot-scope="scope">
-          <d2-highlight :code="scope.row.content" :lang="scope.row.templateType"></d2-highlight>
+          <my-highlight :code="scope.row.content" :lang="scope.row.templateType" :myStyle="style"></my-highlight>
         </template>
       </el-table-column>
       <el-table-column prop="vars" label="变量" width="350">
         <template slot-scope="scope">
-          <d2-highlight :code="scope.row.vars" :lang="scope.row.templateType"></d2-highlight>
+          <my-highlight :code="scope.row.vars" :lang="scope.row.templateType" :myStyle="style"></my-highlight>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="220">
@@ -80,8 +80,7 @@ import Pagination from '@/components/opscloud/common/page/Pagination'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import TemplateEditor from '@/components/opscloud/template/TemplateEditor'
-import 'highlight.js/scss/atom-one-light.scss'
-import 'highlight.js/styles/vs2015.css'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const instanceTypeOptions = [{
   value: 'KUBERNETES',
@@ -123,7 +122,8 @@ export default {
         envType: '',
         queryName: '',
         extend: true
-      }
+      },
+      style: { height: '200px' }
     }
   },
   computed: {},
@@ -134,7 +134,8 @@ export default {
     TemplateEditor,
     SelectItem,
     EnvTag,
-    Pagination
+    Pagination,
+    MyHighlight
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -222,14 +223,6 @@ export default {
 
 .el-button {
   margin-left: 5px;
-}
-
-.d2-highlight {
-  margin-top: 5px;
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 110%;
-  height: 200px;
 }
 
 </style>

@@ -60,14 +60,14 @@
       <el-tab-pane label="Template" name="template" v-if="businessTemplate !== '' && businessTemplate.id !== ''">
         <el-form :model="businessTemplate" label-position="top">
           <el-form-item label="模板">
-            <d2-highlight :code="businessTemplate.template.content" class="content"
-                          :lang="businessTemplate.template.templateType">
-            </d2-highlight>
+            <my-highlight :code="businessTemplate.template.content"
+                          :lang="businessTemplate.template.templateType" :myStyle="style">
+            </my-highlight>
           </el-form-item>
           <el-form-item label="变量">
-            <d2-highlight v-show="!button.editing" :code="businessTemplate.vars" class="vars"
+            <my-highlight v-show="!button.editing" :code="businessTemplate.vars"
                           :lang="businessTemplate.template.templateType">
-            </d2-highlight>
+            </my-highlight>
             <editor v-if="button.editing" v-model="businessTemplate.vars"
                     @init="editorInit"
                     :lang="businessTemplate.template.templateType"
@@ -100,6 +100,7 @@ import { ADD_BUSINESS_TEMPLATE, UPDATE_BUSINESS_TEMPLATE } from '@/api/modules/t
 import { QUERY_TEMPLATE_PAGE } from '@/api/modules/template/template.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import SelectItem from '@/components/opscloud/common/SelectItem'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -136,12 +137,14 @@ export default {
         editing: false,
         ok: false,
         creating: false
-      }
+      },
+      style: { height: '400px' }
     }
   },
   name: 'BusinessTemplateEditor',
   props: ['formStatus', 'instanceTypeOptions'],
   components: {
+    MyHighlight,
     SelectItem,
     editor: require('vue2-ace-editor')
   },
@@ -210,36 +213,28 @@ export default {
     },
     handleUpdate () {
       this.button.ok = true
-      UPDATE_BUSINESS_TEMPLATE(this.businessTemplate)
-        .then(() => {
-          this.$message.success('保存成功!')
-          this.formStatus.visible = false
-          this.$emit('close')
-        })
-        .catch((err) => this.button.ok = false)
+      UPDATE_BUSINESS_TEMPLATE(this.businessTemplate).then(() => {
+        this.$message.success('保存成功!')
+        this.formStatus.visible = false
+        this.$emit('close')
+      }).catch(() => {
+        this.button.ok = false
+      })
     },
     handleAdd () {
       this.button.creating = true
-      ADD_BUSINESS_TEMPLATE(this.businessTemplate)
-        .then((res) => {
-          this.businessTemplate = res.body
-          this.$message.success('新增成功!')
-        })
-        .catch((err) => this.button.creating = false)
+      ADD_BUSINESS_TEMPLATE(this.businessTemplate).then((res) => {
+        this.businessTemplate = res.body
+        this.$message.success('新增成功!')
+      }).catch(() => {
+        this.button.ok = false
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-
-.content {
-  margin-top: 5px;
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 110%;
-  height: 400px;
-}
 
 .vars {
   margin-top: 5px;

@@ -24,7 +24,7 @@
         </el-table-column>
         <el-table-column prop="accessKeys" label="Access Key">
           <template slot-scope="props">
-            <el-tag size="mini" v-for="ak in props.row.accessKeys" :key="ak.assetId">
+            <el-tag size="mini" v-for="ak in props.row.accessKeys" :key="ak.assetId" style="display: inline-block">
               {{ ak.assetId }}
             </el-tag>
           </template>
@@ -36,7 +36,7 @@
                 <el-tooltip class="item" effect="light"
                             :content="policy.description !==  null? policy.description : policy.assetKey2"
                             placement="top-start">
-                  <el-tag style="margin-left: 5px">{{ policy.name }}</el-tag>
+                  <el-tag size="mini">{{ policy.name }}</el-tag>
                 </el-tooltip>
               </div>
             </div>

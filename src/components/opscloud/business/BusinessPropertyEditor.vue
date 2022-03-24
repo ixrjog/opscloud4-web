@@ -3,7 +3,7 @@
     <el-form :model="businessProperty">
       <el-form-item label="属性(YML)" label-position="top">
         <br/>
-        <d2-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"></d2-highlight>
+        <my-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"></my-highlight>
         <editor v-if="editing" v-model="businessProperty.property" @init="editorInit" lang="yaml" theme="chrome"
                 height="400"
                 :options="options" ref="editor"></editor>
@@ -19,7 +19,7 @@
 <script>
 // API
 import { ADD_BUSINESS_PROPERTY, UPDATE_BUSINESS_PROPERTY } from '@/api/modules/business/business.property.api.js'
-import SelectItem from '../common/SelectItem'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -42,6 +42,7 @@ export default {
   props: ['businessType', 'businessId'],
   mixins: [],
   components: {
+    MyHighlight,
     editor: require('vue2-ace-editor')
   },
   mounted () {
@@ -101,11 +102,5 @@ export default {
 </script>
 
 <style scoped>
-  .d2-highlight {
-    margin-top: 5px;
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 150%;
-  }
 
 </style>

@@ -13,7 +13,7 @@
           <template v-slot:extend>
             <el-table-column prop="description" label="版本详情" width="700px">
               <template slot-scope="scope">
-                <d2-highlight v-if="scope.row.description != ''" :code="scope.row.description" lang="sh"/>
+                <my-highlight v-if="scope.row.description != ''" :code="scope.row.description" lang="sh"></my-highlight>
               </template>
             </el-table-column>
           </template>
@@ -29,6 +29,7 @@ import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTa
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import AssetAnsibleHostsInfo from '../../../../components/opscloud/datasource/asset/AssetAnsibleHostsInfo'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const tableLayout = {
   version: {
@@ -71,7 +72,8 @@ export default {
   components: {
     AssetTable,
     AssetAnsibleHostsInfo,
-    DatasourceInstanceTitle
+    DatasourceInstanceTitle,
+    MyHighlight
   },
   methods: {
     handleClick (tab, event) {
@@ -107,13 +109,6 @@ export default {
 
 .el-button {
   margin-left: 5px;
-}
-
-.d2-highlight {
-  margin-top: 5px;
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 150%;
 }
 
 >>> .el-card__header {

@@ -48,7 +48,7 @@
       <el-tab-pane label="工作流" name="workflow">
         <el-form :model="workOrder" label-position="top">
           <el-form-item label="工作流(YML)" required>
-            <d2-highlight v-if="!editing" :code="workOrder.workflow" lang="yaml"></d2-highlight>
+            <my-highlight v-if="!editing" :code="workOrder.workflow" lang="yaml"></my-highlight>
             <editor v-if="editing" v-model="workOrder.workflow" @init="editorInit" lang="yaml" theme="chrome"
                     height="250" :options="options"></editor>
           </el-form-item>
@@ -70,6 +70,7 @@
 import { QUERY_WORK_ORDER_GROUP_PAGE } from '@/api/modules/workorder/workorder.group.api'
 import { UPDATE_WORK_ORDER } from '@/api/modules/workorder/workorder.api'
 import workorderStatus from '@/components/opscloud/common/enums/workorder.status'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -93,6 +94,7 @@ export default {
   name: 'WorkOrderEditor',
   props: ['formStatus'],
   components: {
+    MyHighlight,
     editor: require('vue2-ace-editor')
   },
   methods: {
@@ -140,9 +142,4 @@ export default {
 </script>
 
 <style scoped>
-.d2-highlight {
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 110%;
-}
 </style>

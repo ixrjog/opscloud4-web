@@ -39,7 +39,7 @@
       </el-table-column>
       <el-table-column prop="vars" label="变量">
         <template slot-scope="scope">
-          <d2-highlight :code="scope.row.vars" :lang="scope.row.templateType"></d2-highlight>
+          <my-highlight :code="scope.row.vars" :lang="scope.row.templateType"></my-highlight>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
@@ -79,6 +79,7 @@ import BusinessTemplateEditor from '@/components/opscloud/datasource/template/Bu
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const instanceTypeOptions = [{
   value: 'KUBERNETES',
@@ -132,7 +133,8 @@ export default {
     EnvTag,
     SelectItem,
     BusinessTemplateEditor,
-    Pagination
+    Pagination,
+    MyHighlight
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -248,13 +250,6 @@ export default {
 
 .el-button {
   margin-left: 5px;
-}
-
-.d2-highlight {
-  margin-top: 5px;
-  font-size: 10px;
-  background-color: #dad8c8;
-  line-height: 110%;
 }
 
 </style>
