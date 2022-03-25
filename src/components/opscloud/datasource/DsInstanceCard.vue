@@ -4,36 +4,40 @@
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="mini">{{ instance.instanceType }}</el-tag>
         <my-span :content="instance.instanceName" style="font-size: 14px"></my-span>
-        <el-tooltip class="item" effect="dark" content="实例资产详情" placement="top-start">
-          <el-button type="text" @click="handleOpen">
-            <i class="far fa-paper-plane"></i>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="实例标签" placement="top-start">
-          <el-button type="text" @click="handleTagEdit">
-            <i class="far fa-bookmark"></i>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="下发配置文件" placement="top-start">
-          <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handleSetConfig">
-            <i class="far fa-clipboard"></i>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="实例配置文件" placement="top-start">
-          <el-button type="text" @click="handleEditor">
-            <i class="far fa-sun"></i>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="实例配置" placement="top-start">
-          <el-button type="text" @click="handleRegistered">
-            <i class="far fa-id-card"></i>
-          </el-button>
-        </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="实例任务" placement="top-start">
+        <el-button class="job-size" circle type="success" v-show="instance.jobSize > 0">{{ instance.jobSize }}
+        </el-button>
+        <span class="btn-group">
+          <el-tooltip class="item" effect="dark" content="实例任务" placement="top-start">
           <el-button type="text" @click="handleSchedule">
             <i class="fas fa-recycle"></i>
           </el-button>
         </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="实例配置" placement="top-start">
+          <el-button type="text" @click="handleRegistered">
+            <i class="far fa-id-card"></i>
+          </el-button>
+        </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="实例配置文件" placement="top-start">
+          <el-button type="text" @click="handleEditor">
+            <i class="far fa-sun"></i>
+          </el-button>
+        </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="下发配置文件" placement="top-start">
+          <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handleSetConfig">
+            <i class="far fa-clipboard"></i>
+          </el-button>
+        </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="实例标签" placement="top-start">
+          <el-button type="text" @click="handleTagEdit">
+            <i class="far fa-bookmark"></i>
+          </el-button>
+        </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="实例资产详情" placement="top-start">
+          <el-button type="text" @click="handleOpen">
+            <i class="far fa-paper-plane"></i>
+          </el-button>
+        </el-tooltip>
+        </span>
       </div>
       <el-row v-if="JSON.stringify(instance.tags) !== '[]'">
         <el-col :span="18">
@@ -199,12 +203,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.el- {
-  &button {
-    float: right;
-    margin-left: 5px;
-  }
 
+.job-size {
+  text-align: center;
+  margin-left: 2px;
+  width: 25px;
+  height: 25px;
+}
+
+.btn-group {
+  float: right;
+  margin-left: 5px;
+}
+
+.el-{
   &card {
     margin-bottom: 10px;
     position: relative;
