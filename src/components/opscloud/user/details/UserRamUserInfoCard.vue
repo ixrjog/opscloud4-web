@@ -23,9 +23,9 @@
       </el-table-column>
       <el-table-column prop="accessKeys" label="Access Key">
         <template v-scope="props">
-          <el-tag size="mini" v-for="ak in props.row.accessKeys" :key="ak.assetId" style="display: inline-block">
-            {{ ak.assetId }}
-          </el-tag>
+          <div  v-for="ak in props.row.accessKeys" :key="ak.assetId">
+            <el-tag size="mini">{{ ak.assetId }}</el-tag>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="ramPolicies" label="策略" width="400">

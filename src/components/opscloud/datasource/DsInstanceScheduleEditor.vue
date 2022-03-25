@@ -22,14 +22,13 @@
       <el-table-column prop="description" label="描述" width="120"></el-table-column>
       <el-table-column label="操作" width="80">
         <template slot-scope="scope">
-          <el-button-group>
-            <el-button type="primary" size="mini" plain @click="handleScheduleResume(scope.row)"
-                       v-if="scope.row.status === 'PAUSED'">恢复
-            </el-button>
-            <el-button type="primary" size="mini" plain @click="handleSchedulePause(scope.row)"
-                       v-if="scope.row.status === 'NORMAL'">暂停</el-button>
-            <el-button type="danger" size="mini" plain @click="handleScheduleDel(scope.row)">删除</el-button>
-          </el-button-group>
+          <el-button type="primary" size="mini" plain @click="handleScheduleResume(scope.row)"
+                     v-if="scope.row.status === 'PAUSED'">恢复
+          </el-button>
+          <el-button type="primary" size="mini" plain @click="handleSchedulePause(scope.row)"
+                     v-if="scope.row.status === 'NORMAL'">暂停
+          </el-button>
+          <el-button type="danger" size="mini" plain @click="handleScheduleDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
