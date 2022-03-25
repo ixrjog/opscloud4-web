@@ -4,7 +4,8 @@
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="mini">{{ instance.instanceType }}</el-tag>
         <my-span :content="instance.instanceName" style="font-size: 14px"></my-span>
-        <el-button class="job-size" circle type="success" v-show="instance.jobSize > 0">{{ instance.jobSize }}
+        <el-button class="job-size" circle type="primary" v-show="instance.jobSize > 0">
+          {{ instance.jobSize }}
         </el-button>
         <span class="btn-group">
           <el-tooltip class="item" effect="dark" content="实例任务" placement="top-start">
@@ -207,8 +208,9 @@ export default {
 .job-size {
   text-align: center;
   margin-left: 2px;
-  width: 25px;
-  height: 25px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
 }
 
 .btn-group {
@@ -216,7 +218,7 @@ export default {
   margin-left: 5px;
 }
 
-.el-{
+.el- {
   &card {
     margin-bottom: 10px;
     position: relative;
