@@ -75,6 +75,52 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+      <el-tab-pane label="SQS/SNS" name="sqs">
+        <el-tabs tab-position="left" v-model="activeName.iam" @tab-click="handleClick">
+          <el-tab-pane label="SQS" name="queue">
+            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SQS"
+                         :tableLayout="tableLayout.queue"
+                         ref="queueTable">
+              <template v-slot:extend>
+                <el-table-column prop="children" label="授权的策略" width="300">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.IAM_POLICY" :type="5"></ds-children-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column label="Access Key" width="200">
+                  <template slot-scope="scope">
+                    <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
+                      <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
+                    </div>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="IAM策略" name="iamPolicy">
+            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.IAM_POLICY"
+                         :tableLayout="tableLayout.iamPolicy" :enableActive="true" ref="iamPolicyTable">
+              <template v-slot:extend>
+                <el-table-column prop="assetKey2" label="ARN" width="400">
+                  <template slot-scope="scope">
+                    <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="children" label="成员用户" width="200">
+                  <template slot-scope="scope">
+                    <ds-children-tag :children="scope.row.children.IAM_USER" :type="4"></ds-children-tag>
+                  </template>
+                </el-table-column>
+                <!--                <el-table-column label="描述">-->
+                <!--                  <template slot-scope="scope">-->
+                <!--                    <span>{{ scope.row.description }}</span>-->
+                <!--                  </template>-->
+                <!--                </el-table-column>-->
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -147,6 +193,28 @@ const tableLayout = {
       alias: '区',
       show: false
     }
+  },
+  queue: {
+    assetId: {
+      alias: '策略名称',
+      show: false
+    },
+    name: {
+      alias: '策略名称',
+      show: false
+    },
+    assetKey: {
+      alias: '策略类型',
+      show: false
+    },
+    assetKey2: {
+      alias: 'ARN',
+      show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
   }
 }
 
@@ -187,6 +255,9 @@ export default {
       }
       if (tab.name === 'iamPolicy') {
         this.$refs.iamPolicyTable.fetchData()
+      }
+      if (tab.name === 'queue') {
+        this.$refs.queueTable.fetchData()
       }
     },
     init () {
