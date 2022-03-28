@@ -77,10 +77,10 @@
                          :tableLayout="tableLayout.queue"
                          ref="queueTable">
               <template v-slot:extend>
-                <el-table-column prop="properties" label="RegionId">
+                <el-table-column prop="properties" label="Region Id">
                   <template slot-scope="scope">
                     <span>{{ scope.row.regionId }}</span>
-                    <el-popover placement="right" width="650" trigger="hover">
+                    <el-popover placement="right" width="600" trigger="hover">
                       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                       <el-divider>
                         <span style="color: #8492a6; font-size: 12px">详细信息</span>
@@ -119,6 +119,11 @@
                       </el-row>
                       <br/>
                     </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="createdTime" label="创建时间">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.createdTime }}</span>
                   </template>
                 </el-table-column>
               </template>
