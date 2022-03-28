@@ -82,24 +82,24 @@
                          :tableLayout="tableLayout.queue"
                          ref="queueTable">
               <template v-slot:extend>
-                <el-table-column prop="children" label="授权的策略" width="300">
-                  <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.IAM_POLICY" :type="5"></ds-children-tag>
-                  </template>
-                </el-table-column>
-                <el-table-column label="Access Key" width="200">
-                  <template slot-scope="scope">
-                    <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
-                      <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
-                    </div>
-                  </template>
-                </el-table-column>
+<!--                <el-table-column prop="children" label="授权的策略" width="300">-->
+<!--                  <template slot-scope="scope">-->
+<!--                    <ds-children-tag :children="scope.row.children.IAM_POLICY" :type="5"></ds-children-tag>-->
+<!--                  </template>-->
+<!--                </el-table-column>-->
+<!--                <el-table-column label="Access Key" width="200">-->
+<!--                  <template slot-scope="scope">-->
+<!--                    <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">-->
+<!--                      <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>-->
+<!--                    </div>-->
+<!--                  </template>-->
+<!--                </el-table-column>-->
               </template>
             </asset-table>
           </el-tab-pane>
-          <el-tab-pane label="IAM策略" name="iamPolicy">
+          <el-tab-pane label="SNS" name="topic">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.IAM_POLICY"
-                         :tableLayout="tableLayout.iamPolicy" :enableActive="true" ref="iamPolicyTable">
+                         :tableLayout="tableLayout.iamPolicy" :enableActive="true" ref="topicTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey2" label="ARN" width="400">
                   <template slot-scope="scope">
@@ -196,11 +196,11 @@ const tableLayout = {
   },
   queue: {
     assetId: {
-      alias: '策略名称',
+      alias: 'Queue名称',
       show: false
     },
     name: {
-      alias: '策略名称',
+      alias: 'Queue名称',
       show: false
     },
     assetKey: {
@@ -209,7 +209,7 @@ const tableLayout = {
     },
     assetKey2: {
       alias: 'ARN',
-      show: false
+      show: true
     },
     zone: {
       alias: '区',
@@ -255,8 +255,9 @@ export default {
       }
       if (tab.name === 'iamPolicy') {
         this.$refs.iamPolicyTable.fetchData()
+        return
       }
-      if (tab.name === 'queue') {
+      if (tab.name === 'sqs' || tab.name === 'queue') {
         this.$refs.queueTable.fetchData()
       }
     },
