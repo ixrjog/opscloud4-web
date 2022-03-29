@@ -5,7 +5,7 @@
     </div>
     <div>
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: -5px">
-        <el-select v-model="queryParam.instanceType" clearable placeholder="数据源类型">
+        <el-select v-model="queryParam.instanceType" clearable placeholder="数据源类型" filterable>
           <el-option
             v-for="item in dsInstanceType"
             :key="item.name"

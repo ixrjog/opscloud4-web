@@ -7,6 +7,22 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_PROJECT"
                      :tableLayout="tableLayout.project" ref="projectTable">
           <template v-slot:extend>
+            <el-table-column prop="properties" label="地址" width="400">
+              <template slot-scope="scope">
+                <div>
+                  <!--                  <el-tag size="mini" style="margin-right: 5px">SSH</el-tag>-->
+                  <span v-clipboard:copy="scope.row.assetKey" v-clipboard:success="onCopy"
+                        v-clipboard:error="onError">{{ scope.row.assetKey }}</span>
+                </div>
+                <div>
+                  <!--                  <el-tag size="mini" style="margin-right: 5px">HTTP</el-tag>-->
+                  <el-link :href="scope.row.assetKey2" target="_blank" type="primary" :underline="false"
+                           style="font-size: 12px">
+                    {{ scope.row.assetKey2 }}
+                  </el-link>
+                </div>
+              </template>
+            </el-table-column>
             <el-table-column prop="properties" label="命名空间">
               <template slot-scope="scope">
                 {{ scope.row.properties.namespaceName }}
@@ -55,14 +71,15 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="密钥" name="sshKey">
-        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_SSHKEY" :tableLayout="tableLayout.sshKey"
+        <asset-table :instanceId="instanceId" :assetType="assetType.GITLAB.GITLAB_SSHKEY"
+                     :tableLayout="tableLayout.sshKey"
                      ref="sshKeyTable">
           <template v-slot:extend>
-<!--            <el-table-column prop="properties" label="用户名">-->
-<!--              <template slot-scope="scope">-->
-<!--                <span>{{ scope.row.properties.username }}</span>-->
-<!--              </template>-->
-<!--            </el-table-column>-->
+            <!--            <el-table-column prop="properties" label="用户名">-->
+            <!--              <template slot-scope="scope">-->
+            <!--                <span>{{ scope.row.properties.username }}</span>-->
+            <!--              </template>-->
+            <!--            </el-table-column>-->
           </template>
         </asset-table>
       </el-tab-pane>
@@ -207,6 +224,12 @@ export default {
           this.$refs.projectTable.fetchData()
         }
       }, 50)
+    },
+    onCopy (e) {
+      this.$message.success('内容已复制到剪切板！')
+    },
+    onError (e) {
+      this.$message.error('抱歉，复制失败！')
     }
   }
 }

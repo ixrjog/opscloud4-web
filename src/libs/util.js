@@ -57,6 +57,32 @@ util.bytesToSize = function (bytes) {
 }
 
 /**
+ * 格式化秒
+ * @param result
+ * @returns {string}
+ */
+util.formatSecond = function (result) {
+  const d = Math.floor((result / 3600) / 24)
+  const h = Math.floor((result / 3600) % 24)
+  const m = Math.floor((result / 60) % 60)
+  const s = Math.floor(result % 60)
+  result = ''
+  if (s > 0) {
+    result = s + ' 秒 '
+  }
+  if (m > 0) {
+    result = m + ' 分钟 ' + result
+  }
+  if (h > 0) {
+    result = h + ' 小时 ' + result
+  }
+  if (d > 0) {
+    result = d + ' 天 ' + result
+  }
+  return result === '' ? '0秒' : result
+}
+
+/**
  * 取反色，用于终端字符提示前端展示
  * @param color
  * @returns {string}

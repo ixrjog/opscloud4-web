@@ -65,35 +65,67 @@
                     <ds-children-tag :children="scope.row.children.IAM_USER" :type="4"></ds-children-tag>
                   </template>
                 </el-table-column>
-                <!--                <el-table-column label="描述">-->
-                <!--                  <template slot-scope="scope">-->
-                <!--                    <span>{{ scope.row.description }}</span>-->
-                <!--                  </template>-->
-                <!--                </el-table-column>-->
               </template>
             </asset-table>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="SQS/SNS" name="sqs">
-        <el-tabs tab-position="left" v-model="activeName.iam" @tab-click="handleClick">
+        <el-tabs tab-position="left" v-model="activeName.sqs" @tab-click="handleClick">
           <el-tab-pane label="SQS" name="queue">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SQS"
                          :tableLayout="tableLayout.queue"
                          ref="queueTable">
               <template v-slot:extend>
-<!--                <el-table-column prop="children" label="授权的策略" width="300">-->
-<!--                  <template slot-scope="scope">-->
-<!--                    <ds-children-tag :children="scope.row.children.IAM_POLICY" :type="5"></ds-children-tag>-->
-<!--                  </template>-->
-<!--                </el-table-column>-->
-<!--                <el-table-column label="Access Key" width="200">-->
-<!--                  <template slot-scope="scope">-->
-<!--                    <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">-->
-<!--                      <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>-->
-<!--                    </div>-->
-<!--                  </template>-->
-<!--                </el-table-column>-->
+                <el-table-column prop="properties" label="Region Id">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.regionId }}</span>
+                    <el-popover placement="right" width="600" trigger="hover">
+                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                      <el-divider>
+                        <span style="color: #8492a6; font-size: 12px">详细信息</span>
+                      </el-divider>
+                      <entry-detail name="URL" :value="scope.row.assetKey" :copy="true"></entry-detail>
+                      <br/>
+                      <entry-detail name="ARN" :value="scope.row.assetKey2" :copy="true"></entry-detail>
+                      <br/>
+                      <el-divider>
+                        <span style="color: #8492a6; font-size: 12px">更多</span>
+                      </el-divider>
+                      <el-row :gutter="20">
+                        <el-col :span="12">
+                          <entry-detail name="最大消息大小"
+                                        :value="util.bytesToSize(scope.row.properties.MaximumMessageSize)"></entry-detail>
+                        </el-col>
+                        <el-col :span="12">
+                          <entry-detail name="默认可见性超时"
+                                        :value="util.formatSecond(scope.row.properties.VisibilityTimeout)"></entry-detail>
+                        </el-col>
+                      </el-row>
+                      <el-row :gutter="20">
+                        <el-col :span="12">
+                          <entry-detail name="消息保留周期"
+                                        :value="util.formatSecond(scope.row.properties.MessageRetentionPeriod)"></entry-detail>
+                        </el-col>
+                        <el-col :span="12">
+                          <entry-detail name="接收消息等待时间" :value="scope.row.properties.ReceiveMessageWaitTimeSeconds"
+                                        unit="秒"></entry-detail>
+                        </el-col>
+                      </el-row>
+                      <el-row :gutter="20">
+                        <el-col :span="12">
+                          <entry-detail name="交付延迟" :value="scope.row.properties.DelaySeconds" unit="秒"></entry-detail>
+                        </el-col>
+                      </el-row>
+                      <br/>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="createdTime" label="创建时间">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.createdTime }}</span>
+                  </template>
+                </el-table-column>
               </template>
             </asset-table>
           </el-tab-pane>
@@ -130,6 +162,8 @@ import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTa
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
+import util from '@/libs/util'
+import EntryDetail from '@/components/opscloud/common/EntryDetail'
 
 const tableLayout = {
   ec2: {
@@ -209,7 +243,7 @@ const tableLayout = {
     },
     assetKey2: {
       alias: 'ARN',
-      show: true
+      show: false
     },
     zone: {
       alias: '区',
@@ -224,13 +258,15 @@ export default {
       activeName: {
         name: 'cloudServer',
         ec2: 'ec2',
-        iam: 'iamUser'
+        iam: 'iamUser',
+        sqs: 'queue'
       },
       instance: {
         id: null
       },
       tableLayout: tableLayout,
-      assetType: DsInstanceAssetType
+      assetType: DsInstanceAssetType,
+      util: util
     }
   },
   computed: {},
@@ -239,6 +275,7 @@ export default {
     this.init()
   },
   components: {
+    EntryDetail,
     AssetTable,
     DsChildrenTag,
     DatasourceInstanceTitle
