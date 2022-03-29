@@ -145,6 +145,11 @@
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_SUBSCRIPTION"
                          :tableLayout="tableLayout.subscription" ref="subscriptionTable">
               <template v-slot:extend>
+                <el-table-column prop="protocol" label="协议" width="50">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.protocol }}</span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="assetKey2" label="订阅关系" width="600">
                   <template slot-scope="scope">
                     <el-row>
