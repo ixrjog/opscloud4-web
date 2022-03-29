@@ -50,6 +50,12 @@ export function getAssetTypeText (value) {
       return 'IAM-AK'
     case DsInstanceAssetType.AWS.IAM_POLICY:
       return 'IAM策略'
+    case DsInstanceAssetType.AWS.SQS:
+      return 'SQS队列'
+    case DsInstanceAssetType.AWS.SNS_TOPIC:
+      return 'SNS主题'
+    case DsInstanceAssetType.AWS.SNS_SUBSCRIPTION:
+      return 'SNS订阅'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:

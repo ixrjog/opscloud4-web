@@ -72,7 +72,7 @@
       </el-tab-pane>
       <el-tab-pane label="SQS/SNS" name="sqs">
         <el-tabs tab-position="left" v-model="activeName.sqs" @tab-click="handleClick">
-          <el-tab-pane label="SQS" name="queue">
+          <el-tab-pane label="SQS队列" name="queue">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SQS"
                          :tableLayout="tableLayout.queue"
                          ref="queueTable">
@@ -129,9 +129,21 @@
               </template>
             </asset-table>
           </el-tab-pane>
-          <el-tab-pane label="SNS_TOPIC" name="topic">
+          <el-tab-pane label="SNS主题" name="topic">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_TOPIC"
                          :tableLayout="tableLayout.topic" ref="topicTable">
+              <template v-slot:extend>
+                <el-table-column prop="assetKey2" label="ARN" width="500" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="SNS订阅" name="subscription">
+            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_SUBSCRIPTION"
+                         :tableLayout="tableLayout.subscription" ref="subscriptionTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey2" label="ARN" width="500" show-overflow-tooltip>
                   <template slot-scope="scope">
@@ -261,7 +273,29 @@ const tableLayout = {
       alias: '区',
       show: false
     }
-  }
+  },
+  subscription: {
+    assetId: {
+      alias: 'SubscriptionARN',
+      show: false
+    },
+    name: {
+      alias: 'Topic名称',
+      show: true
+    },
+    assetKey: {
+      alias: '策略类型',
+      show: false
+    },
+    assetKey2: {
+      alias: 'ARN',
+      show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
+  },
 }
 
 export default {
@@ -311,6 +345,9 @@ export default {
       }
       if (tab.name === 'topic') {
         this.$refs.topicTable.fetchData()
+      }
+      if (tab.name === 'subscription') {
+        this.$refs.subscriptionTable.fetchData()
       }
     },
     init () {
