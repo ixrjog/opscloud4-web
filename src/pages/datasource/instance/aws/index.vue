@@ -97,9 +97,9 @@
               </template>
             </asset-table>
           </el-tab-pane>
-          <el-tab-pane label="SNS" name="topic">
-            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.IAM_POLICY"
-                         :tableLayout="tableLayout.iamPolicy" :enableActive="true" ref="topicTable">
+          <el-tab-pane label="SNS_TOPIC" name="topic">
+            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_TOPIC"
+                         :tableLayout="tableLayout.topic" :enableActive="true" ref="topicTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey2" label="ARN" width="400">
                   <template slot-scope="scope">

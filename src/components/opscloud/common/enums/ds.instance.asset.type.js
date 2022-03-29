@@ -32,7 +32,7 @@ const DsInstanceAssetType = Object.freeze({
     IAM_USER: 'IAM_USER',
     IAM_ACCESS_KEY: 'IAM_ACCESS_KEY',
     SQS: 'SQS',
-    SNS: 'SNS'
+    SNS_TOPIC: 'SNS_TOPIC'
   },
   KUBERNETES: {
     KUBERNETES_NODE: 'KUBERNETES_NODE',
