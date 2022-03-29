@@ -131,23 +131,13 @@
           </el-tab-pane>
           <el-tab-pane label="SNS_TOPIC" name="topic">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_TOPIC"
-                         :tableLayout="tableLayout.topic" :enableActive="true" ref="topicTable">
+                         :tableLayout="tableLayout.topic" ref="topicTable">
               <template v-slot:extend>
-                <el-table-column prop="assetKey2" label="ARN" width="400">
+                <el-table-column prop="assetKey2" label="ARN" width="500" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
                   </template>
                 </el-table-column>
-                <el-table-column prop="children" label="成员用户" width="200">
-                  <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.IAM_USER" :type="4"></ds-children-tag>
-                  </template>
-                </el-table-column>
-                <!--                <el-table-column label="描述">-->
-                <!--                  <template slot-scope="scope">-->
-                <!--                    <span>{{ scope.row.description }}</span>-->
-                <!--                  </template>-->
-                <!--                </el-table-column>-->
               </template>
             </asset-table>
           </el-tab-pane>
@@ -318,6 +308,9 @@ export default {
       }
       if (tab.name === 'sqs' || tab.name === 'queue') {
         this.$refs.queueTable.fetchData()
+      }
+      if (tab.name === 'topic') {
+        this.$refs.topicTable.fetchData()
       }
     },
     init () {
