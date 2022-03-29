@@ -249,6 +249,28 @@ const tableLayout = {
       alias: '区',
       show: false
     }
+  },
+  topic: {
+    assetId: {
+      alias: 'Topic名称',
+      show: false
+    },
+    name: {
+      alias: 'Topic名称',
+      show: true
+    },
+    assetKey: {
+      alias: '策略类型',
+      show: false
+    },
+    assetKey2: {
+      alias: 'ARN',
+      show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
   }
 }
 
