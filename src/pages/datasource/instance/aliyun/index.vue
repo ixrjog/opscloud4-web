@@ -122,7 +122,7 @@
                 <el-table-column prop="properties" label="实例详情">
                   <template slot-scope="scope">
                     <span>{{ scope.row.properties.instanceCPU }} 核</span>
-                    <span> / {{ scope.row.properties.instanceMemory }} G</span>
+                    <span> / {{ scope.row.properties.instanceMemory }} M</span>
                     <el-popover placement="right" trigger="hover">
                       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                       <entry-detail name="CPU" :value="scope.row.properties.instanceCPU" unit="核"></entry-detail>
