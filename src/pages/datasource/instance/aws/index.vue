@@ -145,9 +145,31 @@
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_SUBSCRIPTION"
                          :tableLayout="tableLayout.subscription" ref="subscriptionTable">
               <template v-slot:extend>
-                <el-table-column prop="assetKey2" label="ARN" width="500" show-overflow-tooltip>
+                <el-table-column prop="protocol" label="协议" width="50">
                   <template slot-scope="scope">
-                    <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
+                    <span>{{ scope.row.properties.protocol }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="assetKey2" label="订阅关系" width="600">
+                  <template slot-scope="scope">
+                    <el-row>
+                      <el-col :span="1">
+                        <i class="fas fa-link" style="padding-top: 20px"></i>
+                      </el-col>
+                      <el-col :span="23">
+                        <div>
+                          <el-tooltip class="item" effect="dark" content="终端节点" placement="top-end">
+                            <el-tag size="mini">{{ scope.row.assetKey }}</el-tag>
+                          </el-tooltip>
+                        </div>
+                        <div>
+                          <el-tooltip class="item" effect="dark" content="主题ARN" placement="bottom-end">
+                            <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
+                          </el-tooltip>
+                        </div>
+                      </el-col>
+                    </el-row>
+
                   </template>
                 </el-table-column>
               </template>
@@ -280,7 +302,7 @@ const tableLayout = {
       show: false
     },
     name: {
-      alias: 'Topic名称',
+      alias: '主题名称',
       show: true
     },
     assetKey: {
@@ -295,7 +317,7 @@ const tableLayout = {
       alias: '区',
       show: false
     }
-  },
+  }
 }
 
 export default {
