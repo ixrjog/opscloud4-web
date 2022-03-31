@@ -11,7 +11,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handlerAdd">新增</el-button>
+      <el-button @click="handleAdd">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="username" label="用户名"></el-table-column>
@@ -29,8 +29,8 @@
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -121,7 +121,7 @@ export default {
           this.protocolOptions = res.body.options
         })
     },
-    handlerRowDel (row) {
+    handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -135,7 +135,7 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handlerAdd () {
+    handleAdd () {
       const serverAccount = {
         id: '',
         username: '',
@@ -150,7 +150,7 @@ export default {
       this.formStatus.account.operationType = true
       this.formStatus.account.visible = true
     },
-    handlerRowUpdate (row) {
+    handleRowUpdate (row) {
       this.$refs.serverAccountEditor.initData(Object.assign({}, row))
       this.formStatus.account.operationType = false
       this.formStatus.account.visible = true
