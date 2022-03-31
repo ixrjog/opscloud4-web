@@ -11,6 +11,7 @@ import workbench from './modules/opscloud.workbench'
 import workorder from './modules/opscloud.workorder'
 import application from './modules/opscloud.application'
 import task from './modules/opscloud.task'
+import docs from './modules/opscloud.docs'
 
 import layoutHeaderAside from '@/layout/header-aside'
 
@@ -76,7 +77,8 @@ const frameIn = [
       ...rbac,
       // 应用
       ...application,
-      ...task
+      ...task,
+      ...docs
     ]
   },
   playground,
