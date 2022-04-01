@@ -26,7 +26,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="队列名称" prop="queueName">
-        <el-input v-model="sqsData.queueName"></el-input>
+        <el-input v-model="sqsData.queueName" @change="queueNameChange"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
           以 {{ queueNameSuffix }} 结尾，包含小写英文、数字和下划线（_）,长度限制在80个字符之内
         </span>
@@ -243,6 +243,9 @@ export default {
     initDate () {
       this.getDsInstance()
       this.sqsData = Object.assign({}, sqsData)
+    },
+    queueNameChange () {
+      this.sqsData.queueName = this.sqsData.queueName.trim()
     },
     addTicketEntry () {
       this.$refs.sqsDataForm.validate((valid) => {
