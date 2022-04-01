@@ -30,8 +30,6 @@
 <script>
 
 import util from '@/libs/util'
-
-
 import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 import KubernetesTerminalItem from './KubernetesTerminalItem'
 

@@ -2,7 +2,7 @@
   <d2-container>
     <template>
       <div>
-        <h1>{{title}}</h1>
+        <h1>{{ title }}</h1>
       </div>
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model.trim="queryParam.queryName" clearable placeholder="查询命令" class="input-bar"/>
@@ -134,13 +134,12 @@ export default {
     renderData () {
       this.$nextTick(() => {
         this.table.data.forEach(row => {
-
-          const term_input = new Terminal({
+          const termInput = new Terminal({
             rendererType: 'canvas', // 渲染类型
             allowTransparency: true,
             fontSize: 11,
             rows: 2,
-            //cols: 40,
+            // cols: 40,
             theme: this.terminalSetting.theme,
             termName: 'xterm',
             visualBell: false,
@@ -151,13 +150,13 @@ export default {
             cancelEvents: false,
             convertEol: true // 启用时，光标将设置为下一行的开头
           })
-          const input_fitAddon = new FitAddon()
-          term_input.loadAddon(input_fitAddon)
-          term_input.open(document.getElementById(`terminal_input_${row.id}`))
-          input_fitAddon.fit() // 获取对象的高度和宽度
-          term_input.write(row.prompt + ' ' + row.input)
+          const inputFitAddon = new FitAddon()
+          termInput.loadAddon(inputFitAddon)
+          termInput.open(document.getElementById(`terminal_input_${row.id}`))
+          inputFitAddon.fit() // 获取对象的高度和宽度
+          termInput.write(row.prompt + ' ' + row.input)
 
-          const term_output = new Terminal({
+          const termOutput = new Terminal({
             rendererType: 'canvas', // 渲染类型
             allowTransparency: true,
             fontSize: 11,
@@ -172,14 +171,13 @@ export default {
             cancelEvents: false,
             convertEol: true // 启用时，光标将设置为下一行的开头
           })
-          const output_fitAddon = new FitAddon()
-          term_output.loadAddon(output_fitAddon)
-          term_output.open(document.getElementById(`terminal_output_${row.id}`))
-          output_fitAddon.fit() // 获取对象的高度和宽度
-          term_output.write(row.output)
-
-          this.display.inputTerminals.push(term_input)
-          this.display.outputTerminals.push(term_output)
+          const outputFitAddon = new FitAddon()
+          termOutput.loadAddon(outputFitAddon)
+          termOutput.open(document.getElementById(`terminal_output_${row.id}`))
+          outputFitAddon.fit() // 获取对象的高度和宽度
+          termOutput.write(row.output)
+          this.display.inputTerminals.push(termInput)
+          this.display.outputTerminals.push(termOutput)
         })
       })
     },
@@ -215,14 +213,13 @@ export default {
 </script>
 
 <style scoped>
-  .input-bar {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.input-bar {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .button {
-    margin-left: 5px;
-  }
+.button {
+  margin-left: 5px;
+}
 </style>
-

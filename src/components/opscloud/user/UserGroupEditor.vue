@@ -20,7 +20,6 @@
 
 <script>
 
-
 import UserGroupInfo from './child/UserGroupInfo'
 import PermissionUserTab from './child/BusinessPermissionUserTab'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'

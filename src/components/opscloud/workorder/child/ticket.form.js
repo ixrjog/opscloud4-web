@@ -35,6 +35,9 @@ export default {
     },
     employeeResign: {
       visible: false
+    },
+    sqsTicketEditor: {
+      visible: false
     }
   }
 }

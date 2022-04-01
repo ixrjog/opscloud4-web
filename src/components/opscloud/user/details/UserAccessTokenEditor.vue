@@ -63,31 +63,28 @@ export default {
             date.setTime(date.getTime() + 3600 * 1000 * 24 * 180)
             picker.$emit('pick', date)
           }
-        },
-          {
-            text: '1年',
-            onClick (picker) {
-              const date = new Date()
-              date.setTime(date.getTime() + 3600 * 1000 * 24 * 365)
-              picker.$emit('pick', date)
-            }
-          },
-          {
-            text: '2年',
-            onClick (picker) {
-              const date = new Date()
-              date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 2)
-              picker.$emit('pick', date)
-            }
-          },
-          {
-            text: '3年',
-            onClick (picker) {
-              const date = new Date()
-              date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 3)
-              picker.$emit('pick', date)
-            }
-          }]
+        }, {
+          text: '1年',
+          onClick (picker) {
+            const date = new Date()
+            date.setTime(date.getTime() + 3600 * 1000 * 24 * 365)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '2年',
+          onClick (picker) {
+            const date = new Date()
+            date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 2)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '3年',
+          onClick (picker) {
+            const date = new Date()
+            date.setTime(date.getTime() + 3600 * 1000 * 24 * 365 * 3)
+            picker.$emit('pick', date)
+          }
+        }]
       }
     }
   },
