@@ -98,7 +98,7 @@ export default {
         loading: false,
         pagination: {
           currentPage: 1,
-          pageSize: 10,
+          pageSize: 5,
           total: 0
         }
       },

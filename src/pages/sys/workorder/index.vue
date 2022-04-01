@@ -34,6 +34,7 @@
     <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic" ref="onsTopicTicketEditor" @close="fetchData"></ons-topic-ticket-editor>
     <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup" ref="onsGroupTicketEditor" @close="fetchData"></ons-group-ticket-editor>
     <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor" @close="fetchData"></employee-resign-ticket-editor>
+    <sqs-ticket-editor :formStatus="formStatus.ticket.sqsTicketEditor" ref="sqsTicketEditor" @close="fetchData"></sqs-ticket-editor>
   </d2-container>
 </template>
 
@@ -57,6 +58,7 @@ import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopi
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
 import EmployeeResignTicketEditor from '@/components/opscloud/workorder/ticket/EmployeeResignTicketEditor'
 import GrafanaTicketEditor from '@/components/opscloud/workorder/ticket/GrafanaTicketEditor'
+import SqsTicketEditor from '@/components/opscloud/workorder/ticket/SqsTicketEditor'
 
 export default {
   data () {
@@ -88,7 +90,8 @@ export default {
     NacosTicketEditor,
     OnsTopicTicketEditor,
     OnsGroupTicketEditor,
-    EmployeeResignTicketEditor
+    EmployeeResignTicketEditor,
+    SqsTicketEditor
   },
   computed: {},
   mounted () {
@@ -182,6 +185,10 @@ export default {
         case this.workOrderKeyConstants.SYS_EMPLOYEE_RESIGN:
           this.handleOpenTicketEditor(this.formStatus.ticket.employeeResign)
           this.$refs.employeeResignTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.SQS:
+          this.handleOpenTicketEditor(this.formStatus.ticket.sqsTicketEditor)
+          this.$refs.sqsTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

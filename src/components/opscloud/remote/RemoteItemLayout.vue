@@ -258,7 +258,7 @@ export default {
       displayElm.onblur = () => {
         displayElm.className = ''
       }
-     // this.keyboard = new Guacamole.Keyboard(displayElm)
+      // this.keyboard = new Guacamole.Keyboard(displayElm)
       this.keyboard = new Guacamole.Keyboard(document)
       this.installKeyboard()
       this.mouse.onmousedown = this.mouse.onmouseup = this.mouse.onmousemove = this.handleMouseState

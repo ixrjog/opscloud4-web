@@ -1,34 +1,34 @@
 <template>
   <div>
-      <el-row :gutter="24">
-        <el-select v-model="instanceUuid" filterable clearable value-key="instanceName"
-                   placeholder="选择数据源实例" style="display: inline-block; width: 250px; margin-left: 10px" reserve-keyword
-                   @change="selInstance">
-          <el-option
-            v-for="item in dsInstanceOptions"
-            :key="item.uuid"
-            :label="item.instanceName"
-            :value="item.uuid">
-            <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
-          </el-option>
-        </el-select>
-        <el-select v-model="ticketEntry" filterable clearable value-key="name"
-                   style="display: inline-block; width: 250px; margin-left: 10px"
-                   remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
-                   :loading="searchLoading" :disabled="instanceUuid === ''">
-          <el-option
-            v-for="item in ticketEntryOptions"
-            :key="item.name"
-            :label="item.name"
-            :value="item">
-            <select-item :name="item.name" :comment="item.comment"></select-item>
-          </el-option>
-        </el-select>
-        <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry()"
-                   :loading="buttonAdding"
-                   style="margin-left: 10px">添加
-        </el-button>
-      </el-row>
+    <el-row :gutter="24">
+      <el-select v-model="instanceUuid" filterable clearable value-key="instanceName"
+                 placeholder="选择数据源实例" style="display: inline-block; width: 250px; margin-left: 10px" reserve-keyword
+                 @change="selInstance">
+        <el-option
+          v-for="item in dsInstanceOptions"
+          :key="item.uuid"
+          :label="item.instanceName"
+          :value="item.uuid">
+          <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+        </el-option>
+      </el-select>
+      <el-select v-model="ticketEntry" filterable clearable value-key="name"
+                 style="display: inline-block; width: 250px; margin-left: 10px"
+                 remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
+                 :loading="searchLoading" :disabled="instanceUuid === ''">
+        <el-option
+          v-for="item in ticketEntryOptions"
+          :key="item.name"
+          :label="item.name"
+          :value="item">
+          <select-item :name="item.name" :comment="item.comment"></select-item>
+        </el-option>
+      </el-select>
+      <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry()"
+                 :loading="buttonAdding"
+                 style="margin-left: 10px">添加
+      </el-button>
+    </el-row>
   </div>
 </template>
 
@@ -85,12 +85,11 @@ export default {
         ...this.ticketEntry,
         instanceUuid: this.ticketEntry.entry.instanceUuid
       }
-      ADD_WORK_ORDER_TICKET_ENTRY(requestBody)
-        .then(res => {
-          this.buttonAdding = false
-          this.ticketEntry = ''
-          this.handleNotify()
-        }).catch(() => {
+      ADD_WORK_ORDER_TICKET_ENTRY(requestBody).then(res => {
+        this.buttonAdding = false
+        this.ticketEntry = ''
+        this.handleNotify()
+      }).catch(() => {
         this.buttonAdding = false
       })
     },

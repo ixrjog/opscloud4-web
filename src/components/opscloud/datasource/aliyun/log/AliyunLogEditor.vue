@@ -82,7 +82,7 @@ export default {
       this.aliyunLog = aliyunLog
     },
     getProject (param) {
-      let requestBody = {
+      const requestBody = {
         queryName: param,
         instanceId: this.instanceId
       }
@@ -92,7 +92,7 @@ export default {
         })
     },
     getLogstore () {
-      let requestBody = {
+      const requestBody = {
         projectName: this.aliyunLog.project,
         instanceId: this.instanceId
       }
@@ -102,7 +102,7 @@ export default {
         })
     },
     getConfig () {
-      let requestBody = {
+      const requestBody = {
         projectName: this.aliyunLog.project,
         logstoreName: this.aliyunLog.logstore,
         instanceId: this.instanceId
@@ -126,7 +126,7 @@ export default {
     },
     saveInfo () {
       setTimeout(() => {
-        let requestBody = Object.assign({}, this.aliyunLog)
+        const requestBody = Object.assign({}, this.aliyunLog)
         if (this.formStatus.operationType) {
           ADD_LOG(requestBody)
             .then(res => {

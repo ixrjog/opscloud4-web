@@ -101,8 +101,6 @@
                           <entry-detail name="默认可见性超时"
                                         :value="util.formatSecond(scope.row.properties.VisibilityTimeout)"></entry-detail>
                         </el-col>
-                      </el-row>
-                      <el-row :gutter="20">
                         <el-col :span="12">
                           <entry-detail name="消息保留周期"
                                         :value="util.formatSecond(scope.row.properties.MessageRetentionPeriod)"></entry-detail>
@@ -111,8 +109,6 @@
                           <entry-detail name="接收消息等待时间" :value="scope.row.properties.ReceiveMessageWaitTimeSeconds"
                                         unit="秒"></entry-detail>
                         </el-col>
-                      </el-row>
-                      <el-row :gutter="20">
                         <el-col :span="12">
                           <entry-detail name="交付延迟" :value="scope.row.properties.DelaySeconds" unit="秒"></entry-detail>
                         </el-col>
