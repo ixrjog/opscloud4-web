@@ -26,7 +26,8 @@
                     <entry-detail name="实例名称" :value="scope.ticketEntry.instance.instanceName"></entry-detail>
                   </el-col>
                   <el-col :span="12">
-                    <entry-detail name="Region ID" :value="scope.ticketEntry.entry.regionId"></entry-detail>
+                    <entry-detail name="Region ID" :value="toRegionTypeText(scope.ticketEntry.entry.regionId)">
+                    </entry-detail>
                   </el-col>
                 </el-row>
                 <br>
@@ -123,6 +124,7 @@ import TicketSqsForm from '@/components/opscloud/workorder/child/TicketSqsForm'
 import TicketEntryDesc from '@/components/opscloud/workorder/child/TicketEntryDesc'
 import util from '@/libs/util'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
+import { getAWSRegionTypeText } from '@/filters/cloud.region'
 
 const TableLayout = {
   instance: true,
@@ -154,7 +156,9 @@ export default {
   mixins: [],
   mounted () {
   },
-  filters: {},
+  filters: {
+    getAWSRegionTypeText
+  },
   methods: {
     initData (ticketView) {
       this.ticketView = ticketView
@@ -258,6 +262,9 @@ export default {
       } else {
         this.$refs.ticketEntryDesc.initData(ticketEntries)
       }
+    },
+    toRegionTypeText (regionId) {
+      return regionId + ' [' + getAWSRegionTypeText(regionId) + ']'
     }
   }
 }

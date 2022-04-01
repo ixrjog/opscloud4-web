@@ -29,7 +29,7 @@
       <el-form-item label="GID" required>
         <el-input v-model="groupData.groupId" :disabled="added"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
-          以 “GID_”开头，只能包含大写字母、数字和下划线（_），长度限制在 7~64 字符之间
+          以 “GID_”开头，只能包含大写字母、数字和下划线（_），长度限制在64字符之间
         </span>
       </el-form-item>
       <el-form-item label="客户端协议" required>
