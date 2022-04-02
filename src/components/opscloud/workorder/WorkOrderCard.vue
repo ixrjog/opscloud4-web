@@ -15,6 +15,9 @@
                   <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"
                      style="margin-right: 5px"></i>
                   <span>{{ scope.row.name }}</span>
+                  <span v-if="scope.row.docs !== null && scope.row.docs !== ''">
+                     <a :href="scope.row.docs"><i class="el-icon-info" style="color: #008200; margin-left: 5px"></i></a>
+                  </span>
                   <el-button :type="scope.row.status === 0 ? 'primary' :'warning'"
                              style="float: right"
                              plain size="mini"
@@ -36,6 +39,7 @@
 
 import { GET_WORK_ORDER_VIEW } from '@/api/modules/workorder/workorder.api.js'
 import { CREATE_WORK_ORDER_TICKET } from '@/api/modules/workorder/workorder.ticket.api.js'
+import util from '@/libs/util'
 
 export default {
   name: 'WorkOrderCard',
@@ -72,6 +76,9 @@ export default {
         row.loading = false
         this.disabled = false
       })
+    },
+    openDocs (docs) {
+      util.open(docs)
     },
     fetchData () {
       GET_WORK_ORDER_VIEW()
