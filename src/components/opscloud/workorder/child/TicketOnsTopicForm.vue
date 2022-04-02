@@ -29,7 +29,7 @@
       <el-form-item label="Topic" required>
         <el-input v-model="topicData.topic" :disabled="added"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
-          以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,长度限制在64个字符之间
+          以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,最多 64 个字符
         </span>
       </el-form-item>
       <el-form-item label="消息类型" required>

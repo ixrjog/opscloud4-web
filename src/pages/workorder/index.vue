@@ -25,6 +25,7 @@
     <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup" ref="onsGroupTicketEditor" @close="fetchData"></ons-group-ticket-editor>
     <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor" @close="fetchData"></employee-resign-ticket-editor>
     <sqs-ticket-editor :formStatus="formStatus.ticket.sqsTicketEditor" ref="sqsTicketEditor" @close="fetchData"></sqs-ticket-editor>
+    <sns-topic-ticket-editor :formStatus="formStatus.ticket.snsTopicTicketEditor" ref="snsTopicTicketEditor" @close="fetchData"></sns-topic-ticket-editor>
   </d2-container>
 </template>
 
@@ -48,6 +49,7 @@ import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPol
 import EmployeeResignTicketEditor from '@/components/opscloud/workorder/ticket/EmployeeResignTicketEditor'
 import GrafanaTicketEditor from '@/components/opscloud/workorder/ticket/GrafanaTicketEditor'
 import SqsTicketEditor from '@/components/opscloud/workorder/ticket/SqsTicketEditor'
+import SnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/SnsTopicTicketEditor'
 
 export default {
   data () {
@@ -75,7 +77,8 @@ export default {
     OnsTopicTicketEditor,
     OnsGroupTicketEditor,
     EmployeeResignTicketEditor,
-    SqsTicketEditor
+    SqsTicketEditor,
+    SnsTopicTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -156,6 +159,10 @@ export default {
         case this.workOrderKeyConstants.SQS:
           this.handleOpenTicketEditor(this.formStatus.ticket.sqsTicketEditor)
           this.$refs.sqsTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.SNS_TOPIC:
+          this.handleOpenTicketEditor(this.formStatus.ticket.snsTopicTicketEditor)
+          this.$refs.snsTopicTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

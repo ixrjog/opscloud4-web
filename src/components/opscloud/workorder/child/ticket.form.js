@@ -38,6 +38,9 @@ export default {
     },
     sqsTicketEditor: {
       visible: false
+    },
+    snsTopicTicketEditor: {
+      visible: false
     }
   }
 }

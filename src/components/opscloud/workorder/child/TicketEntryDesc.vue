@@ -18,6 +18,11 @@
       <slot name="header" :ticketEntry="ticketEntry"></slot>
     </div>
     <slot name="body" :ticketEntry="ticketEntry"></slot>
+    <div v-if="JSON.stringify(ticketEntry) !== '{}'">
+      <div style="margin: 10px 0 0">
+        <span>{{ ticketEntry.comment }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,7 +36,7 @@ import MySpan from '@/components/opscloud/common/MySpan'
 
 export default {
   name: 'TicketEntryDesc',
-  props: ['ticketId', 'workOrderKey', 'ticketPhase', 'tableLayout'],
+  props: ['ticketId', 'workOrderKey', 'ticketPhase'],
   data () {
     return {
       orderPhase: WorkOrderTicketPhase,
