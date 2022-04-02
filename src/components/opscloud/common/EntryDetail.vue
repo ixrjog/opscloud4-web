@@ -3,14 +3,15 @@
     <span class="name">{{ name }}</span>
     <span class="value">
       <span v-if="!copy">{{ value }}</span>
-      <span v-else v-clipboard:copy="value" v-clipboard:success="onCopy"
-            v-clipboard:error="onError">{{ value }}</span>
+      <copy-span :content="value" v-else :show-icon="false"></copy-span>
       <span v-if="unit !== undefined && unit !== null"> {{ unit }}</span>
     </span>
   </div>
 </template>
 
 <script>
+import CopySpan from '@/components/opscloud/common/CopySpan'
+
 export default {
   name: 'EntryDetail',
   props: {
@@ -35,13 +36,10 @@ export default {
       default: false
     }
   },
+  components: {
+    CopySpan
+  },
   methods: {
-    onCopy (e) {
-      this.$message.success('内容已复制到剪切板！')
-    },
-    onError (e) {
-      this.$message.error('抱歉，复制失败！')
-    }
   }
 }
 </script>

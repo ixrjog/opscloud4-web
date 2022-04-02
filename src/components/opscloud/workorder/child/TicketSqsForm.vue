@@ -113,7 +113,7 @@
           </el-row>
         </el-collapse-item>
       </el-collapse>
-      <br>
+      <br/>
       <el-form-item label="描述" prop="remark">
         <el-input v-model="sqsData.remark" placeholder="请输入备注，例如：用户 - 领券队列"></el-input>
       </el-form-item>
