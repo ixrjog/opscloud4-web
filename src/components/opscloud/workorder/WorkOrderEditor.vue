@@ -13,7 +13,7 @@
           <el-form-item label="Key" :required="true">
             <el-input v-model.trim="workOrder.workOrderKey" disabled></el-input>
           </el-form-item>
-          <el-form-item label="群组">
+          <el-form-item label="群组" :required="true">
             <el-select v-model="workOrder.workOrderGroupId" filterable remote reserve-keyword placeholder="关键字搜索群组"
                        :remote-method="getWorkOrderGroups">
               <el-option
@@ -24,7 +24,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="顺序">
+          <el-form-item label="顺序" :required="true">
             <el-input v-model.number="workOrder.seq" placeholder="请输入工单顺序"></el-input>
           </el-form-item>
           <el-form-item label="图标">
@@ -32,13 +32,16 @@
               <i slot="suffix" :class=workOrder.icon aria-hidden="true"></i>
             </el-input>
           </el-form-item>
-          <el-form-item label="状态">
+          <el-form-item label="状态" :required="true">
             <el-radio-group v-model="workOrder.status">
               <el-radio :label="workOrderStatus.NORMAL.type">{{ workOrderStatus.NORMAL.desc }}</el-radio>
               <el-radio :label="workOrderStatus.DEVELOPING.type">{{ workOrderStatus.DEVELOPING.desc }}</el-radio>
               <el-radio :label="workOrderStatus.SYS.type">{{ workOrderStatus.SYS.desc }}</el-radio>
               <el-radio :label="workOrderStatus.INACTIVE.type">{{ workOrderStatus.INACTIVE.desc }}</el-radio>
             </el-radio-group>
+          </el-form-item>
+          <el-form-item label="帮助">
+            <el-input v-model.number="workOrder.docs" placeholder="只支持内部跳转"></el-input>
           </el-form-item>
           <el-form-item label="描述">
             <el-input v-model.trim="workOrder.comment" placeholder="请输入工单描述"></el-input>
