@@ -28,7 +28,7 @@
             <user-avatar :user="scope.row.createUser" :size="24"></user-avatar>
           </template>
         </el-table-column>
-        <el-table-column prop="ticketPhase" label="进度">
+        <el-table-column prop="ticketPhase" label="进度" width="120">
           <template slot-scope="scope">
             <el-tag class="filters" :type="scope.row.ticketPhase | toPhaseType" size="mini">
               <i class="el-icon-loading" v-show="scope.row.ticketPhase === 'PROCESSING'"></i>
@@ -36,8 +36,8 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="ago" label="申请时间"></el-table-column>
-        <el-table-column label="操作" width="180">
+        <el-table-column prop="ago" label="申请时间" width="120"></el-table-column>
+        <el-table-column label="操作" width="120">
           <template slot-scope="scope">
             <el-button v-if="scope.row.ticketPhase !== 'NEW' && !scope.row.isApprover"
                        type="success"

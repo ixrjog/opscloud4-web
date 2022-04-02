@@ -20,7 +20,12 @@
                                :tableLayout="tableLayout"
                                v-show="JSON.stringify(ticketView.ticketEntries) !== '[]'"
                                ref="ticketEntryDesc" @ticketEntriesChanged="ticketEntriesChanged">
-              <template v-slot:extend="scope">
+              <template v-slot:header="scope">
+                <div v-if="scope.ticketEntry.entry.queueUrl">
+                  <copy-span :content="scope.ticketEntry.entry.queueUrl" style="color: #8492a6"></copy-span>
+                </div>
+              </template>
+              <template v-slot:body="scope">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <entry-detail name="实例名称" :value="scope.ticketEntry.instance.instanceName"></entry-detail>
@@ -30,7 +35,7 @@
                     </entry-detail>
                   </el-col>
                 </el-row>
-                <br>
+                <br/>
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <entry-detail name="最大消息大小"
@@ -125,6 +130,7 @@ import TicketEntryDesc from '@/components/opscloud/workorder/child/TicketEntryDe
 import util from '@/libs/util'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import { getAWSRegionTypeText } from '@/filters/cloud.region'
+import CopySpan from '@/components/opscloud/common/CopySpan'
 
 const TableLayout = {
   instance: true,
@@ -151,7 +157,8 @@ export default {
     TicketSqsForm,
     TicketEntryDesc,
     WorkflowNodes,
-    EntryDetail
+    EntryDetail,
+    CopySpan
   },
   mixins: [],
   mounted () {
@@ -178,6 +185,10 @@ export default {
      * 提交工单
      */
     submitTicket () {
+      if (JSON.stringify(this.ticketView.ticketEntries) === '[]') {
+        this.$message.warning('请先保存以校验SQS配置')
+        return
+      }
       this.submitting = true
       const requestBody = {
         ticketId: this.ticketView.ticketId,
