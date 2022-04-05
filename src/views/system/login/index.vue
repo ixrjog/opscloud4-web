@@ -141,9 +141,7 @@ import ui from '@/libs/util.ui'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 
 const wordcloud = [
-  '抱怨身处黑暗 不如提灯前行',
-  '纵使无人伴身旁 也要一展少年狂',
-  '你所看到的惊艳 都曾被平庸历练'
+  'Jan单、高效'
 ]
 
 export default {
