@@ -12,8 +12,8 @@
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
             <ticket-sns-topic-form :workOrderTicketId="ticketView.ticketId" ref="ticketSqsForm"
-                             v-show="ticketView.ticketPhase === 'NEW' && JSON.stringify(ticketView.ticketEntries) === '[]'"
-                             @handleNotify="fetchData"></ticket-sns-topic-form>
+                                   v-show="ticketView.ticketPhase === 'NEW' && JSON.stringify(ticketView.ticketEntries) === '[]'"
+                                   @handleNotify="fetchData"></ticket-sns-topic-form>
             <ticket-entry-desc :ticketId="ticketView.ticketId"
                                :workOrderKey="ticketView.workOrderKey"
                                :ticketPhase="ticketView.ticketPhase"
@@ -32,6 +32,13 @@
                   <el-col :span="12">
                     <entry-detail name="Region ID" :value="toRegionTypeText(scope.ticketEntry.entry.regionId)">
                     </entry-detail>
+                  </el-col>
+                  <el-col :span="12" v-if="scope.ticketEntry.entry.attributes.FifoTopic">
+                    <entry-detail name="FIFO主题" :value="scope.ticketEntry.entry.attributes.FifoTopic"></entry-detail>
+                  </el-col>
+                  <el-col :span="12" v-if="scope.ticketEntry.entry.attributes.ContentBasedDeduplication">
+                    <entry-detail name="基于内容的消息重复数据删除"
+                                  :value="scope.ticketEntry.entry.attributes.ContentBasedDeduplication"></entry-detail>
                   </el-col>
                 </el-row>
                 <br/>
