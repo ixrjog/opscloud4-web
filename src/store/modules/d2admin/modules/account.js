@@ -50,21 +50,9 @@ export default {
       }
 
       // 判断是否需要确认
-      if (confirm) {
-        SYS_USER_LOGOUT()
-        commit('d2admin/gray/set', true, { root: true })
-        // MessageBox.confirm('确定要注销当前用户吗', '注销用户', { type: 'warning' })
-        //   .then(() => {
-        //     commit('d2admin/gray/set', false, { root: true })
-        //     logout()
-        //   })
-        //   .catch(() => {
-        //     commit('d2admin/gray/set', false, { root: true })
-        //     Message({ message: '取消注销操作' })
-        //   })
-      } else {
-        logout()
-      }
+      SYS_USER_LOGOUT()
+      // commit('d2admin/gray/set', true, { root: true })
+      logout()
     },
     /**
      * @description 用户登录后从持久化数据加载一系列的设置
