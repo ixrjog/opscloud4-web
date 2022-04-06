@@ -11,17 +11,17 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-sns-topic-form :workOrderTicketId="ticketView.ticketId" ref="ticketSqsForm"
-                                   v-show="ticketView.ticketPhase === 'NEW' && JSON.stringify(ticketView.ticketEntries) === '[]'"
-                                   @handleNotify="fetchData"></ticket-sns-topic-form>
+            <ticket-sns-subscription-form :workOrderTicketId="ticketView.ticketId" ref="ticketSnsSubscriptionForm"
+                                          v-show="ticketView.ticketPhase === 'NEW' && JSON.stringify(ticketView.ticketEntries) === '[]'"
+                                          @handleNotify="fetchData"></ticket-sns-subscription-form>
             <ticket-entry-desc :ticketId="ticketView.ticketId"
                                :workOrderKey="ticketView.workOrderKey"
                                :ticketPhase="ticketView.ticketPhase"
                                v-show="JSON.stringify(ticketView.ticketEntries) !== '[]'"
                                ref="ticketEntryDesc" @ticketEntriesChanged="ticketEntriesChanged">
               <template v-slot:header="scope">
-                <div v-if="scope.ticketEntry.entry.topicArn">
-                  <copy-span :content="scope.ticketEntry.entry.topicArn" style="color: #8492a6"></copy-span>
+                <div v-if="scope.ticketEntry.entry.subscriptionArn">
+                  <copy-span :content="scope.ticketEntry.entry.subscriptionArn" style="color: #8492a6"></copy-span>
                 </div>
               </template>
               <template v-slot:body="scope">
@@ -36,12 +36,15 @@
                 </el-row>
                 <br/>
                 <el-row>
-                  <el-col :span="12" v-if="scope.ticketEntry.entry.attributes.FifoTopic">
-                    <entry-detail name="FIFO主题" :value="scope.ticketEntry.entry.attributes.FifoTopic"></entry-detail>
+                  <el-col :span="24">
+                    <entry-detail name="SNS主题 ARN" :value="scope.ticketEntry.entry.topicArn"></entry-detail>
                   </el-col>
-                  <el-col :span="12" v-if="scope.ticketEntry.entry.attributes.ContentBasedDeduplication">
-                    <entry-detail name="基于内容的消息重复数据删除"
-                                  :value="scope.ticketEntry.entry.attributes.ContentBasedDeduplication"></entry-detail>
+                  <el-col :span="24">
+                    <entry-detail name="订阅协议" :value="scope.ticketEntry.entry.protocol">
+                    </entry-detail>
+                  </el-col>
+                  <el-col :span="24">
+                    <entry-detail name="SQS队列 ARN" :value="scope.ticketEntry.entry.endpoint"></entry-detail>
                   </el-col>
                 </el-row>
               </template>
@@ -106,11 +109,10 @@ import {
   APPROVE_WORK_ORDER_TICKET, GET_WORK_ORDER_TICKET_ENTRIES
 } from '@/api/modules/workorder/workorder.ticket.api'
 import TicketEntryDesc from '@/components/opscloud/workorder/child/TicketEntryDesc'
-import util from '@/libs/util'
 import { getAWSRegionTypeText } from '@/filters/cloud.region'
-import TicketSnsTopicForm from '@/components/opscloud/workorder/child/TicketSnsTopicForm'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import CopySpan from '@/components/opscloud/common/CopySpan'
+import TicketSnsSubscriptionForm from '@/components/opscloud/workorder/child/TicketSnsSubscriptionForm'
 
 export default {
   data () {
@@ -119,16 +121,15 @@ export default {
       approvalComment: '', // 审批说明
       submitting: false,
       saving: false,
-      approving: false,
-      util: util
+      approving: false
     }
   },
-  name: 'SnsTopicTicketEditor',
+  name: 'SnsSubscriptionTicketEditor',
   props: ['formStatus'],
   components: {
     TicketTitle,
     NodeView,
-    TicketSnsTopicForm,
+    TicketSnsSubscriptionForm,
     TicketEntryDesc,
     WorkflowNodes,
     EntryDetail,
@@ -149,7 +150,7 @@ export default {
       this.approving = false
       this.$nextTick(() => {
         if (ticketView.ticketPhase === 'NEW' && JSON.stringify(ticketView.ticketEntries) === '[]') {
-          this.$refs.ticketSqsForm.initDate(ticketView.ticketEntries)
+          this.$refs.ticketSnsSubscriptionForm.initDate(ticketView.ticketEntries)
         } else {
           this.$refs.ticketEntryDesc.initData(ticketView.ticketEntries)
         }
@@ -243,7 +244,7 @@ export default {
     ticketEntriesChanged (ticketEntries) {
       this.ticketView.ticketEntries = ticketEntries
       if (JSON.stringify(ticketEntries) === '[]') {
-        this.$refs.ticketSqsForm.initDate()
+        this.$refs.ticketSnsSubscriptionForm.initDate()
       } else {
         this.$refs.ticketEntryDesc.initData(ticketEntries)
       }
