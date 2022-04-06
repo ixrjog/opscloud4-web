@@ -32,7 +32,7 @@
         </span>
       </el-form-item>
       <el-form-item label="主题类型" prop="topicType">
-        <el-radio-group v-model="snsTopicData.topicType">
+        <el-radio-group v-model="snsTopicData.topicType" @change="topicTypeChange">
           <el-radio label="0">标准
             <el-alert type="info" :closable="false">
               <div style="font-size: 10px;color: #909399;width: 260px">
@@ -42,7 +42,7 @@
               </div>
             </el-alert>
           </el-radio>
-          <el-radio label="1" disabled>FIFO(暂不支持)
+          <el-radio label="1">FIFO(先进先出)
             <el-alert type="info" :closable="false">
               <div style="font-size: 10px;color: #909399;width: 260px">
                 <li>严格保持的消息排序</li>
@@ -107,6 +107,7 @@ export default {
       buttonAdding: false,
       dsInstanceOptions: '',
       regionOptions: CloudRegionType.AWS.regionType,
+      fifoSuffix: '.fifo',
       topicSuffix: '',
       rules: {
         regionId: [
@@ -133,19 +134,29 @@ export default {
         switch (newName) {
           case 'ap-northeast-2':
             this.topicSuffix = '_dev_topic'
-            this.snsTopicData.topic = '_dev_topic'
+            if (this.snsTopicData.topicType === '1') {
+              this.snsTopicData.topic = this.topicSuffix + this.fifoSuffix
+            } else {
+              this.snsTopicData.topic = this.topicSuffix
+            }
             break
           case 'ap-east-1':
             this.topicSuffix = '_test_topic'
-            this.snsTopicData.topic = '_test_topic'
+            if (this.snsTopicData.topicType === '1') {
+              this.snsTopicData.topic = this.topicSuffix + this.fifoSuffix
+            } else {
+              this.snsTopicData.topic = this.topicSuffix
+            }
             break
           case 'eu-west-1':
             this.topicSuffix = '_canary_topic 或 _prod_topic'
-            this.snsTopicData.topic = '_canary_topic'
+            if (this.snsTopicData.topicType === '1') {
+              this.snsTopicData.topic = '_canary_topic' + this.fifoSuffix
+            } else {
+              this.snsTopicData.topic = '_canary_topic'
+            }
             break
           default:
-            this.topicSuffix = '_topic'
-            this.snsTopicData.topic = '_topic'
         }
       },
       immediate: true
@@ -156,6 +167,17 @@ export default {
       this.getDsInstance()
       this.snsTopicData = Object.assign({}, snsTopicData)
     },
+    topicTypeChange () {
+      if (this.snsTopicData.topicType === '1') {
+        if (!this.snsTopicData.topic.endsWith('.fifo')) {
+          this.snsTopicData.topic = this.snsTopicData.topic + '.fifo'
+        }
+      } else {
+        if (this.snsTopicData.topic.endsWith('.fifo')) {
+          this.snsTopicData.topic = this.snsTopicData.topic.substr(0, this.snsTopicData.topic.length - 5)
+        }
+      }
+    },
     addTicketEntry () {
       this.$refs.snsTopicDataForm.validate((valid) => {
         if (valid) {
@@ -163,7 +185,7 @@ export default {
           const attributes = {
             DisplayName: this.snsTopicData.remark
           }
-          if (this.snsTopicData.topicType === 1) {
+          if (this.snsTopicData.topicType === '1') {
             attributes.FifoTopic = 'true'
             if (this.snsTopicData.contentBasedDeduplication) {
               attributes.ContentBasedDeduplication = 'true'
