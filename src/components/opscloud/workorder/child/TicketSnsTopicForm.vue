@@ -42,7 +42,7 @@
               </div>
             </el-alert>
           </el-radio>
-          <el-radio label="1">FIFO(先进先出)
+          <el-radio label="1" disabled>FIFO(暂不支持)
             <el-alert type="info" :closable="false">
               <div style="font-size: 10px;color: #909399;width: 260px">
                 <li>严格保持的消息排序</li>

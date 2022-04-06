@@ -79,7 +79,9 @@
               <template v-slot:extend>
                 <el-table-column prop="properties" label="Region Id">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.regionId }}</span>
+                    <span style="display: block">{{ scope.row.regionId }}</span>
+                    <span style="color: #8492a6;font-size: 10px">
+                      {{ scope.row.regionId | getAWSRegionTypeText }}</span>
                     <el-popover placement="right" width="600" trigger="hover">
                       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                       <el-divider>
@@ -129,6 +131,13 @@
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_TOPIC"
                          :tableLayout="tableLayout.topic" ref="topicTable">
               <template v-slot:extend>
+                <el-table-column label="Region ID">
+                  <template slot-scope="scope">
+                    <span style="display: block">{{ scope.row.regionId }}</span>
+                    <span style="color: #8492a6;font-size: 10px">
+                      {{ scope.row.regionId | getAWSRegionTypeText }}</span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="assetKey2" label="ARN" width="500" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
@@ -184,6 +193,7 @@ import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsC
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 import util from '@/libs/util'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
+import { getAWSRegionTypeText } from '@/filters/cloud.region'
 
 const tableLayout = {
   ec2: {
@@ -332,6 +342,9 @@ export default {
       assetType: DsInstanceAssetType,
       util: util
     }
+  },
+  filters: {
+    getAWSRegionTypeText
   },
   computed: {},
   mounted () {
