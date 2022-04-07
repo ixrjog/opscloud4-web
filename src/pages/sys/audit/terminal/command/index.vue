@@ -117,10 +117,10 @@ export default {
         sessionId: this.$route.params.sessionId,
         id: this.$route.params.id
       }
+      this.fetchData()
     } catch (e) {
       this.sessionInstance = null
     }
-    this.fetchData()
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -192,6 +192,7 @@ export default {
       this.display.outputTerminals = []
     },
     fetchData () {
+      if (this.sessionInstance === null) return
       this.table.loading = true
       this.clearTerminals()
       const requestBody = {
