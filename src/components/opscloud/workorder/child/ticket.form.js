@@ -41,6 +41,9 @@ export default {
     },
     snsTopicTicketEditor: {
       visible: false
+    },
+    snsSubscriptionTicketEditor: {
+      visible: false
     }
   }
 }
