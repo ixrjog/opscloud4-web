@@ -16,5 +16,14 @@ export default [
       auth: true,
       title: '文档-Nexus构件仓库'
     }
+  },
+  {
+    path: '/docs/workorder/ram',
+    name: 'docs-workorder-ram',
+    component: () => import('@/pages/docs/workorder/ram'),
+    meta: {
+      auth: true,
+      title: '文档-阿里云RAM'
+    }
   }
 ]
