@@ -1,11 +1,11 @@
 <template>
   <el-tag size="mini">
-      <span v-if="showName(user)">
-            {{ user.username }}&lt;{{ user.displayName }}&gt;
-          </span>
+    <span v-if="showName(user)">
+      {{ user.username }}&lt;{{ user.displayName }}&gt;
+    </span>
     <span v-else>
-            {{ user.username }}&lt;{{ user.name }}:{{ user.displayName }}&gt;
-          </span>
+      {{ user.username }}&lt;{{ user.name }}:{{ user.displayName }}&gt;
+    </span>
   </el-tag>
 </template>
 

@@ -5,12 +5,45 @@
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
       <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="username" label="用户名" width="150"></el-table-column>
-      <el-table-column prop="displayName" label="显示名" width="150"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="250"></el-table-column>
+      <el-table-column label="用户名" width="200">
+        <template slot-scope="scope">
+          <el-row>
+            <copy-span :content="scope.row.username"></copy-span>
+            <el-button type="text" style="float:right" @click="openUserDetail(scope.row.username)">
+              <i style="margin-left: 5px" class="el-icon-position"></i>
+            </el-button>
+          </el-row>
+          <el-row>
+            <span>{{ scope.row.displayName }}</span>
+            <span v-if="showName(scope.row)" style="margin-left: 5px">&lt;{{ scope.row.name }}&gt;</span>
+          </el-row>
+          <el-row>
+            <copy-span :content="scope.row.email"></copy-span>
+          </el-row>
+          <el-row>
+            <el-tag :type="scope.row.mfa ? 'success': 'info'" size="mini">
+              <i class="fas fa-lock" v-if="scope.row.forceMfa" style="margin-right: 5px"></i>MFA
+            </el-tag>
+          </el-row>
+        </template>
+      </el-table-column>
+      <el-table-column label="云账户" width="300">
+        <template slot-scope="scope">
+          <div v-for="(value,key) in scope.row.amMap" :key="key" :label="key">
+            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAmTypeText }}</b></el-divider>
+            <div v-for="item in value" :key="item.instanceUuid">
+              <el-tooltip class="item" effect="light" :content="item.instanceName" placement="right">
+                <span>{{ item.loginUser }}
+                  <i class="fas fa-key" style="color:#67C23A;margin-left: 5px"
+                     v-if="JSON.stringify(item.accessKeys) !== '[]'"></i>
+                </span>
+              </el-tooltip>
+            </div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="businessPermissions" label="业务授权">
         <template slot-scope="scope">
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
@@ -54,6 +87,9 @@ import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import UserEditor from '@/components/opscloud/user/UserEditor'
+import CopySpan from '@/components/opscloud/common/CopySpan'
+import util from '@/libs/util'
+import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 
 export default {
   name: 'UserTable',
@@ -104,7 +140,20 @@ export default {
     UserEditor,
     Pagination,
     BusinessTags,
-    BusinessTagEditor
+    BusinessTagEditor,
+    CopySpan
+  },
+  filters: {
+    getAmTypeText (value) {
+      switch (value) {
+        case DsInstanceAssetType.ALIYUN.RAM_USER:
+          return 'Aliyun RAM'
+        case DsInstanceAssetType.AWS.IAM_USER:
+          return 'AWS IAM'
+        default:
+          return value
+      }
+    }
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -143,23 +192,6 @@ export default {
       const user = Object.assign({}, row)
       this.$refs.userEditor.initData(user)
     },
-    handleAdd () {
-      this.formStatus.user.visible = true
-      this.formStatus.user.operationType = true
-      const user = {
-        id: '',
-        username: '',
-        password: '',
-        name: '',
-        displayName: '',
-        isActive: true,
-        wechat: '',
-        email: '',
-        phone: '',
-        comment: ''
-      }
-      this.$refs.userEditor.initData(user)
-    },
     fetchData () {
       this.table.loading = true
       const requestBody = {
@@ -173,6 +205,15 @@ export default {
           this.table.pagination.total = res.body.totalNum
           this.table.loading = false
         })
+    },
+    openUserDetail (username) {
+      const host = window.location.host
+      const httpProtocol = window.location.href.split('://')[0]
+      const buildDetailsUrl = httpProtocol + '://' + host + '/#/user/info?username=' + username
+      util.open(buildDetailsUrl)
+    },
+    showName (row) {
+      return !(row.name === null || row.name === '' || row.name === row.displayName)
     }
   }
 }
