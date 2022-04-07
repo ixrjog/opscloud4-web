@@ -15,9 +15,11 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="sessionId" label="会话" width="300">
         <template slot-scope="scope">
-          <user-tag :user="scope.row.user"></user-tag>
-          <span>{{scope.row.createTime}}</span>
-          <span v-if="scope.row.sessionClosed">->{{scope.row.closeTime}}</span>
+          <div>
+            <user-tag :user="scope.row.user"></user-tag>
+          </div>
+          <span>{{ scope.row.createTime }}</span>
+          <span v-if="scope.row.sessionClosed"> -> {{ scope.row.closeTime }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="sessionType" label="会话类型" width="110" sortable>
@@ -27,9 +29,10 @@
       </el-table-column>
       <el-table-column prop="username" label="用户端/服务端" width="250">
         <template slot-scope="scope">
-          <el-tag size="mini" style="margin-right: 5px">{{scope.row.username}}<span v-if="scope.row.remoteAddr !== null">@{{scope.row.remoteAddr}}</span>
+          <el-tag size="mini" style="margin-right: 5px">{{ scope.row.username }}<span
+            v-if="scope.row.remoteAddr !== null">@{{ scope.row.remoteAddr }}</span>
           </el-tag>
-          <el-tag size="mini">{{scope.row.serverHostname}}/{{scope.row.serverAddr}}</el-tag>
+          <el-tag size="mini">{{ scope.row.serverHostname }}/{{ scope.row.serverAddr }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="会话实例">
@@ -126,28 +129,28 @@ export default {
 
 <style lang="less" scoped>
 
-  .session-instances {
-    display: flex;
-    flex-wrap: wrap;
+.session-instances {
+  display: flex;
+  flex-wrap: wrap;
 
-    .terminal-session-instance-info {
-      margin-bottom: 4px;
-      flex-grow: 1;
-      flex-basis: 50%;
-    }
+  .terminal-session-instance-info {
+    margin-bottom: 4px;
+    flex-grow: 1;
+    flex-basis: 50%;
   }
+}
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

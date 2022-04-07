@@ -10,12 +10,8 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column label="用户名" width="200">
         <template slot-scope="scope">
-          <el-row class="copyClass">
-            <span>{{ scope.row.username }}</span>
-            <span v-clipboard:copy="scope.row.username" v-clipboard:success="onCopy"
-                  v-clipboard:error="onError">
-                <i style="margin-left: 5px" class="el-icon-copy-document"></i>
-              </span>
+          <el-row>
+            <copy-span :content="scope.row.username"></copy-span>
             <el-button type="text" style="float:right" @click="openUserDetail(scope.row.username)">
               <i style="margin-left: 5px" class="el-icon-position"></i>
             </el-button>
@@ -25,22 +21,28 @@
             <span v-if="showName(scope.row)" style="margin-left: 5px">&lt;{{ scope.row.name }}&gt;</span>
           </el-row>
           <el-row>
-            <el-tag :type="scope.row.mfa ? 'success': 'info'" size="mini">{{
-                scope.row.forceMfa ? 'MFA(Force)' : 'MFA'
-              }}
+            <copy-span :content="scope.row.email"></copy-span>
+          </el-row>
+          <el-row>
+            <el-tag :type="scope.row.mfa ? 'success': 'info'" size="mini">
+              <i class="fas fa-lock" v-if="scope.row.forceMfa" style="margin-right: 5px"></i>MFA
             </el-tag>
           </el-row>
         </template>
       </el-table-column>
-      <el-table-column label="邮箱" width="250">
+      <el-table-column label="云账户" width="300">
         <template slot-scope="scope">
-          <span class="copyClass">
-            <span>{{ scope.row.email }}</span>
-            <span v-clipboard:copy="scope.row.email" v-clipboard:success="onCopy"
-                  v-clipboard:error="onError">
-              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
-            </span>
-          </span>
+          <div v-for="(value,key) in scope.row.amMap" :key="key" :label="key">
+            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAmTypeText }}</b></el-divider>
+            <div v-for="item in value" :key="item.instanceUuid">
+              <el-tooltip class="item" effect="light" :content="item.instanceName" placement="right">
+                <span>{{ item.loginUser }}
+                  <i class="fas fa-key" style="color:#67C23A;margin-left: 5px"
+                     v-if="JSON.stringify(item.accessKeys) !== '[]'"></i>
+                </span>
+              </el-tooltip>
+            </div>
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="businessPermissions" label="业务授权">
@@ -113,6 +115,8 @@ import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import util from '@/libs/util'
+import CopySpan from '@/components/opscloud/common/CopySpan'
+import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 
 export default {
   name: 'UserTable',
@@ -159,11 +163,24 @@ export default {
   mounted () {
     this.fetchData()
   },
+  filters: {
+    getAmTypeText (value) {
+      switch (value) {
+        case DsInstanceAssetType.ALIYUN.RAM_USER:
+          return 'Aliyun RAM'
+        case DsInstanceAssetType.AWS.IAM_USER:
+          return 'AWS IAM'
+        default:
+          return value
+      }
+    }
+  },
   components: {
     UserEditor,
     Pagination,
     BusinessTags,
-    BusinessTagEditor
+    BusinessTagEditor,
+    CopySpan
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -239,12 +256,6 @@ export default {
           this.table.loading = false
         })
     },
-    onCopy (e) {
-      this.$message.success('内容已复制到剪切板！')
-    },
-    onError (e) {
-      this.$message.error('抱歉，复制失败！')
-    },
     openUserDetail (username) {
       const host = window.location.host
       const httpProtocol = window.location.href.split('://')[0]
@@ -266,16 +277,6 @@ export default {
 
 .el-button {
   margin-left: 5px;
-}
-
-.copyClass i {
-  display: none;
-  font-size: 10px;
-}
-
-.copyClass:hover i {
-  display: inline;
-  font-size: 10px;
 }
 
 .el-divider--horizontal {
