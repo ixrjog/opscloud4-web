@@ -5,11 +5,11 @@
         <h1>{{ title }}</h1>
       </div>
       <el-row :gutter="24" style="margin-bottom: 5px">
-        <el-input v-model.trim="queryParam.queryName" clearable placeholder="查询命令" class="input-bar"/>
-        <el-button @click="fetchData" class="button">查询</el-button>
+        <el-input v-model.trim="queryParam.queryName" clearable placeholder="查询命令" class="search-input"/>
+        <el-button @click="fetchData" class="search-button">查询</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column prop="input" label="输入命令" width="600">
+        <el-table-column prop="input" label="输入(命令)" width="600">
           <template slot-scope="scope">
             <div :id="`terminal_input_${scope.row.id}`" class="xterm"></div>
           </template>
@@ -19,11 +19,6 @@
             <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
           </template>
         </el-table-column>
-        <!--        <el-table-column fixed="right" label="操作" width="280">-->
-        <!--          <template slot-scope="scope">-->
-        <!--            &lt;!&ndash;            <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>&ndash;&gt;-->
-        <!--          </template>-->
-        <!--        </el-table-column>-->
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                   @handleSizeChange="handleSizeChange"></pagination>
@@ -40,12 +35,10 @@ import Pagination from '../../../../../components/opscloud/common/page/Paginatio
 import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
-// import { FitAddon } from 'xterm-addon-fit'
-// import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 
 const theme = {
   foreground: '#f3f3f3',
-  background: '#000000',
+  background: '#535353',
   cursor: '#ffffff',
   selection: 'rgba(255, 255, 255, 0.3)',
   black: '#000000',
@@ -65,15 +58,6 @@ const theme = {
   brightBlack: '#808080',
   brightWhite: '#ffffff'
 }
-
-// const theme = {
-//   foreground: '#d2d2d2', // 字体
-//   background: '#000000', // 背景色
-//   fallback: '#000000',
-//   cursor: 'help', // 设置光标
-//   red: '#dd7479',
-//   blue: '#1BD1FF'
-// }
 
 export default {
   data () {
@@ -112,7 +96,6 @@ export default {
       if (this.$route.params.sessionId === undefined || this.$route.params.id === undefined) {
         return
       }
-      // this.initTerminalSetting()
       this.sessionInstance = {
         sessionId: this.$route.params.sessionId,
         id: this.$route.params.id
@@ -135,7 +118,9 @@ export default {
       this.$nextTick(() => {
         this.table.data.forEach(row => {
           const termInput = new Terminal({
-            rendererType: 'canvas', // 渲染类型
+            // 渲染类型 https://xtermjs.org/docs/api/terminal/modules/xterm/#renderertype
+            // canvas dom
+            rendererType: 'canvas',
             allowTransparency: true,
             fontSize: 11,
             rows: 2,
@@ -146,6 +131,7 @@ export default {
             popOnBell: false,
             scrollback: 2, // 最大滚动行数
             screenKeys: false,
+            // cursor: 'help', // 设置光标
             debug: false,
             cancelEvents: false,
             convertEol: true // 启用时，光标将设置为下一行的开头
@@ -214,13 +200,19 @@ export default {
 </script>
 
 <style scoped>
-.input-bar {
+
+.search-input {
   display: inline-block;
   max-width: 200px;
   margin-left: 10px;
 }
 
-.button {
+.search-button {
   margin-left: 5px;
 }
+
+>>>.el-table td div  {
+  border-radius: 2px
+}
+
 </style>
