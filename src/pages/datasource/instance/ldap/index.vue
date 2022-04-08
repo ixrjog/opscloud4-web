@@ -7,12 +7,13 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account"
                      ref="accountTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="手机">
+            <el-table-column prop="properties" label="手机" width="100">
               <template slot-scope="scope">
-                <span>{{ scope.row.properties.mobile }}</span>
+                <span v-if="scope.row.properties.mobile === '0'"></span>
+                <span v-else>{{ scope.row.properties.mobile }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="children" label="成员(账户组)" width="800">
+            <el-table-column prop="children" label="成员(账户组)" width="550">
               <template slot-scope="scope">
                 <ds-children-tag :children="scope.row.children.GROUP" :type="0"></ds-children-tag>
               </template>
