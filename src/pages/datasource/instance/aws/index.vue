@@ -9,19 +9,26 @@
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.EC2" :tableLayout="tableLayout.ec2"
                          ref="ec2Table">
               <template v-slot:extend>
-                <el-table-column prop="regionId" label="Region ID">
+                <el-table-column prop="assetKey" label="IP地址" width="150">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.assetKey }}
+                      <span style="color: #8492a6 ; font-size: 12px">私有</span>
+                    </span>
+                    <div v-if="scope.row.assetKey2">{{ scope.row.assetKey2 }}
+                      <span style="color: #8492a6 ; font-size: 12px">公有</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="regionId" label="Region ID" width="90">
                   <template slot-scope="scope">
                     <span>{{ scope.row.regionId }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column prop="properties" label="CPU">
+                <el-table-column prop="properties" label="配置">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.properties.cpu }}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="properties" label="内存(MiB)">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.properties.memory }}</span>
+                    <span>{{ scope.row.properties.cpu }} vCPU </span>
+                    <span style="margin-right: 5px">{{ scope.row.properties.memory / 1024 }} GiB</span>
+                    <div>{{ scope.row.properties.platformDetails }}</div>
                   </template>
                 </el-table-column>
               </template>
@@ -174,7 +181,6 @@
                         </div>
                       </el-col>
                     </el-row>
-
                   </template>
                 </el-table-column>
               </template>
@@ -205,11 +211,11 @@ const tableLayout = {
     },
     assetKey: {
       alias: '私网IP',
-      show: true
+      show: false
     },
     assetKey2: {
       alias: '公网IP',
-      show: true
+      show: false
     },
     zone: {
       alias: '区',
@@ -392,12 +398,6 @@ export default {
         return IAM_ACCESS_KEY
       }
       return []
-    },
-    onCopy (e) {
-      this.$message.success('内容已复制到剪切板！')
-    },
-    onError (e) {
-      this.$message.error('抱歉，复制失败！')
     }
   }
 }

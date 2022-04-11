@@ -9,14 +9,21 @@
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
                          ref="ecsTable">
               <template v-slot:extend>
-                <el-table-column prop="properties" label="CPU">
+                <el-table-column prop="assetKey" label="IP地址" width="150">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.properties.cpu }}</span>
+                    <span>{{ scope.row.assetKey }}
+                      <span style="color: #8492a6 ; font-size: 12px">私有</span>
+                    </span>
+                    <div v-if="scope.row.assetKey2">{{ scope.row.assetKey2 }}
+                      <span style="color: #8492a6 ; font-size: 12px">公有</span>
+                    </div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="properties" label="内存(MiB)">
+                <el-table-column prop="properties" label="配置">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.properties.memory }}</span>
+                    <span>{{ scope.row.properties.cpu }} vCPU </span>
+                    <span style="margin-right: 5px">{{ scope.row.properties.memory / 1024 }} GiB</span>
+                    <div>{{ scope.row.properties.osType }}</div>
                   </template>
                 </el-table-column>
               </template>
@@ -356,14 +363,14 @@ const tableLayout = {
     },
     assetKey: {
       alias: '私网IP',
-      show: true
+      show: false
     },
     assetKey2: {
       alias: '公网IP',
-      show: true
+      show: false
     },
     zone: {
-      alias: '区',
+      alias: 'Region ID',
       show: true
     }
   },
