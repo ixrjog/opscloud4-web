@@ -76,7 +76,7 @@ export default {
         queryName: '',
         extend: true
       },
-      sessionInstance: {},
+      sessionInstance: null,
       terminalSetting: { // 终端主题
         theme: theme,
         rows: 30
@@ -94,6 +94,7 @@ export default {
   mounted () {
     try {
       if (this.$route.params.sessionId === undefined || this.$route.params.id === undefined) {
+        this.sessionInstance = null
         return
       }
       this.sessionInstance = {
