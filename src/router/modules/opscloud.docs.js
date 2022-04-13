@@ -18,6 +18,15 @@ export default [
     }
   },
   {
+    path: '/docs/workorder/nacos',
+    name: 'docs-workorder-nacos',
+    component: () => import('@/pages/docs/workorder/nacos'),
+    meta: {
+      auth: true,
+      title: '文档-Nacos注册中心+配置中心'
+    }
+  },
+  {
     path: '/docs/workorder/ram',
     name: 'docs-workorder-ram',
     component: () => import('@/pages/docs/workorder/ram'),
