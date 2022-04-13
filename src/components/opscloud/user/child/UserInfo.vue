@@ -27,6 +27,9 @@
       <el-form-item label="留言" :label-width="labelWidth">
         <el-input v-model="user.comment" placeholder="请输入内容"></el-input>
       </el-form-item>
+      <el-form-item label="自动授权" :label-width="labelWidth" v-show="operationType">
+        <el-checkbox v-model="user.needInitializeDefaultConfiguration">创建用户初始化默认配置（角色、用户组等）</el-checkbox>
+      </el-form-item>
     </el-form>
   </div>
 </template>

@@ -241,7 +241,9 @@ export default {
         return
       }
       if (convertBusinessTypes.USER !== undefined) {
-        this.$refs.userEditor.initData(convertBusinessTypes.USER)
+        const newUser = Object.assign({}, convertBusinessTypes.USER)
+        newUser.needInitializeDefaultConfiguration = true
+        this.$refs.userEditor.initData(newUser)
         this.formStatus.user.operationType = true
         this.formStatus.user.visible = true
         return
