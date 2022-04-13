@@ -16,7 +16,7 @@
       <el-table-column prop="sessionId" label="会话" width="300">
         <template slot-scope="scope">
           <div>
-            <user-tag :user="scope.row.user"></user-tag>
+            <user-tag :user="scope.row.user" v-if="scope.row.user"></user-tag>
           </div>
           <span>{{ scope.row.createTime }}</span>
           <span v-if="scope.row.sessionClosed"> -> {{ scope.row.closeTime }}</span>
