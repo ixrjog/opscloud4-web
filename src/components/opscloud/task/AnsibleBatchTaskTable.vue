@@ -14,10 +14,10 @@
             <el-select v-model="dsInstance" filterable placeholder="选择Ansible实例"
                        value-key="id">
               <el-option
-                  v-for="item in dsInstanceOptions"
-                  :key="item.id"
-                  :label="item.instanceName"
-                  :value="item">
+                v-for="item in dsInstanceOptions"
+                :key="item.id"
+                :label="item.instanceName"
+                :value="item">
                 <span style="float: left">{{ item.instanceType }}</span>
                 <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
                 {{ item.instanceName }}</span>
@@ -32,10 +32,10 @@
                        @clear="getPlaybook('')"
                        value-key="id">
               <el-option
-                  v-for="item in playbookOptions"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item">
+                v-for="item in playbookOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item">
               </el-option>
             </el-select>
             <el-button type="primary" plain size="mini" @click="handleOpenPlaybook" :disabled="playbook === ''">查看
@@ -49,7 +49,7 @@
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" :disabled="submitting" @click="submitServerTask"><i
-              class="el-icon-loading" v-show="submitting"></i>提交任务
+            class="el-icon-loading" v-show="submitting"></i>提交任务
           </el-button>
         </div>
       </el-card>
@@ -91,7 +91,7 @@ export default {
       dsInstance: '',
       dsInstanceOptions: [],
       options: options,
-      taskUuid: tools.uuid(),
+      taskUuid: tools.uuid().replaceAll('-', ''),
       formStatus: {
         playbook: {
           operationType: true,

@@ -2,7 +2,7 @@
   <el-card shadow="hover" style="margin-top: 5px">
     <div slot="header" class="clearfix">
       <span style="margin-left: 20px;font-size: 12px">执行任务详情
-        <el-tag size="mini" style="margin-left: 5px">TaskUUID : {{ serverTaskInfo.taskUuid }}</el-tag>
+        <el-tag size="mini" style="margin-left: 5px">任务UUID: {{ serverTaskInfo.taskUuid }}</el-tag>
       </span>
     </div>
     <el-table :data="serverTaskInfo.servers" style="width: 100%">
