@@ -200,7 +200,7 @@ export default {
 .el-card {
   margin-bottom: 5px;
   margin-right: 5px;
-  width: 350px;
+  width: 400px;
   display: inline-block;
   position: relative;
 
@@ -211,7 +211,7 @@ export default {
   .el-button {
     position: absolute;
     right: 5px;
-    bottom: 5px;
+    bottom: 0;
   }
 }
 
