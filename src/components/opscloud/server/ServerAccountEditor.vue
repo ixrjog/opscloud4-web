@@ -28,8 +28,8 @@
       <el-form-item label="凭据" :label-width="labelWidth" required>
         <el-select v-model="serverAccount.credentialId" filterable clearable
                    remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential">
-          <el-option v-for="item in credentialOptions" :key="item.id" :label="item.username" :value="item.id">
-            <select-item :name="item.username" :comment="item.title"></select-item>
+          <el-option v-for="item in credentialOptions" :key="item.id" :label="item.title" :value="item.id">
+            <select-item :name="item.title" :comment="item.username"></select-item>
           </el-option>
         </el-select>
       </el-form-item>
