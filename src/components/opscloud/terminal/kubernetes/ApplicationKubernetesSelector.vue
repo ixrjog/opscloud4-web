@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
+      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

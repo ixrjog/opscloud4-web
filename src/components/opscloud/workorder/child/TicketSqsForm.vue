@@ -26,7 +26,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="队列名称" prop="queueName">
-        <el-input v-model.trim="sqsData.queueName"></el-input>
+        <el-input v-model="sqsData.queueName"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
           以 {{ queueNameSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 80 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>

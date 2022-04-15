@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.name" placeholder="名称"/>
+      <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-select v-model="queryParam.protocol" placeholder="选择协议类型" clearable>
         <el-option
           v-for="item in protocolOptions"

@@ -18,7 +18,7 @@
     </el-row>
     <el-divider></el-divider>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.queryName" placeholder="名称"/>
+      <el-input v-model="queryParam.queryName" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

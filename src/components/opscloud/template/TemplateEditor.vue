@@ -5,7 +5,7 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="template">
           <el-form-item label="名称" :label-width="labelWidth">
-            <el-input v-model.trim="template.name" placeholder="不填写则自动生成"></el-input>
+            <el-input v-model="template.name" placeholder="不填写则自动生成"></el-input>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
             <el-select v-model.trim="template.envType" clearable
@@ -43,7 +43,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model.trim="template.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="template.comment" placeholder="请输入内容"></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>

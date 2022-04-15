@@ -16,10 +16,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="服务器组" v-show="!formStatus.operationType" :label-width="labelWidth">
-        <el-input v-model.trim="logMember.serverGroupName" :disabled="true"></el-input>
+        <el-input v-model="logMember.serverGroupName" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="自定义Topic" :label-width="labelWidth">
-        <el-input v-model.trim="logMember.topic" placeholder="请输入内容"></el-input>
+        <el-input v-model="logMember.topic" placeholder="请输入内容"></el-input>
       </el-form-item>
       <el-form-item label="环境" :label-width="labelWidth" :required="true">
         <el-select v-model.trim="logMember.envType" filterable clearable
@@ -34,7 +34,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model.trim="logMember.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="logMember.comment" placeholder="请输入内容"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

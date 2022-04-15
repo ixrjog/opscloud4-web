@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询"/>
+      <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新建</el-button>

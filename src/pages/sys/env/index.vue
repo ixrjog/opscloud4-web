@@ -5,7 +5,7 @@
         <h1>{{ title }}</h1>
       </div>
       <el-row :gutter="24" style="margin-bottom: 5px">
-        <el-input v-model.trim="queryParam.envName" clearable placeholder="名称" class="input-bar"/>
+        <el-input v-model="queryParam.envName" clearable placeholder="名称" class="input-bar"/>
         <el-button @click="fetchData" class="button">查询</el-button>
         <el-button @click="handlerAdd" class="button">新增</el-button>
       </el-row>

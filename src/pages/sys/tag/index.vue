@@ -4,7 +4,7 @@
       <h1>标签配置</h1>
     </div>
     <el-row :gutter="24" style="margin-bottom: 5px">
-      <el-input v-model.trim="queryParam.tagKey" placeholder="标签关键字"/>
+      <el-input v-model="queryParam.tagKey" placeholder="标签关键字"/>
       <el-select v-model="queryParam.businessType" clearable placeholder="业务类型">
         <el-option
           v-for="item in businessTypeOptions"

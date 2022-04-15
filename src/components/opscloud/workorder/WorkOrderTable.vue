@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.name" placeholder="名称"/>
+      <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-select v-model.trim="queryParam.workOrderGroupId" filterable clearable
                  remote reserve-keyword placeholder="搜索工单组" :remote-method="getGroup" @clear="fetchData">
         <el-option

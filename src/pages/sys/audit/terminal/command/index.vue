@@ -5,7 +5,7 @@
         <h1>{{ title }}</h1>
       </div>
       <el-row :gutter="24" style="margin-bottom: 5px">
-        <el-input v-model.trim="queryParam.queryName" clearable placeholder="查询命令" class="search-input"/>
+        <el-input v-model="queryParam.queryName" clearable placeholder="查询命令" class="search-input"/>
         <el-button @click="fetchData" class="search-button">查询</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

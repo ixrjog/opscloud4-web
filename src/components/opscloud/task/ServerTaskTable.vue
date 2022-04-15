@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字查询"/>
+      <el-input v-model="queryParam.queryName" placeholder="输入关键字查询"/>
       <el-select v-model="queryParam.finalized" clearable placeholder="完成">
         <el-option
           v-for="item in taskEndOptions"

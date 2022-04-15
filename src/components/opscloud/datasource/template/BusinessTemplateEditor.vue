@@ -5,7 +5,7 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="businessTemplate">
           <el-form-item label="名称" :label-width="labelWidth">
-            <el-input v-model.trim="businessTemplate.name" placeholder="不填写则自动生成"></el-input>
+            <el-input v-model="businessTemplate.name" placeholder="不填写则自动生成"></el-input>
           </el-form-item>
           <el-form-item label="实例类型" :label-width="labelWidth" required>
             <el-select v-model="queryParam.instanceType" placeholder="选择类型">
@@ -53,7 +53,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model.trim="businessTemplate.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="businessTemplate.comment" placeholder="请输入内容"></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>

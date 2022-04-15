@@ -5,10 +5,10 @@
       <el-tab-pane label="应用配置" name="config">
         <el-form :model="application" label-width="150px">
           <el-form-item label="应用名称" required>
-            <el-input v-model.trim="application.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="application.name" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="应用Key" :required="true">
-            <el-input v-model.trim="application.applicationKey" placeholder="请输入内容"
+            <el-input v-model="application.applicationKey" placeholder="请输入内容"
                       :disabled="!formStatus.operationType">
               <template slot="append">
                 <el-button size="mini" type="primary" @click="handleBuildKey">

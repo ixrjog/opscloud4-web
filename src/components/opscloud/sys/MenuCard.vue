@@ -14,7 +14,7 @@
             <i class="fas fa-align-justify handle" style="margin-right: 10px;"></i>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model.trim="menu.title" placeholder="请输入名称"></el-input>
+            <el-input v-model="menu.title" placeholder="请输入名称"></el-input>
           </el-form-item>
           <el-form-item required>
             <el-input v-model="menu.icon" placeholder="请输入图标">

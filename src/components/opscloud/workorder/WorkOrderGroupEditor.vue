@@ -3,7 +3,7 @@
              :visible.sync="formStatus.visible">
     <el-form :model="workOrderGroup" label-width="80px">
       <el-form-item label="名称" :required="true">
-        <el-input v-model.trim="workOrderGroup.name" placeholder="请输入工单群组名称"></el-input>
+        <el-input v-model="workOrderGroup.name" placeholder="请输入工单群组名称"></el-input>
       </el-form-item>
       <el-form-item label="类型">
         <el-select v-model="workOrderGroup.groupType">
@@ -24,7 +24,7 @@
         </el-input>
       </el-form-item>
       <el-form-item label="描述">
-        <el-input v-model.trim="workOrderGroup.comment" placeholder="请输入工单群组描述"></el-input>
+        <el-input v-model="workOrderGroup.comment" placeholder="请输入工单群组描述"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

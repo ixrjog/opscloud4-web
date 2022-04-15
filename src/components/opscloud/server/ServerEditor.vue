@@ -5,7 +5,7 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="server">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model.trim="server.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.name" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="服务器类型" :label-width="labelWidth" required>
             <el-select v-model="server.serverType" placeholder="选择类型">
@@ -60,19 +60,19 @@
             </el-select>
           </el-form-item>
           <el-form-item label="区" :label-width="labelWidth">
-            <el-input v-model.trim="server.area" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.area" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="公网ip" :label-width="labelWidth">
-            <el-input v-model.trim="server.publicIp" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.publicIp" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="私网ip" :label-width="labelWidth" required>
-            <el-input v-model.trim="server.privateIp" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.privateIp" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="序号" :label-width="labelWidth" required>
             <el-input v-model.number="server.serialNumber" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model.trim="server.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.comment" placeholder="请输入内容"></el-input>
           </el-form-item>
         </el-form>
       </el-tab-pane>
