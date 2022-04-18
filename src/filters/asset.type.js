@@ -58,6 +58,8 @@ export function getAssetTypeText (value) {
       return 'SNS主题'
     case DsInstanceAssetType.AWS.SNS_SUBSCRIPTION:
       return 'SNS订阅'
+    case DsInstanceAssetType.AWS.AMAZON_DOMAIN:
+      return '域名'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:

@@ -188,6 +188,16 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+      <el-tab-pane label="域名" name="domain">
+        <asset-table :instanceId="instance.id" :assetType="assetType.AWS.AMAZON_DOMAIN"
+                     :tableLayout="tableLayout.domain"
+                     ref="domainTable">
+          <template v-slot:extend>
+            <el-table-column prop="expiredTime" label="到期时间"></el-table-column>
+            <el-table-column prop="description" label="备注"></el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -329,6 +339,28 @@ const tableLayout = {
       alias: '区',
       show: false
     }
+  },
+  domain: {
+    assetId: {
+      alias: '域名',
+      show: false
+    },
+    name: {
+      alias: '域名',
+      show: true
+    },
+    assetKey: {
+      alias: '域名',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '区',
+      show: false
+    }
   }
 }
 
@@ -385,6 +417,9 @@ export default {
       }
       if (tab.name === 'subscription') {
         this.$refs.subscriptionTable.fetchData()
+      }
+      if (tab.name === 'domain') {
+        this.$refs.domainTable.fetchData()
       }
     },
     init () {
