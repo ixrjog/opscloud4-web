@@ -319,6 +319,22 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+      <el-tab-pane label="域名" name="domain">
+        <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ALIYUN_DOMAIN"
+                     :tableLayout="tableLayout.domain"
+                     ref="domainTable">
+          <template v-slot:extend>
+            <el-table-column prop="createdTime" label="注册时间"></el-table-column>
+            <el-table-column prop="expiredTime" label="到期时间"></el-table-column>
+            <el-table-column prop="properties" label="提示">
+              <template slot-scope="scope">
+                还有{{ scope.row.properties.ExpirationCurrDateDiff }}天过期
+              </template>
+            </el-table-column>
+            <el-table-column prop="description" label="备注"></el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
       <el-tab-pane label="Log日志服务" name="log">
         <el-row :gutter="20">
           <el-col :span="10">
@@ -608,6 +624,28 @@ const tableLayout = {
       alias: '',
       show: false
     }
+  },
+  domain: {
+    assetId: {
+      alias: '域名',
+      show: false
+    },
+    name: {
+      alias: '域名',
+      show: true
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
   }
 }
 
@@ -690,6 +728,10 @@ export default {
       }
       if (tab.name === 'onsRocketMqGroup') {
         this.$refs.onsRocketMqGroupTable.fetchData()
+        return
+      }
+      if (tab.name === 'domain') {
+        this.$refs.domainTable.fetchData()
         return
       }
       if (tab.name === 'log') {

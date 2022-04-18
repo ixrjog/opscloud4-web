@@ -44,6 +44,8 @@ export function getAssetTypeText (value) {
       return 'MQ-TOPIC'
     case DsInstanceAssetType.ALIYUN.ONS_ROCKETMQ_GROUP:
       return 'MQ-GROUP'
+    case DsInstanceAssetType.ALIYUN.ALIYUN_DOMAIN:
+      return '域名'
     case DsInstanceAssetType.AWS.IAM_USER:
       return 'IAM用户'
     case DsInstanceAssetType.AWS.IAM_ACCESS_KEY:
