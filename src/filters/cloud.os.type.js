@@ -6,7 +6,7 @@ export function getAWSOsTypeText (osType) {
       return 'Linux'
     case 'Windows':
       return 'Windows'
-    case 'WiWindows with SQL Server Standardndosw':
+    case 'Windows with SQL Server Standard':
       return 'Windosw'
     default:
       return osType
