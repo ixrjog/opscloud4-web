@@ -6,6 +6,10 @@
         <span slot="label"><i class="fab fa-ubuntu"></i> 阿里云RAM(访问控制)</span>
         <my-markdown v-if="docs.ram !== null" :content="docs.ram.content"></my-markdown>
       </el-tab-pane>
+      <el-tab-pane :name="docKeys.DMS_README">
+        <span slot="label"><i class="fab fa-ubuntu"></i> 阿里云DMS(数据库管理)</span>
+        <my-markdown v-if="docs.dms !== null" :content="docs.dms.content"></my-markdown>
+      </el-tab-pane>
       <el-tab-pane :name="docKeys.LOG_README">
         <span slot="label"><i class="fas fa-stream"></i> 阿里云Log(日志服务)</span>
         <my-markdown v-if="docs.log !== null" :content="docs.log.content"></my-markdown>
@@ -25,6 +29,7 @@ import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 const docKeys = {
   RAM_README: 'RAM_README',
+  DMS_README: 'DMS_README',
   LOG_README: 'LOG_README',
   ARMS_README: 'ARMS_README'
 }
@@ -35,6 +40,7 @@ export default {
       activeName: docKeys.RAM_README,
       docs: {
         ram: null,
+        dms: null,
         log: null,
         arms: null
       },
@@ -64,6 +70,9 @@ export default {
           switch (key) {
             case this.docKeys.RAM_README:
               this.docs.ram = res.body
+              break
+            case this.docKeys.DMS_README:
+              this.docs.dms = res.body
               break
             case this.docKeys.LOG_README:
               this.docs.log = res.body
