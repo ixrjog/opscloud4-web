@@ -34,5 +34,14 @@ export default [
       auth: true,
       title: '文档-阿里云RAM'
     }
+  },
+  {
+    path: '/docs/workorder/iam',
+    name: 'docs-workorder-iam',
+    component: () => import('@/pages/docs/workorder/iam'),
+    meta: {
+      auth: true,
+      title: '文档-AmazonIAM'
+    }
   }
 ]
