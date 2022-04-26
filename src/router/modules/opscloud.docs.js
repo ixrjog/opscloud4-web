@@ -43,5 +43,14 @@ export default [
       auth: true,
       title: '文档-AmazonIAM'
     }
+  },
+  {
+    path: '/docs/channel',
+    name: 'docs-channel',
+    component: () => import('@/pages/docs/channel'),
+    meta: {
+      auth: true,
+      title: '文档-VPN通道'
+    }
   }
 ]
