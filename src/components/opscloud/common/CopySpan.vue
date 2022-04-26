@@ -49,14 +49,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .copyClass i {
-  display: none;
-  font-size: 10px;
-}
-
-.copyClass:hover i {
-  display: inline;
   font-size: 10px;
 }
 </style>
