@@ -17,7 +17,15 @@
       </el-select>
       <el-button @click="fetchData" :loading="searching">查询</el-button>
     </el-row>
-    <el-tree style="margin-top: 5px" :data="serverTree.tree" show-checkbox ref="myServerTree" node-key="id"></el-tree>
+    <el-tree style="margin-top: 5px" :data="serverTree.tree" show-checkbox ref="myServerTree" node-key="id">
+       <span class="custom-tree-node" slot-scope="{ node, data }">
+        <span>{{ node.label }}</span>
+        <span>
+             <business-tags v-if="data.server !== null && data.server.tags !== null"
+                            :tags="data.server.tags"></business-tags>
+        </span>
+      </span>
+    </el-tree>
   </el-card>
 </template>
 
@@ -25,6 +33,7 @@
 // API
 import { QUERY_SERVER_GROUP_TYPE_PAGE } from '@/api/modules/server/server.group.type.api.js'
 import { QUERY_USER_SERVER_TREE } from '@/api/modules/user/user.server.api.js'
+import BusinessTags from '../common/tag/BusinessTags'
 
 export default {
   data () {
@@ -43,6 +52,9 @@ export default {
   name: 'ServerTree',
   props: [],
   mixins: [],
+  components: {
+    BusinessTags
+  },
   mounted () {
     this.getGroupType('')
   },
@@ -102,4 +114,14 @@ export default {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+
 </style>
