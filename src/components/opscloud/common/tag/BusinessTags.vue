@@ -1,5 +1,4 @@
 <template>
-  <el-row>
     <span class="tag-group">
     <span v-for="item in tags" :key="item.id" :style="spanStyle">
       <el-tooltip class="item" effect="light" :content="item.comment === '' ? '未定义': item.comment"
@@ -10,7 +9,6 @@
       </el-tooltip>
     </span>
   </span>
-  </el-row>
 </template>
 
 <script>

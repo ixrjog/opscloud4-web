@@ -9,6 +9,7 @@
                 <el-tag size="mini">{{ server.label }}</el-tag>
               </span>
               <env-tag :env="server.env" class="env"></env-tag>
+              <business-tags v-if="server.tags !== null" :tags="server.tags" style="margin-left: 10px"></business-tags>
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"
                            @click="handleLogout( {server:server,isNotify:true})">
@@ -38,6 +39,7 @@ import TerminalItem from './TerminalItem'
 
 import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 import EnvTag from '../common/tag/EnvTag'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 
 const wsUrl = 'ws/terminal'
 
@@ -63,6 +65,7 @@ export default {
   },
   components: {
     TerminalItem,
+    BusinessTags,
     EnvTag
   },
   mounted () {
