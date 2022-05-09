@@ -39,3 +39,10 @@ export function UPDATE_SERVER (data) {
     data
   })
 }
+
+export function SCAN_SERVER_MONITOR () {
+  return request({
+    url: baseUrl + '/monitor/scan',
+    method: 'put'
+  })
+}

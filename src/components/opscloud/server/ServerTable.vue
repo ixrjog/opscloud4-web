@@ -29,7 +29,7 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.serverStatus" clearable placeholder="状态">
+      <el-select v-model="queryParam.serverStatus" clearable placeholder="状态" v-if="false">
         <el-option
           v-for="item in serverStatusOptions"
           :key="item.value"
@@ -47,8 +47,17 @@
           :value="item.id">
         </el-option>
       </el-select>
+      <el-select v-model="queryParam.monitorStatus" clearable placeholder="监控状态">
+        <el-option
+          v-for="item in serverMonitorStatusOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
+      <el-button @click="handleScanMonitor" class="button">扫描监控</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
@@ -65,9 +74,15 @@
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="serverStatus" label="状态" width="80">
+      <!--      暂不启用状态展示-->
+      <el-table-column prop="serverStatus" label="状态" width="80" v-if="false">
         <template slot-scope="scope">
           <server-status-tag :serverStatus="scope.row.serverStatus"></server-status-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="monitorStatus" label="监控" width="80">
+        <template slot-scope="scope">
+          <server-monitor-status-tag :monitorStatus="scope.row.monitorStatus"></server-monitor-status-tag>
         </template>
       </el-table-column>
       <el-table-column prop="account" label="账户">
@@ -98,7 +113,7 @@
 
 <script>
 
-import { QUERY_SERVER_PAGE, DELETE_SERVER_BY_ID } from '@/api/modules/server/server.api.js'
+import { QUERY_SERVER_PAGE, DELETE_SERVER_BY_ID, SCAN_SERVER_MONITOR } from '@/api/modules/server/server.api.js'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api.js'
@@ -113,6 +128,7 @@ import AccountTags from '../common/tag/AccountTags'
 import Pagination from '../common/page/Pagination'
 
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
+import ServerMonitorStatusTag from '@/components/opscloud/common/tag/ServerMonitorStatusTag'
 
 const activeOptions = [{
   value: true,
@@ -131,6 +147,17 @@ const serverStatusOptions = [{
 }, {
   value: -1,
   label: '未知'
+}]
+
+const serverMonitorStatusOptions = [{
+  value: 0,
+  label: '启用'
+}, {
+  value: 1,
+  label: '禁用'
+}, {
+  value: -1,
+  label: '未监控'
 }]
 
 export default {
@@ -168,6 +195,7 @@ export default {
         tagId: '',
         isActive: '',
         serverStatus: '',
+        monitorStatus: '',
         extend: true
       },
       tagOptions: [],
@@ -175,7 +203,8 @@ export default {
       serverGroupOptions: [],
       businessType: BusinessType.SERVER,
       activeOptions: activeOptions,
-      serverStatusOptions: serverStatusOptions
+      serverStatusOptions: serverStatusOptions,
+      serverMonitorStatusOptions: serverMonitorStatusOptions
     }
   },
   mounted () {
@@ -193,6 +222,7 @@ export default {
     EnvTag,
     ActiveTag,
     ServerStatusTag,
+    ServerMonitorStatusTag,
     BusinessTagEditor,
     AccountTags
   },
@@ -289,6 +319,11 @@ export default {
         })
       }).catch(() => {
         this.$message.info('已取消删除!')
+      })
+    },
+    handleScanMonitor(){
+      SCAN_SERVER_MONITOR().then(res => {
+        this.$message.success('扫描任务异步执行中!')
       })
     },
     fetchData () {
