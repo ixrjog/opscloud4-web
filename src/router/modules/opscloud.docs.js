@@ -52,5 +52,14 @@ export default [
       auth: true,
       title: '文档-VPN通道'
     }
+  },
+  {
+    path: '/docs/zabbix',
+    name: 'docs-zabbix',
+    component: () => import('@/pages/docs/zabbix'),
+    meta: {
+      auth: true,
+      title: '文档-Zabbix帮助'
+    }
   }
 ]
