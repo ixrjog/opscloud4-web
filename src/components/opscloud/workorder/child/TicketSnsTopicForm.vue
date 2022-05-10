@@ -28,7 +28,7 @@
       <el-form-item label="主题名称" prop="topic">
         <el-input v-model="snsTopicData.topic"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
-          以 {{ topicSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 256 个字符，FIFO 名称必须以“.fifo”结尾。
+          以 {{ topicPrefix }} 开头,以 {{ topicSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 256 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>
       </el-form-item>
       <el-form-item label="主题类型" prop="topicType">
@@ -108,6 +108,7 @@ export default {
       dsInstanceOptions: '',
       regionOptions: CloudRegionType.AWS.regionType,
       fifoSuffix: '.fifo',
+      topicPrefix: 'transsnet_',
       topicSuffix: '',
       rules: {
         regionId: [
