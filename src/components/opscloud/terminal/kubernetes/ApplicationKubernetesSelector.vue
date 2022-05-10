@@ -9,6 +9,9 @@
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
           <div style="color: #9d9fa3">{{ scope.row.comment }}</div>
+          <el-row>
+            <business-tags :tags="scope.row.tags"></business-tags>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column prop="resources" label="无状态">
@@ -88,6 +91,7 @@
 
 import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api.js'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 
 export default {
   name: 'ApplicationKubernetesSelector',
@@ -114,7 +118,8 @@ export default {
   },
   computed: {},
   components: {
-    EntryDetail
+    EntryDetail,
+    BusinessTags
   },
   filters: {},
   methods: {

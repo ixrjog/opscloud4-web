@@ -5,8 +5,7 @@
         <h1>{{ title }}</h1>
       </div>
       <el-row style="margin-bottom: 5px" :gutter="24">
-        <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"
-                  class="input"/>
+        <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询" class="input"/>
         <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
         <el-button style="margin-left: 5px" @click="handlerAdd">新增</el-button>
       </el-row>
@@ -28,7 +27,7 @@
             </el-row>
           </template>
         </el-table-column>
-        <el-table-column prop="resourceMap" label="绑定资源">
+        <el-table-column prop="resourceMap" label="绑定资源" width="400px">
           <template slot-scope="props">
             <div v-for="(value,key) in props.row.resourceMap" :key="key" :label="key" class="resDiv">
               <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
@@ -60,9 +59,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column fixed="right" label="操作" width="280">
           <template slot-scope="scope">
             <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+            <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
             <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -71,6 +71,8 @@
                   @handleSizeChange="handleSizeChange"></pagination>
       <application-editor ref="applicationEditor" :formStatus="formStatus.application"
                           @close="fetchData"></application-editor>
+      <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
+                           :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
     </template>
   </d2-container>
 </template>
@@ -82,12 +84,17 @@ import { DELETE_APPLICATION, QUERY_APPLICATION_PAGE } from '@/api/modules/applic
 import ApplicationEditor from '@/components/opscloud/application/ApplicationEditor'
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 import UsersTag from '../../components/opscloud/common/tag/UsersTag'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
+import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 
 export default {
   name: 'ApplicationTable',
   data () {
     return {
       title: '应用管理',
+      instance: {
+        id: ''
+      },
       table: {
         data: [],
         loading: false,
@@ -100,6 +107,7 @@ export default {
       options: {
         stripe: true
       },
+      businessType: BusinessType.APPLICATION,
       queryParam: {
         queryName: ''
       },
@@ -109,6 +117,10 @@ export default {
           operationType: true,
           addTitle: '新增应用配置',
           updateTitle: '更新应用配置'
+        },
+        businessTag: {
+          visible: false,
+          title: '编辑应用标签'
         }
       },
       formPermissionStatus: {
@@ -141,7 +153,8 @@ export default {
   components: {
     Pagination,
     ApplicationEditor,
-    UsersTag
+    UsersTag,
+    BusinessTagEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -163,6 +176,14 @@ export default {
       }
       this.$refs.applicationEditor.initData(application)
       this.formStatus.application.visible = true
+    },
+    handleRowTagEdit (row) {
+      this.instance.id = row.id
+      const businessTags = {
+        tagIds: row.tags !== null ? row.tags.map(e => e.id) : []
+      }
+      this.$refs.businessTagEditor.initData(businessTags)
+      this.formStatus.businessTag.visible = true
     },
     handlerRowEdit (row) {
       this.formStatus.application.operationType = false
