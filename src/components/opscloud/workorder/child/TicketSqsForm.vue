@@ -28,7 +28,7 @@
       <el-form-item label="队列名称" prop="queueName">
         <el-input v-model="sqsData.queueName"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
-          以 {{ queueNameSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 80 个字符，FIFO 名称必须以“.fifo”结尾。
+         以 {{ queueNamePrefix }} 开头,以 {{ queueNameSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 80 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>
       </el-form-item>
       <el-form-item label="队列类型" prop="queueType">
@@ -179,6 +179,7 @@ export default {
         delaySecondsUnit: time.second,
         maximumMessageSizeUnit: 1024
       },
+      queueNamePrefix: 'transsnet_',
       queueNameSuffix: '',
       time: time,
       rules: {
