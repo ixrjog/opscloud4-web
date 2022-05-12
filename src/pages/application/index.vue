@@ -31,7 +31,7 @@
           <template slot-scope="props">
             <div v-for="(value,key) in props.row.resourceMap" :key="key" :label="key" class="resDiv">
               <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
-              <span v-for="item in value" :key="item.id">
+              <div v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
                 <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
@@ -39,7 +39,7 @@
                   {{ item.name }}
                 </el-tag>
               </el-tooltip>
-            </span>
+            </div>
             </div>
           </template>
         </el-table-column>
