@@ -83,8 +83,9 @@
             <p
               class="page-login--options"
               flex="main:justify cross:center">
-              <span><d2-icon name="question-circle"/> 忘记密码</span>
-              <span>注册用户</span>
+              <span v-show="false"><d2-icon name="question-circle"/> 忘记密码</span>
+              <span v-show="false">注册用户</span>
+              <span>注册用户、忘记密码请联系运维</span>
             </p>
             <!-- quick login -->
             <!--            <el-button class="page-login&#45;&#45;quick" size="default" type="info" @click="dialogVisible = true">-->
