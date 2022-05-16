@@ -84,6 +84,9 @@
       <el-tab-pane label="账户配置" name="account" :disabled="server.id === '' || server.id === 0">
         <server-account-transfer :serverId="server.id" ref="serverAccountTransfer"></server-account-transfer>
       </el-tab-pane>
+      <el-tab-pane label="业务文档" name="document" :disabled="server.id === '' || server.id === 0">
+        <business-doc-editor :business-type="server.businessType" :business-id="server.businessId" ref="businessDocEditor"></business-doc-editor>
+      </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
@@ -100,6 +103,7 @@ import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
 import { QUERY_SERVER_GROUP_PAGE } from '@/api/modules/server/server.group.api.js'
 import ServerAccountTransfer from './child/ServerAccountTransfer'
 import BusinessPropertyEditor from '../business/BusinessPropertyEditor'
+import BusinessDocEditor from '@/components/opscloud/business/BusinessDocEditor'
 
 const activeOptions = [{
   value: true,
@@ -145,6 +149,7 @@ export default {
   props: ['formStatus'],
   components: {
     BusinessPropertyEditor,
+    BusinessDocEditor,
     ServerAccountTransfer
   },
   mixins: [],
@@ -196,6 +201,7 @@ export default {
         this.$refs.serverAccountTransfer.init(accountIds)
         // 业务对象属性
         this.$refs.businessPropertyEditor.initData(this.server.businessProperty)
+        this.$refs.businessDocEditor.initData(this.server.document)
       })
     },
     handleUpdate (requestBody) {

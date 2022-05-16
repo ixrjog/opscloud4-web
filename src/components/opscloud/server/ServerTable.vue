@@ -60,7 +60,13 @@
       <el-button @click="handleScanMonitor" class="button">扫描监控</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" width="200"></el-table-column>
+      <el-table-column prop="name" label="名称" width="200">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
+          <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px" plain size="mini"
+                     @click="handleDocRead(scope.row)"><i class="fab fa-dochub"></i></el-button>
+        </template>
+      </el-table-column>
       <el-table-column prop="serialNumber" label="序号" width="80" sortable></el-table-column>
       <el-table-column prop="publicIp" label="公网IP" width="120"></el-table-column>
       <el-table-column prop="privateIp" label="私网IP" width="120"></el-table-column>
@@ -108,6 +114,7 @@
     <server-editor :formStatus="formStatus.server" ref="serverEditor" @close="fetchData"></server-editor>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+    <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
   </div>
 </template>
 
@@ -129,6 +136,7 @@ import Pagination from '../common/page/Pagination'
 
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import ServerMonitorStatusTag from '@/components/opscloud/common/tag/ServerMonitorStatusTag'
+import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 
 const activeOptions = [{
   value: true,
@@ -180,6 +188,10 @@ export default {
           visible: false,
           title: '编辑数据源实例标签'
         },
+        businessDoc: {
+          visible: false,
+          title: '服务器文档'
+        },
         server: {
           visible: false,
           labelWidth: '150px',
@@ -224,7 +236,8 @@ export default {
     ServerStatusTag,
     ServerMonitorStatusTag,
     BusinessTagEditor,
-    AccountTags
+    AccountTags,
+    BusinessDocReader
   },
   filters: {},
   methods: {
@@ -279,6 +292,10 @@ export default {
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
     },
+    handleDocRead (row) {
+      this.$refs.businessDocReader.initData(Object.assign({}, row.document))
+      this.formStatus.businessDoc.visible = true
+    },
     handleRowEdit (row) {
       this.formStatus.server.visible = true
       this.formStatus.server.operationType = false
@@ -321,7 +338,7 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handleScanMonitor(){
+    handleScanMonitor () {
       SCAN_SERVER_MONITOR().then(res => {
         this.$message.success('扫描任务异步执行中!')
       })
