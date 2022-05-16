@@ -30,9 +30,12 @@
                          :loginType="terminalLayout.loginType"
                          :colSpan="terminalLayout.colSpan"
                          @handleLogoutByServerNode="handleLogoutByServerNode"
-                         @handleLoginByServerNode="handleLoginByServerNode"></terminal-layout>
+                         @handleLoginByServerNode="handleLoginByServerNode"
+                         @handleRead="handleRead"></terminal-layout>
       </el-col>
     </el-row>
+    <business-doc-reader :form-status="formStatus.businessDoc"
+                         ref="businessDocReader"></business-doc-reader>
   </d2-container>
 </template>
 
@@ -43,6 +46,7 @@ import TerminalTools from '../../../components/opscloud/terminal/TerminalTools'
 import TerminalLayout from '../../../components/opscloud/terminal/TerminalLayout'
 
 import { mapState } from 'vuex'
+import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 
 export default {
   props: {},
@@ -72,6 +76,12 @@ export default {
         uuid: '',
         loginType: 0,
         colSpan: 12
+      },
+      formStatus: {
+        businessDoc: {
+          visible: false,
+          title: '服务器文档'
+        }
       }
     }
   },
@@ -89,7 +99,8 @@ export default {
   components: {
     ServerTree,
     TerminalTools,
-    TerminalLayout
+    TerminalLayout,
+    BusinessDocReader
   },
   methods: {
     /**
@@ -101,6 +112,10 @@ export default {
         this.terminalSetting.theme.background = this.info.terminalSetting.theme.background
         this.terminalSetting.rows = this.info.terminalSetting.rows
       }
+    },
+    handleRead (server) {
+      this.$refs.businessDocReader.initData(Object.assign({}, server.document))
+      this.formStatus.businessDoc.visible = true
     },
     handleChangeBatch () {
       let isBatch = true

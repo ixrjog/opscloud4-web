@@ -10,9 +10,13 @@
               </span>
               <env-tag :env="server.env" class="env"></env-tag>
               <business-tags v-if="server.tags !== null" :tags="server.tags" style="margin-left: 10px"></business-tags>
+              <el-button type="text" v-if="server.document !== null"
+                         style="margin-left: 10px" plain size="mini"
+                         @click="handleRead(server)"><i class="fab fa-dochub"></i>
+              </el-button>
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"
-                           @click="handleLogout( {server:server,isNotify:true})">
+                           @click="handleLogout( { server:server, isNotify: true})">
                   Logout
                 </el-button>
               </el-tooltip>
@@ -131,6 +135,9 @@ export default {
      * 单个终端退出
      * @param id
      */
+    handleRead (args) {
+      this.$emit('handleRead', args)
+    },
     handleLogout (args) {
       const logoutMessage = {
         state: this.terminalState.LOGOUT,

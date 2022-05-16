@@ -42,9 +42,12 @@
                                   :terminalSetting="terminalSetting"
                                   :containers="terminalLayout.containers"
                                   :colSpan="terminalLayout.colSpan"
-                                  @handleLogoutByContainer="handleLogoutByContainer">
+                                  @handleLogoutByContainer="handleLogoutByContainer"
+                                  @handleRead="handleRead">
       </kubernetes-terminal-layout>
     </el-row>
+    <business-doc-reader :form-status="formStatus.businessDoc"
+                         ref="businessDocReader"></business-doc-reader>
   </d2-container>
 </template>
 
@@ -54,6 +57,7 @@ import { mapState } from 'vuex'
 import ApplicationKubernetesSelector
   from '../../../components/opscloud/terminal/kubernetes/ApplicationKubernetesSelector'
 import KubernetesTerminalLayout from '../../../components/opscloud/terminal/kubernetes/KubernetesTerminalLayout'
+import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 
 export default {
   props: {},
@@ -82,6 +86,12 @@ export default {
         loginParam: '',
         containers: [],
         colSpan: 24
+      },
+      formStatus: {
+        businessDoc: {
+          visible: false,
+          title: '服务器文档'
+        }
       }
     }
   },
@@ -98,7 +108,8 @@ export default {
   },
   components: {
     ApplicationKubernetesSelector,
-    KubernetesTerminalLayout
+    KubernetesTerminalLayout,
+    BusinessDocReader
   },
   methods: {
     /**
@@ -110,6 +121,10 @@ export default {
         this.terminalSetting.theme.background = this.info.terminalSetting.theme.background
         this.terminalSetting.rows = this.info.terminalSetting.rows
       }
+    },
+    handleRead (server) {
+      this.$refs.businessDocReader.initData(Object.assign({}, server.document))
+      this.formStatus.businessDoc.visible = true
     },
     handleOpen (loginParam) {
       this.layout.status = 1
