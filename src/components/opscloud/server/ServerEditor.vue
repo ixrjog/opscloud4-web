@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
-             :visible.sync="formStatus.visible">
+             :visible.sync="formStatus.visible" width="75%">
     <el-tabs v-model="activeName">
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="server">
