@@ -19,7 +19,9 @@
 
 <script>
 // API
-import { ADD_BUSINESS_DOCUMENT, UPDATE_BUSINESS_DOCUMENT } from '@/api/modules/business/business.document.api.js'
+import {
+  GET_BUSINESS_DOCUMENT_BY_UNIQUE_KEY,SAVE_BUSINESS_DOCUMENT
+} from '@/api/modules/business/business.document.api.js'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import util from '@/libs/util'
 
@@ -59,7 +61,7 @@ export default {
       // snippet
       require('brace/snippets/yaml')
     },
-    initData (document) {
+    open (document) {
       this.editing = false
       if (document !== null) {
         this.document = document
@@ -76,31 +78,15 @@ export default {
     openUrl(){
       util.open('https://fe.chuanyinet.com/upload')
     },
-    handleClick () {
-    },
-    handleUpdate () {
-      UPDATE_BUSINESS_DOCUMENT(this.document)
-        .then(res => {
-        })
-    },
-    handleAdd () {
-      if (this.document.content === '') {
-        return // 未编辑
-      }
-      ADD_BUSINESS_DOCUMENT(this.document)
-        .then(res => {
-        })
-    },
     handleEditing () {
       this.editing = true
     },
     save () {
       this.editing = false
-      if (this.document.id === '') {
-        this.handleAdd()
-      } else {
-        this.handleUpdate()
-      }
+      SAVE_BUSINESS_DOCUMENT(this.document)
+        .then(res => {
+          this.$message.success('保存成功!')
+        })
     }
   }
 }

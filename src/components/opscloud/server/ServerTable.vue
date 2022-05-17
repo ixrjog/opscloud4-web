@@ -63,8 +63,9 @@
       <el-table-column prop="name" label="名称" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
-          <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px" plain size="mini"
-                     @click="handleDocRead(scope.row)"><i class="fab fa-dochub"></i></el-button>
+          <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
+                     @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
+          </el-button>
         </template>
       </el-table-column>
       <el-table-column prop="serialNumber" label="序号" width="80" sortable></el-table-column>

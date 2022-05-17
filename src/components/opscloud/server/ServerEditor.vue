@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" width="75%">
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="server">
           <el-form-item label="名称" :label-width="labelWidth" required>
@@ -201,8 +201,12 @@ export default {
         this.$refs.serverAccountTransfer.init(accountIds)
         // 业务对象属性
         this.$refs.businessPropertyEditor.initData(this.server.businessProperty)
-        this.$refs.businessDocEditor.initData(this.server.document)
       })
+    },
+    handleClick (tab, event) {
+      if (tab.name === 'document') {
+        this.$refs.businessDocEditor.open(this.server.document)
+      }
     },
     handleUpdate (requestBody) {
       UPDATE_SERVER(requestBody)
