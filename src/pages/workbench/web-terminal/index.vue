@@ -74,7 +74,7 @@ export default {
         serverNodes: [],
         terminals: [],
         uuid: '',
-        loginType: 0,
+        loginType: 1,
         colSpan: 12
       },
       formStatus: {
