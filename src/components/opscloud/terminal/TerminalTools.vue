@@ -80,7 +80,7 @@ export default {
       layout: {
         mode: 0 // 当前布局模式
       },
-      loginUserType: 0, // 登录用户类型
+      loginUserType: 1, // 登录用户类型
       loginUserTypeOptions: loginUserTypeOptions,
       layoutModeOptions: layoutModeOptions,
       formStatus: {
