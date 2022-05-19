@@ -1,11 +1,13 @@
 <template>
   <div>
     <el-row>
-      <my-markdown v-if="!editing && document.content !== ''" :content="document.content"></my-markdown>
-      <editor v-if="editing && document !==null" v-model="document.content" @init="editorInit" lang="yaml"
-              theme="chrome"
-              height="400"
-              :options="options" ref="editor"></editor>
+      <el-card shadow="never">
+        <my-markdown v-if="!editing && document.content !== ''" :content="document.content"></my-markdown>
+        <editor v-if="editing && document !==null" v-model="document.content" @init="editorInit" lang="yaml"
+                theme="chrome"
+                height="400"
+                :options="options" ref="editor"></editor>
+      </el-card>
     </el-row>
     <el-row>
       <div style="width:100%;text-align:center;margin-top:10px">
@@ -20,7 +22,7 @@
 <script>
 // API
 import {
-  GET_BUSINESS_DOCUMENT_BY_UNIQUE_KEY,SAVE_BUSINESS_DOCUMENT
+  GET_BUSINESS_DOCUMENT_BY_UNIQUE_KEY, SAVE_BUSINESS_DOCUMENT
 } from '@/api/modules/business/business.document.api.js'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import util from '@/libs/util'
@@ -75,7 +77,7 @@ export default {
         }
       }
     },
-    openUrl(){
+    openUrl () {
       util.open('https://fe.chuanyinet.com/upload')
     },
     handleEditing () {

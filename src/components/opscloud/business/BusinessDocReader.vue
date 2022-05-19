@@ -1,10 +1,12 @@
 <template>
   <el-dialog :title="document.displayName + formStatus.title" :visible.sync="formStatus.visible">
     <el-row>
-      <my-markdown v-if="!editing" :content="document.content"></my-markdown>
-      <editor v-if="editing" v-model="document.content" @init="editorInit" lang="yaml" theme="chrome"
-              height="400"
-              :options="options" ref="editor"></editor>
+      <el-card shadow="never">
+        <my-markdown v-if="!editing" :content="document.content"></my-markdown>
+        <editor v-if="editing" v-model="document.content" @init="editorInit" lang="yaml" theme="chrome"
+                height="400"
+                :options="options" ref="editor"></editor>
+      </el-card>
     </el-row>
     <el-row>
       <div style="width:100%;text-align:center;margin-top:10px">
