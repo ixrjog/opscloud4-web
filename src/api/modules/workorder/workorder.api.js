@@ -2,6 +2,14 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/workorder'
 
+export function GET_WORK_ORDER_OPTIONS (param) {
+  return request({
+    url: baseUrl + '/options/get',
+    method: 'get',
+    params: param
+  })
+}
+
 export function GET_WORK_ORDER_VIEW () {
   // 接口请求
   return request({

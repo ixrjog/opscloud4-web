@@ -15,6 +15,14 @@
           <el-radio-button :label="ticketPhase.FAILED">{{ ticketPhase.FAILED | toPhaseText }}</el-radio-button>
           <el-radio-button :label="ticketPhase.CLOSED">{{ ticketPhase.CLOSED | toPhaseText }}</el-radio-button>
         </el-radio-group>
+        <el-select v-model.trim="queryParam.workOrderId" filterable clearable @change="fetchData">
+          <el-option
+            v-for="item in workOrderOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id">
+          </el-option>
+        </el-select>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column prop="id" label="编号" width="80"></el-table-column>
@@ -77,6 +85,7 @@
 <script>
 
 import { toPhaseText, toPhaseType } from '@/filters/ticket.js'
+import { GET_WORK_ORDER_OPTIONS, } from '@/api/modules/workorder/workorder.api.js'
 import {
   GET_WORK_ORDER_TICKET_VIEW,
   QUERY_WORK_ORDER_TICKET_PAGE,
@@ -115,6 +124,7 @@ export default {
       },
       ticketPhase: WorkOrderTicketPhase,
       workOrderKeyConstants: WorkOrderKeyConstants,
+      workOrderOptions: [],
       formStatus: {
         ticket: Object.assign({}, ticketFormStatus.ticket)
       },
@@ -129,6 +139,7 @@ export default {
   computed: {},
   mounted () {
     this.fetchData()
+    this.getWorkOrderOptions()
   },
   components: {
     Pagination,
@@ -145,6 +156,11 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    getWorkOrderOptions () {
+      GET_WORK_ORDER_OPTIONS().then(res => {
+        this.workOrderOptions = res.body
+      })
     },
     delTicket (ticket) {
       this.$confirm('此操作将删除当前工单?', '提示', {
@@ -234,5 +250,9 @@ export default {
   border-bottom: 1px solid #EBEEF5;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.el-select {
+  margin-left: 10px;
 }
 </style>
