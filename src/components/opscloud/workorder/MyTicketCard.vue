@@ -15,12 +15,13 @@
           <el-radio-button :label="ticketPhase.FAILED">{{ ticketPhase.FAILED | toPhaseText }}</el-radio-button>
           <el-radio-button :label="ticketPhase.CLOSED">{{ ticketPhase.CLOSED | toPhaseText }}</el-radio-button>
         </el-radio-group>
-        <el-select v-model.trim="queryParam.workOrderId" filterable clearable @change="fetchData">
+        <el-select v-model.trim="queryParam.workOrderId" filterable clearable @change="fetchData" placeholder="请选择工单类型">
           <el-option
             v-for="item in workOrderOptions"
             :key="item.id"
             :label="item.name"
             :value="item.id">
+            <span style="float: left"><i :class="item.icon" style="margin-right: 5px"></i>{{ item.name }}</span>
           </el-option>
         </el-select>
       </el-row>
