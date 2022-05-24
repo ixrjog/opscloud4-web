@@ -41,16 +41,16 @@
       <el-form-item label="订阅协议">
         <span style="font-size: 10px;color: #909399">目前仅支持 Amazon SQS 协议</span>
       </el-form-item>
-      <el-form-item label="SQS 队列" prop="endpoint">
-        <el-select v-model="snsSubscriptionData.endpoint" filterable
+      <el-form-item label="SQS 队列">
+        <el-select v-model="sqsEntry" filterable value-key="name"
                    style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索 SQS 队列"
-                   :remote-method="fetchSqsData"
+                   :remote-method="fetchSqsData" @change="sqsChange"
                    :disabled="snsSubscriptionData.topicArn === ''">
           <el-option
             v-for="item in sqsEntryOptions"
             :key="item.name"
-            :label="item.content"
-            :value="item.content">
+            :label="item.name"
+            :value="item">
           </el-option>
         </el-select>
       </el-form-item>
@@ -80,6 +80,7 @@ const snsSubscriptionData = {
   topicArn: '',
   protocol: 'sqs',
   endpoint: '',
+  queueName: '',
   instanceId: '',
   regionId: 'ap-northeast-2',
   remark: ''
@@ -106,14 +107,12 @@ export default {
       dsInstanceOptions: '',
       dsInstanceAssetType: DsInstanceAssetType,
       snsTopicEntry: '',
+      sqsEntry: '',
       sqsEntryOptions: [],
       snsTopicEntryOptions: [],
       rules: {
         regionId: [
           { required: true, message: '请选择 Region', trigger: 'change' }
-        ],
-        endpoint: [
-          { required: true, message: '请选择 SQS 队列', trigger: 'change' }
         ],
         remark: [
           { required: true, message: '请输入描述说明', trigger: 'blur' }
@@ -127,30 +126,41 @@ export default {
     initDate () {
       this.getDsInstance()
       this.snsTopicEntry = ''
+      this.sqsEntry = ''
       this.sqsEntryOptions = []
       this.snsTopicEntryOptions = []
       this.snsSubscriptionData = Object.assign({}, snsSubscriptionData)
     },
     regionIdChange () {
       this.snsTopicEntry = ''
+      this.sqsEntry = ''
       this.snsSubscriptionData.topicArn = ''
       this.snsSubscriptionData.endpoint = ''
+      this.snsSubscriptionData.queueName = ''
       this.fetchSnsTopicData('')
     },
     snsTopicChange () {
       this.snsSubscriptionData.topicArn = this.snsTopicEntry.content
-      this.snsSubscriptionData.endpoint = ''
       this.fetchSqsData('')
+    },
+    sqsChange () {
+      this.snsSubscriptionData.endpoint = this.sqsEntry.content
+      this.snsSubscriptionData.queueName = this.sqsEntry.name
     },
     addTicketEntry () {
       this.$refs.snsSubscriptionDataForm.validate((valid) => {
         if (valid) {
+          if (this.snsSubscriptionData.endpoint === '') {
+            this.$message.warning('请选择SQS队列')
+            return
+          }
           this.buttonAdding = true
           const data = {
             regionId: this.snsSubscriptionData.regionId,
             topicArn: this.snsSubscriptionData.topicArn,
             protocol: this.snsSubscriptionData.protocol,
-            endpoint: this.snsSubscriptionData.endpoint
+            endpoint: this.snsSubscriptionData.endpoint,
+            queueName: this.snsSubscriptionData.queueName
           }
           const requestBody = {
             workOrderTicketId: this.workOrderTicketId,
@@ -163,6 +173,7 @@ export default {
             comment: this.snsSubscriptionData.remark,
             content: JSON.stringify(data)
           }
+          debugger
           ADD_WORK_ORDER_TICKET_ENTRY(requestBody).then(() => {
             this.$emit('handleNotify')
             this.$message.success('保存成功')
