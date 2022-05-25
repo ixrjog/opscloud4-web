@@ -103,4 +103,3 @@ export function QUERY_WORK_ORDER_TICKET_ENTRY (data) {
     data
   })
 }
-

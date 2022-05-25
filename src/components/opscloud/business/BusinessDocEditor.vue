@@ -21,9 +21,7 @@
 
 <script>
 // API
-import {
-  GET_BUSINESS_DOCUMENT_BY_UNIQUE_KEY, SAVE_BUSINESS_DOCUMENT
-} from '@/api/modules/business/business.document.api.js'
+import { SAVE_BUSINESS_DOCUMENT } from '@/api/modules/business/business.document.api.js'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import util from '@/libs/util'
 
@@ -97,4 +95,3 @@ export default {
 <style scoped>
 
 </style>
-

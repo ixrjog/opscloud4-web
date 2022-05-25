@@ -66,7 +66,7 @@ export default {
         this.document = document
       }
     },
-    openUrl(){
+    openUrl () {
       util.open('https://fe.chuanyinet.com/upload')
     },
     handleEditing () {
@@ -86,4 +86,3 @@ export default {
 <style scoped>
 
 </style>
-

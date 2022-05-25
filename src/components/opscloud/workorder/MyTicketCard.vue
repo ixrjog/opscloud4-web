@@ -86,7 +86,7 @@
 <script>
 
 import { toPhaseText, toPhaseType } from '@/filters/ticket.js'
-import { GET_WORK_ORDER_OPTIONS, } from '@/api/modules/workorder/workorder.api.js'
+import { GET_WORK_ORDER_OPTIONS } from '@/api/modules/workorder/workorder.api.js'
 import {
   GET_WORK_ORDER_TICKET_VIEW,
   QUERY_WORK_ORDER_TICKET_PAGE,
