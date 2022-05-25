@@ -79,5 +79,14 @@ export default [
       auth: true,
       title: '工单管理'
     }
+  },
+  {
+    path: '/sys/docs',
+    name: 'sys/docs',
+    component: () => import('@/pages/sys/docs'),
+    meta: {
+      auth: true,
+      title: '运维文档'
+    }
   }
 ]
