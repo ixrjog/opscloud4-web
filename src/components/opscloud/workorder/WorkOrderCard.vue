@@ -39,7 +39,6 @@
 
 import { GET_WORK_ORDER_VIEW } from '@/api/modules/workorder/workorder.api.js'
 import { CREATE_WORK_ORDER_TICKET } from '@/api/modules/workorder/workorder.ticket.api.js'
-import util from '@/libs/util'
 
 export default {
   name: 'WorkOrderCard',
