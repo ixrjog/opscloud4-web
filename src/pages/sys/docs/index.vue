@@ -36,7 +36,7 @@ export default {
       docs: {
         vpn: null,
         bArchitect: null,
-        cArchitect:null
+        cArchitect: null
       },
       docKeys: docKeys,
       dict: {
@@ -55,6 +55,11 @@ export default {
       this.fetchDoc(tab.name)
     },
     fetchDoc (key) {
+      this.docs = {
+        vpn: null,
+        bArchitect: null,
+        cArchitect: null
+      }
       const requestBody = {
         dict: this.dict,
         documentKey: key
