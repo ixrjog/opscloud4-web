@@ -5,26 +5,24 @@
         {{ sessionInstance.instanceId }}
       </el-tag>
     </div>
-    <el-row :gutter="10">
-      <el-col :span="20">
-        <i class="far fa-clock"></i>{{ sessionInstance.openTime }}[{{ sessionInstance.sessionDuration }}s]
-        <div>
-          <i class="fas fa-video"></i>{{ util.bytesToSize(sessionInstance.outputSize) }}
-          <i class="far fa-address-card"></i>{{ sessionInstance.loginUser }}
-        </div>
-      </el-col>
-      <el-col :span="4">
-        <el-row>
-          <el-button type="text" style="float: right; padding: 3px 0"
-                     @click="handleCommand(sessionInstance)"><i class="fas fa-greater-than-equal"></i>Cmd
-          </el-button>
-        </el-row>
-        <el-row>
-          <el-button type="text" style="float: right; padding: 3px 0"
-                     @click="handlePlay(sessionInstance)"><i class="fas fa-play"></i>Play
-          </el-button>
-        </el-row>
-      </el-col>
+    <el-row>
+      <i class="far fa-clock"></i>{{ sessionInstance.openTime }}[{{ sessionInstance.sessionDuration }}s]
+      <div>
+        <i class="fas fa-video"></i>{{ util.bytesToSize(sessionInstance.outputSize) }}
+        <i class="far fa-address-card"></i>{{ sessionInstance.loginUser }}
+      </div>
+    </el-row>
+    <el-row>
+        <span v-if="sessionInstance.commandSize !== 0">
+          <el-badge :value="sessionInstance.commandSize" class="item" type="primary" style="font-size: 4px">
+            <el-button type="text" style="float: right; padding: 3px 0"
+                       @click="handleCommand(sessionInstance)"><i class="fas fa-greater-than-equal"></i>CMD
+            </el-button>
+          </el-badge>
+        </span>
+      <el-button type="text" style="float: right; padding: 3px 0"
+                 @click="handlePlay(sessionInstance)"><i class="fas fa-play"></i>Play
+      </el-button>
     </el-row>
   </el-card>
 </template>
