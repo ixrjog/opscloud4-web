@@ -37,7 +37,7 @@ export default {
         protocol: '',
         extend: true,
         page: 1,
-        length: 10
+        length: 100
       }
       QUERY_SERVER_ACCOUNT_PAGE(parameter)
         .then(res => {
