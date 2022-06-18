@@ -5,7 +5,7 @@
       <el-tag size="mini" style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
     </div>
     <el-row>
-      <el-input v-model="queryParam.name" placeholder="名称" style="display: inline-block; maxWidth: 200px;"/>
+      <el-input v-model="queryParam.name" placeholder="名称" style="display: inline-block; width: 180px;" @change="fetchData"/>
       <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType" :loading="loading">
         <el-option
