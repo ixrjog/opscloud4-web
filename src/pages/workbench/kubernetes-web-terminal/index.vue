@@ -15,7 +15,7 @@
     <el-row v-if="layout.status === 0" style="margin-top: 10px">
       <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane :name="docKeys.KUBERNETES_README">
-          <span slot="label"><i class="fab fa-instalod"></i>Kubernetes</span>
+          <span slot="label"><i class="fab fa-docker"></i>Kubernetes</span>
           <my-markdown v-if="docs.kubernetes !== null" :content="docs.kubernetes.content"></my-markdown>
         </el-tab-pane>
       </el-tabs>
