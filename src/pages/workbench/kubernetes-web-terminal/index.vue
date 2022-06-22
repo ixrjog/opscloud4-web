@@ -4,36 +4,21 @@
       <h1>{{ title }}</h1>
     </div>
     <!--      应用选择器-->
-    <el-row v-if="layout.status === 0" :gutter="10">
-      <el-col :span="19">
-        <el-card shadow="hover">
-          <div slot="header" class="clearfix">
-            <span>应用列表</span>
-          </div>
-          <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>
-        </el-card>
-      </el-col>
-      <el-col :span="5">
-        <el-alert title="Tips" type="info" :closable="false">
-          <div style="margin-left: 5px">
-            <i style="margin-right: 2px" class="fab fa-artstation"></i>Pod(容器组)
-          </div>
-          <div style="margin-left: 5px">
-            <i style="margin-right: 2px" class="fab fa-docker"></i>Container(容器)
-          </div>
-          <div>
-            <div style="margin-left: 5px">容器运行状态:
-              <li>PodScheduled：Pod 已经被调度到某节点</li>
-              <li>ContainersReady：Pod 中所有容器都已就绪</li>
-              <li>Initialized：所有的 Init 容器都已成功启动</li>
-              <li>Ready：Pod 可以为请求提供服务</li>
-            </div>
-          </div>
-          <div style="margin-left: 5px">
-            <a href="https://kubernetes.io/zh/docs/concepts/workloads/pods/">打开教程</a>
-          </div>
-        </el-alert>
-      </el-col>
+    <el-row v-if="layout.status === 0">
+      <el-card shadow="hover">
+        <div slot="header" class="clearfix">
+          <span>应用容器详情</span>
+        </div>
+        <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>
+      </el-card>
+    </el-row>
+    <el-row v-if="layout.status === 0" style="margin-top: 10px">
+      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane :name="docKeys.KUBERNETES_README">
+          <span slot="label"><i class="fab fa-instalod"></i>Kubernetes</span>
+          <my-markdown v-if="docs.kubernetes !== null" :content="docs.kubernetes.content"></my-markdown>
+        </el-tab-pane>
+      </el-tabs>
     </el-row>
     <el-row>
       <!--          终端布局-->
@@ -58,12 +43,23 @@ import ApplicationKubernetesSelector
   from '../../../components/opscloud/terminal/kubernetes/ApplicationKubernetesSelector'
 import KubernetesTerminalLayout from '../../../components/opscloud/terminal/kubernetes/KubernetesTerminalLayout'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
+import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
+import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
+
+const docKeys = {
+  KUBERNETES_README: 'KUBERNETES_README'
+}
 
 export default {
   props: {},
   data () {
     return {
       title: '容器管理',
+      docs: {
+        kubernetes: null
+      },
+      docKeys: docKeys,
+      activeName: docKeys.KUBERNETES_README,
       layout: {
         mode: 0,
         status: 0 // 0 选择/登录
@@ -101,6 +97,7 @@ export default {
     ])
   },
   mounted () {
+    this.fetchDoc(this.docKeys.KUBERNETES_README)
     this.initTerminalSetting()
   },
   beforeDestroy () {
@@ -109,7 +106,8 @@ export default {
   components: {
     ApplicationKubernetesSelector,
     KubernetesTerminalLayout,
-    BusinessDocReader
+    BusinessDocReader,
+    MyMarkdown
   },
   methods: {
     /**
@@ -234,6 +232,23 @@ export default {
     recovery () {
       this.$store.dispatch('d2admin/menu/asideCollapseSet', false)
       this.terminalTools.mode = 0
+    },
+    handleClick (tab, event) {
+      this.fetchDoc(tab.name)
+    },
+    fetchDoc (key) {
+      const requestBody = {
+        dict: this.dict,
+        documentKey: key
+      }
+      PREVIEW_DOCUMENT(requestBody)
+        .then(res => {
+          switch (key) {
+            case this.docKeys.KUBERNETES_README:
+              this.docs.kubernetes = res.body
+              break
+          }
+        })
     }
   }
 }

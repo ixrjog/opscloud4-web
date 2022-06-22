@@ -1,13 +1,23 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
-      <el-button @click="fetchData" class="button">查询</el-button>
+      <el-select v-model.trim="queryParam.applicationId" filterable clearable
+                 remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication" @change="handleChange">
+        <el-option
+          v-for="item in applicationOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"></select-item>
+        </el-option>
+      </el-select>
+      <el-button @click="fetchData" class="button"
+                 :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">刷新</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="应用名称" width="180">
         <template slot-scope="scope">
-          <span>{{scope.row.name}}</span>
+          <span>{{ scope.row.name }}</span>
           <div style="color: #9d9fa3">{{ scope.row.comment }}</div>
           <el-row>
             <business-tags :tags="scope.row.tags"></business-tags>
@@ -92,6 +102,7 @@
 import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api.js'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
+import SelectItem from '@/components/opscloud/common/SelectItem'
 
 export default {
   name: 'ApplicationKubernetesSelector',
@@ -107,29 +118,46 @@ export default {
         }
       },
       queryParam: {
-        queryName: '',
+        applicationId: '',
         authorized: true,
-        extend: true
-      }
+        extend: true,
+        page: 1,
+        length: 10
+      },
+      applicationOptions: []
     }
   },
   mounted () {
-    this.fetchData()
+    this.getApplication('')
   },
   computed: {},
   components: {
     EntryDetail,
-    BusinessTags
+    BusinessTags,
+    SelectItem
   },
   filters: {},
   methods: {
-    paginationCurrentChange (currentPage) {
-      this.table.pagination.currentPage = currentPage
-      this.fetchData()
+    getApplication (name) {
+      const requestBody = {
+        queryName: name,
+        extend: false,
+        page: 1,
+        length: 30
+      }
+      QUERY_APPLICATION_KUBERNETES_PAGE(requestBody)
+        .then(res => {
+          this.applicationOptions = res.body.data
+          // this.table.pagination.total = res.body.totalNum
+          // this.table.loading = false
+        })
     },
-    handleSizeChange (size) {
-      this.table.pagination.pageSize = size
-      this.fetchData()
+    handleChange(){
+      if(this.queryParam.applicationId === ''){
+         this.getApplication('')
+      }else{
+        this.fetchData()
+      }
     },
     handleRemote (remoteServer) {
       this.$emit('handleRemote', remoteServer)
