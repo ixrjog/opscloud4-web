@@ -27,6 +27,10 @@ export default {
     nacos: {
       visible: false
     },
+    gitlab: {
+      project: { visible: false },
+      group: { visible: false }
+    },
     onsTopic: {
       visible: false
     },

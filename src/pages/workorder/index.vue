@@ -30,6 +30,8 @@
                               @close="fetchData"></iam-policy-ticket-editor>
     <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor"
                          @close="fetchData"></nacos-ticket-editor>
+    <gitlab-project-ticket-editor :formStatus="formStatus.ticket.gitlab.project" ref="gitlabProjectTicketEditor"
+                         @close="fetchData"></gitlab-project-ticket-editor>
     <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic" ref="onsTopicTicketEditor"
                              @close="fetchData"></ons-topic-ticket-editor>
     <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup" ref="onsGroupTicketEditor"
@@ -59,7 +61,7 @@ import VpnTicketEditor from '@/components/opscloud/workorder/ticket/VpnTicketEdi
 import NexusTicketEditor from '@/components/opscloud/workorder/ticket/NexusTicketEditor'
 import RamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/RamPolicyTicketEditor'
 import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicketEditor'
-import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
+import GitlabProjectTicketEditor from '@/components/opscloud/workorder/ticket/GitlabProjectTicketEditor'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
 import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPolicyTicketEditor'
@@ -68,6 +70,7 @@ import GrafanaTicketEditor from '@/components/opscloud/workorder/ticket/GrafanaT
 import SqsTicketEditor from '@/components/opscloud/workorder/ticket/SqsTicketEditor'
 import SnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/SnsTopicTicketEditor'
 import SnsSubscriptionTicketEditor from '@/components/opscloud/workorder/ticket/SnsSubscriptionTicketEditor'
+import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 
 export default {
   data () {
@@ -92,6 +95,7 @@ export default {
     RamPolicyTicketEditor,
     IamPolicyTicketEditor,
     NacosTicketEditor,
+    GitlabProjectTicketEditor,
     OnsTopicTicketEditor,
     OnsGroupTicketEditor,
     EmployeeResignTicketEditor,
@@ -162,6 +166,10 @@ export default {
         case this.workOrderKeyConstants.NACOS:
           this.handleOpenTicketEditor(this.formStatus.ticket.nacos)
           this.$refs.nacosTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.GITLAB_PROJECT:
+          this.handleOpenTicketEditor(this.formStatus.ticket.gitlab.project)
+          this.$refs.gitlabProjectTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.ONS_ROCKETMQ_TOPIC:
           this.handleOpenTicketEditor(this.formStatus.ticket.onsTopic)

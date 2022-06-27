@@ -62,6 +62,21 @@ export default {
     initData (ticketView) {
       this.ticketEntries = ticketView.ticketEntries
     },
+    updateEntryRole (entry) {
+      UPDATE_WORK_ORDER_TICKET_ENTRY(entry)
+        .then(res => {
+          // 返回数据
+          if (res.success) {
+            this.$message({
+              message: '设置成功',
+              type: 'success'
+            })
+            this.fetchData()
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+    },
     updateEntry (entry) {
       const requestBody = Object.assign({}, entry)
       if (requestBody.role === null || requestBody.role === '') {

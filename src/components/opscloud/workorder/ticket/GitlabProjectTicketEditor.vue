@@ -2,8 +2,8 @@
   <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '70%': '50%'"
              :before-close="beforeClose">
     <!--页眉-->
-    <template slot="title" v-if="ticketView !== null">
-      <ticket-title :id="ticketView.ticketId"
+    <template slot="title">
+      <ticket-title v-if="ticketView !== null" :id="ticketView.ticketId"
                     :title="ticketView.workOrder.name"></ticket-title>
     </template>
     <!--页眉-->
@@ -12,15 +12,32 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
-                                   :workOrderTicketId="ticketView.ticketId"
-                                   :entryDesc="tableLayout.entryName"
-                                   @handleNotify="fetchData"></ticket-entry-selector>
+            <ticket-asset-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
+                                         :instanceType="'GITLAB'"
+                                         :assetType="'GITLAB_PROJECT'"
+                                         :workOrderTicketId="ticketView.ticketId"
+                                         :entryDesc="tableLayout.entryName"
+                                         ref="ticketEntrySelector"
+                                         @handleNotify="fetchData"></ticket-asset-entry-selector>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
                                 :tableLayout="tableLayout"
                                 ref="ticketEntryTable">
+              <template v-slot:extend>
+                <el-table-column prop="role" label="角色" width="150">
+                  <template slot-scope="scope">
+                    <el-select v-model="scope.row.role" placeholder="请选择" @change="updateEntry(scope.row)" :disabled="ticketView.ticketPhase !== 'NEW'">
+                      <el-option
+                        v-for="item in gitlabRoleOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </template>
+                </el-table-column>
+              </template>
             </ticket-entry-table>
           </el-card>
         </el-timeline-item>
@@ -29,8 +46,9 @@
                           :ticketPhase="ticketView.ticketPhase"></workflow-nodes>
         </el-timeline-item>
         <el-timeline-item timestamp="申请说明" placement="top">
-          <el-input type="textarea" :rows="2" v-model="ticketView.comment"
+          <el-input type="textarea" :rows="2"
                     :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
+                    v-model="ticketView.comment"
                     :readonly="ticketView.ticketPhase !== 'NEW'"></el-input>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
@@ -72,7 +90,7 @@
 </template>
 
 <script>
-import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
+import TicketAssetEntrySelector from '@/components/opscloud/workorder/child/TicketAssetEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
 import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
@@ -83,10 +101,35 @@ import {
   APPROVE_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
 
+const gitlabRoleOptions = [
+  /**
+   *     Guest(10),
+   *     Reporter(20),
+   *     Developer(30),
+   *     Master(40),
+   *     Owner(50);
+   */
+  {
+    value: 'REPORTER',
+    label: 'Reporter'
+  },
+  {
+    value: 'DEVELOPER',
+    label: 'Developer'
+  },
+  {
+    value: 'MASTER',
+    label: 'Maintainer'
+  },
+  {
+    value: 'OWNER',
+    label: 'Owner'
+  }
+]
+
 const TableLayout = {
-  instance: false,
-  role: true,
-  entryName: '服务器组'
+  instance: true,
+  entryName: 'Gitlab项目'
 }
 
 export default {
@@ -97,15 +140,16 @@ export default {
       approvalComment: '', // 审批说明
       submitting: false,
       saving: false,
-      approving: false
+      approving: false,
+      gitlabRoleOptions: gitlabRoleOptions
     }
   },
-  name: 'ServerGroupTicketEditor',
+  name: 'GitlabProjectTicketEditor',
   props: ['formStatus'],
   components: {
     TicketTitle,
     NodeView,
-    TicketEntrySelector,
+    TicketAssetEntrySelector,
     TicketEntryTable,
     WorkflowNodes
   },
@@ -114,12 +158,15 @@ export default {
   },
   methods: {
     initData (ticketView) {
+      this.ticketView = ticketView
       this.approvalComment = ''
       this.submitting = false
       this.saving = false
       this.approving = false
-      this.ticketView = ticketView
       this.$nextTick(() => {
+        if (this.ticketView.ticketPhase === 'NEW') {
+          this.$refs.ticketEntrySelector.getDsInstance()
+        }
         this.fetchData()
       }, 200)
     },
@@ -180,14 +227,15 @@ export default {
         this.$message.error(res.msg)
       })
     },
+    updateEntry(entry){
+      this.$refs.ticketEntryTable.updateEntryRole(entry)
+    },
     beforeClose (done) {
-      this.$confirm('确定关闭工单?')
-        .then(_ => {
-          done()
-          this.closeEditor()
-        })
-        .catch(_ => {
-        })
+      this.$confirm('确定关闭工单?').then(_ => {
+        done()
+        this.closeEditor()
+      }).catch(_ => {
+      })
     },
     closeEditor () {
       this.formStatus.visible = false
