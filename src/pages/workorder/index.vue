@@ -32,6 +32,8 @@
                          @close="fetchData"></nacos-ticket-editor>
     <gitlab-project-ticket-editor :formStatus="formStatus.ticket.gitlab.project" ref="gitlabProjectTicketEditor"
                          @close="fetchData"></gitlab-project-ticket-editor>
+    <gitlab-group-ticket-editor :formStatus="formStatus.ticket.gitlab.group" ref="gitlabGroupTicketEditor"
+                                  @close="fetchData"></gitlab-group-ticket-editor>
     <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic" ref="onsTopicTicketEditor"
                              @close="fetchData"></ons-topic-ticket-editor>
     <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup" ref="onsGroupTicketEditor"
@@ -62,6 +64,7 @@ import NexusTicketEditor from '@/components/opscloud/workorder/ticket/NexusTicke
 import RamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/RamPolicyTicketEditor'
 import NacosTicketEditor from '@/components/opscloud/workorder/ticket/NacosTicketEditor'
 import GitlabProjectTicketEditor from '@/components/opscloud/workorder/ticket/GitlabProjectTicketEditor'
+import GitlabGroupTicketEditor from '@/components/opscloud/workorder/ticket/GitlabGroupTicketEditor'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
 import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPolicyTicketEditor'
@@ -96,6 +99,7 @@ export default {
     IamPolicyTicketEditor,
     NacosTicketEditor,
     GitlabProjectTicketEditor,
+    GitlabGroupTicketEditor,
     OnsTopicTicketEditor,
     OnsGroupTicketEditor,
     EmployeeResignTicketEditor,
@@ -170,6 +174,10 @@ export default {
         case this.workOrderKeyConstants.GITLAB_PROJECT:
           this.handleOpenTicketEditor(this.formStatus.ticket.gitlab.project)
           this.$refs.gitlabProjectTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.GITLAB_GROUP:
+          this.handleOpenTicketEditor(this.formStatus.ticket.gitlab.group)
+          this.$refs.gitlabGroupTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.ONS_ROCKETMQ_TOPIC:
           this.handleOpenTicketEditor(this.formStatus.ticket.onsTopic)
