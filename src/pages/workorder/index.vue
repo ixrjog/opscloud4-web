@@ -34,17 +34,17 @@
                          @close="fetchData"></gitlab-project-ticket-editor>
     <gitlab-group-ticket-editor :formStatus="formStatus.ticket.gitlab.group" ref="gitlabGroupTicketEditor"
                                   @close="fetchData"></gitlab-group-ticket-editor>
-    <ons-topic-ticket-editor :formStatus="formStatus.ticket.onsTopic" ref="onsTopicTicketEditor"
+    <ons-topic-ticket-editor :formStatus="formStatus.ticket.ons.topic" ref="onsTopicTicketEditor"
                              @close="fetchData"></ons-topic-ticket-editor>
-    <ons-group-ticket-editor :formStatus="formStatus.ticket.onsGroup" ref="onsGroupTicketEditor"
+    <ons-group-ticket-editor :formStatus="formStatus.ticket.ons.group" ref="onsGroupTicketEditor"
                              @close="fetchData"></ons-group-ticket-editor>
     <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor"
                                    @close="fetchData"></employee-resign-ticket-editor>
-    <sqs-ticket-editor :formStatus="formStatus.ticket.sqsTicketEditor" ref="sqsTicketEditor"
+    <sqs-ticket-editor :formStatus="formStatus.ticket.sqs" ref="sqsTicketEditor"
                        @close="fetchData"></sqs-ticket-editor>
-    <sns-topic-ticket-editor :formStatus="formStatus.ticket.snsTopicTicketEditor" ref="snsTopicTicketEditor"
+    <sns-topic-ticket-editor :formStatus="formStatus.ticket.sns.topic" ref="snsTopicTicketEditor"
                              @close="fetchData"></sns-topic-ticket-editor>
-    <sns-subscription-ticket-editor :formStatus="formStatus.ticket.snsSubscriptionTicketEditor"
+    <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription"
                                     ref="snsSubscriptionTicketEditor"
                                     @close="fetchData"></sns-subscription-ticket-editor>
   </d2-container>
@@ -180,11 +180,11 @@ export default {
           this.$refs.gitlabGroupTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.ONS_ROCKETMQ_TOPIC:
-          this.handleOpenTicketEditor(this.formStatus.ticket.onsTopic)
+          this.handleOpenTicketEditor(this.formStatus.ticket.ons.topic)
           this.$refs.onsTopicTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.ONS_ROCKETMQ_GROUP:
-          this.handleOpenTicketEditor(this.formStatus.ticket.onsGroup)
+          this.handleOpenTicketEditor(this.formStatus.ticket.ons.group)
           this.$refs.onsGroupTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.SYS_EMPLOYEE_RESIGN:
@@ -192,15 +192,15 @@ export default {
           this.$refs.employeeResignTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.SQS:
-          this.handleOpenTicketEditor(this.formStatus.ticket.sqsTicketEditor)
+          this.handleOpenTicketEditor(this.formStatus.ticket.sqs)
           this.$refs.sqsTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.SNS_TOPIC:
-          this.handleOpenTicketEditor(this.formStatus.ticket.snsTopicTicketEditor)
+          this.handleOpenTicketEditor(this.formStatus.ticket.sns.topic)
           this.$refs.snsTopicTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.SNS_SUBSCRIPTION:
-          this.handleOpenTicketEditor(this.formStatus.ticket.snsSubscriptionTicketEditor)
+          this.handleOpenTicketEditor(this.formStatus.ticket.sns.subscription)
           this.$refs.snsSubscriptionTicketEditor.initData(ticket)
           break
         default:

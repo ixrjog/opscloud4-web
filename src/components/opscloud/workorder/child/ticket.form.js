@@ -31,23 +31,19 @@ export default {
       project: { visible: false },
       group: { visible: false }
     },
-    onsTopic: {
-      visible: false
-    },
-    onsGroup: {
-      visible: false
+    ons:{
+      topic: { visible: false },
+      group: { visible: false }
     },
     employeeResign: {
       visible: false
     },
-    sqsTicketEditor: {
+    sqs: {
       visible: false
     },
-    snsTopicTicketEditor: {
-      visible: false
-    },
-    snsSubscriptionTicketEditor: {
-      visible: false
+    sns: {
+      topic: { visible: false },
+      subscription: { visible: false }
     }
   }
 }
