@@ -259,7 +259,7 @@ export default {
       margin-bottom: 5px;
       margin-right: 5px;
       position: relative;
-      width: 460px;
+      width: 440px;
       display: inline-block;
 
       /deep/ .el-card__body {
