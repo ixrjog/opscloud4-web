@@ -1,15 +1,15 @@
 <template>
   <!--  class="page"-->
   <d2-container class="page">
-      <div align="center">
-        <echarts-font text="OPSCLOUD" :font-size="50"></echarts-font>
-        <a target="blank" href="https://github.com/ixrjog/opscloud4">
-          <img
-            style="position: absolute; top: 0; right: 0; border: 0; width: 120px;"
-            src="./image/darkblue@2x.png"
-            alt="Fork me on GitHub">
-        </a>
-      </div>
+    <div align="center">
+      <echarts-font text="OPSCLOUD" :font-size="50"></echarts-font>
+      <a target="blank" href="https://github.com/ixrjog/opscloud4">
+        <img
+          style="position: absolute; top: 0; right: 0; border: 0; width: 120px;"
+          src="./image/darkblue@2x.png"
+          alt="Fork me on GitHub">
+      </a>
+    </div>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane :name="docKeys.OPSCLOUD_README">
         <span slot="label"><i class="fas fa-home"></i> 平台帮助</span>
@@ -28,8 +28,8 @@
       <div class="btn-group">
         <div align="center">
           <p class="d2-page-cover__title">Version 4.0.9</p>
-<!--          <p class="d2-page-cover__sub-title">IaC 基础架构即代码</p>-->
-          <p class="d2-page-cover__build-time">FINAL BUILD TIME {{$buildTime}}</p>
+          <!--          <p class="d2-page-cover__sub-title">IaC 基础架构即代码</p>-->
+          <p class="d2-page-cover__build-time">FINAL BUILD TIME {{ $buildTime }}</p>
         </div>
         <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
         <!--          <span class="btn-group__btn" @click="$open('https://d2.pub/zh/doc/d2-admin')">文档</span> |-->
@@ -84,9 +84,6 @@ export default {
   },
   mounted () {
     this.fetchDoc(this.docKeys.OPSCLOUD_README)
-    // for (let key in this.docKeys) {
-    //   this.fetchDoc(this.docKeys[key])
-    // }
   },
   methods: {
     handleClick (tab, event) {
