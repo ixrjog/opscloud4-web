@@ -12,7 +12,8 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button"
-                 :disabled="table.loading || queryParam.applicationId === null || queryParam.applicationId === ''">刷新</el-button>
+                 :disabled="table.loading || queryParam.applicationId === null || queryParam.applicationId === ''">刷新
+      </el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="应用名称" width="180">
@@ -152,10 +153,10 @@ export default {
           // this.table.loading = false
         })
     },
-    handleChange(){
-      if(this.queryParam.applicationId === ''){
-         this.getApplication('')
-      }else{
+    handleChange () {
+      if (this.queryParam.applicationId === '') {
+        this.getApplication('')
+      } else {
         this.fetchData()
       }
     },

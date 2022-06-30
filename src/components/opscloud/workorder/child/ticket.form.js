@@ -31,7 +31,7 @@ export default {
       project: { visible: false },
       group: { visible: false }
     },
-    ons:{
+    ons: {
       topic: { visible: false },
       group: { visible: false }
     },
