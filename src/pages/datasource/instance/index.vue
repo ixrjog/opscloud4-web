@@ -44,6 +44,7 @@ const dsTypeOptions = [{
 }]
 
 export default {
+  name: 'datasource-instance',
   data () {
     return {
       dsInstances: [],

@@ -40,7 +40,7 @@ const docKeys = {
 }
 
 export default {
-  name: 'index',
+  name: 'ssh-server',
   data () {
     return {
       activeName: docKeys.SSH_SERVER_README,

@@ -49,6 +49,7 @@ import { mapState } from 'vuex'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 
 export default {
+  name: 'web-terminal',
   props: {},
   data () {
     return {

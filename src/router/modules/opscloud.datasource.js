@@ -14,6 +14,7 @@ export default [
     component: () => import('@/pages/datasource/instance'),
     meta: {
       auth: true,
+      cache: true,
       title: '数据源实例'
     }
   },

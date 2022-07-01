@@ -51,6 +51,7 @@ const docKeys = {
 }
 
 export default {
+  name: 'kubernetes-web-terminal',
   props: {},
   data () {
     return {

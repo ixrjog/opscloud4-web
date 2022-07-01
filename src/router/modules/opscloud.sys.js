@@ -10,7 +10,7 @@ export default [
   },
   {
     path: '/sys/tag',
-    name: 'sys/tag',
+    name: 'sys-tag',
     component: () => import('@/pages/sys/tag'),
     meta: {
       auth: true,
@@ -19,7 +19,7 @@ export default [
   },
   {
     path: '/sys/env',
-    name: 'sys/env',
+    name: 'sys-env',
     component: () => import('@/pages/sys/env'),
     meta: {
       auth: true,
@@ -28,7 +28,7 @@ export default [
   },
   {
     path: '/sys/menu',
-    name: 'sys/menu',
+    name: 'sys-menu',
     component: () => import('@/pages/sys/menu'),
     meta: {
       auth: true,
@@ -37,7 +37,7 @@ export default [
   },
   {
     path: '/sys/audit',
-    name: 'sys/audit',
+    name: 'sys-audit',
     component: () => import('@/pages/sys/audit'),
     meta: {
       auth: true,
@@ -46,7 +46,7 @@ export default [
   },
   {
     path: '/sys/audit/terminal/play',
-    name: 'sys/audit/terminal/play',
+    name: 'sys-audit-terminal-play',
     component: () => import('@/pages/sys/audit/terminal/play'),
     meta: {
       auth: true,
@@ -55,7 +55,7 @@ export default [
   },
   {
     path: '/sys/audit/terminal/command',
-    name: 'sys/audit/terminal/command',
+    name: 'sys-audit-terminal-command',
     component: () => import('@/pages/sys/audit/terminal/command'),
     meta: {
       auth: true,
@@ -64,7 +64,7 @@ export default [
   },
   {
     path: '/sys/instance',
-    name: 'sys/instance',
+    name: 'sys-instance',
     component: () => import('@/pages/sys/instance'),
     meta: {
       auth: true,
@@ -73,7 +73,7 @@ export default [
   },
   {
     path: '/sys/workorder',
-    name: 'sys/workorder',
+    name: 'sys-workorder',
     component: () => import('@/pages/sys/workorder'),
     meta: {
       auth: true,
@@ -82,7 +82,7 @@ export default [
   },
   {
     path: '/sys/docs',
-    name: 'sys/docs',
+    name: 'sys-docs',
     component: () => import('@/pages/sys/docs'),
     meta: {
       auth: true,
