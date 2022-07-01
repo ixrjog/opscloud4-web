@@ -1,15 +1,27 @@
 <template>
   <!--  class="page"-->
   <d2-container class="page">
-      <div align="center">
-        <echarts-font text="OPSCLOUD" :font-size="50"></echarts-font>
-        <a target="blank" href="https://github.com/ixrjog/opscloud4">
-          <img
-            style="position: absolute; top: 0; right: 0; border: 0; width: 120px;"
-            src="./image/darkblue@2x.png"
-            alt="Fork me on GitHub">
-        </a>
-      </div>
+    <div align="center">
+      <echarts-font text="OPSCLOUD" :font-size="50"></echarts-font>
+      <a target="blank" href="https://github.com/ixrjog/opscloud4">
+        <img
+          style="position: absolute; top: 0; right: 0; border: 0; width: 120px;"
+          src="./image/darkblue@2x.png"
+          alt="Fork me on GitHub">
+      </a>
+    </div>
+    <el-row>
+      <el-col :span="16" :offset="4">
+        <el-row :gutter="10" class="nav-card">
+          <el-col :span="4" v-for="nav in navList" :key="nav.id">
+            <el-card shadow="hover" @click.native=openNavUrl(nav)>
+              <p>{{ nav.navTitle }}</p>
+              <p>{{ nav.navContent }}</p>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane :name="docKeys.OPSCLOUD_README">
         <span slot="label"><i class="fas fa-home"></i> 平台帮助</span>
@@ -28,8 +40,8 @@
       <div class="btn-group">
         <div align="center">
           <p class="d2-page-cover__title">Version 4.0.9</p>
-<!--          <p class="d2-page-cover__sub-title">IaC 基础架构即代码</p>-->
-          <p class="d2-page-cover__build-time">FINAL BUILD TIME {{$buildTime}}</p>
+          <!--          <p class="d2-page-cover__sub-title">IaC 基础架构即代码</p>-->
+          <p class="d2-page-cover__build-time">FINAL BUILD TIME {{ $buildTime }}</p>
         </div>
         <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
         <!--          <span class="btn-group__btn" @click="$open('https://d2.pub/zh/doc/d2-admin')">文档</span> |-->
@@ -56,6 +68,9 @@ import D2Help from './components/d2-help'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
+import 'animate.css'
+import { LIST_NAV } from '@/api/modules/sys/sys.nav.api'
+import util from '@/libs/util'
 
 const docKeys = {
   OPSCLOUD_README: 'OPSCLOUD_README',
@@ -73,7 +88,8 @@ export default {
       docKeys: docKeys,
       dict: {
         sshServerHost: window.location.hostname
-      }
+      },
+      navList: []
     }
   },
   components: {
@@ -84,13 +100,21 @@ export default {
   },
   mounted () {
     this.fetchDoc(this.docKeys.OPSCLOUD_README)
-    // for (let key in this.docKeys) {
-    //   this.fetchDoc(this.docKeys[key])
-    // }
+    this.listNav()
   },
   methods: {
     handleClick (tab, event) {
       this.fetchDoc(tab.name)
+    },
+    listNav () {
+      this.navList = []
+      LIST_NAV()
+        .then(({ body }) => {
+          this.navList = body
+        })
+    },
+    openNavUrl (nav) {
+      util.open(nav.navUrl)
     },
     fetchDoc (key) {
       const requestBody = {
@@ -135,6 +159,44 @@ export default {
 
       &.btn-group__btn--link {
         color: $color-primary;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="less" scoped>
+.nav-card {
+
+  .el-card {
+    /deep/ .el-card__body {
+      padding: 0;
+    }
+
+    border-radius: 25px;
+    border: 2px solid #EBEEF5;
+    padding: 10px;
+    width: 140px;
+    height: 50px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+
+    p {
+      margin: 5px 0;
+      font-size: 12px;
+      color: #B7B6B6;
+      text-align: center;
+
+      &:first-child {
+        color: #20A9D9;
+        font-size: 16px;
+        line-height: 20px;
+
+        &:hover {
+          animation: heartBeat; /* referring directly to the animation's @keyframe declaration */
+          animation-duration: 2s; /* don't forget to set a duration! */
+        }
       }
     }
   }

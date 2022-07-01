@@ -27,7 +27,8 @@
               <template v-slot:extend>
                 <el-table-column prop="role" label="角色" width="150">
                   <template slot-scope="scope">
-                    <el-select v-model="scope.row.role" placeholder="请选择" @change="updateEntry(scope.row)" :disabled="ticketView.ticketPhase !== 'NEW'">
+                    <el-select v-model="scope.row.role" placeholder="请选择" @change="updateEntry(scope.row)"
+                               :disabled="ticketView.ticketPhase !== 'NEW'">
                       <el-option
                         v-for="item in gitlabRoleOptions"
                         :key="item.value"
@@ -227,7 +228,7 @@ export default {
         this.$message.error(res.msg)
       })
     },
-    updateEntry(entry){
+    updateEntry (entry) {
       this.$refs.ticketEntryTable.updateEntryRole(entry)
     },
     beforeClose (done) {
