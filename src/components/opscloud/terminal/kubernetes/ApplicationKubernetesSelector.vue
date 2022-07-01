@@ -32,8 +32,8 @@
                  <!-- Deployment无状态 -->
                  <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>
                  <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
-                 <el-checkbox style="margin-left: 5px" v-model="resource.checked"
-                              @change="handleCheckAllChange(resource)">
+                 <business-tags :tags="resource.tags"></business-tags>
+                 <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="handleCheckAllChange(resource)">
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
                  <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)">
