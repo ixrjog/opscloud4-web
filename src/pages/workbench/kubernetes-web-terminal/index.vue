@@ -21,6 +21,11 @@
       </el-tabs>
     </el-row>
     <el-row>
+    </el-row>
+      <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
+        <el-button @click="handleChangeBatch" v-if="this.layout.status === 1" :type="terminalTools.batchType" plain>命令同步</el-button>
+      </el-tooltip>
+    <el-row>
       <!--          终端布局-->
       <kubernetes-terminal-layout class="terminal-layout" ref="terminalLayout"
                                   :loginParam="terminalLayout.loginParam"
@@ -87,7 +92,7 @@ export default {
       formStatus: {
         businessDoc: {
           visible: false,
-          title: '服务器文档'
+          title: '应用文档'
         }
       }
     }
