@@ -43,13 +43,13 @@ export default {
     handleCommand (sessionInstance) {
       this.$router.push({
         // path: '/sys/audit/terminal/play?sessionId=' + sessionInstance.sessionId + '&instanceId=' + sessionInstance.instanceId
-        name: 'sys/audit/terminal/command', params: sessionInstance
+        name: 'sys-audit-terminal-command', params: sessionInstance
       })
     },
     handlePlay (sessionInstance) {
       this.$router.push({
         // path: '/sys/audit/terminal/play?sessionId=' + sessionInstance.sessionId + '&instanceId=' + sessionInstance.instanceId
-        name: 'sys/audit/terminal/play', params: sessionInstance
+        name: 'sys-audit-terminal-play', params: sessionInstance
       })
     }
   }

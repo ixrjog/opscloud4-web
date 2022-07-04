@@ -14,7 +14,7 @@
 import TerminalSessionTable from '../../../components/opscloud/audit/TerminalSessionTable'
 
 export default {
-  name: 'sys-audit-terminal-play',
+  name: 'sys-audit',
   data () {
     return {
       title: '审计管理',
