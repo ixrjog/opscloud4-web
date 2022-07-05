@@ -34,15 +34,24 @@
                  <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>
                  <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
                  <business-tags :tags="resource.tags"></business-tags>
-                 <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="handleCheckAllChange(resource)">
+                 <el-checkbox style="margin-left: 5px" v-model="resource.checked"
+                              @change="handleCheckAllChange(resource)">
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
-                 <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)">
-                   Log
-                 </el-button>
-                 <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)">
-                   Terminal
-                 </el-button>
+                 <!--                 <i class="fas fa-redo"></i>-->
+                 <el-tooltip class="item" effect="dark" content="执行重新部署任务" placement="top-start">
+                     <el-button style="float: right; padding: 3px 0" type="text"
+                                @click="handleRedeploy(resource)">Redeploy</el-button>
+                 </el-tooltip>
+                 <!--                 <i class="fab fa-wpforms"></i>-->
+                 <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
+                   <el-button style="float: right; padding: 3px 0" type="text"
+                              @click="handleLog(resource)">Log</el-button>
+                   </el-tooltip>
+                 <!--                 <i class="fas fa-terminal"></i>-->
+                 <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)">Terminal</el-button>
+                 </el-tooltip>
                </div>
                <el-divider/>
               <!-- Pod容器组 -->
@@ -95,6 +104,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <redeploy-editor :formStatus="formStatus.redeploy" ref="redeployEditor"></redeploy-editor>
   </div>
 </template>
 
@@ -104,6 +114,7 @@ import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/app
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
+import RedeployEditor from '@/components/opscloud/application/RedeployEditor'
 
 export default {
   name: 'ApplicationKubernetesSelector',
@@ -117,6 +128,9 @@ export default {
           pageSize: 5,
           total: 0
         }
+      },
+      formStatus: {
+        redeploy: { visible: false }
       },
       queryParam: {
         applicationId: '',
@@ -135,7 +149,8 @@ export default {
   components: {
     EntryDetail,
     BusinessTags,
-    SelectItem
+    SelectItem,
+    RedeployEditor
   },
   filters: {},
   methods: {
@@ -206,6 +221,10 @@ export default {
     handleTerminal (resource) {
       this.handleByType(resource, 'CONTAINER_TERMINAL')
     },
+    handleRedeploy(resource) {
+      this.$refs.redeployEditor.initData(resource)
+      this.formStatus.redeploy.visible = true
+    },
     fetchData () {
       this.table.loading = true
       const requestBody = {
@@ -250,7 +269,7 @@ export default {
   }
 
   &button {
-    margin-left: 5px;
+    margin-left: 8px;
   }
 }
 

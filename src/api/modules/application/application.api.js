@@ -80,3 +80,11 @@ export function PREVIEW_APPLICATION_RES_PAGE (data) {
     data
   })
 }
+
+export function OPERATION_APPLICATION_RES (data) {
+  return request({
+    url: baseUrl + '/res/operation',
+    method: 'put',
+    data
+  })
+}
