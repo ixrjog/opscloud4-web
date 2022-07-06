@@ -221,7 +221,7 @@ export default {
     handleTerminal (resource) {
       this.handleByType(resource, 'CONTAINER_TERMINAL')
     },
-    handleRedeploy(resource) {
+    handleRedeploy (resource) {
       this.$refs.redeployEditor.initData(resource)
       this.formStatus.redeploy.visible = true
     },
