@@ -18,6 +18,10 @@
           <span slot="label"><i class="fab fa-docker"></i>Kubernetes</span>
           <my-markdown v-if="docs.kubernetes !== null" :content="docs.kubernetes.content"></my-markdown>
         </el-tab-pane>
+        <el-tab-pane :name="docKeys.KUBERNETES_REDEPLOY_README">
+          <span slot="label"><i class="fas fa-redo"></i>Redeploy</span>
+          <my-markdown v-if="docs.redeploy !== null" :content="docs.redeploy.content"></my-markdown>
+        </el-tab-pane>
       </el-tabs>
     </el-row>
     <el-row>
@@ -52,7 +56,8 @@ import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 const docKeys = {
-  KUBERNETES_README: 'KUBERNETES_README'
+  KUBERNETES_README: 'KUBERNETES_README',
+  KUBERNETES_REDEPLOY_README: 'KUBERNETES_REDEPLOY_README'
 }
 
 export default {
@@ -62,7 +67,8 @@ export default {
     return {
       title: '容器管理',
       docs: {
-        kubernetes: null
+        kubernetes: null,
+        redeploy: null
       },
       docKeys: docKeys,
       activeName: docKeys.KUBERNETES_README,
@@ -252,6 +258,9 @@ export default {
           switch (key) {
             case this.docKeys.KUBERNETES_README:
               this.docs.kubernetes = res.body
+              break
+            case this.docKeys.KUBERNETES_REDEPLOY_README:
+              this.docs.redeploy = res.body
               break
           }
         })
