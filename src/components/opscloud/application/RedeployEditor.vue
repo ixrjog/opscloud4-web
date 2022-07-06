@@ -21,6 +21,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="ago" label="时间"></el-table-column>
+          <el-table-column prop="comment" label="说明" show-overflow-tooltip></el-table-column>
           <el-table-column prop="result" label="结果">
             <template slot-scope="scope">
               <el-tag disable-transitions :type="scope.row.result === 'SUCCESS' ? 'success' : 'danger'">
