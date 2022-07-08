@@ -34,7 +34,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button size="mini" type="primary" @click="handleOperation">确定</el-button>
+      <el-button size="mini" type="primary" @click="handleOperation" :loading="loading">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -43,8 +43,8 @@
 
 // API
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
-import { OPERATION_APPLICATION_RES } from '@/api/modules/application/application.api'
 import UserTag from '@/components/opscloud/common/tag/UserTag'
+import { OPERATION_APPLICATION_RES } from '@/api/modules/application/application.api'
 
 export default {
   data () {
@@ -59,7 +59,8 @@ export default {
       },
       requestParam: {
         comment: ''
-      }
+      },
+      loading: false
     }
   },
   name: 'RedeployEditor',
@@ -78,15 +79,26 @@ export default {
       this.requestParam.comment = ''
     },
     handleOperation () {
-      const requestBody = {
-        resourceId: this.resource.id,
-        operationType: 'REDEPLOY',
-        comment: this.requestParam.comment
-      }
-      OPERATION_APPLICATION_RES(requestBody)
-        .then(() => {
+      this.$confirm('此操作将重新部署无状态?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const requestBody = {
+          resourceId: this.resource.id,
+          operationType: 'REDEPLOY',
+          comment: this.requestParam.comment
+        }
+        this.loading = true
+        OPERATION_APPLICATION_RES(requestBody).then(() => {
           this.$message.success('执行成功!')
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
         })
+      }).catch(() => {
+        this.$message.info('已取消')
+      })
     }
   }
 }
