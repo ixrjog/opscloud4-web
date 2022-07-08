@@ -44,6 +44,9 @@ export default {
     initSessionChart (sessionMonthReport) {
       const myChart = echarts.init(document.getElementById('sessionMonthReport'))
       const option = {
+        title: {
+          text: '会话统计'
+        },
         xAxis: {
           type: 'category',
           data: sessionMonthReport.dateCat
@@ -54,7 +57,10 @@ export default {
         series: [
           {
             data: sessionMonthReport.values,
-            type: 'bar'
+            type: 'bar',
+            itemStyle: {
+              color: '#609F5C'
+            }
           }
         ]
       }
@@ -63,6 +69,9 @@ export default {
     initInstanceChart (instanceMonthReport) {
       const myChart = echarts.init(document.getElementById('instanceMonthReport'))
       const option = {
+        title: {
+          text: '实例统计'
+        },
         xAxis: {
           type: 'category',
           data: instanceMonthReport.dateCat
@@ -73,7 +82,10 @@ export default {
         series: [
           {
             data: instanceMonthReport.values,
-            type: 'bar'
+            type: 'bar',
+            itemStyle: {
+              color: '#E3C454'
+            }
           }
         ]
       }
@@ -82,6 +94,9 @@ export default {
     initCommandChart (commandMonthReport) {
       const myChart = echarts.init(document.getElementById('commandMonthReport'))
       const option = {
+        title: {
+          text: '命令统计'
+        },
         xAxis: {
           type: 'category',
           data: commandMonthReport.dateCat
@@ -92,7 +107,10 @@ export default {
         series: [
           {
             data: commandMonthReport.values,
-            type: 'bar'
+            type: 'bar',
+            itemStyle: {
+              color: '#4A5FAB'
+            }
           }
         ]
       }
