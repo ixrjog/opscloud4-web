@@ -72,7 +72,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" size="mini" @click="handlerSave">确定</el-button>
+      <el-button type="primary" size="mini" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -172,7 +172,7 @@ export default {
           this.credentialOptions = res.body.data
         })
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_DATASOURCE_CONFIG(requestBody)
         .then(res => {
           // 返回数据
@@ -184,7 +184,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_DATASOURCE_CONFIG(requestBody)
         .then(res => {
           // 返回数据
@@ -199,7 +199,7 @@ export default {
     handleEditing () {
       this.editing = true
     },
-    handlerSave () {
+    handleSave () {
       const requestBody = Object.assign({}, this.datasourceConfig)
       // credentialId
       if (this.credential !== null && this.credential !== '') {
@@ -208,9 +208,9 @@ export default {
         requestBody.credentialId = ''
       }
       if (this.formStatus.operationType) {
-        this.handlerAdd(requestBody)
+        this.handleAdd(requestBody)
       } else {
-        this.handlerUpdate(requestBody)
+        this.handleUpdate(requestBody)
       }
     }
   }

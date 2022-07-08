@@ -4,6 +4,7 @@ import components from './modules/components'
 
 import sys from './modules/opscloud.sys'
 import user from './modules/opscloud.user'
+import report from './modules/opscloud.report'
 import server from './modules/opscloud.server'
 import rbac from './modules/opscloud.rbac'
 import datasource from './modules/opscloud.datasource'
@@ -65,8 +66,10 @@ const frameIn = [
       ...sys,
       // 工作台
       ...workbench,
-      // 我的工单
+      // 工单
       ...workorder,
+      // 报表
+      ...report,
       // 用户
       ...user,
       // 服务器
