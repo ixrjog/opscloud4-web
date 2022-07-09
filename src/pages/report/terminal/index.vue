@@ -45,7 +45,7 @@ export default {
       const myChart = echarts.init(document.getElementById('sessionMonthReport'))
       const option = {
         title: {
-          text: '会话统计'
+          text: '会话审计'
         },
         xAxis: {
           type: 'category',
@@ -70,7 +70,7 @@ export default {
       const myChart = echarts.init(document.getElementById('instanceMonthReport'))
       const option = {
         title: {
-          text: '实例统计'
+          text: '实例审计'
         },
         xAxis: {
           type: 'category',
@@ -95,7 +95,7 @@ export default {
       const myChart = echarts.init(document.getElementById('commandMonthReport'))
       const option = {
         title: {
-          text: '命令统计'
+          text: '命令审计'
         },
         xAxis: {
           type: 'category',
