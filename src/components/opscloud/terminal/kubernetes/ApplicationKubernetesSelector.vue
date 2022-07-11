@@ -38,19 +38,14 @@
                               @change="handleCheckAllChange(resource)">
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
-                 <!--                 <i class="fas fa-redo"></i>-->
                  <el-tooltip class="item" effect="dark" content="执行重新部署任务" placement="top-start">
-                     <el-button style="float: right; padding: 3px 0" type="text"
-                                @click="handleRedeploy(resource)">Redeploy</el-button>
+                     <el-button style="float: right; padding: 3px 0" type="text" @click="handleRedeploy(resource)"><i class="fas fa-redo" v-show="false"></i>Redeploy</el-button>
                  </el-tooltip>
-                 <!--                 <i class="fab fa-wpforms"></i>-->
                  <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text"
-                              @click="handleLog(resource)">Log</el-button>
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i class="fab fa-wpforms" v-show="false"></i>Log</el-button>
                    </el-tooltip>
-                 <!--                 <i class="fas fa-terminal"></i>-->
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)">Terminal</el-button>
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)"><i class="fas fa-terminal" v-show="false"></i>Terminal</el-button>
                  </el-tooltip>
                </div>
                <el-divider/>
@@ -178,7 +173,7 @@ export default {
     handleRemote (remoteServer) {
       this.$emit('handleRemote', remoteServer)
     },
-    handleByType (resource, type) {
+    handleOpenTerminalByType (resource, type) {
       const pods = []
       for (const item of resource.assetContainers) {
         const containers = item.children.filter(e => e.checked)
@@ -216,10 +211,10 @@ export default {
       this.$emit('handleOpen', loginParam)
     },
     handleLog (resource) {
-      this.handleByType(resource, 'CONTAINER_LOG')
+      this.handleOpenTerminalByType(resource, 'CONTAINER_LOG')
     },
     handleTerminal (resource) {
-      this.handleByType(resource, 'CONTAINER_TERMINAL')
+      this.handleOpenTerminalByType(resource, 'CONTAINER_TERMINAL')
     },
     handleRedeploy (resource) {
       this.$refs.redeployEditor.initData(resource)

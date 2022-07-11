@@ -27,7 +27,7 @@
     <el-row>
     </el-row>
       <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
-        <el-button @click="handleChangeBatch" v-if="this.layout.status === 1" :type="terminalTools.batchType" plain>命令同步</el-button>
+        <el-button @click="handleChangeBatch" v-if="this.layout.status === 1 && terminalLayout.loginParam.sessionType === 'CONTAINER_TERMINAL'" :type="terminalTools.batchType" plain>命令同步</el-button>
       </el-tooltip>
     <el-row>
       <!--          终端布局-->
@@ -138,6 +138,7 @@ export default {
     },
     handleOpen (loginParam) {
       this.layout.status = 1
+      this.terminalTools.batchType = ''
       this.$store.dispatch('d2admin/menu/asideCollapseSet', true)
       this.terminalLayout.loginParam = loginParam
       // 转换容器终端数据
