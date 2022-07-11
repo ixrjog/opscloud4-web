@@ -12,46 +12,18 @@
         <el-col :span="12">
           <el-row :gutter="24">
             <el-col :span="12">
-              <el-card shadow="hover">
-                <div slot="header" class="clearfix">
-                  <span>审计用户总数</span>
-                  <el-tag style="float: right" type="text">Users</el-tag>
-                </div>
-                <div style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.userTotal }}</div>
-                <div style="font-size: 10px; color: #B7B6B6">All user</div>
-              </el-card>
+              <info-card title="审计用户总数" tag="Users" :content="report.userTotal" footer="All user"></info-card>
             </el-col>
             <el-col :span="12">
-              <el-card shadow="hover">
-                <div slot="header" class="clearfix">
-                  <span>审计会话总数</span>
-                  <el-tag style="float: right" type="text">Sessions</el-tag>
-                </div>
-                <div style="font-size: 45px; color:#20A9D9; font-weight: 300">{{ report.sessionTotal }}</div>
-                <div style="font-size: 10px; color: #B7B6B6">All session</div>
-              </el-card>
+              <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal" footer="All session"></info-card>
             </el-col>
           </el-row>
           <el-row :gutter="24">
             <el-col :span="12">
-              <el-card shadow="hover">
-                <div slot="header" class="clearfix">
-                  <span>审计实例总数</span>
-                  <el-tag style="float: right" type="text">Instances</el-tag>
-                </div>
-                <div style="font-size: 45px; color:#20A9D9; font-weight: 300">{{ report.instanceTotal }}</div>
-                <div style="font-size: 10px; color: #B7B6B6">All instance</div>
-              </el-card>
+              <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal" footer="All instance"></info-card>
             </el-col>
             <el-col :span="12">
-              <el-card shadow="hover">
-                <div slot="header" class="clearfix">
-                  <span>审计命令总数</span>
-                  <el-tag style="float: right" type="text">Commands</el-tag>
-                </div>
-                <div style="font-size: 45px; color:#20A9D9; font-weight: 300">{{ report.commandTotal }}</div>
-                <div style="font-size: 10px; color: #B7B6B6">All command</div>
-              </el-card>
+              <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal" footer="All command"></info-card>
             </el-col>
           </el-row>
         </el-col>
@@ -76,6 +48,7 @@
 import * as echarts from 'echarts'
 // API
 import { GET_TERMINAL_REPORT } from '@/api/modules/report/report.api'
+import InfoCard from '@/components/opscloud/common/InfoCard'
 
 export default {
   data () {
@@ -84,7 +57,9 @@ export default {
       report: ''
     }
   },
-  components: {},
+  components: {
+    InfoCard
+  },
   computed: {},
   mounted () {
     this.fetchData()
