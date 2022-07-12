@@ -64,6 +64,15 @@ export default [
     }
   },
   {
+    path: '/datasource/instance/huaweicloud',
+    name: 'datasource-instance-huaweicloud',
+    component: () => import('@/pages/datasource/instance/huaweicloud'),
+    meta: {
+      auth: true,
+      title: '华为云数据源实例'
+    }
+  },
+  {
     path: '/datasource/instance/gitlab',
     name: 'datasource-instance-gitlab',
     component: () => import('@/pages/datasource/instance/gitlab'),

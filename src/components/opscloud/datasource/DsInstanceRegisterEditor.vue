@@ -120,6 +120,9 @@ export default {
         case this.dsInstanceType.DINGTALK_APP.type:
           instanceType = this.dsInstanceType.DINGTALK_APP
           break
+        case this.dsInstanceType.HUAWEICLOUD.type:
+          instanceType = this.dsInstanceType.HUAWEICLOUD
+          break
         default:
           this.$message({
             message: '未知的实例类型',

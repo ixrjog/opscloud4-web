@@ -100,11 +100,12 @@ export function getAssetTypeText (value) {
       return '权限'
     case DsInstanceAssetType.NACOS.NACOS_USER:
       return '用户'
-
     case DsInstanceAssetType.DINGTALK_APP.DINGTALK_DEPARTMENT:
       return '部门'
     case DsInstanceAssetType.DINGTALK_APP.DINGTALK_USER:
       return '通讯录用户'
+    case DsInstanceAssetType.HUAWEICLOUD.HUAWEICLOUD_ECS:
+      return 'ECS'
     default:
       return value
   }
