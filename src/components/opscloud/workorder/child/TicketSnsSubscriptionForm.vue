@@ -13,15 +13,15 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Region ID" prop="regionId">
-        <el-select v-model="snsSubscriptionData.regionId" filterable style="width: 250px;" placeholder="请选择Region Id"
+      <el-form-item label="环境" prop="regionId">
+        <el-select v-model="snsSubscriptionData.env" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''" @change="regionIdChange">
           <el-option
             v-for="item in regionOptions"
-            :key="item.value"
+            :key="item.label"
             :label="item.label"
-            :value="item.value">
-            <select-item :name="item.value" :comment="item.desc"></select-item>
+            :value="item.label">
+            <select-item :name="item.label" :comment="item.desc"></select-item>
           </el-option>
         </el-select>
       </el-form-item>
@@ -77,6 +77,7 @@ import CloudRegionType from '@/components/opscloud/common/enums/cloud.region.typ
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 
 const snsSubscriptionData = {
+  env: 'dev',
   topicArn: '',
   protocol: 'sqs',
   endpoint: '',
@@ -112,7 +113,7 @@ export default {
       snsTopicEntryOptions: [],
       rules: {
         regionId: [
-          { required: true, message: '请选择 Region', trigger: 'change' }
+          { required: true, message: '请选择环境', trigger: 'change' }
         ],
         remark: [
           { required: true, message: '请输入描述说明', trigger: 'blur' }
@@ -132,6 +133,20 @@ export default {
       this.snsSubscriptionData = Object.assign({}, snsSubscriptionData)
     },
     regionIdChange () {
+      switch (this.snsSubscriptionData.env) {
+        case 'dev':
+          this.snsSubscriptionData.regionId = 'ap-northeast-2'
+          break
+        case 'daily':
+          this.snsSubscriptionData.regionId = 'ap-east-1'
+          break
+        case 'gray':
+          this.snsSubscriptionData.regionId = 'eu-west-1'
+          break
+        case 'prod':
+          this.snsSubscriptionData.regionId = 'eu-west-1'
+          break
+      }
       this.snsTopicEntry = ''
       this.sqsEntry = ''
       this.snsSubscriptionData.topicArn = ''
