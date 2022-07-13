@@ -13,15 +13,15 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Region ID" prop="regionId">
-        <el-select v-model="snsTopicData.regionId" filterable style="width: 250px;" placeholder="请选择Region Id"
+      <el-form-item label="环境" prop="env">
+        <el-select v-model="snsTopicData.env" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
           <el-option
             v-for="item in regionOptions"
-            :key="item.value"
+            :key="item.label"
             :label="item.label"
-            :value="item.value">
-            <select-item :name="item.value" :comment="item.desc"></select-item>
+            :value="item.label">
+            <select-item :name="item.label" :comment="item.desc"></select-item>
           </el-option>
         </el-select>
       </el-form-item>
@@ -79,6 +79,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import CloudRegionType from '@/components/opscloud/common/enums/cloud.region.type'
 
 const snsTopicData = {
+  env: 'dev',
   topic: '_dev_topic',
   topicType: '0',
   instanceId: '',
@@ -111,8 +112,8 @@ export default {
       topicPrefix: 'transsnet_',
       topicSuffix: '',
       rules: {
-        regionId: [
-          { required: true, message: '请选择regionId', trigger: 'change' }
+        env: [
+          { required: true, message: '请选择环境', trigger: 'change' }
         ],
         topic: [
           { required: true, message: '请输入队列名称', trigger: 'blur' },
@@ -130,34 +131,45 @@ export default {
   mounted () {
   },
   watch: {
-    'snsTopicData.regionId': {
+    'snsTopicData.env': {
       handler (newName, oldName) {
         switch (newName) {
-          case 'ap-northeast-2':
+          case 'dev':
             this.topicSuffix = '_dev_topic'
+            this.snsTopicData.regionId = 'ap-northeast-2'
             if (this.snsTopicData.topicType === '1') {
               this.snsTopicData.topic = this.topicSuffix + this.fifoSuffix
             } else {
               this.snsTopicData.topic = this.topicSuffix
             }
             break
-          case 'ap-east-1':
+          case 'daily':
             this.topicSuffix = '_test_topic'
+            this.snsTopicData.regionId = 'ap-east-1'
             if (this.snsTopicData.topicType === '1') {
               this.snsTopicData.topic = this.topicSuffix + this.fifoSuffix
             } else {
               this.snsTopicData.topic = this.topicSuffix
             }
             break
-          case 'eu-west-1':
-            this.topicSuffix = '_canary_topic 或 _prod_topic'
+          case 'gray':
+            this.topicSuffix = '_canary_topic'
+            this.snsTopicData.regionId = 'eu-west-1'
             if (this.snsTopicData.topicType === '1') {
               this.snsTopicData.topic = '_canary_topic' + this.fifoSuffix
             } else {
               this.snsTopicData.topic = '_canary_topic'
             }
             break
-          default:
+          case 'prod':
+            this.topicSuffix = '_prod_topic'
+            this.snsTopicData.regionId = 'eu-west-1'
+            if (this.snsTopicData.topicType === '1') {
+              this.snsTopicData.topic = '_prod_topic' + this.fifoSuffix
+            } else {
+              this.snsTopicData.topic = '_prod_topic'
+            }
+            break
         }
       },
       immediate: true

@@ -22,18 +22,23 @@ const CloudRegionType = Object.freeze({
     regionType: [
       {
         value: 'ap-northeast-2',
-        label: 'ap-northeast-2',
-        desc: '亚太地区(首尔) 开发环境'
+        label: 'dev',
+        desc: '亚太地区(首尔)开发环境'
       },
       {
         value: 'ap-east-1',
-        label: 'ap-east-1',
-        desc: '亚太地区(香港) 测试环境'
+        label: 'daily',
+        desc: '亚太地区(香港)测试环境'
       },
       {
         value: 'eu-west-1',
-        label: 'eu-west-1',
-        desc: '欧洲(爱尔兰) 灰度、生产环境'
+        label: 'gray',
+        desc: '欧洲(爱尔兰)灰度环境'
+      },
+      {
+        value: 'eu-west-1',
+        label: 'prod',
+        desc: '欧洲(爱尔兰)生产环境'
       }
     ]
   }

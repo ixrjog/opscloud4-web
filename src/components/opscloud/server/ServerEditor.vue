@@ -85,7 +85,8 @@
         <server-account-transfer :serverId="server.id" ref="serverAccountTransfer"></server-account-transfer>
       </el-tab-pane>
       <el-tab-pane label="业务文档" name="document" :disabled="server.id === '' || server.id === 0">
-        <business-doc-editor :business-type="server.businessType" :business-id="server.businessId" ref="businessDocEditor"></business-doc-editor>
+        <business-doc-editor v-if="server.id !== ''&& server.id !== 0" :business-type="server.businessType" :business-id="server.businessId"
+                             ref="businessDocEditor"></business-doc-editor>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">

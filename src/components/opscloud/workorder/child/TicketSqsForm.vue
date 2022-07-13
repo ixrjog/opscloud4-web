@@ -13,15 +13,15 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="Region ID" prop="regionId">
-        <el-select v-model="sqsData.regionId" filterable style="width: 250px;" placeholder="请选择Region Id"
+      <el-form-item label="环境" prop="env">
+        <el-select v-model="sqsData.env" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
           <el-option
             v-for="item in regionOptions"
-            :key="item.value"
+            :key="item.label"
             :label="item.label"
-            :value="item.value">
-            <select-item :name="item.value" :comment="item.desc"></select-item>
+            :value="item.label">
+            <select-item :name="item.label" :comment="item.desc"></select-item>
           </el-option>
         </el-select>
       </el-form-item>
@@ -134,6 +134,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import CloudRegionType from '@/components/opscloud/common/enums/cloud.region.type'
 
 const sqsData = {
+  env: 'dev',
   queueName: '_dev_queue',
   queueType: '0',
   instanceId: '',
@@ -183,8 +184,8 @@ export default {
       queueNameSuffix: '',
       time: time,
       rules: {
-        regionId: [
-          { required: true, message: '请选择regionId', trigger: 'change' }
+        env: [
+          { required: true, message: '请选择环境', trigger: 'change' }
         ],
         queueName: [
           { required: true, message: '请输入队列名称', trigger: 'blur' },
@@ -217,24 +218,29 @@ export default {
   mounted () {
   },
   watch: {
-    'sqsData.regionId': {
+    'sqsData.env': {
       handler (newName, oldName) {
         switch (newName) {
-          case 'ap-northeast-2':
+          case 'dev':
+            this.sqsData.regionId = 'ap-northeast-2'
             this.queueNameSuffix = '_dev_queue'
             this.sqsData.queueName = '_dev_queue'
             break
-          case 'ap-east-1':
+          case 'daily':
+            this.sqsData.regionId = 'ap-east-1'
             this.queueNameSuffix = '_test_queue'
             this.sqsData.queueName = '_test_queue'
             break
-          case 'eu-west-1':
-            this.queueNameSuffix = '_canary_queue 或 _prod_queue'
+          case 'gray':
+            this.sqsData.regionId = 'eu-west-1'
+            this.queueNameSuffix = '_canary_queue'
             this.sqsData.queueName = '_canary_queue'
             break
-          default:
-            this.queueNameSuffix = '_queue'
-            this.sqsData.queueName = '_queue'
+          case 'prod':
+            this.sqsData.regionId = 'eu-west-1'
+            this.queueNameSuffix = '_prod_queue'
+            this.sqsData.queueName = '_prod_queue'
+            break
         }
       },
       immediate: true
