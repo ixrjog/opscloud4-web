@@ -39,13 +39,16 @@
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
                  <el-tooltip class="item" effect="dark" content="执行重新部署任务" placement="top-start">
-                     <el-button style="float: right; padding: 3px 0" type="text" @click="handleRedeploy(resource)"><i class="fas fa-redo" v-show="false"></i>Redeploy</el-button>
+                     <el-button style="float: right; padding: 3px 0" type="text" @click="handleRedeploy(resource)"><i
+                       class="fas fa-redo" v-show="false"></i>Redeploy</el-button>
                  </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i class="fab fa-wpforms" v-show="false"></i>Log</el-button>
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i
+                     class="fab fa-wpforms" v-show="false"></i>Log</el-button>
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)"><i class="fas fa-terminal" v-show="false"></i>Terminal</el-button>
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)"><i
+                     class="fas fa-terminal" v-show="false"></i>Terminal</el-button>
                  </el-tooltip>
                </div>
                <el-divider/>
@@ -54,8 +57,7 @@
                <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name">
                  <div>
                    <span>
-                   <i class="fab fa-artstation" style="margin-right: 2px"></i>
-                   {{ pod.asset.name }}
+                   <i class="fab fa-artstation" style="margin-right: 2px"></i>{{ pod.asset.name }}
                      <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
@@ -69,19 +71,7 @@
                      <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
                        {{ pod.properties.restartCount }}</span>
                    </div>
-                    <el-tag size="mini" style="float: right;margin-right: 5px" class="position"
-                            :type=" pod.properties.status === 'true'? 'success': 'warning'">{{ pod.properties.phase }}
-                       <el-popover placement="right" trigger="hover">
-                         <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
-                         <entry-detail name="Initialized" :value="pod.properties.initialized"></entry-detail>
-                         <br/>
-                         <entry-detail name="Ready" :value="pod.properties.ready"></entry-detail>
-                         <br/>
-                         <entry-detail name="ContainersReady" :value="pod.properties.containersReady"></entry-detail>
-                         <br/>
-                       <entry-detail name="PodScheduled" :value="pod.properties.podScheduled"></entry-detail>
-                    </el-popover>
-                    </el-tag>
+                     <pod-phase-tag :pod="pod"></pod-phase-tag>
                  </span>
                      <el-checkbox v-for="container in pod.children"
                                   :key="container.asset.name" style="margin-right: 5px;margin-left: 5px"
@@ -110,6 +100,7 @@ import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import RedeployEditor from '@/components/opscloud/application/RedeployEditor'
+import PodPhaseTag from '@/components/opscloud/common/tag/PodPhaseTag'
 
 export default {
   name: 'ApplicationKubernetesSelector',
@@ -145,7 +136,8 @@ export default {
     EntryDetail,
     BusinessTags,
     SelectItem,
-    RedeployEditor
+    RedeployEditor,
+    PodPhaseTag
   },
   filters: {},
   methods: {
