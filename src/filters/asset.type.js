@@ -106,6 +106,8 @@ export function getAssetTypeText (value) {
       return '通讯录用户'
     case DsInstanceAssetType.HUAWEICLOUD.HUAWEICLOUD_ECS:
       return 'ECS'
+    case DsInstanceAssetType.CONSUL.CONSUL_SERVICE:
+      return '服务'
     default:
       return value
   }
