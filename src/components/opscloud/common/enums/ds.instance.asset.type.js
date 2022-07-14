@@ -84,6 +84,9 @@ const DsInstanceAssetType = Object.freeze({
   HUAWEICLOUD: {
     HUAWEICLOUD_ECS: 'HUAWEICLOUD_ECS'
   },
+  CONSUL: {
+    CONSUL_SERVICE: 'CONSUL_SERVICE'
+  }
 })
 
 export default DsInstanceAssetType

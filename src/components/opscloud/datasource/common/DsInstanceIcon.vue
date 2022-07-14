@@ -21,6 +21,7 @@ const iconUrl = {
   nexus: require('@/static/icons/ds-nexus.svg'),
   prometheus: require('@/static/icons/ds-prometheus.svg'),
   huaweiCloud: require('@/static/icons/ds-huaweiCloud.svg'),
+  consul: require('@/static/icons/ds-consul.svg'),
   common: require('@/static/icons/ds-common.svg')
 }
 
@@ -109,6 +110,10 @@ export default {
         case DsInstanceType.HUAWEICLOUD.name:
           this.icon = iconUrl.huaweiCloud
           this.style = 'width: 150px'
+          break
+        case DsInstanceType.CONSUL.name:
+          this.icon = iconUrl.consul
+          this.style = 'width: 50px'
           break
         default:
           this.icon = iconUrl.common

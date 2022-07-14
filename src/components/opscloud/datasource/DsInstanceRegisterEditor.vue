@@ -123,6 +123,9 @@ export default {
         case this.dsInstanceType.HUAWEICLOUD.type:
           instanceType = this.dsInstanceType.HUAWEICLOUD
           break
+        case this.dsInstanceType.CONSUL.type:
+          instanceType = this.dsInstanceType.CONSUL
+          break
         default:
           this.$message({
             message: '未知的实例类型',

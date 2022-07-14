@@ -124,6 +124,16 @@ const DsInstanceType = Object.freeze({
       }
     ]
   },
+  CONSUL: {
+    type: 15,
+    name: 'CONSUL',
+    instanceType: [
+      {
+        value: 'CONSUL',
+        label: 'CONSUL'
+      }
+    ]
+  },
   ALIYUN: {
     type: 50,
     name: 'ALIYUN',

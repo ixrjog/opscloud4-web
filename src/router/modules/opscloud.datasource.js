@@ -73,6 +73,15 @@ export default [
     }
   },
   {
+    path: '/datasource/instance/consul',
+    name: 'datasource-instance-consul',
+    component: () => import('@/pages/datasource/instance/consul'),
+    meta: {
+      auth: true,
+      title: 'Consul数据源实例'
+    }
+  },
+  {
     path: '/datasource/instance/gitlab',
     name: 'datasource-instance-gitlab',
     component: () => import('@/pages/datasource/instance/gitlab'),
