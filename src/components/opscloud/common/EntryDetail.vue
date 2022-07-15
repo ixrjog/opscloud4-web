@@ -23,7 +23,7 @@ export default {
     value: {
       type: String,
       required: true,
-      default: ''
+      default: 'Na'
     },
     unit: {
       type: String,
