@@ -44,6 +44,9 @@ export default {
     sns: {
       topic: { visible: false },
       subscription: { visible: false }
+    },
+    applicationScaleReplicas: {
+      visible: false
     }
   }
 }

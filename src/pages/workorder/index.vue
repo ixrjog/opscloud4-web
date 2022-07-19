@@ -31,9 +31,9 @@
     <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor"
                          @close="fetchData"></nacos-ticket-editor>
     <gitlab-project-ticket-editor :formStatus="formStatus.ticket.gitlab.project" ref="gitlabProjectTicketEditor"
-                         @close="fetchData"></gitlab-project-ticket-editor>
+                                  @close="fetchData"></gitlab-project-ticket-editor>
     <gitlab-group-ticket-editor :formStatus="formStatus.ticket.gitlab.group" ref="gitlabGroupTicketEditor"
-                                  @close="fetchData"></gitlab-group-ticket-editor>
+                                @close="fetchData"></gitlab-group-ticket-editor>
     <ons-topic-ticket-editor :formStatus="formStatus.ticket.ons.topic" ref="onsTopicTicketEditor"
                              @close="fetchData"></ons-topic-ticket-editor>
     <ons-group-ticket-editor :formStatus="formStatus.ticket.ons.group" ref="onsGroupTicketEditor"
@@ -47,6 +47,9 @@
     <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription"
                                     ref="snsSubscriptionTicketEditor"
                                     @close="fetchData"></sns-subscription-ticket-editor>
+    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas"
+                                              ref="applicationScaleReplicasTicketEditor"
+                                              @close="fetchData"></application-scale-replicas-ticket-editor>
   </d2-container>
 </template>
 
@@ -74,6 +77,8 @@ import SqsTicketEditor from '@/components/opscloud/workorder/ticket/SqsTicketEdi
 import SnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/SnsTopicTicketEditor'
 import SnsSubscriptionTicketEditor from '@/components/opscloud/workorder/ticket/SnsSubscriptionTicketEditor'
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
+import ApplicationScaleReplicasTicketEditor
+  from '@/components/opscloud/workorder/ticket/ApplicationScaleReplicasTicketEditor'
 
 export default {
   data () {
@@ -105,7 +110,8 @@ export default {
     EmployeeResignTicketEditor,
     SqsTicketEditor,
     SnsTopicTicketEditor,
-    SnsSubscriptionTicketEditor
+    SnsSubscriptionTicketEditor,
+    ApplicationScaleReplicasTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -202,6 +208,10 @@ export default {
         case this.workOrderKeyConstants.SNS_SUBSCRIPTION:
           this.handleOpenTicketEditor(this.formStatus.ticket.sns.subscription)
           this.$refs.snsSubscriptionTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APPLICATION_SCALE_REPLICAS:
+          this.handleOpenTicketEditor(this.formStatus.ticket.applicationScaleReplicas)
+          this.$refs.applicationScaleReplicasTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
