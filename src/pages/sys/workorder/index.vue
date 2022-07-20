@@ -57,6 +57,9 @@
     <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription"
                                     ref="snsSubscriptionTicketEditor"
                                     @close="fetchData"></sns-subscription-ticket-editor>
+    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas"
+                                              ref="applicationScaleReplicasTicketEditor"
+                                              @close="fetchData"></application-scale-replicas-ticket-editor>
   </d2-container>
 </template>
 
@@ -85,6 +88,8 @@ import SnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/SnsTopi
 import SnsSubscriptionTicketEditor from '@/components/opscloud/workorder/ticket/SnsSubscriptionTicketEditor'
 import GitlabProjectTicketEditor from '@/components/opscloud/workorder/ticket/GitlabProjectTicketEditor'
 import GitlabGroupTicketEditor from '@/components/opscloud/workorder/ticket/GitlabGroupTicketEditor'
+import ApplicationScaleReplicasTicketEditor
+  from '@/components/opscloud/workorder/ticket/ApplicationScaleReplicasTicketEditor'
 
 export default {
   data () {
@@ -121,7 +126,8 @@ export default {
     EmployeeResignTicketEditor,
     SqsTicketEditor,
     SnsTopicTicketEditor,
-    SnsSubscriptionTicketEditor
+    SnsSubscriptionTicketEditor,
+    ApplicationScaleReplicasTicketEditor
   },
   computed: {},
   mounted () {
@@ -235,6 +241,10 @@ export default {
         case this.workOrderKeyConstants.SNS_SUBSCRIPTION:
           this.handleOpenTicketEditor(this.formStatus.ticket.sns.subscription)
           this.$refs.snsSubscriptionTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APPLICATION_SCALE_REPLICAS:
+          this.handleOpenTicketEditor(this.formStatus.ticket.applicationScaleReplicas)
+          this.$refs.applicationScaleReplicasTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
