@@ -61,5 +61,14 @@ export default [
       auth: true,
       title: '文档-Zabbix帮助'
     }
+  },
+  {
+    path: '/docs/workorder/application/scale',
+    name: 'docs-workorder-application-scale',
+    component: () => import('@/pages/docs/workorder/application/scale'),
+    meta: {
+      auth: true,
+      title: '文档-应用副本扩容帮助'
+    }
   }
 ]
