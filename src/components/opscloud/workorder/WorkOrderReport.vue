@@ -1,12 +1,15 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :span="8">
-      <work-order-name-stats-report ref="workOrderNameStatsReport"></work-order-name-stats-report>
-    </el-col>
-    <el-col :span="16">
+  <div>
+    <el-row>
+      <el-col>
+        <work-order-name-stats-report ref="workOrderNameStatsReport"></work-order-name-stats-report>
+      </el-col>
+    </el-row>
+    <!--  :gutter="20"-->
+    <el-row style="margin-top: 10px">
       <work-order-month-stats-report ref="workOrderMonthStatsReport"></work-order-month-stats-report>
-    </el-col>
-  </el-row>
+    </el-row>
+  </div>
 </template>
 
 <script>

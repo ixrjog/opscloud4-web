@@ -7,7 +7,7 @@
                      @click="fetchData" size="mini" plain></el-button>
         </span>
       </el-row>
-      <div id="workOrderMonthStatsReport" style="height:500px;width: 100%"></div>
+      <div id="workOrderMonthStatsReport" style="height:450px;width: 100%"></div>
     </el-card>
   </div>
 </template>
