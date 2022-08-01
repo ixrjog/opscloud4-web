@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :visible.sync="formStatus.visible" width="80%" :before-close='handlerClose'>
+  <el-dialog :title="title" :visible.sync="formStatus.visible" width="80%" :before-close='handleClose'>
     <slot></slot>
     <div v-for="s in servers" :key="s.name">
       <template>
@@ -10,13 +10,13 @@
                 <el-tag size="mini">{{ s.name }}</el-tag>
               </span>
               <el-tooltip class="item" effect="light" content="退出" placement="top-start">
-                <el-button style="float: right; padding: 3px 0" type="text" @click="handlerLogout(s.name)">
+                <el-button style="float: right; padding: 3px 0" type="text" @click="handleLogout(s.name)">
                   <i class="fas fa-sign-out" aria-hidden="true"></i>
                 </el-button>
               </el-tooltip>
               <el-tooltip class="item" effect="light" content="DuplicateSession复制会话" placement="top-start">
                 <el-button style="float: right; padding: 3px 0;margin-right: 20px" type="text"
-                           @click="handlerDuplicateSession()"><i class="fas fa-clone" aria-hidden="true"></i>
+                           @click="handleDuplicateSession()"><i class="fas fa-clone" aria-hidden="true"></i>
                 </el-button>
               </el-tooltip>
             </div>
@@ -27,7 +27,7 @@
       </template>
     </div>
     <div slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="handlerExit">关闭</el-button>
+      <el-button size="mini" @click="handleExit">关闭</el-button>
     </div>
   </el-dialog>
 </template>
@@ -105,7 +105,7 @@ export default {
         }
       }
     },
-    handlerExit () {
+    handleExit () {
       this.sendMessage(message.close)
       this.servers = []
       clearInterval(this.timer)
@@ -115,7 +115,7 @@ export default {
       this.server = server
       this.servers.push(server)
       this.initTerminal(server)
-      this.handlerLogin()
+      this.handleLogin()
     },
     initTerminal (server) {
       this.$nextTick(() => {
@@ -124,14 +124,14 @@ export default {
     },
     setTimer () {
       this.timer = setInterval(() => {
-        this.handlerHeartbeat()
+        this.handleHeartbeat()
         // console.log('开始定时...每10秒执行一次')
       }, 10000)
     },
     /**
      * 发送空心跳 避免阿里云SLB会话断开
      */
-    handlerHeartbeat () {
+    handleHeartbeat () {
       try {
         this.sendMessage(message.heartbeat)
       } catch (e) {
@@ -140,14 +140,14 @@ export default {
     /**
      * 后端调整体型
      */
-    handlerResize (server) {
+    handleResize (server) {
       this.$refs[`terminal_${server.name}`][0].resize()
     },
     /**
      * 复制会话，重开一个终端（支持变更用户类型）
      * @param id
      */
-    handlerDuplicateSession () {
+    handleDuplicateSession () {
       // 计算 instanceId  源id  server-prod-1#1
       const instanceId = this.server.name + '#' + tools.uuid()
       const sourceTerminal = this.$refs[`terminal_${this.server.name}`][0]
@@ -173,7 +173,7 @@ export default {
      * 单个终端退出
      * @param id
      */
-    handlerLogout (name) {
+    handleLogout (name) {
       const logoutMessage = {
         status: 'LOGOUT',
         instanceId: name
@@ -184,13 +184,13 @@ export default {
         return s.name !== name
       })
       this.$message.warning(name + '终端已关闭')
-      if (this.servers.length === 0) this.handlerExit()
+      if (this.servers.length === 0) this.handleExit()
     },
-    handlerClose (done) {
+    handleClose (done) {
       this.$confirm('确定退出Web终端,并关闭所有会话?')
         .then(_ => {
           done()
-          this.handlerExit()
+          this.handleExit()
         })
         .catch(_ => {
         })
@@ -198,7 +198,7 @@ export default {
     /**
      * 登录
      */
-    handlerLogin () {
+    handleLogin () {
       this.initSocket()
       this.setTimer()
     },
@@ -238,7 +238,7 @@ export default {
             }
             this.sendMessage(initMessage)
             this.$nextTick(() => {
-              this.handlerResize(this.server)
+              this.handleResize(this.server)
             })
           })
         } catch (e) {

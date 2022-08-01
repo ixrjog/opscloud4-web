@@ -3,6 +3,9 @@
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
                                datasource-nane="Jenkins实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
+      <el-tab-pane label="构建任务视图" name="buildExecutor">
+        <jenkins-build-executor-status-card :instanceId="instanceId" ref="buildExecutor"></jenkins-build-executor-status-card>
+      </el-tab-pane>
       <el-tab-pane label="计算节点" name="computer">
         <asset-table :instanceId="instanceId" :assetType="assetType.JENKINS.JENKINS_COMPUTER"
                      :tableLayout="tableLayout.computer" ref="computerTable">
@@ -46,6 +49,7 @@ import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.
 
 import util from '@/libs/util'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
+import JenkinsBuildExecutorStatusCard from '@/components/opscloud/jenkins/JenkinsBuildExecutorStatusCard'
 
 const tableLayout = {
   computer: {
@@ -73,7 +77,7 @@ const tableLayout = {
 export default {
   data () {
     return {
-      activeName: 'computer',
+      activeName: 'buildExecutor',
       instanceId: null,
       tableLayout: tableLayout,
       assetType: DsInstanceAssetType,
@@ -86,21 +90,25 @@ export default {
     this.init()
   },
   components: {
+    JenkinsBuildExecutorStatusCard,
     AssetTable,
     DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {
+      if (tab.name === 'buildExecutor') {
+        this.$refs.buildExecutor.start()
+      }
       if (tab.name === 'computer') {
         this.$refs.computerTable.fetchData()
       }
     },
     init () {
       setTimeout(() => {
-        if (this.$refs.computerTable) {
-          this.$refs.computerTable.fetchData()
-        }
-      }, 50)
+          if (this.$refs.buildExecutor) {
+            this.$refs.buildExecutor.start()
+          }
+      }, 1000)
     }
   }
 }
