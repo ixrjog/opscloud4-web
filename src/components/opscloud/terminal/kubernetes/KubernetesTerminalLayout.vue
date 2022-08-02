@@ -6,7 +6,8 @@
           <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
             <div slot="header" class="clearfix" style="height: 15px">
               <span>
-                <el-tag size="mini">{{ container.instanceId }}</el-tag>
+                <el-tag size="mini">{{container.podIp}}</el-tag>
+                <el-tag size="mini" style="margin-left: 5px">{{ container.instanceId }}</el-tag>
               </span>
               <!--              <env-tag :env="server.env" class="env"></env-tag>-->
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">

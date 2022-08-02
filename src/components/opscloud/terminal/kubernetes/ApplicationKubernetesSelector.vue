@@ -57,7 +57,7 @@
                <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name">
                  <div>
                    <span>
-                   <i class="fab fa-artstation" style="margin-right: 2px"></i>{{ pod.asset.name }}
+                   <i class="fab fa-artstation" style="margin-right: 2px"></i>{{ pod.asset.assetKey }} {{ pod.asset.name }}
                      <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
