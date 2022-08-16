@@ -3,10 +3,11 @@
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
                                datasource-nane="AWS实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName.name" v-if="instance.id !== null" @tab-click="handleClick">
-      <el-tab-pane label="云服务器" name="cloudServer">
+      <el-tab-pane label="弹性计算" name="elasticCompute">
         <el-tabs tab-position="left" v-model="activeName.ec2" @tab-click="handleClick">
           <el-tab-pane label="EC2" name="ec2">
-            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.EC2" :tableLayout="tableLayout.ec2"
+            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.EC2"
+                         :tableLayout="tableLayout.elasticCompute.ec2"
                          ref="ec2Table">
               <template v-slot:extend>
                 <el-table-column prop="assetKey" label="IP地址" width="150">
@@ -36,11 +37,28 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+      <el-tab-pane label="ECR" name="ecr">
+        <el-tabs tab-position="left" v-model="activeName.ecr" @tab-click="handleClick">
+          <el-tab-pane label="镜像仓库" name="ecrRepository">
+            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.ECR_REPOSITORY"
+                         :tableLayout="tableLayout.ecr.repository"
+                         ref="ecrRepositoryTable">
+              <template v-slot:extend>
+                <el-table-column prop="properties" label="实例ID" v-if="false">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.instanceId }}</span>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
       <el-tab-pane label="IAM访问控制" name="iam">
         <el-tabs tab-position="left" v-model="activeName.iam" @tab-click="handleClick">
           <el-tab-pane label="IAM用户" name="iamUser">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.IAM_USER"
-                         :tableLayout="tableLayout.iamUser"
+                         :tableLayout="tableLayout.iam.user"
                          ref="iamUserTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="授权的策略" width="300">
@@ -60,7 +78,7 @@
           </el-tab-pane>
           <el-tab-pane label="IAM策略" name="iamPolicy">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.IAM_POLICY"
-                         :tableLayout="tableLayout.iamPolicy" :enableActive="true" ref="iamPolicyTable">
+                         :tableLayout="tableLayout.iam.policy" :enableActive="true" ref="iamPolicyTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey2" label="ARN" width="400">
                   <template slot-scope="scope">
@@ -77,11 +95,11 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="SQS/SNS" name="sqs">
-        <el-tabs tab-position="left" v-model="activeName.sqs" @tab-click="handleClick">
+      <el-tab-pane label="消息服务" name="mq">
+        <el-tabs tab-position="left" v-model="activeName.mq" @tab-click="handleClick">
           <el-tab-pane label="SQS队列" name="queue">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SQS"
-                         :tableLayout="tableLayout.queue"
+                         :tableLayout="tableLayout.sqs.queue"
                          ref="queueTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="Region Id">
@@ -136,7 +154,7 @@
           </el-tab-pane>
           <el-tab-pane label="SNS主题" name="topic">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_TOPIC"
-                         :tableLayout="tableLayout.topic" ref="topicTable">
+                         :tableLayout="tableLayout.sns.topic" ref="topicTable">
               <template v-slot:extend>
                 <el-table-column label="Region ID">
                   <template slot-scope="scope">
@@ -155,7 +173,7 @@
           </el-tab-pane>
           <el-tab-pane label="SNS订阅" name="subscription">
             <asset-table :instanceId="instance.id" :assetType="assetType.AWS.SNS_SUBSCRIPTION"
-                         :tableLayout="tableLayout.subscription" ref="subscriptionTable">
+                         :tableLayout="tableLayout.sns.subscription" ref="subscriptionTable">
               <template v-slot:extend>
                 <el-table-column prop="protocol" label="协议" width="50">
                   <template slot-scope="scope">
@@ -212,132 +230,162 @@ import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import { getAWSRegionTypeText } from '@/filters/cloud.region'
 
 const tableLayout = {
-  ec2: {
-    assetId: {
-      alias: '实例ID'
-    },
-    name: {
-      alias: '实例名称'
-    },
-    assetKey: {
-      alias: '私网IP',
-      show: false
-    },
-    assetKey2: {
-      alias: '公网IP',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+  elasticCompute: {
+    ec2: {
+      assetId: {
+        alias: '实例ID'
+      },
+      name: {
+        alias: '实例名称'
+      },
+      assetKey: {
+        alias: '私网IP',
+        show: false
+      },
+      assetKey2: {
+        alias: '公网IP',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
-  iamUser: {
-    assetId: {
-      alias: 'User ID'
+  iam: {
+    user: {
+      assetId: {
+        alias: 'User ID'
+      },
+      name: {
+        alias: '名称'
+      },
+      assetKey: {
+        alias: '用户名',
+        show: true
+      },
+      assetKey2: {
+        alias: 'Email',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    name: {
-      alias: '名称'
-    },
-    assetKey: {
-      alias: '用户名',
-      show: true
-    },
-    assetKey2: {
-      alias: 'Email',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+    policy: {
+      assetId: {
+        alias: '策略名称',
+        show: false
+      },
+      name: {
+        alias: '策略名称',
+        show: false
+      },
+      assetKey: {
+        alias: '策略类型',
+        show: false
+      },
+      assetKey2: {
+        alias: 'ARN',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
-  iamPolicy: {
-    assetId: {
-      alias: '策略名称',
-      show: false
-    },
-    name: {
-      alias: '策略名称',
-      show: false
-    },
-    assetKey: {
-      alias: '策略类型',
-      show: false
-    },
-    assetKey2: {
-      alias: 'ARN',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+  ecr:{
+    repository:{
+      assetId: {
+        alias: 'ARN'
+      },
+      name: {
+        alias: '仓库名称'
+      },
+      assetKey: {
+        alias: '',
+        show: false
+      },
+      assetKey2: {
+        alias: 'URI',
+        show: true
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
-  queue: {
-    assetId: {
-      alias: 'Queue名称',
-      show: false
-    },
-    name: {
-      alias: 'Queue名称',
-      show: false
-    },
-    assetKey: {
-      alias: '策略类型',
-      show: false
-    },
-    assetKey2: {
-      alias: 'ARN',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+  sqs:{
+    queue: {
+      assetId: {
+        alias: 'Queue名称',
+        show: false
+      },
+      name: {
+        alias: 'Queue名称',
+        show: false
+      },
+      assetKey: {
+        alias: '策略类型',
+        show: false
+      },
+      assetKey2: {
+        alias: 'ARN',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
-  topic: {
-    assetId: {
-      alias: 'Topic名称',
-      show: false
+  sns: {
+    topic: {
+      assetId: {
+        alias: 'Topic名称',
+        show: false
+      },
+      name: {
+        alias: 'Topic名称',
+        show: true
+      },
+      assetKey: {
+        alias: '策略类型',
+        show: false
+      },
+      assetKey2: {
+        alias: 'ARN',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    name: {
-      alias: 'Topic名称',
-      show: true
-    },
-    assetKey: {
-      alias: '策略类型',
-      show: false
-    },
-    assetKey2: {
-      alias: 'ARN',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
-    }
-  },
-  subscription: {
-    assetId: {
-      alias: 'SubscriptionARN',
-      show: false
-    },
-    name: {
-      alias: '主题名称',
-      show: true
-    },
-    assetKey: {
-      alias: '策略类型',
-      show: false
-    },
-    assetKey2: {
-      alias: 'ARN',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+    subscription: {
+      assetId: {
+        alias: 'SubscriptionARN',
+        show: false
+      },
+      name: {
+        alias: '主题名称',
+        show: true
+      },
+      assetKey: {
+        alias: '策略类型',
+        show: false
+      },
+      assetKey2: {
+        alias: 'ARN',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
   domain: {
@@ -368,10 +416,11 @@ export default {
   data () {
     return {
       activeName: {
-        name: 'cloudServer',
+        name: 'elasticCompute',
+        ecr: 'ecrRepository',
         ec2: 'ec2',
         iam: 'iamUser',
-        sqs: 'queue'
+        mq: 'queue'
       },
       instance: {
         id: null
@@ -397,8 +446,12 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      if (tab.name === 'cloudServer' || tab.name === 'ec2') {
+      if (tab.name === 'elasticCompute' || tab.name === 'ec2') {
         this.$refs.ec2Table.fetchData()
+        return
+      }
+      if (tab.name === 'ecr' || tab.name === 'ecrRepository') {
+        this.$refs.ecrRepositoryTable.fetchData()
         return
       }
       if (tab.name === 'iamUser' || tab.name === 'iam') {
@@ -409,7 +462,7 @@ export default {
         this.$refs.iamPolicyTable.fetchData()
         return
       }
-      if (tab.name === 'sqs' || tab.name === 'queue') {
+      if (tab.name === 'mq' || tab.name === 'queue') {
         this.$refs.queueTable.fetchData()
       }
       if (tab.name === 'topic') {
