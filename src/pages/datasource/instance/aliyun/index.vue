@@ -3,10 +3,11 @@
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
                                datasource-nane="Aliyun实例管理"></datasource-instance-title>
     <el-tabs v-model="activeName.name" v-if="instance.id !== null" @tab-click="handleClick">
-      <el-tab-pane label="云服务器" name="cloudServer">
+      <el-tab-pane label="弹性计算" name="elasticCompute">
         <el-tabs tab-position="left" v-model="activeName.ecs" @tab-click="handleClick">
           <el-tab-pane label="ECS" name="ecs">
-            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ECS" :tableLayout="tableLayout.ecs"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ECS"
+                         :tableLayout="tableLayout.elasticCompute.ecs"
                          ref="ecsTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey" label="IP地址" width="150">
@@ -31,7 +32,7 @@
           </el-tab-pane>
           <el-tab-pane label="Image" name="image">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ECS_IMAGE"
-                         :tableLayout="tableLayout.image"
+                         :tableLayout="tableLayout.elasticCompute.image"
                          ref="imageTable">
               <template v-slot:extend>
                 <el-table-column label="操作系统" show-overflow-tooltip>
@@ -53,7 +54,8 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="VPC" name="vpc">
-            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.VPC" :tableLayout="tableLayout.vpc"
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.VPC"
+                         :tableLayout="tableLayout.elasticCompute.vpc"
                          ref="vpcTable">
               <template v-slot:extend>
                 <el-table-column label="安全组" width="450">
@@ -73,11 +75,63 @@
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
+      <el-tab-pane label="ACR" name="acr">
+        <el-tabs tab-position="left" v-model="activeName.acr" @tab-click="handleClick">
+          <el-tab-pane label="ACR实例" name="acrInstance">
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ACR_INSTANCE"
+                         :tableLayout="tableLayout.acr.instance"
+                         ref="acrInstanceTable">
+              <template v-slot:extend>
+                <el-table-column prop="properties" label="域名">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.domain }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="命名空间" width="200">
+                  <template slot-scope="scope">
+                    <span v-for="namespace in scope.row.tree.ACR_NAMESPACE" :key="namespace.id">
+                      <el-tag size="mini" style="margin-right: 2px">{{ namespace.name }}</el-tag>
+                    </span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="仓库" width="400">
+                  <template slot-scope="scope">
+                    <span v-for="repository in scope.row.tree.ACR_REPOSITORY" :key="repository.id">
+                      <el-tag size="mini" style="margin-right: 2px">{{ repository.name }}</el-tag>
+                    </span>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="命名空间" name="acrInstanceNamespace">
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ACR_NAMESPACE"
+                         :tableLayout="tableLayout.acr.namespace"
+                         ref="acrInstanceNamespaceTable">
+              <template v-slot:extend>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="镜像仓库" name="acrInstanceRepository">
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ACR_REPOSITORY"
+                         :tableLayout="tableLayout.acr.repository"
+                         ref="acrInstanceRepositoryTable">
+              <template v-slot:extend>
+                <el-table-column prop="properties" label="实例ID">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.properties.instanceId }}</span>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
       <el-tab-pane label="RAM访问控制" name="ram">
         <el-tabs tab-position="left" v-model="activeName.ram" @tab-click="handleClick">
           <el-tab-pane label="RAM用户" name="ramUser">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RAM_USER"
-                         :tableLayout="tableLayout.ramUser"
+                         :tableLayout="tableLayout.ram.user"
                          ref="ramUserTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="授权的策略" width="300">
@@ -97,7 +151,7 @@
           </el-tab-pane>
           <el-tab-pane label="RAM策略" name="ramPolicy">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RAM_POLICY"
-                         :tableLayout="tableLayout.ramPolicy" :enableActive="true" ref="ramPolicyTable">
+                         :tableLayout="tableLayout.ram.policy" :enableActive="true" ref="ramPolicyTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="成员用户" width="300">
                   <template slot-scope="scope">
@@ -118,7 +172,7 @@
         <el-tabs tab-position="left" v-model="activeName.rds" @tab-click="handleClick">
           <el-tab-pane label="RDS实例" name="rdsInstance">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RDS_INSTANCE"
-                         :tableLayout="tableLayout.rdsInstance"
+                         :tableLayout="tableLayout.rds.instance"
                          ref="rdsInstanceTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="数据库类型">
@@ -166,7 +220,7 @@
           </el-tab-pane>
           <el-tab-pane label="RDS数据库" name="rdsDatabase">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.RDS_DATABASE"
-                         :tableLayout="tableLayout.rdsDatabase" ref="rdsDatabaseTable">
+                         :tableLayout="tableLayout.rds.database" ref="rdsDatabaseTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="RDS实例" width="350">
                   <template slot-scope="scope">
@@ -178,7 +232,7 @@
           </el-tab-pane>
           <el-tab-pane label="Redis实例" name="redisInstance">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.REDIS_INSTANCE"
-                         :tableLayout="tableLayout.redisInstance" ref="redisInstanceTable">
+                         :tableLayout="tableLayout.rds.redis.instance" ref="redisInstanceTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="数据库类型">
                   <template slot-scope="scope">
@@ -217,7 +271,7 @@
         <el-tabs tab-position="left" v-model="activeName.dms" @tab-click="handleClick">
           <el-tab-pane label="用户管理" name="dmsUser">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.DMS_USER"
-                         :tableLayout="tableLayout.dmsUser" ref="dmsUserTable">
+                         :tableLayout="tableLayout.dms.user" ref="dmsUserTable">
               <template v-slot:button>
                 <el-button @click="handlePushRamUser">推送RAM用户</el-button>
               </template>
@@ -231,7 +285,7 @@
         <el-tabs tab-position="left" v-model="activeName.ons" @tab-click="handleClick">
           <el-tab-pane label="实例" name="onsRocketMqInstance">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_INSTANCE"
-                         :tableLayout="tableLayout.onsRocketMqInstance"
+                         :tableLayout="tableLayout.ons.rocketMq.instance"
                          ref="onsRocketMqInstanceTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="实例详情">
@@ -283,7 +337,7 @@
           </el-tab-pane>
           <el-tab-pane label="Topic" name="onsRocketMqTopic">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_TOPIC"
-                         :tableLayout="tableLayout.onsRocketMqTopic"
+                         :tableLayout="tableLayout.ons.rocketMq.topic"
                          ref="onsRocketMqTopicTable">
               <template v-slot:extend>
                 <el-table-column prop="kind" label="消息类型">
@@ -301,7 +355,7 @@
           </el-tab-pane>
           <el-tab-pane label="Group" name="onsRocketMqGroup">
             <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS_ROCKETMQ_GROUP"
-                         :tableLayout="tableLayout.onsRocketMqGroup"
+                         :tableLayout="tableLayout.ons.rocketMq.group"
                          ref="onsRocketMqGroupTable">
               <template v-slot:extend>
                 <el-table-column prop="kind" label="客户端协议">
@@ -370,259 +424,338 @@ const treeObj = {
 }
 
 const tableLayout = {
-  ecs: {
-    assetId: {
-      alias: '实例ID'
+  elasticCompute: {
+    ecs: {
+      assetId: {
+        alias: '实例ID'
+      },
+      name: {
+        alias: '实例名称'
+      },
+      assetKey: {
+        alias: '私网IP',
+        show: false
+      },
+      assetKey2: {
+        alias: '公网IP',
+        show: false
+      },
+      zone: {
+        alias: 'Region ID',
+        show: true
+      }
     },
-    name: {
-      alias: '实例名称'
+    image: {
+      assetId: {
+        alias: '镜像ID'
+      },
+      name: {
+        alias: '镜像名称'
+      },
+      assetKey: {
+        alias: '镜像id',
+        show: false
+      },
+      assetKey2: {
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    assetKey: {
-      alias: '私网IP',
-      show: false
-    },
-    assetKey2: {
-      alias: '公网IP',
-      show: false
-    },
-    zone: {
-      alias: 'Region ID',
-      show: true
+    vpc: {
+      assetId: {
+        alias: '实例ID'
+      },
+      name: {
+        alias: '名称'
+      },
+      assetKey: {
+        alias: '手机',
+        show: false
+      },
+      assetKey2: {
+        alias: '网段',
+        show: true
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
-  image: {
-    assetId: {
-      alias: '镜像ID'
+  acr: {
+    instance: {
+      assetId: {
+        alias: '实例ID'
+      },
+      name: {
+        alias: '名称',
+        show: false
+      },
+      assetKey: {
+        alias: '',
+        show: false
+      },
+      assetKey2: {
+        alias: '实例类型',
+        show: true
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    name: {
-      alias: '镜像名称'
+    namespace: {
+      assetId: {
+        alias: 'ID'
+      },
+      name: {
+        alias: '名称',
+        show: true
+      },
+      assetKey: {
+        alias: '',
+        show: false
+      },
+      assetKey2: {
+        alias: '实例ID',
+        show: true
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    assetKey: {
-      alias: '镜像id',
-      show: false
-    },
-    assetKey2: {
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+    repository: {
+      assetId: {
+        alias: '仓库ID'
+      },
+      name: {
+        alias: '仓库名称',
+        show: true
+      },
+      assetKey: {
+        alias: '',
+        show: false
+      },
+      assetKey2: {
+        alias: '命名空间',
+        show: true
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
-  vpc: {
-    assetId: {
-      alias: '实例ID'
+  ram: {
+    user: {
+      assetId: {
+        alias: 'User ID'
+      },
+      name: {
+        alias: '名称'
+      },
+      assetKey: {
+        alias: '用户名',
+        show: true
+      },
+      assetKey2: {
+        alias: 'Email',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    name: {
-      alias: '名称'
-    },
-    assetKey: {
-      alias: '手机',
-      show: false
-    },
-    assetKey2: {
-      alias: '网段',
-      show: true
-    },
-    zone: {
-      alias: '区',
-      show: false
+    policy: {
+      assetId: {
+        alias: '策略名称',
+        show: false
+      },
+      name: {
+        alias: '策略名称',
+        show: false
+      },
+      assetKey: {
+        alias: '策略类型',
+        show: true
+      },
+      assetKey2: {
+        alias: '',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     }
   },
-  ramUser: {
-    assetId: {
-      alias: 'User ID'
+  rds: {
+    instance: {
+      assetId: {
+        alias: '实例ID',
+        show: true
+      },
+      name: {
+        alias: '实例名称',
+        show: true
+      },
+      assetKey: {
+        alias: '',
+        show: false
+      },
+      assetKey2: {
+        alias: '',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    name: {
-      alias: '名称'
+    database: {
+      assetId: {
+        alias: '实例ID',
+        show: true
+      },
+      name: {
+        alias: '数据库名称',
+        show: true
+      },
+      assetKey: {
+        alias: '',
+        show: false
+      },
+      assetKey2: {
+        alias: '',
+        show: false
+      },
+      zone: {
+        alias: '区',
+        show: false
+      }
     },
-    assetKey: {
-      alias: '用户名',
-      show: true
-    },
-    assetKey2: {
-      alias: 'Email',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+    redis: {
+      instance: {
+        assetId: {
+          alias: '实例ID',
+          show: true
+        },
+        name: {
+          alias: '实例名称',
+          show: true
+        },
+        assetKey: {
+          alias: '',
+          show: false
+        },
+        assetKey2: {
+          alias: '',
+          show: false
+        },
+        zone: {
+          alias: '区',
+          show: false
+        }
+      }
     }
   },
-  ramPolicy: {
-    assetId: {
-      alias: '策略名称',
-      show: false
-    },
-    name: {
-      alias: '策略名称',
-      show: false
-    },
-    assetKey: {
-      alias: '策略类型',
-      show: true
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
+  dms: {
+    user: {
+      assetId: {
+        alias: '用户ID',
+        show: false
+      },
+      name: {
+        alias: '显示名',
+        show: true
+      },
+      assetKey: {
+        alias: 'UID',
+        show: true
+      },
+      assetKey2: {
+        alias: '',
+        show: false
+      },
+      zone: {
+        alias: '',
+        show: false
+      }
     }
   },
-  rdsInstance: {
-    assetId: {
-      alias: '实例ID',
-      show: true
-    },
-    name: {
-      alias: '实例名称',
-      show: true
-    },
-    assetKey: {
-      alias: '',
-      show: false
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
-    }
-  },
-  rdsDatabase: {
-    assetId: {
-      alias: '实例ID',
-      show: true
-    },
-    name: {
-      alias: '数据库名称',
-      show: true
-    },
-    assetKey: {
-      alias: '',
-      show: false
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
-    }
-  },
-  redisInstance: {
-    assetId: {
-      alias: '实例ID',
-      show: true
-    },
-    name: {
-      alias: '实例名称',
-      show: true
-    },
-    assetKey: {
-      alias: '',
-      show: false
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '区',
-      show: false
-    }
-  },
-  dmsUser: {
-    assetId: {
-      alias: '用户ID',
-      show: false
-    },
-    name: {
-      alias: '显示名',
-      show: true
-    },
-    assetKey: {
-      alias: 'UID',
-      show: true
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '',
-      show: false
-    }
-  },
-  onsRocketMqInstance: {
-    assetId: {
-      alias: '实例ID',
-      show: true
-    },
-    name: {
-      alias: '实例名称',
-      show: true
-    },
-    assetKey: {
-      alias: '',
-      show: false
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '',
-      show: false
-    }
-  },
-  onsRocketMqTopic: {
-    assetId: {
-      alias: '实例ID',
-      show: true
-    },
-    name: {
-      alias: 'Topic',
-      show: true
-    },
-    assetKey: {
-      alias: '',
-      show: false
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '',
-      show: false
-    }
-  },
-  onsRocketMqGroup: {
-    assetId: {
-      alias: '实例ID',
-      show: true
-    },
-    name: {
-      alias: 'Group',
-      show: true
-    },
-    assetKey: {
-      alias: '',
-      show: false
-    },
-    assetKey2: {
-      alias: '',
-      show: false
-    },
-    zone: {
-      alias: '',
-      show: false
+  ons: {
+    rocketMq: {
+      instance: {
+        assetId: {
+          alias: '实例ID',
+          show: true
+        },
+        name: {
+          alias: '实例名称',
+          show: true
+        },
+        assetKey: {
+          alias: '',
+          show: false
+        },
+        assetKey2: {
+          alias: '',
+          show: false
+        },
+        zone: {
+          alias: '',
+          show: false
+        }
+      },
+      topic: {
+        assetId: {
+          alias: '实例ID',
+          show: true
+        },
+        name: {
+          alias: 'Topic',
+          show: true
+        },
+        assetKey: {
+          alias: '',
+          show: false
+        },
+        assetKey2: {
+          alias: '',
+          show: false
+        },
+        zone: {
+          alias: '',
+          show: false
+        }
+      },
+      group: {
+        assetId: {
+          alias: '实例ID',
+          show: true
+        },
+        name: {
+          alias: 'Group',
+          show: true
+        },
+        assetKey: {
+          alias: '',
+          show: false
+        },
+        assetKey2: {
+          alias: '',
+          show: false
+        },
+        zone: {
+          alias: '',
+          show: false
+        }
+      }
     }
   },
   domain: {
@@ -653,8 +786,9 @@ export default {
   data () {
     return {
       activeName: {
-        name: 'cloudServer',
+        name: 'elasticCompute',
         ecs: 'ecs',
+        acr: 'acrInstance',
         ram: 'ramUser',
         rds: 'rdsInstance',
         ons: 'onsRocketMqInstance',
@@ -682,7 +816,7 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      if (tab.name === 'ecs' || tab.name === 'cloudServer') {
+      if (tab.name === 'ecs' || tab.name === 'elasticCompute') {
         this.$refs.ecsTable.fetchData()
         return
       }
@@ -694,6 +828,20 @@ export default {
         this.$refs.vpcTable.fetchData()
         return
       }
+      // ACR
+      if (tab.name === 'acrInstance' || tab.name === 'acr') {
+        this.$refs.acrInstanceTable.fetchData()
+        return
+      }
+      if (tab.name === 'acrInstanceNamespace') {
+        this.$refs.acrInstanceNamespaceTable.fetchData()
+        return
+      }
+      if (tab.name === 'acrInstanceRepository') {
+        this.$refs.acrInstanceRepositoryTable.fetchData()
+        return
+      }
+
       if (tab.name === 'ramUser' || tab.name === 'ram') {
         this.$refs.ramUserTable.fetchData()
         return
