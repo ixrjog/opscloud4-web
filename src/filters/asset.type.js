@@ -46,6 +46,12 @@ export function getAssetTypeText (value) {
       return 'MQ-GROUP'
     case DsInstanceAssetType.ALIYUN.ALIYUN_DOMAIN:
       return '域名'
+    case DsInstanceAssetType.ALIYUN.ACR_INSTANCE:
+      return 'ACR实例'
+    case DsInstanceAssetType.ALIYUN.ACR_NAMESPACE:
+      return 'ACR命名空间'
+    case DsInstanceAssetType.ALIYUN.ACR_REPOSITORY:
+      return 'ACR仓库'
     case DsInstanceAssetType.AWS.IAM_USER:
       return 'IAM用户'
     case DsInstanceAssetType.AWS.IAM_ACCESS_KEY:
@@ -60,6 +66,8 @@ export function getAssetTypeText (value) {
       return 'SNS订阅'
     case DsInstanceAssetType.AWS.AMAZON_DOMAIN:
       return '域名'
+    case DsInstanceAssetType.AWS.ECR_REPOSITORY:
+      return 'ECR仓库'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
       return '用户'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:
@@ -93,7 +101,6 @@ export function getAssetTypeText (value) {
       return '邮箱'
     case DsInstanceAssetType.SONAR.SONAR_PROJECT:
       return '项目'
-
     case DsInstanceAssetType.NACOS.NACOS_CLUSTER_NODE:
       return '集群节点'
     case DsInstanceAssetType.NACOS.NACOS_PERMISSION:
