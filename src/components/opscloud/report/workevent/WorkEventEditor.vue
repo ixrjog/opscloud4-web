@@ -25,8 +25,8 @@
     <el-divider></el-divider>
     <el-form v-model="workEventData" label-width="80px">
       <el-form-item label="时间">
-        <el-date-picker v-model="workEventData.workEventTime" type="week" placeholder="选择周"
-                        format="yyyy 年 WW 周">
+        <el-date-picker v-model="workEventData.workEventTime" align="right" type="date" :picker-options="pickerOptions"
+                        value-format="timestamp">
         </el-date-picker>
       </el-form-item>
       <el-row v-for="(workEvent,index) in workEventData.workEventList" :key="index">
@@ -35,7 +35,7 @@
         </el-row>
         <el-col :span="6">
           <el-form-item label="次数">
-            <el-input-number v-model="workEvent.workEventCnt"></el-input-number>
+            <el-input-number controls-position="right" :min="1" v-model="workEvent.workEventCnt"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="14">
@@ -69,9 +69,8 @@ const workEvent = {
   workRoleId: '',
   workItemId: '',
   workItemName: '',
-  username: '',
   workEventTime: '',
-  workEventCnt: 0,
+  workEventCnt: 1,
   comment: ''
 }
 
@@ -86,6 +85,31 @@ export default {
       adding: false,
       workItemProps: {
         emitPath: false
+      },
+      pickerOptions: {
+        disabledDate (time) {
+          return time.getTime() > Date.now()
+        },
+        shortcuts: [{
+          text: '今天',
+          onClick (picker) {
+            picker.$emit('pick', new Date())
+          }
+        }, {
+          text: '昨天',
+          onClick (picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', date)
+          }
+        }, {
+          text: '一周前',
+          onClick (picker) {
+            const date = new Date()
+            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', date)
+          }
+        }]
       }
     }
   },
@@ -101,6 +125,7 @@ export default {
         workEventTime: Date.now(),
         workEventList: []
       }
+      this.workItemId = ''
       this.workRoleId = this.workRoleOptions[0].id
       this.getWorkItemTree()
     },
@@ -153,6 +178,7 @@ export default {
             workRoleId: value.workRoleId,
             workItemId: value.workItemId,
             workEventCnt: value.workEventCnt,
+            workEventTime: value.workEventTime,
             comment: value.comment
           })
         }
