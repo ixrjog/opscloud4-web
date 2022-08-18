@@ -28,6 +28,7 @@
     </div>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column prop="dsType" label="数据源类型" width="150">
         <template slot-scope="scope">
           <datasource-type-tag :ds-type="scope.row.dsType" :ds-type-options="dsTypeOptions"></datasource-type-tag>
