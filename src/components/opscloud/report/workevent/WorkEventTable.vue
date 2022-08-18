@@ -13,6 +13,11 @@
       <el-cascader :options="workItemOptions" :props="workItemProps" clearable
                    @change="handleChange" class="cascader" placeholder="选择类目" collapse-tags>
       </el-cascader>
+      <el-date-picker
+        v-model="workEventTime" type="daterange" align="right" unlink-panels value-format="timestamp"
+        start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期"
+        :picker-options="pickerOptions" class="picker">
+      </el-date-picker>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
@@ -22,12 +27,13 @@
           <span>{{ props.row.workRole.workRoleName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="项目" width="150" show-overflow-tooltip>
+      <el-table-column label="类目" prop="workItemTree" width="300" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="workEventTime" label="时间" width="150">
         <template slot-scope="props">
-          <span>{{ props.row.workItem.workItemName }}</span>
+          <span style="margin-right: 2px">{{ props.row.workEventTime }}</span>
+          <span style="color: #20A9D9">[{{ props.row.ago }}]</span>
         </template>
       </el-table-column>
-      <el-table-column prop="weeks" label="时间" width="100"></el-table-column>
       <el-table-column prop="workEventCnt" label="次数" width="60"></el-table-column>
       <el-table-column label="用户" width="200">
         <template slot-scope="props">
@@ -35,9 +41,21 @@
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="说明"></el-table-column>
-      <el-table-column label="操作" width="140">
+      <el-table-column prop="tags" label="标签" width="150px">
+        <template slot-scope="props">
+          <div class="tag-group">
+              <span v-for="item in props.row.tags" :key="item.id">
+                <el-tooltip class="item" effect="light" :content="item.comment" placement="top-start">
+                  <el-tag size="mini" style="margin-left: 5px" :style="{ color: item.color }">{{ item.tagKey }}</el-tag>
+                </el-tooltip>
+              </span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="210">
         <template slot-scope="scope">
           <!--          <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>-->
+          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -46,6 +64,8 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <work-event-editor ref="workEventEditor" :form-status="formStatus.workEvent" @closeDialog="dataChange"
                        :work-role-options="workRoleOptions"></work-event-editor>
+    <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
+                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
   </div>
 </template>
 
@@ -59,6 +79,8 @@ import {
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import UserTag from '@/components/opscloud/common/tag/UserTag'
 import WorkEventEditor from '@/components/opscloud/report/workevent/WorkEventEditor'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
+import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 
 export default {
   data () {
@@ -72,9 +94,14 @@ export default {
           total: 0
         }
       },
+      instance: {
+        id: ''
+      },
       loading: false,
+      businessType: BusinessType.WORK_EVENT,
       workRoleOptions: [],
       workItemOptions: [],
+      workEventTime: [],
       workItemProps: {
         multiple: true,
         expandTrigger: 'hover',
@@ -88,7 +115,38 @@ export default {
       formStatus: {
         workEvent: {
           visible: false
+        },
+        businessTag: {
+          visible: false,
+          title: '编辑工作事件标签'
         }
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一个月',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近三个月',
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }]
       }
     }
   },
@@ -101,7 +159,8 @@ export default {
   components: {
     UserTag,
     Pagination,
-    WorkEventEditor
+    WorkEventEditor,
+    BusinessTagEditor
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -143,6 +202,10 @@ export default {
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
+      if (Array.isArray(this.workEventTime) && this.workEventTime.length > 0) {
+        requestBody.workEventStartTime = this.workEventTime[0]
+        requestBody.workEventEndTime = this.workEventTime[1]
+      }
       if (requestBody.workRoleId === '') {
         requestBody.workRoleId = -1
       }
@@ -151,6 +214,14 @@ export default {
         this.table.loading = false
         this.table.pagination.total = body.totalNum
       })
+    },
+    handleRowTagEdit (row) {
+      this.instance.id = row.id
+      const businessTags = {
+        tagIds: row.tags !== null ? row.tags.map(e => e.id) : []
+      }
+      this.$refs.businessTagEditor.initData(businessTags)
+      this.formStatus.businessTag.visible = true
     },
     handleAdd () {
       this.formStatus.workEvent.visible = true
@@ -184,7 +255,7 @@ export default {
   max-width: 200px;
 }
 
-.select, .button {
+.picker, .select, .button {
   margin-left: 5px;
 }
 

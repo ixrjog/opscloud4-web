@@ -16,7 +16,7 @@ import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 const docKeys = {
-  APPLICATION_SCALE_REPLICAS_README: 'APPLICATION_SCALE_REPLICAS_README',
+  APPLICATION_SCALE_REPLICAS_README: 'APPLICATION_SCALE_REPLICAS_README'
 }
 
 export default {
