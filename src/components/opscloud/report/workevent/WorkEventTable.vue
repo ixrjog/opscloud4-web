@@ -15,7 +15,8 @@
       </el-cascader>
       <el-date-picker
         v-model="workEventTime" type="daterange" align="right" unlink-panels value-format="timestamp"
-        start-placeholder="开始日期" range-separator="至" end-placeholder="结束日期"
+        size="mini"
+        start-placeholder="开始" range-separator="-" end-placeholder="结束"
         :picker-options="pickerOptions" class="picker">
       </el-date-picker>
       <el-button @click="fetchData" class="button">查询</el-button>
@@ -250,12 +251,18 @@ export default {
 </script>
 
 <style scoped>
+
 .input {
   display: inline-block;
   max-width: 200px;
 }
 
-.picker, .select, .button {
+.select, .button {
+  margin-left: 5px;
+}
+
+.picker {
+  position: fixed;
   margin-left: 5px;
 }
 
