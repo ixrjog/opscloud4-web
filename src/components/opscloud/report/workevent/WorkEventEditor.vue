@@ -13,7 +13,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="类目">
-          <el-cascader :options="workItemOptions" filterable @change="handleChange" class="cascader" placeholder="选择类目"
+          <el-cascader v-model="value" :options="workItemOptions" filterable @change="handleChange" class="cascader"
+                       placeholder="选择类目"
                        collapse-tags :props="workItemProps">
           </el-cascader>
           <el-button type="primary" plain size="mini" @click="handleAdd()" style="margin-left: 10px" :loading="adding">
@@ -24,11 +25,6 @@
     </el-row>
     <el-divider></el-divider>
     <el-form v-model="workEventData" label-width="80px">
-      <el-form-item label="时间">
-        <el-date-picker v-model="workEventData.workEventTime" align="right" type="date" :picker-options="pickerOptions"
-                        value-format="timestamp">
-        </el-date-picker>
-      </el-form-item>
       <el-row v-for="(workEvent,index) in workEventData.workEventList" :key="index" style="margin-bottom: 10px">
         <el-card shadow="hover">
           <div slot="header" class="clearfix">
@@ -58,10 +54,15 @@
               </el-radio-group>
             </el-form-item>
           </span>
-          <el-form-item label="次数">
+          <el-form-item label="事件次数">
             <el-input-number controls-position="right" :min="1" v-model="workEvent.workEventCnt"></el-input-number>
           </el-form-item>
-          <el-form-item label="说明">
+          <el-form-item label="事件时间">
+            <el-date-picker v-model="workEvent.workEventTime" align="right" type="date" :picker-options="pickerOptions"
+                            value-format="timestamp">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="事件说明">
             <el-input type="textarea" :rows="2" v-model="workEvent.comment"></el-input>
           </el-form-item>
         </el-card>
@@ -96,6 +97,7 @@ export default {
   data () {
     return {
       title: '新增工作事件',
+      value: '',
       workRoleId: '',
       workRole: {},
       workItemId: '',
@@ -150,9 +152,9 @@ export default {
   methods: {
     initData () {
       this.workEventData = {
-        workEventTime: Date.now(),
         workEventList: []
       }
+      this.value = ''
       this.workItemId = ''
       this.workRole = {}
       this.workRoleId = this.workRoleOptions[0].id
@@ -169,6 +171,7 @@ export default {
         })
     },
     workRoleChange () {
+      this.value = ''
       this.getWorkItemTree()
       this.getWorkRole()
       this.workEventData.workEventList = []
@@ -194,7 +197,7 @@ export default {
           const data = Object.assign({}, workEvent)
           data.workItemId = this.workItemId
           data.workRoleId = this.workRoleId
-          data.workEventTime = this.workEventData.workEventTime
+          data.workEventTime = new Date(new Date().toLocaleTimeString())
           data.workItemName = body.workItemName
           if (this.workRole.workRoleKey === 'SUPPORT') {
             data.property = Object.assign({}, this.workEventProperty.support)
