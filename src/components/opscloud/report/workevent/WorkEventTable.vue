@@ -15,8 +15,7 @@
       </el-cascader>
       <el-date-picker
         v-model="workEventTime" type="daterange" align="right" unlink-panels value-format="timestamp"
-        size="mini"
-        start-placeholder="开始" range-separator="-" end-placeholder="结束"
+        start-placeholder="开始" range-separator="-" end-placeholder="结束" size="mini"
         :picker-options="pickerOptions" class="picker">
       </el-date-picker>
       <el-button @click="fetchData" class="button">查询</el-button>
@@ -28,7 +27,7 @@
           <span>{{ props.row.workRole.workRoleName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="类目" prop="workItemTree" width="300" show-overflow-tooltip></el-table-column>
+      <el-table-column label="类目" prop="workItemTree" width="80" show-overflow-tooltip></el-table-column>
       <el-table-column prop="workEventTime" label="时间" width="150">
         <template slot-scope="props">
           <span style="margin-right: 2px">{{ props.row.workEventTime }}</span>
@@ -42,7 +41,17 @@
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="说明"></el-table-column>
-      <el-table-column prop="tags" label="标签" width="150px">
+      <el-table-column label="属性" width="200">
+        <template slot-scope="props">
+          <span v-for="item in props.row.propertyList" :key="item.id">
+            <el-tag class="prop-tag" v-if="item.name === 'timeliness'" :type="timelinessColor(item.value)">{{ item.value }}</el-tag>
+            <el-tag class="prop-tag" v-if="item.name === 'fault' && item.value === 'true'" type="danger">故障</el-tag>
+            <el-tag class="prop-tag" v-if="item.name === 'intercept'" v-text="item.value === 'true'? '拦截':'未拦截'"
+                    :type="item.value === 'true'? 'success':'warning'"></el-tag>
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="tags" label="标签" width="150">
         <template slot-scope="props">
           <div class="tag-group">
               <span v-for="item in props.row.tags" :key="item.id">
@@ -189,12 +198,23 @@ export default {
     },
     getWorkItemTree () {
       this.workItemOptions = []
+      this.queryParam.workItemIdList = []
       const requestBody = {
         workRoleId: this.queryParam.workRoleId === '' ? -1 : this.queryParam.workRoleId
       }
       QUERY_WORK_ITEM_TREE(requestBody).then(({ body }) => {
         this.workItemOptions = body
       })
+    },
+    timelinessColor (value) {
+      switch (value) {
+        case '24小时内':
+          return ''
+        case '48小时内':
+          return 'success'
+        default:
+          return 'info'
+      }
     },
     fetchData () {
       this.table.loading = true
@@ -262,13 +282,21 @@ export default {
 }
 
 .picker {
-  position: fixed;
   margin-left: 5px;
 }
 
 .cascader {
   margin-left: 5px;
   width: 400px;
+}
+
+.el-range-editor.el-input__inner {
+  padding: 0 10px;
+}
+
+.prop-tag {
+  margin-left: 5px;
+  margin-bottom: 5px
 }
 
 </style>

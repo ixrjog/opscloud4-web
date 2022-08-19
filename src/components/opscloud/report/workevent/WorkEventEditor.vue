@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :visible.sync="formStatus.visible" width="50%">
+  <el-dialog :title="title" :visible.sync="formStatus.visible" width="50%" :before-close="handleClose">
     <el-row :gutter="24" style="margin-bottom: 5px">
       <el-form label-width="80px">
         <el-form-item label="角色">
@@ -29,25 +29,42 @@
                         value-format="timestamp">
         </el-date-picker>
       </el-form-item>
-      <el-row v-for="(workEvent,index) in workEventData.workEventList" :key="index">
-        <el-row>
-          <span class="item-span">{{ workEvent.workItemName }}</span>
-        </el-row>
-        <el-col :span="6">
+      <el-row v-for="(workEvent,index) in workEventData.workEventList" :key="index" style="margin-bottom: 10px">
+        <el-card shadow="hover">
+          <div slot="header" class="clearfix">
+            <my-span :content="workEvent.workItemName" style="font-size: 14px"></my-span>
+            <el-button @click.prevent="handleDel(workEvent)" type="text"
+                       style="float: right;margin-left: 5px;color: #F56C6C">删除
+            </el-button>
+          </div>
+          <span v-if="workRole.workRoleKey === 'SUPPORT'">
+            <el-form-item label="解决时效">
+              <el-radio-group v-model="workEvent.property.timeliness">
+                <el-radio label="24小时内" value="24小时内"></el-radio>
+                <el-radio label="48小时内" value="48小时内"></el-radio>
+               <el-radio label="超48小时" value="超48小时"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="是否拦截">
+              <el-radio-group v-model="workEvent.property.intercept">
+                <el-radio :label="true">拦截</el-radio>
+                <el-radio :label="false">未拦截</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="是否故障">
+              <el-radio-group v-model="workEvent.property.fault">
+                <el-radio :label="true">故障</el-radio>
+                <el-radio :label="false">未故障</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </span>
           <el-form-item label="次数">
             <el-input-number controls-position="right" :min="1" v-model="workEvent.workEventCnt"></el-input-number>
           </el-form-item>
-        </el-col>
-        <el-col :span="14">
           <el-form-item label="说明">
-            <el-input v-model="workEvent.comment"></el-input>
+            <el-input type="textarea" :rows="2" v-model="workEvent.comment"></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span="1">
-          <el-form-item>
-            <el-button @click.prevent="handleDel(workEvent)" icon="el-icon-delete" type="danger" plain></el-button>
-          </el-form-item>
-        </el-col>
+        </el-card>
       </el-row>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -62,8 +79,9 @@
 import {
   ADD_WORK_EVENT,
   QUERY_WORK_ITEM_BY_ID,
-  QUERY_WORK_ITEM_TREE
+  QUERY_WORK_ITEM_TREE, QUERY_WORK_ROLE_BY_ID
 } from '@/api/modules/report/workevent/work.event.api'
+import MySpan from '@/components/opscloud/common/MySpan'
 
 const workEvent = {
   workRoleId: '',
@@ -79,12 +97,20 @@ export default {
     return {
       title: '新增工作事件',
       workRoleId: '',
+      workRole: {},
       workItemId: '',
       workEventData: {},
       workItemOptions: [],
       adding: false,
       workItemProps: {
         emitPath: false
+      },
+      workEventProperty: {
+        support: {
+          timeliness: '24小时内',
+          intercept: true,
+          fault: false
+        }
       },
       pickerOptions: {
         disabledDate (time) {
@@ -117,7 +143,9 @@ export default {
   props: ['formStatus', 'workRoleOptions'],
   mounted () {
   },
-  components: {},
+  components: {
+    MySpan
+  },
   filters: {},
   methods: {
     initData () {
@@ -126,17 +154,27 @@ export default {
         workEventList: []
       }
       this.workItemId = ''
+      this.workRole = {}
       this.workRoleId = this.workRoleOptions[0].id
+      this.getWorkRole()
       this.getWorkItemTree()
     },
     handleChange (value) {
       this.workItemId = value
     },
+    getWorkRole () {
+      QUERY_WORK_ROLE_BY_ID({ id: this.workRoleId })
+        .then(({ body }) => {
+          this.workRole = body
+        })
+    },
     workRoleChange () {
       this.getWorkItemTree()
+      this.getWorkRole()
       this.workEventData.workEventList = []
     },
     getWorkItemTree () {
+      this.workItemId = ''
       this.workItemOptions = []
       const requestBody = {
         workRoleId: this.workRoleId
@@ -158,6 +196,9 @@ export default {
           data.workRoleId = this.workRoleId
           data.workEventTime = this.workEventData.workEventTime
           data.workItemName = body.workItemName
+          if (this.workRole.workRoleKey === 'SUPPORT') {
+            data.property = Object.assign({}, this.workEventProperty.support)
+          }
           this.workEventData.workEventList.push(data)
           this.adding = false
         })
@@ -173,27 +214,47 @@ export default {
         workEventList: []
       }
       this.workEventData.workEventList.map(value => {
-        if (value.workEventCnt !== 0) {
-          requestBody.workEventList.push({
-            workRoleId: value.workRoleId,
-            workItemId: value.workItemId,
-            workEventCnt: value.workEventCnt,
-            workEventTime: value.workEventTime,
-            comment: value.comment
-          })
+        const propertyList = []
+        if (JSON.stringify(value.property) !== '{}') {
+          for (const i in value.property) {
+            propertyList.push({
+              name: i,
+              value: value.property[i]
+            })
+          }
         }
+        requestBody.workEventList.push({
+          workRoleId: value.workRoleId,
+          workItemId: value.workItemId,
+          workEventCnt: value.workEventCnt,
+          workEventTime: value.workEventTime,
+          comment: value.comment,
+          propertyList: propertyList
+        })
       })
       if (JSON.stringify(requestBody.workEventList) === '[]') {
         this.$message.warning('请新增至少一个工作项目')
         return
       }
       ADD_WORK_EVENT(requestBody)
-        .then(res => {
+        .then(() => {
           this.adding = false
           this.$message.success('保存成功')
           this.formStatus.visible = false
           this.$emit('closeDialog')
         })
+    },
+    handleClose (done) {
+      this.$confirm('确定关闭?')
+        .then(_ => {
+          done()
+          this.closeEditor()
+        })
+        .catch(_ => {
+        })
+    },
+    closeEditor () {
+      this.formStatus.visible = false
     }
   }
 }
@@ -219,5 +280,19 @@ export default {
   margin-left: 40px;
   color: #B7B6B6;
   font-size: 16px;
+}
+
+>>> .el-card__header {
+  padding: 10px 10px;
+  border-bottom: 1px solid #EBEEF5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 12px 0;
 }
 </style>
