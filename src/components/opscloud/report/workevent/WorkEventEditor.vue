@@ -85,7 +85,7 @@ const workEvent = {
   workRoleId: '',
   workItemId: '',
   workItemName: '',
-  workEventTime: new Date(new Date().setHours(0, 0, 0, 0)),
+  workEventTime: new Date(new Date().setHours(0, 0, 0, 0) + 8 * 60 * 60 * 1000),
   workEventCnt: 1,
   comment: ''
 }
