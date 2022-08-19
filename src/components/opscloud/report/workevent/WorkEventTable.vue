@@ -14,9 +14,8 @@
                    @change="handleChange" class="cascader" placeholder="选择类目" collapse-tags>
       </el-cascader>
       <el-date-picker
-        v-model="workEventTime" type="daterange" align="right" unlink-panels value-format="timestamp"
-        start-placeholder="开始" range-separator="-" end-placeholder="结束" size="mini"
-        :picker-options="pickerOptions" class="picker">
+        v-model="workEventTime" type="daterange" unlink-panels value-format="timestamp" class="picker" size="mini"
+        start-placeholder="开始" range-separator="-" end-placeholder="结束" :default-time="['00:00:00', '23:59:59']">
       </el-date-picker>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
@@ -44,7 +43,9 @@
       <el-table-column label="属性" width="200">
         <template slot-scope="props">
           <span v-for="item in props.row.propertyList" :key="item.id">
-            <el-tag class="prop-tag" v-if="item.name === 'timeliness'" :type="timelinessColor(item.value)">{{ item.value }}</el-tag>
+            <el-tag class="prop-tag" v-if="item.name === 'timeliness'" :type="timelinessColor(item.value)">{{
+                item.value
+              }}</el-tag>
             <el-tag class="prop-tag" v-if="item.name === 'fault' && item.value === 'true'" type="danger">故障</el-tag>
             <el-tag class="prop-tag" v-if="item.name === 'intercept'" v-text="item.value === 'true'? '拦截':'未拦截'"
                     :type="item.value === 'true'? 'success':'warning'"></el-tag>
@@ -130,33 +131,6 @@ export default {
           visible: false,
           title: '编辑工作事件标签'
         }
-      },
-      pickerOptions: {
-        shortcuts: [{
-          text: '最近一周',
-          onClick (picker) {
-            const end = new Date(new Date().toLocaleTimeString())
-            const start = new Date(new Date().toLocaleTimeString())
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近一个月',
-          onClick (picker) {
-            const end = new Date(new Date().toLocaleTimeString())
-            const start = new Date(new Date().toLocaleTimeString())
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近三个月',
-          onClick (picker) {
-            const end = new Date(new Date().toLocaleTimeString())
-            const start = new Date(new Date().toLocaleTimeString())
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }]
       }
     }
   },

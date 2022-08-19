@@ -2,7 +2,7 @@
   <el-dialog :title="title" :visible.sync="formStatus.visible" width="50%" :before-close="handleClose">
     <el-row :gutter="24" style="margin-bottom: 5px">
       <el-form label-width="80px">
-        <el-form-item label="角色">
+        <el-form-item label="角色" required>
           <el-select v-model="workRoleId" placeholder="选择角色" class="select" @change="workRoleChange">
             <el-option
               v-for="item in workRoleOptions"
@@ -12,10 +12,9 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="类目">
+        <el-form-item label="类目" required>
           <el-cascader v-model="value" :options="workItemOptions" filterable @change="handleChange" class="cascader"
-                       placeholder="选择类目"
-                       collapse-tags :props="workItemProps">
+                       placeholder="选择类目" collapse-tags :props="workItemProps">
           </el-cascader>
           <el-button type="primary" plain size="mini" @click="handleAdd()" style="margin-left: 10px" :loading="adding">
             添加
@@ -54,13 +53,11 @@
               </el-radio-group>
             </el-form-item>
           </span>
-          <el-form-item label="事件次数">
+          <el-form-item label="事件次数" required>
             <el-input-number controls-position="right" :min="1" v-model="workEvent.workEventCnt"></el-input-number>
           </el-form-item>
-          <el-form-item label="事件时间">
-            <el-date-picker v-model="workEvent.workEventTime" align="right" type="date" :picker-options="pickerOptions"
-                            value-format="timestamp">
-            </el-date-picker>
+          <el-form-item label="事件时间" required>
+            <el-date-picker v-model="workEvent.workEventTime" type="date" value-format="timestamp"></el-date-picker>
           </el-form-item>
           <el-form-item label="事件说明">
             <el-input type="textarea" :rows="2" v-model="workEvent.comment"></el-input>
@@ -88,7 +85,7 @@ const workEvent = {
   workRoleId: '',
   workItemId: '',
   workItemName: '',
-  workEventTime: '',
+  workEventTime: new Date(new Date().setHours(0, 0, 0, 0)),
   workEventCnt: 1,
   comment: ''
 }
@@ -113,31 +110,6 @@ export default {
           intercept: true,
           fault: false
         }
-      },
-      pickerOptions: {
-        disabledDate (time) {
-          return time.getTime() > Date.now()
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick (picker) {
-            picker.$emit('pick', new Date())
-          }
-        }, {
-          text: '昨天',
-          onClick (picker) {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24)
-            picker.$emit('pick', date)
-          }
-        }, {
-          text: '一周前',
-          onClick (picker) {
-            const date = new Date()
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', date)
-          }
-        }]
       }
     }
   },
@@ -197,7 +169,6 @@ export default {
           const data = Object.assign({}, workEvent)
           data.workItemId = this.workItemId
           data.workRoleId = this.workRoleId
-          data.workEventTime = new Date(new Date().toLocaleTimeString())
           data.workItemName = body.workItemName
           if (this.workRole.workRoleKey === 'SUPPORT') {
             data.property = Object.assign({}, this.workEventProperty.support)
