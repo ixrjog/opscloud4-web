@@ -10,13 +10,26 @@
           :value="item.value">
         </el-option>
       </el-select>
+      <el-select v-model="queryParam.sessionClosed" clearable placeholder="会话状态">
+        <el-option
+          v-for="item in sessionStatusOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="sessionId" label="会话" width="300">
+      <el-table-column prop="sessionId" label="会话" width="350">
         <template slot-scope="scope">
           <div>
             <user-tag :user="scope.row.user" v-if="scope.row.user"></user-tag>
+          </div>
+<!--          用户端@服务端-->
+          <div>
+            <span>{{ scope.row.username }}<span v-if="scope.row.remoteAddr !== null">[{{ scope.row.remoteAddr }}]</span></span>
+            <span>@{{ scope.row.serverHostname }}[{{ scope.row.serverAddr }}]</span>
           </div>
           <span>{{ scope.row.createTime }}</span>
           <span v-if="scope.row.sessionClosed"> -> {{ scope.row.closeTime }}</span>
@@ -25,15 +38,6 @@
       <el-table-column prop="sessionType" label="会话类型" width="110" sortable>
         <template slot-scope="scope">
           <session-type-tag :sessionType="scope.row.sessionType"></session-type-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="username" label="用户端/服务端" width="250">
-        <template slot-scope="scope">
-          <el-tag size="mini" style="margin-right: 5px" v-if="scope.row.username">
-            <span>{{ scope.row.username }}</span>
-            <span v-if="scope.row.remoteAddr !== null">@{{ scope.row.remoteAddr }}</span>
-          </el-tag>
-          <el-tag size="mini">{{ scope.row.serverHostname }}/{{ scope.row.serverAddr }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="会话实例">
@@ -70,6 +74,14 @@ const sessionTypeOptions = [{
   label: 'SSH服务器'
 }]
 
+const sessionStatusOptions = [{
+  value: false,
+  label: '活跃'
+}, {
+  value: true,
+  label: '关闭'
+}]
+
 export default {
   data () {
     return {
@@ -85,9 +97,11 @@ export default {
       queryParam: {
         username: '',
         sessionType: '',
+        sessionClosed: null,
         extend: true
       },
-      sessionTypeOptions: sessionTypeOptions
+      sessionTypeOptions: sessionTypeOptions,
+      sessionStatusOptions: sessionStatusOptions
     }
   },
   mounted () {
