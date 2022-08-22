@@ -13,6 +13,16 @@
       <el-cascader :options="workItemOptions" :props="workItemProps" clearable
                    @change="handleChange" class="cascader" placeholder="选择类目" collapse-tags>
       </el-cascader>
+      <el-select v-model="queryParam.username" filterable remote reserve-keyword placeholder="搜索用户"
+                 :remote-method="getUser" class="select">
+        <el-option
+          v-for="user in userOptions"
+          :key="user.username"
+          :label="user.displayName"
+          :value="user.username">
+          <select-item :name="user.username" :comment="user.displayName"></select-item>
+        </el-option>
+      </el-select>
       <el-date-picker
         v-model="workEventTime" type="daterange" unlink-panels value-format="timestamp" class="picker" size="mini"
         start-placeholder="开始" range-separator="-" end-placeholder="结束" :default-time="['00:00:00', '23:59:59']">
@@ -43,9 +53,8 @@
       <el-table-column label="属性" width="200">
         <template slot-scope="props">
           <span v-for="item in props.row.propertyList" :key="item.id">
-            <el-tag class="prop-tag" v-if="item.name === 'timeliness'" :type="timelinessColor(item.value)">{{
-                item.value
-              }}</el-tag>
+            <el-tag class="prop-tag" v-if="item.name === 'timeliness'" :type="timelinessColor(item.value)">
+              {{ item.value }}</el-tag>
             <el-tag class="prop-tag" v-if="item.name === 'fault' && item.value === 'true'" type="danger">故障</el-tag>
             <el-tag class="prop-tag" v-if="item.name === 'intercept'" v-text="item.value === 'true'? '拦截':'未拦截'"
                     :type="item.value === 'true'? 'success':'warning'"></el-tag>
@@ -92,6 +101,8 @@ import UserTag from '@/components/opscloud/common/tag/UserTag'
 import WorkEventEditor from '@/components/opscloud/report/workevent/WorkEventEditor'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
+import SelectItem from '@/components/opscloud/common/SelectItem'
+import { QUERY_USER_PAGE } from '@/api/modules/user/user.api'
 
 export default {
   data () {
@@ -108,6 +119,7 @@ export default {
       instance: {
         id: ''
       },
+      userOptions: [],
       loading: false,
       businessType: BusinessType.WORK_EVENT,
       workRoleOptions: [],
@@ -121,6 +133,7 @@ export default {
       queryParam: {
         queryName: '',
         workRoleId: '',
+        username: '',
         workItemIdList: []
       },
       formStatus: {
@@ -144,6 +157,7 @@ export default {
     UserTag,
     Pagination,
     WorkEventEditor,
+    SelectItem,
     BusinessTagEditor
   },
   methods: {
@@ -210,6 +224,19 @@ export default {
         this.table.pagination.total = body.totalNum
       })
     },
+    getUser (queryName) {
+      this.userOptions = []
+      const requestBody = {
+        queryName: queryName,
+        extend: false,
+        page: 1,
+        length: 20
+      }
+      QUERY_USER_PAGE(requestBody)
+        .then(res => {
+          this.userOptions = res.body.data
+        })
+    },
     handleRowTagEdit (row) {
       this.instance.id = row.id
       const businessTags = {
@@ -261,7 +288,7 @@ export default {
 
 .cascader {
   margin-left: 5px;
-  width: 400px;
+  width: 280px;
 }
 
 .el-range-editor.el-input__inner {
