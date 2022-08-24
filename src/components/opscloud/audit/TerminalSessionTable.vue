@@ -10,6 +10,14 @@
           :value="item.value">
         </el-option>
       </el-select>
+      <el-select v-model="queryParam.serverHostname" clearable placeholder="会话实例">
+        <el-option
+          v-for="item in instanceOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.name">
+        </el-option>
+      </el-select>
       <el-select v-model="queryParam.sessionClosed" clearable placeholder="会话状态">
         <el-option
           v-for="item in sessionStatusOptions"
@@ -26,7 +34,7 @@
           <div>
             <user-tag :user="scope.row.user" v-if="scope.row.user"></user-tag>
           </div>
-<!--          用户端@服务端-->
+          <!--          用户端@服务端-->
           <div>
             <span>{{ scope.row.username }}<span v-if="scope.row.remoteAddr !== null">[{{ scope.row.remoteAddr }}]</span></span>
             <span>@{{ scope.row.serverHostname }}[{{ scope.row.serverAddr }}]</span>
@@ -58,6 +66,7 @@
 <script>
 
 import { QUERY_TERMINAL_SESSION_PAGE } from '@/api/modules/terminal/terminal.session.api.js'
+import { QUERY_INSTANCE_PAGE, SET_INSTANCE_ACTIVE } from '@/api/modules/sys/sys.instance.api.js'
 import Pagination from '../common/page/Pagination'
 import SessionTypeTag from '../common/tag/SessionTypeTag'
 import TerminalSessionInstanceInfo from '../terminal/TerminalSessionInstanceInfo'
@@ -98,13 +107,16 @@ export default {
         username: '',
         sessionType: '',
         sessionClosed: null,
+        serverHostname: '',
         extend: true
       },
+      instanceOptions: [],
       sessionTypeOptions: sessionTypeOptions,
       sessionStatusOptions: sessionStatusOptions
     }
   },
   mounted () {
+    this.getInstance()
     this.fetchData()
   },
   computed: {},
@@ -123,6 +135,17 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    getInstance () {
+      const requestBody = {
+        extend: false,
+        page: 1,
+        length: 10
+      }
+      QUERY_INSTANCE_PAGE(requestBody)
+        .then(res => {
+          this.instanceOptions = res.body.data
+        })
     },
     fetchData () {
       this.table.loading = true
