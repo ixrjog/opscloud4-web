@@ -13,10 +13,10 @@
     </el-row>
     <el-row :gutter="10">
       <el-col :span="14">
-        <work-event-weekly-report ref="workEventWeeklyReport" :work-role-id="workRoleId"></work-event-weekly-report>
+        <work-event-weekly-report ref="workEventWeeklyReport"></work-event-weekly-report>
       </el-col>
       <el-col :span="10">
-        <work-event-item-report ref="workEventItemReport" :work-role-id="workRoleId"></work-event-item-report>
+        <work-event-item-report ref="workEventItemReport"></work-event-item-report>
       </el-col>
     </el-row>
   </div>
@@ -42,8 +42,8 @@ export default {
   },
   methods: {
     initChart () {
-      this.$refs.workEventWeeklyReport.fetchData()
-      this.$refs.workEventItemReport.fetchData()
+      this.$refs.workEventWeeklyReport.fetchData(this.workRoleId)
+      this.$refs.workEventItemReport.fetchData(this.workRoleId)
     }
   }
 }

@@ -12,7 +12,6 @@ import { GET_WORK_EVENT_ITEM_REPORT } from '@/api/modules/report/report.api'
 
 export default {
   name: 'WorkEventItemReport',
-  props: ['workRoleId'],
   data () {
     return {}
   },
@@ -53,9 +52,9 @@ export default {
       }
       myChart.setOption(option, true)
     },
-    fetchData () {
-      if (this.workRoleId !== '') {
-        GET_WORK_EVENT_ITEM_REPORT({ workRoleId: this.workRoleId })
+    fetchData (workRoleId) {
+      if (workRoleId !== '') {
+        GET_WORK_EVENT_ITEM_REPORT({ workRoleId: workRoleId })
           .then(({ body }) => {
             const data = body.map(e => ({ name: e.cname, value: e.value }))
             const color = body.map(e => (e.color))

@@ -22,7 +22,6 @@ const data = {
 
 export default {
   name: 'WorkEventWeeklyReport',
-  props: ['workRoleId'],
   data () {
     return {
       weeklyReport: {},
@@ -70,9 +69,9 @@ export default {
       }
       myChart.setOption(option, true)
     },
-    fetchData () {
-      if (this.workRoleId !== '') {
-        GET_WORK_EVENT_WEEKLY_REPORT({ workRoleId: this.workRoleId })
+    fetchData (workRoleId) {
+      if (workRoleId !== '') {
+        GET_WORK_EVENT_WEEKLY_REPORT({ workRoleId: workRoleId })
           .then(({ body }) => {
             this.weeklyReport = body
             this.initData()

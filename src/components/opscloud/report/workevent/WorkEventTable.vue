@@ -148,7 +148,6 @@ export default {
   name: 'WorkEventTable',
   props: ['workRoleOptions'],
   mounted () {
-    this.getWorkRole()
     this.getWorkItemTree()
     this.fetchData()
   },
