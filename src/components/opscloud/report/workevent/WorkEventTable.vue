@@ -79,7 +79,7 @@
       </el-table-column>
       <el-table-column label="操作" width="210">
         <template slot-scope="scope">
-          <!--          <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>-->
+                    <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
@@ -91,6 +91,8 @@
                        @closeDialog="dataChange"></work-event-editor>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+    <work-event-update-editor ref="workEventUpdateEditor" :form-status="formStatus.workEventUpdate"
+                              @closeDialog="dataChange"></work-event-update-editor>
   </div>
 </template>
 
@@ -108,6 +110,7 @@ import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEdito
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_USER_PAGE } from '@/api/modules/user/user.api'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
+import WorkEventUpdateEditor from '@/components/opscloud/report/workevent/WorkEventUpdateEditor'
 
 export default {
   data () {
@@ -144,6 +147,9 @@ export default {
         workEvent: {
           visible: false
         },
+        workEventUpdate: {
+          visible: false
+        },
         businessTag: {
           visible: false,
           title: '编辑工作事件标签'
@@ -161,6 +167,7 @@ export default {
     UserTag,
     Pagination,
     WorkEventEditor,
+    WorkEventUpdateEditor,
     SelectItem,
     BusinessTagEditor,
     MyMarkdown
@@ -247,6 +254,10 @@ export default {
     handleAdd () {
       this.formStatus.workEvent.visible = true
       this.$refs.workEventEditor.initData()
+    },
+    handleRowUpdate (row) {
+      this.formStatus.workEventUpdate.visible = true
+      this.$refs.workEventUpdateEditor.initData(row)
     },
     dataChange () {
       this.fetchData()

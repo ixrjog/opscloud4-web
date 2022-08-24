@@ -35,9 +35,9 @@
           <span v-if="workRole.workRoleKey === 'SUPPORT'">
             <el-form-item label="解决时效">
               <el-radio-group v-model="workEvent.property.timeliness">
-                <el-radio label="24小时内" value="24小时内"></el-radio>
-                <el-radio label="48小时内" value="48小时内"></el-radio>
-               <el-radio label="超48小时" value="超48小时"></el-radio>
+                <el-radio label="24小时内">24小时内</el-radio>
+                <el-radio label="48小时内">48小时内</el-radio>
+               <el-radio label="超48小时">超48小时</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="是否拦截">
@@ -46,7 +46,7 @@
                 <el-radio :label="false">未拦截</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="是否解决" v-if="!workEvent.property.intercept">
+            <el-form-item label="是否解决">
               <el-radio-group v-model="workEvent.property.solve">
                 <el-radio :label="true">已解决</el-radio>
                 <el-radio :label="false">处理中</el-radio>
@@ -66,14 +66,14 @@
             <el-date-picker v-model="workEvent.workEventTime" type="date" value-format="timestamp"></el-date-picker>
           </el-form-item>
           <el-form-item label="事件说明">
-            <el-input type="textarea" :rows="2" v-model="workEvent.comment"></el-input>
+            <el-input type="textarea" :rows="4" v-model="workEvent.comment"></el-input>
           </el-form-item>
         </el-card>
       </el-row>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleSave">保存</el-button>
+      <el-button type="primary" @click="handleSave" :disabled="saving">保存</el-button>
     </div>
   </el-dialog>
 </template>
@@ -119,7 +119,8 @@ export default {
           fault: false,
           solve: true
         }
-      }
+      },
+      saving: false
     }
   },
   name: 'WorkEventEditor',
@@ -167,12 +168,10 @@ export default {
     getWorkItemTree () {
       this.workItemId = ''
       this.workItemOptions = []
-      const requestBody = {
-        workRoleId: this.workRoleId
-      }
-      QUERY_WORK_ITEM_TREE(requestBody).then(({ body }) => {
-        this.workItemOptions = body
-      })
+      QUERY_WORK_ITEM_TREE({ workRoleId: this.workRoleId })
+        .then(({ body }) => {
+          this.workItemOptions = body
+        })
     },
     handleAdd () {
       if (this.workItemId === '') {
@@ -200,6 +199,7 @@ export default {
       }
     },
     handleSave () {
+      this.saving = true
       const requestBody = {
         workEventList: []
       }
@@ -226,13 +226,15 @@ export default {
         this.$message.warning('请新增至少一个工作项目')
         return
       }
-      ADD_WORK_EVENT(requestBody)
-        .then(() => {
-          this.adding = false
-          this.$message.success('保存成功')
-          this.formStatus.visible = false
-          this.$emit('closeDialog')
-        })
+      ADD_WORK_EVENT(requestBody).then(() => {
+        this.adding = false
+        this.$message.success('保存成功')
+        this.formStatus.visible = false
+        this.saving = false
+        this.$emit('closeDialog')
+      }).catch(() => {
+        this.saving = false
+      })
     },
     handleClose (done) {
       this.$confirm('确定关闭?')
