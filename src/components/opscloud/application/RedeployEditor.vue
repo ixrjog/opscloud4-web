@@ -74,7 +74,6 @@ export default {
   },
   methods: {
     initData (resource) {
-      debugger
       this.resource = resource
       this.requestParam.comment = ''
     },
