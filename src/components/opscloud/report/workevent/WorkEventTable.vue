@@ -49,7 +49,11 @@
           <user-tag :user="props.row.user"></user-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="说明"></el-table-column>
+      <el-table-column prop="comment" label="事件内容">
+        <template slot-scope="props">
+          <my-markdown v-if="props.row.comment !== null" :content="props.row.comment"></my-markdown>
+        </template>
+      </el-table-column>
       <el-table-column label="属性" width="200">
         <template slot-scope="props">
           <span v-for="item in props.row.propertyList" :key="item.id">
@@ -58,6 +62,7 @@
             <el-tag class="prop-tag" v-if="item.name === 'fault' && item.value === 'true'" type="danger">故障</el-tag>
             <el-tag class="prop-tag" v-if="item.name === 'intercept'" v-text="item.value === 'true'? '拦截':'未拦截'"
                     :type="item.value === 'true'? 'success':'warning'"></el-tag>
+            <el-tag class="prop-tag" v-if="item.name === 'solve' && item.value === 'false'" type="info">处理中</el-tag>
           </span>
         </template>
       </el-table-column>
@@ -102,6 +107,7 @@ import BusinessType from '@/components/opscloud/common/enums/business.type'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_USER_PAGE } from '@/api/modules/user/user.api'
+import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 
 export default {
   data () {
@@ -156,7 +162,8 @@ export default {
     Pagination,
     WorkEventEditor,
     SelectItem,
-    BusinessTagEditor
+    BusinessTagEditor,
+    MyMarkdown
   },
   methods: {
     paginationCurrentChange (currentPage) {

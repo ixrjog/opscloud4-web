@@ -46,6 +46,12 @@
                 <el-radio :label="false">未拦截</el-radio>
               </el-radio-group>
             </el-form-item>
+            <el-form-item label="是否解决" v-if="!workEvent.property.intercept">
+              <el-radio-group v-model="workEvent.property.solve">
+                <el-radio :label="true">已解决</el-radio>
+                <el-radio :label="false">处理中</el-radio>
+              </el-radio-group>
+            </el-form-item>
             <el-form-item label="是否故障">
               <el-radio-group v-model="workEvent.property.fault">
                 <el-radio :label="true">故障</el-radio>
@@ -86,7 +92,7 @@ const workEvent = {
   workRoleId: '',
   workItemId: '',
   workItemName: '',
-  workEventTime: new Date(new Date().setHours(0, 0, 0, 0) + 8 * 60 * 60 * 1000),
+  workEventTime: new Date(new Date().setHours(8, 0, 0, 0)),
   workEventCnt: 1,
   comment: ''
 }
@@ -110,7 +116,8 @@ export default {
         support: {
           timeliness: '24小时内',
           intercept: true,
-          fault: false
+          fault: false,
+          solve: true
         }
       }
     }
@@ -131,9 +138,6 @@ export default {
       this.value = ''
       this.workItemId = ''
       this.workRole = {}
-      this.workRoleId = this.workRoleOptions[0].id
-      this.getWorkRole()
-      this.getWorkItemTree()
       this.getMyWorkRole()
     },
     handleChange (value) {
@@ -149,6 +153,9 @@ export default {
       this.workRoleOptions = []
       QUERY_MY_WORK_ROLE().then(({ body }) => {
         this.workRoleOptions = body
+        this.workRoleId = body[0].id
+        this.getWorkRole()
+        this.getWorkItemTree()
       })
     },
     workRoleChange () {
