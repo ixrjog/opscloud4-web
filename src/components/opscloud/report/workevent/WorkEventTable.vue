@@ -82,8 +82,8 @@
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
-    <work-event-editor ref="workEventEditor" :form-status="formStatus.workEvent" @closeDialog="dataChange"
-                       :work-role-options="workRoleOptions"></work-event-editor>
+    <work-event-editor ref="workEventEditor" :form-status="formStatus.workEvent"
+                       @closeDialog="dataChange"></work-event-editor>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
   </div>
@@ -93,8 +93,7 @@
 import {
   DELETE_WORK_EVENT,
   QUERY_WORK_EVENT_PAGE,
-  QUERY_WORK_ITEM_TREE,
-  QUERY_WORK_ROLE
+  QUERY_WORK_ITEM_TREE
 } from '@/api/modules/report/workevent/work.event.api'
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import UserTag from '@/components/opscloud/common/tag/UserTag'
@@ -122,7 +121,6 @@ export default {
       userOptions: [],
       loading: false,
       businessType: BusinessType.WORK_EVENT,
-      workRoleOptions: [],
       workItemOptions: [],
       workEventTime: [],
       workItemProps: {
@@ -148,6 +146,7 @@ export default {
     }
   },
   name: 'WorkEventTable',
+  props: ['workRoleOptions'],
   mounted () {
     this.getWorkRole()
     this.getWorkItemTree()
@@ -177,12 +176,6 @@ export default {
     },
     workRoleChange () {
       this.getWorkItemTree()
-    },
-    getWorkRole () {
-      this.workRoleOptions = []
-      QUERY_WORK_ROLE().then(({ body }) => {
-        this.workRoleOptions = body
-      })
     },
     getWorkItemTree () {
       this.workItemOptions = []

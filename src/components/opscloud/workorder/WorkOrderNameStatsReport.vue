@@ -42,14 +42,10 @@ export default {
           {
             name: '工单名称',
             type: 'pie',
-            radius: ['70%', '80%'],
+            radius: ['60%', '80%'],
             avoidLabelOverlap: false,
-            // label: {
-            //   show: false,
-            //   position: 'center'
-            // },
             label: {
-              formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+              formatter: ' {b|{b}：}{c}  {per|{d}%} ',
               backgroundColor: '#F6F8FC',
               borderColor: '#8C8D8E',
               borderWidth: 1,

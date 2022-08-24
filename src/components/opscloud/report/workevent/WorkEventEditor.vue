@@ -75,9 +75,10 @@
 <script>
 // API
 import {
-  ADD_WORK_EVENT,
+  ADD_WORK_EVENT, QUERY_MY_WORK_ROLE,
   QUERY_WORK_ITEM_BY_ID,
-  QUERY_WORK_ITEM_TREE, QUERY_WORK_ROLE_BY_ID
+  QUERY_WORK_ITEM_TREE,
+  QUERY_WORK_ROLE_BY_ID
 } from '@/api/modules/report/workevent/work.event.api'
 import MySpan from '@/components/opscloud/common/MySpan'
 
@@ -100,6 +101,7 @@ export default {
       workItemId: '',
       workEventData: {},
       workItemOptions: [],
+      workRoleOptions: [],
       adding: false,
       workItemProps: {
         emitPath: false
@@ -114,7 +116,7 @@ export default {
     }
   },
   name: 'WorkEventEditor',
-  props: ['formStatus', 'workRoleOptions'],
+  props: ['formStatus'],
   mounted () {
   },
   components: {
@@ -132,6 +134,7 @@ export default {
       this.workRoleId = this.workRoleOptions[0].id
       this.getWorkRole()
       this.getWorkItemTree()
+      this.getMyWorkRole()
     },
     handleChange (value) {
       this.workItemId = value
@@ -141,6 +144,12 @@ export default {
         .then(({ body }) => {
           this.workRole = body
         })
+    },
+    getMyWorkRole () {
+      this.workRoleOptions = []
+      QUERY_MY_WORK_ROLE().then(({ body }) => {
+        this.workRoleOptions = body
+      })
     },
     workRoleChange () {
       this.value = ''

@@ -49,6 +49,13 @@ export function QUERY_WORK_ROLE () {
   })
 }
 
+export function QUERY_MY_WORK_ROLE () {
+  return request({
+    url: baseUrl + '/my/role/query',
+    method: 'get'
+  })
+}
+
 export function QUERY_WORK_ROLE_BY_ID (param) {
   return request({
     url: baseUrl + '/role/id/query',

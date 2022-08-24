@@ -188,7 +188,6 @@ export default {
             comment: this.snsSubscriptionData.remark,
             content: JSON.stringify(data)
           }
-          debugger
           ADD_WORK_ORDER_TICKET_ENTRY(requestBody).then(() => {
             this.$emit('handleNotify')
             this.$message.success('保存成功')
