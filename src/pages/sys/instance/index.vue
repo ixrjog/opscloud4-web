@@ -25,6 +25,13 @@
           <span>       {{ util.bytesToSize(scope.row.systemInfo.mem.total) }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="activeSessionMap" label="活动会话" width="250" sortable>
+        <template slot-scope="scope">
+         <div>WebTerminal: {{scope.row.activeSessionMap.WEB_TERMINAL}}</div>
+          <div>KubernetesTerminal: {{scope.row.activeSessionMap.KUBERNETES_TERMINAL}}</div>
+          <div>SSH-Server: {{scope.row.activeSessionMap.SSH_SERVER}}</div>
+        </template>
+      </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
         <template slot-scope="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>

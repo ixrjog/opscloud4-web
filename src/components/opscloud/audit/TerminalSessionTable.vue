@@ -57,6 +57,11 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column label="操作" width="120">
+        <template slot-scope="scope">
+          <el-button type="danger" plain size="mini" @click="handleClose(scope.row)">关闭</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
@@ -65,7 +70,7 @@
 
 <script>
 
-import { QUERY_TERMINAL_SESSION_PAGE } from '@/api/modules/terminal/terminal.session.api.js'
+import { QUERY_TERMINAL_SESSION_PAGE,CLOSE_TERMINAL_SESSION_BY_ID } from '@/api/modules/terminal/terminal.session.api.js'
 import { QUERY_INSTANCE_PAGE, SET_INSTANCE_ACTIVE } from '@/api/modules/sys/sys.instance.api.js'
 import Pagination from '../common/page/Pagination'
 import SessionTypeTag from '../common/tag/SessionTypeTag'
@@ -145,6 +150,16 @@ export default {
       QUERY_INSTANCE_PAGE(requestBody)
         .then(res => {
           this.instanceOptions = res.body.data
+        })
+    },
+    /**
+     * 强制关闭会话
+     */
+    handleClose(row){
+      CLOSE_TERMINAL_SESSION_BY_ID(row.id)
+        .then(res => {
+          this.$message.success('会话已关闭!')
+            this.fetchData()
         })
     },
     fetchData () {

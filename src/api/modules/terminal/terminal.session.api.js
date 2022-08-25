@@ -19,3 +19,11 @@ export function QUERY_TERMINAL_SESSION_INSTANCE_COMMAND_PAGE (data) {
     data
   })
 }
+
+export function CLOSE_TERMINAL_SESSION_BY_ID (id) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/close?id=' + id,
+    method: 'put'
+  })
+}
