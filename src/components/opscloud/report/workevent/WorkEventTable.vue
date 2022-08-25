@@ -31,24 +31,22 @@
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column label="角色" width="150">
+      <el-table-column label="角色 / 用户" width="200">
         <template slot-scope="props">
           <span>{{ props.row.workRole.workRoleName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="类目" prop="workItemTree" width="80" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="workEventTime" label="时间" width="150">
-        <template slot-scope="props">
-          <span style="margin-right: 2px">{{ props.row.workEventTime }}</span>
-          <span style="color: #20A9D9">[{{ props.row.ago }}]</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="workEventCnt" label="次数" width="60"></el-table-column>
-      <el-table-column label="用户" width="200">
-        <template slot-scope="props">
           <user-tag :user="props.row.user"></user-tag>
         </template>
       </el-table-column>
+      <el-table-column label="类目 / 事件" prop="workItemTree" width="150" show-overflow-tooltip>
+        <template slot-scope="props">
+          <span>{{ props.row.workItemTree }}</span>
+          <div>
+            <span style="margin-right: 2px">{{ props.row.workEventTime }}</span>
+            <span style="color: #20A9D9">[{{ props.row.ago }}]</span>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column prop="workEventCnt" label="次数" width="60"></el-table-column>
       <el-table-column prop="comment" label="事件内容">
         <template slot-scope="props">
           <my-markdown v-if="props.row.comment !== null" :content="props.row.comment"></my-markdown>
