@@ -139,6 +139,7 @@ export default {
       this.value = ''
       this.workItemId = ''
       this.workRole = {}
+      this.saving = false
       this.getMyWorkRole()
     },
     handleChange (value) {
@@ -199,7 +200,6 @@ export default {
       }
     },
     handleSave () {
-      this.saving = true
       const requestBody = {
         workEventList: []
       }
@@ -226,13 +226,15 @@ export default {
         this.$message.warning('请新增至少一个工作项目')
         return
       }
+      this.saving = true
       ADD_WORK_EVENT(requestBody).then(() => {
-        this.adding = false
         this.$message.success('保存成功')
         this.formStatus.visible = false
+        this.adding = false
         this.saving = false
         this.$emit('closeDialog')
       }).catch(() => {
+        this.adding = false
         this.saving = false
       })
     },

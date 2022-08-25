@@ -74,16 +74,18 @@ export default {
   methods: {
     initData (data) {
       this.workEventData = Object.assign({}, data)
+      this.saving = false
     },
     handleSave () {
       this.saving = true
       UPDATE_WORK_EVENT({ workEvent: this.workEventData }).then(() => {
-        this.adding = false
         this.$message.success('保存成功')
         this.formStatus.visible = false
+        this.adding = false
         this.saving = false
         this.$emit('closeDialog')
       }).catch(() => {
+        this.adding = false
         this.saving = false
       })
     },
