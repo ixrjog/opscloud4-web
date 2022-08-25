@@ -27,8 +27,12 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
+      <el-button @click="handleBatchClose" class="button" :disabled="multipleSelection.length === 0">批量关闭</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading" ref="multipleTable"
+              @selection-change="handleSelectionChange" tooltip-effect="dark">
+      <el-table-column type="selection" width="55">
+      </el-table-column>
       <el-table-column prop="sessionId" label="会话" width="350">
         <template slot-scope="scope">
           <div>
@@ -59,7 +63,9 @@
       </el-table-column>
       <el-table-column label="操作" width="120">
         <template slot-scope="scope">
-          <el-button type="danger" plain size="mini" v-if="scope.row.sessionClosed === false" @click="handleClose(scope.row)">关闭</el-button>
+          <el-button type="danger" plain size="mini" v-if="scope.row.sessionClosed === false"
+                     @click="handleClose(scope.row)">关闭
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,8 +76,12 @@
 
 <script>
 
-import { QUERY_TERMINAL_SESSION_PAGE,CLOSE_TERMINAL_SESSION_BY_ID } from '@/api/modules/terminal/terminal.session.api.js'
-import { QUERY_INSTANCE_PAGE, SET_INSTANCE_ACTIVE } from '@/api/modules/sys/sys.instance.api.js'
+import {
+  QUERY_TERMINAL_SESSION_PAGE,
+  CLOSE_TERMINAL_SESSION_BY_ID,
+  BATCH_CLOSE_TERMINAL_SESSION
+} from '@/api/modules/terminal/terminal.session.api.js'
+import { QUERY_INSTANCE_PAGE } from '@/api/modules/sys/sys.instance.api.js'
 import Pagination from '../common/page/Pagination'
 import SessionTypeTag from '../common/tag/SessionTypeTag'
 import TerminalSessionInstanceInfo from '../terminal/TerminalSessionInstanceInfo'
@@ -108,6 +118,7 @@ export default {
           total: 0
         }
       },
+      multipleSelection: [],
       queryParam: {
         username: '',
         sessionType: '',
@@ -152,14 +163,37 @@ export default {
           this.instanceOptions = res.body.data
         })
     },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
     /**
      * 强制关闭会话
      */
-    handleClose(row){
+    handleClose (row) {
       CLOSE_TERMINAL_SESSION_BY_ID(row.id)
         .then(res => {
           this.$message.success('会话已关闭!')
-            this.fetchData()
+          this.fetchData()
+        })
+    },
+    handleBatchClose () {
+      const requestBody = {
+        ids: this.multipleSelection.map(e => (e.id)),
+      }
+      debugger
+      BATCH_CLOSE_TERMINAL_SESSION(requestBody)
+        .then(res => {
+          this.$message.success('会话已关闭!')
+          this.fetchData()
         })
     },
     fetchData () {
