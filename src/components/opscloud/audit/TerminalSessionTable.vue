@@ -59,7 +59,7 @@
       </el-table-column>
       <el-table-column label="操作" width="120">
         <template slot-scope="scope">
-          <el-button type="danger" plain size="mini" @click="handleClose(scope.row)">关闭</el-button>
+          <el-button type="danger" plain size="mini" v-if="scope.row.sessionClosed === false" @click="handleClose(scope.row)">关闭</el-button>
         </template>
       </el-table-column>
     </el-table>
