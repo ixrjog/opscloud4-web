@@ -27,3 +27,12 @@ export function CLOSE_TERMINAL_SESSION_BY_ID (id) {
     method: 'put'
   })
 }
+
+export function BATCH_CLOSE_TERMINAL_SESSION (data) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/batch/close',
+    method: 'put',
+    data
+  })
+}
