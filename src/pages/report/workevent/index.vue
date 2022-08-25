@@ -26,7 +26,7 @@ export default {
   data () {
     return {
       title: '工作事件',
-      activeName: 'detail',
+      activeName: 'report',
       workRoleOptions: []
     }
   },

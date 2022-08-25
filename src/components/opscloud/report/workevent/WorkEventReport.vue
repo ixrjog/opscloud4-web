@@ -19,12 +19,30 @@
         <work-event-item-report ref="workEventItemReport"></work-event-item-report>
       </el-col>
     </el-row>
+    <el-row :gutter="10" style="margin-top: 10px">
+      <el-col :span="12">
+        <work-event-time-report ref="workEventTimeReport"></work-event-time-report>
+      </el-col>
+      <el-col :span="12">
+        <work-event-intercept-report ref="workEventInterceptReport"></work-event-intercept-report>
+      </el-col>
+      <el-col :span="12">
+        <work-event-solve-report ref="workEventSolveReport"></work-event-solve-report>
+      </el-col>
+      <el-col :span="12">
+        <work-event-fault-report ref="workEventFaultReport"></work-event-fault-report>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import WorkEventWeeklyReport from '@/components/opscloud/report/workevent/WorkEventWeeklyReport'
 import WorkEventItemReport from '@/components/opscloud/report/workevent/WorkEventItemReport'
+import WorkEventFaultReport from '@/components/opscloud/report/workevent/WorkEventFaultReport'
+import WorkEventInterceptReport from '@/components/opscloud/report/workevent/WorkEventInterceptReport'
+import WorkEventSolveReport from '@/components/opscloud/report/workevent/WorkEventSolveReport'
+import WorkEventTimeReport from '@/components/opscloud/report/workevent/WorkEventTimeReport'
 
 export default {
   name: 'WorkEventReport',
@@ -36,7 +54,11 @@ export default {
   },
   components: {
     WorkEventWeeklyReport,
-    WorkEventItemReport
+    WorkEventItemReport,
+    WorkEventFaultReport,
+    WorkEventInterceptReport,
+    WorkEventSolveReport,
+    WorkEventTimeReport
   },
   mounted () {
   },
