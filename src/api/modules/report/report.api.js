@@ -24,3 +24,35 @@ export function GET_WORK_EVENT_ITEM_REPORT (param) {
     params: param
   })
 }
+
+export function GET_WORK_EVENT_TIME_REPORT (param) {
+  return request({
+    url: baseUrl + '/workevent/timeliness',
+    method: 'get',
+    params: param
+  })
+}
+
+export function GET_WORK_EVENT_INTERCEPT_REPORT (param) {
+  return request({
+    url: baseUrl + '/workevent/intercept',
+    method: 'get',
+    params: param
+  })
+}
+
+export function GET_WORK_EVENT_SOLVE_REPORT (param) {
+  return request({
+    url: baseUrl + '/workevent/solve',
+    method: 'get',
+    params: param
+  })
+}
+
+export function GET_WORK_EVENT_FAULT_REPORT (param) {
+  return request({
+    url: baseUrl + '/workevent/fault',
+    method: 'get',
+    params: param
+  })
+}
