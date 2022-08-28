@@ -163,17 +163,17 @@ export default {
           this.instanceOptions = res.body.data
         })
     },
-    toggleSelection(rows) {
+    toggleSelection (rows) {
       if (rows) {
         rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row);
-        });
+          this.$refs.multipleTable.toggleRowSelection(row)
+        })
       } else {
-        this.$refs.multipleTable.clearSelection();
+        this.$refs.multipleTable.clearSelection()
       }
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
+    handleSelectionChange (val) {
+      this.multipleSelection = val
     },
     /**
      * 强制关闭会话
@@ -187,7 +187,7 @@ export default {
     },
     handleBatchClose () {
       const requestBody = {
-        ids: this.multipleSelection.map(e => (e.id)),
+        ids: this.multipleSelection.map(e => (e.id))
       }
       debugger
       BATCH_CLOSE_TERMINAL_SESSION(requestBody)

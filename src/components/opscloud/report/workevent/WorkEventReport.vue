@@ -1,37 +1,39 @@
 <template>
   <div>
     <el-row>
-      <el-select v-model="workRoleId" placeholder="选择角色" class="select" @change="initChart">
+      <el-select v-model="workRole" placeholder="选择角色" class="select" @change="initChart" value-key="id">
         <el-option
           v-for="item in workRoleOptions"
           :key="item.id"
           :label="item.workRoleName"
-          :value="item.id">
+          :value="item">
         </el-option>
       </el-select>
       <el-button @click="initChart" class="button">刷新</el-button>
     </el-row>
     <el-row :gutter="10">
-      <el-col :span="14">
-        <work-event-weekly-report ref="workEventWeeklyReport"></work-event-weekly-report>
-      </el-col>
       <el-col :span="10">
         <work-event-item-report ref="workEventItemReport"></work-event-item-report>
       </el-col>
+      <el-col :span="14">
+        <work-event-weekly-report ref="workEventWeeklyReport"></work-event-weekly-report>
+      </el-col>
     </el-row>
     <el-row :gutter="10" style="margin-top: 10px">
-      <el-col :span="12">
-        <work-event-time-report ref="workEventTimeReport"></work-event-time-report>
-      </el-col>
-      <el-col :span="12">
-        <work-event-intercept-report ref="workEventInterceptReport"></work-event-intercept-report>
-      </el-col>
-      <el-col :span="12">
-        <work-event-solve-report ref="workEventSolveReport"></work-event-solve-report>
-      </el-col>
-      <el-col :span="12">
-        <work-event-fault-report ref="workEventFaultReport"></work-event-fault-report>
-      </el-col>
+      <span v-if="JSON.stringify(workRole) !== '{}' && workRole.workRoleKey ==='SUPPORT'">
+        <el-col :span="12">
+          <work-event-intercept-report ref="workEventInterceptReport"></work-event-intercept-report>
+        </el-col>
+        <el-col :span="12">
+          <work-event-time-report ref="workEventTimeReport"></work-event-time-report>
+        </el-col>
+        <el-col :span="12">
+          <work-event-solve-report ref="workEventSolveReport"></work-event-solve-report>
+        </el-col>
+        <el-col :span="12">
+          <work-event-fault-report ref="workEventFaultReport"></work-event-fault-report>
+        </el-col>
+      </span>
     </el-row>
   </div>
 </template>
@@ -49,7 +51,7 @@ export default {
   props: ['workRoleOptions'],
   data () {
     return {
-      workRoleId: ''
+      workRole: {}
     }
   },
   components: {
@@ -64,8 +66,9 @@ export default {
   },
   methods: {
     initChart () {
-      this.$refs.workEventWeeklyReport.fetchData(this.workRoleId)
-      this.$refs.workEventItemReport.fetchData(this.workRoleId)
+      console.log(this.workRole)
+      this.$refs.workEventWeeklyReport.fetchData(this.workRole.id)
+      this.$refs.workEventItemReport.fetchData(this.workRole.id)
     }
   }
 }
