@@ -55,7 +55,7 @@ export default {
           {
             type: 'pie',
             id: 'pie',
-            radius: '30%',
+            radius: ['30%', '40%'],
             center: ['50%', '25%'],
             emphasis: {
               focus: 'self'
