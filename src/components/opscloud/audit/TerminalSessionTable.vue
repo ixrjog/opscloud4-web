@@ -189,7 +189,6 @@ export default {
       const requestBody = {
         ids: this.multipleSelection.map(e => (e.id))
       }
-      debugger
       BATCH_CLOSE_TERMINAL_SESSION(requestBody)
         .then(res => {
           this.$message.success('会话已关闭!')

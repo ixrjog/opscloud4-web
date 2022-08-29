@@ -249,7 +249,6 @@ export default {
       }
     },
     toRegionTypeText (envName) {
-      debugger
       return envName + ' [' + getAWSRegionTypeText(envName) + ']'
     }
   }

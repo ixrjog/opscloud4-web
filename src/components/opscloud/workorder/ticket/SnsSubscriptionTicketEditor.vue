@@ -249,8 +249,8 @@ export default {
         this.$refs.ticketEntryDesc.initData(ticketEntries)
       }
     },
-    toRegionTypeText (regionId) {
-      return regionId + ' [' + getAWSRegionTypeText(regionId) + ']'
+    toRegionTypeText (envName) {
+      return envName + ' [' + getAWSRegionTypeText(envName) + ']'
     }
   }
 }
