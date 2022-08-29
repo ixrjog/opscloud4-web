@@ -13,8 +13,8 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="环境" prop="env">
-        <el-select v-model="snsTopicData.env" filterable style="width: 250px;" placeholder="请选择环境"
+      <el-form-item label="环境">
+        <el-select v-model="snsTopicData.envName" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
           <el-option
             v-for="item in regionOptions"
@@ -79,7 +79,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import CloudRegionType from '@/components/opscloud/common/enums/cloud.region.type'
 
 const snsTopicData = {
-  env: 'dev',
+  envName: 'dev',
   topic: '_dev_topic',
   topicType: '0',
   instanceId: '',
@@ -112,9 +112,6 @@ export default {
       topicPrefix: 'transsnet_',
       topicSuffix: '',
       rules: {
-        env: [
-          { required: true, message: '请选择环境', trigger: 'change' }
-        ],
         topic: [
           { required: true, message: '请输入队列名称', trigger: 'blur' },
           { max: 256, message: '长度限制在256个字符之内', trigger: 'blur' }
@@ -131,7 +128,7 @@ export default {
   mounted () {
   },
   watch: {
-    'snsTopicData.env': {
+    'snsTopicData.envName': {
       handler (newName, oldName) {
         switch (newName) {
           case 'dev':
@@ -159,6 +156,15 @@ export default {
               this.snsTopicData.topic = '_canary_topic' + this.fifoSuffix
             } else {
               this.snsTopicData.topic = '_canary_topic'
+            }
+            break
+          case 'pre':
+            this.topicSuffix = '_pre_topic'
+            this.snsTopicData.regionId = 'eu-west-1'
+            if (this.snsTopicData.topicType === '1') {
+              this.snsTopicData.topic = '_pre_topic' + this.fifoSuffix
+            } else {
+              this.snsTopicData.topic = '_pre_topic'
             }
             break
           case 'prod':
@@ -205,6 +211,7 @@ export default {
             }
           }
           const data = {
+            envName: this.snsTopicData.envName,
             topic: this.snsTopicData.topic,
             regionId: this.snsTopicData.regionId,
             attributes: attributes

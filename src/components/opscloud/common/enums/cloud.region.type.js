@@ -37,6 +37,11 @@ const CloudRegionType = Object.freeze({
       },
       {
         value: 'eu-west-1',
+        label: 'pre',
+        desc: '欧洲(爱尔兰)预发环境'
+      },
+      {
+        value: 'eu-west-1',
         label: 'prod',
         desc: '欧洲(爱尔兰)生产环境'
       }

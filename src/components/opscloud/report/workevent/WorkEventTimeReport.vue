@@ -19,6 +19,7 @@ export default {
     initChart (source, time) {
       const myChart = echarts.init(document.getElementById('workEventTimeReport'))
       const option = {
+        color: ['#39CD9C', '#1977CF', '#FEC71E'],
         legend: {
           orient: 'vertical',
           left: 'left'

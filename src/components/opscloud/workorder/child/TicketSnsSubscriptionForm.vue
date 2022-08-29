@@ -13,8 +13,8 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="环境" prop="regionId">
-        <el-select v-model="snsSubscriptionData.env" filterable style="width: 250px;" placeholder="请选择环境"
+      <el-form-item label="环境">
+        <el-select v-model="snsSubscriptionData.envName" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''" @change="regionIdChange">
           <el-option
             v-for="item in regionOptions"
@@ -77,7 +77,7 @@ import CloudRegionType from '@/components/opscloud/common/enums/cloud.region.typ
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 
 const snsSubscriptionData = {
-  env: 'dev',
+  envName: 'dev',
   topicArn: '',
   protocol: 'sqs',
   endpoint: '',
@@ -133,7 +133,7 @@ export default {
       this.snsSubscriptionData = Object.assign({}, snsSubscriptionData)
     },
     regionIdChange () {
-      switch (this.snsSubscriptionData.env) {
+      switch (this.snsSubscriptionData.envName) {
         case 'dev':
           this.snsSubscriptionData.regionId = 'ap-northeast-2'
           break
@@ -141,6 +141,9 @@ export default {
           this.snsSubscriptionData.regionId = 'ap-east-1'
           break
         case 'gray':
+          this.snsSubscriptionData.regionId = 'eu-west-1'
+          break
+        case 'pre':
           this.snsSubscriptionData.regionId = 'eu-west-1'
           break
         case 'prod':
@@ -171,6 +174,7 @@ export default {
           }
           this.buttonAdding = true
           const data = {
+            envName: this.snsSubscriptionData.envName,
             regionId: this.snsSubscriptionData.regionId,
             topicArn: this.snsSubscriptionData.topicArn,
             protocol: this.snsSubscriptionData.protocol,

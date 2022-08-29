@@ -13,8 +13,8 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="环境" prop="env">
-        <el-select v-model="sqsData.env" filterable style="width: 250px;" placeholder="请选择环境"
+      <el-form-item label="环境">
+        <el-select v-model="sqsData.envName" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
           <el-option
             v-for="item in regionOptions"
@@ -134,7 +134,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import CloudRegionType from '@/components/opscloud/common/enums/cloud.region.type'
 
 const sqsData = {
-  env: 'dev',
+  envName: 'dev',
   queueName: '_dev_queue',
   queueType: '0',
   instanceId: '',
@@ -184,9 +184,6 @@ export default {
       queueNameSuffix: '',
       time: time,
       rules: {
-        env: [
-          { required: true, message: '请选择环境', trigger: 'change' }
-        ],
         queueName: [
           { required: true, message: '请输入队列名称', trigger: 'blur' },
           { max: 80, message: '长度限制在80个字符之内', trigger: 'blur' }
@@ -218,7 +215,7 @@ export default {
   mounted () {
   },
   watch: {
-    'sqsData.env': {
+    'sqsData.envName': {
       handler (newName, oldName) {
         switch (newName) {
           case 'dev':
@@ -235,6 +232,11 @@ export default {
             this.sqsData.regionId = 'eu-west-1'
             this.queueNameSuffix = '_canary_queue'
             this.sqsData.queueName = '_canary_queue'
+            break
+          case 'pre':
+            this.sqsData.regionId = 'eu-west-1'
+            this.queueNameSuffix = '_pre_queue'
+            this.sqsData.queueName = '_pre_queue'
             break
           case 'prod':
             this.sqsData.regionId = 'eu-west-1'
@@ -263,6 +265,7 @@ export default {
             VisibilityTimeout: this.sqsData.visibilityTimeout * this.unit.visibilityTimeoutUnit
           }
           const data = {
+            envName: this.sqsData.envName,
             queueName: this.sqsData.queueName,
             regionId: this.sqsData.regionId,
             attributes: attributes

@@ -31,7 +31,7 @@
                     <entry-detail name="实例名称" :value="scope.ticketEntry.instance.instanceName"></entry-detail>
                   </el-col>
                   <el-col :span="12">
-                    <entry-detail name="Region ID" :value="toRegionTypeText(scope.ticketEntry.entry.regionId)">
+                    <entry-detail name="环境" :value="toRegionTypeText(scope.ticketEntry.entry.envName)">
                     </entry-detail>
                   </el-col>
                 </el-row>
@@ -274,8 +274,8 @@ export default {
         this.$refs.ticketEntryDesc.initData(ticketEntries)
       }
     },
-    toRegionTypeText (regionId) {
-      return regionId + ' [' + getAWSRegionTypeText(regionId) + ']'
+    toRegionTypeText (envName) {
+      return envName + ' [' + getAWSRegionTypeText(envName) + ']'
     }
   }
 }
