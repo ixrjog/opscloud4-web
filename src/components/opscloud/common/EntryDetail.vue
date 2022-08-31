@@ -39,8 +39,7 @@ export default {
   components: {
     CopySpan
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
