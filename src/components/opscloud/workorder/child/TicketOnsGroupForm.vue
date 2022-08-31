@@ -35,7 +35,7 @@
       <el-form-item label="客户端协议" required>
         <el-radio-group v-model="groupData.groupType" :disabled="added">
           <el-radio-button :label="groupType.tcp.type"></el-radio-button>
-          <el-radio-button :label="groupType.http.type" disabled></el-radio-button>
+          <el-radio-button :label="groupType.http.type"></el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="描述" required>
