@@ -21,16 +21,16 @@
     </el-row>
     <el-row :gutter="10" style="margin-top: 10px">
       <span v-if="JSON.stringify(workRole) !== '{}' && workRole.workRoleKey ==='SUPPORT'">
-        <el-col :span="12">
+        <el-col :span="12" style="margin-bottom: 10px">
           <work-event-intercept-report ref="workEventInterceptReport"></work-event-intercept-report>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" style="margin-bottom: 10px">
           <work-event-time-report ref="workEventTimeReport"></work-event-time-report>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" style="margin-bottom: 10px">
           <work-event-solve-report ref="workEventSolveReport"></work-event-solve-report>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" style="margin-bottom: 10px">
           <work-event-fault-report ref="workEventFaultReport"></work-event-fault-report>
         </el-col>
       </span>
@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     initChart () {
-      console.log(this.workRole)
       this.$refs.workEventWeeklyReport.fetchData(this.workRole.id)
       this.$refs.workEventItemReport.fetchData(this.workRole.id)
     }
