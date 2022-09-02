@@ -11,8 +11,12 @@
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column prop="input" label="输入/输出">
           <template slot-scope="scope">
-            <div :id="`terminal_input_${scope.row.id}`" class="xterm" style="margin-bottom: 2px"></div>
-            <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
+            <el-row style="margin-bottom: 2px">
+              <div :id="`terminal_input_${scope.row.id}`" class="xterm"></div>
+            </el-row>
+            <el-row>
+              <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
+            </el-row>
           </template>
         </el-table-column>
         <el-table-column prop="output" label="输出" v-if="false">
@@ -213,7 +217,7 @@ export default {
   margin-left: 5px;
 }
 
->>>.el-table td div  {
+>>> .el-table td div {
   border-radius: 2px
 }
 
