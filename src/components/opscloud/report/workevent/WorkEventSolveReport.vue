@@ -90,8 +90,8 @@ export default {
       GET_WORK_EVENT_SOLVE_REPORT()
         .then(({ body }) => {
           const date = ['周']
-          const value0 = ['处理中']
-          const value1 = ['已解决']
+          const value0 = ['已解决']
+          const value1 = ['处理中']
           for (const i of body) {
             date.push(i.cname)
             value0.push(i.value0)
