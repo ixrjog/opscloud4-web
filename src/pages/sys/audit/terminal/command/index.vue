@@ -9,12 +9,13 @@
         <el-button @click="fetchData" class="search-button">查询</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column prop="input" label="输入(命令)" width="600">
+        <el-table-column prop="input" label="输入/输出">
           <template slot-scope="scope">
             <div :id="`terminal_input_${scope.row.id}`" class="xterm"></div>
+            <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
           </template>
         </el-table-column>
-        <el-table-column prop="output" label="输出">
+        <el-table-column prop="output" label="输出" v-if="false">
           <template slot-scope="scope">
             <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
           </template>
