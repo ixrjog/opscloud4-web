@@ -11,7 +11,7 @@
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column prop="input" label="输入/输出">
           <template slot-scope="scope">
-            <div :id="`terminal_input_${scope.row.id}`" class="xterm"></div>
+            <div :id="`terminal_input_${scope.row.id}`" class="xterm" style="margin-bottom: 2px"></div>
             <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
           </template>
         </el-table-column>
