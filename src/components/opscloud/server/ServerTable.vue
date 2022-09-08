@@ -60,17 +60,26 @@
       <el-button @click="handleScanMonitor" class="button">扫描监控</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" width="200">
+      <el-table-column label="名称 / 群组" width="200">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
           <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
                      @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
           </el-button>
+          <div>{{ scope.row.serverGroup.name }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="serialNumber" label="序号" width="80" sortable></el-table-column>
-      <el-table-column prop="publicIp" label="公网IP" width="120"></el-table-column>
-      <el-table-column prop="privateIp" label="私网IP" width="120"></el-table-column>
+      <el-table-column label="IP地址" width="150">
+        <template slot-scope="scope">
+          <span>{{ scope.row.privateIp }}
+            <span style="color: #8492a6 ; font-size: 12px">私有</span>
+          </span>
+          <div v-if="scope.row.publicIp">{{ scope.row.publicIp }}
+            <span style="color: #8492a6 ; font-size: 12px">公有</span>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column prop="env" label="环境" width="80">
         <template slot-scope="scope">
           <env-tag :env="scope.row.env"></env-tag>
