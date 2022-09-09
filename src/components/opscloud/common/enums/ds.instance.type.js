@@ -175,6 +175,17 @@ const DsInstanceType = Object.freeze({
         label: 'HUAWEICLOUD_ECS'
       }
     ]
+  },
+  // 领先互联
+  LXHL: {
+    type: 53,
+    name: 'LXHL',
+    instanceType: [
+      {
+        value: 'LXHL',
+        label: 'LXHL'
+      }
+    ]
   }
 })
 

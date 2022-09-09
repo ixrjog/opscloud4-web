@@ -126,6 +126,9 @@ export default {
         case this.dsInstanceType.CONSUL.type:
           instanceType = this.dsInstanceType.CONSUL
           break
+        case this.dsInstanceType.LXHL.type:
+          instanceType = this.dsInstanceType.LXHL
+          break
         default:
           this.$message({
             message: '未知的实例类型',
