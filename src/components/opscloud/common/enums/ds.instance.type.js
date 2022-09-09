@@ -175,6 +175,16 @@ const DsInstanceType = Object.freeze({
         label: 'HUAWEICLOUD_ECS'
       }
     ]
+  },
+  LXHL: {
+    type: 53,
+    name: 'LXHL',
+    instanceType: [
+      {
+        value: 'LXHL',
+        label: 'LXHL'
+      }
+    ]
   }
 })
 
