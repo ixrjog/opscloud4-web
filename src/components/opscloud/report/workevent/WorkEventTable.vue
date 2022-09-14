@@ -14,7 +14,7 @@
                    @change="handleChange" class="cascader" placeholder="选择类目" collapse-tags>
       </el-cascader>
       <el-select v-model="queryParam.username" filterable remote reserve-keyword placeholder="搜索用户"
-                 :remote-method="getUser" class="select">
+                 :remote-method="getUser" class="select" clearable>
         <el-option
           v-for="user in userOptions"
           :key="user.username"
