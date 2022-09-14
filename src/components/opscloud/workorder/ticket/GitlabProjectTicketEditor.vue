@@ -33,7 +33,8 @@
                         v-for="item in gitlabRoleOptions"
                         :key="item.value"
                         :label="item.label"
-                        :value="item.value">
+                        :value="item.value"
+                        :disabled="item.disabled">
                       </el-option>
                     </el-select>
                   </template>
@@ -124,7 +125,8 @@ const gitlabRoleOptions = [
   },
   {
     value: 'OWNER',
-    label: 'Owner'
+    label: 'Owner',
+    disabled: true
   }
 ]
 
