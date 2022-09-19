@@ -27,6 +27,16 @@
         v-model="workEventTime" type="daterange" unlink-panels value-format="timestamp" class="picker" size="mini"
         start-placeholder="开始" range-separator="-" end-placeholder="结束" :default-time="['00:00:00', '23:59:59']">
       </el-date-picker>
+      <el-select
+        v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+        placeholder="请输入关键词搜索标签" :remote-method="getTag" class="select">
+        <el-option
+          v-for="item in tagOptions"
+          :key="item.id"
+          :label="item.tagKey"
+          :value="item.id">
+        </el-option>
+      </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
@@ -109,6 +119,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_USER_PAGE } from '@/api/modules/user/user.api'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import WorkEventUpdateEditor from '@/components/opscloud/report/workevent/WorkEventUpdateEditor'
+import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
 
 export default {
   data () {
@@ -141,6 +152,7 @@ export default {
         username: '',
         workItemIdList: []
       },
+      tagOptions:[],
       formStatus: {
         workEvent: {
           visible: false
@@ -159,6 +171,7 @@ export default {
   props: ['workRoleOptions'],
   mounted () {
     this.getWorkItemTree()
+    this.getTag('')
     this.fetchData()
   },
   components: {
@@ -187,6 +200,19 @@ export default {
     },
     workRoleChange () {
       this.getWorkItemTree()
+    },
+    getTag (name) {
+      const requestBody = {
+        tagKey: name,
+        businessType: this.businessType,
+        append: true,
+        page: 1,
+        length: 20
+      }
+      QUERY_TAG_PAGE(requestBody)
+        .then(res => {
+          this.tagOptions = res.body.data
+        })
     },
     getWorkItemTree () {
       this.workItemOptions = []
