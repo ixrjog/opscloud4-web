@@ -23,9 +23,17 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="platformName" label="平台" width="150" sortable></el-table-column>
       <el-table-column prop="username" label="用户名" width="150" sortable></el-table-column>
+      <el-table-column prop="otp" label="使用OTP" width="100">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.otp ? 'success' : 'info'">{{
+              scope.row.otp ? '是' : '否'
+            }}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="result" label="认证结果" width="150">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.result ? 'success' : 'danger'">{{
+          <el-tag :type="scope.row.result !== null ? 'success' : 'danger'">{{
               scope.row.result ? '认证成功' : '认证失败'
             }}
           </el-tag>
