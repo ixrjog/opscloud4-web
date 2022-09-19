@@ -16,5 +16,14 @@ export default [
       auth: true,
       title: '工作事件'
     }
+  },
+  {
+    path: '/report/platform/auth',
+    name: 'report-platform-auth',
+    component: () => import('@/pages/report/platform/auth'),
+    meta: {
+      auth: true,
+      title: '平台认证'
+    }
   }
 ]
