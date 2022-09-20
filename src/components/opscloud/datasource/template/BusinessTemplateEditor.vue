@@ -192,6 +192,7 @@ export default {
       this.getTemplate('')
     },
     initData (businessTemplate, instanceType) {
+      debugger
       this.activeName = 'base'
       this.button = {
         editing: false,
@@ -204,6 +205,8 @@ export default {
       if (this.businessTemplate.template === undefined) {
         this.getTemplate('')
       } else {
+        // 初始化模板Key
+        this.queryParam.templateKey = this.businessTemplate.template.templateKey
         this.templateOptions = []
         this.templateOptions.push(this.businessTemplate.template)
       }
