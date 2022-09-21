@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     initData (data) {
-      this.workEventData = Object.assign({}, data)
+      this.workEventData = data
       this.saving = false
     },
     handleSave () {

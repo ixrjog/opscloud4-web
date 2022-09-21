@@ -281,7 +281,7 @@ export default {
     },
     handleRowUpdate (row) {
       this.formStatus.workEventUpdate.visible = true
-      this.$refs.workEventUpdateEditor.initData(row)
+      this.$refs.workEventUpdateEditor.initData(Object.assign({}, row))
     },
     dataChange () {
       this.fetchData()

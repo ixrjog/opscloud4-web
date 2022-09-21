@@ -186,6 +186,7 @@ export default {
           data.workItemId = this.workItemId
           data.workRoleId = this.workRoleId
           data.workItemName = body.workItemName
+          data.comment = body.comment
           if (this.workRole.workRoleKey === 'SUPPORT') {
             data.property = Object.assign({}, this.workEventProperty.support)
           }
