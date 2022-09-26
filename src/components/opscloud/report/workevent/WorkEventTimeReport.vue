@@ -19,8 +19,12 @@ export default {
     initChart (source, time) {
       const myChart = echarts.init(document.getElementById('workEventTimeReport'))
       const option = {
+        title: {
+          text: '工作事件(周)处理效率'
+        },
         color: ['#39CD9C', '#1977CF', '#FEC71E'],
         legend: {
+          top: '20%',
           orient: 'vertical',
           left: 'left'
         },

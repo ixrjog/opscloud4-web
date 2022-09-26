@@ -19,8 +19,12 @@ export default {
     initChart (source, time) {
       const myChart = echarts.init(document.getElementById('workEventFaultReport'))
       const option = {
+        title:{
+          text:'工作事件(周)故障占比'
+        },
         color: ['#39CD9C', '#FEC71E'],
         legend: {
+          top: '20%',
           orient: 'vertical',
           left: 'left'
         },

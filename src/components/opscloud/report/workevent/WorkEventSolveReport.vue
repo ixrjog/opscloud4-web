@@ -19,8 +19,12 @@ export default {
     initChart (source, time) {
       const myChart = echarts.init(document.getElementById('workEventSolveReport'))
       const option = {
+        title:{
+          text:'工作事件(周)问题解决率'
+        },
         color: ['#39CD9C', '#FEC71E'],
         legend: {
+          top: '20%',
           orient: 'vertical',
           left: 'left'
         },

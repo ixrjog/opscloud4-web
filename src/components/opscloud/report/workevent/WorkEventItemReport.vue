@@ -21,12 +21,16 @@ export default {
     initChart (data, color) {
       const myChart = echarts.init(document.getElementById('workEventItemReport'))
       const option = {
+        title:{
+          text:'工作事件总比例'
+        },
         color: color,
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b}: {c} ({d}%)'
         },
         legend: {
+          top: '20%',
           orient: 'vertical',
           left: 'left'
         },
@@ -34,7 +38,7 @@ export default {
           {
             name: '类目',
             type: 'pie',
-            radius: ['60%', '80%'],
+            radius: ['40%', '60%'],
             avoidLabelOverlap: false,
             emphasis: {
               label: {

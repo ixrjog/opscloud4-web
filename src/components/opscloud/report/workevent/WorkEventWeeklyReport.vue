@@ -38,6 +38,9 @@ export default {
     initChart () {
       const myChart = echarts.init(document.getElementById('workEventReport'))
       const option = {
+        title:{
+          text:'工作事件(周)报表'
+        },
         color: this.color,
         tooltip: {
           trigger: 'axis',

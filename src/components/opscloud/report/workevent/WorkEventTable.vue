@@ -64,14 +64,9 @@
       </el-table-column>
       <el-table-column label="属性" width="200">
         <template slot-scope="props">
-          <span v-for="item in props.row.propertyList" :key="item.id">
-            <el-tag class="prop-tag" v-if="item.name === 'timeliness'" :type="timelinessColor(item.value)">
-              {{ item.value }}</el-tag>
-            <el-tag class="prop-tag" v-if="item.name === 'fault' && item.value === 'true'" type="danger">故障</el-tag>
-            <el-tag class="prop-tag" v-if="item.name === 'intercept'" v-text="item.value === 'true'? '拦截':'未拦截'"
-                    :type="item.value === 'true'? 'success':'warning'"></el-tag>
-            <el-tag class="prop-tag" v-if="item.name === 'solve' && item.value === 'false'" type="info">处理中</el-tag>
-          </span>
+           <span v-for="item in props.row.properties">
+             <el-tag class="prop-tag" v-if="item.isShow" :type="item.feType">{{ item.feName }}</el-tag>
+           </span>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="150">
