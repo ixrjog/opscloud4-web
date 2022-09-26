@@ -77,8 +77,12 @@ export default {
       this.saving = false
     },
     handleSave () {
+      let request = {
+        workEvent: Object.assign({}, this.workEventData)
+      }
+      delete (request.workEvent.user)
       this.saving = true
-      UPDATE_WORK_EVENT({ workEvent: this.workEventData }).then(() => {
+      UPDATE_WORK_EVENT(request).then(() => {
         this.$message.success('保存成功')
         this.formStatus.visible = false
         this.adding = false
