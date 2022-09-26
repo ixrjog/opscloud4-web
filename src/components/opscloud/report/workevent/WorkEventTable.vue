@@ -41,19 +41,19 @@
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column label="角色 / 用户" width="200">
+      <el-table-column label="用户详情" width="200">
         <template slot-scope="props">
           <span>{{ props.row.workRole.workRoleName }}</span>
           <user-tag :user="props.row.user"></user-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="类目 / 事件" prop="workItemTree" width="150" show-overflow-tooltip>
-        <template slot-scope="props">
-          <span>{{ props.row.workItemTree }}</span>
           <div>
             <span style="margin-right: 2px">{{ props.row.workEventTime }}</span>
             <span style="color: #20A9D9">[{{ props.row.ago }}]</span>
           </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="事件类目" prop="workItemTree" width="150" show-overflow-tooltip>
+        <template slot-scope="props">
+          <span>{{ props.row.workItemTree }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="workEventCnt" label="次数" width="60"></el-table-column>
