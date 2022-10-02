@@ -2,7 +2,8 @@
   <div>
     <el-row>
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询" class="input"/>
-      <el-select v-model="queryParam.workRoleId" placeholder="选择角色" class="select" clearable @change="workRoleChange">
+      <el-select v-model="queryParam.workRoleId" placeholder="选择角色" class="select" clearable
+                 @change="workRoleChange">
         <el-option
           v-for="item in workRoleOptions"
           :key="item.id"
@@ -53,7 +54,9 @@
       </el-table-column>
       <el-table-column label="事件类目" prop="workItemTree" width="150" show-overflow-tooltip>
         <template slot-scope="props">
-          <span>{{ props.row.workItemTree }}</span>
+          <el-tooltip class="item" effect="dark" :content="props.row.workItem.comment" placement="top-start">
+            <el-tag :style="{color: props.row.workItem.color }">{{ props.row.workItem.workItemName }}</el-tag>
+          </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column prop="workEventCnt" label="次数" width="60"></el-table-column>
@@ -147,7 +150,7 @@ export default {
         username: '',
         workItemIdList: []
       },
-      tagOptions:[],
+      tagOptions: [],
       formStatus: {
         workEvent: {
           visible: false
