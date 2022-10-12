@@ -140,6 +140,9 @@ export default {
         case 'daily':
           this.snsSubscriptionData.regionId = 'ap-east-1'
           break
+        case 'frankfurt-daily':
+          this.snsSubscriptionData.regionId = 'eu-central-1'
+          break
         case 'gray':
           this.snsSubscriptionData.regionId = 'eu-west-1'
           break

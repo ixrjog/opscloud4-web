@@ -149,6 +149,15 @@ export default {
               this.snsTopicData.topic = this.topicSuffix
             }
             break
+          case 'frankfurt-daily':
+            this.topicSuffix = '_daily_topic'
+            this.snsTopicData.regionId = 'eu-central-1'
+            if (this.snsTopicData.topicType === '1') {
+              this.snsTopicData.topic = this.topicSuffix + this.fifoSuffix
+            } else {
+              this.snsTopicData.topic = this.topicSuffix
+            }
+            break
           case 'gray':
             this.topicSuffix = '_canary_topic'
             this.snsTopicData.regionId = 'eu-west-1'

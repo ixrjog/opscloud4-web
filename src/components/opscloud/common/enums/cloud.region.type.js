@@ -31,6 +31,11 @@ const CloudRegionType = Object.freeze({
         desc: '亚太地区(香港)测试环境'
       },
       {
+        value: 'eu-central-1',
+        label: 'frankfurt-daily',
+        desc: '欧洲(法兰克福)日常环境'
+      },
+      {
         value: 'eu-west-1',
         label: 'gray',
         desc: '欧洲(爱尔兰)灰度环境'

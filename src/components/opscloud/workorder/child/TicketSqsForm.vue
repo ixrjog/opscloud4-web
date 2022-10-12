@@ -228,6 +228,11 @@ export default {
             this.queueNameSuffix = '_test_queue'
             this.sqsData.queueName = '_test_queue'
             break
+          case 'frankfurt-daily':
+            this.sqsData.regionId = 'eu-central-1'
+            this.queueNameSuffix = '_daily_queue'
+            this.sqsData.queueName = '_daily_queue'
+            break
           case 'gray':
             this.sqsData.regionId = 'eu-west-1'
             this.queueNameSuffix = '_canary_queue'
