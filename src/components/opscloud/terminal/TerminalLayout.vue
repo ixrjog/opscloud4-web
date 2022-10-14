@@ -206,7 +206,12 @@ export default {
       this.socketOnMessage()
     },
     socketOnOpen () {
-      this.socket.onopen = () => { // 链接成功后
+      if (util.cookies.get('token') === undefined && util.cookies.get('token') === null && util.cookies.get('token') === '') {
+        this.$message.error('用户Token失效: 请重新登录平台')
+        return
+      }
+      this.socket.onopen = () => {
+        // WebSocket连接成功后
         try {
           const initMessage = {
             token: util.cookies.get('token'),
