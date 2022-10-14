@@ -54,8 +54,10 @@ export default {
       })
       term.loadAddon(this.fitAddon)
       term.open(document.getElementById(this.server.instanceId))
-      this.fitAddon.fit() // 获取对象的高度和宽度
-      term.focus() // 聚焦
+      // 获取对象的高度和宽度
+      this.fitAddon.fit()
+      // 聚焦窗体
+      term.focus()
       const _this = this
       term.onData(function (cmd) {
         const command = {

@@ -221,6 +221,10 @@ export default {
       this.socketOnMessage()
     },
     socketOnOpen () {
+      if (util.cookies.get('token') === undefined && util.cookies.get('token') === null && util.cookies.get('token') === '') {
+        this.$message.error('用户Token失效: 请重新登录平台')
+        return
+      }
       this.socket.onopen = () => { // 链接成功后
         try {
           this.servers = []
