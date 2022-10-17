@@ -70,5 +70,14 @@ export default [
       auth: true,
       title: '文档-应用副本扩容帮助'
     }
+  },
+  {
+    path: '/docs/workorder/gitlab',
+    name: 'docs-workorder-gitlab',
+    component: () => import('@/pages/docs/workorder/gitlab'),
+    meta: {
+      auth: true,
+      title: '文档-Gitlab帮助'
+    }
   }
 ]
