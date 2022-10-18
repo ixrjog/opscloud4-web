@@ -179,6 +179,7 @@ const serverMonitorStatusOptions = [{
 }]
 
 export default {
+  name: 'server-table',
   data () {
     return {
       instance: {

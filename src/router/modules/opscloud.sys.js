@@ -14,6 +14,7 @@ export default [
     component: () => import('@/pages/sys/tag'),
     meta: {
       auth: true,
+      cache: true,
       title: '标签配置'
     }
   },

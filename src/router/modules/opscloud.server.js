@@ -5,6 +5,7 @@ export default [
     component: () => import('@/pages/server'),
     meta: {
       auth: true,
+      cache: true,
       title: '服务器'
     }
   },
@@ -14,6 +15,7 @@ export default [
     component: () => import('@/pages/server/group'),
     meta: {
       auth: true,
+      cache: true,
       title: '服务器组'
     }
   }

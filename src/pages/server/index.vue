@@ -18,6 +18,7 @@ import ServerAccountTable from '../../components/opscloud/server/ServerAccountTa
 import ServerTable from '../../components/opscloud/server/ServerTable'
 
 export default {
+  name: 'server',
   data () {
     return {
       activeName: 'server'

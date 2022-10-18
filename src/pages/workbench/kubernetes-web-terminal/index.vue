@@ -4,7 +4,7 @@
       <h1>{{ title }}</h1>
     </div>
     <!--      应用选择器-->
-    <el-row v-if="layout.status === 0">
+    <el-row v-show="layout.status === 0">
       <el-card shadow="hover">
         <div slot="header" class="clearfix">
           <span>应用容器详情</span>

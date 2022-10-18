@@ -103,7 +103,7 @@ import RedeployEditor from '@/components/opscloud/application/RedeployEditor'
 import PodPhaseTag from '@/components/opscloud/common/tag/PodPhaseTag'
 
 export default {
-  name: 'ApplicationKubernetesSelector',
+  name: 'application-kubernetes-selector',
   data () {
     return {
       table: {

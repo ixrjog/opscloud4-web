@@ -54,6 +54,7 @@ import Pagination from '../../../components/opscloud/common/page/Pagination'
 import TagEditor from '../../../components/opscloud/tag/TagEditor'
 
 export default {
+  name: 'sys-tag',
   data () {
     return {
       formStatus: {
