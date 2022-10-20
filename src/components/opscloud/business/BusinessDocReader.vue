@@ -2,8 +2,8 @@
   <el-dialog :title="document.displayName + formStatus.title" :visible.sync="formStatus.visible">
     <el-row>
       <el-card shadow="never">
-        <my-markdown v-if="!editing" :content="document.content"></my-markdown>
-        <editor v-if="editing" v-model="document.content" @init="editorInit" lang="yaml" theme="chrome"
+        <my-markdown v-if="!editing" :content="doc.content"></my-markdown>
+        <editor v-if="editing" v-model="doc.content" @init="editorInit" lang="yaml" theme="chrome"
                 height="400"
                 :options="options" ref="editor"></editor>
       </el-card>
@@ -12,7 +12,7 @@
       <div style="width:100%;text-align:center;margin-top:10px">
         <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑文档</el-button>
         <el-button size="mini" type="primary" @click="openUrl" v-show="editing">上传助手</el-button>
-        <el-button size="mini" type="primary" @click="save" v-show="editing">保存文档</el-button>
+        <el-button size="mini" type="primary" @click="saveDoc" v-show="editing">保存文档</el-button>
       </div>
     </el-row>
   </el-dialog>
@@ -20,9 +20,12 @@
 
 <script>
 // API
-import { SAVE_BUSINESS_DOCUMENT } from '@/api/modules/business/business.document.api.js'
+import {
+  GET_BUSINESS_DOCUMENT_BY_UNIQUE_KEY, SAVE_BUSINESS_DOCUMENT
+} from '@/api/modules/business/business.document.api.js'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import util from '@/libs/util'
+import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -38,6 +41,7 @@ export default {
       labelWidth: '150px',
       editing: false,
       document: {},
+      doc: '',
       options: options
     }
   },
@@ -65,6 +69,7 @@ export default {
       if (document !== null) {
         this.document = document
       }
+      this.fetchDoc()
     },
     openUrl () {
       util.open('https://fe.chuanyinet.com/upload')
@@ -72,11 +77,21 @@ export default {
     handleEditing () {
       this.editing = true
     },
-    save () {
+    saveDoc () {
       this.editing = false
-      SAVE_BUSINESS_DOCUMENT(this.document)
+      SAVE_BUSINESS_DOCUMENT(this.doc)
         .then(res => {
           this.$message.success('保存成功!')
+        })
+    },
+    fetchDoc () {
+      const param = {
+        businessType: this.document.businessType,
+        businessId: this.document.businessId
+      }
+      GET_BUSINESS_DOCUMENT_BY_UNIQUE_KEY(param)
+        .then(res => {
+          this.doc = res.body
         })
     }
   }
