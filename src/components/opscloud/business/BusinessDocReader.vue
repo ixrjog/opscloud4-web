@@ -25,7 +25,6 @@ import {
 } from '@/api/modules/business/business.document.api.js'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import util from '@/libs/util'
-import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等

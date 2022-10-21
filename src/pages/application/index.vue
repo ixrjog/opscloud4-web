@@ -11,25 +11,24 @@
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column label="应用" width="250px">
-          <template slot-scope="props">
+          <template slot-scope="scope">
             <el-row>
-              <el-tag disable-transitions type="primary" plain size="mini">{{ props.row.applicationKey }}</el-tag>
+              <span>{{ scope.row.name }}</span>
+              <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
+                         @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
+              </el-button>
             </el-row>
-            <el-row class="nameCopy">
-              <span>{{ props.row.name }}</span>
-              <span v-clipboard:copy="props.row.name" v-clipboard:success="onCopy"
-                    v-clipboard:error="onError">
-              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
-              </span>
+            <el-row v-if="false">
+              <el-tag disable-transitions type="primary" plain size="mini">{{ scope.row.applicationKey }}</el-tag>
             </el-row>
             <el-row>
-              <b style="color: #9d9fa3">{{ props.row.comment }}</b>
+              <b style="color: #9d9fa3">{{ scope.row.comment }}</b>
             </el-row>
           </template>
         </el-table-column>
         <el-table-column prop="resourceMap" label="绑定资源" width="400px">
-          <template slot-scope="props">
-            <div v-for="(value,key) in props.row.resourceMap" :key="key" :label="key" class="resDiv">
+          <template slot-scope="scope">
+            <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key" class="resDiv">
               <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
               <div v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
@@ -49,9 +48,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="tags" label="标签" width="150px">
-          <template slot-scope="props">
+          <template slot-scope="scope">
             <div class="tag-group">
-              <span v-for="item in props.row.tags" :key="item.id">
+              <span v-for="item in scope.row.tags" :key="item.id">
                 <el-tooltip class="item" effect="light" :content="item.comment" placement="top-start">
                   <el-tag size="mini" style="margin-left: 5px" :style="{ color: item.color }">{{ item.tagKey }}</el-tag>
                 </el-tooltip>
@@ -73,6 +72,7 @@
                           @close="fetchData"></application-editor>
       <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                            :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+      <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
     </template>
   </d2-container>
 </template>
@@ -86,6 +86,7 @@ import AppDsInstanceAssetType from '@/components/opscloud/common/enums/applicati
 import UsersTag from '../../components/opscloud/common/tag/UsersTag'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
+import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 
 export default {
   name: 'ApplicationTable',
@@ -121,10 +122,11 @@ export default {
         businessTag: {
           visible: false,
           title: '编辑应用标签'
+        },
+        businessDoc: {
+          visible: false,
+          title: '应用文档'
         }
-      },
-      formPermissionStatus: {
-        visible: false
       }
     }
   },
@@ -154,7 +156,8 @@ export default {
     Pagination,
     ApplicationEditor,
     UsersTag,
-    BusinessTagEditor
+    BusinessTagEditor,
+    BusinessDocReader
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -164,6 +167,10 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    handleDocRead (row) {
+      this.$refs.businessDocReader.initData(Object.assign({}, row.document))
+      this.formStatus.businessDoc.visible = true
     },
     handlerAdd () {
       this.formStatus.application.operationType = true

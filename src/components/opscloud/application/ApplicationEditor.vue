@@ -104,6 +104,10 @@
         <permission-user-tab :businessType="businessType.APPLICATION" :businessId="application.id"
                              ref="permissionUserTab"></permission-user-tab>
       </el-tab-pane>
+      <el-tab-pane label="业务文档" name="document" :disabled="application.id === '' || application.id === 0">
+        <business-doc-editor v-if="application.id !== ''&& application.id !== 0" :business-type="application.businessType" :business-id="application.businessId"
+                             ref="businessDocEditor"></business-doc-editor>
+      </el-tab-pane>
     </el-tabs>
   </el-dialog>
 </template>
@@ -123,6 +127,7 @@ import BusinessType from '@/components/opscloud/common/enums/business.type'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 import PermissionUserTab from '../user/child/BusinessPermissionUserTab'
+import BusinessDocEditor from '@/components/opscloud/business/BusinessDocEditor'
 
 export default {
   data () {
@@ -146,6 +151,7 @@ export default {
   name: 'ApplicationDialog',
   props: ['formStatus'],
   components: {
+    BusinessDocEditor,
     PermissionUserTab
   },
   filters: {
@@ -180,6 +186,9 @@ export default {
       }
       if (tab.name === 'permissionUser') {
         this.$refs.permissionUserTab.init()
+      }
+      if (tab.name === 'document') {
+        this.$refs.businessDocEditor.open(this.application.document)
       }
     },
     handleSelectBusinessType () {

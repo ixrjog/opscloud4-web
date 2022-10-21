@@ -19,6 +19,9 @@
       <el-table-column prop="name" label="应用名称" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
+          <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
+                     @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
+          </el-button>
           <div style="color: #9d9fa3">{{ scope.row.comment }}</div>
           <el-row>
             <business-tags :tags="scope.row.tags"></business-tags>
@@ -90,6 +93,7 @@
       </el-table-column>
     </el-table>
     <redeploy-editor :formStatus="formStatus.redeploy" ref="redeployEditor"></redeploy-editor>
+    <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
   </div>
 </template>
 
@@ -101,6 +105,7 @@ import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import RedeployEditor from '@/components/opscloud/application/RedeployEditor'
 import PodPhaseTag from '@/components/opscloud/common/tag/PodPhaseTag'
+import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 
 export default {
   name: 'application-kubernetes-selector',
@@ -116,7 +121,11 @@ export default {
         }
       },
       formStatus: {
-        redeploy: { visible: false }
+        redeploy: { visible: false },
+        businessDoc: {
+          visible: false,
+          title: '应用文档'
+        }
       },
       queryParam: {
         applicationId: '',
@@ -137,7 +146,8 @@ export default {
     BusinessTags,
     SelectItem,
     RedeployEditor,
-    PodPhaseTag
+    PodPhaseTag,
+    BusinessDocReader
   },
   filters: {},
   methods: {
@@ -161,6 +171,10 @@ export default {
       } else {
         this.fetchData()
       }
+    },
+    handleDocRead (row) {
+      this.$refs.businessDocReader.initData(Object.assign({}, row.document))
+      this.formStatus.businessDoc.visible = true
     },
     handleRemote (remoteServer) {
       this.$emit('handleRemote', remoteServer)
