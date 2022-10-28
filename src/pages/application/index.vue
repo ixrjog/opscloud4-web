@@ -110,7 +110,7 @@ export default {
       },
       businessType: BusinessType.APPLICATION,
       queryParam: {
-        queryName: 'rss'
+        queryName: ''
       },
       formStatus: {
         application: {
