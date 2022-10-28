@@ -81,8 +81,8 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button size="mini" type="primary" :disabled="JSON.stringify(queryParam.resource) === '{}'"
-                         @click="handleBindResources">绑定
+              <el-button size="mini" type="primary" @click="handleBindResources"
+                         :disabled="queryParam.resource === '' || JSON.stringify(queryParam.resource) === '{}'">绑定
               </el-button>
             </el-form-item>
           </el-form>
@@ -100,12 +100,13 @@
           </div>
         </el-col>
       </el-tab-pane>
-      <el-tab-pane label="用户授权" name="permissionUser" v-if="JSON.stringify(application) !== '{}'">
+      <el-tab-pane label="用户授权" name="permissionUser" v-if="application.id !== ''&& application.id !== 0">
         <permission-user-tab :businessType="businessType.APPLICATION" :businessId="application.id"
                              ref="permissionUserTab"></permission-user-tab>
       </el-tab-pane>
       <el-tab-pane label="业务文档" name="document" :disabled="application.id === '' || application.id === 0">
-        <business-doc-editor v-if="application.id !== ''&& application.id !== 0" :business-type="application.businessType" :business-id="application.businessId"
+        <business-doc-editor v-if="application.id !== ''&& application.id !== 0"
+                             :business-type="application.businessType" :business-id="application.businessId"
                              ref="businessDocEditor"></business-doc-editor>
       </el-tab-pane>
     </el-tabs>
@@ -252,6 +253,10 @@ export default {
         })
     },
     handleBindResources () {
+      if (this.queryParam.businessType === '') {
+        this.$message.warning('请选择业务类型产')
+        return
+      }
       BIND_APPLICATION_RES(this.queryParam.resource)
         .then(() => {
           this.getApplicationResource()
