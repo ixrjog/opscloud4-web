@@ -70,7 +70,8 @@ export default {
           id: '',
           businessType: this.businessType,
           businessId: this.businessId,
-          documentType: 1
+          documentType: 1,
+          content: ''
         }
         this.content = ''
       }
@@ -83,6 +84,7 @@ export default {
     },
     save () {
       this.editing = false
+      this.document.content = this.content
       SAVE_BUSINESS_DOCUMENT(this.document)
         .then(res => {
           this.$message.success('保存成功!')
