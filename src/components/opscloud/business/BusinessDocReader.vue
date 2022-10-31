@@ -41,7 +41,9 @@ export default {
       labelWidth: '150px',
       editing: false,
       document: {},
-      doc: '',
+      doc: {
+        content: ''
+      },
       options: options
     }
   },

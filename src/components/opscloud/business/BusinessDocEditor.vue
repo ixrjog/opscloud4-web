@@ -2,11 +2,9 @@
   <div>
     <el-row>
       <el-card shadow="never">
-        <my-markdown v-if="!editing && document.content !== ''" :content="document.content"></my-markdown>
-        <editor v-if="editing && document !==null" v-model="document.content" @init="editorInit" lang="yaml"
-                theme="chrome"
-                height="400"
-                :options="options" ref="editor"></editor>
+        <my-markdown v-if="!editing && content !== ''" :content="content"></my-markdown>
+        <editor v-if="editing && JSON.stringify(document) !== '{}'" v-model="content" @init="editorInit"
+                lang="yaml" theme="chrome" height="400" :options="options" ref="editor"></editor>
       </el-card>
     </el-row>
     <el-row>
@@ -39,7 +37,8 @@ export default {
       labelWidth: '150px',
       editing: false,
       document: {},
-      options: options
+      options: options,
+      content: ''
     }
   },
   name: 'BusinessDocEditor',
@@ -65,6 +64,7 @@ export default {
       this.editing = false
       if (document !== null) {
         this.document = document
+        this.content = document.content
       } else {
         this.document = {
           id: '',
@@ -73,6 +73,7 @@ export default {
           documentType: 1,
           content: ''
         }
+        this.content = ''
       }
     },
     openUrl () {
@@ -83,6 +84,7 @@ export default {
     },
     save () {
       this.editing = false
+      this.document.content = this.content
       SAVE_BUSINESS_DOCUMENT(this.document)
         .then(res => {
           this.$message.success('保存成功!')
