@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedVariable -->
 <template>
   <el-dialog :title="title" :visible.sync="formStatus.visible" width="80%" :before-close='handleClose'>
     <slot></slot>
@@ -207,8 +208,8 @@ export default {
     },
     sendCmd (server, command) {
       this.sendMessage(command)
+      // 强制焦点
       this.$refs[`terminal_${server.name}`][0].focus()
-      // this.terminalMap[this.server.name].focus() // 强制焦点
     },
     /**
      * WS初始化
@@ -222,14 +223,16 @@ export default {
     },
     socketOnOpen () {
       if (util.cookies.get('token') === undefined && util.cookies.get('token') === null && util.cookies.get('token') === '') {
-        this.$message.error('用户Token失效: 请重新登录平台')
+        this.$message.error('用户Token失效, 请重新登录平台')
         return
       }
-      this.socket.onopen = () => { // 链接成功后
+      // socket连接成功
+      this.socket.onopen = () => {
         try {
           this.servers = []
           this.servers.push(this.server)
-          this.$nextTick(() => { // 需要延迟执行
+          // 延迟执行
+          this.$nextTick(() => {
             const initMessage = {
               token: util.cookies.get('token'),
               instanceId: this.server.name,
@@ -246,7 +249,7 @@ export default {
             })
           })
         } catch (e) {
-          this.$message.error('登录失败，未选择服务器或其它原因')
+          this.$message.error('登录失败, 未选择服务器或其它原因')
         }
       }
     },
@@ -256,7 +259,7 @@ export default {
     },
     socketOnError () {
       this.socket.onerror = () => {
-        // console.log('socket 链接失败')
+        this.$message.error('服务端连接失败, WebSocket错误!')
       }
     },
     socketOnSend (data) {

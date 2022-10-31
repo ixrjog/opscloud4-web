@@ -105,7 +105,8 @@
                              ref="permissionUserTab"></permission-user-tab>
       </el-tab-pane>
       <el-tab-pane label="业务文档" name="document" :disabled="application.id === '' || application.id === 0">
-        <business-doc-editor v-if="application.id !== ''&& application.id !== 0" :business-type="application.businessType" :business-id="application.businessId"
+        <business-doc-editor v-if="application.id !== ''&& application.id !== 0"
+                             :business-type="application.businessType" :business-id="application.businessId"
                              ref="businessDocEditor"></business-doc-editor>
       </el-tab-pane>
     </el-tabs>
@@ -163,6 +164,8 @@ export default {
           return '项目(GITLAB_PROJECT)'
         case AppDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
           return '无状态(DEPLOYMENT)'
+        case 'DATASOURCE_INSTANCE':
+          return '数据源实例'
         case 'SERVERGROUP':
           return '服务器组(SERVER_GROUP)'
         case 'SERVER':
@@ -222,16 +225,19 @@ export default {
     },
     getResource (queryName) {
       this.clearResOptions()
-      let applicationResType
+      let appResType
       switch (this.queryParam.businessType) {
         case this.businessType.SERVER:
-          applicationResType = 'SERVER'
+          appResType = 'SERVER'
           break
         case this.businessType.SERVERGROUP:
-          applicationResType = 'SERVERGROUP'
+          appResType = 'SERVERGROUP'
+          break
+        case this.businessType.DATASOURCE_INSTANCE:
+          appResType = 'DATASOURCE_INSTANCE'
           break
         case this.businessType.ASSET:
-          applicationResType = this.queryParam.assetType
+          appResType = this.queryParam.assetType
           break
         default:
           this.$message.warning('暂不支持绑定该类型')
@@ -242,7 +248,7 @@ export default {
         instanceUuid: this.queryParam.dsInstance !== {} ? this.queryParam.dsInstance.uuid : '',
         applicationId: this.application.id,
         businessType: this.queryParam.businessType,
-        applicationResType: applicationResType,
+        appResType: appResType,
         page: 1,
         length: 20
       }
@@ -267,7 +273,7 @@ export default {
     getAssetInstance () {
       const requestBody = {
         isActive: true,
-        extend: true
+        extend: false
       }
       QUERY_DATASOURCE_INSTANCE(requestBody)
         .then(({ body }) => {
@@ -333,18 +339,12 @@ export default {
 </script>
 
 <style scoped lang="less">
-/*.resDiv {*/
-/*  .el-tag {*/
-/*    margin-right: 5px;*/
-/*  }*/
-/*}*/
 
 .resTabPane {
   & .el-select {
     max-width: 80%;
     width: 80%;
   }
-
   .el-col {
     p {
       margin: 0px;

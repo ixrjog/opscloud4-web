@@ -5,6 +5,7 @@ const BusinessType = Object.freeze({
   USERGROUP: 4,
   ASSET: 5,
   APPLICATION: 8,
+  DATASOURCE_INSTANCE: 16,
   WORK_EVENT: 102
 })
 
