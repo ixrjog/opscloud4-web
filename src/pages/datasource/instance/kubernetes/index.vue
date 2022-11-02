@@ -60,7 +60,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="业务模版" name="template">
+      <el-tab-pane label="业务模板" name="template">
         <kubernetes-template-table :instanceUuid="instance.uuid" ref="templateTable">
         </kubernetes-template-table>
       </el-tab-pane>
