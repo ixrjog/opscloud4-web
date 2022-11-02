@@ -1,12 +1,9 @@
 <template>
   <d2-container>
-    <h1>服务器管理</h1>
+    <h1>Leo模板管理</h1>
     <el-tabs v-model="activeName">
-      <el-tab-pane label="服务器管理" name="server">
-        <server-table></server-table>
-      </el-tab-pane>
-      <el-tab-pane label="账户管理" name="account">
-        <server-account-table></server-account-table>
+      <el-tab-pane label="模板配置" name="template">
+        <leo-template-table></leo-template-table>
       </el-tab-pane>
     </el-tabs>
   </d2-container>
@@ -14,21 +11,19 @@
 
 <script>
 
-import ServerAccountTable from '../../components/opscloud/server/ServerAccountTable'
-import ServerTable from '../../components/opscloud/server/ServerTable'
+import LeoTemplateTable from '@/components/opscloud/leo/LeoTemplateTable'
 
 export default {
-  name: 'server',
+  name: 'leoTemplate',
   data () {
     return {
-      activeName: 'server'
+      activeName: 'template'
     }
   },
   mounted () {
   },
   components: {
-    ServerTable,
-    ServerAccountTable
+    LeoTemplateTable
   },
   methods: {
   }
