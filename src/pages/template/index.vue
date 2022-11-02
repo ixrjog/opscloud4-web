@@ -2,7 +2,7 @@
   <d2-container>
     <h1>模板管理</h1>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="模版" name="template">
+      <el-tab-pane label="模板" name="template">
         <template-table ref="templateTable"></template-table>
       </el-tab-pane>
     </el-tabs>
