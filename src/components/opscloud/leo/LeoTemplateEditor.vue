@@ -52,7 +52,6 @@
 // API
 import { ADD_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE } from '@/api/modules/leo/leo.template.api'
 
-import LeoConfigEditor from '@/components/opscloud/leo/LeoConfigEditor'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const options = {
@@ -86,7 +85,6 @@ export default {
   props: ['formStatus'],
   components: {
     MyHighlight,
-    LeoConfigEditor,
     editor: require('vue2-ace-editor')
   },
   mixins: [],

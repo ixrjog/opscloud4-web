@@ -10,7 +10,6 @@ export function QUERY_LEO_TEMPLATE_PAGE (data) {
   })
 }
 
-
 export function ADD_LEO_TEMPLATE (data) {
   return request({
     url: baseUrl + '/add',
