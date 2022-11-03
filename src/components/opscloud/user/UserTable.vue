@@ -2,6 +2,16 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
+      <el-select
+        v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+        placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
+        <el-option
+          v-for="item in tagOptions"
+          :key="item.id"
+          :label="item.tagKey"
+          :value="item.id">
+        </el-option>
+      </el-select>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新建</el-button>
@@ -117,6 +127,7 @@ import BusinessType from '@/components/opscloud/common/enums/business.type'
 import util from '@/libs/util'
 import CopySpan from '@/components/opscloud/common/CopySpan'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
+import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
 
 export default {
   name: 'UserTable',
@@ -154,14 +165,17 @@ export default {
         queryName: '',
         filterTag: true,
         isActive: true,
+        tagId: '',
         extend: true
       },
-      businessType: BusinessType.USER
+      businessType: BusinessType.USER,
+      tagOptions: []
     }
   },
   computed: {},
   mounted () {
     this.fetchData()
+    this.getTag('')
   },
   filters: {
     getAmTypeText (value) {
@@ -190,6 +204,19 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    getTag (name) {
+      const requestBody = {
+        tagKey: name,
+        businessType: this.businessType,
+        append: true,
+        page: 1,
+        length: 20
+      }
+      QUERY_TAG_PAGE(requestBody)
+        .then(res => {
+          this.tagOptions = res.body.data
+        })
     },
     handleRowTagEdit (row) {
       this.instance.id = row.id
@@ -273,6 +300,10 @@ export default {
 .el-input {
   display: inline-block;
   max-width: 200px;
+}
+
+.el-select {
+  margin-left: 5px;
 }
 
 .el-button {

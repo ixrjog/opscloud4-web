@@ -3,7 +3,7 @@
     <el-row :gutter="24" style="margin-left: 0px;">
       <el-input v-model="queryParam.roleName" placeholder="角色名称"/>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
-      <el-button @click="handlerRowAdd" style="margin-left: 5px">新增</el-button>
+      <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
       <el-table-column prop="roleName" label="名称" width="300"></el-table-column>
@@ -14,11 +14,11 @@
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="280">
+      <el-table-column label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
-          <el-button type="primary" plain size="mini" @click="handlerEditMenu(scope.row)">菜单</el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" plain size="mini" @click="handleEditMenu(scope.row)">菜单</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -89,16 +89,16 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.$refs.roleEditor.initData(Object.assign({}, row))
       this.formStatus.role.operationType = false
       this.formStatus.role.visible = true
     },
-    handlerEditMenu (row) {
+    handleEditMenu (row) {
       this.$refs.roleMenuEditor.initData(Object.assign({}, row))
       this.formStatus.roleMenu.visible = true
     },
-    handlerRowAdd () {
+    handleRowAdd () {
       const role = {
         id: '',
         roleName: '',
@@ -110,7 +110,7 @@ export default {
       this.formStatus.role.operationType = true
       this.formStatus.role.visible = true
     },
-    handlerRowDel (row) {
+    handleRowDel (row) {
       DELETE_ROLE_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功！')

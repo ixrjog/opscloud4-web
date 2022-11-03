@@ -13,6 +13,7 @@ import workorder from './modules/opscloud.workorder'
 import application from './modules/opscloud.application'
 import task from './modules/opscloud.task'
 import docs from './modules/opscloud.docs'
+import leo from './modules/opscloud.leo'
 
 import layoutHeaderAside from '@/layout/header-aside'
 
@@ -81,7 +82,9 @@ const frameIn = [
       // 应用
       ...application,
       ...task,
-      ...docs
+      ...docs,
+      // 发布模块
+      ...leo
     ]
   },
   playground,

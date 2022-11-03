@@ -28,6 +28,9 @@
       <!--        <el-button @click="handlerPreviewUserDoc">用户文档</el-button>-->
       <!--      </el-tooltip>-->
       <el-button @click="handleSetting">终端设置</el-button>
+      <el-tooltip class="item" effect="light" content="单窗口最大化显示" placement="bottom">
+        <el-button @click="handleFullScreen" v-if="mode === 1">全屏模式</el-button>
+      </el-tooltip>
       <el-tooltip class="item" effect="light" content="修复终端字符错位" placement="bottom">
         <el-button @click="handleResize" v-if="mode === 1">调整大小</el-button>
       </el-tooltip>
@@ -114,6 +117,9 @@ export default {
     handleChangeBatch () {
       this.$emit('handleChangeBatch')
     },
+    handleFullScreen () {
+      this.$emit('handleFullScreen')
+    },
     handleResize () {
       this.$emit('handleResize')
     },
@@ -128,8 +134,8 @@ export default {
 </script>
 
 <style scoped>
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

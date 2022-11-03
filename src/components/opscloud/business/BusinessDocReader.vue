@@ -35,6 +35,7 @@ const options = {
 }
 
 export default {
+  name: 'business-doc-reader',
   data () {
     return {
       labelWidth: '150px',
@@ -46,7 +47,6 @@ export default {
       options: options
     }
   },
-  name: 'BusinessDocRdader',
   props: ['formStatus'],
   mixins: [],
   components: {

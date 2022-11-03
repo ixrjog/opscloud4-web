@@ -39,6 +39,18 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="任务模板" name="template">
+        <asset-table :instanceId="instanceId" :assetType="assetType.JENKINS.JENKINS_TEMPLATE"
+                     :tableLayout="tableLayout.template" ref="templateTable">
+          <template v-slot:extend>
+            <el-table-column prop="properties" label="_class">
+              <template slot-scope="scope">
+                {{ scope.row.properties._class }}
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -62,6 +74,26 @@ const tableLayout = {
     },
     assetKey: {
       alias: 'sshUrl',
+      show: false
+    },
+    assetKey2: {
+      alias: '',
+      show: false
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  template: {
+    assetId: {
+      alias: '模板路径'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '',
       show: false
     },
     assetKey2: {
@@ -102,6 +134,9 @@ export default {
       }
       if (tab.name === 'computer') {
         this.$refs.computerTable.fetchData()
+      }
+      if (tab.name === 'template') {
+        this.$refs.templateTable.fetchData()
       }
     },
     init () {

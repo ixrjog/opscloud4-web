@@ -18,7 +18,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
-      <el-button @click="handlerRowAdd" style="margin-left: 5px">新增</el-button>
+      <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
       <el-table-column prop="resourceName" label="资源" width="400"></el-table-column>
@@ -38,10 +38,10 @@
           <whether-tag :whether="scope.row.ui"></whether-tag>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="280">
+      <el-table-column label="操作" width="280">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -134,12 +134,12 @@ export default {
           this.groupOptions = res.body.data
         })
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.$refs.resourceEditor.initData(Object.assign({}, row))
       this.formStatus.resource.operationType = false
       this.formStatus.resource.visible = true
     },
-    handlerRowAdd () {
+    handleRowAdd () {
       const group = this.queryParam.groupId === '' ? null : this.groupOptions.find(e => e.id === this.queryParam.groupId)
       const resource = {
         id: '',
@@ -155,7 +155,7 @@ export default {
       this.formStatus.resource.operationType = true
       this.formStatus.resource.visible = true
     },
-    handlerRowDel (row) {
+    handleRowDel (row) {
       DELETE_RESOURCE_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功！')
