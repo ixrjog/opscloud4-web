@@ -7,6 +7,7 @@ const BusinessType = Object.freeze({
   APPLICATION: 8,
   DATASOURCE_INSTANCE: 16,
   LEO_TEMPLATE: 20,
+  LEO_JOB: 21,
   WORK_EVENT: 102
 })
 

@@ -1,0 +1,267 @@
+<template>
+  <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
+             :visible.sync="formStatus.visible" width="75%">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="基本信息" name="base">
+        <el-form :model="leoJob">
+          <el-form-item label="显示名称" :label-width="formStatus.labelWidth" required>
+            <el-input v-model="leoJob.name" placeholder="请输入内容"></el-input>
+          </el-form-item>
+          <el-form-item label="任务主键" :label-width="formStatus.labelWidth" required>
+            <el-input v-model="leoJob.jobKey" placeholder="请输入内容"
+                      :disabled="leoJob.id !== '' && leoJob.id !== 0"></el-input>
+          </el-form-item>
+          <el-form-item label="应用" :label-width="formStatus.labelWidth" required>
+            <el-select v-model.trim="leoJob.applicationId"  filterable clearable
+                       remote reserve-keyword placeholder="搜索应用" :remote-method="getApplication" @clear="getApplication('')">
+              <el-option
+                v-for="item in applicationOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"></select-item>
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="任务模板" :label-width="formStatus.labelWidth" required>
+            <el-select v-model.trim="leoJob.templateId"  filterable clearable
+                       remote reserve-keyword placeholder="搜索任务模板" :remote-method="getTemplate" @clear="getTemplate('')">
+              <el-option
+                v-for="item in templateOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"></select-item>
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="环境" :label-width="formStatus.labelWidth" required>
+            <el-select v-model.trim="leoJob.envType" clearable
+                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv">
+              <el-option
+                v-for="item in envOptions"
+                :key="item.envType"
+                :label="item.envName"
+                :value="item.envType">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
+            <el-select v-model="leoJob.isActive" placeholder="选择">
+              <el-option
+                v-for="item in activeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="说明" :label-width="formStatus.labelWidth">
+            <el-input v-model="leoJob.comment" placeholder="请输入内容"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="模板YML" name="ymlConfig" :disabled="leoJob.id === '' || leoJob.id === 0">
+        <el-row>
+          <el-card shadow="never">
+            <my-highlight v-if="!editing && leoJob.jobConfig !== ''" :code="leoJob.jobConfig"
+                          lang="yaml" :myStyle="style"></my-highlight>
+            <editor v-if="editing && JSON.stringify(leoJob.jobConfig) !== '{}'"
+                    v-model="leoJob.jobConfig" @init="editorInit"
+                    lang="yaml" theme="chrome" height="400" :options="options" ref="editor"
+                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"></editor>
+          </el-card>
+        </el-row>
+        <el-row>
+          <div style="width:100%;text-align:center;margin-top:10px">
+            <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑</el-button>
+          </div>
+        </el-row>
+      </el-tab-pane>
+      <el-tab-pane label="模板内容" name="templateContent" :disabled="leoJob.id === '' || leoJob.id === 0">
+        <el-row>
+          <el-card shadow="never">
+            <my-highlight v-if="!editing && JSON.stringify(leoJob.templateContent) !== '{}'"
+                          :code="leoJob.templateContent"
+                          lang="xml" :myStyle="style"></my-highlight>
+          </el-card>
+        </el-row>
+        <el-row>
+          <div style="width:100%;text-align:center;margin-top:10px">
+            <el-button size="mini" type="primary" @click="handleUpgradeContent" v-show="!editing"
+                       :loading="buttons.upgradeTemplateContent">升级
+            </el-button>
+          </div>
+        </el-row>
+      </el-tab-pane>
+    </el-tabs>
+    <div slot="footer" class="dialog-footer">
+      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
+    </div>
+  </el-dialog>
+</template>
+
+<script>
+
+// API
+import { ADD_LEO_JOB, UPDATE_LEO_JOB, UPGRADE_LEO_JOB_TEMPLATE_CONTENT } from '@/api/modules/leo/leo.job.api'
+
+import MyHighlight from '@/components/opscloud/common/MyHighlight'
+import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
+import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
+import SelectItem from '@/components/opscloud/common/SelectItem'
+import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api'
+
+const options = {
+  // vue2-ace-editor编辑器配置自动补全等
+  enableBasicAutocompletion: true,
+  enableSnippets: true,
+  // 自动补全
+  enableLiveAutocompletion: true
+}
+
+const activeOptions = [{
+  value: true,
+  label: '有效'
+}, {
+  value: false,
+  label: '无效'
+}]
+
+export default {
+  data () {
+    return {
+      activeName: 'base',
+      leoJob: '',
+      activeOptions: activeOptions,
+      editing: false,
+      options: options,
+      style: { height: '400px' },
+      envOptions: [],
+      applicationOptions: [],
+      templateOptions: [],
+      buttons: {
+        upgradeTemplateContent: false
+      }
+    }
+  },
+  name: 'LeoJobEditor',
+  props: ['formStatus'],
+  components: {
+    MyHighlight,
+    SelectItem,
+    editor: require('vue2-ace-editor')
+  },
+  mixins: [],
+  mounted () {
+  },
+  methods: {
+    editorInit: function () {
+      // language extension prerequsite...
+      require('brace/ext/language_tools')
+      // language
+      require('brace/mode/yaml')
+      require('brace/mode/xml')
+      require('brace/theme/chrome')
+      // snippet
+      require('brace/snippets/yaml')
+      require('brace/snippets/xml')
+    },
+    getEnv (name) {
+      const requestBody = {
+        envName: name,
+        page: 1,
+        length: 20
+      }
+      QUERY_ENV_PAGE(requestBody)
+        .then(res => {
+          this.envOptions = res.body.data
+        })
+    },
+    getApplication (name) {
+      const requestBody = {
+        queryName: name,
+        extend: false,
+        page: 1,
+        length: 20
+      }
+      QUERY_APPLICATION_KUBERNETES_PAGE(requestBody)
+        .then(res => {
+          this.applicationOptions = res.body.data
+        })
+    },
+    getTemplate (name) {
+      const requestBody = {
+        queryName: name,
+        extend: false,
+        page: 1,
+        length: 20
+      }
+      QUERY_LEO_TEMPLATE_PAGE(requestBody)
+        .then(res => {
+          this.templateOptions = res.body.data
+        })
+    },
+    handleEditing () {
+      this.editing = true
+    },
+    initData (leoJob) {
+      this.activeName = 'base'
+      // 环境选项
+      this.getEnv()
+      // 模板选项
+      if (JSON.stringify(leoJob.template) !== '{}') {
+        this.templateOptions = []
+        this.templateOptions.push(leoJob.template)
+      } else {
+        this.getTemplate('')
+      }
+      if (JSON.stringify(leoJob.application) !== '{}') {
+        this.applicationOptions = []
+        this.applicationOptions.push(leoJob.application)
+      } else {
+        this.getApplication('')
+      }
+      this.leoJob = leoJob
+    },
+    handleClick (tab, event) {
+      if (tab.name === 'ymlConfig') {
+        this.editing = false
+      }
+    },
+    handleUpgradeContent () {
+      this.buttons.upgradeTemplateContent = true
+      UPGRADE_LEO_JOB_TEMPLATE_CONTENT(this.leoJob)
+        .then((res) => {
+          this.$message.success('升级模板内容成功!')
+          this.leoTemplate = res.body
+          this.buttons.upgradeTemplateContent = false
+        })
+    },
+    handleUpdate () {
+      UPDATE_LEO_JOB(this.leoJob)
+        .then(() => {
+          this.$message.success('保存成功!')
+          this.formStatus.visible = false
+          this.$emit('close')
+        })
+    },
+    handleAdd () {
+      ADD_LEO_JOB(this.leoJob)
+        .then(() => {
+          this.$message.success('新增成功!')
+          this.formStatus.visible = false
+          this.$emit('close')
+        })
+    },
+    handleSave () {
+      if (this.formStatus.operationType) {
+        this.handleAdd()
+      } else {
+        this.handleUpdate()
+      }
+    }
+  }
+}
+</script>

@@ -30,12 +30,28 @@
                           lang="yaml" :myStyle="style"></my-highlight>
             <editor v-if="editing && JSON.stringify(leoTemplate.templateConfig) !== '{}'"
                     v-model="leoTemplate.templateConfig" @init="editorInit"
-                    lang="yaml" theme="chrome" height="400" :options="options" ref="editor"></editor>
+                    lang="yaml" theme="chrome" height="400" :options="options" ref="editor"
+                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"></editor>
           </el-card>
         </el-row>
         <el-row>
           <div style="width:100%;text-align:center;margin-top:10px">
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑</el-button>
+          </div>
+        </el-row>
+      </el-tab-pane>
+      <el-tab-pane label="模板内容" name="templateContent" :disabled="leoTemplate.id === '' || leoTemplate.id === 0">
+        <el-row>
+          <el-card shadow="never">
+            <my-highlight v-if="!editing && leoTemplate.templateContent !== ''" :code="leoTemplate.templateContent"
+                          lang="html" :myStyle="style"></my-highlight>
+          </el-card>
+        </el-row>
+        <el-row>
+          <div style="width:100%;text-align:center;margin-top:10px">
+            <el-button size="mini" type="primary" @click="handleUpdateContent" v-show="!editing"
+                       :loading="buttons.updateTemplateContent">导入
+            </el-button>
           </div>
         </el-row>
       </el-tab-pane>
@@ -50,7 +66,7 @@
 <script>
 
 // API
-import { ADD_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE } from '@/api/modules/leo/leo.template.api'
+import { ADD_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE_CONTENT } from '@/api/modules/leo/leo.template.api'
 
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
@@ -78,7 +94,10 @@ export default {
       activeOptions: activeOptions,
       editing: false,
       options: options,
-      style: { height: '400px' }
+      style: { height: '400px' },
+      buttons: {
+        updateTemplateContent: false
+      }
     }
   },
   name: 'LeoTemplateEditor',
@@ -96,9 +115,11 @@ export default {
       require('brace/ext/language_tools')
       // language
       require('brace/mode/yaml')
+      require('brace/mode/xml')
       require('brace/theme/chrome')
       // snippet
       require('brace/snippets/yaml')
+      require('brace/snippets/xml')
     },
     handleEditing () {
       this.editing = true
@@ -112,16 +133,25 @@ export default {
         this.editing = false
       }
     },
-    handleUpdate (requestBody) {
-      UPDATE_LEO_TEMPLATE(requestBody)
+    handleUpdateContent () {
+      this.buttons.updateTemplateContent = true
+      UPDATE_LEO_TEMPLATE_CONTENT(this.leoTemplate)
+        .then((res) => {
+          this.$message.success('更新模板内容成功!')
+          this.leoTemplate = res.body
+          this.buttons.updateTemplateContent = false
+        })
+    },
+    handleUpdate () {
+      UPDATE_LEO_TEMPLATE(this.leoTemplate)
         .then(() => {
           this.$message.success('保存成功!')
           this.formStatus.visible = false
           this.$emit('close')
         })
     },
-    handleAdd (requestBody) {
-      ADD_LEO_TEMPLATE(requestBody)
+    handleAdd () {
+      ADD_LEO_TEMPLATE(this.leoTemplate)
         .then(() => {
           this.$message.success('新增成功!')
           this.formStatus.visible = false
@@ -130,9 +160,9 @@ export default {
     },
     handleSave () {
       if (this.formStatus.operationType) {
-        this.handleAdd(this.leoTemplate)
+        this.handleAdd()
       } else {
-        this.handleUpdate(this.leoTemplate)
+        this.handleUpdate()
       }
     }
   }

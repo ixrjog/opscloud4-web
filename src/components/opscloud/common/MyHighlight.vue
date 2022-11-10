@@ -55,6 +55,7 @@ export default {
       const code = this.formatHtml ? htmlFormat(this.code) : this.code
       this.highlightHTML = highlight.highlightAuto(code, [
         this.lang,
+        'xml',
         'html',
         'javascript',
         'json',

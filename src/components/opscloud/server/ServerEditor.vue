@@ -62,10 +62,10 @@
           <el-form-item label="区" :label-width="labelWidth">
             <el-input v-model="server.area" placeholder="请输入内容"></el-input>
           </el-form-item>
-          <el-form-item label="公网ip" :label-width="labelWidth">
+          <el-form-item label="公网IP" :label-width="labelWidth">
             <el-input v-model="server.publicIp" placeholder="请输入内容"></el-input>
           </el-form-item>
-          <el-form-item label="私网ip" :label-width="labelWidth" required>
+          <el-form-item label="私网IP" :label-width="labelWidth" required>
             <el-input v-model="server.privateIp" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="序号" :label-width="labelWidth" required>
