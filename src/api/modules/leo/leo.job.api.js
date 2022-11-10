@@ -1,8 +1,8 @@
 import { request } from '@/api/_service.js'
 
-const baseUrl = '/leo/template'
+const baseUrl = '/leo/job'
 
-export function QUERY_LEO_TEMPLATE_PAGE (data) {
+export function QUERY_LEO_JOB_PAGE (data) {
   return request({
     url: baseUrl + '/page/query',
     method: 'post',
@@ -10,7 +10,7 @@ export function QUERY_LEO_TEMPLATE_PAGE (data) {
   })
 }
 
-export function ADD_LEO_TEMPLATE (data) {
+export function ADD_LEO_JOB (data) {
   return request({
     url: baseUrl + '/add',
     method: 'post',
@@ -18,7 +18,7 @@ export function ADD_LEO_TEMPLATE (data) {
   })
 }
 
-export function UPDATE_LEO_TEMPLATE (data) {
+export function UPDATE_LEO_JOB (data) {
   return request({
     url: baseUrl + '/update',
     method: 'put',
@@ -26,9 +26,9 @@ export function UPDATE_LEO_TEMPLATE (data) {
   })
 }
 
-export function UPDATE_LEO_TEMPLATE_CONTENT (data) {
+export function UPGRADE_LEO_JOB_TEMPLATE_CONTENT (data) {
   return request({
-    url: baseUrl + '/content/update',
+    url: baseUrl + '/template/content/upgrade',
     method: 'put',
     data
   })

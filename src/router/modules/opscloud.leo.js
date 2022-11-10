@@ -6,7 +6,17 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: 'Leo模板'
+      title: 'Leo模板管理'
+    }
+  },
+  {
+    path: '/leo/job',
+    name: 'leoJob',
+    component: () => import('@/pages/leo/job'),
+    meta: {
+      auth: true,
+      cache: true,
+      title: 'Leo任务管理'
     }
   }
 ]
