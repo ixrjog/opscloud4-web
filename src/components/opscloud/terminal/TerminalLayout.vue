@@ -64,7 +64,8 @@ export default {
       terminalState: TerminalState,
       socketURI: util.wsUrl(wsUrl),
       socket: null,
-      timer: null // 心跳定时器
+      // 心跳定时器
+      timer: null
     }
   },
   components: {
