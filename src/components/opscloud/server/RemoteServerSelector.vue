@@ -156,6 +156,7 @@ export default {
       const requestBody = {
         tagKey: name,
         businessType: this.businessType,
+        append: true,
         page: 1,
         length: 20
       }

@@ -13,7 +13,8 @@
           <el-form-item label="项目地址" :label-width="formStatus.labelWidth">
             <el-input v-model="leoJob.configDetails.job.gitLab.project.sshUrl" readonly style="width: 500px"></el-input>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
-                         style="margin-left: 20px" @change="getBranchOptions">查询 Tag
+                         style="margin-left: 20px" @change="getBranchOptions">查询<span
+              style="margin-left: 2px">Tag</span>
             </el-checkbox>
           </el-form-item>
           <el-form-item label="构建分支" :label-width="formStatus.labelWidth" required>
@@ -41,7 +42,7 @@
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
-          <el-button size="mini" type="primary" @click="doBuild" icon="fa fa-play" :loading="buttons.building"
+          <el-button size="mini" type="primary" @click="doBuild" icon="fa fa-play" :loading="buttons.doBuilding"
                      :disabled="buttons.building"><span style="margin-left: 2px">执行构建</span>
           </el-button>
         </div>
@@ -77,6 +78,7 @@ export default {
       doBuildParam: {
         jobId: '',
         branch: '',
+        params: {},
         versionName: '',
         versionDesc: ''
       },
@@ -91,7 +93,7 @@ export default {
       options: options,
       style: { height: '400px' },
       buttons: {
-        building: false
+        doBuilding: false
       }
     }
   },
@@ -122,6 +124,7 @@ export default {
       this.buttons.building = false
       this.leoJob = leoJob
       this.doBuildParam.branch = leoJob.configDetails.job.gitLab.project.branch
+      this.doBuildParam.jobId = this.leoJob.id
       this.getBranchOptionsParam = {
         jobId: this.leoJob.id,
         sshUrl: this.leoJob.configDetails.job.gitLab.project.sshUrl,
@@ -143,12 +146,22 @@ export default {
         })
     },
     doBuild () {
-      this.buttons.building = true
-      DO_BUILD(this.leoJob)
-        .then(() => {
-          this.$message.success('保存成功!')
-          this.buttons.building = false
-        })
+      this.buttons.doBuilding = true
+      DO_BUILD(this.doBuildParam)
+        .then(res => {
+          if (res.success) {
+            this.$message({
+              type: 'success',
+              message: '任务执行中!'
+            })
+          } else {
+            this.$message.error(res.msg)
+          }
+          this.buttons.doBuilding = false
+        }).catch((res) => {
+        this.buttons.doBuilding = false
+        this.$message.error(res.msg)
+      })
     }
   }
 }

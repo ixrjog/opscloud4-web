@@ -92,6 +92,8 @@ export function getAssetTypeText (value) {
       return '服务'
     case DsInstanceAssetType.JENKINS.JENKINS_COMPUTER:
       return '计算节点'
+    case DsInstanceAssetType.JENKINS.JENKINS_TEMPLATE:
+      return '任务模板'
     // Ansible
     case DsInstanceAssetType.ANSIBLE.ANSIBLE_VERSION:
       return '版本'
