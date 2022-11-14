@@ -35,6 +35,7 @@ export default {
       return this.fitAddon
     },
     init () {
+      // https://github.com/xtermjs/xterm.js/blob/3.12.0/typings/xterm.d.ts#L16
       const term = new Terminal({
         rendererType: 'canvas', // 渲染类型
         allowTransparency: true,
@@ -48,7 +49,8 @@ export default {
         screenKeys: false,
         debug: false,
         cancelEvents: false,
-        cursorStyle: 'underline', // 光标样式
+        // 光标样式 cursorStyle?: 'block' | 'underline' # 白色闪烁 | 'bar';
+        cursorStyle: 'block',
         cursorBlink: true, // 光标闪烁
         convertEol: true // 启用时，光标将设置为下一行的开头
       })

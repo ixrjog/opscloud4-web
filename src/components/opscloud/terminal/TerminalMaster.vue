@@ -53,9 +53,15 @@ const message = {
 }
 
 const theme = {
-  foreground: '#181818', // 字体
-  background: '#EEEEEE', // 背景色
-  cursor: 'help', // 设置光标
+  // 字体色
+  foreground: '#181818',
+  // 背景色
+  background: '#EEEEEE',
+  /** The cursor color 设置光标 */
+  cursor: 'help',
+  /** The accent color of the cursor (used as the foreground color for a block cursor) */
+  cursorAccent: '#838383',
+  //selection: '#f10b15',
   red: '#dd7479',
   blue: '#1BD1FF'
 }
