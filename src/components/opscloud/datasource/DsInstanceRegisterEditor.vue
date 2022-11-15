@@ -117,6 +117,9 @@ export default {
         case this.dsInstanceType.NACOS.type:
           instanceType = this.dsInstanceType.NACOS
           break
+        case this.dsInstanceType.DINGTALK_ROBOT.type:
+          instanceType = this.dsInstanceType.DINGTALK_ROBOT
+          break
         case this.dsInstanceType.DINGTALK_APP.type:
           instanceType = this.dsInstanceType.DINGTALK_APP
           break
@@ -131,7 +134,7 @@ export default {
           break
         default:
           this.$message({
-            message: '未知的实例类型',
+            message: '未知的数据源实例类型',
             type: 'warning'
           })
       }

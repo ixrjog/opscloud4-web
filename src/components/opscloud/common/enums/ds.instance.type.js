@@ -114,6 +114,16 @@ const DsInstanceType = Object.freeze({
       }
     ]
   },
+  DINGTALK_ROBOT: {
+    type: 13,
+    name: 'DINGTALK_ROBOT',
+    instanceType: [
+      {
+        value: 'DINGTALK_ROBOT',
+        label: 'DINGTALK_ROBOT'
+      }
+    ]
+  },
   DINGTALK_APP: {
     type: 14,
     name: 'DINGTALK_APP',
