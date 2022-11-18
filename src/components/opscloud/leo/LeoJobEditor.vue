@@ -12,8 +12,9 @@
                       :disabled="leoJob.id !== '' && leoJob.id !== 0"></el-input>
           </el-form-item>
           <el-form-item label="应用" :label-width="formStatus.labelWidth" required>
-            <el-select v-model.trim="leoJob.applicationId"  filterable clearable
-                       remote reserve-keyword placeholder="搜索应用" :remote-method="getApplication" @clear="getApplication('')">
+            <el-select v-model.trim="leoJob.applicationId" filterable clearable
+                       remote reserve-keyword placeholder="搜索应用" :remote-method="getApplication"
+                       @clear="getApplication('')">
               <el-option
                 v-for="item in applicationOptions"
                 :key="item.id"
@@ -24,8 +25,9 @@
             </el-select>
           </el-form-item>
           <el-form-item label="任务模板" :label-width="formStatus.labelWidth" required>
-            <el-select v-model.trim="leoJob.templateId"  filterable clearable
-                       remote reserve-keyword placeholder="搜索任务模板" :remote-method="getTemplate" @clear="getTemplate('')">
+            <el-select v-model.trim="leoJob.templateId" filterable clearable
+                       remote reserve-keyword placeholder="搜索任务模板" :remote-method="getTemplate"
+                       @clear="getTemplate('')">
               <el-option
                 v-for="item in templateOptions"
                 :key="item.id"
@@ -232,7 +234,7 @@ export default {
     },
     handleUpgradeContent () {
       this.buttons.upgradeTemplateContent = true
-      UPGRADE_LEO_JOB_TEMPLATE_CONTENT(this.leoJob)
+      UPGRADE_LEO_JOB_TEMPLATE_CONTENT({ jobId: this.leoJob.id })
         .then((res) => {
           this.$message.success('升级模板内容成功!')
           this.leoTemplate = res.body

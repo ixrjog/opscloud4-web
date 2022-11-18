@@ -26,10 +26,10 @@ export function UPDATE_LEO_JOB (data) {
   })
 }
 
-export function UPGRADE_LEO_JOB_TEMPLATE_CONTENT (data) {
+export function UPGRADE_LEO_JOB_TEMPLATE_CONTENT (param) {
   return request({
     url: baseUrl + '/template/content/upgrade',
     method: 'put',
-    data
+    params: param
   })
 }
