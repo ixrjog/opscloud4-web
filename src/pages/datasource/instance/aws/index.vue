@@ -133,11 +133,13 @@
                                         :value="util.formatSecond(scope.row.properties.MessageRetentionPeriod)"></entry-detail>
                         </el-col>
                         <el-col :span="12">
-                          <entry-detail name="接收消息等待时间" :value="scope.row.properties.ReceiveMessageWaitTimeSeconds"
+                          <entry-detail name="接收消息等待时间"
+                                        :value="scope.row.properties.ReceiveMessageWaitTimeSeconds"
                                         unit="秒"></entry-detail>
                         </el-col>
                         <el-col :span="12">
-                          <entry-detail name="交付延迟" :value="scope.row.properties.DelaySeconds" unit="秒"></entry-detail>
+                          <entry-detail name="交付延迟" :value="scope.row.properties.DelaySeconds"
+                                        unit="秒"></entry-detail>
                         </el-col>
                       </el-row>
                       <br/>
@@ -296,17 +298,17 @@ const tableLayout = {
       }
     }
   },
-  ecr:{
-    repository:{
+  ecr: {
+    repository: {
       assetId: {
-        alias: 'ARN'
+        alias: 'Registry ID'
       },
       name: {
         alias: '仓库名称'
       },
       assetKey: {
-        alias: '',
-        show: false
+        alias: 'ARN',
+        show: true
       },
       assetKey2: {
         alias: 'URI',
@@ -318,7 +320,7 @@ const tableLayout = {
       }
     }
   },
-  sqs:{
+  sqs: {
     queue: {
       assetId: {
         alias: 'Queue名称',
