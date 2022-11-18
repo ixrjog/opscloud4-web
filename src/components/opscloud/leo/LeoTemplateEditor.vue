@@ -43,7 +43,7 @@
       <el-tab-pane label="模板内容" name="templateContent" :disabled="leoTemplate.id === '' || leoTemplate.id === 0">
         <el-row>
           <el-card shadow="never">
-            <my-highlight v-if="!editing && leoTemplate.templateContent !== ''" :code="leoTemplate.templateContent"
+            <my-highlight v-if="!editing && leoTemplate.templateContent !== ''" :code="viewTemplateContent"
                           lang="html" :myStyle="style"></my-highlight>
           </el-card>
         </el-row>
@@ -91,6 +91,7 @@ export default {
     return {
       activeName: 'base',
       leoTemplate: '',
+      viewTemplateContent: '',
       activeOptions: activeOptions,
       editing: false,
       options: options,
@@ -127,6 +128,20 @@ export default {
     initData (leoTemplate) {
       this.activeName = 'base'
       this.leoTemplate = leoTemplate
+
+      /**
+       * ' is replaced with &apos;
+       * " is replaced with &quot;
+       * & is replaced with &amp;
+       * < is replaced with &lt;
+       * > is replaced with &gt;
+       */
+      this.viewTemplateContent = this.leoTemplate.templateContent
+        .replaceAll('&apos;', '\'')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
     },
     handleClick (tab, event) {
       if (tab.name === 'ymlConfig') {
