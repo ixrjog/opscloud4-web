@@ -23,7 +23,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="模板YML" name="ymlConfig" :disabled="leoTemplate.id === '' || leoTemplate.id === 0">
+      <el-tab-pane label="模板YML" name="ymlConfig">
         <el-row>
           <el-card shadow="never">
             <my-highlight v-if="!editing && leoTemplate.templateConfig !== ''" :code="leoTemplate.templateConfig"
@@ -128,24 +128,27 @@ export default {
     initData (leoTemplate) {
       this.activeName = 'base'
       this.leoTemplate = leoTemplate
-
-      /**
-       * ' is replaced with &apos;
-       * " is replaced with &quot;
-       * & is replaced with &amp;
-       * < is replaced with &lt;
-       * > is replaced with &gt;
-       */
-      this.viewTemplateContent = this.leoTemplate.templateContent
-        .replaceAll('&apos;', '\'')
-        .replaceAll('&quot;', '"')
-        .replaceAll('&amp;', '&')
-        .replaceAll('&lt;', '<')
-        .replaceAll('&gt;', '>')
+      if (this.formStatus.operationType) {
+        this.editing = true
+      } else {
+        this.editing = false
+        /**
+         * ' is replaced with &apos;
+         * " is replaced with &quot;
+         * & is replaced with &amp;
+         * < is replaced with &lt;
+         * > is replaced with &gt;
+         */
+        this.viewTemplateContent = this.leoTemplate.templateContent
+          .replaceAll('&apos;', '\'')
+          .replaceAll('&quot;', '"')
+          .replaceAll('&amp;', '&')
+          .replaceAll('&lt;', '<')
+          .replaceAll('&gt;', '>')
+      }
     },
     handleClick (tab, event) {
       if (tab.name === 'ymlConfig') {
-        this.editing = false
       }
     },
     handleUpdateContent () {

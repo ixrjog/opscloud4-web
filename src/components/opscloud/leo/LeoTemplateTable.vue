@@ -31,6 +31,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
+      <el-button @click="handleAdd" class="button">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="100" sortable></el-table-column>
@@ -192,6 +193,22 @@ export default {
       }
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
+    },
+    handleAdd () {
+      this.formStatus.template.visible = true
+      this.formStatus.template.operationType = true
+      let template = {
+        id: '',
+        name: '',
+        jenkinsInstanceUuid: '',
+        templateName:'',
+        templateConfig:'',
+        templateParameter: '',
+        templateContent: '',
+        isActive: true,
+        comment: ''
+      }
+      this.$refs.templateEditor.initData(template)
     },
     handleRowEdit (row) {
       this.formStatus.template.visible = true

@@ -66,7 +66,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="template" label="模板">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tooltip class="item" effect="light"
                       :content="scope.row.template.comment === '' ? '未定义': scope.row.template.comment"
                       placement="top-start">
@@ -79,22 +79,24 @@
       </el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable></el-table-column>
       <el-table-column prop="env" label="环境" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <env-tag :env="scope.row.env"></env-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="buildSize" label="构建次数" width="80">
+      </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>

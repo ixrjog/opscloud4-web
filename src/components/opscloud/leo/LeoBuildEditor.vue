@@ -11,7 +11,9 @@
             <el-input v-model="leoJob.jobKey" readonly></el-input>
           </el-form-item>
           <el-form-item label="项目地址" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.configDetails.job.gitLab.project.sshUrl" readonly style="width: 500px"></el-input>
+            <el-input v-if="JSON.stringify(leoJob) !== '{}'"
+                      v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
+                      readonly style="width: 500px"></el-input>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
                          style="margin-left: 20px" @change="getBranchOptions">查询<span
               style="margin-left: 2px">Tag</span>
@@ -74,7 +76,7 @@ export default {
   data () {
     return {
       activeName: 'build',
-      leoJob: '',
+      leoJob: {},
       doBuildParam: {
         jobId: '',
         branch: '',
