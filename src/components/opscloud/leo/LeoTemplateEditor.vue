@@ -55,6 +55,13 @@
           </div>
         </el-row>
       </el-tab-pane>
+      <el-tab-pane label="文档" name="doc">
+        <el-row>
+          <el-card shadow="never">
+            <my-markdown v-if="docs.template !== null" :content="docs.template.content"></my-markdown>
+          </el-card>
+        </el-row>
+      </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
@@ -69,6 +76,12 @@
 import { ADD_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE_CONTENT } from '@/api/modules/leo/leo.template.api'
 
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
+import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
+import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
+
+const docKeys = {
+  LEO_TEMPLATE_README: 'LEO_TEMPLATE_README'
+}
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -90,6 +103,10 @@ export default {
   data () {
     return {
       activeName: 'base',
+      docs: {
+        template: null
+      },
+      docKeys: docKeys,
       leoTemplate: '',
       viewTemplateContent: '',
       activeOptions: activeOptions,
@@ -105,6 +122,7 @@ export default {
   props: ['formStatus'],
   components: {
     MyHighlight,
+    MyMarkdown,
     editor: require('vue2-ace-editor')
   },
   mixins: [],
@@ -150,6 +168,9 @@ export default {
     handleClick (tab, event) {
       if (tab.name === 'ymlConfig') {
       }
+      if (tab.name === 'doc') {
+        this.fetchDoc(this.docKeys.LEO_TEMPLATE_README)
+      }
     },
     handleUpdateContent () {
       this.buttons.updateTemplateContent = true
@@ -182,6 +203,20 @@ export default {
       } else {
         this.handleUpdate()
       }
+    },
+    fetchDoc (key) {
+      const requestBody = {
+        dict: this.dict,
+        documentKey: key
+      }
+      PREVIEW_DOCUMENT(requestBody)
+        .then(res => {
+          switch (key) {
+            case this.docKeys.LEO_TEMPLATE_README:
+              this.docs.template = res.body
+              break
+          }
+        })
     }
   }
 }

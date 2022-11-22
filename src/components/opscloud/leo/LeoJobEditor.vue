@@ -96,6 +96,13 @@
           </div>
         </el-row>
       </el-tab-pane>
+      <el-tab-pane label="文档" name="doc">
+        <el-row>
+          <el-card shadow="never">
+            <my-markdown v-if="docs.job !== null" :content="docs.job.content"></my-markdown>
+          </el-card>
+        </el-row>
+      </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
@@ -114,6 +121,8 @@ import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api'
+import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
+import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -121,6 +130,10 @@ const options = {
   enableSnippets: true,
   // 自动补全
   enableLiveAutocompletion: true
+}
+
+const docKeys = {
+  LEO_JOB_README: 'LEO_JOB_README'
 }
 
 const activeOptions = [{
@@ -135,6 +148,10 @@ export default {
   data () {
     return {
       activeName: 'base',
+      docs: {
+        job: null
+      },
+      docKeys: docKeys,
       leoJob: {},
       activeOptions: activeOptions,
       editing: false,
@@ -152,6 +169,7 @@ export default {
   props: ['formStatus'],
   components: {
     MyHighlight,
+    MyMarkdown,
     SelectItem,
     editor: require('vue2-ace-editor')
   },
@@ -237,6 +255,9 @@ export default {
       if (tab.name === 'ymlConfig') {
         // this.editing = false
       }
+      if (tab.name === 'doc') {
+        this.fetchDoc(this.docKeys.LEO_JOB_README)
+      }
     },
     handleUpgradeContent () {
       this.buttons.upgradeTemplateContent = true
@@ -269,6 +290,20 @@ export default {
       } else {
         this.handleUpdate()
       }
+    },
+    fetchDoc (key) {
+      const requestBody = {
+        dict: this.dict,
+        documentKey: key
+      }
+      PREVIEW_DOCUMENT(requestBody)
+        .then(res => {
+          switch (key) {
+            case this.docKeys.LEO_JOB_README:
+              this.docs.job = res.body
+              break
+          }
+        })
     }
   }
 }
