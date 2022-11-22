@@ -11,6 +11,7 @@ import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 // import 'highlight.js/scss/default.scss'
 //import 'highlight.js/styles/vs2015.css'
 import 'highlight.js/styles/github-gist.css'
+
 const options = {
   markdownIt: {
     html: true,
@@ -67,11 +68,9 @@ export default {
   word-wrap: normal;
   background: #f3f3f3 !important;
   border-radius: 4px;
-  font-size: 9px;
-}
-
->>> .markdown-body {
   font-size: 10px;
+  line-height: 110%;
+  padding: 0.5em;
 }
 
 </style>
