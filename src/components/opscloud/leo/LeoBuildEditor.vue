@@ -149,18 +149,17 @@ export default {
     },
     doBuild () {
       this.buttons.doBuilding = true
-      DO_BUILD(this.doBuildParam)
-        .then(res => {
-          if (res.success) {
-            this.$message({
-              type: 'success',
-              message: '任务执行中!'
-            })
-          } else {
-            this.$message.error(res.msg)
-          }
-          this.buttons.doBuilding = false
-        }).catch((res) => {
+      DO_BUILD(this.doBuildParam).then(res => {
+        if (res.success) {
+          this.$message({
+            type: 'success',
+            message: '任务执行中!'
+          })
+        } else {
+          this.$message.error(res.msg)
+        }
+        this.buttons.doBuilding = false
+      }).catch((res) => {
         this.buttons.doBuilding = false
         this.$message.error(res.msg)
       })

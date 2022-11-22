@@ -33,3 +33,11 @@ export function UPGRADE_LEO_JOB_TEMPLATE_CONTENT (param) {
     params: param
   })
 }
+
+export function DELETE_LEO_JOB_BY_ID (param) {
+  return request({
+    url: baseUrl + '/del',
+    method: 'delete',
+    params: param
+  })
+}

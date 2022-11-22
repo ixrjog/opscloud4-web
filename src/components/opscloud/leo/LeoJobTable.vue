@@ -53,6 +53,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
+      <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
@@ -100,7 +101,7 @@
           <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.buildSize !==0">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -117,7 +118,7 @@
 
 <script>
 
-import { QUERY_LEO_JOB_PAGE } from '@/api/modules/leo/leo.job.api'
+import { QUERY_LEO_JOB_PAGE, DELETE_LEO_JOB_BY_ID } from '@/api/modules/leo/leo.job.api'
 import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
@@ -275,13 +276,46 @@ export default {
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
     },
+    handleAdd () {
+      this.formStatus.job.visible = true
+      this.formStatus.job.operationType = true
+      const job = {
+        id: '',
+        parentId: 0,
+        applicationId: '',
+        name: '',
+        jobKey: '',
+        branch: '',
+        envType: 0,
+        jobConfig: '',
+        buildNumber: 0,
+        templateId: '',
+        templateVersion: '',
+        hide: false,
+        href: '',
+        isActive: true,
+        comment: ''
+      }
+      this.$refs.jobEditor.initData(job)
+    },
     handleRowEdit (row) {
       this.formStatus.job.visible = true
       this.formStatus.job.operationType = false
       this.$refs.jobEditor.initData(Object.assign({}, row))
     },
     handleRowDel (row) {
-
+      this.$confirm('此操作将删除当前配置?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DELETE_LEO_JOB_BY_ID({ jobId: row.id }).then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除!')
+      })
     },
     handleBuild (row) {
       this.formStatus.build.visible = true

@@ -63,7 +63,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="模板YML" name="ymlConfig" :disabled="leoJob.id === '' || leoJob.id === 0">
+      <el-tab-pane label="模板YML" name="ymlConfig">
         <el-row>
           <el-card shadow="never">
             <my-highlight v-if="!editing && leoJob.jobConfig !== ''" :code="leoJob.jobConfig"
@@ -135,7 +135,7 @@ export default {
   data () {
     return {
       activeName: 'base',
-      leoJob: '',
+      leoJob: {},
       activeOptions: activeOptions,
       editing: false,
       options: options,
@@ -210,16 +210,22 @@ export default {
     },
     initData (leoJob) {
       this.activeName = 'base'
+
+      if (this.formStatus.operationType) {
+        this.editing = true
+      } else {
+        this.editing = false
+      }
       // 环境选项
       this.getEnv()
       // 模板选项
-      if (JSON.stringify(leoJob.template) !== '{}') {
+      if (leoJob.template !== undefined && JSON.stringify(leoJob.template) !== '{}') {
         this.templateOptions = []
         this.templateOptions.push(leoJob.template)
       } else {
         this.getTemplate('')
       }
-      if (JSON.stringify(leoJob.application) !== '{}') {
+      if (leoJob.application !== undefined && JSON.stringify(leoJob.application) !== '{}') {
         this.applicationOptions = []
         this.applicationOptions.push(leoJob.application)
       } else {
@@ -229,7 +235,7 @@ export default {
     },
     handleClick (tab, event) {
       if (tab.name === 'ymlConfig') {
-        this.editing = false
+        // this.editing = false
       }
     },
     handleUpgradeContent () {

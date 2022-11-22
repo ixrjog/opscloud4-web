@@ -34,32 +34,33 @@
       <el-button @click="handleAdd" class="button">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" width="100" sortable></el-table-column>
-      <el-table-column prop="instance" label="实例" width="150">
-        <template slot-scope="scope">
+      <el-table-column prop="name" label="名称" sortable></el-table-column>
+      <el-table-column prop="instance" label="实例">
+        <template v-slot="scope">
           <span>{{ scope.row.instance.instanceName }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="version" label="版本" width="80">
-        <template slot-scope="scope">
+      <el-table-column prop="version" label="版本">
+        <template v-slot="scope">
           <span>{{ scope.row.version }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="jobSize" label="任务数量" width="80"></el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.jobSize !==0">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,7 +75,7 @@
 
 <script>
 
-import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
+import { QUERY_LEO_TEMPLATE_PAGE, DELETE_LEO_TEMPLATE_BY_ID } from '@/api/modules/leo/leo.template.api'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 
@@ -197,12 +198,12 @@ export default {
     handleAdd () {
       this.formStatus.template.visible = true
       this.formStatus.template.operationType = true
-      let template = {
+      const template = {
         id: '',
         name: '',
         jenkinsInstanceUuid: '',
-        templateName:'',
-        templateConfig:'',
+        templateName: '',
+        templateConfig: '',
         templateParameter: '',
         templateContent: '',
         isActive: true,
@@ -216,7 +217,18 @@ export default {
       this.$refs.templateEditor.initData(Object.assign({}, row))
     },
     handleRowDel (row) {
-
+      this.$confirm('此操作将删除当前配置?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DELETE_LEO_TEMPLATE_BY_ID({ templateId: row.id }).then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除!')
+      })
     },
     fetchData () {
       this.table.loading = true

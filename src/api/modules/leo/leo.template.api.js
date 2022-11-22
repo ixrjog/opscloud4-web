@@ -33,3 +33,11 @@ export function UPDATE_LEO_TEMPLATE_CONTENT (data) {
     data
   })
 }
+
+export function DELETE_LEO_TEMPLATE_BY_ID (param) {
+  return request({
+    url: baseUrl + '/del',
+    method: 'delete',
+    params: param
+  })
+}
