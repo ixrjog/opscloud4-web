@@ -38,5 +38,15 @@ export default [
       cache: true,
       title: '容器终端'
     }
+  },
+  {
+    path: '/workbench/continuous-delivery',
+    name: 'continuous-delivery',
+    component: () => import('@/pages/workbench/continuous-delivery'),
+    meta: {
+      auth: true,
+      cache: true,
+      title: '持续交付'
+    }
   }
 ]

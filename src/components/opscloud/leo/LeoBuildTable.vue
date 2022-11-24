@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"/>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
@@ -13,79 +12,14 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-select v-model.trim="queryParam.templateId" filterable clearable
-                 remote reserve-keyword placeholder="搜索并选择模板" :remote-method="getTemplate"
-                 @change="fetchData">
-        <el-option
-          v-for="item in templateOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
-        </el-option>
-      </el-select>
-      <el-select v-model="queryParam.envType" clearable filterable
-                 remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv" @change="fetchData">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
-        </el-option>
-      </el-select>
-      <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-select
-        v-model="queryParam.tagId" filterable clearable remote reserve-keyword
-        placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
-        <el-option
-          v-for="item in tagOptions"
-          :key="item.id"
-          :label="item.tagKey"
-          :value="item.id">
-        </el-option>
-      </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
+      <el-button @click="fetchData" class="button">刷新</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
-      <el-table-column prop="application" label="应用">
-        <template slot-scope="scope">
-          <el-tooltip class="item" effect="light"
-                      :content="scope.row.application.comment === '' ? '未定义': scope.row.application.comment"
-                      placement="top-start">
-            <el-tag size="mini">{{ scope.row.application.name }}</el-tag>
-          </el-tooltip>
-        </template>
-      </el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"></i>
-            <span>{{ scope.row.branch }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="template" label="模板">
-        <template v-slot="scope">
-          <el-tooltip class="item" effect="light"
-                      :content="scope.row.template.comment === '' ? '未定义': scope.row.template.comment"
-                      placement="top-start">
-            <span>{{ scope.row.template.name }}</span>
-          </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column prop="template" label="模板版本">
-        <template v-slot="scope">
-          <el-tag size="mini" :type="scope.row.verifyTemplateVersion.type">
-            {{ scope.row.verifyTemplateVersion.displayVersion }}
-          </el-tag>
+          <span>{{ scope.row.branch }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="env" label="环境" width="80">
@@ -95,22 +29,14 @@
       </el-table-column>
       <el-table-column prop="buildSize" label="构建次数" width="80">
       </el-table-column>
-      <el-table-column prop="isActive" label="有效" width="80">
-        <template v-slot="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
-        </template>
-      </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
         <template v-slot="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="280">
+      <el-table-column label="操作" width="200">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>
-          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
-          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.buildSize !==0">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -152,7 +78,7 @@ const activeOptions = [{
 }]
 
 export default {
-  name: 'leoJobTable',
+  name: 'leoBuildTable',
   data () {
     return {
       instance: {
@@ -331,6 +257,7 @@ export default {
       this.$refs.doBuildEditor.initData(Object.assign({}, row))
     },
     fetchData () {
+      if (this.queryParam.applicationId === '') return
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,

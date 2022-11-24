@@ -5,6 +5,9 @@
       <el-tab-pane label="任务配置" name="job">
         <leo-job-table></leo-job-table>
       </el-tab-pane>
+      <el-tab-pane label="构建详情" name="build">
+        <leo-build-table></leo-build-table>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -12,6 +15,7 @@
 <script>
 
 import LeoJobTable from '@/components/opscloud/leo/LeoJobTable'
+import LeoBuildTable from '@/components/opscloud/leo/LeoBuildTable'
 
 export default {
   name: 'leoJob',
@@ -23,7 +27,8 @@ export default {
   mounted () {
   },
   components: {
-    LeoJobTable
+    LeoJobTable,
+    LeoBuildTable
   },
   methods: {
   }

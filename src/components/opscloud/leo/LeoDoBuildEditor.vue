@@ -99,7 +99,7 @@ export default {
       }
     }
   },
-  name: 'LeoBuildEditor',
+  name: 'LeoDoBuildEditor',
   props: ['formStatus'],
   components: {
     MyHighlight,

@@ -9,7 +9,7 @@
 import MarkdownItVue from 'markdown-it-vue'
 import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 // import 'highlight.js/scss/default.scss'
-//import 'highlight.js/styles/vs2015.css'
+// import 'highlight.js/styles/vs2015.css'
 import 'highlight.js/styles/github-gist.css'
 
 const options = {
