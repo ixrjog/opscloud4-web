@@ -25,8 +25,7 @@
       </el-select>
       <el-button :type="webSocketState.type" class="button">{{ webSocketState.name }}</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="80"></el-table-column>
+    <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
@@ -55,6 +54,15 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
     <leo-do-build-editor :form-status="formStatus.build" ref="doBuildEditor"></leo-do-build-editor>
+    <el-divider>最新构建详情</el-divider>
+
+    <div v-for="build in builds" :key="build.id" style="font-size: 12px">
+      <template>
+        <leo-build-details :build="build">
+        </leo-build-details>
+      </template>
+    </div>
+
   </div>
 </template>
 
@@ -70,6 +78,7 @@ import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
 
 import util from '@/libs/util'
+import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails'
 
 const wsUrl = 'ws/continuous-delivery'
 
@@ -99,6 +108,7 @@ export default {
           total: 0
         }
       },
+      builds: [],
       formStatus: {
         build: {
           visible: false,
@@ -110,9 +120,7 @@ export default {
         envType: 1
       },
       envOptions: [],
-      applicationOptions: [],
-      // 选中的JobIds
-      multipleSelection: []
+      applicationOptions: []
     }
   },
   mounted () {
@@ -131,6 +139,7 @@ export default {
     SelectItem,
     BusinessTags,
     EnvTag,
+    LeoBuildDetails,
     LeoDoBuildEditor
   },
   filters: {},
@@ -210,6 +219,10 @@ export default {
           case 'QUERY_LEO_JOB':
             this.table.data = messageJson.body.data
             this.table.pagination.total = messageJson.body.data.totalNum
+            break
+          case 'QUERY_LEO_BUILD':
+            this.builds = messageJson.body.data
+            break
         }
       }
     },
@@ -247,25 +260,20 @@ export default {
           this.applicationOptions = res.body.data
         })
     },
-    // 用户选中
-    handleSelectionChange (val) {
-      debugger
-      this.multipleSelection = val
-      console.log('multipleSelection' + this.multipleSelection)
-    },
     handleBuild (row) {
       this.formStatus.build.visible = true
       this.$refs.doBuildEditor.initData(Object.assign({}, row))
     },
     setQueryLeoJobTimer () {
-      if (this.queryParam.applicationId === '' && this.queryParam.envType === '') return
+      if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
       // queryJob定时器
       // 销毁定时器
       this.timers.queryJobTimer && clearInterval(this.timers.queryJobTimer) // 销毁定时器
       this.handleQueryLeoJob()
       this.timers.queryJobTimer = setInterval(() => {
         this.handleQueryLeoJob()
-      }, 10000)
+        this.handleQueryLeoBuild()
+      }, 5000)
     },
     handleQueryLeoJob () {
       const queryMessage = {
@@ -273,6 +281,15 @@ export default {
         ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
+      }
+      this.sendMessage(queryMessage)
+    },
+    handleQueryLeoBuild () {
+      const queryMessage = {
+        messageType: 'QUERY_LEO_BUILD',
+        ...this.queryParam,
+        page: 1,
+        length: 5
       }
       this.sendMessage(queryMessage)
     }
