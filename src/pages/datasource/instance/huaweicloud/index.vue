@@ -6,7 +6,8 @@
       <el-tab-pane label="云服务器" name="cloudServer">
         <el-tabs tab-position="left" v-model="activeName.ecs" @tab-click="handleClick">
           <el-tab-pane label="ECS" name="ecs">
-            <asset-table :instanceId="instance.id" :assetType="assetType.HUAWEICLOUD.HUAWEICLOUD_ECS" :tableLayout="tableLayout.ecs"
+            <asset-table :instanceId="instance.id" :assetType="assetType.HUAWEICLOUD.HUAWEICLOUD_ECS"
+                         :tableLayout="tableLayout.ecs"
                          ref="ecsTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey" label="IP地址" width="150">
@@ -87,8 +88,7 @@ export default {
       util: util
     }
   },
-  filters: {
-  },
+  filters: {},
   computed: {},
   mounted () {
     this.instance.id = this.$route.query.id

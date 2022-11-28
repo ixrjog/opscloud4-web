@@ -16,7 +16,7 @@ import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 const docKeys = {
-  IAM_README: 'IAM_README',
+  IAM_README: 'IAM_README'
 }
 
 export default {

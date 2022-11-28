@@ -8,23 +8,6 @@
         <span style="margin-left: 8px"><i class="fab fa-teamspeak"></i>{{
             build.buildDetails.build.dict.displayName
           }}</span>
-
-
-        <!--                <build-number-icon :pipeline="pipeline"></build-number-icon>-->
-        <!--                <ago-icon :ago="pipeline.ago"></ago-icon>-->
-        <!--                <user-icon :user="pipeline.user"></user-icon>-->
-        <!--                <el-tooltip class="item" effect="light" content="展开日志" placement="top-start">-->
-        <!--                  <el-button class="btn" type="text" @click="handlerPipelineOutput(pipeline.id)">-->
-        <!--                   <d2-icon name="television"/>-->
-        <!--                  </el-button>-->
-        <!--                </el-tooltip>-->
-        <!--                <el-tooltip class="item" effect="light" content="登录节点(管理员专用)" placement="top-start"-->
-        <!--                            v-if="pipeline.executors != null">-->
-        <!--                  <el-button class="btn" type="text" @click="handlerOpenExecutor(pipeline)"-->
-        <!--                             :disabled="pipeline.executors.length === 0">-->
-        <!--                    <d2-icon name="terminal"/>-->
-        <!--                  </el-button>-->
-        <!--                </el-tooltip>-->
       </div>
       <div :style='{ height: "200px" }'>
         <el-col :span="8">
@@ -43,14 +26,14 @@
           <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}</div>
           <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
           <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
-          <div><span class="label">执行引擎</span> {{ build.buildDetails.build.jenkins.instance.name }}</div>
+          <div><span class="label">执行引擎</span> {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || '' }}</div>
         </el-col>
         <el-col :span="16"></el-col>
-
-        <!--        <pipeline-graph :onNodeClick='(nodeName,id)=> {nodeClick(nodeName,id,pipeline)}'-->
-        <!--          :stages='pipeline.nodes'-->
-        <!--          :layout='layout'-->
-        <!--        />-->
+        <div>
+          <pipeline-graph :onNodeClick='( nodeName,id ) => { nodeClick(nodeName,id,build.pipeline) }'
+                          :stages='build.pipeline.nodes'
+                          :layout='layout'/>
+        </div>
       </div>
       <!--      <pipeline-output :buildType="buildType" :buildId="pipeline.id" :ref="`pipelines${pipeline.id}`"></pipeline-output>-->
       <!--      <pipeline-step :ref="`pipelineStep${pipeline.id}`"></pipeline-step>-->
@@ -62,6 +45,8 @@
 
 import BuildNumberIcon from '@/components/opscloud/leo/child/BuildNumberIcon'
 import BuildResult from '@/components/opscloud/leo/child/BuildResult'
+import PipelineGraph from 'jenkins-pipeline-graph-vue'
+import { GET_PIPELINE_RUN_NODE_STEPS } from '@/api/modules/leo/leo.pipeline.api'
 
 const layout = {
   nodeSpacingH: 90, // 节点间距
@@ -85,6 +70,7 @@ export default {
     }
   },
   components: {
+    PipelineGraph,
     BuildNumberIcon,
     BuildResult
   },
@@ -92,7 +78,22 @@ export default {
   },
   destroyed () {
   },
-  methods: {}
+  methods: {
+    nodeClick (nodeName, nodeId, pipeline) {
+      if (nodeName === 'Queue') return
+      const requestBody = {
+        buildType: pipeline.buildType,
+        buildId: pipeline.buildId,
+        nodeId: nodeId
+      }
+      const _this = this
+      GET_PIPELINE_RUN_NODE_STEPS(requestBody)
+        .then(res => {
+          _this.$refs[`pipelineStep${pipeline.id}`][0].init(res.body)
+        })
+    }
+
+  }
 }
 
 </script>
@@ -120,6 +121,10 @@ export default {
 
 .card {
   margin-bottom: 10px
+}
+
+.label {
+  color: #99a9bf;
 }
 
 </style>

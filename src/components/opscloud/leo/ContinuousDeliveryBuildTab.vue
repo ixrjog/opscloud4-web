@@ -3,7 +3,7 @@
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
-                 @change="setQueryLeoJobTimer">
+                 @change="fetchData">
         <el-option
           v-for="item in applicationOptions"
           :key="item.id"
@@ -14,7 +14,7 @@
       </el-select>
       <el-select v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
-                 @change="setQueryLeoJobTimer">
+                 @change="fetchData">
         <el-option
           v-for="item in envOptions"
           :key="item.id"
@@ -130,7 +130,6 @@ export default {
   },
   destroyed () {
     clearInterval(this.timers.retrySocketTimer) // 销毁定时器
-    clearInterval(this.timers.queryJobTimer) // 销毁定时器
     this.socket.close()
   },
   computed: {},
@@ -264,17 +263,6 @@ export default {
       this.formStatus.build.visible = true
       this.$refs.doBuildEditor.initData(Object.assign({}, row))
     },
-    setQueryLeoJobTimer () {
-      if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
-      // queryJob定时器
-      // 销毁定时器
-      this.timers.queryJobTimer && clearInterval(this.timers.queryJobTimer) // 销毁定时器
-      this.handleQueryLeoJob()
-      this.timers.queryJobTimer = setInterval(() => {
-        this.handleQueryLeoJob()
-        this.handleQueryLeoBuild()
-      }, 5000)
-    },
     handleQueryLeoJob () {
       const queryMessage = {
         messageType: 'QUERY_LEO_JOB',
@@ -292,6 +280,11 @@ export default {
         length: 5
       }
       this.sendMessage(queryMessage)
+    },
+    fetchData () {
+      if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
+      this.handleQueryLeoJob()
+      this.handleQueryLeoBuild()
     }
   }
 }
