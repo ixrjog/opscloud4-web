@@ -23,7 +23,11 @@
           <select-item :name="item.envName" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-button :type="webSocketState.type" class="button">{{ webSocketState.name }}</el-button>
+      <el-button :type="webSocketState.type" class="button">
+        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
+        <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
+           style="margin-right: 5px"></i>{{ webSocketState.name }}
+      </el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
@@ -31,6 +35,11 @@
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"></i>
           <span>{{ scope.row.branch }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="latestBuildInfos" label="最新构建">
+        <template v-slot="scope">
+          <latest-build-info :buildInfos="scope.row.latestBuildInfos"></latest-build-info>
         </template>
       </el-table-column>
       <el-table-column prop="env" label="环境" width="80">
@@ -79,8 +88,20 @@ import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
 
 import util from '@/libs/util'
 import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails'
+import LatestBuildInfo from '@/components/opscloud/leo/child/LatestBuildInfo'
 
 const wsUrl = 'ws/continuous-delivery'
+
+const wsStates = {
+  success: {
+    name: '服务端连接成功',
+    type: 'success'
+  },
+  fail: {
+    name: '服务端连接失败[自动重试]',
+    type: 'warning'
+  }
+}
 
 export default {
   name: 'continuous-delivery-build-tab',
@@ -89,10 +110,8 @@ export default {
       socket: null,
       socketURI: util.wsUrl(wsUrl),
       // WebSocket Connecting
-      webSocketState: {
-        name: 'websocket closed',
-        type: 'warning'
-      },
+      webSocketState: wsStates.fail,
+      wsStates: wsStates,
       timers: {
         retrySocketTimer: null,
         queryJobTimer: null,
@@ -139,7 +158,8 @@ export default {
     BusinessTags,
     EnvTag,
     LeoBuildDetails,
-    LeoDoBuildEditor
+    LeoDoBuildEditor,
+    LatestBuildInfo
   },
   filters: {},
   methods: {
@@ -153,10 +173,7 @@ export default {
     },
     retrySocket () {
       if (this.socket.readyState !== 1) {
-        this.webSocketState = {
-          name: 'websocket closed',
-          type: 'warning'
-        }
+        this.webSocketState = wsStates.fail
         try {
           this.socket.close()
         } catch (e) {
@@ -182,10 +199,7 @@ export default {
       // 连接成功后
       this.socket.onopen = () => {
         // console.log('continuous-delivery连接成功！')
-        this.webSocketState = {
-          name: 'websocket connecting',
-          type: 'success'
-        }
+        this.webSocketState = wsStates.success
         try {
           const loginMessage = {
             messageType: 'LOGIN',

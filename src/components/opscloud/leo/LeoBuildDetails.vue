@@ -11,22 +11,24 @@
       </div>
       <div :style='{ height: "200px" }'>
         <el-col :span="8">
-          <div><span class="label">开始时间</span> {{ build.startTime }}</div>
-          <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>
-            {{ build.endTime }}
-          </div>
-          <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
-          <div><span class="label">构建结果</span>
-            <build-result style="margin-left: 5px" :build="build"></build-result>
-          </div>
-          <div><span class="label">构件版本</span> {{ build.versionName }}</div>
-          <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
-          <div><span class="label">构建分支</span> {{ build.buildDetails.build.dict.branch }}</div>
-          <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}</div>
-          <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}</div>
-          <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
-          <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
-          <div><span class="label">执行引擎</span> {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || '' }}</div>
+          <el-row style="margin-left: 10px">
+            <div><span class="label">开始时间</span> {{ build.startTime }}</div>
+            <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>
+              {{ build.endTime }}
+            </div>
+            <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
+            <div><span class="label">构建结果</span>
+              <build-result style="margin-left: 5px" :build="build"></build-result>
+            </div>
+            <div><span class="label">构件版本</span> {{ build.versionName }}</div>
+            <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
+            <div><span class="label">构建分支</span> {{ build.buildDetails.build.dict.branch }}</div>
+            <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}</div>
+            <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}</div>
+            <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
+            <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
+            <div><span class="label">执行引擎</span> {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || '' }}</div>
+          </el-row>
         </el-col>
         <el-col :span="16"></el-col>
         <div>
