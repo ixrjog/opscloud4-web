@@ -18,3 +18,10 @@ export function GET_BUILD_BRANCH_OPTIONS (data) {
   })
 }
 
+export function STOP_BUILD (param) {
+  return request({
+    url: baseUrl + '/stop',
+    method: 'put',
+    params: param
+  })
+}

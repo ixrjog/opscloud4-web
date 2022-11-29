@@ -64,14 +64,11 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <leo-do-build-editor :form-status="formStatus.build" ref="doBuildEditor"></leo-do-build-editor>
     <el-divider>最新构建详情</el-divider>
-
     <div v-for="build in builds" :key="build.id" style="font-size: 12px">
       <template>
-        <leo-build-details :build="build">
-        </leo-build-details>
+        <leo-build-details :build="build"></leo-build-details>
       </template>
     </div>
-
   </div>
 </template>
 
@@ -109,7 +106,6 @@ export default {
     return {
       socket: null,
       socketURI: util.wsUrl(wsUrl),
-      // WebSocket Connecting
       webSocketState: wsStates.fail,
       wsStates: wsStates,
       timers: {

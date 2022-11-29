@@ -23,6 +23,32 @@ export function getBuildResultType (value) {
   }
 }
 
+export function getBuildResultColor (value) {
+  switch (value) {
+    case 'FAILURE':
+      return '#f85d63'
+    case 'UNSTABLE':
+      return '#e56c0d'
+    case 'REBUILDING':
+      return '#0cb3cb'
+    case 'BUILDING':
+      return '#0cb3cb'
+    case 'ABORTED':
+      return '#e56c0d'
+    case 'SUCCESS':
+      return '#0ad97c'
+    case 'UNKNOWN':
+      return '#e56c0d'
+    case 'NOT_BUILT':
+      return '#a9a7a4'
+    case 'CANCELLED':
+      return '#a9a7a4'
+    default:
+      return '#a9a7a4'
+  }
+}
+
+
 export function getBuildResultText (value) {
   switch (value) {
     case 'FAILURE':
