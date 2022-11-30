@@ -66,7 +66,7 @@
     <el-divider>最新构建详情</el-divider>
     <div v-for="build in builds" :key="build.id" style="font-size: 12px">
       <template>
-        <leo-build-details :build="build"></leo-build-details>
+        <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"></leo-build-details>
       </template>
     </div>
   </div>
@@ -220,7 +220,20 @@ export default {
     socketOnSend (data) {
       this.socket.send(data)
     },
+    /**
+     * message = {
+     *   messageType: 'QUERY_LEO_BUILD',
+     *   body: {}
+     * }
+     *
+     * consoleLog = {
+     *   buildId: 1,
+     *   log: ''
+     * }
+     *
+     */
     socketOnMessage () {
+      let _this = this
       this.socket.onmessage = (message) => {
         const messageJson = JSON.parse(message.data)
         // 消息路由

@@ -12,40 +12,46 @@
             <i class="far fa-stop-circle"></i>
           </el-button>
         </el-tooltip>
+        <el-tooltip class="item" effect="light" content="控制台流日志" placement="top-start">
+          <el-button class="btn" type="text" style="margin-right: 10px" @click="consoleStream(build.id)" :disabled="build.startTime === null">
+            <i class="fas fa-print"></i>
+          </el-button>
+        </el-tooltip>
       </div>
       <div :style='{ height: "200px" }'>
-          <el-col :span="14">
-            <pipeline-graph :onNodeClick='( nodeName,id ) => { nodeClick(nodeName, id, build) }'
-                            :stages='build.pipeline.nodes'
-                            :layout='layout'/>
-          </el-col>
-          <el-col :span="10">
-            <el-row style="margin-left: 10px">
-              <div><span class="label">开始时间</span> {{ build.startTime }}</div>
-              <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>
-                {{ build.endTime }}
-              </div>
-              <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
-              <div><span class="label">构建结果</span>
-                <build-result style="margin-left: 5px" :build="build"></build-result>
-              </div>
-              <div><span class="label">构件版本</span> {{ build.versionName }}</div>
-              <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
-              <div><span class="label">构建分支</span> {{ build.buildDetails.build.dict.branch }}</div>
-              <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}</div>
-              <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}</div>
-              <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
-              <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
-              <div><span class="label">执行引擎</span> {{
-                  build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''
-                }}
-              </div>
-            </el-row>
-          </el-col>
+        <el-col :span="14">
+          <pipeline-graph :onNodeClick='( nodeName,id ) => { nodeClick(nodeName, id, build) }'
+                          :stages='build.pipeline.nodes'
+                          :layout='layout'/>
+        </el-col>
+        <el-col :span="10">
+          <el-row style="margin-left: 10px">
+            <div><span class="label">开始时间</span> {{ build.startTime }}</div>
+            <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>
+              {{ build.endTime }}
+            </div>
+            <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
+            <div><span class="label">构建结果</span>
+              <build-result style="margin-left: 5px" :build="build"></build-result>
+            </div>
+            <div><span class="label">构件版本</span> {{ build.versionName }}</div>
+            <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
+            <div><span class="label">构建分支</span> {{ build.buildDetails.build.dict.branch }}</div>
+            <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}</div>
+            <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}</div>
+            <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
+            <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
+            <div><span class="label">执行引擎</span> {{
+                build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''
+              }}
+            </div>
+          </el-row>
+        </el-col>
       </div>
       <!--      <pipeline-output :buildType="buildType" :buildId="pipeline.id" :ref="`pipelines${pipeline.id}`"></pipeline-output>-->
       <el-row>
         <el-col :span="24">
+          <terminal-with-console-stream :buildId="build.id" ref="terminalWithConsoleStream"></terminal-with-console-stream>
           <pipeline-step :ref="`pipelineStep${build.id}`"></pipeline-step>
         </el-col>
       </el-row>
@@ -61,6 +67,8 @@ import PipelineGraph from 'jenkins-pipeline-graph-vue'
 import { GET_PIPELINE_RUN_NODE_STEPS } from '@/api/modules/leo/leo.pipeline.api'
 import { STOP_BUILD } from '@/api/modules/leo/leo.build.api'
 import PipelineStep from '@/components/opscloud/leo/child/PipelineStep'
+
+import TerminalWithConsoleStream from '@/components/opscloud/leo/child/TerminalWithConsoleStream'
 
 const layout = {
   nodeSpacingH: 90, // 节点间距
@@ -89,6 +97,7 @@ export default {
   components: {
     PipelineGraph,
     PipelineStep,
+    TerminalWithConsoleStream,
     BuildNumberIcon,
     BuildResult
   },
@@ -104,12 +113,13 @@ export default {
         nodeId: nodeId
       }
       const _this = this
-      //   <pipeline-step :ref="`pipelineStep${build.pipeline.id}`"></pipeline-step>
       GET_PIPELINE_RUN_NODE_STEPS(requestBody)
         .then(res => {
-          // _this.$refs[`pipelineStep${build.id}`][0].init(res.body)
           _this.$refs[`pipelineStep${build.id}`].init(res.body)
         })
+    },
+    consoleStream (buildId) {
+      this.$refs.terminalWithConsoleStream.init()
     },
     stopBuild (id) {
       this.buttons.stopping = true

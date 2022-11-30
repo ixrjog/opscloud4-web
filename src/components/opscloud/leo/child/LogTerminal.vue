@@ -12,7 +12,6 @@ import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 
-
 const theme = {
   // 字体色
   foreground: '#181818',
@@ -22,7 +21,7 @@ const theme = {
   cursor: 'help',
   /** The accent color of the cursor (used as the foreground color for a block cursor) */
   cursorAccent: '#838383',
-  //selection: '#f10b15',
+  // selection: '#f10b15',
   red: '#dd7479',
   blue: '#1BD1FF'
 }
@@ -33,12 +32,11 @@ export default {
       term: null,
       id: util.uuid(),
       fitAddon: new FitAddon(),
-      switch: true,
       theme: theme
     }
   },
   name: 'LogTerminal',
-  props: [ 'step'],
+  props: ['step'],
   mixins: [],
   mounted () {
     this.init()
@@ -52,11 +50,11 @@ export default {
     },
     init () {
       // let log = this.switch ? this.step.log : this.step.displayDescription.replace(/ {24,50}/g, '\n').replace(/^(\t)*$\n/g, '')
-      const log= this.step.log
+      const log = this.step.log
       if (log === null || log === '') return
-      let line = log.split('\n').length
+      const line = log.split('\n').length
       const rows = line > 30 ? 30 : line
-      let term = new Terminal({
+      const term = new Terminal({
         rendererType: 'canvas', // 渲染类型
         allowTransparency: true,
         fontSize: 11,
@@ -79,15 +77,6 @@ export default {
       term.focus() // 聚焦
       term.write(log)
       this.term = term
-    },
-    doSwitch () {
-      this.switch = !this.switch
-      if (this.term !== null) {
-        this.term.clear()
-        this.term.dispose()
-        this.term = null
-      }
-      this.init()
     },
     /**
      * 聚焦

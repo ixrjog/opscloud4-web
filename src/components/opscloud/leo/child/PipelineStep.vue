@@ -6,15 +6,14 @@
         <b style="color: #5b5d66; margin-left: 10px;">Steps Log</b>
         <el-tooltip class="item" effect="light" content="关闭步骤详情" placement="top-start">
           <el-button class="stepsButton" type="text" @click="closeSteps">
-            <i class="el-icon-close" aria-hidden="true"></i>
+            <i class="far fa-times-circle"></i>
           </el-button>
         </el-tooltip>
       </div>
       <div v-for="(step,i) in steps" :key="step.id" style="font-size: 12px; margin-bottom: 15px">
         <div class="displayName" :style="{height: '20px'}">
-          {{ step.displayName }}
           <el-tag :type="step.result | getBuildResultType">{{ step.result }}</el-tag>
-
+          {{ step.displayName }}
           <!--        <el-tag effect="dark" style="margin-left: 5px" :type="step.result|  getStepResultType">Step {{i +1}}-->
           <!--        </el-tag>-->
         </div>
@@ -57,9 +56,6 @@ export default {
       for (let i = 0; i < this.steps.length; i++) {
         this.$refs[`terminal-log${i}`][0].init()
       }
-    },
-    getColor (result) {
-      return getBuildResultColor(result)
     },
     closeSteps () {
       this.steps = []

@@ -48,7 +48,6 @@ export function getBuildResultColor (value) {
   }
 }
 
-
 export function getBuildResultText (value) {
   switch (value) {
     case 'FAILURE':
