@@ -18,8 +18,14 @@
             <i class="fas fa-print"></i>
           </el-button>
         </el-tooltip>
+        <el-tooltip class="item" effect="light" content="编辑构建详情" placement="top-start">
+          <el-button class="btn" type="text" style="margin-right: 10px" @click="handleEdit(build)"
+                     :disabled="!build.isFinish">
+            <i class="fas fa-edit"></i>
+          </el-button>
+        </el-tooltip>
       </div>
-      <div :style='{ height: "200px" }'>
+      <el-row>
         <el-col :span="14">
           <pipeline-graph :onNodeClick='( nodeName,id ) => { nodeClick(nodeName, id, build) }'
                           :stages='build.pipeline.nodes'
@@ -28,14 +34,14 @@
         <el-col :span="10">
           <el-row style="margin-left: 10px">
             <div><span class="label">执行时间</span>
-              <span v-show="build.startTime !== null && build.startTime !== ''"> {{ build.startTime }} - {{ build.endTime ? build.endTime : '?' }}
-              <span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{ build.runtime }}</b>></span>
+              <span v-show="build.startTime !== null && build.startTime !== ''"> {{
+                  build.startTime
+                }} - {{ build.endTime ? build.endTime : '?' }}
+              <span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{
+                  build.runtime
+                }}</b>></span>
               </span>
             </div>
-            <!--            <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>-->
-            <!--              {{ build.endTime }}-->
-            <!--              <span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{build.runtime}}</b>></span>-->
-            <!--            </div>-->
             <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
             <div><span class="label">构建结果</span>
               <build-result style="margin-left: 5px" :build="build"></build-result>
@@ -48,7 +54,6 @@
               <el-tag style="margin-left: 2px" :type="build.isImageExists ? 'success' : 'warning'">
                 {{ build.isImageExists ? '已验证' : '未验证' }}
               </el-tag>
-              <!--              <span style="margin-left: 2px"><<b v-show="build.isImageExists" style="color: #36ce3d">已验证</b><b v-show="!build.isImageExists" style="color: #e56c0d">未验证</b>></span>-->
             </div>
             <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
             <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
@@ -58,8 +63,7 @@
             </div>
           </el-row>
         </el-col>
-      </div>
-      <!--      <pipeline-output :buildType="buildType" :buildId="pipeline.id" :ref="`pipelines${pipeline.id}`"></pipeline-output>-->
+      </el-row>
       <el-row>
         <el-col :span="24">
           <terminal-with-console-stream :buildId="build.id"
@@ -68,6 +72,7 @@
         </el-col>
       </el-row>
     </el-card>
+    <leo-build-details-editor :form-status="formStatus.build" ref="buildDetailsEditor"></leo-build-details-editor>
   </div>
 </template>
 
@@ -81,10 +86,11 @@ import { STOP_BUILD } from '@/api/modules/leo/leo.build.api'
 import PipelineStep from '@/components/opscloud/leo/child/PipelineStep'
 
 import TerminalWithConsoleStream from '@/components/opscloud/leo/child/TerminalWithConsoleStream'
+import LeoBuildDetailsEditor from '@/components/opscloud/leo/LeoBuildDetailsEditor'
 
 const layout = {
   nodeSpacingH: 90, // 节点间距
-  parallelSpacingH: 400, // 平行间距
+  parallelSpacingH: 200, // 平行间距
   nodeRadius: 12, // 节点半径
   terminalRadius: 10, // 终端半径
   curveRadius: 5, // 跳过连接线半径
@@ -99,6 +105,12 @@ export default {
   data () {
     return {
       title: '持续集成',
+      formStatus: {
+        build: {
+          visible: false,
+          labelWidth: '150px'
+        }
+      },
       timer: null,
       layout: layout,
       buttons: {
@@ -111,7 +123,8 @@ export default {
     PipelineStep,
     TerminalWithConsoleStream,
     BuildNumberIcon,
-    BuildResult
+    BuildResult,
+    LeoBuildDetailsEditor
   },
   mounted () {
   },
@@ -119,6 +132,10 @@ export default {
   },
   methods: {
     nodeClick (nodeName, nodeId, build) {
+      if(build.isDeletedBuildJob){
+        this.$message.warning('构建任务失效，无法查看步骤信息!')
+        return
+      }
       if (nodeName === 'Queue') return
       const requestBody = {
         buildId: build.id,
@@ -140,7 +157,11 @@ export default {
           this.$message.info('后台执行中请稍等!')
           this.buttons.stopping = false
         })
-    }
+    },
+    handleEdit (build) {
+      this.formStatus.build.visible = true
+      this.$refs.buildDetailsEditor.initData(Object.assign({}, build))
+    },
   }
 }
 

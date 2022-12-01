@@ -25,3 +25,11 @@ export function STOP_BUILD (param) {
     params: param
   })
 }
+
+export function UPDATE_LEO_BUILD (data) {
+  return request({
+    url: baseUrl + '/update',
+    method: 'put',
+    data
+  })
+}

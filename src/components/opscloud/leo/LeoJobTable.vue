@@ -122,6 +122,7 @@
     </leo-do-build-editor>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+    <leo-build-history :form-status="formStatus.history" ref="leoBuildHistory"></leo-build-history>
   </div>
 </template>
 
@@ -142,6 +143,7 @@ import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor'
 import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
+import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 
 const activeOptions = [{
   value: true,
@@ -182,6 +184,10 @@ export default {
         build: {
           visible: false,
           labelWidth: '150px'
+        },
+        history: {
+          visible: false,
+          labelWidth: '150px'
         }
       },
       queryParam: {
@@ -217,7 +223,8 @@ export default {
     EnvTag,
     BusinessTagEditor,
     LeoJobEditor,
-    LeoDoBuildEditor
+    LeoDoBuildEditor,
+    LeoBuildHistory
   },
   filters: {},
   methods: {

@@ -57,12 +57,14 @@
       <el-table-column label="操作" width="200">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>
+          <el-button type="primary" plain size="mini" @click="handleHistory(scope.row)">历史</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
     <leo-do-build-editor :form-status="formStatus.build" ref="doBuildEditor"></leo-do-build-editor>
+    <leo-build-history :form-status="formStatus.history" ref="buildHistory"></leo-build-history>
     <el-divider>最新构建详情</el-divider>
     <div v-for="build in builds" :key="build.id" style="font-size: 12px">
       <template>
@@ -86,6 +88,7 @@ import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
 import util from '@/libs/util'
 import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails'
 import LatestBuildInfo from '@/components/opscloud/leo/child/LatestBuildInfo'
+import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 
 const wsUrl = 'ws/continuous-delivery'
 
@@ -128,6 +131,10 @@ export default {
         build: {
           visible: false,
           labelWidth: '150px'
+        },
+        history: {
+          visible: false,
+          labelWidth: '150px'
         }
       },
       queryParam: {
@@ -155,7 +162,8 @@ export default {
     EnvTag,
     LeoBuildDetails,
     LeoDoBuildEditor,
-    LatestBuildInfo
+    LatestBuildInfo,
+    LeoBuildHistory
   },
   filters: {},
   methods: {
@@ -286,6 +294,10 @@ export default {
     handleBuild (row) {
       this.formStatus.build.visible = true
       this.$refs.doBuildEditor.initData(Object.assign({}, row))
+    },
+    handleHistory(row){
+      this.formStatus.history.visible = true
+      this.$refs.buildHistory.initData(Object.assign({}, row))
     },
     handleQueryLeoJob () {
       const queryMessage = {

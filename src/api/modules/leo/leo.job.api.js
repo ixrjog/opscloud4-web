@@ -10,6 +10,14 @@ export function QUERY_LEO_JOB_PAGE (data) {
   })
 }
 
+export function QUERY_LEO_JOB_BUILD_PAGE (data) {
+  return request({
+    url: baseUrl + '/build/page/query',
+    method: 'post',
+    data
+  })
+}
+
 export function ADD_LEO_JOB (data) {
   return request({
     url: baseUrl + '/add',
