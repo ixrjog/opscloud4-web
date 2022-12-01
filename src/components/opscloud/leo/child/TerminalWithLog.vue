@@ -35,7 +35,7 @@ export default {
       theme: theme
     }
   },
-  name: 'LogTerminal',
+  name: 'TerminalWithLog',
   props: ['step'],
   mixins: [],
   mounted () {

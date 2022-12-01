@@ -13,7 +13,7 @@
           </el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="light" content="控制台流日志" placement="top-start">
-          <el-button class="btn" type="text" style="margin-right: 10px" @click="consoleStream(build.id)" :disabled="build.startTime === null">
+          <el-button class="btn" type="text" style="margin-right: 10px" @click="consoleStream(build.id)" :disabled="build.startTime === null || build.isDeletedBuildJob">
             <i class="fas fa-print"></i>
           </el-button>
         </el-tooltip>
@@ -28,7 +28,7 @@
           <el-row style="margin-left: 10px">
             <div><span class="label">开始时间</span> {{ build.startTime }}</div>
             <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>
-              {{ build.endTime }}
+              {{ build.endTime }}<span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{build.runtime}}</b>></span>
             </div>
             <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
             <div><span class="label">构建结果</span>

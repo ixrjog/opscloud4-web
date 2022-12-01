@@ -17,7 +17,7 @@
           <!--        <el-tag effect="dark" style="margin-left: 5px" :type="step.result|  getStepResultType">Step {{i +1}}-->
           <!--        </el-tag>-->
         </div>
-        <log-terminal :ref="`terminal-log${i}`" :step="step"></log-terminal>
+        <terminal-with-log :ref="`terminal-log${i}`" :step="step"></terminal-with-log>
       </div>
     </el-card>
   </div>
@@ -27,14 +27,15 @@
 
 import util from '@/libs/util'
 
-import LogTerminal from '@/components/opscloud/leo/child/LogTerminal'
+
 import { getBuildResultType } from '@/filters/leo.build.result.js'
+import TerminalWithLog from '@/components/opscloud/leo/child/TerminalWithLog'
 
 export default {
   name: 'PipelineStep',
   props: [],
   components: {
-    LogTerminal
+    TerminalWithLog
   },
   filters: {
     getBuildResultType
