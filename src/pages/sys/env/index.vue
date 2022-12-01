@@ -7,27 +7,32 @@
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.envName" clearable placeholder="名称" class="input-bar"/>
         <el-button @click="fetchData" class="button">查询</el-button>
-        <el-button @click="handlerAdd" class="button">新增</el-button>
+        <el-button @click="handleAdd" class="button">新增</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading"
                 :default-sort="{prop: 'envType', order: 'ascending'}">
         <el-table-column prop="name" label="名称">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <env-tag :env="scope.row"></env-tag>
           </template>
         </el-table-column>
         <el-table-column prop="name" label="终端提示色">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <prompt-color-tag v-if="scope.row.promptColor !== null" :env="scope.row"
                               :promptColorOptions="promptColorOptions"></prompt-color-tag>
           </template>
         </el-table-column>
         <el-table-column prop="envType" label="类型值" sortable></el-table-column>
+        <el-table-column prop="isActive" label="有效">
+          <template v-slot="scope">
+            <active-tag :is-active="scope.row.isActive"></active-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="comment" label="描述"></el-table-column>
         <el-table-column fixed="right" label="操作" width="280">
-          <template slot-scope="scope">
-            <el-button type="primary" plain size="mini" @click="handlerRowUpdate(scope.row)">编辑</el-button>
-            <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+          <template v-slot="scope">
+            <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
+            <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -47,6 +52,7 @@ import Pagination from '../../../components/opscloud/common/page/Pagination'
 import EnvTag from '../../../components/opscloud/common/tag/EnvTag'
 import EnvEditor from '../../../components/opscloud/sys/EnvEditor'
 import PromptColorTag from '../../../components/opscloud/common/tag/PromptColorTag'
+import ActiveTag from '@/components/opscloud/common/tag/ActiveTag'
 
 const promptColorOptions = [{
   value: 0,
@@ -108,6 +114,7 @@ export default {
     EnvTag,
     EnvEditor,
     Pagination,
+    ActiveTag,
     PromptColorTag
   },
   computed: {},
@@ -123,7 +130,7 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handlerRowDel (row) {
+    handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -137,19 +144,20 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handlerAdd () {
+    handleAdd () {
       const env = {
         id: '',
         envName: '',
         envType: '',
         color: '',
+        isActive: true,
         comment: ''
       }
       this.$refs.envEditor.initData(env)
       this.formStatus.env.operationType = true
       this.formStatus.env.visible = true
     },
-    handlerRowUpdate (row) {
+    handleRowUpdate (row) {
       this.$refs.envEditor.initData(Object.assign({}, row))
       this.formStatus.env.operationType = false
       this.formStatus.env.visible = true

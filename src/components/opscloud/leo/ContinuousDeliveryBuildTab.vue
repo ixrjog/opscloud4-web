@@ -262,6 +262,7 @@ export default {
     getEnv (name) {
       const requestBody = {
         envName: name,
+        isActive: true,
         page: 1,
         length: 20
       }

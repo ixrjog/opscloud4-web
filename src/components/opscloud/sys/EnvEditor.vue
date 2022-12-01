@@ -23,6 +23,16 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="有效" :label-width="labelWidth" required>
+        <el-select v-model="env.isActive" placeholder="选择类型">
+          <el-option
+            v-for="item in activeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
         <el-input v-model="env.comment" placeholder="请输入内容"></el-input>
       </el-form-item>
@@ -39,11 +49,20 @@
 import { ADD_ENV, UPDATE_ENV } from '@/api/modules/sys/sys.env.api.js'
 import SelectPromptColorTag from '../common/tag/SelectPromptColorTag'
 
+const activeOptions = [{
+  value: true,
+  label: '有效'
+}, {
+  value: false,
+  label: '无效'
+}]
+
 export default {
   data () {
     return {
       env: '',
-      labelWidth: '150px'
+      labelWidth: '150px',
+      activeOptions: activeOptions
     }
   },
   name: 'EnvEditor',
