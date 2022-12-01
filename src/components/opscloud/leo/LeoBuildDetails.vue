@@ -13,7 +13,8 @@
           </el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="light" content="控制台流日志" placement="top-start">
-          <el-button class="btn" type="text" style="margin-right: 10px" @click="consoleStream(build.id)" :disabled="build.startTime === null || build.isDeletedBuildJob">
+          <el-button class="btn" type="text" style="margin-right: 10px" @click="consoleStream(build.id)"
+                     :disabled="build.startTime === null || build.isDeletedBuildJob">
             <i class="fas fa-print"></i>
           </el-button>
         </el-tooltip>
@@ -26,10 +27,15 @@
         </el-col>
         <el-col :span="10">
           <el-row style="margin-left: 10px">
-            <div><span class="label">开始时间</span> {{ build.startTime }}</div>
-            <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>
-              {{ build.endTime }}<span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{build.runtime}}</b>></span>
+            <div><span class="label">执行时间</span>
+              <span v-show="build.startTime !== null && build.startTime !== ''"> {{ build.startTime }} - {{ build.endTime ? build.endTime : '?' }}
+              <span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{ build.runtime }}</b>></span>
+              </span>
             </div>
+            <!--            <div><span class="label" v-show="build.endTime !== null && build.endTime !== ''">结束时间</span>-->
+            <!--              {{ build.endTime }}-->
+            <!--              <span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{build.runtime}}</b>></span>-->
+            <!--            </div>-->
             <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
             <div><span class="label">构建结果</span>
               <build-result style="margin-left: 5px" :build="build"></build-result>
@@ -38,7 +44,12 @@
             <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
             <div><span class="label">构建分支</span> {{ build.buildDetails.build.dict.branch }}</div>
             <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}</div>
-            <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}</div>
+            <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}
+              <el-tag style="margin-left: 2px" :type="build.isImageExists ? 'success' : 'warning'">
+                {{ build.isImageExists ? '已验证' : '未验证' }}
+              </el-tag>
+              <!--              <span style="margin-left: 2px"><<b v-show="build.isImageExists" style="color: #36ce3d">已验证</b><b v-show="!build.isImageExists" style="color: #e56c0d">未验证</b>></span>-->
+            </div>
             <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
             <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
             <div><span class="label">执行引擎</span> {{
@@ -51,7 +62,8 @@
       <!--      <pipeline-output :buildType="buildType" :buildId="pipeline.id" :ref="`pipelines${pipeline.id}`"></pipeline-output>-->
       <el-row>
         <el-col :span="24">
-          <terminal-with-console-stream :buildId="build.id" ref="terminalWithConsoleStream"></terminal-with-console-stream>
+          <terminal-with-console-stream :buildId="build.id"
+                                        ref="terminalWithConsoleStream"></terminal-with-console-stream>
           <pipeline-step :ref="`pipelineStep${build.id}`"></pipeline-step>
         </el-col>
       </el-row>

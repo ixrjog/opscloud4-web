@@ -178,8 +178,11 @@ export default {
            * @type {string}
            */
           const consoleStream = JSON.parse(message.data)
-          this.term.write(consoleStream.body.log)
-          this.fitAddon.fit()
+          try {
+            this.term.write(consoleStream.body.log)
+            this.fitAddon.fit()
+          } catch (e) {
+          }
         }
       }
     }
