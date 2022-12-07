@@ -123,7 +123,7 @@ export default {
     },
     initData (leoJob) {
       this.activeName = 'build'
-      this.buttons.building = false
+      this.buttons.doBuilding = false
       this.leoJob = leoJob
       this.doBuildParam.branch = leoJob.configDetails.job.gitLab.project.branch
       this.doBuildParam.jobId = this.leoJob.id
@@ -153,7 +153,7 @@ export default {
         if (res.success) {
           this.$message({
             type: 'success',
-            message: '任务执行中!'
+            message: '执行构建任务中!'
           })
         } else {
           this.$message.error(res.msg)

@@ -1,6 +1,11 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+      <el-button :type="webSocketState.type" class="button">
+        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
+        <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
+           style="margin-right: 5px"></i>{{ webSocketState.name }}
+      </el-button>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
@@ -23,11 +28,6 @@
           <select-item :name="item.envName" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-button :type="webSocketState.type" class="button">
-        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
-        <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
-           style="margin-right: 5px"></i>{{ webSocketState.name }}
-      </el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
@@ -65,7 +65,7 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <leo-do-build-editor :form-status="formStatus.build" ref="doBuildEditor"></leo-do-build-editor>
     <leo-build-history :form-status="formStatus.history" ref="buildHistory"></leo-build-history>
-    <el-divider>最新构建详情</el-divider>
+    <el-divider>Latest build details</el-divider>
     <div v-for="build in builds" :key="build.id" style="font-size: 12px">
       <template>
         <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"></leo-build-details>
@@ -79,6 +79,7 @@
 import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 
+import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
 import SelectItem from '../common/SelectItem'
 import BusinessTags from '../common/tag/BusinessTags'
 import Pagination from '../common/page/Pagination'
@@ -90,15 +91,13 @@ import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails'
 import LatestBuildInfo from '@/components/opscloud/leo/child/LatestBuildInfo'
 import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 
-const wsUrl = 'ws/continuous-delivery'
-
 const wsStates = {
   success: {
-    name: '服务端连接成功',
+    name: 'WS连接成功',
     type: 'success'
   },
   fail: {
-    name: '服务端连接失败[自动重试]',
+    name: 'WS连接断开',
     type: 'warning'
   }
 }
@@ -108,7 +107,7 @@ export default {
   data () {
     return {
       socket: null,
-      socketURI: util.wsUrl(wsUrl),
+      socketURI: util.wsUrl(WebSocketAPI.CONTINUOUS_DELIVERY_BUILD),
       webSocketState: wsStates.fail,
       wsStates: wsStates,
       timers: {
@@ -211,7 +210,7 @@ export default {
           }
           this.sendMessage(loginMessage)
         } catch (e) {
-          this.$message.error('登录失败, 未选择服务器或其它原因')
+         // this.$message.error('登录失败, 未选择服务器或其它原因')
         }
       }
     },
@@ -295,7 +294,7 @@ export default {
       this.formStatus.build.visible = true
       this.$refs.doBuildEditor.initData(Object.assign({}, row))
     },
-    handleHistory(row){
+    handleHistory (row) {
       this.formStatus.history.visible = true
       this.$refs.buildHistory.initData(Object.assign({}, row))
     },

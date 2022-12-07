@@ -1,8 +1,9 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-select v-model.trim="queryParam.applicationId" filterable clearable
-                 remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication" @change="handleChange">
+      <el-select v-model="queryParam.applicationId" filterable clearable
+                 remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
+                 @change="handleChange">
         <el-option
           v-for="item in applicationOptions"
           :key="item.id"
@@ -60,7 +61,9 @@
                <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name">
                  <div>
                    <span>
-                   <i class="fab fa-artstation" style="margin-right: 2px"></i>{{ pod.asset.assetKey }} {{ pod.asset.name }}
+                   <i class="fab fa-artstation" style="margin-right: 2px"></i>{{ pod.asset.assetKey }} {{
+                       pod.asset.name
+                     }}
                      <el-popover placement="right" trigger="hover">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
@@ -100,7 +103,6 @@
 <script>
 
 import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api.js'
-import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import RedeployEditor from '@/components/opscloud/application/RedeployEditor'
@@ -142,7 +144,6 @@ export default {
   },
   computed: {},
   components: {
-    EntryDetail,
     BusinessTags,
     SelectItem,
     RedeployEditor,

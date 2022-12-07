@@ -1,6 +1,6 @@
 <template>
   <d2-container>
-    <div v-show="layout.status === 0">
+    <div v-show="layout.status === 0" v-if="false">
       <h1>{{ title }}</h1>
     </div>
     <!--      应用选择器-->

@@ -23,11 +23,10 @@
 
 import util from '@/libs/util'
 
-const wsUrl = 'ws/continuous-delivery/jenkins/console/stream'
-
 import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
+import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api'
 
 const theme = {
   // 字体色
@@ -44,11 +43,11 @@ const theme = {
 }
 
 export default {
-  name: 'TerminalWithConsoleStream',
+  name: 'terminal-with-console-stream',
   data () {
     return {
       title: 'Console stream',
-      socketURI: util.wsUrl(wsUrl),
+      socketURI: util.wsUrl(WebSocketAPI.CONTINUOUS_DELIVERY_JENKINS_CONSOLE_STREAM),
       timer: null,
       show: false,
       term: null,
