@@ -25,6 +25,19 @@ export default {
       scrollTop: 0
     }
   },
+  watch: {
+    $route (to, from) {
+      if (to.name === 'continuous-delivery') {
+        // 进入
+        if(this.activeName === 'deploy'){
+          this.$refs.continuousDeliveryDeployTab.lineShow()
+        }
+      } else {
+        // 离开
+        this.$refs.continuousDeliveryDeployTab.lineHide()
+      }
+    }
+  },
   mounted () {
   },
   components: {

@@ -214,9 +214,6 @@ export default {
       handler (v) {
         this.drawLine()
       }
-    },
-    $route(to,from){
-      this.lineHide()
     }
   },
   filters: {},
