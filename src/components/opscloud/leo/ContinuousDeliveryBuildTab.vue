@@ -204,11 +204,8 @@ export default {
         // console.log('continuous-delivery连接成功！')
         this.webSocketState = wsStates.success
         try {
-          const loginMessage = {
-            messageType: 'LOGIN',
-            token: token
-          }
-          this.sendMessage(loginMessage)
+          this.handleQueryLeoJob()
+          this.handleQueryLeoBuild()
         } catch (e) {
          // this.$message.error('登录失败, 未选择服务器或其它原因')
         }
@@ -299,7 +296,10 @@ export default {
       this.$refs.buildHistory.initData(Object.assign({}, row))
     },
     handleQueryLeoJob () {
+      if (this.queryParam.applicationId === '') return
+      if (this.queryParam.envType === '') return
       const queryMessage = {
+        token: util.cookies.get('token'),
         messageType: 'QUERY_LEO_JOB',
         ...this.queryParam,
         page: this.table.pagination.currentPage,
@@ -308,7 +308,10 @@ export default {
       this.sendMessage(queryMessage)
     },
     handleQueryLeoBuild () {
+      if (this.queryParam.applicationId === '') return
+      if (this.queryParam.envType === '') return
       const queryMessage = {
+        token: util.cookies.get('token'),
         messageType: 'QUERY_LEO_BUILD',
         ...this.queryParam,
         page: 1,

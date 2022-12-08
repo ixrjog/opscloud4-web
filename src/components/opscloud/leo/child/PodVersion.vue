@@ -6,7 +6,7 @@
         style="margin-left: 5px">HostIP {{ pod.hostIP }}</span>
       </el-popover>
       <div><span class="label">Pod IP</span> {{ pod.podIP }}</div>
-      <div><span class="label">启动时间</span> {{ pod.startTime }}</div>
+      <div><span class="label">启动时间</span> {{ pod.startTime }}<span style="color: #00a2d4"> {{ pod.ago }}</span></div>
       <div><span class="label">重启次数</span><span :style="pod.restartCount === 0 ? 'color: #67C23A':'color: #F56C6C'"> {{ pod.restartCount }}</span></div>
       <pod-conditions :pod="pod"></pod-conditions>
     </el-card>

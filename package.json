@@ -34,6 +34,7 @@
     "hotkeys-js": "^3.7.3",
     "jenkins-pipeline-graph-vue": "^1.0.8",
     "js-cookie": "^2.2.1",
+    "leader-line-vue": "^2.1.1",
     "lodash": "^4.17.20",
     "lowdb": "^1.0.0",
     "markdown-it-vue": "^1.1.6",

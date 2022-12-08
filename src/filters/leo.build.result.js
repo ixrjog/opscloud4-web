@@ -18,6 +18,8 @@ export function getBuildResultType (value) {
       return 'warning'
     case 'CANCELLED':
       return 'danger'
+    case 'ERROR':
+      return 'danger'
     default:
       return 'info'
   }
@@ -25,7 +27,7 @@ export function getBuildResultType (value) {
 
 export function getBuildResultColor (value) {
   switch (value) {
-    case 'FAILURE':
+    case 'FAILURE' || 'ERROR':
       return '#f85d63'
     case 'UNSTABLE':
       return '#e56c0d'
@@ -50,6 +52,8 @@ export function getBuildResultColor (value) {
 
 export function getBuildResultText (value) {
   switch (value) {
+    case 'ERROR':
+      return '错误'
     case 'FAILURE':
       return '失败'
     case 'UNSTABLE':
