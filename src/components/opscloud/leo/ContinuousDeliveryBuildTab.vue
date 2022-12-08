@@ -112,7 +112,7 @@ export default {
       wsStates: wsStates,
       timers: {
         retrySocketTimer: null,
-        queryJobTimer: null,
+        queryJobTimer: null
       },
       instance: {
         id: ''
@@ -207,7 +207,6 @@ export default {
           this.handleQueryLeoJob()
           this.handleQueryLeoBuild()
         } catch (e) {
-         // this.$message.error('登录失败, 未选择服务器或其它原因')
         }
       }
     },
@@ -237,7 +236,6 @@ export default {
      *
      */
     socketOnMessage () {
-      let _this = this
       this.socket.onmessage = (message) => {
         const messageJson = JSON.parse(message.data)
         // 消息路由

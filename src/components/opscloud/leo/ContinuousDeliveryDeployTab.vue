@@ -192,6 +192,11 @@ export default {
   destroyed () {
     clearInterval(this.timers.retrySocketTimer) // 销毁定时器
     this.socket.close()
+    try {
+      this.line.remove()
+      this.line = null
+    } catch (e) {
+    }
   },
   computed: {},
   components: {
@@ -209,6 +214,9 @@ export default {
       handler (v) {
         this.drawLine()
       }
+    },
+    $route(to,from){
+      this.lineHide()
     }
   },
   filters: {},
@@ -343,6 +351,13 @@ export default {
         this.line.show()
       }
     },
+    scroll (y) {
+      try {
+        // 重新绘制
+        this.line.position()
+      } catch (e) {
+      }
+    },
     drawLine () {
       if (this.queryParam.deployId === '') {
         return
@@ -355,6 +370,7 @@ export default {
         if (start === null) {
           return
         }
+        LeaderLine.positionByWindowResize = true
         this.line = LeaderLine.setLine(start, document.getElementById('deploy_details'), this.lineOptions)
       })
     },

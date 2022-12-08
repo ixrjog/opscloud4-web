@@ -1,5 +1,5 @@
 <template>
-  <d2-container>
+  <d2-container @scroll="({x, y}) => handleScroll(y)">
     <h1 v-show="false">Leo持续交付</h1>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Build" name="build">
@@ -21,7 +21,8 @@ export default {
   name: 'continuous-delivery',
   data () {
     return {
-      activeName: 'build'
+      activeName: 'build',
+      scrollTop: 0
     }
   },
   mounted () {
@@ -39,6 +40,9 @@ export default {
       if (tab.name === 'deploy') {
         this.$refs.continuousDeliveryDeployTab.lineShow()
       }
+    },
+    handleScroll (y) {
+      this.$refs.continuousDeliveryDeployTab.scroll(y)
     }
   }
 }
