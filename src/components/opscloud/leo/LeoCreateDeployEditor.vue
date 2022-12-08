@@ -37,13 +37,13 @@
           <el-form-item label="发布版本" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.buildId" filterable clearable remote reserve-keyword
                        :disabled="doDeployParam.jobId === ''"
-                       placeholder="搜索并选择任务" style="width: 400px" :remote-method="getLeoDeployVersion">
+                       placeholder="搜索并选择版本" style="width: 400px" :remote-method="getLeoDeployVersion">
               <el-option
                 v-for="item in deployVersionOptions"
                 :key="item.id"
-                :label="item.image.versionName"
+                :label="item.versionName"
                 :value="item.id">
-                <select-item :name="item.image.versionName"
+                <select-item :name="item.versionName"
                              :comment="item.ago + ' #' + item.buildNumber + '次构建'"></select-item>
               </el-option>
             </el-select>
