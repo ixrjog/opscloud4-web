@@ -73,6 +73,7 @@
         <el-col :span="18" style="margin-top: 10px">
           <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
           </el-tag>
+          <leo-keywords-chart></leo-keywords-chart>
           <div style="margin-left: 20px; margin-top: 12px">
             <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
@@ -123,6 +124,7 @@ import DeployResult from '@/components/opscloud/leo/child/DeployResult'
 import DeployNumberIcon from '@/components/opscloud/leo/child/DeployNumberIcon'
 import PodVersion from '@/components/opscloud/leo/child/PodVersion.vue'
 import DeployVersion from '@/components/opscloud/leo/child/DeployVersion.vue'
+import LeoKeywordsChart from '@/components/opscloud/leo/child/LeoKeywordsChart.vue'
 
 const wsStates = {
   success: {
@@ -205,7 +207,8 @@ export default {
     DeployResult,
     DeployNumberIcon,
     PodVersion,
-    DeployVersion
+    DeployVersion,
+    LeoKeywordsChart
   },
   watch: {
     // 监听数据
