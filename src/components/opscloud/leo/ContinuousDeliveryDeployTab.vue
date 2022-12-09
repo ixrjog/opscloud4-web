@@ -43,7 +43,7 @@
                   <span style="margin-left: 8px"><i
                     class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
                   <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
-                    <el-tag style="float: right" @click="queryDeployDetails(deploy)"
+                    <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                             :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
                             :id="`deploy_${deploy.id}`">
                       <i class="fas fa-plus-circle"></i></el-tag>
@@ -282,12 +282,7 @@ export default {
         // 消息路由
         switch (messageJson.messageType) {
           case 'QUERY_LEO_DEPLOY':
-            this.data.deploys = messageJson.body.data
-            if (this.data.deploys.length > 0) {
-              if (this.data.deploys[0].id !== this.topDeployId) {
-                this.topDeployId = this.data.deploys[0].id
-              }
-            }
+            this.setDetails(messageJson.body.data)
             break
           case 'QUERY_LEO_DEPLOY_DETAILS':
             this.data.deployDetails = messageJson.body
@@ -297,6 +292,32 @@ export default {
     },
     sendMessage (message) {
       this.socketOnSend(JSON.stringify(message))
+    },
+    setDetails (deploys) {
+      if (deploys.length === 0) {
+        try {
+          this.line.remove()
+          this.line = null
+        } catch (e) {
+        }
+        this.data.deploys = []
+        this.topDeployId = ''
+        return
+      }
+      // 设置数据
+      if (deploys[0].id !== this.topDeployId) {
+        this.topDeployId = deploys[0].id
+      }
+      if (this.data.deploy !== '') {
+        if (this.data.deploy.id < (this.topDeployId - 4)) {
+          try {
+            this.line.remove()
+            this.line = null
+          } catch (e) {
+          }
+        }
+      }
+      this.data.deploys = deploys
     },
     getApplication (name) {
       const requestBody = {
@@ -367,7 +388,7 @@ export default {
         if (start === null) {
           return
         }
-        LeaderLine.positionByWindowResize = true
+        //LeaderLine.positionByWindowResize = true
         this.line = LeaderLine.setLine(start, document.getElementById('deploy_details'), this.lineOptions)
       })
     },

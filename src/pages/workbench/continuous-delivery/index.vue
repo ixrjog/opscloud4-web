@@ -29,7 +29,7 @@ export default {
     $route (to, from) {
       if (to.name === 'continuous-delivery') {
         // 进入
-        if(this.activeName === 'deploy'){
+        if (this.activeName === 'deploy') {
           this.$refs.continuousDeliveryDeployTab.lineShow()
         }
       } else {

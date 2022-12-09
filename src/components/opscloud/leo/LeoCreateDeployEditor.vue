@@ -225,7 +225,7 @@ export default {
         }
         this.buttons.doDeploying = false
       }).catch((res) => {
-        this.buttons.doDeploying= false
+        this.buttons.doDeploying = false
         this.$message.error(res.msg)
       })
     }
