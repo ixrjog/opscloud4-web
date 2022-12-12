@@ -73,14 +73,13 @@
         <el-col :span="18" style="margin-top: 10px">
           <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
           </el-tag>
-          <leo-keywords-chart></leo-keywords-chart>
           <div style="margin-left: 20px; margin-top: 12px">
             <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="previousVersionTab">
-              <el-tab-pane label="以前版本" v-if="data.deployDetails.previousVersion.pods !== []">
-                <deploy-version :version="data.deployDetails.previousVersion" :type="'previous'"></deploy-version>
-                <span v-for="pod in data.deployDetails.previousVersion.pods" :key="pod.name"
+              <el-tab-pane label="以前版本" v-if="data.deployDetails.versionDetails1.pods !== []">
+                <deploy-version :version="data.deployDetails.versionDetails1" :type="'previous'"></deploy-version>
+                <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
                       style="font-size: 12px; display: inline-block;">
                 <pod-version :pod="pod"></pod-version>
               </span>
@@ -91,10 +90,10 @@
             <el-tabs type="border-card" shadow="hover" body-style="padding: 2px" style="margin-top: 15px"
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="releaseVersionTab">
-              <el-tab-pane label="发布版本" v-if="data.deployDetails.releaseVersion.pods !== []">
-                <deploy-version :version="data.deployDetails.releaseVersion" :type="'release'"
+              <el-tab-pane label="发布版本" v-if="data.deployDetails.versionDetails2.pods !== []">
+                <deploy-version :version="data.deployDetails.versionDetails2" :type="'release'"
                                 :replicas="data.deployDetails.replicas"></deploy-version>
-                <span v-for="pod in data.deployDetails.releaseVersion.pods" :key="pod.name"
+                <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
                       style="font-size: 12px; display: inline-block;">
                 <pod-version :pod="pod"></pod-version>
               </span>
@@ -103,6 +102,7 @@
               </el-col>
             </el-tabs>
           </div>
+          <leo-keywords-chart v-if="false"></leo-keywords-chart>
         </el-col>
       </el-row>
     </el-row>
@@ -116,6 +116,7 @@ import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/app
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import LeaderLine from 'leader-line-vue'
 import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
+import LeoRequestType from '@/components/opscloud/common/enums/leo.request.js'
 import SelectItem from '../common/SelectItem'
 import LeoCreateDeployEditor from '@/components/opscloud/leo/LeoCreateDeployEditor'
 
@@ -284,10 +285,10 @@ export default {
         const messageJson = JSON.parse(message.data)
         // 消息路由
         switch (messageJson.messageType) {
-          case 'QUERY_LEO_DEPLOY':
+          case LeoRequestType.SUBSCRIBE_LEO_DEPLOY:
             this.setDetails(messageJson.body.data)
             break
-          case 'QUERY_LEO_DEPLOY_DETAILS':
+          case LeoRequestType.SUBSCRIBE_LEO_DEPLOY_DETAILS:
             this.data.deployDetails = messageJson.body
             break
         }
@@ -348,14 +349,13 @@ export default {
     },
     handleHistory (row) {
       this.formStatus.history.visible = true
-      // this.$refs.deployHistory.initData(Object.assign({}, row))
     },
     handleQueryLeoDeploy () {
       if (this.queryParam.applicationId === '') return
       if (this.queryParam.envType === '') return
       const queryMessage = {
         token: util.cookies.get('token'),
-        messageType: 'QUERY_LEO_DEPLOY',
+        messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOY,
         ...this.queryParam,
         page: 1,
         length: 5
@@ -408,7 +408,7 @@ export default {
       if (this.queryParam.deployId === '') return
       const queryMessage = {
         token: util.cookies.get('token'),
-        messageType: 'QUERY_LEO_DEPLOY_DETAILS',
+        messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOY_DETAILS,
         deployId: this.queryParam.deployId
       }
       this.sendMessage(queryMessage)

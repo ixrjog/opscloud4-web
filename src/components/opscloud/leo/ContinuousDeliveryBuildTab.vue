@@ -80,6 +80,7 @@ import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/app
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 
 import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
+import LeoRequestType from '@/components/opscloud/common/enums/leo.request.js'
 import SelectItem from '../common/SelectItem'
 import BusinessTags from '../common/tag/BusinessTags'
 import Pagination from '../common/page/Pagination'
@@ -240,11 +241,11 @@ export default {
         const messageJson = JSON.parse(message.data)
         // 消息路由
         switch (messageJson.messageType) {
-          case 'QUERY_LEO_JOB':
+          case LeoRequestType.SUBSCRIBE_LEO_JOB:
             this.table.data = messageJson.body.data
             this.table.pagination.total = messageJson.body.data.totalNum
             break
-          case 'QUERY_LEO_BUILD':
+          case LeoRequestType.SUBSCRIBE_LEO_BUILD:
             this.builds = messageJson.body.data
             break
         }
@@ -298,7 +299,7 @@ export default {
       if (this.queryParam.envType === '') return
       const queryMessage = {
         token: util.cookies.get('token'),
-        messageType: 'QUERY_LEO_JOB',
+        messageType: LeoRequestType.SUBSCRIBE_LEO_JOB,
         ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
@@ -310,7 +311,7 @@ export default {
       if (this.queryParam.envType === '') return
       const queryMessage = {
         token: util.cookies.get('token'),
-        messageType: 'QUERY_LEO_BUILD',
+        messageType: LeoRequestType.SUBSCRIBE_LEO_BUILD,
         ...this.queryParam,
         page: 1,
         length: 5

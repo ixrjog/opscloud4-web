@@ -87,6 +87,8 @@ function createService () {
           // throw new Error('请重新登录')
           router.push({ name: 'login' }); break
         // 根据需要添加其它判断
+        // Leo错误
+        case 43000: return response.data
         default: break
       }
       const error = new Error(response.data.msg)
