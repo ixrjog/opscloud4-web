@@ -34,7 +34,37 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="发布版本" :label-width="formStatus.labelWidth" required>
+          <el-form-item label="部署类型" :label-width="formStatus.labelWidth" required>
+            <el-col :span="6">
+              <el-radio v-model="doDeployParam.deployType" label="ROLLING" border>滚动 Rolling</el-radio>
+              <el-alert class="radio-desc" :closable="false"
+                        title="渐进式创建新版本，然后停止老版本，自动完成整个流程 (滚动比例25%)"
+                        type="info">
+              </el-alert>
+            </el-col>
+            <el-col :span="6">
+              <el-radio v-model="doDeployParam.deployType" label="REDEPLOY" border>重启 Redeploy</el-radio>
+              <el-alert class="radio-desc" :closable="false"
+                        title="不变更版本，只滚动重启所有副本"
+                        type="info">
+              </el-alert>
+            </el-col>
+            <el-col :span="6">
+              <el-radio v-model="doDeployParam.deployType" label="GRAY" border>灰度 Gray</el-radio>
+              <el-alert class="radio-desc" :closable="false"
+                        title="小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署"
+                        type="info">
+              </el-alert>
+            </el-col>
+            <el-col :span="6">
+              <el-radio v-model="doDeployParam.deployType" label="BG" border :disabled="true">蓝绿 Blue/Green</el-radio>
+              <el-alert class="radio-desc" :closable="false"
+                        title="创建出新版本，与老版本并存，通过切换流量实现发布与回滚"
+                        type="info">
+              </el-alert>
+            </el-col>
+          </el-form-item>
+          <el-form-item label="发布版本" :label-width="formStatus.labelWidth" required v-if="doDeployParam.deployType !== 'REDEPLOY'">
             <el-select v-model="doDeployParam.buildId" filterable clearable remote reserve-keyword
                        :disabled="doDeployParam.jobId === ''"
                        placeholder="搜索并选择版本" style="width: 400px" :remote-method="getLeoDeployVersion">
@@ -48,36 +78,13 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="部署类型" :label-width="formStatus.labelWidth" required>
-            <el-col :span="7">
-              <el-radio v-model="doDeployParam.deployType" label="ROLLING" border>滚动 Rolling</el-radio>
-              <el-alert class="radio-desc" :closable="false"
-                        title="渐进式创建新版本，然后停止老版本，自动完成整个流程 (滚动比例25%)"
-                        type="info">
-              </el-alert>
-            </el-col>
-            <el-col :span="7">
-              <el-radio v-model="doDeployParam.deployType" label="GRAY" border>灰度 Gray</el-radio>
-              <el-alert class="radio-desc" :closable="false"
-                        title="小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署"
-                        type="info">
-              </el-alert>
-            </el-col>
-            <el-col :span="7">
-              <el-radio v-model="doDeployParam.deployType" label="BG" border :disabled="true">蓝绿 Blue/Green</el-radio>
-              <el-alert class="radio-desc" :closable="false"
-                        title="创建出新版本，与老版本并存，通过切换流量实现发布与回滚"
-                        type="info">
-              </el-alert>
-            </el-col>
-          </el-form-item>
           <el-form-item label="部署说明" :label-width="formStatus.labelWidth">
             <el-input v-model="doDeployParam.comment"></el-input>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" @click="doDeploy" icon="fa fa-play" :loading="buttons.doDeploying"
-                     :disabled="buttons.doDeploying || doDeployParam.jobId === '' || doDeployParam.buildId === '' || doDeployParam.assetId === ''"><span style="margin-left: 2px">执行部署</span>
+                     :disabled="buttons.doDeploying || doDeployParam.jobId === '' ||  (doDeployParam.deployType !== 'REDEPLOY' &&  doDeployParam.buildId === '') || doDeployParam.assetId === ''"><span style="margin-left: 2px">执行部署</span>
           </el-button>
         </div>
       </el-tab-pane>
@@ -240,7 +247,7 @@ export default {
 
 .radio-desc {
   margin-top: 3px;
-  width: 280px;
+  width: 240px;
   font-size: 12px;
   line-height: 110%;
 }

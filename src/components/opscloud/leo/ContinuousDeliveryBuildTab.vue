@@ -205,7 +205,7 @@ export default {
         // console.log('continuous-delivery连接成功！')
         this.webSocketState = wsStates.success
         try {
-          this.handleQueryLeoJob()
+          this.handleSubscribeLeoJob()
           this.handleQueryLeoBuild()
         } catch (e) {
         }
@@ -294,7 +294,7 @@ export default {
       this.formStatus.history.visible = true
       this.$refs.buildHistory.initData(Object.assign({}, row))
     },
-    handleQueryLeoJob () {
+    handleSubscribeLeoJob () {
       if (this.queryParam.applicationId === '') return
       if (this.queryParam.envType === '') return
       const queryMessage = {
@@ -320,7 +320,7 @@ export default {
     },
     fetchData () {
       if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
-      this.handleQueryLeoJob()
+      this.handleSubscribeLeoJob()
       this.handleQueryLeoBuild()
     }
   }

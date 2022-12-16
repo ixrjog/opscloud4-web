@@ -31,6 +31,8 @@
       <el-button type="primary" @click="createDeploy"
                  :disabled="queryParam.applicationId === '' || queryParam.envType === ''">创建部署任务
       </el-button>
+      <el-button type="warning" :disabled="true">创建弹性伸缩任务
+      </el-button>
       <el-row :gutter="20">
         <!-- 最新部署 -->
         <el-col :span="6" style="margin-top: 10px" v-if="data.deploys !== []">
@@ -40,8 +42,7 @@
                 <div slot="header">
                   <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                   <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-                  <span style="margin-left: 8px"><i
-                    class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
+                  <span style="margin-left: 8px" v-if="deploy.deployDetails.deploy.dict.displayName !== null"><i class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
                   <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                     <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                             :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
@@ -77,8 +78,9 @@
             <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="previousVersionTab">
-              <el-tab-pane label="以前版本" v-if="data.deployDetails.versionDetails1.pods !== []">
-                <deploy-version :version="data.deployDetails.versionDetails1" :type="'previous'"></deploy-version>
+              <!--              版本1-->
+              <el-tab-pane :label="data.deployDetails.versionDetails1.title" v-if="data.deployDetails.versionDetails1.pods !== []">
+                <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
                       style="font-size: 12px; display: inline-block;">
                 <pod-version :pod="pod"></pod-version>
@@ -90,8 +92,9 @@
             <el-tabs type="border-card" shadow="hover" body-style="padding: 2px" style="margin-top: 15px"
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="releaseVersionTab">
-              <el-tab-pane label="发布版本" v-if="data.deployDetails.versionDetails2.pods !== []">
-                <deploy-version :version="data.deployDetails.versionDetails2" :type="'release'"
+              <!--              版本2-->
+              <el-tab-pane :label="data.deployDetails.versionDetails2.title" v-if="data.deployDetails.versionDetails2.pods !== []">
+                <deploy-version :version="data.deployDetails.versionDetails2" :type="'version2'"
                                 :replicas="data.deployDetails.replicas"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
                       style="font-size: 12px; display: inline-block;">
@@ -260,8 +263,8 @@ export default {
         // console.log('continuous-delivery连接成功！')
         this.webSocketState = wsStates.success
         try {
-          this.handleQueryLeoDeploy()
-          this.handleQueryDeployDetails()
+          this.handleSubscribeLeoDeploy()
+          this.handleSubscribeDeployDetails()
         } catch (e) {
           // this.$message.error('发送消息错误')
         }
@@ -294,16 +297,20 @@ export default {
         }
       }
     },
+    lineRemove () {
+      try {
+        if (this.line !== null) {
+          this.line.remove()
+        }
+      } catch (e) {
+      }
+    },
     sendMessage (message) {
       this.socketOnSend(JSON.stringify(message))
     },
     setDetails (deploys) {
       if (deploys.length === 0) {
-        try {
-          this.line.remove()
-          this.line = null
-        } catch (e) {
-        }
+        this.lineRemove()
         this.data.deploys = []
         this.topDeployId = ''
         return
@@ -314,11 +321,7 @@ export default {
       }
       if (this.data.deploy !== '') {
         if (this.data.deploy.id < (this.topDeployId - 4)) {
-          try {
-            this.line.remove()
-            this.line = null
-          } catch (e) {
-          }
+          this.lineRemove()
         }
       }
       this.data.deploys = deploys
@@ -350,7 +353,7 @@ export default {
     handleHistory (row) {
       this.formStatus.history.visible = true
     },
-    handleQueryLeoDeploy () {
+    handleSubscribeLeoDeploy () {
       if (this.queryParam.applicationId === '') return
       if (this.queryParam.envType === '') return
       const queryMessage = {
@@ -383,15 +386,12 @@ export default {
       if (this.queryParam.deployId === '') {
         return
       }
-      if (this.line !== null) {
-        this.line.remove()
-      }
+      this.lineRemove()
       this.$nextTick(() => { // 需要延迟执行
         const start = document.getElementById('deploy_' + this.queryParam.deployId)
         if (start === null) {
           return
         }
-        //LeaderLine.positionByWindowResize = true
         this.line = LeaderLine.setLine(start, document.getElementById('deploy_details'), this.lineOptions)
       })
     },
@@ -401,11 +401,12 @@ export default {
         return
       }
       this.queryParam.deployId = deploy.id
-      this.handleQueryDeployDetails()
+      this.handleSubscribeDeployDetails()
       this.drawLine()
     },
-    handleQueryDeployDetails () {
+    handleSubscribeDeployDetails () {
       if (this.queryParam.deployId === '') return
+      this.data.deployDetails = {}
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOY_DETAILS,
@@ -423,7 +424,9 @@ export default {
     },
     fetchData () {
       if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
-      this.handleQueryLeoDeploy()
+      this.handleSubscribeLeoDeploy()
+      this.setDetails([])
+      this.data.deployDetails = {}
     }
   }
 }
