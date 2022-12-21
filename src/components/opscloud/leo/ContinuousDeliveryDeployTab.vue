@@ -42,7 +42,7 @@
                 <div slot="header">
                   <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                   <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-                  <span style="margin-left: 8px" v-if="deploy.deployDetails.deploy.dict.displayName !== null"><i class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
+                  <span style="margin-left: 8px" v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
                   <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                     <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                             :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
@@ -79,7 +79,7 @@
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="previousVersionTab">
               <!--              版本1-->
-              <el-tab-pane :label="data.deployDetails.versionDetails1.title" v-if="data.deployDetails.versionDetails1.pods !== []">
+              <el-tab-pane :label="data.deployDetails.versionDetails1.title" v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.pods !== []">
                 <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
                       style="font-size: 12px; display: inline-block;">
@@ -93,7 +93,7 @@
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="releaseVersionTab">
               <!--              版本2-->
-              <el-tab-pane :label="data.deployDetails.versionDetails2.title" v-if="data.deployDetails.versionDetails2.pods !== []">
+              <el-tab-pane :label="data.deployDetails.versionDetails2.title" v-if="data.deployDetails.versionDetails2 !== null && data.deployDetails.versionDetails2.pods !== []">
                 <deploy-version :version="data.deployDetails.versionDetails2" :type="'version2'"
                                 :replicas="data.deployDetails.replicas"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
