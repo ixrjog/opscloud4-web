@@ -49,14 +49,15 @@
                         type="info">
               </el-alert>
             </el-col>
+<!--            小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署-->
             <el-col :span="6">
-              <el-radio v-model="doDeployParam.deployType" label="GRAY" border>灰度 Gray</el-radio>
+              <el-radio v-model="doDeployParam.deployType" label="OFFLINE" border>下线 Offline</el-radio>
               <el-alert class="radio-desc" :closable="false"
-                        title="小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署"
+                        title="仅支持小流量环境（Canary）下线"
                         type="info">
               </el-alert>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="6" v-if="false">
               <el-radio v-model="doDeployParam.deployType" label="BG" border :disabled="true">蓝绿 Blue/Green</el-radio>
               <el-alert class="radio-desc" :closable="false"
                         title="创建出新版本，与老版本并存，通过切换流量实现发布与回滚"
@@ -64,7 +65,7 @@
               </el-alert>
             </el-col>
           </el-form-item>
-          <el-form-item label="发布版本" :label-width="formStatus.labelWidth" required v-if="doDeployParam.deployType !== 'REDEPLOY'">
+          <el-form-item label="发布版本" :label-width="formStatus.labelWidth" required v-if="doDeployParam.deployType === 'ROLLING'">
             <el-select v-model="doDeployParam.buildId" filterable clearable remote reserve-keyword
                        :disabled="doDeployParam.jobId === ''"
                        placeholder="搜索并选择版本" style="width: 400px" :remote-method="getLeoDeployVersion">
@@ -84,7 +85,7 @@
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" @click="doDeploy" icon="fa fa-play" :loading="buttons.doDeploying"
-                     :disabled="buttons.doDeploying || doDeployParam.jobId === '' ||  (doDeployParam.deployType !== 'REDEPLOY' &&  doDeployParam.buildId === '') || doDeployParam.assetId === ''"><span style="margin-left: 2px">执行部署</span>
+                     :disabled="buttons.doDeploying || doDeployParam.jobId === '' ||  (doDeployParam.deployType === 'ROLLING' &&  doDeployParam.buildId === '') || doDeployParam.assetId === ''"><span style="margin-left: 2px">执行部署</span>
           </el-button>
         </div>
       </el-tab-pane>

@@ -61,7 +61,7 @@
               <span v-show="deploy.runtime !== null" style="margin-left: 2px">
                 <b style="color: #3b97d7"> {{ deploy.runtime }}</b></span>
               </span>
-                <div><span class="label">部署类型</span> {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}</div>
+                <div><span class="label" v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span> {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}</div>
                 <div><span class="label">部署状态</span> {{ deploy.deployStatus }}</div>
                 <div><span class="label">部署结果</span>
                   <deploy-result style="margin-left: 5px" :deploy="deploy"></deploy-result>
