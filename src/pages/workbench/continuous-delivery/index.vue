@@ -1,6 +1,7 @@
 <template>
   <d2-container @scroll="({x, y}) => handleScroll(y)">
     <h1 v-show="false">Leo持续交付</h1>
+    <announcement-carousel :kind="1"></announcement-carousel>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Build" name="build">
         <continuous-delivery-build-tab ref="continuousDeliveryBuildTab"></continuous-delivery-build-tab>
@@ -16,6 +17,7 @@
 
 import continuousDeliveryBuildTab from '@/components/opscloud/leo/ContinuousDeliveryBuildTab'
 import continuousDeliveryDeployTab from '@/components/opscloud/leo/ContinuousDeliveryDeployTab'
+import AnnouncementCarousel from '@/components/opscloud/sys/AnnouncementCarousel.vue'
 
 export default {
   name: 'continuous-delivery',
@@ -41,6 +43,7 @@ export default {
   mounted () {
   },
   components: {
+    AnnouncementCarousel,
     continuousDeliveryBuildTab,
     continuousDeliveryDeployTab
   },
