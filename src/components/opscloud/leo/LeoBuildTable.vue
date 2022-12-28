@@ -12,9 +12,38 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
+      <el-select v-model="queryParam.envType" clearable filterable
+                 remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
+                 @change="fetchData">
+        <el-option
+          v-for="item in envOptions"
+          :key="item.id"
+          :label="item.envName"
+          :value="item.envType">
+          <select-item :name="item.envName" :comment="item.comment"></select-item>
+        </el-option>
+      </el-select>
+      <el-select v-model="queryParam.buildResult" clearable filterable placeholder="选择构建结果"
+                 @change="fetchData">
+        <el-option
+          v-for="item in buildResultOptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <el-button @click="fetchData" class="button">刷新</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+
+    <div v-for="build in table.data" :key="build.id" style="font-size: 12px">
+      <template>
+        <div>
+          <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"></leo-build-details>
+        </div>
+      </template>
+    </div>
+
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading" v-if="false">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
@@ -53,8 +82,8 @@
 
 <script>
 
-import { QUERY_LEO_JOB_PAGE, DELETE_LEO_JOB_BY_ID } from '@/api/modules/leo/leo.job.api'
-import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api'
+import { QUERY_LEO_JOB_PAGE, DELETE_LEO_JOB_BY_ID,QUERY_LEO_JOB_BUILD_PAGE } from '@/api/modules/leo/leo.job.api'
+import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 
@@ -68,6 +97,7 @@ import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor'
 import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
+import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails.vue'
 
 const activeOptions = [{
   value: true,
@@ -76,6 +106,25 @@ const activeOptions = [{
   value: false,
   label: '无效'
 }]
+
+const buildResultOptions = [{
+  value: 'SUCCESS',
+  label: 'SUCCESS'
+}, {
+  value: 'ABORTED',
+  label: 'ABORTED'
+}, {
+  value: 'FAILURE',
+  label: 'FAILURE'
+}, {
+  value: 'UNSTABLE',
+  label: 'UNSTABLE'
+}, {
+  value: 'ERROR',
+  label: 'ERROR'
+}
+
+]
 
 export default {
   name: 'leoBuildTable',
@@ -116,6 +165,7 @@ export default {
         templateId: '',
         envType: '',
         tagId: '',
+        buildResult: '',
         isActive: '',
         extend: true
       },
@@ -124,6 +174,7 @@ export default {
       applicationOptions: [],
       templateOptions: [],
       envOptions: [],
+      buildResultOptions: buildResultOptions,
       activeOptions: activeOptions
     }
   },
@@ -143,7 +194,8 @@ export default {
     EnvTag,
     BusinessTagEditor,
     LeoJobEditor,
-    LeoDoBuildEditor
+    LeoDoBuildEditor,
+    LeoBuildDetails
   },
   filters: {},
   methods: {
@@ -158,6 +210,7 @@ export default {
     getEnv (name) {
       const requestBody = {
         envName: name,
+        isActive: true,
         page: 1,
         length: 20
       }
@@ -186,7 +239,7 @@ export default {
         page: 1,
         length: 20
       }
-      QUERY_APPLICATION_KUBERNETES_PAGE(requestBody)
+      QUERY_MY_APPLICATION_PAGE(requestBody)
         .then(res => {
           this.applicationOptions = res.body.data
         })
@@ -264,7 +317,7 @@ export default {
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
       }
-      QUERY_LEO_JOB_PAGE(requestBody)
+      QUERY_LEO_JOB_BUILD_PAGE(requestBody)
         .then(res => {
           this.table.data = res.body.data
           this.table.pagination.total = res.body.totalNum

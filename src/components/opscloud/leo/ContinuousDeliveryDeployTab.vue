@@ -28,10 +28,11 @@
           <select-item :name="item.envName" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-button type="primary" @click="createDeploy"
+      <el-button type="primary" size="mini" @click="createDeploy"
                  :disabled="queryParam.applicationId === '' || queryParam.envType === ''">创建部署任务
       </el-button>
-      <el-button type="warning" :disabled="true">创建弹性伸缩任务
+      <el-button type="primary" plain size="mini" @click="handleHistory()"
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">历史
       </el-button>
       <el-row :gutter="20">
         <!-- 最新部署 -->
@@ -42,7 +43,9 @@
                 <div slot="header">
                   <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                   <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-                  <span style="margin-left: 8px" v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
+                  <span style="margin-left: 8px"
+                        v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i
+                    class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
                   <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                     <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                             :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
@@ -61,7 +64,10 @@
               <span v-show="deploy.runtime !== null" style="margin-left: 2px">
                 <b style="color: #3b97d7"> {{ deploy.runtime }}</b></span>
               </span>
-                <div><span class="label" v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span> {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}</div>
+                <div><span class="label"
+                           v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>
+                  {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
+                </div>
                 <div><span class="label">部署状态</span> {{ deploy.deployStatus }}</div>
                 <div><span class="label">部署结果</span>
                   <deploy-result style="margin-left: 5px" :deploy="deploy"></deploy-result>
@@ -79,7 +85,8 @@
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="previousVersionTab">
               <!--              版本1-->
-              <el-tab-pane :label="data.deployDetails.versionDetails1.title" v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.pods !== []">
+              <el-tab-pane :label="data.deployDetails.versionDetails1.title"
+                           v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.pods !== []">
                 <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
                       style="font-size: 12px; display: inline-block;">
@@ -93,7 +100,8 @@
                      v-if="JSON.stringify(data.deployDetails) !== '{}'"
                      ref="releaseVersionTab">
               <!--              版本2-->
-              <el-tab-pane :label="data.deployDetails.versionDetails2.title" v-if="data.deployDetails.versionDetails2 !== null && data.deployDetails.versionDetails2.pods !== []">
+              <el-tab-pane :label="data.deployDetails.versionDetails2.title"
+                           v-if="data.deployDetails.versionDetails2 !== null && data.deployDetails.versionDetails2.pods !== []">
                 <deploy-version :version="data.deployDetails.versionDetails2" :type="'version2'"
                                 :replicas="data.deployDetails.replicas"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
@@ -110,12 +118,13 @@
       </el-row>
     </el-row>
     <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"></leo-create-deploy-editor>
+    <leo-deploy-history :form-status="formStatus.history" :applicationId="queryParam.applicationId" :envType="queryParam.envType" ref="deployHistory"></leo-deploy-history>
   </div>
 </template>
 
 <script>
 
-import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api'
+import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import LeaderLine from 'leader-line-vue'
 import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
@@ -129,6 +138,7 @@ import DeployNumberIcon from '@/components/opscloud/leo/child/DeployNumberIcon'
 import PodVersion from '@/components/opscloud/leo/child/PodVersion.vue'
 import DeployVersion from '@/components/opscloud/leo/child/DeployVersion.vue'
 import LeoKeywordsChart from '@/components/opscloud/leo/child/LeoKeywordsChart.vue'
+import LeoDeployHistory from '@/components/opscloud/leo/LeoDeployHistory.vue'
 
 const wsStates = {
   success: {
@@ -212,7 +222,8 @@ export default {
     DeployNumberIcon,
     PodVersion,
     DeployVersion,
-    LeoKeywordsChart
+    LeoKeywordsChart,
+    LeoDeployHistory
   },
   watch: {
     // 监听数据
@@ -333,7 +344,7 @@ export default {
         page: 1,
         length: 20
       }
-      QUERY_APPLICATION_KUBERNETES_PAGE(requestBody)
+      QUERY_MY_APPLICATION_PAGE(requestBody)
         .then(res => {
           this.applicationOptions = res.body.data
         })
@@ -350,8 +361,10 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    handleHistory (row) {
+    handleHistory () {
+      if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
       this.formStatus.history.visible = true
+      this.$refs.deployHistory.initData()
     },
     handleSubscribeLeoDeploy () {
       if (this.queryParam.applicationId === '') return

@@ -9,6 +9,14 @@ export function GET_APP_BUSINESS_OPTIONS () {
   })
 }
 
+export function QUERY_MY_APPLICATION_PAGE (data) {
+  return request({
+    url: baseUrl + '/my/page/query',
+    method: 'post',
+    data
+  })
+}
+
 export function QUERY_APPLICATION_KUBERNETES_PAGE (data) {
   return request({
     url: baseUrl + '/kubernetes/page/query',

@@ -120,7 +120,7 @@ import MyHighlight from '@/components/opscloud/common/MyHighlight'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
-import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api'
+import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
@@ -206,7 +206,7 @@ export default {
         page: 1,
         length: 20
       }
-      QUERY_APPLICATION_KUBERNETES_PAGE(requestBody)
+      QUERY_MY_APPLICATION_PAGE(requestBody)
         .then(res => {
           this.applicationOptions = res.body.data
         })
