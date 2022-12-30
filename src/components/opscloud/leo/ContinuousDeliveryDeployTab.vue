@@ -113,7 +113,6 @@
               </el-col>
             </el-tabs>
           </div>
-          <leo-keywords-chart v-if="false"></leo-keywords-chart>
         </el-col>
       </el-row>
     </el-row>
@@ -137,7 +136,6 @@ import DeployResult from '@/components/opscloud/leo/child/DeployResult'
 import DeployNumberIcon from '@/components/opscloud/leo/child/DeployNumberIcon'
 import PodVersion from '@/components/opscloud/leo/child/PodVersion.vue'
 import DeployVersion from '@/components/opscloud/leo/child/DeployVersion.vue'
-import LeoKeywordsChart from '@/components/opscloud/leo/child/LeoKeywordsChart.vue'
 import LeoDeployHistory from '@/components/opscloud/leo/LeoDeployHistory.vue'
 
 const wsStates = {
@@ -222,7 +220,6 @@ export default {
     DeployNumberIcon,
     PodVersion,
     DeployVersion,
-    LeoKeywordsChart,
     LeoDeployHistory
   },
   watch: {

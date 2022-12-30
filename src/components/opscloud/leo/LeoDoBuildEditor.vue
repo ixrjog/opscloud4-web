@@ -35,6 +35,10 @@
                        :loading="branchOptionsLoading">
               <i class="fas fa-circle-notch" aria-hidden="true"></i>
             </el-button>
+            <el-button size="mini" type="primary" style="margin-left: 5px" @click="createBranch"
+                       :loading="branchOptionsLoading">
+              <i class="fab fa-hubspot" aria-hidden="true"></i>
+            </el-button>
           </el-form-item>
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
@@ -59,7 +63,7 @@
 <script>
 
 // API
-import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS } from '@/api/modules/leo/leo.build.api'
+import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
 
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 import SelectItem from '@/components/opscloud/common/SelectItem'
@@ -142,6 +146,18 @@ export default {
     getBranchOptions () {
       this.branchOptionsLoading = true
       GET_BUILD_BRANCH_OPTIONS(this.getBranchOptionsParam)
+        .then(res => {
+          this.branchOptions = res.body.options
+          this.branchOptionsLoading = false
+        })
+    },
+    createBranch () {
+      this.branchOptionsLoading = true
+      const request = {
+        ref: this.doBuildParam.branch,
+        ...this.getBranchOptionsParam
+      }
+      CREATE_BUILD_BRANCH(request)
         .then(res => {
           this.branchOptions = res.body.options
           this.branchOptionsLoading = false

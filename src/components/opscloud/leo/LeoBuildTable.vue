@@ -34,7 +34,6 @@
       </el-select>
       <el-button @click="fetchData" class="button">刷新</el-button>
     </el-row>
-
     <div v-for="build in table.data" :key="build.id" style="font-size: 12px">
       <template>
         <div>
@@ -42,7 +41,6 @@
         </div>
       </template>
     </div>
-
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" v-if="false">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable>
