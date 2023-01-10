@@ -1,5 +1,5 @@
 <template>
-  <div   v-if="JSON.stringify(announcements) !== '[]'" style="margin-bottom: 10px">
+  <div v-if="JSON.stringify(announcements) !== '[]'" style="margin-bottom: 10px">
     <el-carousel trigger="click" height="150px" :interval="10000">
       <el-carousel-item v-for="announcement in announcements" :key="announcement.id">
         <h3 class="small">{{ announcement.title }}</h3>
@@ -15,7 +15,7 @@ import { GET_ANNOUNCEMENT } from '@/api/modules/sys/sys.announcement.api'
 
 export default {
   name: 'AnnouncementCarousel',
-  props:['kind'],
+  props: ['kind'],
   data () {
     return {
       announcements: []
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     fetchData () {
-      GET_ANNOUNCEMENT({kind: this.kind})
+      GET_ANNOUNCEMENT({ kind: this.kind })
         .then(res => {
           this.announcements = res.body
         })

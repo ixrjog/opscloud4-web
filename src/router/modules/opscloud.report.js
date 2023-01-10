@@ -9,6 +9,15 @@ export default [
     }
   },
   {
+    path: '/report/workorder',
+    name: 'workorder-report',
+    component: () => import('@/pages/report/workorder'),
+    meta: {
+      auth: true,
+      title: '工单报表'
+    }
+  },
+  {
     path: '/report/workevent',
     name: 'report-workevent',
     component: () => import('@/pages/report/workevent'),

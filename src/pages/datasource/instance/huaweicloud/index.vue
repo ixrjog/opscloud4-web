@@ -95,16 +95,13 @@ export default {
     this.init()
   },
   components: {
-    EntryDetail,
     AssetTable,
-    DsChildrenTag,
     DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {
       if (tab.name === 'cloudServer' || tab.name === 'ecs') {
         this.$refs.ecsTable.fetchData()
-        return
       }
     },
     init () {

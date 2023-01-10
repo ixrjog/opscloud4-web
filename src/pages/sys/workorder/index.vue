@@ -134,7 +134,6 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      console.log(tab)
       if (tab.name === 'ticket') {
         this.$refs.myTicketCard.fetchData()
       }

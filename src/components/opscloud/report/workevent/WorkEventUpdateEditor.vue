@@ -77,7 +77,7 @@ export default {
       this.saving = false
     },
     handleSave () {
-      let request = {
+      const request = {
         workEvent: Object.assign({}, this.workEventData)
       }
       delete (request.workEvent.user)
