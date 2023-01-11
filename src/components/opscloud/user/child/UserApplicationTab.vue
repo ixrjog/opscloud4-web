@@ -10,7 +10,7 @@
           :value="item.id">
         </el-option>
       </el-select>
-      <el-button type="primary" plain size="mini" @click="handlerGrant()" :disabled="applicationId === ''">授权
+      <el-button type="primary" plain size="mini" @click="handleGrant()" :disabled="applicationId === ''">授权
       </el-button>
     </el-row>
     <el-divider></el-divider>
@@ -31,10 +31,10 @@
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowSet(scope.row)">
+          <el-button type="primary" plain size="mini" @click="handleRowSet(scope.row)">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '降权' : '提权' }}
           </el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowRevoke(scope.row)">解除</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowRevoke(scope.row)">解除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -112,7 +112,7 @@ export default {
           this.applicationOptions = res.body.data
         })
     },
-    handlerRowSet (row) {
+    handleRowSet (row) {
       SET_USER_BUSINESS_PERMISSION({ id: row.userPermission.id })
         .then(res => {
           this.$message.success('设置角色成功!')
@@ -123,7 +123,7 @@ export default {
     /**
      * 授权
      */
-    handlerGrant () {
+    handleGrant () {
       const requestBody = {
         userId: this.user.id,
         businessType: this.businessType.APPLICATION,
@@ -141,7 +141,7 @@ export default {
      * 解除
      * @param row
      */
-    handlerRowRevoke (row) {
+    handleRowRevoke (row) {
       const requestBody = {
         userId: this.user.id,
         businessType: this.businessType.APPLICATION,
