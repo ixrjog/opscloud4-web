@@ -34,5 +34,14 @@ export default [
       auth: true,
       title: '平台认证'
     }
+  },
+  {
+    path: '/report/leo',
+    name: 'report-leo',
+    component: () => import('@/pages/report/leo'),
+    meta: {
+      auth: true,
+      title: 'Leo报表'
+    }
   }
 ]

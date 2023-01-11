@@ -1,7 +1,7 @@
 export default [
   {
     path: '/leo/template',
-    name: 'leoTemplate',
+    name: 'leo-template',
     component: () => import('@/pages/leo/template'),
     meta: {
       auth: true,
@@ -11,7 +11,7 @@ export default [
   },
   {
     path: '/leo/job',
-    name: 'leoJob',
+    name: 'leo-job',
     component: () => import('@/pages/leo/job'),
     meta: {
       auth: true,
@@ -21,7 +21,7 @@ export default [
   },
   {
     path: '/leo/rule',
-    name: 'leoRule',
+    name: 'leo-rule',
     component: () => import('@/pages/leo/rule'),
     meta: {
       auth: true,

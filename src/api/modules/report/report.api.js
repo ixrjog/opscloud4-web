@@ -56,3 +56,10 @@ export function GET_WORK_EVENT_FAULT_REPORT (param) {
     params: param
   })
 }
+
+export function GET_LEO_REPORT () {
+  return request({
+    url: baseUrl + '/leo/get',
+    method: 'get'
+  })
+}
