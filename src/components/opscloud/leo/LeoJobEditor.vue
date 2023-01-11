@@ -96,6 +96,10 @@
           </div>
         </el-row>
       </el-tab-pane>
+      <el-tab-pane label="用户授权" name="permissionUser" v-if="leoJob.id !== ''&& leoJob.id !== 0">
+        <permission-user-tab :businessType="businessType.LEO_JOB" :businessId="leoJob.id"
+                             ref="permissionUserTab"></permission-user-tab>
+      </el-tab-pane>
       <el-tab-pane label="文档" name="doc">
         <el-row>
           <el-card shadow="never">
@@ -123,6 +127,8 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
+import PermissionUserTab from '@/components/opscloud/user/child/BusinessPermissionUserTab.vue'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -162,12 +168,14 @@ export default {
       templateOptions: [],
       buttons: {
         upgradeTemplateContent: false
-      }
+      },
+      businessType: BusinessType
     }
   },
   name: 'LeoJobEditor',
   props: ['formStatus'],
   components: {
+    PermissionUserTab,
     MyHighlight,
     MyMarkdown,
     SelectItem,
