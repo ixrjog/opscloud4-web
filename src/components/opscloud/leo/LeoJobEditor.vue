@@ -263,6 +263,9 @@ export default {
       if (tab.name === 'ymlConfig') {
         // this.editing = false
       }
+      if (tab.name === 'permissionUser') {
+        this.$refs.permissionUserTab.init()
+      }
       if (tab.name === 'doc') {
         this.fetchDoc(this.docKeys.LEO_JOB_README)
       }
