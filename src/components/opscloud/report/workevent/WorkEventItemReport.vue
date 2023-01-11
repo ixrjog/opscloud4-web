@@ -21,8 +21,8 @@ export default {
     initChart (data, color) {
       const myChart = echarts.init(document.getElementById('workEventItemReport'))
       const option = {
-        title:{
-          text:'工作事件总比例'
+        title: {
+          text: '工作事件总比例'
         },
         color: color,
         tooltip: {

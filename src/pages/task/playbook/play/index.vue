@@ -86,7 +86,7 @@ export default {
       }
     },
     close () {
-      this.sendMessage(message.close)
+      // this.sendMessage(message.close)
       /**
        *
        0        CONNECTING        连接尚未建立
@@ -122,7 +122,7 @@ export default {
     },
     handleHeartbeat () {
       try {
-        this.sendMessage(message.heartbeat)
+        // this.sendMessage(message.heartbeat)
       } catch (e) {
       }
     },

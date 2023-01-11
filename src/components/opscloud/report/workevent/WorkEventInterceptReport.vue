@@ -19,8 +19,8 @@ export default {
     initChart (source, time) {
       const myChart = echarts.init(document.getElementById('workEventInterceptReport'))
       const option = {
-        title:{
-          text:'工作事件(周)拦截率'
+        title: {
+          text: '工作事件(周)拦截率'
         },
         color: ['#39CD9C', '#FEC71E'],
         legend: {

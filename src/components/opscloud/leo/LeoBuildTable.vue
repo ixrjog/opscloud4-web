@@ -80,13 +80,12 @@
 
 <script>
 
-import { QUERY_LEO_JOB_PAGE, DELETE_LEO_JOB_BY_ID,QUERY_LEO_JOB_BUILD_PAGE } from '@/api/modules/leo/leo.job.api'
+import { DELETE_LEO_JOB_BY_ID, QUERY_LEO_JOB_BUILD_PAGE } from '@/api/modules/leo/leo.job.api'
 import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 
 import SelectItem from '../common/SelectItem'
-import ActiveTag from '../common/tag/ActiveTag'
 import BusinessTags from '../common/tag/BusinessTags'
 import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import Pagination from '../common/page/Pagination'
@@ -188,7 +187,6 @@ export default {
     Pagination,
     SelectItem,
     BusinessTags,
-    ActiveTag,
     EnvTag,
     BusinessTagEditor,
     LeoJobEditor,

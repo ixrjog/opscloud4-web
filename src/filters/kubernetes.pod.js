@@ -5,7 +5,6 @@ export function toPhaseType (pod) {
   return pod.properties.status === 'true' && pod.properties.phase === 'Running' ? 'success' : 'warning'
 }
 
-
 export function toPodPhaseType (pod) {
   // 终止中
   if (pod.terminating) return 'warning'

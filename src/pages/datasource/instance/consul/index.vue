@@ -39,8 +39,6 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type.js'
-import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
-import WhetherTag from '../../../../components/opscloud/common/tag/WhetherTag'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
 
@@ -84,8 +82,6 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag,
-    WhetherTag,
     DatasourceInstanceTitle,
     EntryDetail
   },
