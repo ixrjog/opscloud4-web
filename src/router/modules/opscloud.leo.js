@@ -18,5 +18,15 @@ export default [
       cache: true,
       title: 'Leo任务管理'
     }
+  },
+  {
+    path: '/leo/rule',
+    name: 'leoRule',
+    component: () => import('@/pages/leo/rule'),
+    meta: {
+      auth: true,
+      cache: true,
+      title: 'Leo规则管理'
+    }
   }
 ]

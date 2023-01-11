@@ -80,13 +80,12 @@
         <el-col :span="18" style="margin-top: 10px">
           <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
           </el-tag>
-          <div style="margin-left: 20px; margin-top: 12px">
+          <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
             <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
-                     v-if="JSON.stringify(data.deployDetails) !== '{}'"
+                     v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.show"
                      ref="previousVersionTab">
-              <!--              版本1-->
-              <el-tab-pane :label="data.deployDetails.versionDetails1.title"
-                           v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.pods !== []">
+              <!-- 版本1 -->
+              <el-tab-pane :label="data.deployDetails.versionDetails1.title">
                 <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
                       style="font-size: 12px; display: inline-block;">
@@ -97,11 +96,10 @@
               </el-col>
             </el-tabs>
             <el-tabs type="border-card" shadow="hover" body-style="padding: 2px" style="margin-top: 15px"
-                     v-if="JSON.stringify(data.deployDetails) !== '{}'"
+                     v-if="data.deployDetails.versionDetails2 !== null && data.deployDetails.versionDetails2.show"
                      ref="releaseVersionTab">
-              <!--              版本2-->
-              <el-tab-pane :label="data.deployDetails.versionDetails2.title"
-                           v-if="data.deployDetails.versionDetails2 !== null && data.deployDetails.versionDetails2.pods !== []">
+              <!-- 版本2-->
+              <el-tab-pane :label="data.deployDetails.versionDetails2.title">
                 <deploy-version :version="data.deployDetails.versionDetails2" :type="'version2'"
                                 :replicas="data.deployDetails.replicas"></deploy-version>
                 <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
