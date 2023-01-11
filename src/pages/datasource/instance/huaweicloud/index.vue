@@ -45,10 +45,8 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
-import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 import util from '@/libs/util'
-import EntryDetail from '@/components/opscloud/common/EntryDetail'
 
 const tableLayout = {
   ecs: {
