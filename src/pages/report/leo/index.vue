@@ -15,6 +15,13 @@
         <div id="deployReportChart" style="height:350px; width: 100%"></div>
       </el-row>
     </el-card>
+    <div v-if="false" v-for="instance in report.instances" :key="instance.instanceId" style="margin-bottom: 20px">
+      <jenkins-build-executor-status-card
+        :instanceId="instance.instanceId"
+        :ref="`instance_${instance.instanceId}_buildExecutor`">
+      </jenkins-build-executor-status-card>
+    </div>
+
   </d2-container>
 </template>
 
@@ -24,6 +31,7 @@ import * as echarts from 'echarts'
 // API
 import { GET_LEO_REPORT } from '@/api/modules/report/report.api'
 import InfoCard from '@/components/opscloud/common/InfoCard'
+import JenkinsBuildExecutorStatusCard from '@/components/opscloud/jenkins/JenkinsBuildExecutorStatusCard.vue'
 
 export default {
   data () {
@@ -33,7 +41,8 @@ export default {
     }
   },
   components: {
-    InfoCard
+    InfoCard,
+    JenkinsBuildExecutorStatusCard
   },
   computed: {},
   mounted () {
@@ -44,7 +53,7 @@ export default {
       const myChart = echarts.init(document.getElementById('buildReportChart'))
       const option = {
         title: {
-          text: '构建报表（按月）'
+          text: '构建(月)报表'
         },
         tooltip: {
           trigger: 'axis',
@@ -88,7 +97,7 @@ export default {
       const myChart = echarts.init(document.getElementById('deployReportChart'))
       const option = {
         title: {
-          text: '部署报表（按月）'
+          text: '部署(月)报表'
         },
         tooltip: {
           trigger: 'axis',
@@ -131,6 +140,11 @@ export default {
     initData () {
       this.initBuildChart(this.report.buildMonthReport)
       this.initDeployChart(this.report.deployMonthReport)
+      // this.$nextTick(() => {
+      //   for (let instance of this.report.instances) {
+      //     this.$refs[`instance_${instance.instanceId}_buildExecutor`][0].start()
+      //   }
+      // }, 5000)
     },
     fetchData () {
       GET_LEO_REPORT()
