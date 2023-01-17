@@ -89,6 +89,7 @@ function createService () {
         // 根据需要添加其它判断
         // Leo错误
         case 43000: return response.data
+        case 42100: return response.data
         default: break
       }
       const error = new Error(response.data.msg)
