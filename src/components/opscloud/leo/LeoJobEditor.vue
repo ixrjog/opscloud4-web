@@ -63,7 +63,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="模板YML" name="ymlConfig">
+      <el-tab-pane label="任务YML" name="ymlConfig">
         <el-row>
           <el-card shadow="never">
             <my-highlight v-if="!editing && leoJob.jobConfig !== ''" :code="leoJob.jobConfig"
@@ -76,6 +76,7 @@
         </el-row>
         <el-row>
           <div style="width:100%;text-align:center;margin-top:10px">
+            <el-button size="mini" type="primary" @click="handleCreateCrRepository">创建CR仓库</el-button>
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑</el-button>
           </div>
         </el-row>
@@ -118,7 +119,12 @@
 <script>
 
 // API
-import { ADD_LEO_JOB, UPDATE_LEO_JOB, UPGRADE_LEO_JOB_TEMPLATE_CONTENT } from '@/api/modules/leo/leo.job.api'
+import {
+  ADD_LEO_JOB,
+  UPDATE_LEO_JOB,
+  UPGRADE_LEO_JOB_TEMPLATE_CONTENT,
+  CREATE_CR_REPOSITORY_WITH_LEO_JOB_ID
+} from '@/api/modules/leo/leo.job.api'
 
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
@@ -285,6 +291,12 @@ export default {
           this.$message.success('保存成功!')
           this.formStatus.visible = false
           this.$emit('close')
+        })
+    },
+    handleCreateCrRepository () {
+      CREATE_CR_REPOSITORY_WITH_LEO_JOB_ID({  jobId: this.leoJob.id })
+        .then(() => {
+          this.$message.success('创建CR仓库成功!')
         })
     },
     handleAdd () {

@@ -57,3 +57,11 @@ export function DELETE_LEO_JOB_BY_ID (param) {
     params: param
   })
 }
+
+export function CREATE_CR_REPOSITORY_WITH_LEO_JOB_ID (param) {
+  return request({
+    url: baseUrl + '/cr/repository/create',
+    method: 'put',
+    params: param
+  })
+}
