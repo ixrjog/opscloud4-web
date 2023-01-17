@@ -14,6 +14,7 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" sortable width="300"></el-table-column>
+      <el-table-column prop="displayName" label="规则" sortable></el-table-column>
       <el-table-column prop="ruleConfig" label="规则配置">
         <template v-slot="scope">
           <my-highlight v-if="scope.row.ruleConfig !== ''" :code="scope.row.ruleConfig"
@@ -25,7 +26,7 @@
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="说明"></el-table-column>
+      <el-table-column prop="comment" label="说明" v-if="false"></el-table-column>
       <el-table-column label="操作" width="280">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -79,7 +80,7 @@ export default {
           updateTitle: '更新规则配置'
         }
       },
-      style: { height: '190px' },
+      style: { height: '80px' },
       queryParam: {
         queryName: '',
         isActive: '',
