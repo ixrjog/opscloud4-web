@@ -76,7 +76,7 @@
         </el-row>
         <el-row>
           <div style="width:100%;text-align:center;margin-top:10px">
-            <el-button size="mini" type="primary" @click="handleCreateCrRepository">创建CR仓库</el-button>
+            <el-button size="mini" type="warning" @click="handleCreateCrRepository">创建CR仓库</el-button>
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑</el-button>
           </div>
         </el-row>

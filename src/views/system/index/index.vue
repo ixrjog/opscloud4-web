@@ -39,7 +39,7 @@
     <template slot="footer">
       <div class="btn-group">
         <div align="center">
-          <p class="d2-page-cover__title">Version 4.0.9</p>
+          <p class="d2-page-cover__title">Version 4.2.0</p>
           <!--          <p class="d2-page-cover__sub-title">IaC 基础架构即代码</p>-->
           <p class="d2-page-cover__build-time">FINAL BUILD TIME {{ $buildTime }}</p>
         </div>
