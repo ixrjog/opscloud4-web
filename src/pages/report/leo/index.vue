@@ -1,18 +1,22 @@
 <template>
   <d2-container>
-    <h1>{{title}}</h1>
+    <h1>{{ title }}</h1>
     <el-row :gutter="24" v-if="JSON.stringify(report) !== '{}'">
       <el-col :span="6">
-        <dashboard-card :title="'应用总数'" :tag="'Applications'" :value="report.dashboard.applicationTotal" :value-desc="'All applications'"></dashboard-card>
+        <dashboard-card :title="'应用总数'" :tag="'Applications'" :value="report.dashboard.applicationTotal"
+                        :value-desc="'All applications'"></dashboard-card>
       </el-col>
       <el-col :span="6">
-        <dashboard-card :title="'任务总数'" :tag="'Jobs'" :value="report.dashboard.jobTotal" :value-desc="'All jobs'"></dashboard-card>
+        <dashboard-card :title="'任务总数'" :tag="'Jobs'" :value="report.dashboard.jobTotal"
+                        :value-desc="'All jobs'"></dashboard-card>
       </el-col>
       <el-col :span="6">
-        <dashboard-card :title="'构建总数'" :tag="'Builds'" :value="report.dashboard.buildTotal" :value-desc="'All builds'"></dashboard-card>
+        <dashboard-card :title="'构建总数'" :tag="'Builds'" :value="report.dashboard.buildTotal"
+                        :value-desc="'All builds'"></dashboard-card>
       </el-col>
       <el-col :span="6">
-        <dashboard-card :title="'部署总数'" :tag="'Deploys'" :value="report.dashboard.deployTotal" :value-desc="'All deploys'"></dashboard-card>
+        <dashboard-card :title="'部署总数'" :tag="'Deploys'" :value="report.dashboard.deployTotal"
+                        :value-desc="'All deploys'"></dashboard-card>
       </el-col>
     </el-row>
     <el-card class="box-card" shadow="hover">
@@ -32,12 +36,12 @@
         <div id="deployReportChart" style="height:350px; width: 100%"></div>
       </el-row>
     </el-card>
-    <div v-if="false" v-for="instance in report.instances" :key="instance.instanceId" style="margin-bottom: 20px">
-      <jenkins-build-executor-status-card
-        :instanceId="instance.instanceId"
-        :ref="`instance_${instance.instanceId}_buildExecutor`">
-      </jenkins-build-executor-status-card>
-    </div>
+    <!--    <div v-if="false" v-for="instance in report.instances" :key="instance.instanceId" style="margin-bottom: 20px">-->
+    <!--      <jenkins-build-executor-status-card-->
+    <!--        :instanceId="instance.instanceId"-->
+    <!--        :ref="`instance_${instance.instanceId}_buildExecutor`">-->
+    <!--      </jenkins-build-executor-status-card>-->
+    <!--    </div>-->
 
   </d2-container>
 </template>
@@ -47,8 +51,6 @@
 import * as echarts from 'echarts'
 // API
 import { GET_LEO_REPORT } from '@/api/modules/report/report.api'
-import InfoCard from '@/components/opscloud/common/InfoCard'
-import JenkinsBuildExecutorStatusCard from '@/components/opscloud/jenkins/JenkinsBuildExecutorStatusCard.vue'
 import DashboardCard from '@/components/opscloud/report/DashboardCard.vue'
 
 export default {
@@ -59,9 +61,7 @@ export default {
     }
   },
   components: {
-    InfoCard,
-    DashboardCard,
-    JenkinsBuildExecutorStatusCard
+    DashboardCard
   },
   computed: {},
   mounted () {
@@ -213,8 +213,8 @@ export default {
       myChart.setOption(option, true)
     },
     initData () {
-     // this.initBuildChart(this.report.buildMonthReport)
-     // this.initDeployChart(this.report.deployMonthReport)
+      // this.initBuildChart(this.report.buildMonthReport)
+      // this.initDeployChart(this.report.deployMonthReport)
       this.initContinuousDeliveryReportChart(this.report.continuousDeliveryReport)
       // this.$nextTick(() => {
       //   for (let instance of this.report.instances) {
