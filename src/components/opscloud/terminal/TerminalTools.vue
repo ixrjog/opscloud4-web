@@ -21,18 +21,18 @@
       </el-select>
       <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
         <el-button @click="handleChangeBatch" v-if="mode === 1" :type="batchType"
-                   plain>命令同步
+                   plain>Command sync
         </el-button>
       </el-tooltip>
-      <el-button @click="handleSetting">终端设置</el-button>
+      <el-button @click="handleSetting">Terminal settings</el-button>
       <el-tooltip class="item" effect="light" content="单窗口最大化显示" placement="bottom">
-        <el-button @click="handleFullScreen" v-if="mode === 1">全屏模式</el-button>
+        <el-button @click="handleFullScreen" v-if="mode === 1">Full screen</el-button>
       </el-tooltip>
       <el-tooltip class="item" effect="light" content="修复终端字符错位" placement="bottom">
-        <el-button @click="handleResize" v-if="mode === 1">调整大小</el-button>
+        <el-button @click="handleResize" v-if="mode === 1">Resize</el-button>
       </el-tooltip>
-      <el-button @click="handleLogin" type="primary" v-if="mode === 0">批量登录</el-button>
-      <el-button @click="handleLogout" type="primary" v-if="mode === 1">全部关闭</el-button>
+      <el-button @click="handleLogin" type="primary" v-if="mode === 0">Login all</el-button>
+      <el-button @click="handleLogout" type="primary" v-if="mode === 1">Logout all</el-button>
     </el-row>
     <user-terminal-setting ref="userTerminalSetting"
                            :formStatus="formStatus.setting"></user-terminal-setting>
@@ -46,20 +46,20 @@ import UserTerminalSetting from '../user/UserTerminalSetting'
 const layoutModeOptions = [
   {
     value: 0,
-    label: '双列布局'
+    label: 'Double column'
   }, {
     value: 1,
-    label: '单列布局'
+    label: 'Single column'
   }
 ]
 
 const loginUserTypeOptions = [
   {
     value: 0,
-    label: '普通用户'
+    label: 'Ordinary user'
   }, {
     value: 1,
-    label: '系统管理员'
+    label: 'Admin'
   }
 ]
 

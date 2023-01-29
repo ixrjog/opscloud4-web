@@ -6,7 +6,7 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: '批量终端'
+      title: 'WebTerminal'
     }
   },
   {

@@ -7,7 +7,7 @@
     <el-row>
       <el-input v-model="queryParam.name" placeholder="名称" style="display: inline-block; width: 180px;" @change="fetchData"/>
       <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable
-                 remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType" :loading="loading">
+                 remote reserve-keyword placeholder="with group type" :remote-method="getGroupType" :loading="loading">
         <el-option
           v-for="item in groupTypeOptions"
           :key="item.id"
@@ -15,7 +15,7 @@
           :value="item.id">
         </el-option>
       </el-select>
-      <el-button @click="fetchData" :loading="searching">查询</el-button>
+      <el-button @click="fetchData" :loading="searching">Query</el-button>
     </el-row>
     <el-tree style="margin-top: 5px" :data="serverTree.tree" show-checkbox ref="myServerTree" node-key="id">
        <span class="custom-tree-node" slot-scope="{ node, data }">

@@ -41,7 +41,7 @@ export const menuAside = supplementPath([
     title: '工作台',
     icon: 'desktop',
     children: [
-      { path: '/workbench/web-terminal', title: '批量终端', icon: 'terminal' }
+      { path: '/workbench/web-terminal', title: 'WebTerminal', icon: 'terminal' }
     ]
   },
   {
