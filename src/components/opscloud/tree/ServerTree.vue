@@ -5,9 +5,9 @@
       <el-tag size="mini" style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
     </div>
     <el-row>
-      <el-input v-model="queryParam.name" placeholder="名称" style="display: inline-block; width: 180px;" @change="fetchData"/>
+      <el-input v-model="queryParam.name" placeholder="Name" style="display: inline-block; width: 180px;" @change="fetchData"/>
       <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable
-                 remote reserve-keyword placeholder="with group type" :remote-method="getGroupType" :loading="loading">
+                 remote reserve-keyword placeholder="With group type" :remote-method="getGroupType" :loading="loading">
         <el-option
           v-for="item in groupTypeOptions"
           :key="item.id"
