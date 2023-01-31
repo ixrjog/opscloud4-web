@@ -11,11 +11,11 @@
                         :value-desc="'All jobs'"></dashboard-card>
       </el-col>
       <el-col :span="6">
-        <dashboard-card :title="'构建总数'" :tag="'Builds'" :value="report.dashboard.buildTotal"
+        <dashboard-card :title="'构建总次数'" :tag="'Builds'" :value="report.dashboard.buildTotal"
                         :value-desc="'All builds'"></dashboard-card>
       </el-col>
       <el-col :span="6">
-        <dashboard-card :title="'部署总数'" :tag="'Deploys'" :value="report.dashboard.deployTotal"
+        <dashboard-card :title="'部署总次数'" :tag="'Deploys'" :value="report.dashboard.deployTotal"
                         :value-desc="'All deploys'"></dashboard-card>
       </el-col>
     </el-row>
