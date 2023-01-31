@@ -18,19 +18,19 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="tagKey" label="标签关键字">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" disable-transitions :style="{ color: scope.row.color }">{{ scope.row.tagKey }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="businessTypeEnum" label="标签业务类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" disable-transitions>{{ scope.row.businessTypeEnum }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="quantityUsed" label="使用数量" width="100"></el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="280">
-        <template slot-scope="scope">
+      <el-table-column label="操作" width="280">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-popconfirm title="确定删除该配置吗？" @confirm="handleRowDel(scope.row)">
             <el-button slot="reference" type="danger" plain size="mini" style="margin-left: 5px"
