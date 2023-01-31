@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字查询"/>
+      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-select v-model.trim="queryParam.serverGroupId" filterable clearable
-                 remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup">
+                 remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup" @change="fetchData">
         <el-option
           v-for="item in serverGroupOptions"
           :key="item.id"
@@ -12,7 +12,7 @@
         </el-option>
       </el-select>
       <el-select v-model="queryParam.envType" clearable filterable
-                 remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv">
+                 remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv" @change="fetchData">
         <el-option
           v-for="item in envOptions"
           :key="item.id"
@@ -21,7 +21,7 @@
           <select-item :name="item.envName" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.isActive" clearable placeholder="有效">
+      <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
         <el-option
           v-for="item in activeOptions"
           :key="item.value"
@@ -39,7 +39,7 @@
       </el-select>
       <el-select
         v-model="queryParam.tagId" filterable clearable remote reserve-keyword
-        placeholder="请输入关键词搜索标签" :remote-method="getTag">
+        placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
         <el-option
           v-for="item in tagOptions"
           :key="item.id"
@@ -60,8 +60,8 @@
       <el-button @click="handleScanMonitor" class="button">扫描监控</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column label="名称 / 群组" width="200">
-        <template slot-scope="scope">
+      <el-table-column label="名称 / 群组">
+        <template v-slot="scope">
           <span>{{ scope.row.name }}</span>
           <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
                      @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
@@ -71,7 +71,7 @@
       </el-table-column>
       <el-table-column prop="serialNumber" label="序号" width="80" sortable></el-table-column>
       <el-table-column label="IP地址" width="150">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.privateIp }}
             <span style="color: #8492a6 ; font-size: 12px">私有</span>
           </span>
@@ -81,38 +81,38 @@
         </template>
       </el-table-column>
       <el-table-column prop="env" label="环境" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <env-tag :env="scope.row.env"></env-tag>
         </template>
       </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>
         </template>
       </el-table-column>
       <!--      暂不启用状态展示-->
       <el-table-column prop="serverStatus" label="状态" width="80" v-if="false">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <server-status-tag :serverStatus="scope.row.serverStatus"></server-status-tag>
         </template>
       </el-table-column>
       <el-table-column prop="monitorStatus" label="监控" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <server-monitor-status-tag :monitorStatus="scope.row.monitorStatus"></server-monitor-status-tag>
         </template>
       </el-table-column>
       <el-table-column prop="account" label="账户">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <account-tags :accounts="scope.row.accounts"></account-tags>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+      <el-table-column label="操作" width="230">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
