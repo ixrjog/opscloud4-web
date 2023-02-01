@@ -65,3 +65,11 @@ export function CREATE_CR_REPOSITORY_WITH_LEO_JOB_ID (param) {
     params: param
   })
 }
+
+export function CLONE_LEO_JOB (data) {
+  return request({
+    url: baseUrl + '/clone',
+    method: 'post',
+    data
+  })
+}

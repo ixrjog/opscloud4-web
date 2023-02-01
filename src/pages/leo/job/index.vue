@@ -11,6 +11,9 @@
       <el-tab-pane label="部署详情" name="deploy">
         <leo-deploy-table></leo-deploy-table>
       </el-tab-pane>
+      <el-tab-pane label="配置工具" name="tools">
+        <leo-job-tools-page></leo-job-tools-page>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -20,6 +23,7 @@
 import LeoJobTable from '@/components/opscloud/leo/LeoJobTable'
 import LeoBuildTable from '@/components/opscloud/leo/LeoBuildTable'
 import LeoDeployTable from '@/components/opscloud/leo/LeoDeployTable.vue'
+import LeoJobToolsPage from '@/components/opscloud/leo/LeoJobToolsPage.vue'
 
 export default {
   name: 'leoJob',
@@ -33,10 +37,10 @@ export default {
   components: {
     LeoJobTable,
     LeoBuildTable,
-    LeoDeployTable
+    LeoDeployTable,
+    LeoJobToolsPage
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
