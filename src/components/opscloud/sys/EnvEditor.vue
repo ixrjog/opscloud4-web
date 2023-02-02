@@ -39,7 +39,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button size="mini" type="primary" @click="handlerSave ">确定</el-button>
+      <el-button size="mini" type="primary" @click="save ">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -77,7 +77,7 @@ export default {
     initData (env) {
       this.env = env
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_ENV(requestBody)
         .then(res => {
           // 返回数据
@@ -89,7 +89,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_ENV(requestBody)
         .then(res => {
           // 返回数据
@@ -101,11 +101,11 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    save () {
       if (this.formStatus.operationType) {
-        this.handlerAdd(this.env)
+        this.handleAdd(this.env)
       } else {
-        this.handlerUpdate(this.env)
+        this.handleUpdate(this.env)
       }
     }
   }
