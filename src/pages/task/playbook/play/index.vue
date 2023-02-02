@@ -8,7 +8,7 @@
             <el-tag size="mini">{{ s.instanceId }}</el-tag>
             <env-tag style="margin-left: 5px" :env="s.env"></env-tag>
           </div>
-          <terminal-item :terminalSetting="terminalSetting"
+          <terminal-item :terminalSettings="terminalSettings"
                          :server="s"
                          :ref="`terminal_${s.instanceId}`"
                          :id="`${s.instanceId}`"
@@ -27,16 +27,9 @@ import { mapState } from 'vuex'
 import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 import TerminalItem from '../../../../components/opscloud/terminal/TerminalItem'
 import EnvTag from '../../../../components/opscloud/common/tag/EnvTag'
+import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
 
 const wsUrl = 'ws/server/task/play'
-
-const theme = {
-  foreground: '#FFFFFF', // 字体
-  background: '#606266', // 背景色
-  cursor: 'help', // 设置光标
-  red: '#dd7479',
-  blue: '#1BD1FF'
-}
 
 export default {
   name: 'ServerTaskPlay', // 剧本任务播放
@@ -46,10 +39,7 @@ export default {
       socketURI: util.wsUrl(wsUrl),
       serverTaskMembers: [],
       terminalState: TerminalState,
-      terminalSetting: { // 终端主题
-        theme: theme,
-        rows: 30
-      }
+      terminalSettings: {}
     }
   },
   components: {
@@ -68,7 +58,7 @@ export default {
       if (serverTaskMembers === undefined || serverTaskMembers.length === 0) {
         return
       }
-      this.initTerminalSetting()
+      this.initTerminalSettings()
       this.serverTaskMembers = serverTaskMembers
       this.play()
     } catch (e) {
@@ -78,11 +68,13 @@ export default {
     /**
      * 设置终端主题色彩
      */
-    initTerminalSetting () {
-      if (typeof (this.info.terminalSetting) !== 'undefined') {
-        this.terminalSetting = {
-          ...this.info.terminalSetting
+    initTerminalSettings () {
+      if (typeof (this.info.terminalSettings) !== 'undefined') {
+        this.terminalSettings = {
+          ...this.info.terminalSettings
         }
+      } else {
+        this.terminalSettings = TerminalSettings
       }
     },
     close () {

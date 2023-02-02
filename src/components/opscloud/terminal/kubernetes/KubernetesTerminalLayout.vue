@@ -17,7 +17,7 @@
                 </el-button>
               </el-tooltip>
             </div>
-            <kubernetes-terminal-item :terminalSetting="terminalSetting" :container="container"
+            <kubernetes-terminal-item :terminalSettings="terminalSettings" :container="container"
                                       @sendMessage="sendMessage"
                                       :ref="`terminal_${container.instanceId}`"
                                       :id="`${container.instanceId}`"></kubernetes-terminal-item>
@@ -47,7 +47,7 @@ const message = {
 
 export default {
   name: 'KubernetesTerminalLayout',
-  props: ['terminalSetting', 'containers', 'loginParam', 'colSpan'],
+  props: ['terminalSettings', 'containers', 'loginParam', 'colSpan'],
   data () {
     return {
       terminalState: TerminalState,

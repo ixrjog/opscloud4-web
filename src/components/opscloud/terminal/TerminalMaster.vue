@@ -21,7 +21,7 @@
                 </el-button>
               </el-tooltip>
             </div>
-            <terminal-item :terminalSetting="terminalSetting" :server="s" @sendMessage="sendMessage"
+            <terminal-item :terminalSettings="terminalSettings" :server="s" @sendMessage="sendMessage"
                            :ref="`terminal_${s.name}`" :id="`${s.name}`"></terminal-item>
           </el-card>
         </el-col>
@@ -52,19 +52,7 @@ const message = {
   }
 }
 
-const theme = {
-  // 字体色
-  foreground: '#181818',
-  // 背景色
-  background: '#EEEEEE',
-  /** The cursor color 设置光标 */
-  cursor: 'help',
-  /** The accent color of the cursor (used as the foreground color for a block cursor) */
-  cursorAccent: '#838383',
-  //selection: '#f10b15',
-  red: '#dd7479',
-  blue: '#1BD1FF'
-}
+import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
 
 export default {
   data () {
@@ -74,10 +62,7 @@ export default {
       server: {}, // 原服务器
       servers: [], // 所有服务器列表
       timer: null, // 心跳定时器
-      terminalSetting: { // 终端主题
-        theme: theme,
-        rows: 30
-      }
+      terminalSettings: {}
     }
   },
   name: 'TerminalMaster',
@@ -92,7 +77,7 @@ export default {
     TerminalItem
   },
   mounted () {
-    this.initTerminalSetting()
+    this.initTerminalSettings()
   },
   beforeDestroy () {
     try {
@@ -105,11 +90,13 @@ export default {
     /**
      * 设置终端主题色彩
      */
-    initTerminalSetting () {
-      if (typeof (this.info.terminalSetting) !== 'undefined') {
-        this.terminalSetting = {
-          ...this.info.terminalSetting
+    initTerminalSettings () {
+      if (typeof (this.info.terminalSettings) !== 'undefined') {
+        this.terminalSettings = {
+          ...this.info.terminalSettings
         }
+      }else{
+        this.terminalSettings = TerminalSettings
       }
     },
     handleExit () {

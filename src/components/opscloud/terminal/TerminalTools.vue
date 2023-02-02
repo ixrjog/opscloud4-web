@@ -34,14 +34,14 @@
       <el-button @click="handleLogin" type="primary" v-if="mode === 0">Login all</el-button>
       <el-button @click="handleLogout" type="primary" v-if="mode === 1">Logout all</el-button>
     </el-row>
-    <user-terminal-setting ref="userTerminalSetting"
-                           :formStatus="formStatus.setting"></user-terminal-setting>
+    <user-terminal-settings ref="userTerminalSettings"
+                           :formStatus="formStatus.setting"></user-terminal-settings>
   </div>
 </template>
 
 <script>
 
-import UserTerminalSetting from '../user/UserTerminalSetting'
+import UserTerminalSettings from '../user/UserTerminalSettings'
 
 const layoutModeOptions = [
   {
@@ -56,18 +56,18 @@ const layoutModeOptions = [
 const loginUserTypeOptions = [
   {
     value: 0,
-    label: 'Ordinary user'
+    label: 'Low privilege'
   }, {
     value: 1,
-    label: 'Admin'
+    label: 'Privilege'
   }
 ]
 
 export default {
   name: 'TerminalTools',
-  props: ['terminalSetting', 'mode', 'batchType'],
+  props: ['terminalSettings', 'mode', 'batchType'],
   components: {
-    UserTerminalSetting
+    UserTerminalSettings
   },
   data () {
     return {
@@ -92,11 +92,11 @@ export default {
     setLayoutMode (layoutMode) {
       this.layout.mode = layoutMode
     },
-    resetTerminalSetting () {
-      this.$emit('resetTerminalSetting')
+    resetTerminalSettings () {
+      this.$emit('resetTerminalSettings')
     },
     handleSetting () {
-      this.$refs.userTerminalSetting.init()
+      this.$refs.userTerminalSettings.init()
       this.formStatus.setting.visible = true
     },
     handleChangeLayout () {

@@ -22,7 +22,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-        <el-button @click="handlerAdd">新增</el-button>
+        <el-button @click="handleAdd">新增</el-button>
         <el-button @click="fetchData">查询</el-button>
       </el-row>
     </div>
@@ -49,9 +49,9 @@
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" :disabled="scope.row.isRegistered"
-                     @click="handlerRowRegister(scope.row)">注册
+                     @click="handleRowRegister(scope.row)">注册
           </el-button>
-          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -158,7 +158,7 @@ export default {
           this.dsTypeOptions = res.body.options
         })
     },
-    handlerAdd () {
+    handleAdd () {
       const dsConfig = {
         comment: null,
         credentialId: '',
@@ -177,7 +177,7 @@ export default {
       this.formStatus.config.operationType = true
       this.formStatus.config.visible = true
     },
-    handlerRowRegister (row) {
+    handleRowRegister (row) {
       const datasource = {
         config: row,
         instance: {
@@ -196,7 +196,7 @@ export default {
       this.formStatus.instance.operationType = true
       this.formStatus.instance.visible = true
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.$refs.datasourceConfigEditor.initData(Object.assign({}, row))
       this.formStatus.config.operationType = false
       this.formStatus.config.visible = true

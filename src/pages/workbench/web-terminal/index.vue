@@ -7,8 +7,8 @@
     <el-row style="margin-left: -5px">
       <!--                        @resetTerminalSetting="initTerminalSetting"-->
       <terminal-tools ref="terminalTools"
-                      :terminal-setting="terminalSetting" :mode="terminalTools.mode"
-                      :batch-type="terminalTools.batchType"
+                      :terminalSettings="terminalSettings" :mode="terminalTools.mode"
+                      :batchType="terminalTools.batchType"
                       @handleLogin="handleLogin"
                       @handleLogout="handleLogout"
                       @handleChangeLoginUserType="handleChangeLoginUserType"
@@ -24,7 +24,7 @@
       <el-col>
         <!--          终端布局-->
         <terminal-layout class="terminal-layout" ref="terminalLayout"
-                         :terminalSetting="terminalSetting"
+                         :terminalSettings="terminalSettings"
                          :terminals="terminalLayout.terminals"
                          :uuid="terminalLayout.uuid"
                          :loginType="terminalLayout.loginType"
@@ -47,6 +47,7 @@ import TerminalLayout from '../../../components/opscloud/terminal/TerminalLayout
 
 import { mapState } from 'vuex'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
+import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
 
 export default {
   name: 'web-terminal',
@@ -57,16 +58,7 @@ export default {
       layout: {
         mode: 0
       },
-      terminalSetting: {
-        theme: {
-          foreground: '#FFFFFF', // 字体
-          background: '#606266', // 背景色
-          cursor: 'help', // 设置光标
-          red: '#dd7479',
-          blue: '#1BD1FF'
-        },
-        rows: 30
-      },
+      terminalSettings: {},
       terminalTools: {
         mode: 0, // 0未登录:1登录
         batchType: ''
@@ -92,7 +84,7 @@ export default {
     ])
   },
   mounted () {
-    this.initTerminalSetting()
+    this.initTerminalSettings()
   },
   beforeDestroy () {
     this.handleLogout()
@@ -107,11 +99,11 @@ export default {
     /**
      * 设置终端主题色彩
      */
-    initTerminalSetting () {
-      if (typeof (this.info.terminalSetting) !== 'undefined') {
-        this.terminalSetting.theme.foreground = this.info.terminalSetting.theme.foreground
-        this.terminalSetting.theme.background = this.info.terminalSetting.theme.background
-        this.terminalSetting.rows = this.info.terminalSetting.rows
+    initTerminalSettings () {
+      if (typeof (this.info.terminalSettings) !== 'undefined') {
+        this.terminalSettings = this.info.terminalSettings
+      } else {
+        this.terminalSettings = TerminalSettings
       }
     },
     handleRead (server) {

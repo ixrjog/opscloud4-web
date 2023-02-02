@@ -26,14 +26,17 @@
     </el-row>
     <el-row>
     </el-row>
-      <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
-        <el-button @click="handleChangeBatch" v-if="this.layout.status === 1 && terminalLayout.loginParam.sessionType === 'CONTAINER_TERMINAL'" :type="terminalTools.batchType" plain>命令同步</el-button>
-      </el-tooltip>
+    <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
+      <el-button @click="handleChangeBatch"
+                 v-if="this.layout.status === 1 && terminalLayout.loginParam.sessionType === 'CONTAINER_TERMINAL'"
+                 :type="terminalTools.batchType" plain>命令同步
+      </el-button>
+    </el-tooltip>
     <el-row>
       <!--          终端布局-->
       <kubernetes-terminal-layout class="terminal-layout" ref="terminalLayout"
                                   :loginParam="terminalLayout.loginParam"
-                                  :terminalSetting="terminalSetting"
+                                  :terminalSettings="terminalSettings"
                                   :containers="terminalLayout.containers"
                                   :colSpan="terminalLayout.colSpan"
                                   @handleLogoutByContainer="handleLogoutByContainer"
@@ -54,6 +57,8 @@ import KubernetesTerminalLayout from '../../../components/opscloud/terminal/kube
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
+
+import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
 
 const docKeys = {
   KUBERNETES_README: 'KUBERNETES_README',
@@ -76,16 +81,7 @@ export default {
         mode: 0,
         status: 0 // 0 选择/登录
       },
-      terminalSetting: {
-        theme: {
-          foreground: '#FFFFFF', // 字体
-          background: '#606266', // 背景色
-          cursor: 'help', // 设置光标
-          red: '#dd7479',
-          blue: '#1BD1FF'
-        },
-        rows: 30
-      },
+      terminalSettings: {},
       terminalTools: {
         mode: 0, // 0未登录:1登录
         batchType: ''
@@ -110,7 +106,7 @@ export default {
   },
   mounted () {
     this.fetchDoc(this.docKeys.KUBERNETES_README)
-    this.initTerminalSetting()
+    this.initTerminalSettings()
   },
   beforeDestroy () {
     this.handleLogout()
@@ -125,11 +121,11 @@ export default {
     /**
      * 设置终端主题色彩
      */
-    initTerminalSetting () {
-      if (typeof (this.info.terminalSetting) !== 'undefined') {
-        this.terminalSetting.theme.foreground = this.info.terminalSetting.theme.foreground
-        this.terminalSetting.theme.background = this.info.terminalSetting.theme.background
-        this.terminalSetting.rows = this.info.terminalSetting.rows
+    initTerminalSettings () {
+      if (typeof (this.info.terminalSettings) !== 'undefined') {
+        this.terminalSettings = this.info.terminalSettings
+      } else {
+        this.terminalSettings = TerminalSettings
       }
     },
     handleRead (server) {
@@ -179,26 +175,6 @@ export default {
       this.$refs.terminalLayout.handleResize()
     },
     handleLogin () {
-      // this.terminalTools.batchType = ''
-      // this.terminalLayout.serverNodes = this.$refs.serverTree.getCheckedNodes(true)
-      // if (this.terminalLayout.serverNodes.length === 0) return
-      // // 如果用户只打开一个终端则自动切换为单列模式
-      // this.$store.dispatch('d2admin/menu/asideCollapseSet', true)
-      // if (this.terminalLayout.serverNodes.length === 1) {
-      //   this.handleChangeLayout(1)
-      //   this.$refs.terminalTools.setLayoutMode(1)
-      // }
-      // this.terminalTools.mode = 1
-      // this.terminalLayout.uuid = this.$refs.serverTree.getUuid()
-      // this.terminalLayout.terminals = []
-      // for (const node of this.terminalLayout.serverNodes) {
-      //   const serverNode = {
-      //     ...node.server,
-      //     instanceId: node.id,
-      //     label: node.label
-      //   }
-      //   this.terminalLayout.terminals.push(serverNode)
-      // }
       this.$nextTick(() => {
         // this.$refs.terminalLayout.open()
       })

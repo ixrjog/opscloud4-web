@@ -26,7 +26,7 @@
                 </el-button>
               </el-tooltip>
             </div>
-            <terminal-item :terminalSetting="terminalSetting" :server="server" @sendMessage="sendMessage"
+            <terminal-item :terminalSettings="terminalSettings" :server="server" @sendMessage="sendMessage"
                            :ref="`terminal_${server.instanceId}`" :id="`${server.instanceId}`"></terminal-item>
           </el-card>
         </el-col>
@@ -58,7 +58,7 @@ const message = {
 
 export default {
   name: 'TerminalLayout',
-  props: ['terminalSetting', 'terminals', 'uuid', 'loginType', 'colSpan'],
+  props: ['terminalSettings', 'terminals', 'uuid', 'loginType', 'colSpan'],
   data () {
     return {
       terminalState: TerminalState,

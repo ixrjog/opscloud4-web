@@ -19,7 +19,7 @@ export default {
     }
   },
   name: 'TerminalItem',
-  props: ['server', 'terminalSetting'],
+  props: ['server', 'terminalSettings'],
   mixins: [],
   mounted () {
   },
@@ -40,8 +40,8 @@ export default {
         rendererType: 'canvas', // 渲染类型
         allowTransparency: true,
         fontSize: 11,
-        rows: this.terminalSetting.rows,
-        theme: this.terminalSetting.theme,
+        rows: this.terminalSettings.rows,
+        theme: this.terminalSettings.theme,
         termName: 'xterm',
         visualBell: false,
         popOnBell: false,

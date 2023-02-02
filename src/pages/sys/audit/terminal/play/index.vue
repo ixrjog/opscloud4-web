@@ -31,9 +31,10 @@ import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
 const wsUrl = 'ws/terminal/session/audit'
 
 const theme = {
-  foreground: '#FFFFFF', // 字体
-  background: '#606266', // 背景色
-  cursor: 'help', // 设置光标
+  foreground: '#090909',
+  background: '#FFFFFF',
+  cursor: '#090909',
+  // cursor: 'help', // 设置光标
   red: '#dd7479',
   blue: '#1BD1FF'
 }

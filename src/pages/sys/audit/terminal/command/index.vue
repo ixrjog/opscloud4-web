@@ -42,8 +42,8 @@ import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 
 const theme = {
-  foreground: '#f3f3f3',
-  background: '#535353',
+  foreground: '#090909',
+  background: '#FFFFFF',
   cursor: '#ffffff',
   selection: 'rgba(255, 255, 255, 0.3)',
   black: '#000000',
