@@ -7,11 +7,11 @@
       <el-row style="margin-bottom: 5px" :gutter="24">
         <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询" class="input"/>
         <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
-        <el-button style="margin-left: 5px" @click="handlerAdd">新增</el-button>
+        <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column label="应用" width="250px">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-row>
               <span>{{ scope.row.name }}</span>
               <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
@@ -27,7 +27,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="resourceMap" label="绑定资源" width="400px">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key" class="resDiv">
               <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
               <div v-for="item in value" :key="item.id">
@@ -43,12 +43,12 @@
           </template>
         </el-table-column>
         <el-table-column prop="users" label="授权用户" width="350">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <users-tag :users="scope.row.users"></users-tag>
           </template>
         </el-table-column>
         <el-table-column prop="tags" label="标签" width="150px">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div class="tag-group">
               <span v-for="item in scope.row.tags" :key="item.id">
                 <el-tooltip class="item" effect="light" :content="item.comment" placement="top-start">
@@ -59,10 +59,10 @@
           </template>
         </el-table-column>
         <el-table-column label="操作" width="280">
-          <template slot-scope="scope">
-            <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
+          <template v-slot="scope">
+            <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
             <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-            <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+            <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -172,7 +172,7 @@ export default {
       this.$refs.businessDocReader.initData(Object.assign({}, row.document))
       this.formStatus.businessDoc.visible = true
     },
-    handlerAdd () {
+    handleAdd () {
       this.formStatus.application.operationType = true
       const application = {
         id: '',
@@ -192,12 +192,12 @@ export default {
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.formStatus.application.operationType = false
       this.formStatus.application.visible = true
       this.$refs.applicationEditor.initData(Object.assign({}, row))
     },
-    handlerRowDel (row) {
+    handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
