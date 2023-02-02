@@ -13,7 +13,7 @@
           </el-button>
         </el-tooltip>
       </div>
-      <terminal-item :terminalSetting="terminalSetting" :server="sessionInstance"
+      <terminal-item :terminalSettings="terminalSettings" :server="sessionInstance"
                      @sendMessage="sendMessage"
                      ref="terminal"
                      id="terminal"></terminal-item>
@@ -27,17 +27,9 @@ import util from '@/libs/util'
 import TerminalItem from '../../../../../components/opscloud/terminal/TerminalItem'
 import { mapState } from 'vuex'
 import TerminalState from '@/components/opscloud/common/enums/terminal.state.js'
+import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
 
 const wsUrl = 'ws/terminal/session/audit'
-
-const theme = {
-  foreground: '#090909',
-  background: '#FFFFFF',
-  cursor: '#090909',
-  // cursor: 'help', // 设置光标
-  red: '#dd7479',
-  blue: '#1BD1FF'
-}
 
 export default {
   name: 'TerminalSessionAuditPlay',
@@ -48,7 +40,7 @@ export default {
       sessionInstance: {},
       terminalState: TerminalState,
       terminalSetting: { // 终端主题
-        theme: theme,
+        theme: TerminalSettings.theme,
         rows: 30
       }
     }
@@ -66,7 +58,7 @@ export default {
       if (this.$route.params.sessionId === undefined || this.$route.params.instanceId === undefined) {
         return
       }
-      this.initTerminalSetting()
+      this.initTerminalSettings()
       this.sessionInstance = {
         sessionId: this.$route.params.sessionId,
         instanceId: this.$route.params.instanceId
@@ -80,11 +72,13 @@ export default {
     /**
      * 设置终端主题色彩
      */
-    initTerminalSetting () {
-      if (typeof (this.info.terminalSetting) !== 'undefined') {
-        this.terminalSetting = {
-          ...this.info.terminalSetting
+    initTerminalSettings () {
+      if (typeof (this.info.terminalSettings) !== 'undefined') {
+        this.terminalSettings = {
+          ...this.info.terminalSettings
         }
+      } else {
+        this.terminalSettings = TerminalSettings
       }
     },
     close () {

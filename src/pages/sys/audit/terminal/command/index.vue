@@ -10,7 +10,7 @@
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column prop="input" label="输入/输出">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-row style="margin-bottom: 2px">
               <div :id="`terminal_input_${scope.row.id}`" class="xterm"></div>
             </el-row>
@@ -20,7 +20,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="output" label="输出" v-if="false">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
           </template>
         </el-table-column>
@@ -40,29 +40,7 @@ import Pagination from '../../../../../components/opscloud/common/page/Paginatio
 import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
-
-const theme = {
-  foreground: '#090909',
-  background: '#FFFFFF',
-  cursor: '#ffffff',
-  selection: 'rgba(255, 255, 255, 0.3)',
-  black: '#000000',
-  red: '#e06c75',
-  brightRed: '#e06c75',
-  green: '#A4EFA1',
-  brightGreen: '#A4EFA1',
-  brightYellow: '#EDDC96',
-  yellow: '#EDDC96',
-  magenta: '#e39ef7',
-  brightMagenta: '#e39ef7',
-  cyan: '#5fcbd8',
-  brightBlue: '#5fcbd8',
-  brightCyan: '#5fcbd8',
-  blue: '#5fcbd8',
-  white: '#d0d0d0',
-  brightBlack: '#808080',
-  brightWhite: '#ffffff'
-}
+import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
 
 export default {
   data () {
@@ -82,10 +60,7 @@ export default {
         extend: true
       },
       sessionInstance: null,
-      terminalSetting: { // 终端主题
-        theme: theme,
-        rows: 30
-      },
+      terminalSetting: TerminalSettings,
       display: {
         inputTerminals: [],
         outputTerminals: []
@@ -131,7 +106,7 @@ export default {
             fontSize: 11,
             rows: 2,
             // cols: 40,
-            theme: this.terminalSetting.theme,
+            theme: this.terminalSettings.theme,
             termName: 'xterm',
             visualBell: false,
             popOnBell: false,
@@ -153,7 +128,7 @@ export default {
             allowTransparency: true,
             fontSize: 11,
             rows: row.outputRows,
-            theme: this.terminalSetting.theme,
+            theme: this.terminalSettings.theme,
             termName: 'xterm',
             visualBell: false,
             popOnBell: false,

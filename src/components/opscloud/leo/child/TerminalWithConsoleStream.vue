@@ -27,20 +27,7 @@ import 'xterm/css/xterm.css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api'
-
-const theme = {
-  // 字体色
-  foreground: '#181818',
-  // 背景色
-  background: '#EEEEEE',
-  /** The cursor color 设置光标 */
-  cursor: 'help',
-  /** The accent color of the cursor (used as the foreground color for a block cursor) */
-  cursorAccent: '#838383',
-  /** selection: '#f10b15', */
-  red: '#dd7479',
-  blue: '#1BD1FF'
-}
+import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
 
 export default {
   name: 'terminal-with-console-stream',
@@ -53,7 +40,7 @@ export default {
       term: null,
       id: util.uuid(),
       fitAddon: new FitAddon(),
-      theme: theme,
+      theme: TerminalSettings.theme,
       streaming: false
     }
   },
@@ -83,12 +70,12 @@ export default {
       this.streaming = false
       this.show = true
       const rows = 39
-      let term = new Terminal({
+      const term = new Terminal({
         rendererType: 'canvas', // 渲染类型
         allowTransparency: true,
         fontSize: 11,
         rows: rows,
-        theme: this.theme,
+        theme: TerminalSettings.theme,
         termName: 'xterm',
         visualBell: false,
         popOnBell: false,
