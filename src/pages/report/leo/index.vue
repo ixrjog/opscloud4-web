@@ -2,19 +2,27 @@
   <d2-container>
     <h1>{{ title }}</h1>
     <el-row :gutter="24" v-if="JSON.stringify(report) !== '{}'">
-      <el-col :span="6">
+      <el-col :span="4">
+        <dashboard-card :title="'授权用户总数'" :tag="'Authorized Users'" :value="report.dashboard.authorizedUserTotal"
+                        :value-desc="'All authorized users'"></dashboard-card>
+      </el-col>
+      <el-col :span="4">
+        <dashboard-card :title="'活跃用户总数'" :tag="'Users'" :value="report.dashboard.userTotal"
+                        :value-desc="'All users'"></dashboard-card>
+      </el-col>
+      <el-col :span="4">
         <dashboard-card :title="'应用总数'" :tag="'Applications'" :value="report.dashboard.applicationTotal"
                         :value-desc="'All applications'"></dashboard-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <dashboard-card :title="'任务总数'" :tag="'Jobs'" :value="report.dashboard.jobTotal"
                         :value-desc="'All jobs'"></dashboard-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <dashboard-card :title="'构建总次数'" :tag="'Builds'" :value="report.dashboard.buildTotal"
                         :value-desc="'All builds'"></dashboard-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="4">
         <dashboard-card :title="'部署总次数'" :tag="'Deploys'" :value="report.dashboard.deployTotal"
                         :value-desc="'All deploys'"></dashboard-card>
       </el-col>
@@ -233,7 +241,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+
 .input-bar {
   display: inline-block;
   max-width: 200px;
@@ -246,15 +255,13 @@ export default {
 
 .el-row {
   margin-bottom: 20px;
-
-&
-:last-child {
-  margin-bottom: 0;
-}
-
+  & :last-child {
+    margin-bottom: 0;
+  }
 }
 
 .el-col {
   border-radius: 4px;
 }
+
 </style>
