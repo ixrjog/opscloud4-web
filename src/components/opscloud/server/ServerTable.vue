@@ -3,7 +3,7 @@
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-select v-model="serverGroupTypeId" filterable clearable
-                 remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType" @change="getGroup">
+                 remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType" @change="getGroup('')">
         <el-option
           v-for="item in groupTypeOptions"
           :key="item.id"
