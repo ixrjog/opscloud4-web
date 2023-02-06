@@ -2,7 +2,17 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
-      <el-select v-model.trim="queryParam.serverGroupId" filterable clearable
+      <el-select v-model="serverGroupTypeId" filterable clearable
+                 remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType" @change="getGroup">
+        <el-option
+          v-for="item in groupTypeOptions"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"></select-item>
+        </el-option>
+      </el-select>
+      <el-select v-model="queryParam.serverGroupId" filterable clearable
                  remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup" @change="fetchData">
         <el-option
           v-for="item in serverGroupOptions"
@@ -147,6 +157,7 @@ import Pagination from '../common/page/Pagination'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import ServerMonitorStatusTag from '@/components/opscloud/common/tag/ServerMonitorStatusTag'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
+import { QUERY_SERVER_GROUP_TYPE_PAGE } from '@/api/modules/server/server.group.type.api'
 
 const activeOptions = [{
   value: true,
@@ -221,19 +232,22 @@ export default {
         monitorStatus: '',
         extend: true
       },
+      serverGroupTypeId: '',
       tagOptions: [],
       envOptions: [],
       serverGroupOptions: [],
       businessType: BusinessType.SERVER,
       activeOptions: activeOptions,
       serverStatusOptions: serverStatusOptions,
-      serverMonitorStatusOptions: serverMonitorStatusOptions
+      serverMonitorStatusOptions: serverMonitorStatusOptions,
+      groupTypeOptions: []
     }
   },
   mounted () {
     this.fetchData()
     this.getEnv('')
     this.getTag('')
+    this.getGroupType('')
     this.getGroup('')
   },
   computed: {},
@@ -291,10 +305,21 @@ export default {
           this.envOptions = res.body.data
         })
     },
+    getGroupType (name) {
+      const requestBody = {
+        name: name,
+        page: 1,
+        length: 10
+      }
+      QUERY_SERVER_GROUP_TYPE_PAGE(requestBody)
+        .then(res => {
+          this.groupTypeOptions = res.body.data
+        })
+    },
     getGroup (name) {
       const requestBody = {
         name: name,
-        serverGroupTypeId: '',
+        serverGroupTypeId: this.serverGroupTypeId,
         page: 1,
         length: 10
       }
