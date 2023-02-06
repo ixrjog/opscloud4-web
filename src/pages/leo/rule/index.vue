@@ -12,7 +12,7 @@
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称" sortable width="300"></el-table-column>
       <el-table-column prop="displayName" label="规则" sortable></el-table-column>
       <el-table-column prop="ruleConfig" label="规则配置">
@@ -37,7 +37,7 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
     <leo-rule-editor :formStatus="formStatus.rule" ref="ruleEditor"
-                    @close="fetchData"></leo-rule-editor>
+                     @close="fetchData"></leo-rule-editor>
   </d2-container>
 </template>
 
@@ -109,6 +109,13 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
+    tableRowClassName ({ row, rowIndex }) {
+      if (row.isActive) {
+        return 'warning-row'
+      } else {
+        return ''
+      }
+    },
     handleAdd () {
       this.formStatus.rule.visible = true
       this.formStatus.rule.operationType = true
@@ -157,6 +164,17 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
+}
+</style>
 
 <style scoped>
 
