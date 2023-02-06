@@ -9,7 +9,7 @@
         <el-button @click="fetchData" class="button">查询</el-button>
         <el-button @click="handleAdd" class="button">新增</el-button>
       </el-row>
-      <el-table :data="table.data" style="width: 100%" v-loading="table.loading"
+      <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName"
                 :default-sort="{prop: 'envType', order: 'ascending'}">
         <el-table-column prop="name" label="名称">
           <template v-slot="scope">
@@ -130,6 +130,13 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
+    tableRowClassName ({ row, rowIndex }) {
+      if (row.isActive) {
+        return 'warning-row'
+      } else {
+        return ''
+      }
+    },
     handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
@@ -179,6 +186,17 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
+}
+</style>
 
 <style scoped>
 .input-bar {

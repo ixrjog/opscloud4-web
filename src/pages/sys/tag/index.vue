@@ -11,6 +11,7 @@
           :key="item.value"
           :label="item.label"
           :value="item.value">
+          <select-item :name="item.label" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
@@ -52,6 +53,7 @@
 import { GET_TAG_BUSINESS_OPTIONS, DELETE_TAG_BY_ID, QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import Pagination from '../../../components/opscloud/common/page/Pagination'
 import TagEditor from '../../../components/opscloud/tag/TagEditor'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 
 export default {
   name: 'sys-tag',
@@ -91,7 +93,8 @@ export default {
   computed: {},
   components: {
     Pagination,
-    TagEditor
+    TagEditor,
+    SelectItem
   },
   methods: {
     paginationCurrentChange (currentPage) {
