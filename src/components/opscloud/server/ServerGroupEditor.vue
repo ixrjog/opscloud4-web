@@ -15,6 +15,7 @@
                 :key="item.id"
                 :label="item.name"
                 :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"></select-item>
               </el-option>
             </el-select>
           </el-form-item>
@@ -38,10 +39,9 @@
                                   ref="businessPropertyEditor"></business-property-editor>
       </el-tab-pane>
     </el-tabs>
-
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button size="mini" type="primary" @click="handlerSave">确定</el-button>
+      <el-button size="mini" type="primary" @click="save">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -51,6 +51,7 @@
 import { QUERY_SERVER_GROUP_TYPE_PAGE } from '@/api/modules/server/server.group.type.api.js'
 import { ADD_SERVER_GROUP, UPDATE_SERVER_GROUP } from '@/api/modules/server/server.group.api.js'
 import BusinessPropertyEditor from '../business/BusinessPropertyEditor'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 
 const allowOptions = [{
   value: false,
@@ -73,7 +74,8 @@ export default {
     }
   },
   components: {
-    BusinessPropertyEditor
+    BusinessPropertyEditor,
+    SelectItem
   },
   mounted () {
   },
@@ -103,7 +105,7 @@ export default {
         this.$refs.businessPropertyEditor.initData(this.serverGroup.businessProperty)
       })
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_SERVER_GROUP(requestBody)
         .then(res => {
           this.$message.success('保存成功!')
@@ -111,7 +113,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_SERVER_GROUP(requestBody)
         .then(res => {
           this.$message.success('新增成功!')
@@ -119,11 +121,11 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    save () {
       if (this.formStatus.operationType) {
-        this.handlerAdd(this.serverGroup)
+        this.handleAdd(this.serverGroup)
       } else {
-        this.handlerUpdate(this.serverGroup)
+        this.handleUpdate(this.serverGroup)
       }
     }
   }

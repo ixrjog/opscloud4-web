@@ -7,12 +7,13 @@
     <el-row>
       <el-input v-model="queryParam.name" placeholder="Name" style="display: inline-block; width: 180px;" @change="fetchData"/>
       <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable
-                 remote reserve-keyword placeholder="With group type" :remote-method="getGroupType" :loading="loading">
+                 remote reserve-keyword placeholder="Namespace" :remote-method="getGroupType" :loading="loading">
         <el-option
           v-for="item in groupTypeOptions"
           :key="item.id"
           :label="item.name"
           :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
       <el-button @click="fetchData" :loading="searching">Query</el-button>
@@ -34,6 +35,7 @@
 import { QUERY_SERVER_GROUP_TYPE_PAGE } from '@/api/modules/server/server.group.type.api.js'
 import { QUERY_USER_SERVER_TREE } from '@/api/modules/user/user.server.api.js'
 import BusinessTags from '../common/tag/BusinessTags'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 
 export default {
   data () {
@@ -53,7 +55,8 @@ export default {
   props: [],
   mixins: [],
   components: {
-    BusinessTags
+    BusinessTags,
+    SelectItem
   },
   mounted () {
     this.getGroupType('')

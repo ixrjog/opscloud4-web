@@ -59,7 +59,7 @@
       <el-button @click="handleAdd" class="button">新增</el-button>
       <el-button @click="handleScanMonitor" class="button">扫描监控</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
       <el-table-column label="名称 / 群组">
         <template v-slot="scope">
           <span>{{ scope.row.name }}</span>
@@ -260,6 +260,13 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
+    tableRowClassName ({ row, rowIndex }) {
+      if (!row.isActive) {
+        return 'warning-row'
+      } else {
+        return ''
+      }
+    },
     getTag (name) {
       const requestBody = {
         tagKey: name,
@@ -372,6 +379,17 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
+}
+</style>
 
 <style scoped>
 

@@ -56,7 +56,6 @@
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" sortable></el-table-column>
       <el-table-column prop="application" label="应用">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="light"
@@ -66,6 +65,7 @@
           </el-tooltip>
         </template>
       </el-table-column>
+      <el-table-column prop="name" label="名称" sortable></el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"></i>
@@ -93,8 +93,8 @@
           <env-tag :env="scope.row.env"></env-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="buildSize" label="构建次数" width="80">
-      </el-table-column>
+      <el-table-column prop="buildSize" label="构建次数" width="80"></el-table-column>
+      <el-table-column prop="deploySize" label="部署次数" width="80"></el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
         <template v-slot="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>
@@ -110,7 +110,7 @@
           <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.buildSize !==0">删除</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.isActive">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

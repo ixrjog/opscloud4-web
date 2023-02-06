@@ -15,7 +15,7 @@
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%">
+    <el-table :data="table.data" style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="hostname" label="主机名"></el-table-column>
       <el-table-column prop="hostIp" label="注册IP"></el-table-column>
@@ -103,6 +103,13 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
+    tableRowClassName ({ row, rowIndex }) {
+      if (row.isActive) {
+        return 'warning-row'
+      } else {
+        return ''
+      }
+    },
     handleSetActive (row) {
       SET_INSTANCE_ACTIVE({ id: row.id })
         .then(res => {
@@ -127,6 +134,17 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
+}
+</style>
 
 <style scoped>
 .el-input {

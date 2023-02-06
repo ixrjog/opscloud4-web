@@ -9,12 +9,13 @@
           :key="item.id"
           :label="item.name"
           :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新增</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="serverGroupType" label="组类型">
         <template slot-scope="scope">
@@ -55,6 +56,7 @@ import { QUERY_SERVER_GROUP_PAGE, DELETE_SERVER_GROUP_BY_ID } from '@/api/module
 import Pagination from '../common/page/Pagination'
 import ServerGroupEditor from './ServerGroupEditor'
 import AllowTag from '@/components/opscloud/common/tag/AllowTag'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 
 export default {
   name: 'ServerGroupTable',
@@ -96,7 +98,8 @@ export default {
   components: {
     ServerGroupEditor,
     AllowTag,
-    Pagination
+    Pagination,
+    SelectItem
   },
   methods: {
     paginationCurrentChange (currentPage) {
@@ -106,6 +109,13 @@ export default {
     handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
+    },
+    tableRowClassName ({ row, rowIndex }) {
+      if (!row.allowOrder) {
+        return 'warning-row'
+      } else {
+        return ''
+      }
     },
     getGroupType (name) {
       const requestBody = {
@@ -168,6 +178,17 @@ export default {
   }
 }
 </script>
+
+<style>
+
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
+}
+</style>
 
 <style scoped>
 
