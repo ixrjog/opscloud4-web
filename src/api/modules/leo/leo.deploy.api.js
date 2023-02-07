@@ -33,4 +33,3 @@ export function STOP_DEPLOY (param) {
     params: param
   })
 }
-

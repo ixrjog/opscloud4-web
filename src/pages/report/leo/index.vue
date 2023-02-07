@@ -27,7 +27,7 @@
                         :value-desc="'All deploys'"></dashboard-card>
       </el-col>
     </el-row>
-    <el-card class="box-card" shadow="hover">
+    <el-card class="box-card" shadow="hover" style="margin-bottom: 20px">
       <el-row>
         <span style="float: right">
           <el-button type="text" icon="el-icon-refresh" style="margin-left: 5px"
@@ -42,6 +42,16 @@
       </el-row>
       <el-row v-if="false">
         <div id="deployReportChart" style="height:350px; width: 100%"></div>
+      </el-row>
+    </el-card>
+    <el-card class="box-card" shadow="hover">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <div id="buildWithEnvReportChart" style="height:350px; width: 100%"></div>
+        </el-col>
+        <el-col :span="12">
+          <div id="deployWithEnvReportChart" style="height:350px; width: 100%"></div>
+        </el-col>
       </el-row>
     </el-card>
     <!--    <div v-if="false" v-for="instance in report.instances" :key="instance.instanceId" style="margin-bottom: 20px">-->
@@ -132,98 +142,149 @@ export default {
       }
       myChart.setOption(option, true)
     },
-    initBuildChart (buildMonthReport) {
-      const myChart = echarts.init(document.getElementById('buildReportChart'))
+    initBuildWithEnvChart (data, color) {
+      const myChart = echarts.init(document.getElementById('buildWithEnvReportChart'))
       const option = {
         title: {
-          text: '构建(月)报表'
+          text: '构建按环境占比'
         },
+        color: color,
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            // Use axis to trigger tooltip
-            type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
-          }
+          trigger: 'item'
         },
-        legend: {},
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        yAxis: {
-          type: 'value'
-        },
-        xAxis: {
-          type: 'category',
-          data: buildMonthReport.dateCat
-        },
+        // legend: {
+        //   orient: 'vertical',
+        //   left: 'left'
+        // },
         series: [
           {
-            name: '构建次数',
-            type: 'bar',
-            stack: 'total',
+            name: '环境',
+            type: 'pie',
+            radius: ['60%', '80%'],
+            avoidLabelOverlap: false,
             label: {
-              show: true
+              formatter: ' {b|{b}：}{c}  {per|{d}%} ',
+              backgroundColor: '#F6F8FC',
+              borderColor: '#8C8D8E',
+              borderWidth: 1,
+              borderRadius: 4,
+              rich: {
+                a: {
+                  color: '#6E7079',
+                  lineHeight: 22,
+                  align: 'center'
+                },
+                hr: {
+                  borderColor: '#8C8D8E',
+                  width: '100%',
+                  borderWidth: 1,
+                  height: 0
+                },
+                b: {
+                  color: '#4C5058',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  lineHeight: 33
+                },
+                per: {
+                  color: '#fff',
+                  backgroundColor: '#4C5058',
+                  padding: [3, 4],
+                  borderRadius: 4
+                }
+              }
             },
             emphasis: {
-              focus: 'series'
+              label: {
+                show: true,
+                fontSize: '20',
+                fontWeight: 'bold'
+              }
             },
-            data: buildMonthReport.values
+            labelLine: {
+              show: false
+            },
+            data: data
           }
         ]
       }
       myChart.setOption(option, true)
     },
-    initDeployChart (deployMonthReport) {
-      const myChart = echarts.init(document.getElementById('deployReportChart'))
+    initDeployWithEnvChart (data, color) {
+      const myChart = echarts.init(document.getElementById('deployWithEnvReportChart'))
       const option = {
         title: {
-          text: '部署(月)报表'
+          text: '部署按环境占比'
         },
+        color: color,
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            // Use axis to trigger tooltip
-            type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
-          }
+          trigger: 'item'
         },
-        legend: {},
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        yAxis: {
-          type: 'value'
-        },
-        xAxis: {
-          type: 'category',
-          data: deployMonthReport.dateCat
-        },
+        // legend: {
+        //   orient: 'vertical',
+        //   left: 'left'
+        // },
         series: [
           {
-            name: '部署次数',
-            type: 'bar',
-            stack: 'total',
+            name: '环境',
+            type: 'pie',
+            radius: ['60%', '80%'],
+            avoidLabelOverlap: false,
             label: {
-              show: true
+              formatter: ' {b|{b}：}{c}  {per|{d}%} ',
+              backgroundColor: '#F6F8FC',
+              borderColor: '#8C8D8E',
+              borderWidth: 1,
+              borderRadius: 4,
+              rich: {
+                a: {
+                  color: '#6E7079',
+                  lineHeight: 22,
+                  align: 'center'
+                },
+                hr: {
+                  borderColor: '#8C8D8E',
+                  width: '100%',
+                  borderWidth: 1,
+                  height: 0
+                },
+                b: {
+                  color: '#4C5058',
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  lineHeight: 33
+                },
+                per: {
+                  color: '#fff',
+                  backgroundColor: '#4C5058',
+                  padding: [3, 4],
+                  borderRadius: 4
+                }
+              }
             },
             emphasis: {
-              focus: 'series'
+              label: {
+                show: true,
+                fontSize: '20',
+                fontWeight: 'bold'
+              }
             },
-            data: deployMonthReport.values
+            labelLine: {
+              show: false
+            },
+            data: data
           }
         ]
       }
       myChart.setOption(option, true)
     },
     initData () {
-      // this.initBuildChart(this.report.buildMonthReport)
-      // this.initDeployChart(this.report.deployMonthReport)
       this.initContinuousDeliveryReportChart(this.report.continuousDeliveryReport)
+      this.initBuildWithEnvChart(this.report.buildWithEnvReport.map(e => ({ name: e.cname, value: e.value })),
+        this.report.buildWithEnvReport.map(e => (e.color)))
+      this.initDeployWithEnvChart(this.report.deployWithEnvReport.map(e => ({ name: e.cname, value: e.value })),
+        this.report.deployWithEnvReport.map(e => (e.color)))
+
       // this.$nextTick(() => {
       //   for (let instance of this.report.instances) {
       //     this.$refs[`instance_${instance.instanceId}_buildExecutor`][0].start()
@@ -255,6 +316,7 @@ export default {
 
 .el-row {
   margin-bottom: 20px;
+
   & :last-child {
     margin-bottom: 0;
   }

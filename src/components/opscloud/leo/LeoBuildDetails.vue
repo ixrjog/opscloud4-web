@@ -37,9 +37,7 @@
               <span v-show="build.startTime !== null && build.startTime !== ''"> {{
                   build.startTime
                 }} - {{ build.endTime ? build.endTime : '?' }}
-              <span v-show="build.runtime !== null" style="margin-left: 2px"><<b style="color: #3b97d7">{{
-                  build.runtime
-                }}</b>></span>
+              <span v-show="build.runtime !== null" style="margin-left: 2px">&lt;<b style="color: #3b97d7">{{build.runtime}}</b>&gt;</span>
               </span>
             </div>
             <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
@@ -132,7 +130,7 @@ export default {
   },
   methods: {
     nodeClick (nodeName, nodeId, build) {
-      if(build.isDeletedBuildJob){
+      if (build.isDeletedBuildJob) {
         this.$message.warning('构建任务失效，无法查看步骤信息!')
         return
       }
@@ -161,7 +159,7 @@ export default {
     handleEdit (build) {
       this.formStatus.build.visible = true
       this.$refs.buildDetailsEditor.initData(Object.assign({}, build))
-    },
+    }
   }
 }
 
