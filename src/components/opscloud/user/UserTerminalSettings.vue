@@ -10,6 +10,12 @@
       <el-form-item label="Cursor">
         <el-color-picker v-model="terminalSettings.theme.cursor"></el-color-picker>
       </el-form-item>
+      <el-form-item label="Cursor Accent" v-if="false">
+        <el-color-picker v-model="terminalSettings.theme.cursorAccent"></el-color-picker>
+      </el-form-item>
+      <el-form-item label="Selection">
+        <el-color-picker v-model="terminalSettings.theme.selection"></el-color-picker>
+      </el-form-item>
       <el-form-item label="Windows Rows">
         <el-input-number v-model="terminalSettings.rows" :min="22" :max="60" label="终端行数"></el-input-number>
       </el-form-item>
@@ -31,7 +37,7 @@ export default {
   data () {
     return {
       title: 'User Profiles',
-      labelWidth: '150px',
+      labelWidth: '180px',
       // Docs https://github.com/xtermjs/xterm.js/blob/5.1.0/typings/xterm.d.ts
       terminalSettings: TerminalSettings
     }

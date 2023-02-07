@@ -1,11 +1,17 @@
 const TerminalSettings = Object.freeze({
   theme: {
-    // 字体
+    /** 字体色 */
     foreground: '#090909',
-    // 背景色
+    /** 背景色 */
     background: '#FFFFFF',
-    // 光标
+    /** 光标色 */
     cursor: '#090909',
+    /** The accent color of the cursor (fg color for a block cursor) */
+    cursorAccent: '#ef0808',
+    /** 选区背景色 */
+    selection: '#838383',
+    /** 终端没有焦点时的选择背景色（可以透明） */
+    /** selectionInactiveBackground? */
     red: '#d95f64',
     blue: '#12c0ea'
   },
