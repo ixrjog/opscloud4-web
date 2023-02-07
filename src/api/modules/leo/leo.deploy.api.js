@@ -25,3 +25,12 @@ export function QUERY_LEO_DEPLOY_DEPLOYMENT (data) {
     data
   })
 }
+
+export function STOP_DEPLOY (param) {
+  return request({
+    url: baseUrl + '/stop',
+    method: 'put',
+    params: param
+  })
+}
+

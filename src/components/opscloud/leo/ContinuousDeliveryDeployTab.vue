@@ -56,6 +56,11 @@
                       <i class="fab fa-sistrix"></i>
                     </el-button>
                   </el-tooltip>
+                  <el-tooltip class="item" effect="light" content="停止部署" placement="top-start" v-if="!deploy.isFinish">
+                    <el-button class="btn" style="margin-right: 10px" type="text" @click="stopDeploy(deploy.id)" :loading="buttons.stopping">
+                      <i class="far fa-stop-circle"></i>
+                    </el-button>
+                  </el-tooltip>
                 </div>
                 <span class="label">执行时间</span>
                 <span v-show="deploy.startTime !== null && deploy.startTime !== ''"> {{
@@ -135,6 +140,7 @@ import DeployNumberIcon from '@/components/opscloud/leo/child/DeployNumberIcon'
 import PodVersion from '@/components/opscloud/leo/child/PodVersion.vue'
 import DeployVersion from '@/components/opscloud/leo/child/DeployVersion.vue'
 import LeoDeployHistory from '@/components/opscloud/leo/LeoDeployHistory.vue'
+import { STOP_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 
 const wsStates = {
   success: {
@@ -193,7 +199,10 @@ export default {
         deployId: ''
       },
       envOptions: [],
-      applicationOptions: []
+      applicationOptions: [],
+      buttons: {
+        stopping: false
+      }
     }
   },
   mounted () {
@@ -421,6 +430,14 @@ export default {
         deployId: this.queryParam.deployId
       }
       this.sendMessage(queryMessage)
+    },
+    stopDeploy (id) {
+      this.buttons.stopping = true
+      STOP_DEPLOY({ deployId: id })
+        .then(res => {
+          this.$message.info('后台执行中请稍等!')
+          this.buttons.stopping = false
+        })
     },
     createDeploy () {
       this.formStatus.deploy.visible = true
