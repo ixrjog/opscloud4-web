@@ -5,6 +5,9 @@
       <el-tab-pane label="模板配置" name="template">
         <leo-template-table></leo-template-table>
       </el-tab-pane>
+      <el-tab-pane label="帮助文档" name="docs">
+         <document-zone mount-zone="LEO"></document-zone>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -12,6 +15,7 @@
 <script>
 
 import LeoTemplateTable from '@/components/opscloud/leo/LeoTemplateTable'
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   name: 'leoTemplate',
@@ -23,7 +27,8 @@ export default {
   mounted () {
   },
   components: {
-    LeoTemplateTable
+    LeoTemplateTable,
+    DocumentZone
   },
   methods: {
   }

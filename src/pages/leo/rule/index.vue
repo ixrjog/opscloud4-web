@@ -1,43 +1,50 @@
 <template>
   <d2-container>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
-    </el-row>
-    <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
-      <el-table-column prop="name" label="名称" sortable width="300"></el-table-column>
-      <el-table-column prop="displayName" label="规则" sortable></el-table-column>
-      <el-table-column prop="ruleConfig" label="规则配置">
-        <template v-slot="scope">
-          <my-highlight v-if="scope.row.ruleConfig !== ''" :code="scope.row.ruleConfig"
-                        lang="yaml" :myStyle="style"></my-highlight>
-        </template>
-      </el-table-column>
-      <el-table-column prop="isActive" label="有效" width="80">
-        <template v-slot="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="comment" label="说明" v-if="false"></el-table-column>
-      <el-table-column label="操作" width="280">
-        <template v-slot="scope">
-          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <leo-rule-editor :formStatus="formStatus.rule" ref="ruleEditor"
-                     @close="fetchData"></leo-rule-editor>
+    <el-tabs v-model="activeName">
+      <el-tab-pane label="规则配置" name="rule">
+        <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+          <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
+            <el-option
+              v-for="item in activeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-button @click="fetchData" class="button">查询</el-button>
+          <el-button @click="handleAdd" class="button">新增</el-button>
+        </el-row>
+        <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
+          <el-table-column prop="name" label="名称" sortable width="300"></el-table-column>
+          <el-table-column prop="displayName" label="规则" sortable></el-table-column>
+          <el-table-column prop="ruleConfig" label="规则配置">
+            <template v-slot="scope">
+              <my-highlight v-if="scope.row.ruleConfig !== ''" :code="scope.row.ruleConfig"
+                            lang="yaml" :myStyle="style"></my-highlight>
+            </template>
+          </el-table-column>
+          <el-table-column prop="isActive" label="有效" width="80">
+            <template v-slot="scope">
+              <active-tag :is-active="scope.row.isActive"></active-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="comment" label="说明" v-if="false"></el-table-column>
+          <el-table-column label="操作" width="280">
+            <template v-slot="scope">
+              <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+              <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+        <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                    @handleSizeChange="handleSizeChange"></pagination>
+        <leo-rule-editor :formStatus="formStatus.rule" ref="ruleEditor"
+                         @close="fetchData"></leo-rule-editor>
+      </el-tab-pane>
+      <el-tab-pane label="帮助文档" name="docs">
+        <document-zone mount-zone="LEO"></document-zone>
+      </el-tab-pane>
+    </el-tabs>
   </d2-container>
 </template>
 
@@ -49,6 +56,7 @@ import Pagination from '@/components/opscloud/common/page/Pagination.vue'
 import ActiveTag from '@/components/opscloud/common/tag/ActiveTag.vue'
 import MyHighlight from '@/components/opscloud/common/MyHighlight.vue'
 import LeoRuleEditor from '@/components/opscloud/leo/LeoRuleEditor.vue'
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 const activeOptions = [{
   value: true,
@@ -62,6 +70,7 @@ export default {
   name: 'leoRuleTable',
   data () {
     return {
+      activeName: 'rule',
       table: {
         data: [],
         loading: false,
@@ -97,7 +106,8 @@ export default {
     Pagination,
     ActiveTag,
     LeoRuleEditor,
-    MyHighlight
+    MyHighlight,
+    DocumentZone
   },
   filters: {},
   methods: {
