@@ -22,16 +22,7 @@
         </el-row>
       </el-col>
     </el-row>
-    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane :name="docKeys.OPSCLOUD_README">
-        <span slot="label"><i class="fas fa-home"></i> 平台帮助</span>
-        <my-markdown v-if="docs.opscloud !== null" :content="docs.opscloud.content"></my-markdown>
-      </el-tab-pane>
-      <el-tab-pane :name="docKeys.VPN_README">
-        <span slot="label"><i class="fas fa-project-diagram"></i> VPN帮助</span>
-        <my-markdown v-if="docs.vpn !== null" :content="docs.vpn.content"></my-markdown>
-      </el-tab-pane>
-    </el-tabs>
+    <document-zone mount-zone="HOME"></document-zone>
     <!--    logo-->
     <!--      <div class="d2-page-cover__logo">-->
     <!--        <d2-icon-svg class="logo" name="d2-admin"/>-->
@@ -40,7 +31,6 @@
       <div class="btn-group">
         <div align="center">
           <p class="d2-page-cover__title">Version 4.2.0</p>
-          <!--          <p class="d2-page-cover__sub-title">IaC 基础架构即代码</p>-->
           <p class="d2-page-cover__build-time">FINAL BUILD TIME {{ $buildTime }}</p>
         </div>
         <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
@@ -67,28 +57,14 @@ import D2Badge from './components/d2-badge'
 import D2Help from './components/d2-help'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
-import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 import 'animate.css'
 import { LIST_NAV } from '@/api/modules/sys/sys.nav.api'
 import util from '@/libs/util'
-
-const docKeys = {
-  OPSCLOUD_README: 'OPSCLOUD_README',
-  VPN_README: 'VPN_README'
-}
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   data () {
     return {
-      activeName: docKeys.OPSCLOUD_README,
-      docs: {
-        opscloud: null,
-        vpn: null
-      },
-      docKeys: docKeys,
-      dict: {
-        sshServerHost: window.location.hostname
-      },
       navList: []
     }
   },
@@ -96,16 +72,13 @@ export default {
     D2Badge,
     D2Help,
     EchartsFont,
-    MyMarkdown
+    MyMarkdown,
+    DocumentZone
   },
   mounted () {
-    this.fetchDoc(this.docKeys.OPSCLOUD_README)
     this.listNav()
   },
   methods: {
-    handleClick (tab, event) {
-      this.fetchDoc(tab.name)
-    },
     listNav () {
       this.navList = []
       LIST_NAV()
@@ -115,23 +88,6 @@ export default {
     },
     openNavUrl (nav) {
       util.open(nav.navUrl)
-    },
-    fetchDoc (key) {
-      const requestBody = {
-        dict: this.dict,
-        documentKey: key
-      }
-      PREVIEW_DOCUMENT(requestBody)
-        .then(res => {
-          switch (key) {
-            case this.docKeys.OPSCLOUD_README:
-              this.docs.opscloud = res.body
-              break
-            case this.docKeys.VPN_README:
-              this.docs.vpn = res.body
-              break
-          }
-        })
     }
   }
 }

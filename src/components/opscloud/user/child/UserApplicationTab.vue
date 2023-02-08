@@ -22,7 +22,7 @@
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="userPermission.roleName" label="角色">
         <template v-slot="scope">
-          <el-tag size="mini" :type=" scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
+          <el-tag size="mini" :type=" scope.row.userPermission.permissionRole === 'admin' ? 'danger' :'info'">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '管理员' : '普通用户' }}
           </el-tag>
         </template>

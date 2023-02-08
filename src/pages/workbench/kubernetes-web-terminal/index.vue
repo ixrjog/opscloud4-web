@@ -13,16 +13,7 @@
       </el-card>
     </el-row>
     <el-row v-if="layout.status === 0" style="margin-top: 10px">
-      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane :name="docKeys.KUBERNETES_README">
-          <span slot="label"><i class="fab fa-docker"></i>Kubernetes</span>
-          <my-markdown v-if="docs.kubernetes !== null" :content="docs.kubernetes.content"></my-markdown>
-        </el-tab-pane>
-        <el-tab-pane :name="docKeys.KUBERNETES_REDEPLOY_README">
-          <span slot="label"><i class="fas fa-redo"></i>Redeploy</span>
-          <my-markdown v-if="docs.redeploy !== null" :content="docs.redeploy.content"></my-markdown>
-        </el-tab-pane>
-      </el-tabs>
+      <document-zone mount-zone="KUBERNETES"></document-zone>
     </el-row>
     <el-row>
     </el-row>
@@ -55,15 +46,9 @@ import ApplicationKubernetesSelector
   from '../../../components/opscloud/terminal/kubernetes/ApplicationKubernetesSelector'
 import KubernetesTerminalLayout from '../../../components/opscloud/terminal/kubernetes/KubernetesTerminalLayout'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
-import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
-import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
-
-const docKeys = {
-  KUBERNETES_README: 'KUBERNETES_README',
-  KUBERNETES_REDEPLOY_README: 'KUBERNETES_REDEPLOY_README'
-}
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   name: 'kubernetes-web-terminal',
@@ -71,12 +56,6 @@ export default {
   data () {
     return {
       title: '容器管理',
-      docs: {
-        kubernetes: null,
-        redeploy: null
-      },
-      docKeys: docKeys,
-      activeName: docKeys.KUBERNETES_README,
       layout: {
         mode: 0,
         status: 0 // 0 选择/登录
@@ -105,7 +84,6 @@ export default {
     ])
   },
   mounted () {
-    this.fetchDoc(this.docKeys.KUBERNETES_README)
     this.initTerminalSettings()
   },
   beforeDestroy () {
@@ -115,7 +93,7 @@ export default {
     ApplicationKubernetesSelector,
     KubernetesTerminalLayout,
     BusinessDocReader,
-    MyMarkdown
+    DocumentZone
   },
   methods: {
     /**
@@ -221,26 +199,6 @@ export default {
     recovery () {
       this.$store.dispatch('d2admin/menu/asideCollapseSet', false)
       this.terminalTools.mode = 0
-    },
-    handleClick (tab, event) {
-      this.fetchDoc(tab.name)
-    },
-    fetchDoc (key) {
-      const requestBody = {
-        dict: this.dict,
-        documentKey: key
-      }
-      PREVIEW_DOCUMENT(requestBody)
-        .then(res => {
-          switch (key) {
-            case this.docKeys.KUBERNETES_README:
-              this.docs.kubernetes = res.body
-              break
-            case this.docKeys.KUBERNETES_REDEPLOY_README:
-              this.docs.redeploy = res.body
-              break
-          }
-        })
     }
   }
 }

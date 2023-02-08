@@ -36,20 +36,7 @@
         </el-card>
       </el-col>
       <el-col :span="16">
-        <el-tabs type="border-card">
-          <el-tab-pane>
-            <span slot="label"><i class="fab fa-chrome"></i> Chrome</span>
-            <my-markdown v-if="docs.chrome !== null" :content="docs.chrome.content"></my-markdown>
-          </el-tab-pane>
-          <el-tab-pane>
-            <span slot="label"><i class="fab fa-apple"></i> iOS</span>
-            <my-markdown v-if="docs.ios !== null" :content="docs.ios.content"></my-markdown>
-          </el-tab-pane>
-          <el-tab-pane>
-            <span slot="label"><i class="fab fa-android"></i> Android</span>
-            <my-markdown v-if="docs.android !== null" :content="docs.android.content"></my-markdown>
-          </el-tab-pane>
-        </el-tabs>
+        <document-zone mount-zone="MFA"></document-zone>
       </el-col>
     </el-row>
   </d2-container>
@@ -58,40 +45,21 @@
 <script>
 
 import VueQr from 'vue-qr'
-import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
-import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 import { GET_USER_MFA, RESET_USER_MFA } from '@/api/modules/user/user.mfa.api'
-
-const docKeys = {
-  MFA_CHROME_README: 'MFA_CHROME_README',
-  MFA_IOS_README: 'MFA_IOS_README',
-  MFA_ANDROID_README: 'MFA_ANDROID_README'
-}
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   data () {
     return {
-      mfa: null,
-      docs: {
-        chrome: null,
-        ios: null,
-        android: null
-      },
-      docKeys: docKeys,
-      dict: {
-        // sshServerHost: window.location.hostname
-      }
+      mfa: null
     }
   },
   mounted () {
     this.fetchMfa()
-    for (const key in this.docKeys) {
-      this.fetchDoc(this.docKeys[key])
-    }
   },
   components: {
     VueQr,
-    MyMarkdown
+    DocumentZone
   },
   methods: {
     handleReset () {
@@ -104,26 +72,6 @@ export default {
       GET_USER_MFA()
         .then(res => {
           this.mfa = res.body
-        })
-    },
-    fetchDoc (key) {
-      const requestBody = {
-        dict: this.dict,
-        documentKey: key
-      }
-      PREVIEW_DOCUMENT(requestBody)
-        .then(res => {
-          switch (key) {
-            case this.docKeys.MFA_CHROME_README:
-              this.docs.chrome = res.body
-              break
-            case this.docKeys.MFA_IOS_README:
-              this.docs.ios = res.body
-              break
-            case this.docKeys.MFA_ANDROID_README:
-              this.docs.android = res.body
-              break
-          }
         })
     }
   }
