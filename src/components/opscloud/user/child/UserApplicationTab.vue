@@ -20,9 +20,8 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="comment" label="备注"></el-table-column>
       <el-table-column prop="userPermission.roleName" label="角色">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" :type=" scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '管理员' : '普通用户' }}
           </el-tag>
@@ -30,7 +29,7 @@
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowSet(scope.row)">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '降权' : '提权' }}
           </el-button>
