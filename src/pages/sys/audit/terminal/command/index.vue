@@ -9,7 +9,9 @@
         <el-button @click="fetchData" class="search-button">查询</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column prop="input" label="输入/输出">
+        <el-table-column prop="id" label="ID" width="100">
+        </el-table-column>
+        <el-table-column prop="input" label="Input/Output">
           <template v-slot="scope">
             <el-row style="margin-bottom: 2px">
               <div :id="`terminal_input_${scope.row.id}`" class="xterm"></div>
@@ -60,7 +62,6 @@ export default {
         extend: true
       },
       sessionInstance: null,
-      terminalSetting: TerminalSettings,
       display: {
         inputTerminals: [],
         outputTerminals: []
@@ -106,7 +107,7 @@ export default {
             fontSize: 11,
             rows: 2,
             // cols: 40,
-            theme: this.terminalSettings.theme,
+            theme: TerminalSettings.theme,
             termName: 'xterm',
             visualBell: false,
             popOnBell: false,
@@ -128,7 +129,7 @@ export default {
             allowTransparency: true,
             fontSize: 11,
             rows: row.outputRows,
-            theme: this.terminalSettings.theme,
+            theme: TerminalSettings.theme,
             termName: 'xterm',
             visualBell: false,
             popOnBell: false,
