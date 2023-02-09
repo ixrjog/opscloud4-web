@@ -89,6 +89,7 @@ export default {
     initContinuousDeliveryReportChart (continuousDeliveryReport) {
       const myChart = echarts.init(document.getElementById('continuousDeliveryReportChart'))
       const option = {
+        color: ['#179bb9', '#c90a12'],
         title: {
           text: '持续交付(月)报表'
         },
