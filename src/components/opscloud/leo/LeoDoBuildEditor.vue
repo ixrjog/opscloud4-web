@@ -39,6 +39,11 @@
                        :loading="branchOptionsLoading">
               <i class="fab fa-hubspot" aria-hidden="true"></i>
             </el-button>
+            <!--commit详情-->
+            <el-alert v-show="JSON.stringify(this.branch) !== '{}'" :title="branch.commitId" type="success" style="margin-top: 2px"
+                      :closable="false"
+                      :description="branch.commitMessage">
+            </el-alert>
           </el-form-item>
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
@@ -94,6 +99,7 @@ export default {
         openTag: true
       },
       editing: false,
+      branch: {},
       branchOptions: [],
       branchOptionsLoading: false,
       options: options,
@@ -127,6 +133,7 @@ export default {
     },
     initData (leoJob) {
       this.activeName = 'build'
+      this.branch = {}
       this.buttons.doBuilding = false
       this.leoJob = leoJob
       this.doBuildParam.branch = leoJob.configDetails.job.gitLab.project.branch
@@ -143,12 +150,26 @@ export default {
         this.editing = false
       }
     },
+    findBranch () {
+      if (JSON.stringify(this.branchOptions) === '[]') {
+        return
+      } else {
+        for (const option of this.branchOptions) {
+          const branch = option.options.find(e => (e.value === this.doBuildParam.branch))
+          if (branch !== undefined) {
+            this.branch = branch
+            break
+          }
+        }
+      }
+    },
     getBranchOptions () {
       this.branchOptionsLoading = true
       GET_BUILD_BRANCH_OPTIONS(this.getBranchOptionsParam)
         .then(res => {
           this.branchOptions = res.body.options
           this.branchOptionsLoading = false
+          this.findBranch()
         })
     },
     createBranch () {
