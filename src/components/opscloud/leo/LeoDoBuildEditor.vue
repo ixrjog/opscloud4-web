@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="构建分支" :label-width="formStatus.labelWidth" required>
             <el-select v-model.trim="doBuildParam.branch" filterable style="width: 500px"
-                       :loading="branchOptionsLoading" loading-text="正在加载选项" remote>
+                       :loading="branchOptionsLoading" loading-text="正在加载选项" remote  @change="handleChange">
               <el-option-group v-for="group in branchOptions" :key="group.label" :label="group.label">
                 <el-option v-for="item in group.options"
                            :key="item.value"
@@ -150,9 +150,9 @@ export default {
         this.editing = false
       }
     },
-    findBranch () {
+    handleChange () {
       if (JSON.stringify(this.branchOptions) === '[]') {
-        return
+        this.branch = {}
       } else {
         for (const option of this.branchOptions) {
           const branch = option.options.find(e => (e.value === this.doBuildParam.branch))
@@ -169,7 +169,7 @@ export default {
         .then(res => {
           this.branchOptions = res.body.options
           this.branchOptionsLoading = false
-          this.findBranch()
+          this.handleChange()
         })
     },
     createBranch () {
