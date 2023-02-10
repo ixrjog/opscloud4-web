@@ -53,10 +53,10 @@
 </template>
 
 <script>
+
 import D2Badge from './components/d2-badge'
 import D2Help from './components/d2-help'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
-import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import 'animate.css'
 import { LIST_NAV } from '@/api/modules/sys/sys.nav.api'
 import util from '@/libs/util'
@@ -72,7 +72,6 @@ export default {
     D2Badge,
     D2Help,
     EchartsFont,
-    MyMarkdown,
     DocumentZone
   },
   mounted () {

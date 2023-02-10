@@ -2,7 +2,9 @@
   <el-tag size="mini" style="float: right;margin-right: 5px" class="position" :type="pod | toPodPhaseType">
     <i class="el-icon-loading" v-show="!pod.isComplete"></i>
     <span v-show="pod.terminating">Terminating</span>
-    <span v-show="!pod.terminating">{{ pod.reason === null || pod.reason === undefined ? pod.phase : pod.reason }}</span>
+    <span v-show="!pod.terminating">{{
+        pod.reason === null || pod.reason === undefined ? pod.phase : pod.reason
+      }}</span>
     <el-popover placement="right" trigger="hover">
       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
       <entry-detail name="Initialized" :value="pod.conditions.Initialized"></entry-detail>
@@ -18,7 +20,7 @@
 
 <script>
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
-import {  toPodPhaseType } from '@/filters/kubernetes.pod'
+import { toPodPhaseType } from '@/filters/kubernetes.pod'
 
 export default {
   name: 'PodConditions',

@@ -5,7 +5,6 @@
   </d2-container>
 </template>
 
-
 <script>
 
 import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'

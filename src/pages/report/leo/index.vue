@@ -35,22 +35,16 @@
         </span>
       </el-row>
       <el-row>
-        <div id="continuousDeliveryReportChart" style="height:350px; width: 100%"></div>
-      </el-row>
-      <el-row v-if="false">
-        <div id="buildReportChart" style="height:350px; width: 100%"></div>
-      </el-row>
-      <el-row v-if="false">
-        <div id="deployReportChart" style="height:350px; width: 100%"></div>
+        <div id="cDChart" style="height:350px; width: 100%"></div>
       </el-row>
     </el-card>
     <el-card class="box-card" shadow="hover">
       <el-row :gutter="20">
         <el-col :span="12">
-          <div id="buildWithEnvReportChart" style="height:350px; width: 100%"></div>
+          <div id="buildChart" style="height:350px; width: 100%"></div>
         </el-col>
         <el-col :span="12">
-          <div id="deployWithEnvReportChart" style="height:350px; width: 100%"></div>
+          <div id="deployChart" style="height:350px; width: 100%"></div>
         </el-col>
       </el-row>
     </el-card>
@@ -67,6 +61,7 @@
 <script>
 
 import * as echarts from 'echarts'
+
 // API
 import { GET_LEO_REPORT } from '@/api/modules/report/report.api'
 import DashboardCard from '@/components/opscloud/report/DashboardCard.vue'
@@ -74,7 +69,7 @@ import DashboardCard from '@/components/opscloud/report/DashboardCard.vue'
 export default {
   data () {
     return {
-      title: '持续交付-报表',
+      title: '持续交付2.0-报表',
       report: {}
     }
   },
@@ -86,10 +81,10 @@ export default {
     this.fetchData()
   },
   methods: {
-    initContinuousDeliveryReportChart (continuousDeliveryReport) {
-      const myChart = echarts.init(document.getElementById('continuousDeliveryReportChart'))
+    initCDChart (continuousDeliveryReport) {
+      const myChart = echarts.init(document.getElementById('cDChart'))
       const option = {
-        color: ['#179bb9', '#c90a12'],
+        color: ['#36c6ae', '#82daa9'],
         title: {
           text: '持续交付(月)报表'
         },
@@ -143,8 +138,8 @@ export default {
       }
       myChart.setOption(option, true)
     },
-    initBuildWithEnvChart (data, color) {
-      const myChart = echarts.init(document.getElementById('buildWithEnvReportChart'))
+    initBuildChart (data, color) {
+      const myChart = echarts.init(document.getElementById('buildChart'))
       const option = {
         title: {
           text: '构建按环境占比'
@@ -211,8 +206,8 @@ export default {
       }
       myChart.setOption(option, true)
     },
-    initDeployWithEnvChart (data, color) {
-      const myChart = echarts.init(document.getElementById('deployWithEnvReportChart'))
+    initDeployChart (data, color) {
+      const myChart = echarts.init(document.getElementById('deployChart'))
       const option = {
         title: {
           text: '部署按环境占比'
@@ -280,10 +275,10 @@ export default {
       myChart.setOption(option, true)
     },
     initData () {
-      this.initContinuousDeliveryReportChart(this.report.continuousDeliveryReport)
-      this.initBuildWithEnvChart(this.report.buildWithEnvReport.map(e => ({ name: e.cname, value: e.value })),
+      this.initCDChart(this.report.continuousDeliveryReport)
+      this.initBuildChart(this.report.buildWithEnvReport.map(e => ({ name: e.cname, value: e.value })),
         this.report.buildWithEnvReport.map(e => (e.color)))
-      this.initDeployWithEnvChart(this.report.deployWithEnvReport.map(e => ({ name: e.cname, value: e.value })),
+      this.initDeployChart(this.report.deployWithEnvReport.map(e => ({ name: e.cname, value: e.value })),
         this.report.deployWithEnvReport.map(e => (e.color)))
 
       // this.$nextTick(() => {
@@ -325,6 +320,10 @@ export default {
 
 .el-col {
   border-radius: 4px;
+}
+
+.chart {
+  height: 100vh;
 }
 
 </style>

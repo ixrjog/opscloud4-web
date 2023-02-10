@@ -67,7 +67,7 @@
       </el-table-column>
       <el-table-column label="属性" width="200">
         <template slot-scope="props">
-           <span v-for="item in props.row.properties">
+           <span v-for="item in props.row.properties" :key="item.id">
              <el-tag class="prop-tag" v-if="item.isShow" :type="item.feType">{{ item.feName }}</el-tag>
            </span>
         </template>

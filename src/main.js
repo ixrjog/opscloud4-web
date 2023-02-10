@@ -15,6 +15,12 @@ import { frameInRoutes } from '@/router/routes'
 import ui from '@/libs/util.ui'
 import VueClipboard from 'vue-clipboard2'
 
+// vue-echarts
+import 'echarts'
+import ECharts from 'vue-echarts'
+
+Vue.component('v-chart', ECharts)
+
 // 核心插件
 Vue.use(d2Admin)
 Vue.use(VueClipboard)

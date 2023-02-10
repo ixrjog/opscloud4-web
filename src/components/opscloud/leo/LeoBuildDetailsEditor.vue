@@ -39,7 +39,6 @@
 <script>
 
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
-import SelectItem from '@/components/opscloud/common/SelectItem'
 import { UPDATE_LEO_BUILD } from '@/api/modules/leo/leo.build.api'
 
 const activeOptions = [{
@@ -63,8 +62,7 @@ export default {
   name: 'LeoBuildDetailsEditor',
   props: ['formStatus'],
   components: {
-    MyHighlight,
-    SelectItem
+    MyHighlight
   },
   mixins: [],
   mounted () {

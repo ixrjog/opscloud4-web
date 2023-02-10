@@ -294,7 +294,7 @@ export default {
         })
     },
     handleCreateCrRepository () {
-      CREATE_CR_REPOSITORY_WITH_LEO_JOB_ID({  jobId: this.leoJob.id })
+      CREATE_CR_REPOSITORY_WITH_LEO_JOB_ID({ jobId: this.leoJob.id })
         .then(() => {
           this.$message.success('创建CR仓库成功!')
         })

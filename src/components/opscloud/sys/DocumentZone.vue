@@ -1,7 +1,7 @@
 <template>
   <div v-if="docZone.zone.isActive">
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane v-for="doc in docZone.docs" :name="doc.documentKey">
+      <el-tab-pane v-for="doc in docZone.docs" :name="doc.documentKey" :key="doc.id">
         <span slot="label"><i :class="doc.icon"></i> {{ doc.name }}</span>
         <my-markdown :content="doc.content"></my-markdown>
       </el-tab-pane>
@@ -49,7 +49,7 @@ export default {
       GET_DOCUMENT_ZONE(requestBody)
         .then(res => {
           this.docZone = res.body
-          if(this.docZone.zone.isActive){
+          if (this.docZone.zone.isActive) {
             this.activeName = this.docZone.docs[0].documentKey
           }
         })

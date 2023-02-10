@@ -26,8 +26,6 @@
 <script>
 
 import util from '@/libs/util'
-
-
 import { getBuildResultType } from '@/filters/leo.build.result.js'
 import TerminalWithLog from '@/components/opscloud/leo/child/TerminalWithLog'
 

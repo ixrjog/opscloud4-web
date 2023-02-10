@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item label="构建分支" :label-width="formStatus.labelWidth" required>
             <el-select v-model.trim="doBuildParam.branch" filterable style="width: 500px"
-                       :loading="branchOptionsLoading" loading-text="正在加载选项" remote  @change="handleChange">
+                       :loading="branchOptionsLoading" loading-text="正在加载选项" remote @change="handleChange">
               <el-option-group v-for="group in branchOptions" :key="group.label" :label="group.label">
                 <el-option v-for="item in group.options"
                            :key="item.value"
@@ -40,7 +40,8 @@
               <i class="fab fa-hubspot" aria-hidden="true"></i>
             </el-button>
             <!--commit详情-->
-            <el-alert v-show="JSON.stringify(this.branch) !== '{}'" :title="branch.commitId" type="success" style="margin-top: 2px"
+            <el-alert v-show="JSON.stringify(this.branch) !== '{}'" :title="branch.commitId" type="success"
+                      style="margin-top: 2px"
                       :closable="false"
                       :description="branch.commitMessage">
             </el-alert>
@@ -69,8 +70,6 @@
 
 // API
 import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
-
-import MyHighlight from '@/components/opscloud/common/MyHighlight'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 
 const options = {
@@ -112,9 +111,7 @@ export default {
   name: 'LeoDoBuildEditor',
   props: ['formStatus'],
   components: {
-    MyHighlight,
-    SelectItem,
-    editor: require('vue2-ace-editor')
+    SelectItem
   },
   mixins: [],
   mounted () {
