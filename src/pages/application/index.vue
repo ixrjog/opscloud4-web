@@ -5,7 +5,17 @@
         <h1>{{ title }}</h1>
       </div>
       <el-row style="margin-bottom: 5px" :gutter="24">
-        <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询" class="input"/>
+        <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
+        <el-select
+          v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+          placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
+          <el-option
+            v-for="item in tagOptions"
+            :key="item.id"
+            :label="item.tagKey"
+            :value="item.id">
+          </el-option>
+        </el-select>
         <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
         <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
       </el-row>
@@ -31,14 +41,14 @@
             <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key" class="resDiv">
               <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
               <div v-for="item in value" :key="item.id">
-              <el-tooltip effect="dark" :content="item.comment" placement="top-start"
-                          :disabled="!item.comment">
-                <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
-                  <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>
-                  {{ item.name }}
-                </el-tag>
-              </el-tooltip>
-            </div>
+                <el-tooltip effect="dark" :content="item.comment" placement="top-start"
+                            :disabled="!item.comment">
+                  <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
+                    <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>
+                    {{ item.name }}
+                  </el-tag>
+                </el-tooltip>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -87,6 +97,7 @@ import UsersTag from '../../components/opscloud/common/tag/UsersTag'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
+import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
 
 export default {
   name: 'ApplicationTable',
@@ -110,7 +121,8 @@ export default {
       },
       businessType: BusinessType.APPLICATION,
       queryParam: {
-        queryName: ''
+        queryName: '',
+        tagId: ''
       },
       formStatus: {
         application: {
@@ -127,7 +139,8 @@ export default {
           visible: false,
           title: '应用文档'
         }
-      }
+      },
+      tagOptions: []
     }
   },
   filters: {
@@ -150,6 +163,7 @@ export default {
   },
   computed: {},
   mounted () {
+    this.getTag('')
     this.fetchData()
   },
   components: {
@@ -171,6 +185,19 @@ export default {
     handleDocRead (row) {
       this.$refs.businessDocReader.initData(Object.assign({}, row.document))
       this.formStatus.businessDoc.visible = true
+    },
+    getTag (name) {
+      const requestBody = {
+        tagKey: name,
+        businessType: this.businessType,
+        append: true,
+        page: 1,
+        length: 20
+      }
+      QUERY_TAG_PAGE(requestBody)
+        .then(res => {
+          this.tagOptions = res.body.data
+        })
     },
     handleAdd () {
       this.formStatus.application.operationType = true
@@ -215,7 +242,7 @@ export default {
     fetchData () {
       this.loading = true
       const requestBody = {
-        queryName: this.queryParam.queryName,
+        ...this.queryParam,
         extend: 1,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
@@ -239,14 +266,17 @@ export default {
 
 <style lang="less" scoped>
 
-.input {
+.el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
-.select {
-  margin-right: 5px;
+.el-select {
+  margin-left: 5px;
+}
+
+.el-button {
+  margin-left: 5px;
 }
 
 .nameCopy i {
