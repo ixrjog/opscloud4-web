@@ -159,11 +159,11 @@ export default {
       newServerNode.instanceId = tools.instanceId(serverNode.instanceId)
       const duplicateSessionMessage = {
         state: this.terminalState.DUPLICATE_SESSION,
-        // duplicateInstanceId: id,
         // 源会话
-        duplicateServerNode: serverNode,
+        // duplicateServerNode: serverNode,
+        duplicateServerNode: {id: serverNode.id, instanceId: serverNode.instanceId },
         // 目标会话
-        serverNode: newServerNode,
+        serverNode: {  id: newServerNode.id, instanceId: newServerNode.instanceId },
         token: util.cookies.get('token'),
         loginType: this.loginType,
         terminal: {
@@ -217,7 +217,8 @@ export default {
           const initMessage = {
             token: util.cookies.get('token'),
             loginType: this.loginType,
-            serverNodes: this.terminals,
+            // serverNodes: this.terminals,
+            serverNodes: this.terminals.map(e => ({ id: e.id, instanceId: e.instanceId })),
             state: this.terminalState.LOGIN,
             terminal: {
               width: 0,
