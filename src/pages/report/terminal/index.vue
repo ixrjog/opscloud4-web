@@ -68,6 +68,7 @@ export default {
     initSessionChart (sessionReport) {
       const myChart = echarts.init(document.getElementById('sessionReportChart'))
       const option = {
+        color: [ '#bd5a39','#c9171f','#eaa235'],
         title: {
           text: '会话审计'
         },
@@ -94,7 +95,7 @@ export default {
         },
         series: [
           {
-            name: 'server-terminal',
+            name: '服务器终端',
             type: 'bar',
             stack: 'total',
             label: {
@@ -106,7 +107,7 @@ export default {
             data: sessionReport.valueMap.WEB_TERMINAL
           },
           {
-            name: 'kubernetes-terminal',
+            name: '容器终端',
             type: 'bar',
             stack: 'total',
             label: {
@@ -118,7 +119,7 @@ export default {
             data: sessionReport.valueMap.KUBERNETES_TERMINAL
           },
           {
-            name: 'ssh-server',
+            name: 'SSH-Server',
             type: 'bar',
             stack: 'total',
             label: {
@@ -136,6 +137,7 @@ export default {
     initInstanceChart (instanceReport) {
       const myChart = echarts.init(document.getElementById('instanceReportChart'))
       const option = {
+        color: [ '#bd5a39','#c9171f','#eaa235'],
         title: {
           text: '实例审计'
         },
@@ -174,7 +176,7 @@ export default {
             data: instanceReport.valueMap.SERVER
           },
           {
-            name: '容器终端',
+            name: '容器',
             type: 'bar',
             stack: 'total',
             label: {
@@ -204,6 +206,7 @@ export default {
     initCommandChart (commandMonthReport) {
       const myChart = echarts.init(document.getElementById('commandReportChart'))
       const option = {
+        color: [ '#12c0ea'],
         title: {
           text: '命令审计'
         },
