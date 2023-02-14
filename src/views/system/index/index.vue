@@ -10,18 +10,18 @@
           alt="Fork me on GitHub">
       </a>
     </div>
-    <el-row>
-      <el-col :span="16" :offset="4">
-        <el-row :gutter="10" class="nav-card">
-          <el-col :span="4" v-for="nav in navList" :key="nav.id">
-            <el-card shadow="hover" @click.native=openNavUrl(nav)>
-              <p>{{ nav.navTitle }}</p>
-              <p>{{ nav.navContent }}</p>
-            </el-card>
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
+<!--    <el-row>-->
+<!--      <el-col :span="16" :offset="4">-->
+<!--        <el-row :gutter="10" class="nav-card">-->
+<!--          <el-col :span="4" v-for="nav in navList" :key="nav.id">-->
+<!--            <el-card shadow="hover" @click.native=openNavUrl(nav)>-->
+<!--              <p>{{ nav.navTitle }}</p>-->
+<!--              <p>{{ nav.navContent }}</p>-->
+<!--            </el-card>-->
+<!--          </el-col>-->
+<!--        </el-row>-->
+<!--      </el-col>-->
+<!--    </el-row>-->
     <document-zone mount-zone="HOME"></document-zone>
     <!--    logo-->
     <!--      <div class="d2-page-cover__logo">-->
@@ -58,8 +58,6 @@ import D2Badge from './components/d2-badge'
 import D2Help from './components/d2-help'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 import 'animate.css'
-import { LIST_NAV } from '@/api/modules/sys/sys.nav.api'
-import util from '@/libs/util'
 import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
@@ -75,19 +73,8 @@ export default {
     DocumentZone
   },
   mounted () {
-    this.listNav()
   },
   methods: {
-    listNav () {
-      this.navList = []
-      LIST_NAV()
-        .then(({ body }) => {
-          this.navList = body
-        })
-    },
-    openNavUrl (nav) {
-      util.open(nav.navUrl)
-    }
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="docZone.zone.isActive">
+  <div v-if="docZone.zone.isActive" :key="key">
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="doc in docZone.docs" :name="doc.documentKey" :key="doc.id">
         <span slot="label"><i :class="doc.icon"></i> {{ doc.name }}</span>
@@ -19,6 +19,7 @@ export default {
   props: ['mountZone'],
   data () {
     return {
+      key: 0,
       activeName: '',
       docZone: {
         zone: {
@@ -39,7 +40,7 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      //
+      this.key ++
     },
     fetchData (key) {
       const requestBody = {
