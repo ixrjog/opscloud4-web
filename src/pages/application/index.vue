@@ -206,6 +206,7 @@ export default {
         name: '',
         applicationKey: '',
         applicationType: 0,
+        isActive: true,
         comment: ''
       }
       this.$refs.applicationEditor.initData(application)
