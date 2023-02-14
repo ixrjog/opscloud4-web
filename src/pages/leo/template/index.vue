@@ -6,7 +6,7 @@
         <leo-template-table></leo-template-table>
       </el-tab-pane>
       <el-tab-pane label="帮助文档" name="docs">
-         <document-zone mount-zone="LEO"></document-zone>
+         <document-zone mount-zone="LEO_MGMT"></document-zone>
       </el-tab-pane>
     </el-tabs>
   </d2-container>

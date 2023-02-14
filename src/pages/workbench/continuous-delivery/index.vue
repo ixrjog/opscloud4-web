@@ -10,6 +10,9 @@
         <continuous-delivery-deploy-tab ref="continuousDeliveryDeployTab"></continuous-delivery-deploy-tab>
       </el-tab-pane>
     </el-tabs>
+    <el-row style="margin-top: 20px">
+      <document-zone mount-zone="LEO_CD"></document-zone>
+    </el-row>
   </d2-container>
 </template>
 
@@ -18,6 +21,7 @@
 import continuousDeliveryBuildTab from '@/components/opscloud/leo/ContinuousDeliveryBuildTab'
 import continuousDeliveryDeployTab from '@/components/opscloud/leo/ContinuousDeliveryDeployTab'
 import AnnouncementCarousel from '@/components/opscloud/sys/AnnouncementCarousel.vue'
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   name: 'continuous-delivery',
@@ -45,7 +49,8 @@ export default {
   components: {
     AnnouncementCarousel,
     continuousDeliveryBuildTab,
-    continuousDeliveryDeployTab
+    continuousDeliveryDeployTab,
+    DocumentZone
   },
   methods: {
     handleClick (tab, event) {
