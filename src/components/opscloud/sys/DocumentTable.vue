@@ -96,6 +96,7 @@ export default {
       },
       queryParam: {
         queryName: '',
+        mountZone: '',
         isActive: '',
         extend: true
       },
