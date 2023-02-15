@@ -46,4 +46,3 @@ export function DELETE_BUSINESS_TEMPLATE_BY_ID (id) {
     method: 'delete'
   })
 }
-

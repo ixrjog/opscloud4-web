@@ -6,7 +6,6 @@
 
 <script>
 
-
 import { getServerMonitorStatusType, getServerMonitorStatusText } from '@/filters/server.monitor.status'
 
 export default {

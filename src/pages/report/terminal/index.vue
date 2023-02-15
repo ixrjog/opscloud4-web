@@ -15,15 +15,18 @@
               <info-card title="审计用户总数" tag="Users" :content="report.userTotal" footer="All user"></info-card>
             </el-col>
             <el-col :span="12">
-              <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal" footer="All session"></info-card>
+              <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal"
+                         footer="All session"></info-card>
             </el-col>
           </el-row>
           <el-row :gutter="24">
             <el-col :span="12">
-              <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal" footer="All instance"></info-card>
+              <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal"
+                         footer="All instance"></info-card>
             </el-col>
             <el-col :span="12">
-              <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal" footer="All command"></info-card>
+              <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal"
+                         footer="All command"></info-card>
             </el-col>
           </el-row>
         </el-col>
@@ -68,7 +71,7 @@ export default {
     initSessionChart (sessionReport) {
       const myChart = echarts.init(document.getElementById('sessionReportChart'))
       const option = {
-        color: [ '#bd5a39','#c9171f','#eaa235'],
+        color: ['#bd5a39', '#c9171f', '#eaa235'],
         title: {
           text: '会话审计'
         },
@@ -137,7 +140,7 @@ export default {
     initInstanceChart (instanceReport) {
       const myChart = echarts.init(document.getElementById('instanceReportChart'))
       const option = {
-        color: [ '#bd5a39','#c9171f','#eaa235'],
+        color: ['#bd5a39', '#c9171f', '#eaa235'],
         title: {
           text: '实例审计'
         },
@@ -206,7 +209,7 @@ export default {
     initCommandChart (commandMonthReport) {
       const myChart = echarts.init(document.getElementById('commandReportChart'))
       const option = {
-        color: [ '#12c0ea'],
+        color: ['#12c0ea'],
         title: {
           text: '命令审计'
         },
@@ -276,9 +279,13 @@ export default {
 }
 
 .el-row {
-  margin-bottom: 20px; &:last-child {
-   margin-bottom: 0;
-  }
+  margin-bottom: 20px;
+
+&
+:last-child {
+  margin-bottom: 0;
+}
+
 }
 
 .el-col {

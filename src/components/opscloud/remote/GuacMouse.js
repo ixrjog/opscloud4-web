@@ -112,14 +112,18 @@ const mouse = function (element) {
 
     guac_mouse.currentState.fromClientPosition(element, e.clientX, e.clientY)
 
-    if (guac_mouse.onmousemove) { guac_mouse.onmousemove(guac_mouse.currentState) }
+    if (guac_mouse.onmousemove) {
+      guac_mouse.onmousemove(guac_mouse.currentState)
+    }
   }, false)
 
   element.addEventListener('mousedown', function (e) {
     cancelEvent(e)
 
     // Do not handle if ignoring events
-    if (ignore_mouse) { return }
+    if (ignore_mouse) {
+      return
+    }
 
     switch (e.button) {
       case 0:
@@ -133,14 +137,18 @@ const mouse = function (element) {
         break
     }
 
-    if (guac_mouse.onmousedown) { guac_mouse.onmousedown(guac_mouse.currentState) }
+    if (guac_mouse.onmousedown) {
+      guac_mouse.onmousedown(guac_mouse.currentState)
+    }
   }, false)
 
   element.addEventListener('mouseup', function (e) {
     cancelEvent(e)
 
     // Do not handle if ignoring events
-    if (ignore_mouse) { return }
+    if (ignore_mouse) {
+      return
+    }
 
     switch (e.button) {
       case 0:
@@ -154,7 +162,9 @@ const mouse = function (element) {
         break
     }
 
-    if (guac_mouse.onmouseup) { guac_mouse.onmouseup(guac_mouse.currentState) }
+    if (guac_mouse.onmouseup) {
+      guac_mouse.onmouseup(guac_mouse.currentState)
+    }
   }, false)
 
   element.addEventListener('mouseout', function (e) {
@@ -164,7 +174,9 @@ const mouse = function (element) {
     // Check that mouseout is due to actually LEAVING the element
     var target = e.relatedTarget || e.toElement
     while (target) {
-      if (target === element) { return }
+      if (target === element) {
+        return
+      }
       target = target.parentNode
     }
 
@@ -178,11 +190,15 @@ const mouse = function (element) {
       guac_mouse.currentState.middle = false
       guac_mouse.currentState.right = false
 
-      if (guac_mouse.onmouseup) { guac_mouse.onmouseup(guac_mouse.currentState) }
+      if (guac_mouse.onmouseup) {
+        guac_mouse.onmouseup(guac_mouse.currentState)
+      }
     }
 
     // Fire onmouseout event
-    if (guac_mouse.onmouseout) { guac_mouse.onmouseout() }
+    if (guac_mouse.onmouseout) {
+      guac_mouse.onmouseout()
+    }
   }, false)
 
   // Override selection on mouse event element.
@@ -208,14 +224,20 @@ const mouse = function (element) {
     // already in pixels
     if (delta) {
       // Convert to pixels if delta was lines
-      if (e.deltaMode === 1) { delta = e.deltaY * guac_mouse.PIXELS_PER_LINE }
+      if (e.deltaMode === 1) {
+        delta = e.deltaY * guac_mouse.PIXELS_PER_LINE
+      }
 
       // Convert to pixels if delta was pages
-      else if (e.deltaMode === 2) { delta = e.deltaY * guac_mouse.PIXELS_PER_PAGE }
+      else if (e.deltaMode === 2) {
+        delta = e.deltaY * guac_mouse.PIXELS_PER_PAGE
+      }
     }
 
     // Otherwise, assume legacy mousewheel event and line scrolling
-    else { delta = e.detail * guac_mouse.PIXELS_PER_LINE }
+    else {
+      delta = e.detail * guac_mouse.PIXELS_PER_LINE
+    }
 
     // Update overall delta
     scroll_delta += delta
@@ -280,7 +302,9 @@ const mouse = function (element) {
     var div = document.createElement('div')
 
     // If no cursor property at all, then no support
-    if (!('cursor' in div.style)) { return false }
+    if (!('cursor' in div.style)) {
+      return false
+    }
 
     try {
       // Apply simple 1x1 PNG

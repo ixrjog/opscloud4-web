@@ -26,14 +26,10 @@
   </el-dialog>
 </template>
 
-
 <script>
 
 // API
 import { QUERY_LEO_JOB_BUILD_PAGE } from '@/api/modules/leo/leo.job.api'
-import MyHighlight from '@/components/opscloud/common/MyHighlight'
-import SelectItem from '@/components/opscloud/common/SelectItem'
-import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails'
 
@@ -77,11 +73,7 @@ export default {
   },
   components: {
     Pagination,
-    MyHighlight,
-    MyMarkdown,
-    SelectItem,
-    LeoBuildDetails,
-    editor: require('vue2-ace-editor')
+    LeoBuildDetails
   },
   mixins: [],
   mounted () {

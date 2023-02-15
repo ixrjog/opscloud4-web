@@ -67,5 +67,3 @@ export function DELETE_DOCUMENT_BY_ID (id) {
     method: 'delete'
   })
 }
-
-

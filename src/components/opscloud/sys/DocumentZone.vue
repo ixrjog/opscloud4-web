@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     handleClick (tab, event) {
-      this.key ++
+      this.key++
     },
     fetchData (key) {
       const requestBody = {

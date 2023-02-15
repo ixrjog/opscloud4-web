@@ -61,7 +61,6 @@ import { ADD_LEO_RULE, UPDATE_LEO_RULE } from '@/api/modules/leo/leo.rule.api'
 import { PREVIEW_DOCUMENT } from '@/api/modules/sys/sys.doc.api.js'
 
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
-import SelectItem from '@/components/opscloud/common/SelectItem'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
 
 const options = {
@@ -110,7 +109,6 @@ export default {
   components: {
     MyHighlight,
     MyMarkdown,
-    SelectItem,
     editor: require('vue2-ace-editor')
   },
   mixins: [],

@@ -55,11 +55,9 @@
 
 import SelectItem from '../common/SelectItem'
 import ActiveTag from '../common/tag/ActiveTag'
-import BusinessTags from '../common/tag/BusinessTags'
 import Pagination from '../common/page/Pagination'
 import { DELETE_DOCUMENT_BY_ID, QUERY_DOCUMENT_PAGE, QUERY_DOCUMENT_ZONE_PAGE } from '@/api/modules/sys/sys.doc.api'
 import DocumentEditor from '@/components/opscloud/sys/DocumentEditor.vue'
-import { DELETE_SERVER_BY_ID } from '@/api/modules/server/server.api'
 
 const activeOptions = [{
   value: true,
@@ -68,7 +66,6 @@ const activeOptions = [{
   value: false,
   label: '无效'
 }]
-
 
 export default {
   name: 'document-table',
@@ -111,7 +108,6 @@ export default {
   components: {
     Pagination,
     SelectItem,
-    BusinessTags,
     ActiveTag,
     DocumentEditor
   },

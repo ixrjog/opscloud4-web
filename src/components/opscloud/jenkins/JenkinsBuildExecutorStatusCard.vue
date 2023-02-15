@@ -27,7 +27,7 @@ export default {
   mixins: [],
   components: {},
   mounted () {
-    this.initChart ()
+    this.initChart()
     this.initSocket()
   },
   destroyed () {

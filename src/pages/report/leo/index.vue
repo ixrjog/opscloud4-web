@@ -113,7 +113,7 @@ export default {
           {
             name: '构建次数',
             type: 'bar',
-            stack: 'total',
+            stack: 'build',
             label: {
               show: true
             },
@@ -125,7 +125,7 @@ export default {
           {
             name: '部署次数',
             type: 'bar',
-            stack: 'total',
+            stack: 'deploy',
             label: {
               show: true
             },

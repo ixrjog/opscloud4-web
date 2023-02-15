@@ -161,9 +161,9 @@ export default {
         state: this.terminalState.DUPLICATE_SESSION,
         // 源会话
         // duplicateServerNode: serverNode,
-        duplicateServerNode: {id: serverNode.id, instanceId: serverNode.instanceId },
+        duplicateServerNode: { id: serverNode.id, instanceId: serverNode.instanceId },
         // 目标会话
-        serverNode: {  id: newServerNode.id, instanceId: newServerNode.instanceId },
+        serverNode: { id: newServerNode.id, instanceId: newServerNode.instanceId },
         token: util.cookies.get('token'),
         loginType: this.loginType,
         terminal: {

@@ -37,9 +37,7 @@
 
 <script>
 
-import SelectItem from '../common/SelectItem'
 import ActiveTag from '../common/tag/ActiveTag'
-import BusinessTags from '../common/tag/BusinessTags'
 import Pagination from '../common/page/Pagination'
 import { QUERY_DOCUMENT_ZONE_PAGE } from '@/api/modules/sys/sys.doc.api'
 import DocumentZoneEditor from '@/components/opscloud/sys/DocumentZoneEditor.vue'
@@ -51,7 +49,6 @@ const activeOptions = [{
   value: false,
   label: '无效'
 }]
-
 
 export default {
   name: 'document-zone-table',
@@ -90,8 +87,6 @@ export default {
   computed: {},
   components: {
     Pagination,
-    SelectItem,
-    BusinessTags,
     ActiveTag,
     DocumentZoneEditor
   },

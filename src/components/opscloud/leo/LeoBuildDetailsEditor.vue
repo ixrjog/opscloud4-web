@@ -84,7 +84,7 @@ export default {
           this.formStatus.visible = false
           this.$emit('close')
         })
-    },
+    }
   }
 }
 </script>

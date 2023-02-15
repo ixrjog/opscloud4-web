@@ -103,7 +103,7 @@ export default {
       this.fetchData()
     },
     handleAdd () {
-      let aliyunLogMember = {
+      const aliyunLogMember = {
         id: 0,
         aliyunLogId: this.queryParam.aliyunLogId,
         serverGroupId: '',
@@ -159,7 +159,7 @@ export default {
     },
     fetchData () {
       this.table.loading = true
-      let requestBody = {
+      const requestBody = {
         ...this.queryParam,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
