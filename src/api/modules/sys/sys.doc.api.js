@@ -18,3 +18,38 @@ export function GET_DOCUMENT_ZONE (data) {
     data
   })
 }
+
+export function QUERY_DOCUMENT_PAGE (data) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/page/query',
+    method: 'post',
+    data
+  })
+}
+
+export function QUERY_DOCUMENT_ZONE_PAGE (data) {
+  // 接口请求
+  return request({
+    url: baseUrl + '/zone/page/query',
+    method: 'post',
+    data
+  })
+}
+
+export function UPDATE_DOCUMENT_ZONE (data) {
+  return request({
+    url: baseUrl + '/zone/update',
+    method: 'put',
+    data
+  })
+}
+
+export function UPDATE_DOCUMENT (data) {
+  return request({
+    url: baseUrl + '/update',
+    method: 'put',
+    data
+  })
+}
+

@@ -18,7 +18,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="服务器组" :label-width="labelWidth" required>
-            <el-select v-model.trim="server.serverGroupId" filterable clearable
+            <el-select v-model="server.serverGroupId" filterable clearable
                        remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup" @clear="getGroup('')">
               <el-option
                 v-for="item in serverGroupOptions"
@@ -29,7 +29,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
-            <el-select v-model.trim="server.envType" clearable
+            <el-select v-model="server.envType" clearable
                        remote reserve-keyword placeholder="选择环境" :remote-method="getEnv">
               <el-option
                 v-for="item in envOptions"
