@@ -53,3 +53,19 @@ export function UPDATE_DOCUMENT (data) {
   })
 }
 
+export function ADD_DOCUMENT (data) {
+  return request({
+    url: baseUrl + '/add',
+    method: 'post',
+    data
+  })
+}
+
+export function DELETE_DOCUMENT_BY_ID (id) {
+  return request({
+    url: baseUrl + '/del?id=' + id,
+    method: 'delete'
+  })
+}
+
+

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="formStatus.updateTitle" :visible.sync="formStatus.visible" width="50%">
+  <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle" :visible.sync="formStatus.visible" width="50%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="文档信息" name="base">
         <el-form :model="document">
@@ -28,15 +28,15 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="图标" :label-width="labelWidth">
+          <el-form-item label="图标" :label-width="labelWidth" required>
             <el-input v-model="document.icon">
               <template slot="append"><i :class="document.icon"></i></template>
             </el-input>
           </el-form-item>
-          <el-form-item label="文档Key" :label-width="labelWidth">
+          <el-form-item label="文档Key" :label-width="labelWidth" required>
             <el-input v-model="document.documentKey"></el-input>
           </el-form-item>
-          <el-form-item label="序列" :label-width="labelWidth">
+          <el-form-item label="序列" :label-width="labelWidth" required>
             <el-input v-model="document.seq"></el-input>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
@@ -68,7 +68,7 @@
 <script>
 
 // API
-import { QUERY_DOCUMENT_ZONE_PAGE, UPDATE_DOCUMENT } from '@/api/modules/sys/sys.doc.api'
+import { QUERY_DOCUMENT_ZONE_PAGE, UPDATE_DOCUMENT, ADD_DOCUMENT } from '@/api/modules/sys/sys.doc.api'
 import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown.vue'
 import util from '@/libs/util'
@@ -147,9 +147,9 @@ export default {
       this.document = document
       this.activeName = 'base'
       if (this.formStatus.operationType) {
-        this.getZone(document.mountZone)
-      } else {
         this.getZone('')
+      } else {
+        this.getZone(document.mountZone)
       }
     },
     saveDoc () {
@@ -160,12 +160,21 @@ export default {
         })
     },
     save () {
-      UPDATE_DOCUMENT(this.document)
-        .then(() => {
-          this.$message.success('保存成功!')
-          this.formStatus.visible = false
-          this.$emit('close')
-        })
+      if (this.formStatus.operationType) {
+        ADD_DOCUMENT(this.document)
+          .then(() => {
+            this.$message.success('新增成功!')
+            this.formStatus.visible = false
+            this.$emit('close')
+          })
+      } else {
+        UPDATE_DOCUMENT(this.document)
+          .then(() => {
+            this.$message.success('保存成功!')
+            this.formStatus.visible = false
+            this.$emit('close')
+          })
+      }
     }
   }
 }

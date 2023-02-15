@@ -2,6 +2,15 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
+      <el-select v-model="queryParam.mountZone" filterable clearable
+                 remote reserve-keyword placeholder="搜索挂载区" :remote-method="getZone" @change="fetchData">
+        <el-option v-for="item in zoneOptions"
+                   :key="item.id"
+                   :label="item.mountZone"
+                   :value="item.mountZone">
+          <select-item :name="item.mountZone" :comment="item.name"></select-item>
+        </el-option>
+      </el-select>
       <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
         <el-option
           v-for="item in activeOptions"
@@ -11,7 +20,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
-      <!--      <el-button @click="handleAdd" class="button">新增</el-button>-->
+      <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称"></el-table-column>
@@ -31,13 +40,14 @@
       <el-table-column label="操作" width="230">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
     <document-editor :formStatus="formStatus.doc" ref="documentEditor"
-                          @close="fetchData"></document-editor>
+                     @close="fetchData"></document-editor>
   </div>
 </template>
 
@@ -47,8 +57,9 @@ import SelectItem from '../common/SelectItem'
 import ActiveTag from '../common/tag/ActiveTag'
 import BusinessTags from '../common/tag/BusinessTags'
 import Pagination from '../common/page/Pagination'
-import { QUERY_DOCUMENT_PAGE } from '@/api/modules/sys/sys.doc.api'
+import { DELETE_DOCUMENT_BY_ID, QUERY_DOCUMENT_PAGE, QUERY_DOCUMENT_ZONE_PAGE } from '@/api/modules/sys/sys.doc.api'
 import DocumentEditor from '@/components/opscloud/sys/DocumentEditor.vue'
+import { DELETE_SERVER_BY_ID } from '@/api/modules/server/server.api'
 
 const activeOptions = [{
   value: true,
@@ -88,10 +99,12 @@ export default {
         isActive: '',
         extend: true
       },
-      activeOptions: activeOptions
+      activeOptions: activeOptions,
+      zoneOptions: []
     }
   },
   mounted () {
+    this.getZone('')
   },
   computed: {},
   components: {
@@ -118,13 +131,52 @@ export default {
         return ''
       }
     },
+    getZone (name) {
+      const requestBody = {
+        queryName: name,
+        page: 1,
+        length: 20
+      }
+      QUERY_DOCUMENT_ZONE_PAGE(requestBody)
+        .then(res => {
+          this.zoneOptions = res.body.data
+        })
+    },
     handleRowEdit (row) {
       this.$refs.documentEditor.initData(Object.assign({}, row))
       this.formStatus.doc.visible = true
       this.formStatus.doc.operationType = false
     },
-    handleAdd (){
-      // documentEditor
+    handleAdd () {
+      const document = {
+        id: '',
+        name: '',
+        icon: '',
+        mountZone: '',
+        seq: 1,
+        documentKey: '',
+        documentType: 1,
+        isActive: true,
+        content: '',
+        comment: ''
+      }
+      this.$refs.documentEditor.initData(document)
+      this.formStatus.doc.visible = true
+      this.formStatus.doc.operationType = true
+    },
+    handleRowDel (row) {
+      this.$confirm('此操作将删除当前配置?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DELETE_DOCUMENT_BY_ID(row.id).then(res => {
+          this.$message.success('删除成功!')
+          this.fetchData()
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除!')
+      })
     },
     fetchData () {
       this.table.loading = true

@@ -87,7 +87,7 @@ export default [
     component: () => import('@/pages/sys/docs'),
     meta: {
       auth: true,
-      title: '运维文档'
+      title: '文档管理'
     }
   }
 ]
