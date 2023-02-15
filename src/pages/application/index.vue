@@ -20,7 +20,7 @@
         <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column label="应用" width="250px">
+        <el-table-column label="应用" width="200px">
           <template v-slot="scope">
             <el-row>
               <span>{{ scope.row.name }}</span>
@@ -34,6 +34,8 @@
             <el-row>
               <b style="color: #9d9fa3">{{ scope.row.comment }}</b>
             </el-row>
+            <!--Tags-->
+            <business-tags :tags="scope.row.tags"></business-tags>
           </template>
         </el-table-column>
         <el-table-column prop="resourceMap" label="绑定资源" width="400px">
@@ -57,18 +59,7 @@
             <users-tag :users="scope.row.users"></users-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="tags" label="标签" width="150px">
-          <template v-slot="scope">
-            <div class="tag-group">
-              <span v-for="item in scope.row.tags" :key="item.id">
-                <el-tooltip class="item" effect="light" :content="item.comment" placement="top-start">
-                  <el-tag size="mini" style="margin-left: 5px" :style="{ color: item.color }">{{ item.tagKey }}</el-tag>
-                </el-tooltip>
-              </span>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="280">
+        <el-table-column label="操作" width="200">
           <template v-slot="scope">
             <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
             <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
@@ -98,6 +89,7 @@ import BusinessType from '@/components/opscloud/common/enums/business.type'
 import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 
 export default {
   name: 'ApplicationTable',
@@ -147,15 +139,15 @@ export default {
     getAppResText (value) {
       switch (value) {
         case AppDsInstanceAssetType.GITLAB.GITLAB_GROUP:
-          return '群组(GITLAB_GROUP)'
+          return 'GitLab群组'
         case AppDsInstanceAssetType.GITLAB.GITLAB_PROJECT:
-          return '项目(GITLAB_PROJECT)'
+          return 'GitLab项目'
         case AppDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
-          return '无状态(DEPLOYMENT)'
+          return 'Kubernetes无状态'
         case 'SERVERGROUP':
-          return '服务器组(SERVER_GROUP)'
+          return '服务器组'
         case 'SERVER':
-          return '服务器(SERVER)'
+          return '服务器'
         default:
           return value
       }
@@ -171,7 +163,8 @@ export default {
     ApplicationEditor,
     UsersTag,
     BusinessTagEditor,
-    BusinessDocReader
+    BusinessDocReader,
+    BusinessTags
   },
   methods: {
     paginationCurrentChange (currentPage) {
