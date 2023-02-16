@@ -47,25 +47,27 @@
             <div><span class="label">构件版本</span> {{ build.versionName }}</div>
             <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
             <div><span class="label">构建分支</span> {{ build.buildDetails.build.dict.branch }}</div>
-            <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}</div>
+            <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}
+              <span v-if="build.buildDetails.build !== null &&
+                    build.buildDetails.build.gitLab !== null &&
+                    build.buildDetails.build.gitLab.project !== null &&
+                    build.buildDetails.build.gitLab.project.commit !== null &&
+                    build.buildDetails.build.gitLab.project.commit.webUrl !== null">
+                <a target="blank" :href="build.buildDetails.build.gitLab.project.commit.webUrl" style="color: #179bb9"><i class="fab fa-git-alt" style="margin-right: 1px"></i></a></span>
+            </div>
             <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}
-              <el-tag style="margin-left: 2px" :type="build.isImageExists ? 'success' : 'warning'">
-                {{ build.isImageExists ? '已验证' : '未验证' }}
-              </el-tag>
+              <el-tag style="margin-left: 2px"
+                      :type="build.isImageExists ? 'success' : 'warning'">{{ build.isImageExists ? '已验证' : '未验证' }}</el-tag>
             </div>
             <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
             <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
-            <div><span class="label">执行引擎</span> {{
-                build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''
-              }}
-            </div>
+            <div><span class="label">执行引擎</span> {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''}}</div>
           </el-row>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
-          <terminal-with-console-stream :buildId="build.id"
-                                        ref="terminalWithConsoleStream"></terminal-with-console-stream>
+          <terminal-with-console-stream :buildId="build.id" ref="terminalWithConsoleStream"></terminal-with-console-stream>
           <pipeline-step :ref="`pipelineStep${build.id}`"></pipeline-step>
         </el-col>
       </el-row>

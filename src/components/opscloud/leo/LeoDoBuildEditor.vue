@@ -39,11 +39,12 @@
                        :loading="branchOptionsLoading">
               <i class="fab fa-hubspot" aria-hidden="true"></i>
             </el-button>
-            <!--commit详情-->
-            <el-alert v-show="JSON.stringify(this.branch) !== '{}'" :title="branch.commitId" type="success"
-                      style="margin-top: 2px"
-                      :closable="false"
-                      :description="branch.commitMessage">
+            <!--commit详情 :title="branch.commitId" :description="branch.commitMessage" -->
+            <el-alert v-show="JSON.stringify(this.branch) !== '{}'"
+                      style="margin-top: 5px; background-color: #e56c0d"
+                      :closable="false">
+              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF"><i class="fab fa-git-alt" style="margin-right: 1px"></i><b>{{ branch.commitId }}</b></a>
+              <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
             </el-alert>
           </el-form-item>
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
