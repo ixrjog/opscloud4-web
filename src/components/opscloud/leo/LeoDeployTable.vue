@@ -50,7 +50,6 @@
 
 import { QUERY_LEO_JOB_DEPLOY_PAGE } from '@/api/modules/leo/leo.job.api'
 import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
-import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 
 import SelectItem from '../common/SelectItem'
@@ -98,19 +97,6 @@ export default {
           total: 0
         }
       },
-      formStatus: {
-        businessTag: {
-          visible: false,
-          title: '编辑Leo任务标签'
-        },
-        job: {
-          visible: false,
-          labelWidth: '150px',
-          operationType: true,
-          addTitle: '新增任务配置',
-          updateTitle: '更新任务配置'
-        }
-      },
       queryParam: {
         queryName: '',
         applicationId: '',
@@ -120,7 +106,6 @@ export default {
       tagOptions: [],
       businessType: BusinessType.LEO_JOB,
       applicationOptions: [],
-      templateOptions: [],
       envOptions: [],
       deployResultOptions: deployResultOptions,
       activeOptions: activeOptions
