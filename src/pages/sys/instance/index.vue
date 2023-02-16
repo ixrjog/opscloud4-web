@@ -15,7 +15,7 @@
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" :row-class-name="tableRowClassName">
+    <el-table :data="table.data" v-loading="table.loading" style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="hostname" label="主机名"></el-table-column>
       <el-table-column prop="hostIp" label="注册IP"></el-table-column>
