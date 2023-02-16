@@ -1,7 +1,7 @@
 <template>
   <el-tooltip class="item" effect="light" :content="deploy.deployResult !== null? deploy.deployResult: 'RUNNING'"
               placement="top-start">
-    <el-tag disable-transitions :type="deploy.deployResult | getBuildResultType ">
+    <el-tag disable-transitions :type="deploy.deployResult | getBuildResultType " size="mini">
       <i class="el-icon-loading" v-show="!deploy.isFinish"></i>{{deploy.deployResult|getBuildResultText}}
     </el-tag>
   </el-tooltip>

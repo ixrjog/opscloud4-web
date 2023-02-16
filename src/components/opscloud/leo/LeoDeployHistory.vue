@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="部署历史" :visible.sync="formStatus.visible" width="50%">
+  <el-dialog title="部署历史" :visible.sync="formStatus.visible" width="75%">
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"/>
       <el-select v-model="queryParam.deployResult" clearable placeholder="部署结果" @change="fetchData">
