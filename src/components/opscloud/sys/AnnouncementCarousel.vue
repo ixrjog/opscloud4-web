@@ -37,13 +37,13 @@ export default {
 
 <style>
 
-.el-carousel__item h3 {
-  color: #838383;
-  font-size: 13px;
-  opacity: 0.75;
-  line-height: 50px;
-  margin: 0 0 0 50px;
-}
+/*.el-carousel__item h3 {*/
+/*  color: #838383;*/
+/*  font-size: 13px;*/
+/*  opacity: 0.75;*/
+/*  line-height: 50px;*/
+/*  margin: 0 0 0 50px;*/
+/*}*/
 
 .el-carousel__item h2 {
   margin-left: 15px;
@@ -52,6 +52,10 @@ export default {
 .el-carousel__item p {
   margin-left: 25px;
   font-size: 12px;
+}
+
+.httt {
+  color: #d95f64;
 }
 
 .el-carousel__item:nth-child(2n) {
