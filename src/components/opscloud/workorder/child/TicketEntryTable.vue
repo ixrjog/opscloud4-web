@@ -8,10 +8,17 @@
       </el-table-column>
       <el-table-column prop="name" :label="tableLayout.entryName"></el-table-column>
       <el-table-column label="角色" v-if="tableLayout.role !== null && tableLayout.role">
-        <template slot-scope="scope">
-          <el-tag :type=" scope.row.role === 'admin' ?   'danger' :'info'">
-            {{ scope.row.role === 'admin' ? '管理员' : '普通用户' }}
-          </el-tag>
+        <template v-slot="scope">
+          <el-select v-model="scope.row.role" placeholder="请选择" @change="updateEntry(scope.row)"
+                     :disabled="ticketPhase !== 'NEW'">
+            <el-option
+              v-for="item in roleOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+<!--          <el-tag :type="scope.row.role | toPermissionRoleType">{{ scope.row.role | toPermissionRoleText }}</el-tag>-->
         </template>
       </el-table-column>
       <slot name="extend">
@@ -29,11 +36,10 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" width="160" v-if="ticketPhase === orderPhase.NEW">
-        <template slot-scope="scope">
-          <el-button v-if="tableLayout.role !== null && tableLayout.role" type="warning" plain size="mini"
-                     @click="updateEntry(scope.row)">
-            {{ scope.row.role === 'admin' ? '降权' : '提权' }}
-          </el-button>
+        <template v-slot="scope">
+<!--          <el-button v-if="tableLayout.role !== null && tableLayout.role" type="warning" plain size="mini"-->
+<!--                     @click="updateEntry(scope.row)">角色-->
+<!--          </el-button>-->
           <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">移除</el-button>
         </template>
       </el-table-column>
@@ -48,6 +54,23 @@ import {
 } from '@/api/modules/workorder/workorder.ticket.api'
 import WorkOrderTicketPhase from '@/components/opscloud/common/enums/workorder.ticket.phase'
 
+import { toPermissionRoleType, toPermissionRoleText } from '@/filters/user.permission.js'
+
+const roleOptions = [
+  {
+    value: '',
+    label: '普通用户'
+  },
+  {
+    value: 'qa',
+    label: '质量保障'
+  },
+  {
+    value: 'admin',
+    label: '管理员'
+  }
+]
+
 export default {
   name: 'TicketEntryTable',
   props: ['ticketId', 'workOrderKey', 'ticketPhase', 'tableLayout'],
@@ -55,8 +78,12 @@ export default {
     return {
       orderPhase: WorkOrderTicketPhase,
       ticketEntries: [],
-      loading: false
+      loading: false,
+      roleOptions: roleOptions
     }
+  },
+  filters:{
+    toPermissionRoleType, toPermissionRoleText
   },
   methods: {
     initData (ticketView) {
@@ -79,11 +106,11 @@ export default {
     },
     updateEntry (entry) {
       const requestBody = Object.assign({}, entry)
-      if (requestBody.role === null || requestBody.role === '') {
-        requestBody.role = 'admin'
-      } else {
-        requestBody.role = ''
-      }
+      // if (requestBody.role === null || requestBody.role === '') {
+      //   requestBody.role = 'admin'
+      // } else {
+      //   requestBody.role = ''
+      // }
       UPDATE_WORK_ORDER_TICKET_ENTRY(requestBody)
         .then(res => {
           // 返回数据
