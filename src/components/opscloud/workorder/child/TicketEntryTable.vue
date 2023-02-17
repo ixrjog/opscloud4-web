@@ -2,7 +2,7 @@
   <div>
     <el-table :data="ticketEntries" style="width: 100%" v-loading="loading">
       <el-table-column label="实例名称" v-if="tableLayout.instance">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.instance.instanceName }}</span>
         </template>
       </el-table-column>
