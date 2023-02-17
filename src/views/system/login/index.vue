@@ -142,7 +142,7 @@ import ui from '@/libs/util.ui'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 
 const wordcloud = [
-  '总有人Jan一两风，填我十万八千梦'
+  '顺其自然'
 ]
 
 export default {
