@@ -2,8 +2,8 @@
   <div v-if="JSON.stringify(announcements) !== '[]'" style="margin-bottom: 10px">
     <el-carousel trigger="click" height="150px" :interval="10000">
       <el-carousel-item v-for="announcement in announcements" :key="announcement.id">
-        <h3 class="small">{{ announcement.title }}</h3>
-        <p style="margin-left: 50px;font-size: 14px;" v-html="announcement.content"></p>
+        <h2>{{ announcement.title }}</h2>
+        <p v-html="announcement.content"></p>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -38,11 +38,20 @@ export default {
 <style>
 
 .el-carousel__item h3 {
-  color: #475669;
-  font-size: 15px;
+  color: #838383;
+  font-size: 13px;
   opacity: 0.75;
   line-height: 50px;
   margin: 0 0 0 50px;
+}
+
+.el-carousel__item h2 {
+  margin-left: 15px;
+}
+
+.el-carousel__item p {
+  margin-left: 25px;
+  font-size: 12px;
 }
 
 .el-carousel__item:nth-child(2n) {
@@ -52,4 +61,5 @@ export default {
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
 }
+
 </style>

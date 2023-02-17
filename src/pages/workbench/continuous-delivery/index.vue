@@ -1,13 +1,13 @@
 <template>
   <d2-container @scroll="({x, y}) => handleScroll(y)">
-    <h1 v-show="false">Leo持续交付</h1>
+    <h1 v-show="false">持续交付2.0</h1>
     <announcement-carousel :kind="1"></announcement-carousel>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Build" name="build">
-        <continuous-delivery-build-tab ref="continuousDeliveryBuildTab"></continuous-delivery-build-tab>
+        <continuous-delivery-build-tab ref="cDBuildTab"></continuous-delivery-build-tab>
       </el-tab-pane>
       <el-tab-pane label="Deploy" name="deploy">
-        <continuous-delivery-deploy-tab ref="continuousDeliveryDeployTab"></continuous-delivery-deploy-tab>
+        <continuous-delivery-deploy-tab ref="cDDeployTab"></continuous-delivery-deploy-tab>
       </el-tab-pane>
     </el-tabs>
     <el-row style="margin-top: 20px">
@@ -36,11 +36,11 @@ export default {
       if (to.name === 'continuous-delivery') {
         // 进入
         if (this.activeName === 'deploy') {
-          this.$refs.continuousDeliveryDeployTab.lineShow()
+          this.$refs.cDDeployTab.lineShow()
         }
       } else {
         // 离开
-        this.$refs.continuousDeliveryDeployTab.lineHide()
+        this.$refs.cDDeployTab.lineHide()
       }
     }
   },
@@ -55,15 +55,15 @@ export default {
   methods: {
     handleClick (tab, event) {
       if (tab.name === 'build') {
-        this.$refs.continuousDeliveryDeployTab.lineHide()
+        this.$refs.cDDeployTab.lineHide()
         return
       }
       if (tab.name === 'deploy') {
-        this.$refs.continuousDeliveryDeployTab.lineShow()
+        this.$refs.cDDeployTab.lineShow()
       }
     },
     handleScroll (y) {
-      this.$refs.continuousDeliveryDeployTab.scroll(y)
+      this.$refs.cDDeployTab.scroll(y)
     }
   }
 }
