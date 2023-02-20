@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix">
-        <span>我的信息</span>
+        <span>Hi {{ user.displayName }}</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="handleEdit()">编辑</el-button>
       </div>
       <el-form :model="user" label-width="60px">
@@ -78,4 +78,5 @@ export default {
 >>> .el-card__body {
   padding: 10px 10px;
 }
+
 </style>
