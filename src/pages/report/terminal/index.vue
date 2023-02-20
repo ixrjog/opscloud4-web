@@ -15,18 +15,15 @@
               <info-card title="审计用户总数" tag="Users" :content="report.userTotal" footer="All user"></info-card>
             </el-col>
             <el-col :span="12">
-              <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal"
-                         footer="All session"></info-card>
+              <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal" footer="All session"></info-card>
             </el-col>
           </el-row>
           <el-row :gutter="24">
             <el-col :span="12">
-              <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal"
-                         footer="All instance"></info-card>
+              <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal" footer="All instance"></info-card>
             </el-col>
             <el-col :span="12">
-              <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal"
-                         footer="All command"></info-card>
+              <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal" footer="All command"></info-card>
             </el-col>
           </el-row>
         </el-col>

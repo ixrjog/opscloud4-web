@@ -2,29 +2,41 @@
   <d2-container>
     <h1>{{ title }}</h1>
     <el-row :gutter="24" v-if="JSON.stringify(report) !== '{}'">
-      <el-col :span="4">
-        <dashboard-card :title="'授权用户总数'" :tag="'Authorized Users'" :value="report.dashboard.authorizedUserTotal"
-                        :value-desc="'All authorized users'"></dashboard-card>
+      <el-col :span="8">
+        <el-card shadow="hover">
+          <div>
+            <b style="color: #9d9fa3">用户统计</b>
+          </div>
+          <span style="font-size: 10px; color: #B7B6B6">活跃用户</span>
+          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{report.dashboard.userTotal}}</span>
+          <span style="margin-right: 40px"></span>
+          <span style="font-size: 10px; color: #B7B6B6">授权用户</span>
+          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.authorizedUserTotal }}</span>
+        </el-card>
       </el-col>
-      <el-col :span="4">
-        <dashboard-card :title="'活跃用户总数'" :tag="'Users'" :value="report.dashboard.userTotal"
-                        :value-desc="'All users'"></dashboard-card>
+      <el-col :span="8">
+        <el-card shadow="hover">
+          <div>
+            <b style="color: #9d9fa3">应用和任务统计</b>
+          </div>
+          <span style="font-size: 10px; color: #B7B6B6">应用总数</span>
+          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.applicationTotal }}</span>
+          <span style="margin-right: 40px"></span>
+          <span style="font-size: 10px; color: #B7B6B6">任务总数</span>
+          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.jobTotal }}</span>
+        </el-card>
       </el-col>
-      <el-col :span="4">
-        <dashboard-card :title="'应用总数'" :tag="'Applications'" :value="report.dashboard.applicationTotal"
-                        :value-desc="'All applications'"></dashboard-card>
-      </el-col>
-      <el-col :span="4">
-        <dashboard-card :title="'任务总数'" :tag="'Jobs'" :value="report.dashboard.jobTotal"
-                        :value-desc="'All jobs'"></dashboard-card>
-      </el-col>
-      <el-col :span="4">
-        <dashboard-card :title="'构建总次数'" :tag="'Builds'" :value="report.dashboard.buildTotal"
-                        :value-desc="'All builds'"></dashboard-card>
-      </el-col>
-      <el-col :span="4">
-        <dashboard-card :title="'部署总次数'" :tag="'Deploys'" :value="report.dashboard.deployTotal"
-                        :value-desc="'All deploys'"></dashboard-card>
+      <el-col :span="8">
+        <el-card shadow="hover">
+          <div>
+            <b style="color: #9d9fa3">持续交付作业统计</b>
+          </div>
+          <span style="font-size: 10px; color: #B7B6B6">总构建次数</span>
+          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.buildTotal }}</span>
+          <span style="margin-right: 40px"></span>
+          <span style="font-size: 10px; color: #B7B6B6">总部署次数</span>
+          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.deployTotal }}</span>
+        </el-card>
       </el-col>
     </el-row>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 20px">
