@@ -2,7 +2,7 @@
   <div>
     <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
       <div slot="header">
-        <b style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace}} / {{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
+        <b style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace === null ? 'Null' : deploy.deployDetails.deploy.kubernetes.deployment.namespace }}:{{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
         <deploy-number-icon :deploy="deploy"></deploy-number-icon>
         <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
         <span style="margin-left: 8px"
