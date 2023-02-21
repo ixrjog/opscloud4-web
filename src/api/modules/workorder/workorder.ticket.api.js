@@ -103,3 +103,12 @@ export function QUERY_WORK_ORDER_TICKET_ENTRY (data) {
     data
   })
 }
+
+export function DELETE_WORK_ORDER_TICKET_BY_ORDER_AND_PHASE (param) {
+  return request({
+    url: baseUrl + '/order/phase/del',
+    method: 'delete',
+    params: param
+  })
+}
+
