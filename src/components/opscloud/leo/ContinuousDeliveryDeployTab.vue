@@ -36,9 +36,11 @@
       </el-button>
     </el-row>
     <el-row :gutter="20">
+      <el-divider content-position="left">任务&无状态版本详情</el-divider>
       <leo-deployment-version-details :deployment-version-details="data.deploymentVersionDetails"
                                       v-if="data.deploymentVersionDetails.length > 0"></leo-deployment-version-details>
       <!-- 最新部署 -->
+      <el-divider content-position="left">最新部署任务</el-divider>
       <el-col :span="6" style="margin-top: 10px" v-if="data.deploys !== []">
         <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
           <template>
@@ -512,6 +514,15 @@ export default {
   float: right;
   padding: 3px 0;
   margin-left: 10px;
+}
+
+.el-divider__text, .el-link {
+  font-size: 12px;
+  color: #9d9fa3;
+}
+
+.el-divider--horizontal {
+  margin: 12px 0;
 }
 
 </style>
