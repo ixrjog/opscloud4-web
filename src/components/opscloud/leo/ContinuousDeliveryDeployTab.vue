@@ -34,94 +34,105 @@
       <el-button type="primary" plain size="mini" @click="handleHistory()"
                  :disabled="queryParam.applicationId === '' || queryParam.envType === ''">历史
       </el-button>
-      <el-row :gutter="20">
-        <!-- 最新部署 -->
-        <el-col :span="6" style="margin-top: 10px" v-if="data.deploys !== []">
-          <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
-            <template>
-              <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
-                <div slot="header">
-                  <b style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace}} / {{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
-                  <deploy-number-icon :deploy="deploy"></deploy-number-icon>
-                  <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-                  <span style="margin-left: 8px"
-                        v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i
-                    class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
-                  <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
-                    <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
-                            :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
-                            :id="`deploy_${deploy.id}`">
-                      <i class="fas fa-plus-circle"></i></el-tag>
-                    <el-button class="btn" type="text" style="margin-right: 10px" v-if="false"
-                               @click="queryDeployDetails(deploy.id)" :disabled="deploy.startTime === null">
-                      <i class="fab fa-sistrix"></i>
-                    </el-button>
-                  </el-tooltip>
-                  <el-tooltip class="item" effect="light" content="停止部署" placement="top-start" v-if="!deploy.isFinish">
-                    <el-button class="btn" style="margin-right: 10px" type="text" @click="stopDeploy(deploy.id)" :loading="buttons.stopping">
-                      <i class="far fa-stop-circle"></i>
-                    </el-button>
-                  </el-tooltip>
-                </div>
-                <span class="label">执行时间</span>
-                <span v-show="deploy.startTime !== null && deploy.startTime !== ''"> {{
-                    deploy.startTime
-                  }} - {{ deploy.endTime ? deploy.endTime : '?' }}
+    </el-row>
+    <el-row :gutter="20">
+      <leo-deployment-version-details :deployment-version-details="data.deploymentVersionDetails"
+                                      v-if="data.deploymentVersionDetails.length > 0"></leo-deployment-version-details>
+      <!-- 最新部署 -->
+      <el-col :span="6" style="margin-top: 10px" v-if="data.deploys !== []">
+        <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
+          <template>
+            <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
+              <div slot="header">
+                <b
+                  style="margin-right: 5px;color: #ef0808">{{
+                    deploy.deployDetails.deploy.kubernetes.deployment.namespace
+                  }}
+                  / {{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
+                <deploy-number-icon :deploy="deploy"></deploy-number-icon>
+                <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
+                <span style="margin-left: 8px"
+                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i
+                  class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
+                <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
+                  <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
+                          :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
+                          :id="`deploy_${deploy.id}`">
+                    <i class="fas fa-plus-circle"></i></el-tag>
+                  <el-button class="btn" type="text" style="margin-right: 10px" v-if="false"
+                             @click="queryDeployDetails(deploy.id)" :disabled="deploy.startTime === null">
+                    <i class="fab fa-sistrix"></i>
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip class="item" effect="light" content="停止部署" placement="top-start"
+                            v-if="!deploy.isFinish">
+                  <el-button class="btn" style="margin-right: 10px" type="text" @click="stopDeploy(deploy.id)"
+                             :loading="buttons.stopping">
+                    <i class="far fa-stop-circle"></i>
+                  </el-button>
+                </el-tooltip>
+              </div>
+              <span class="label">执行时间</span>
+              <span v-show="deploy.startTime !== null && deploy.startTime !== ''"> {{
+                  deploy.startTime
+                }} - {{ deploy.endTime ? deploy.endTime : '?' }}
               <span v-show="deploy.runtime !== null" style="margin-left: 2px">
                 <b style="color: #3b97d7"> {{ deploy.runtime }}</b></span>
               </span>
-                <div><span class="label"
-                           v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>
-                  {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
-                </div>
-                <div><span class="label">部署状态</span> {{ deploy.deployStatus }}</div>
-                <div><span class="label">部署结果</span>
-                  <deploy-result style="margin-left: 5px" :deploy="deploy"></deploy-result>
-                </div>
-                <div><span class="label">发布版本</span> {{ deploy.versionName === null ? '-': deploy.versionName }}</div>
-              </el-card>
-            </template>
-          </div>
-        </el-col>
-        <el-col :span="18" style="margin-top: 10px">
-          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
-          </el-tag>
-          <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
-            <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
-                     v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.show"
-                     ref="previousVersionTab">
-              <!-- 版本1 -->
-              <el-tab-pane :label="data.deployDetails.versionDetails1.title">
-                <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"></deploy-version>
-                <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
-                      style="font-size: 12px; display: inline-block;">
+              <div><span class="label"
+                         v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>
+                {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
+              </div>
+              <div><span class="label">部署状态</span> {{ deploy.deployStatus }}</div>
+              <div><span class="label">部署结果</span>
+                <deploy-result style="margin-left: 5px" :deploy="deploy"></deploy-result>
+              </div>
+              <div><span class="label">发布版本</span> {{ deploy.versionName === null ? '-' : deploy.versionName }}
+              </div>
+            </el-card>
+          </template>
+        </div>
+      </el-col>
+      <el-col :span="18" style="margin-top: 10px">
+        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
+        </el-tag>
+        <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
+          <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
+                   v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.show"
+                   ref="previousVersionTab">
+            <!-- 版本1 -->
+            <el-tab-pane :label="data.deployDetails.versionDetails1.title">
+              <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"></deploy-version>
+              <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
+                    style="font-size: 12px; display: inline-block;">
                 <pod-version :pod="pod"></pod-version>
               </span>
-              </el-tab-pane>
-              <el-col>
-              </el-col>
-            </el-tabs>
-            <el-tabs type="border-card" shadow="hover" body-style="padding: 2px" style="margin-top: 15px"
-                     v-if="data.deployDetails.versionDetails2 !== null && data.deployDetails.versionDetails2.show"
-                     ref="releaseVersionTab">
-              <!-- 版本2-->
-              <el-tab-pane :label="data.deployDetails.versionDetails2.title">
-                <deploy-version :version="data.deployDetails.versionDetails2" :type="'version2'"
-                                :replicas="data.deployDetails.replicas"></deploy-version>
-                <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
-                      style="font-size: 12px; display: inline-block;">
+            </el-tab-pane>
+            <el-col>
+            </el-col>
+          </el-tabs>
+          <el-tabs type="border-card" shadow="hover" body-style="padding: 2px" style="margin-top: 15px"
+                   v-if="data.deployDetails.versionDetails2 !== null && data.deployDetails.versionDetails2.show"
+                   ref="releaseVersionTab">
+            <!-- 版本2-->
+            <el-tab-pane :label="data.deployDetails.versionDetails2.title">
+              <deploy-version :version="data.deployDetails.versionDetails2" :type="'version2'"
+                              :replicas="data.deployDetails.replicas"></deploy-version>
+              <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
+                    style="font-size: 12px; display: inline-block;">
                 <pod-version :pod="pod"></pod-version>
               </span>
-              </el-tab-pane>
-              <el-col>
-              </el-col>
-            </el-tabs>
-          </div>
-        </el-col>
-      </el-row>
+            </el-tab-pane>
+            <el-col>
+            </el-col>
+          </el-tabs>
+        </div>
+      </el-col>
     </el-row>
+
     <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"></leo-create-deploy-editor>
-    <leo-deploy-history :form-status="formStatus.history" :applicationId="queryParam.applicationId" :envType="queryParam.envType" ref="deployHistory"></leo-deploy-history>
+    <leo-deploy-history :form-status="formStatus.history" :applicationId="queryParam.applicationId"
+                        :envType="queryParam.envType" ref="deployHistory"></leo-deploy-history>
   </div>
 </template>
 
@@ -142,6 +153,7 @@ import PodVersion from '@/components/opscloud/leo/child/PodVersion.vue'
 import DeployVersion from '@/components/opscloud/leo/child/DeployVersion.vue'
 import LeoDeployHistory from '@/components/opscloud/leo/LeoDeployHistory.vue'
 import { STOP_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
+import LeoDeploymentVersionDetails from '@/components/opscloud/leo/LeoDeploymentVersionDetails.vue'
 
 const wsStates = {
   success: {
@@ -182,7 +194,8 @@ export default {
       data: {
         deploy: '',
         deploys: [],
-        deployDetails: {}
+        deployDetails: {},
+        deploymentVersionDetails: []
       },
       formStatus: {
         deploy: {
@@ -228,7 +241,8 @@ export default {
     DeployNumberIcon,
     PodVersion,
     DeployVersion,
-    LeoDeployHistory
+    LeoDeployHistory,
+    LeoDeploymentVersionDetails
   },
   watch: {
     // 监听数据
@@ -281,6 +295,8 @@ export default {
         try {
           this.handleSubscribeLeoDeploy()
           this.handleSubscribeDeployDetails()
+          // 订阅无状态版本
+          this.handleSubscribeDeploymentVersionDetails()
         } catch (e) {
           // this.$message.error('发送消息错误')
         }
@@ -309,6 +325,9 @@ export default {
             break
           case LeoRequestType.SUBSCRIBE_LEO_DEPLOY_DETAILS:
             this.data.deployDetails = messageJson.body
+            break
+          case LeoRequestType.SUBSCRIBE_LEO_DEPLOYMENT_VERSION_DETAILS:
+            this.data.deploymentVersionDetails = messageJson.body
             break
         }
       }
@@ -371,18 +390,6 @@ export default {
       this.formStatus.history.visible = true
       this.$refs.deployHistory.initData()
     },
-    handleSubscribeLeoDeploy () {
-      if (this.queryParam.applicationId === '') return
-      if (this.queryParam.envType === '') return
-      const queryMessage = {
-        token: util.cookies.get('token'),
-        messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOY,
-        ...this.queryParam,
-        page: 1,
-        length: 5
-      }
-      this.sendMessage(queryMessage)
-    },
     lineHide () {
       if (this.line !== null) {
         this.line.hide()
@@ -422,6 +429,18 @@ export default {
       this.handleSubscribeDeployDetails()
       this.drawLine()
     },
+    handleSubscribeLeoDeploy () {
+      if (this.queryParam.applicationId === '') return
+      if (this.queryParam.envType === '') return
+      const queryMessage = {
+        token: util.cookies.get('token'),
+        messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOY,
+        ...this.queryParam,
+        page: 1,
+        length: 5
+      }
+      this.sendMessage(queryMessage)
+    },
     handleSubscribeDeployDetails () {
       if (this.queryParam.deployId === '') return
       this.data.deployDetails = {}
@@ -429,6 +448,17 @@ export default {
         token: util.cookies.get('token'),
         messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOY_DETAILS,
         deployId: this.queryParam.deployId
+      }
+      this.sendMessage(queryMessage)
+    },
+    handleSubscribeDeploymentVersionDetails () {
+      if (this.queryParam.applicationId === '') return
+      if (this.queryParam.envType === '') return
+      this.data.deploymentVersionDetails = {}
+      const queryMessage = {
+        token: util.cookies.get('token'),
+        messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOYMENT_VERSION_DETAILS,
+        ...this.queryParam
       }
       this.sendMessage(queryMessage)
     },
@@ -451,6 +481,7 @@ export default {
     fetchData () {
       if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
       this.handleSubscribeLeoDeploy()
+      this.handleSubscribeDeploymentVersionDetails()
       this.setDetails([])
       this.data.deployDetails = {}
     }
