@@ -1,6 +1,6 @@
 <template>
   <d2-container>
-    <h1>{{ title }}</h1>
+    <h1 v-if="false">{{ title }}</h1>
     <el-row :gutter="24" v-if="JSON.stringify(report) !== '{}'">
       <el-col :span="8">
         <el-card shadow="hover">
@@ -40,6 +40,16 @@
       </el-col>
     </el-row>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 20px">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <div id="buildChart" style="height:280px; width: 100%"></div>
+        </el-col>
+        <el-col :span="12">
+          <div id="deployChart" style="height:280px; width: 100%"></div>
+        </el-col>
+      </el-row>
+    </el-card>
+    <el-card class="box-card" shadow="hover">
       <el-row>
         <span style="float: right">
           <el-button type="text" icon="el-icon-refresh" style="margin-left: 5px"
@@ -47,17 +57,7 @@
         </span>
       </el-row>
       <el-row>
-        <div id="cDChart" style="height:350px; width: 100%"></div>
-      </el-row>
-    </el-card>
-    <el-card class="box-card" shadow="hover">
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <div id="buildChart" style="height:350px; width: 100%"></div>
-        </el-col>
-        <el-col :span="12">
-          <div id="deployChart" style="height:350px; width: 100%"></div>
-        </el-col>
+        <div id="cDChart" style="height:250px; width: 100%"></div>
       </el-row>
     </el-card>
     <!--    <div v-if="false" v-for="instance in report.instances" :key="instance.instanceId" style="margin-bottom: 20px">-->
@@ -127,7 +127,9 @@ export default {
             type: 'bar',
             stack: 'build',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -139,7 +141,9 @@ export default {
             type: 'bar',
             stack: 'deploy',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -179,7 +183,7 @@ export default {
               rich: {
                 a: {
                   color: '#6E7079',
-                  lineHeight: 22,
+                  lineHeight: 20,
                   align: 'center'
                 },
                 hr: {
@@ -190,9 +194,9 @@ export default {
                 },
                 b: {
                   color: '#4C5058',
-                  fontSize: 14,
+                  fontSize: 10,
                   fontWeight: 'bold',
-                  lineHeight: 33
+                  lineHeight: 22
                 },
                 per: {
                   color: '#fff',
@@ -247,7 +251,7 @@ export default {
               rich: {
                 a: {
                   color: '#6E7079',
-                  lineHeight: 22,
+                  lineHeight: 20,
                   align: 'center'
                 },
                 hr: {
@@ -258,9 +262,9 @@ export default {
                 },
                 b: {
                   color: '#4C5058',
-                  fontSize: 14,
+                  fontSize: 12,
                   fontWeight: 'bold',
-                  lineHeight: 33
+                  lineHeight: 22
                 },
                 per: {
                   color: '#fff',

@@ -1,6 +1,21 @@
 <template>
   <d2-container>
     <h1>堡垒机终端审计报表</h1>
+    <el-row :gutter="20">
+      <el-col :span="6">
+        <info-card title="审计用户总数" tag="Users" :content="report.userTotal" footer="All user"></info-card>
+      </el-col>
+      <el-col :span="6">
+        <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal" footer="All session"></info-card>
+      </el-col>
+      <el-col :span="6">
+        <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal"
+                   footer="All instance"></info-card>
+      </el-col>
+      <el-col :span="6">
+        <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal" footer="All command"></info-card>
+      </el-col>
+    </el-row>
     <el-card class="box-card" shadow="hover">
       <el-row>
         <span style="float: right">
@@ -10,34 +25,14 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <el-row :gutter="24">
-            <el-col :span="12">
-              <info-card title="审计用户总数" tag="Users" :content="report.userTotal" footer="All user"></info-card>
-            </el-col>
-            <el-col :span="12">
-              <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal" footer="All session"></info-card>
-            </el-col>
-          </el-row>
-          <el-row :gutter="24">
-            <el-col :span="12">
-              <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal" footer="All instance"></info-card>
-            </el-col>
-            <el-col :span="12">
-              <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal" footer="All command"></info-card>
-            </el-col>
-          </el-row>
+          <div id="sessionReportChart" class="chart"></div>
         </el-col>
         <el-col :span="12">
-          <div id="sessionReportChart" style="height:350px; width: 100%"></div>
+          <div id="instanceReportChart" class="chart"></div>
         </el-col>
       </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <div id="instanceReportChart" style="height:350px; width: 100%"></div>
-        </el-col>
-        <el-col :span="12">
-          <div id="commandReportChart" style="height:350px; width: 100%"></div>
-        </el-col>
+      <el-row>
+        <div id="commandReportChart" class="chart"></div>
       </el-row>
     </el-card>
   </d2-container>
@@ -97,9 +92,11 @@ export default {
           {
             name: '服务器终端',
             type: 'bar',
-            stack: 'total',
+            stack: 'server',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -109,9 +106,11 @@ export default {
           {
             name: '容器终端',
             type: 'bar',
-            stack: 'total',
+            stack: 'ct',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -121,9 +120,11 @@ export default {
           {
             name: 'SSH-Server',
             type: 'bar',
-            stack: 'total',
+            stack: 'ss',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -166,11 +167,14 @@ export default {
           {
             name: '服务器',
             type: 'bar',
-            stack: 'total',
+            stack: 'server',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
+              position: 'top',
               focus: 'series'
             },
             data: instanceReport.valueMap.SERVER
@@ -178,9 +182,11 @@ export default {
           {
             name: '容器',
             type: 'bar',
-            stack: 'total',
+            stack: 'ct',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -190,9 +196,11 @@ export default {
           {
             name: '容器日志',
             type: 'bar',
-            stack: 'total',
+            stack: 'cl',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -237,7 +245,9 @@ export default {
             type: 'bar',
             stack: 'total',
             label: {
-              show: true
+              show: true,
+              position: 'top',
+              formatter: '{c}'
             },
             emphasis: {
               focus: 'series'
@@ -288,4 +298,10 @@ export default {
 .el-col {
   border-radius: 4px;
 }
+
+.chart {
+  height: 250px;
+  width: 100%;
+}
+
 </style>

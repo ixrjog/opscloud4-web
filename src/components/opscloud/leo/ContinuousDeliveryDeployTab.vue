@@ -35,13 +35,16 @@
                  :disabled="queryParam.applicationId === '' || queryParam.envType === ''">历史
       </el-button>
     </el-row>
-    <el-row :gutter="20">
+    <!-- 任务&无状态版本详情 -->
+    <el-row :gutter="20" v-if="data.deploymentVersionDetails.length > 0">
       <el-divider content-position="left">任务&无状态版本详情</el-divider>
-      <leo-deployment-version-details :deployment-version-details="data.deploymentVersionDetails"
-                                      v-if="data.deploymentVersionDetails.length > 0"></leo-deployment-version-details>
-      <!-- 最新部署 -->
+      <leo-deployment-version-details
+        :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
+    </el-row>
+    <!-- 最新部署 -->
+    <el-row v-if="data.deploys.length > 0">
       <el-divider content-position="left">最新部署任务</el-divider>
-      <el-col :span="6" style="margin-top: 10px" v-if="data.deploys !== []">
+      <el-col :span="6" style="margin-top: 10px" >
         <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
@@ -95,6 +98,10 @@
           </template>
         </div>
       </el-col>
+    </el-row>
+
+    <!-- 帮助 -->
+    <el-row>
       <el-col :span="18" style="margin-top: 10px">
         <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
         </el-tag>
