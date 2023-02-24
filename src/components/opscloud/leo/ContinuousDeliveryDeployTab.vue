@@ -42,7 +42,7 @@
         :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
     </el-row>
     <!-- 最新部署 -->
-    <el-row v-if="data.deploys.length > 0">
+    <el-row v-if="data.deploys.length > 0" :gutter="20">
       <el-divider content-position="left">最新部署任务</el-divider>
       <el-col :span="6" style="margin-top: 10px" >
         <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
@@ -98,10 +98,6 @@
           </template>
         </div>
       </el-col>
-    </el-row>
-
-    <!-- 帮助 -->
-    <el-row>
       <el-col :span="18" style="margin-top: 10px">
         <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
         </el-tag>
@@ -138,7 +134,6 @@
         </div>
       </el-col>
     </el-row>
-
     <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"></leo-create-deploy-editor>
     <leo-deploy-history :form-status="formStatus.history" :applicationId="queryParam.applicationId"
                         :envType="queryParam.envType" ref="deployHistory"></leo-deploy-history>

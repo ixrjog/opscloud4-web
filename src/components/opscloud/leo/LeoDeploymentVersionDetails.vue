@@ -3,7 +3,7 @@
     <el-row :gutter="10">
         <span v-for="version in deploymentVersionDetails" :key="version.jobName">
           <el-col :span="6" v-for="deployment in version.deploymentVersions">
-           <el-card style="font-size: 12px; margin-bottom: 5px" shadow="hover">
+           <el-card :style="{fontSize: '12px', marginBottom: '5px', backgroundColor: deployment.versionColor}" shadow="hover">
             <div><b>{{ version.jobName }}</b>
               <env-tag :env="version.env" style="margin-left: 10px"></env-tag>
               <el-tag style="float: right" size="mini">Version</el-tag>
@@ -33,12 +33,17 @@ export default {
 
 <style scoped>
 
+/*.el-card {*/
+/*  font-size: 12px; margin-bottom: 5px;*/
+/*}*/
+
 >>>.el-card__body {
   padding: 3px;
 }
 
 .label {
-  color: #99a9bf;
+  /*color: #99a9bf;*/
+  color: white;
   margin-right: 5px;
 }
 
