@@ -42,7 +42,7 @@
                               @change="handleCheckAllChange(resource)">
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
-                 <el-tooltip class="item" effect="dark" content="执行重新部署任务" placement="top-start">
+                 <el-tooltip class="item" effect="dark" content="执行重新部署任务" placement="top-start" v-if="false">
                      <el-button style="float: right; padding: 3px 0" type="text" @click="handleRedeploy(resource)"><i
                        class="fas fa-redo" v-show="false"></i>Redeploy</el-button>
                  </el-tooltip>

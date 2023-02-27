@@ -9,7 +9,12 @@
               <el-tag style="float: right" size="mini">Version</el-tag>
             </div>
             <div><span class="label">环境分组</span>{{ deployment.name }}</div>
-            <div><span class="label">副本数量</span>{{ deployment.replicas }}</div>
+            <div><span class="label">副本数量</span>
+             <span v-for="index of deployment.replicas">
+               <i class="fas fa-square" style="color: #d9d9d9;margin-right: 1px"></i>
+               <span v-if="index % 5 === 0" style="margin-right: 2px"></span>
+             </span> x{{ deployment.replicas }}
+            </div>
             <div><span class="label">版本名称</span>{{ deployment.versionName }}
               <el-popover placement="right" trigger="hover">
                 <i class="el-icon-info" style="color: rgba(255,255,255,0.3);margin-left: 5px" slot="reference"></i>

@@ -56,9 +56,9 @@
                   / {{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
                 <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                 <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-                <span style="margin-left: 8px"
-                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i
-                  class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
+<!--                <span style="margin-left: 8px"-->
+<!--                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i-->
+<!--                  class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>-->
                 <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                   <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                           :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
@@ -93,6 +93,8 @@
                 <deploy-result style="margin-left: 5px" :deploy="deploy"></deploy-result>
               </div>
               <div><span class="label">发布版本</span> {{ deploy.versionName === null ? '-' : deploy.versionName }}
+              </div>
+              <div><span class="label">操作用户</span> {{ deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ?  deploy.deployDetails.deploy.dict.displayName : '-' }}
               </div>
             </el-card>
           </template>
