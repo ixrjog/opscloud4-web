@@ -17,7 +17,10 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.envType" clearable filterable
+      <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
+        <el-radio-button v-for="env in envOptions" :label="env.envType">{{ env.envName }}</el-radio-button>
+      </el-radio-group>
+      <el-select v-if="false" v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
                  @change="fetchData">
         <el-option
@@ -527,6 +530,10 @@ export default {
 
 .el-divider--horizontal {
   margin: 12px 0;
+}
+
+.el-radio-group {
+  margin-left: 5px;
 }
 
 </style>
