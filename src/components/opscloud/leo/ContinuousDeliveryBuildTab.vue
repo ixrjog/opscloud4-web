@@ -94,6 +94,7 @@ import util from '@/libs/util'
 import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails'
 import LatestBuildInfo from '@/components/opscloud/leo/child/LatestBuildInfo'
 import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
+import router from '@/router'
 
 const wsStates = {
   success: {
@@ -200,7 +201,7 @@ export default {
     socketOnOpen () {
       const token = util.cookies.get('token')
       if (token === undefined && token === null && token === '') {
-        this.$message.error('用户Token失效, 请重新登录平台')
+        router.push({ name: 'login' })
         return
       }
       // 连接成功后
@@ -250,6 +251,9 @@ export default {
             break
           case LeoRequestType.SUBSCRIBE_LEO_BUILD:
             this.builds = messageJson.body.data
+            break
+          case LeoRequestType.AUTHENTICATION_FAILURE:
+            router.push({ name: 'login' })
             break
         }
       }

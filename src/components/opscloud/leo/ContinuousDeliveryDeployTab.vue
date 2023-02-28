@@ -47,7 +47,7 @@
     <!-- 最新部署 -->
     <el-row v-if="data.deploys.length > 0" :gutter="20">
       <el-divider content-position="left">最新部署任务</el-divider>
-      <el-col :span="6" style="margin-top: 10px" >
+      <el-col :span="6" style="margin-top: 10px">
         <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
@@ -59,9 +59,9 @@
                   / {{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
                 <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                 <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-<!--                <span style="margin-left: 8px"-->
-<!--                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i-->
-<!--                  class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>-->
+                <!--                <span style="margin-left: 8px"-->
+                <!--                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i-->
+                <!--                  class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>-->
                 <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                   <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                           :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
@@ -97,7 +97,9 @@
               </div>
               <div><span class="label">发布版本</span> {{ deploy.versionName === null ? '-' : deploy.versionName }}
               </div>
-              <div><span class="label">操作用户</span> {{ deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ?  deploy.deployDetails.deploy.dict.displayName : '-' }}
+              <div><span class="label">操作用户</span> {{
+                  deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
+                }}
               </div>
             </el-card>
           </template>
@@ -163,6 +165,8 @@ import DeployVersion from '@/components/opscloud/leo/child/DeployVersion.vue'
 import LeoDeployHistory from '@/components/opscloud/leo/LeoDeployHistory.vue'
 import { STOP_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import LeoDeploymentVersionDetails from '@/components/opscloud/leo/LeoDeploymentVersionDetails.vue'
+import routes from '@/router/routes'
+import router from '@/router'
 
 const wsStates = {
   success: {
@@ -294,7 +298,7 @@ export default {
     socketOnOpen () {
       const token = util.cookies.get('token')
       if (token === undefined && token === null && token === '') {
-        this.$message.error('用户Token失效, 请重新登录平台')
+        router.push({ name: 'login' })
         return
       }
       // 连接成功后
@@ -337,6 +341,9 @@ export default {
             break
           case LeoRequestType.SUBSCRIBE_LEO_DEPLOYMENT_VERSION_DETAILS:
             this.data.deploymentVersionDetails = messageJson.body
+            break
+          case LeoRequestType.AUTHENTICATION_FAILURE:
+            router.push({ name: 'login' })
             break
         }
       }
