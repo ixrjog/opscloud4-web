@@ -9,6 +9,9 @@
         <el-input v-model="env.envType" placeholder="请输入内容"
                   :disabled="!formStatus.operationType"></el-input>
       </el-form-item>
+      <el-form-item label="顺序" :label-width="labelWidth" prop="seq" required>
+        <el-input v-model="env.seq" placeholder="请输入内容"></el-input>
+      </el-form-item>
       <el-form-item label="环境颜色" :label-width="labelWidth">
         <el-color-picker v-model="env.color"></el-color-picker>
       </el-form-item>

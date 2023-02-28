@@ -23,6 +23,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="envType" label="类型值" sortable></el-table-column>
+        <el-table-column prop="seq" label="顺序" sortable></el-table-column>
         <el-table-column prop="isActive" label="有效">
           <template v-slot="scope">
             <active-tag :is-active="scope.row.isActive"></active-tag>
