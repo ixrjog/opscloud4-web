@@ -5,9 +5,10 @@
       <el-popover placement="right" trigger="hover"><i class="fas fa-globe"></i><span
         style="margin-left: 5px">HostIP {{ pod.hostIP }}</span>
       </el-popover>
-      <div><span class="label">Pod IP</span> {{ pod.podIP }}</div>
-      <div><span class="label">启动时间</span> {{ pod.startTime }}<span style="color: #00a2d4"> {{ pod.ago }}</span></div>
-      <div><span class="label">重启次数</span><span :style="pod.restartCount === 0 ? 'color: #67C23A':'color: #F56C6C'"> {{ pod.restartCount }}</span></div>
+      <div><span class="label">容器组IP</span>{{ pod.podIP }}</div>
+      <div><span class="label">启动时间</span>{{ pod.startTime }}<span style="color: #00a2d4"> [{{ pod.ago }}]</span> 重启次数:
+        <span :style="pod.restartCount === '0' ? 'color: #F56C6C': 'color: #67C23A'">{{ pod.restartCount }}</span>
+      </div>
       <pod-conditions :pod="pod"></pod-conditions>
     </el-card>
   </div>
@@ -52,6 +53,7 @@ export default {
 
 .label {
   color: #99a9bf;
+  margin-right: 5px;
 }
 
 </style>
