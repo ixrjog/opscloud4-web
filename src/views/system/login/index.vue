@@ -142,7 +142,7 @@ import ui from '@/libs/util.ui'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 
 const wordcloud = [
-  '顺其自然'
+  // '顺其自然'
 ]
 
 export default {

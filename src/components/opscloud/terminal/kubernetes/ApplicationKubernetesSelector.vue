@@ -1,22 +1,99 @@
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row style="margin-bottom: 5px;">
       <el-select v-model="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="handleChange">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
+      <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">{{
+            env.envName
+          }}
+        </el-radio-button>
+      </el-radio-group>
       <el-button @click="fetchData" class="button"
                  :disabled="table.loading || queryParam.applicationId === null || queryParam.applicationId === ''">刷新
       </el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+
+    <el-row>
+      <template v-if="application !== '' && application.resources !== null && application.resources.length > 0">
+          <span v-for="resource in application.resources" :key="resource.id">
+            <el-card shadow="never" class="deploymentClass" style="font-size: 10px">
+               <div style="margin-top: -10px">
+                 <!-- Deployment无状态 -->
+                 <!--                 <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>-->
+                 <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}:</span>{{ resource.name }}
+                 <business-tags :tags="resource.tags"></business-tags>
+                 <el-tag style="margin-left: 5px">
+                    副本数量
+                 <span v-for="(item, index) in resource.assetContainers" :key="index">
+                   <i class="fas fa-square" style="color: #838383;margin-right: 1px"></i>
+                   <span v-if="(index + 1) % 5 === 0" style="margin-right: 1px"></span>
+                 </span>x{{ resource.assetContainers.length }}
+                 </el-tag>
+                 <el-checkbox style="margin-left: 5px" v-model="resource.checked"
+                              @change="handleCheckAllChange(resource)">
+                   <span style="font-size: 12px">所有容器</span>
+                 </el-checkbox>
+                 <el-tooltip class="item" effect="dark" content="执行重新部署任务" placement="top-start" v-if="false">
+                     <el-button style="float: right; padding: 3px 0" type="text" @click="handleRedeploy(resource)"><i
+                       class="fas fa-redo" v-show="false"></i>Redeploy</el-button>
+                 </el-tooltip>
+                 <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i
+                     class="fab fa-wpforms" v-show="false"></i>Log</el-button>
+                   </el-tooltip>
+                 <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)"><i
+                     class="fas fa-terminal" v-show="false"></i>Terminal</el-button>
+                 </el-tooltip>
+               </div>
+               <el-divider/>
+              <!-- Pod容器组 -->
+              <div class="podClass">
+               <el-card shadow="hover" v-for="pod in resource.assetContainers" :key="pod.asset.name">
+                   <!-- podName -->
+                   <div style="margin-bottom: 2px"><b style="color: black">{{ pod.asset.name }}</b>
+                    <el-popover placement="right" trigger="hover" v-if="false">
+                         <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                         <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
+                         <br/>
+                         <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
+                      </el-popover>
+                   </div>
+                   <div><span class="label">容器组IP</span>{{ pod.asset.assetKey }}</div>
+                   <div><span class="label">启动时间</span>{{ pod.properties.startTime }}
+                    <span style="color: #20A9D9">[{{ pod.ago }}]</span> 重启次数:
+                     <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
+                       {{ pod.properties.restartCount }}</span>
+                   </div>
+                   <div><span class="label">版本名称</span>{{ pod.properties.versionName }}</div>
+                   <div><span class="label">镜像地址</span>{{ pod.properties.image }}</div>
+                   <pod-phase-tag :pod="pod"></pod-phase-tag>
+                     <i class="fab fa-docker" style="margin-right: 5px"></i>
+                     <el-checkbox v-for="container in pod.children"
+                                  :key="container.asset.name" style="margin-right: 1px"
+                                  v-model="container.checked">
+                       <span style="font-size: 12px">
+                         {{ container.asset.name }}
+                       </span>
+                     </el-checkbox>
+               </el-card>
+              </div>
+            </el-card>
+          </span>
+      </template>
+
+    </el-row>
+
+    <el-table :data="table.data" style="width: 100%" v-loading="table.loading" v-if="false">
       <el-table-column prop="name" label="应用名称" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
@@ -35,8 +112,8 @@
             <el-card shadow="never" class="deploymentClass">
                <div style="margin-top: -10px">
                  <!-- Deployment无状态 -->
-                 <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>
-                 <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}/</span>{{ resource.name }}
+                 <!--                 <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>-->
+                 <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}:</span>{{ resource.name }}
                  <business-tags :tags="resource.tags"></business-tags>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked"
                               @change="handleCheckAllChange(resource)">
@@ -95,19 +172,21 @@
         </template>
       </el-table-column>
     </el-table>
-    <redeploy-editor :formStatus="formStatus.redeploy" ref="redeployEditor"></redeploy-editor>
     <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
   </div>
 </template>
 
 <script>
 
-import { QUERY_APPLICATION_KUBERNETES_PAGE } from '@/api/modules/application/application.api.js'
+import {
+  QUERY_APPLICATION_KUBERNETES_PAGE,
+  GET_APPLICATION_KUBERNETES
+} from '@/api/modules/application/application.api.js'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
-import RedeployEditor from '@/components/opscloud/application/RedeployEditor'
 import PodPhaseTag from '@/components/opscloud/common/tag/PodPhaseTag'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
+import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 
 export default {
   name: 'application-kubernetes-selector',
@@ -123,7 +202,6 @@ export default {
         }
       },
       formStatus: {
-        redeploy: { visible: false },
         businessDoc: {
           visible: false,
           title: '应用文档'
@@ -131,27 +209,40 @@ export default {
       },
       queryParam: {
         applicationId: '',
-        authorized: true,
+        // authorized: true,
         extend: true,
-        page: 1,
-        length: 10
+        envType: 1
       },
+      envOptions: [],
+      application: '',
       applicationOptions: []
     }
   },
   mounted () {
+    this.getEnv('')
     this.getApplication('')
   },
   computed: {},
   components: {
     BusinessTags,
     SelectItem,
-    RedeployEditor,
     PodPhaseTag,
     BusinessDocReader
   },
   filters: {},
   methods: {
+    getEnv (name) {
+      const requestBody = {
+        envName: name,
+        isActive: true,
+        page: 1,
+        length: 20
+      }
+      QUERY_ENV_PAGE(requestBody)
+        .then(res => {
+          this.envOptions = res.body.data
+        })
+    },
     getApplication (name) {
       const requestBody = {
         queryName: name,
@@ -223,22 +314,13 @@ export default {
     handleTerminal (resource) {
       this.handleOpenTerminalByType(resource, 'CONTAINER_TERMINAL')
     },
-    handleRedeploy (resource) {
-      this.$refs.redeployEditor.initData(resource)
-      this.formStatus.redeploy.visible = true
-    },
     fetchData () {
-      this.table.loading = true
       const requestBody = {
-        ...this.queryParam,
-        page: this.table.pagination.currentPage,
-        length: this.table.pagination.pageSize
+        ...this.queryParam
       }
-      QUERY_APPLICATION_KUBERNETES_PAGE(requestBody)
+      GET_APPLICATION_KUBERNETES(requestBody)
         .then(res => {
-          this.table.data = res.body.data
-          this.table.pagination.total = res.body.totalNum
-          this.table.loading = false
+          this.application = res.body
         })
     },
     handleCheckAllChange (resource) {
@@ -253,6 +335,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .el- {
   &divider--horizontal {
     display: block;
@@ -266,9 +349,9 @@ export default {
     max-width: 200px;
   }
 
-  &select {
-    margin-left: 5px;
-  }
+  //&select {
+  //  margin-left: 5px;
+  //}
 
   &button {
     margin-left: 8px;
@@ -281,7 +364,7 @@ export default {
       margin-bottom: 5px;
       margin-right: 5px;
       position: relative;
-      width: 440px;
+      width: 360px;
       display: inline-block;
 
       /deep/ .el-card__body {
@@ -306,4 +389,14 @@ export default {
     padding: 20px 10px 0;
   }
 }
+
+.el-radio-group {
+  margin-left: 5px;
+}
+
+.label {
+  color: #99a9bf;
+  margin-right: 5px;
+}
+
 </style>

@@ -110,4 +110,8 @@ util.colorReverse = function (color) {
   return '#' + str.substring(str.length - 6, str.length)
 }
 
+util.version = function () {
+  return process.env.PROJECT_VERSION
+}
+
 export default util

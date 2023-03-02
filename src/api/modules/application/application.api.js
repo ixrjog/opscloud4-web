@@ -17,9 +17,23 @@ export function QUERY_MY_APPLICATION_PAGE (data) {
   })
 }
 
+/**
+ * 废弃
+ * @param data
+ * @returns {*}
+ * @constructor
+ */
 export function QUERY_APPLICATION_KUBERNETES_PAGE (data) {
   return request({
     url: baseUrl + '/kubernetes/page/query',
+    method: 'post',
+    data
+  })
+}
+
+export function GET_APPLICATION_KUBERNETES (data) {
+  return request({
+    url: baseUrl + '/kubernetes/get',
     method: 'post',
     data
   })
@@ -85,14 +99,6 @@ export function PREVIEW_APPLICATION_RES_PAGE (data) {
   return request({
     url: baseUrl + '/res/preview/page/query',
     method: 'post',
-    data
-  })
-}
-
-export function OPERATION_APPLICATION_RES (data) {
-  return request({
-    url: baseUrl + '/res/operation',
-    method: 'put',
     data
   })
 }

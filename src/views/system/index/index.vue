@@ -10,18 +10,18 @@
           alt="Fork me on GitHub">
       </a>
     </div>
-<!--    <el-row>-->
-<!--      <el-col :span="16" :offset="4">-->
-<!--        <el-row :gutter="10" class="nav-card">-->
-<!--          <el-col :span="4" v-for="nav in navList" :key="nav.id">-->
-<!--            <el-card shadow="hover" @click.native=openNavUrl(nav)>-->
-<!--              <p>{{ nav.navTitle }}</p>-->
-<!--              <p>{{ nav.navContent }}</p>-->
-<!--            </el-card>-->
-<!--          </el-col>-->
-<!--        </el-row>-->
-<!--      </el-col>-->
-<!--    </el-row>-->
+    <!--    <el-row>-->
+    <!--      <el-col :span="16" :offset="4">-->
+    <!--        <el-row :gutter="10" class="nav-card">-->
+    <!--          <el-col :span="4" v-for="nav in navList" :key="nav.id">-->
+    <!--            <el-card shadow="hover" @click.native=openNavUrl(nav)>-->
+    <!--              <p>{{ nav.navTitle }}</p>-->
+    <!--              <p>{{ nav.navContent }}</p>-->
+    <!--            </el-card>-->
+    <!--          </el-col>-->
+    <!--        </el-row>-->
+    <!--      </el-col>-->
+    <!--    </el-row>-->
     <document-zone mount-zone="HOME"></document-zone>
     <!--    logo-->
     <!--      <div class="d2-page-cover__logo">-->
@@ -30,7 +30,7 @@
     <template slot="footer">
       <div class="btn-group">
         <div align="center">
-          <p class="d2-page-cover__title">Version 4.2.1</p>
+          <p class="d2-page-cover__title">Version {{ version }}</p>
           <p class="d2-page-cover__build-time">FINAL BUILD TIME {{ $buildTime }}</p>
         </div>
         <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
@@ -63,7 +63,9 @@ import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 export default {
   data () {
     return {
-      navList: []
+      navList: [],
+      // OPSCLOUD前端版本号
+      version: '4.2.2'
     }
   },
   components: {

@@ -4,14 +4,15 @@
       <h1>{{ title }}</h1>
     </div>
     <!--      应用选择器-->
-    <el-row v-show="layout.status === 0">
-      <el-card shadow="hover">
-        <div slot="header" class="clearfix">
-          <span>应用容器详情</span>
-        </div>
-        <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>
-      </el-card>
-    </el-row>
+    <application-kubernetes-selector v-show="layout.status === 0" @handleOpen="handleOpen"></application-kubernetes-selector>
+<!--    <el-row v-show="layout.status === 0">-->
+<!--      <el-card shadow="hover">-->
+<!--        <div slot="header" class="clearfix">-->
+<!--          <span>应用容器详情</span>-->
+<!--        </div>-->
+<!--        <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>-->
+<!--      </el-card>-->
+<!--    </el-row>-->
     <el-row v-if="layout.status === 0" style="margin-top: 10px">
       <document-zone mount-zone="KUBERNETES"></document-zone>
     </el-row>
