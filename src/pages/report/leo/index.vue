@@ -5,37 +5,45 @@
       <el-col :span="8">
         <el-card shadow="hover">
           <div>
-            <b style="color: #9d9fa3">用户统计</b>
+            <b class="title">用户统计</b>
           </div>
-          <span style="font-size: 10px; color: #B7B6B6">活跃用户</span>
-          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{report.dashboard.userTotal}}</span>
+          <span class="label">活跃用户</span>
+          <span class="value">{{
+              report.dashboard.userTotal > 0 ? report.dashboard.userTotal.toLocaleString() : 0
+              }}</span>
           <span style="margin-right: 40px"></span>
-          <span style="font-size: 10px; color: #B7B6B6">授权用户</span>
-          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.authorizedUserTotal }}</span>
+          <span class="label">授权用户</span>
+          <span class="value">{{
+              report.dashboard.authorizedUserTotal > 0 ? report.dashboard.authorizedUserTotal.toLocaleString() : 0
+            }}</span>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card shadow="hover">
           <div>
-            <b style="color: #9d9fa3">应用和任务统计</b>
+            <b class="title">应用和任务统计</b>
           </div>
-          <span style="font-size: 10px; color: #B7B6B6">应用总数</span>
-          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.applicationTotal }}</span>
+          <span class="label">应用总数</span>
+          <span class="value">{{
+              report.dashboard.applicationTotal > 0 ? report.dashboard.applicationTotal.toLocaleString() : 0
+            }}</span>
           <span style="margin-right: 40px"></span>
-          <span style="font-size: 10px; color: #B7B6B6">任务总数</span>
-          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.jobTotal }}</span>
+          <span class="label">任务总数</span>
+          <span class="value">{{
+              report.dashboard.jobTotal > 0 ? report.dashboard.jobTotal.toLocaleString() : 0
+            }}</span>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card shadow="hover">
           <div>
-            <b style="color: #9d9fa3">持续交付作业统计</b>
+            <b class="title">持续交付作业统计</b>
           </div>
-          <span style="font-size: 10px; color: #B7B6B6">总构建次数</span>
-          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.buildTotal }}</span>
+          <span class="label">总构建次数</span>
+          <span class="value">{{ report.dashboard.buildTotal > 0 ? report.dashboard.buildTotal.toLocaleString() : 0 }}</span>
           <span style="margin-right: 40px"></span>
-          <span style="font-size: 10px; color: #B7B6B6">总部署次数</span>
-          <span style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ report.dashboard.deployTotal }}</span>
+          <span class="label">总部署次数</span>
+          <span class="value">{{ report.dashboard.deployTotal > 0 ? report.dashboard.deployTotal.toLocaleString() : 0 }}</span>
         </el-card>
       </el-col>
     </el-row>
@@ -340,6 +348,22 @@ export default {
 
 .chart {
   height: 100vh;
+}
+
+.title {
+  color: #9d9fa3;
+}
+
+.label {
+  font-size: 10px;
+  color: #B7B6B6;
+}
+
+.value {
+  font-size: 45px;
+  color: #20A9D9;
+  font-weight: 300;
+  margin-left: 2px;
 }
 
 </style>
