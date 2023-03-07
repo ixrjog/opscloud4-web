@@ -5,9 +5,10 @@
         <b style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace === null ? 'Null' : deploy.deployDetails.deploy.kubernetes.deployment.namespace }}:{{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
         <deploy-number-icon :deploy="deploy"></deploy-number-icon>
         <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-        <span style="margin-left: 8px"
-              v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i
-          class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>
+<!--        操作用户-->
+<!--        <span style="margin-left: 8px"-->
+<!--              v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i-->
+<!--          class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>-->
       </div>
       <el-row>
         <el-col :span="12">
@@ -19,11 +20,15 @@
           <div><span class="label"
                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>{{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
           </div>
-          <div><span class="label">部署状态</span>{{ deploy.deployStatus }}</div>
+<!--          <div><span class="label">部署状态</span>{{ deploy.deployStatus }}</div>-->
           <div><span class="label">部署结果</span>
             <deploy-result :deploy="deploy"></deploy-result>
           </div>
-          <div><span class="label">发布版本</span> {{ deploy.versionName === null ? '-': deploy.versionName }}</div>
+          <div><span class="label">发布版本</span>{{ deploy.versionName === null ? '-': deploy.versionName }}</div>
+          <div><span class="label">操作用户</span>{{
+              deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
+            }}
+          </div>
         </el-col>
         <el-col :span="12">
           <div style="border-radius: 2px; background-color: #d9d9d9">

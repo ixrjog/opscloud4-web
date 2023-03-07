@@ -28,15 +28,12 @@
             <el-card shadow="never" class="deploymentClass" style="font-size: 10px">
                <div style="margin-top: -10px">
                  <!-- Deployment无状态 -->
-                 <!--                 <el-tag size="mini" style="margin-right: 5px">Deployment</el-tag>-->
-                 <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}:</span>{{ resource.name }}
+                 <deployment-name :deployment="resource.name" namespace="" :cluster="resource.instance.instanceName"></deployment-name>
+<!--                 <span v-if="resource.instance !== null">{{ resource.instance.instanceName }}:</span>{{ resource.name }}-->
                  <business-tags :tags="resource.tags"></business-tags>
                  <el-tag style="margin-left: 5px">
                     副本数量
-                 <span v-for="(item, index) in resource.assetContainers" :key="index">
-                   <i class="fas fa-square" style="color: #838383;margin-right: 1px"></i>
-                   <span v-if="(index + 1) % 5 === 0" style="margin-right: 1px"></span>
-                 </span>x{{ resource.assetContainers.length }}
+                   <deployment-replicas :replicas="resource.assetContainers.length"></deployment-replicas>
                  </el-tag>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked"
                               @change="handleCheckAllChange(resource)">
@@ -52,7 +49,7 @@
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
                    <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)"><i
-                     class="fas fa-terminal" v-show="false"></i>Terminal</el-button>
+                     class="fas fa-terminal" v-show="false"></i>Login</el-button>
                  </el-tooltip>
                </div>
                <el-divider/>
@@ -90,12 +87,11 @@
             </el-card>
           </span>
       </template>
-
     </el-row>
 
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" v-if="false">
       <el-table-column prop="name" label="应用名称" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.name }}</span>
           <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
                      @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
@@ -107,7 +103,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="resources" label="无状态">
-        <template slot-scope="scope" v-if="scope.row.resources !== null && scope.row.resources.length > 0">
+        <template v-if="scope.row.resources !== null && scope.row.resources.length > 0">
           <span v-for="resource in scope.row.resources" :key="resource.id">
             <el-card shadow="never" class="deploymentClass">
                <div style="margin-top: -10px">
@@ -179,14 +175,15 @@
 <script>
 
 import {
-  QUERY_APPLICATION_KUBERNETES_PAGE,
-  GET_APPLICATION_KUBERNETES
+  GET_APPLICATION_KUBERNETES, QUERY_MY_APPLICATION_PAGE
 } from '@/api/modules/application/application.api.js'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import PodPhaseTag from '@/components/opscloud/common/tag/PodPhaseTag'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
+import DeploymentReplicas from '@/components/opscloud/leo/child/DeploymentReplicas.vue'
+import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
 
 export default {
   name: 'application-kubernetes-selector',
@@ -224,6 +221,8 @@ export default {
   },
   computed: {},
   components: {
+    DeploymentName,
+    DeploymentReplicas,
     BusinessTags,
     SelectItem,
     PodPhaseTag,
@@ -250,7 +249,7 @@ export default {
         page: 1,
         length: 30
       }
-      QUERY_APPLICATION_KUBERNETES_PAGE(requestBody)
+      QUERY_MY_APPLICATION_PAGE(requestBody)
         .then(res => {
           this.applicationOptions = res.body.data
           // this.table.pagination.total = res.body.totalNum
@@ -315,6 +314,9 @@ export default {
       this.handleOpenTerminalByType(resource, 'CONTAINER_TERMINAL')
     },
     fetchData () {
+      if (this.queryParam.applicationId === '') {
+        return
+      }
       const requestBody = {
         ...this.queryParam
       }

@@ -1,7 +1,7 @@
 <template>
     <el-row :gutter="10" style="margin-left: 5px; margin-bottom: 5px">
         <span v-for="version in deploymentVersionDetails" :key="version.jobName">
-          <el-col :span="6" v-for="deployment in version.deploymentVersions">
+          <el-col :span="6" v-for="deployment in version.deploymentVersions" :key="deployment.name">
            <el-card :style="{fontSize: '12px', marginBottom: '5px', backgroundColor: deployment.versionColor}"
                     shadow="hover">
             <div><b>{{ version.jobName }}</b>
@@ -10,10 +10,11 @@
             </div>
             <div><span class="label">环境分组</span>{{ deployment.name }}</div>
             <div><span class="label">副本数量</span>
-             <span v-for="index of deployment.replicas">
-               <i class="fas fa-square" style="color: #d9d9d9;margin-right: 1px"></i>
-               <span v-if="index % 5 === 0" style="margin-right: 2px"></span>
-             </span> x{{ deployment.replicas }}
+              <deployment-replicas :replicas="deployment.replicas"></deployment-replicas>
+<!--             <span v-for="index of deployment.replicas">-->
+<!--               <i class="fas fa-square" style="color: #d9d9d9;margin-right: 1px"></i>-->
+<!--               <span v-if="index % 5 === 0" style="margin-right: 2px"></span>-->
+<!--             </span> x{{ deployment.replicas }}-->
             </div>
             <div><span class="label">版本名称</span>{{ deployment.versionName }}
               <el-popover placement="right" trigger="hover">
@@ -31,11 +32,13 @@
 <script>
 
 import EnvTag from '@/components/opscloud/common/tag/EnvTag.vue'
+import DeploymentReplicas from '@/components/opscloud/leo/child/DeploymentReplicas.vue'
 
 export default {
   name: 'LeoDeploymentVersionDetails',
   props: ['deploymentVersionDetails'],
   components: {
+    DeploymentReplicas,
     EnvTag
   }
 }

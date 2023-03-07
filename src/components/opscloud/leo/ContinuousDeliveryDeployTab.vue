@@ -52,11 +52,8 @@
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
               <div slot="header">
-                <b
-                  style="margin-right: 5px;color: #ef0808">{{
-                    deploy.deployDetails.deploy.kubernetes.deployment.namespace
-                  }}
-                  / {{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
+                <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment.name" :namespace="deploy.deployDetails.deploy.kubernetes.deployment.namespace" cluster=""></deployment-name>
+                <b v-if="false" style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace }}:{{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
                 <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                 <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
                 <!--                <span style="margin-left: 8px"-->
@@ -91,9 +88,10 @@
                          v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>
                 {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
               </div>
-              <div><span class="label">部署状态</span> {{ deploy.deployStatus }}</div>
+<!--              <div><span class="label">部署状态</span> {{ deploy.deployStatus }}</div>-->
               <div><span class="label">部署结果</span>
-                <deploy-result style="margin-left: 5px" :deploy="deploy"></deploy-result>
+                <deploy-result style="margin-left: 5px" :deploy="deploy">
+                </deploy-result>
               </div>
               <div><span class="label">发布版本</span> {{ deploy.versionName === null ? '-' : deploy.versionName }}
               </div>
@@ -167,6 +165,7 @@ import { STOP_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import LeoDeploymentVersionDetails from '@/components/opscloud/leo/LeoDeploymentVersionDetails.vue'
 import routes from '@/router/routes'
 import router from '@/router'
+import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
 
 const wsStates = {
   success: {
@@ -255,7 +254,8 @@ export default {
     PodVersion,
     DeployVersion,
     LeoDeployHistory,
-    LeoDeploymentVersionDetails
+    LeoDeploymentVersionDetails,
+    DeploymentName
   },
   watch: {
     // 监听数据
