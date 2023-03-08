@@ -40,7 +40,6 @@
               <span v-show="build.runtime !== null" style="margin-left: 2px">&lt;<b style="color: #3b97d7">{{build.runtime}}</b>&gt;</span>
               </span>
             </div>
-            <div><span class="label">构建状态</span> {{ build.buildStatus }}</div>
             <div><span class="label">构建结果</span>
               <build-result style="margin-left: 5px" :build="build"></build-result>
             </div>
@@ -96,7 +95,8 @@ const layout = {
   curveRadius: 5, // 跳过连接线半径
   connectorStrokeWidth: 8,
   labelOffsetV: 20, // 文字标签向上位移
-  smallLabelOffsetV: 10
+  smallLabelOffsetV: 10,
+  // height: 160
 }
 
 export default {
@@ -169,12 +169,20 @@ export default {
 
 <style scoped>
 
->>> .el-card__header {
+>>>.el-card__header {
   height: 40px;
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+/*>>>.PWGx-PipelineGraph-container .PWGx-PipelineGraph {*/
+/*  height: 200px;*/
+/*}*/
+
+>>>.PWGx-PipelineGraph-container {
+  height: 160px;
 }
 
 .icon {
