@@ -20,6 +20,7 @@ export default {
 </script>
 
 <style scoped>
+
 .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
@@ -30,6 +31,7 @@ export default {
 .title {
   color: #9d9fa3
 }
+
 .value {
   font-size: 40px;
   color: #20A9D9;
