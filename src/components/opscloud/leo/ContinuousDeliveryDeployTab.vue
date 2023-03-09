@@ -52,13 +52,11 @@
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
               <div slot="header">
-                <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment.name" :namespace="deploy.deployDetails.deploy.kubernetes.deployment.namespace" cluster=""></deployment-name>
-                <b v-if="false" style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace }}:{{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
+                <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment.name"
+                                 :namespace="deploy.deployDetails.deploy.kubernetes.deployment.namespace"
+                                 cluster=""></deployment-name>
                 <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                 <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-                <!--                <span style="margin-left: 8px"-->
-                <!--                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i-->
-                <!--                  class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>-->
                 <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                   <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                           :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
@@ -88,7 +86,6 @@
                          v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>
                 {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
               </div>
-<!--              <div><span class="label">部署状态</span> {{ deploy.deployStatus }}</div>-->
               <div><span class="label">部署结果</span>
                 <deploy-result style="margin-left: 5px" :deploy="deploy">
                 </deploy-result>
@@ -163,9 +160,18 @@ import DeployVersion from '@/components/opscloud/leo/child/DeployVersion.vue'
 import LeoDeployHistory from '@/components/opscloud/leo/LeoDeployHistory.vue'
 import { STOP_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import LeoDeploymentVersionDetails from '@/components/opscloud/leo/LeoDeploymentVersionDetails.vue'
-import routes from '@/router/routes'
 import router from '@/router'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
+
+const leaderLineOptions = {
+  color: '#e56c0d',
+  gradient: false,
+  // path: 'grid',
+  size: 2,
+  startPlug: 'disc',
+  endPlug: 'disc',
+  dropShadow: true
+}
 
 const wsStates = {
   success: {
@@ -193,15 +199,7 @@ export default {
         id: ''
       },
       line: null,
-      lineOptions: {
-        color: '#e56c0d',
-        gradient: false,
-        // path: 'grid',
-        size: 2,
-        startPlug: 'disc',
-        endPlug: 'disc',
-        dropShadow: true
-      },
+      leaderLineOptions: leaderLineOptions,
       topDeployId: '',
       data: {
         deploy: '',
@@ -348,7 +346,7 @@ export default {
         }
       }
     },
-    lineRemove () {
+    removeLine () {
       try {
         if (this.line !== null) {
           this.line.remove()
@@ -361,7 +359,7 @@ export default {
     },
     setDetails (deploys) {
       if (deploys.length === 0) {
-        this.lineRemove()
+        this.removeLine()
         this.data.deploys = []
         this.topDeployId = ''
         return
@@ -372,7 +370,7 @@ export default {
       }
       if (this.data.deploy !== '') {
         if (this.data.deploy.id < (this.topDeployId - 4)) {
-          this.lineRemove()
+          this.removeLine()
         }
       }
       this.data.deploys = deploys
@@ -406,12 +404,12 @@ export default {
       this.formStatus.history.visible = true
       this.$refs.deployHistory.initData()
     },
-    lineHide () {
+    hideLine () {
       if (this.line !== null) {
         this.line.hide()
       }
     },
-    lineShow () {
+    showLine () {
       if (this.line !== null) {
         this.line.show()
       }
@@ -427,13 +425,13 @@ export default {
       if (this.queryParam.deployId === '') {
         return
       }
-      this.lineRemove()
+      this.removeLine()
       this.$nextTick(() => { // 需要延迟执行
         const start = document.getElementById('deploy_' + this.queryParam.deployId)
         if (start === null) {
           return
         }
-        this.line = LeaderLine.setLine(start, document.getElementById('deploy_details'), this.lineOptions)
+        this.line = LeaderLine.setLine(start, document.getElementById('deploy_details'), this.leaderLineOptions)
       })
     },
     queryDeployDetails (deploy) {

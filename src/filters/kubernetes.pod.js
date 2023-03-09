@@ -36,4 +36,3 @@ export function toDeploymentVersionClass (version) {
       return 'versionOther'
   }
 }
-

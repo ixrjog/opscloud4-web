@@ -16,10 +16,8 @@
             </div>
             <div><span class="label">版本名称</span>{{ deployment.versionName }}
               <el-popover placement="right" trigger="hover">
-                <i class="el-icon-info" style="color: rgba(255,255,255,0.3);margin-left: 5px" slot="reference"></i>
-                 <span style="font-size: 10px;color: #9d9fa3">{{
-                     deployment.versionDesc === '' ? '用户未填写版本说明' : deployment.versionDesc
-                   }}</span>
+                <i class="el-icon-info" slot="reference"></i>
+                 <span style="font-size: 10px; color: #9d9fa3">{{deployment.versionDesc === '' ? '用户未填写版本说明' : deployment.versionDesc}}</span>
               </el-popover>
             </div>
                <div><span class="label">镜像地址</span>{{ deployment.image }}</div>
@@ -60,7 +58,7 @@ export default {
 
 .label {
   /*color: #99a9bf;*/
-  color: #838383;
+  color: #99a9bf;
   margin-right: 5px;
 }
 
@@ -78,6 +76,11 @@ export default {
 
 .versionOffline {
   border: 3px solid #9d9fa3;
+}
+
+.el-icon-info {
+  color: green;
+  margin-left: 5px;
 }
 
 </style>

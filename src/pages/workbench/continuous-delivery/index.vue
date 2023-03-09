@@ -36,11 +36,11 @@ export default {
       if (to.name === 'continuous-delivery') {
         // 进入
         if (this.activeName === 'deploy') {
-          this.$refs.cDDeployTab.lineShow()
+          this.$refs.cDDeployTab.showLine()
         }
       } else {
         // 离开
-        this.$refs.cDDeployTab.lineHide()
+        this.$refs.cDDeployTab.hideLine()
       }
     }
   },
@@ -55,11 +55,11 @@ export default {
   methods: {
     handleClick (tab, event) {
       if (tab.name === 'build') {
-        this.$refs.cDDeployTab.lineHide()
+        this.$refs.cDDeployTab.hideLine()
         return
       }
       if (tab.name === 'deploy') {
-        this.$refs.cDDeployTab.lineShow()
+        this.$refs.cDDeployTab.showLine()
       }
     },
     handleScroll (y) {
