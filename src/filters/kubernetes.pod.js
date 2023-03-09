@@ -13,3 +13,27 @@ export function toPodPhaseType (pod) {
   }
   return pod.isComplete && pod.phase === 'Running' ? 'success' : 'warning'
 }
+
+export function toPodClass (pod) {
+  if (pod.properties.restartCount === '0') {
+    return 'podNormal'
+  } else {
+    return 'podFault'
+  }
+}
+
+export function toDeploymentVersionClass (version) {
+  switch (version.versionType) {
+    case 'BLUE':
+      return 'versionBlue'
+    case 'GREEN':
+      return 'versionGreen'
+    case 'OTHER':
+      return 'versionOther'
+    case 'OFFLINE':
+      return 'versionOffline'
+    default:
+      return 'versionOther'
+  }
+}
+

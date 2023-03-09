@@ -84,7 +84,6 @@ import * as echarts from 'echarts'
 
 // API
 import { GET_LEO_REPORT } from '@/api/modules/report/report.api'
-import DashboardCard from '@/components/opscloud/report/DashboardCard.vue'
 
 export default {
   data () {
@@ -94,7 +93,6 @@ export default {
     }
   },
   components: {
-    DashboardCard
   },
   computed: {},
   mounted () {

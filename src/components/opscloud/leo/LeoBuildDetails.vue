@@ -95,8 +95,7 @@ const layout = {
   curveRadius: 5, // 跳过连接线半径
   connectorStrokeWidth: 8,
   labelOffsetV: 20, // 文字标签向上位移
-  smallLabelOffsetV: 10,
-  // height: 160
+  smallLabelOffsetV: 10
 }
 
 export default {
