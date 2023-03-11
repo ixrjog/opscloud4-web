@@ -50,6 +50,9 @@
     <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas"
                                               ref="applicationScaleReplicasTicketEditor"
                                               @close="fetchData"></application-scale-replicas-ticket-editor>
+    <apollo-ticket-editor :formStatus="formStatus.ticket.apollo"
+                          ref="apolloTicketEditor"
+                          @close="fetchData"></apollo-ticket-editor>
   </d2-container>
 </template>
 
@@ -79,6 +82,7 @@ import SnsSubscriptionTicketEditor from '@/components/opscloud/workorder/ticket/
 import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import ApplicationScaleReplicasTicketEditor
   from '@/components/opscloud/workorder/ticket/ApplicationScaleReplicasTicketEditor'
+import ApolloTicketEditor from '@/components/opscloud/workorder/ticket/ApolloTicketEditor.vue'
 
 export default {
   data () {
@@ -111,7 +115,8 @@ export default {
     SqsTicketEditor,
     SnsTopicTicketEditor,
     SnsSubscriptionTicketEditor,
-    ApplicationScaleReplicasTicketEditor
+    ApplicationScaleReplicasTicketEditor,
+    ApolloTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -212,6 +217,10 @@ export default {
         case this.workOrderKeyConstants.APPLICATION_SCALE_REPLICAS:
           this.handleOpenTicketEditor(this.formStatus.ticket.applicationScaleReplicas)
           this.$refs.applicationScaleReplicasTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APOLLO:
+          this.handleOpenTicketEditor(this.formStatus.ticket.apollo)
+          this.$refs.apolloTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

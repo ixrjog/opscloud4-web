@@ -15,6 +15,9 @@ export default {
     grafana: {
       visible: false
     },
+    apollo: {
+      visible: false
+    },
     nexus: {
       visible: false
     },
