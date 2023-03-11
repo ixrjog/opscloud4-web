@@ -33,3 +33,11 @@ export function STOP_DEPLOY (param) {
     params: param
   })
 }
+
+export function CLONE_DEPLOY_DEPLOYMENT (data) {
+  return request({
+    url: baseUrl + '/deployment/clone',
+    method: 'post',
+    data
+  })
+}
