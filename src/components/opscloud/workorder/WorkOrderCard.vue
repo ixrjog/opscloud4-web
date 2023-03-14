@@ -18,12 +18,11 @@
                        <i class="fab fa-creative-commons-share" style="color: #008200; margin-left: 5px"></i>
                      </a>
                   </span>
-                  <el-button :type="scope.row.status === 0 ? 'primary' :'warning'"
-                             style="float: right"
+                  <el-button :type="scope.row.status === 2 ? 'info' :'primary'" style="float: right"
+                             :disabled="scope.row.status === 2"
+                             :loading="scope.row.loading"
                              plain size="mini"
-                             @click="createTicket(scope.row)"
-                             :disabled="disabled"
-                             :loading="scope.row.loading">{{ scope.row.status === 0 ? '新建' : '开发中' }}
+                             @click="createTicket(scope.row)">{{ scope.row.status | toStatusName }}
                   </el-button>
                 </template>
               </el-table-column>
@@ -39,6 +38,7 @@
 
 import { GET_WORK_ORDER_VIEW } from '@/api/modules/workorder/workorder.api.js'
 import { CREATE_WORK_ORDER_TICKET } from '@/api/modules/workorder/workorder.ticket.api.js'
+import { toStatusName } from '@/filters/workorder'
 
 export default {
   name: 'WorkOrderCard',
@@ -46,11 +46,13 @@ export default {
   data () {
     return {
       activeNames: [0],
-      workOrderView: {},
-      disabled: false
+      workOrderView: {}
     }
   },
   components: {},
+  filters: {
+    toStatusName
+  },
   mounted () {
     this.fetchData()
   },

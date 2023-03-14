@@ -18,7 +18,7 @@
         </el-option>
       </el-select>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType">{{ env.envName }}</el-radio-button>
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{ env.envName }}</el-radio-button>
       </el-radio-group>
       <el-select v-if="false" v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
@@ -52,8 +52,8 @@
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
               <div slot="header">
-                <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment.name"
-                                 :namespace="deploy.deployDetails.deploy.kubernetes.deployment.namespace"
+                <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
+                                 :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
                                  cluster=""></deployment-name>
                 <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                 <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
@@ -82,8 +82,8 @@
               <span v-show="deploy.runtime !== null" style="margin-left: 2px">
                 <b style="color: #3b97d7"> {{ deploy.runtime }}</b></span>
               </span>
-              <div><span class="label"
-                         v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>
+              <div v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
+                <span class="label">部署类型</span>
                 {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
               </div>
               <div><span class="label">部署结果</span>
