@@ -40,6 +40,8 @@ export default {
     clone () {
       const requestBody = {
         buildId: this.deploymentVersion.buildId,
+        // 获取applicationId
+        jobId: this.deploymentVersion.jobId,
         assetId: this.deploymentVersion.assetId,
         name: this.deploymentVersion.name,
         deploymentName: this.deploymentVersion.deploymentName,

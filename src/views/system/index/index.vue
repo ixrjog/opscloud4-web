@@ -65,7 +65,7 @@ export default {
     return {
       navList: [],
       // OPSCLOUD前端版本号
-      version: '4.2.2'
+      version: '4.2.3'
     }
   },
   components: {

@@ -4,26 +4,19 @@
       <h1>{{ title }}</h1>
     </div>
     <!--      应用选择器-->
-    <application-kubernetes-selector v-show="layout.status === 0" @handleOpen="handleOpen"></application-kubernetes-selector>
-<!--    <el-row v-show="layout.status === 0">-->
-<!--      <el-card shadow="hover">-->
-<!--        <div slot="header" class="clearfix">-->
-<!--          <span>应用容器详情</span>-->
-<!--        </div>-->
-<!--        <application-kubernetes-selector @handleOpen="handleOpen"></application-kubernetes-selector>-->
-<!--      </el-card>-->
-<!--    </el-row>-->
+    <application-kubernetes-selector v-show="layout.status === 0"
+                                     @handleOpen="handleOpen"></application-kubernetes-selector>
     <el-row v-if="layout.status === 0" style="margin-top: 10px">
       <document-zone mount-zone="KUBERNETES"></document-zone>
     </el-row>
     <el-row>
     </el-row>
-    <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
-      <el-button @click="handleChangeBatch"
+      <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
+        <el-button @click="handleChangeBatch"
                  v-if="this.layout.status === 1 && terminalLayout.loginParam.sessionType === 'CONTAINER_TERMINAL'"
                  :type="terminalTools.batchType" plain>命令同步
-      </el-button>
-    </el-tooltip>
+        </el-button>
+      </el-tooltip>
     <el-row>
       <!--          终端布局-->
       <kubernetes-terminal-layout class="terminal-layout" ref="terminalLayout"
@@ -59,11 +52,19 @@ export default {
       title: '容器管理',
       layout: {
         mode: 0,
-        status: 0 // 0 选择/登录
+        /**
+         * 0 选择
+         * 1 登录
+         */
+        status: 0
       },
       terminalSettings: {},
       terminalTools: {
-        mode: 0, // 0未登录:1登录
+        /**
+         * 0未登录
+         * 1登录
+         */
+        mode: 0,
         batchType: ''
       },
       terminalLayout: {
@@ -207,15 +208,13 @@ export default {
 </script>
 
 <style scoped>
+
 .el-button {
   margin-left: 5px
-}
-
-.server-tree {
-  margin-top: 5px;
 }
 
 .terminal-layout {
   margin-top: 5px;
 }
+
 </style>

@@ -32,6 +32,7 @@
                     副本
                    <deployment-replicas :replicas="resource.assetContainers.length"></deployment-replicas>
                  </el-tag>
+                 <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"></deployment-resources-limits>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked"
                               @change="selAllContainers(resource)">
                    <span style="font-size: 12px">所有容器</span>
@@ -100,6 +101,7 @@ import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import DeploymentReplicas from '@/components/opscloud/leo/child/DeploymentReplicas.vue'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
 import { toPodClass } from '@/filters/kubernetes.pod'
+import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
 
 export default {
   name: 'application-kubernetes-selector',
@@ -134,7 +136,8 @@ export default {
     BusinessTags,
     SelectItem,
     PodPhaseTag,
-    BusinessDocReader
+    BusinessDocReader,
+    DeploymentResourcesLimits
   },
   filters: {
     toPodClass

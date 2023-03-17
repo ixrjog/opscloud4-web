@@ -2,7 +2,14 @@
   <div>
     <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
       <div slot="header">
-        <b style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace === null ? 'Null' : deploy.deployDetails.deploy.kubernetes.deployment.namespace }}:{{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>
+<!--        <b style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace === null ? 'Null'-->
+<!--          : deploy.deployDetails.deploy.kubernetes.deployment.namespace }}:{{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>-->
+
+        <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
+                         :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
+                         cluster=""></deployment-name>
+
+
         <deploy-number-icon :deploy="deploy"></deploy-number-icon>
         <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
 <!--        操作用户-->
@@ -48,11 +55,13 @@
 
 import DeployResult from '@/components/opscloud/leo/child/DeployResult.vue'
 import DeployNumberIcon from '@/components/opscloud/leo/child/DeployNumberIcon.vue'
+import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
 
 export default {
   name: 'LeoDeployDetails',
   props: ['deploy'],
   components: {
+    DeploymentName,
     DeployNumberIcon,
     DeployResult
   }

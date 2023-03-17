@@ -36,6 +36,7 @@
             <div><span class="label">环境分组</span>{{ deployment.name }}</div>
             <div><span class="label">副本数量</span>
               <deployment-replicas :replicas="deployment.replicas"></deployment-replicas>
+              <deployment-resources-limits :properties="deployment.properties"></deployment-resources-limits>
             </div>
             <div><span class="label">版本名称</span>{{ deployment.versionName }}
               <el-popover placement="right" trigger="hover">
@@ -61,6 +62,7 @@ import DeploymentReplicas from '@/components/opscloud/leo/child/DeploymentReplic
 import { toDeploymentVersionClass } from '@/filters/kubernetes.pod'
 import CloneDeploymentEditor from '@/components/opscloud/leo/child/CloneDeploymentEditor.vue'
 import { DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
+import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
 
 
 export default {
@@ -82,6 +84,7 @@ export default {
   components: {
     CloneDeploymentEditor,
     DeploymentReplicas,
+    DeploymentResourcesLimits,
     EnvTag
   },
   filters: {

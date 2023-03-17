@@ -8,7 +8,7 @@
                      :tableLayout="tableLayout.node" ref="nodeTable">
           <template v-slot:extend>
             <el-table-column label="容量" show-overflow-tooltip>
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>CPU {{ scope.row.properties.cpu }} / Memory {{ scope.row.properties.memory }}</span>
               </template>
             </el-table-column>
@@ -27,8 +27,13 @@
                      :tableLayout="tableLayout.deployment" ref="deploymentTable">
           <template v-slot:extend>
             <el-table-column label="容器组数量" show-overflow-tooltip>
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ scope.row.properties.replicas }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="资源限制" show-overflow-tooltip>
+              <template v-slot="scope">
+                <span>CPU {{ scope.row.properties['resources.limits.cpu'] }} / Memory {{ scope.row.properties['resources.limits.memory'] }}</span>
               </template>
             </el-table-column>
           </template>
