@@ -18,7 +18,10 @@
         </el-option>
       </el-select>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{ env.envName }}</el-radio-button>
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{
+            env.envName
+          }}
+        </el-radio-button>
       </el-radio-group>
       <el-select v-if="false" v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
@@ -52,9 +55,10 @@
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
               <div slot="header">
-                <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
-                                 :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
-                                 cluster=""></deployment-name>
+                <deployment-name
+                  :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
+                  :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
+                  cluster=""></deployment-name>
                 <deploy-number-icon :deploy="deploy"></deploy-number-icon>
                 <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
                 <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
@@ -82,7 +86,8 @@
               <span v-show="deploy.runtime !== null" style="margin-left: 2px">
                 <b style="color: #3b97d7"> {{ deploy.runtime }}</b></span>
               </span>
-              <div v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
+              <div
+                v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
                 <span class="label">部署类型</span>
                 {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
               </div>
@@ -332,13 +337,23 @@ export default {
         // 消息路由
         switch (messageJson.messageType) {
           case LeoRequestType.SUBSCRIBE_LEO_DEPLOY:
-            this.setDetails(messageJson.body.data)
+            for(const deploy of messageJson.body.data ){
+              if(this.queryParam.applicationId === deploy.applicationId){
+                this.setDetails(messageJson.body.data)
+                return
+              }
+            }
             break
           case LeoRequestType.SUBSCRIBE_LEO_DEPLOY_DETAILS:
             this.data.deployDetails = messageJson.body
             break
           case LeoRequestType.SUBSCRIBE_LEO_DEPLOYMENT_VERSION_DETAILS:
-            this.data.deploymentVersionDetails = messageJson.body
+            for(const version of messageJson.body ){
+              if (this.queryParam.applicationId === version.applicationId && this.queryParam.envType === version.envType) {
+                this.data.deploymentVersionDetails = messageJson.body
+                return
+              }
+            }
             break
           case LeoRequestType.AUTHENTICATION_FAILURE:
             router.push({ name: 'login' })
@@ -451,7 +466,7 @@ export default {
         messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOY,
         ...this.queryParam,
         page: 1,
-        length: 5
+        length: 3
       }
       this.sendMessage(queryMessage)
     },

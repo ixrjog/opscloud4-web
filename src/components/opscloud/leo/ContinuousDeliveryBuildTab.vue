@@ -246,11 +246,21 @@ export default {
         // 消息路由
         switch (messageJson.messageType) {
           case LeoRequestType.SUBSCRIBE_LEO_JOB:
-            this.table.data = messageJson.body.data
-            this.table.pagination.total = messageJson.body.data.totalNum
+            for (let job of messageJson.body.data) {
+              if (job.applicationId === this.queryParam.applicationId && job.envType === this.queryParam.envType) {
+                this.table.data = messageJson.body.data
+                this.table.pagination.total = messageJson.body.data.totalNum
+                return
+              }
+            }
             break
           case LeoRequestType.SUBSCRIBE_LEO_BUILD:
-            this.builds = messageJson.body.data
+            for (let build of messageJson.body.data) {
+              if (build.applicationId === this.queryParam.applicationId) {
+                this.builds = messageJson.body.data
+                return
+              }
+            }
             break
           case LeoRequestType.AUTHENTICATION_FAILURE:
             router.push({ name: 'login' })
@@ -321,14 +331,17 @@ export default {
         messageType: LeoRequestType.SUBSCRIBE_LEO_BUILD,
         ...this.queryParam,
         page: 1,
-        length: 5
+        length: 3
       }
       this.sendMessage(queryMessage)
     },
     fetchData () {
       if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
       this.handleSubscribeLeoJob()
+      this.table.data = []
+      this.table.pagination.total = 0
       this.handleQueryLeoBuild()
+      this.builds = []
     }
   }
 }

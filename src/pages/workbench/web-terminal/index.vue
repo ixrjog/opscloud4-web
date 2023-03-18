@@ -4,7 +4,7 @@
       <h1>{{ title }}</h1>
     </div>
     <!--      顶部工具栏-->
-    <el-row style="margin-left: -5px">
+    <el-row>
       <!--                        @resetTerminalSetting="initTerminalSetting"-->
       <terminal-tools ref="terminalTools"
                       :terminalSettings="terminalSettings" :mode="terminalTools.mode"

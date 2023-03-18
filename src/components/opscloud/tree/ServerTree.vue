@@ -6,7 +6,7 @@
     </div>
     <el-row>
       <el-input v-model="queryParam.name" placeholder="Name" style="display: inline-block; width: 180px;" @change="fetchData"/>
-      <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable
+      <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable style="margin-left: 5px"
                  remote reserve-keyword placeholder="Namespace" :remote-method="getGroupType" :loading="loading">
         <el-option
           v-for="item in groupTypeOptions"
@@ -103,9 +103,9 @@ export default {
 
 <style scope>
 
-.el-select {
-  margin-left: 5px;
-}
+/*.el-select {*/
+/*  margin-left: 5px;*/
+/*}*/
 
 .el-button {
   margin-left: 5px;
