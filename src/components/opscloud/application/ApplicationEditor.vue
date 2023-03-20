@@ -8,14 +8,23 @@
             <el-input v-model="application.name" placeholder="请输入内容"></el-input>
           </el-form-item>
           <el-form-item label="应用Key" :required="true">
-            <el-input v-model="application.applicationKey" placeholder="请输入内容"
-                      :disabled="!formStatus.operationType">
+            <el-input v-model="application.applicationKey" placeholder="请输入内容">
               <template slot="append">
                 <el-button size="mini" type="primary" @click="handleBuildKey">
                   <i class="fa fa-arrow-up" aria-hidden="true"></i>
                 </el-button>
               </template>
             </el-input>
+          </el-form-item>
+          <el-form-item label="有效" required>
+            <el-select v-model="application.isActive" placeholder="选择">
+              <el-option
+                v-for="item in activeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="描述">
             <el-input v-model="application.comment" placeholder="请输入内容"></el-input>
@@ -130,6 +139,14 @@ import AppDsInstanceAssetType from '@/components/opscloud/common/enums/applicati
 import PermissionUserTab from '../user/child/BusinessPermissionUserTab'
 import BusinessDocEditor from '@/components/opscloud/business/BusinessDocEditor'
 
+const activeOptions = [{
+  value: true,
+  label: '有效'
+}, {
+  value: false,
+  label: '无效'
+}]
+
 export default {
   data () {
     return {
@@ -146,7 +163,8 @@ export default {
       appDsInstanceAssetType: AppDsInstanceAssetType,
       resOptions: [],
       dsInstanceOptions: [],
-      assetTypeOptions: []
+      assetTypeOptions: [],
+      activeOptions: activeOptions
     }
   },
   name: 'ApplicationDialog',
@@ -159,17 +177,17 @@ export default {
     getAppResText (value) {
       switch (value) {
         case AppDsInstanceAssetType.GITLAB.GITLAB_GROUP:
-          return '群组(GITLAB_GROUP)'
+          return 'GitLab群组'
         case AppDsInstanceAssetType.GITLAB.GITLAB_PROJECT:
-          return '项目(GITLAB_PROJECT)'
+          return 'GitLab项目'
         case AppDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
-          return '无状态(DEPLOYMENT)'
+          return 'Kubernetes无状态'
         case 'DATASOURCE_INSTANCE':
           return '数据源实例'
         case 'SERVERGROUP':
-          return '服务器组(SERVER_GROUP)'
+          return '服务器组'
         case 'SERVER':
-          return '服务器(SERVER)'
+          return '服务器'
         default:
           return value
       }
@@ -349,6 +367,7 @@ export default {
     max-width: 80%;
     width: 80%;
   }
+
   .el-col {
     p {
       margin: 0px;

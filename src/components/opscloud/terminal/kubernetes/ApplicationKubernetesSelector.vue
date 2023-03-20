@@ -32,7 +32,8 @@
                     副本
                    <deployment-replicas :replicas="resource.assetContainers.length"></deployment-replicas>
                  </el-tag>
-                 <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"></deployment-resources-limits>
+                 <deployment-resources-limits style="margin-left: 5px"
+                                              :properties="resource.asset.properties"></deployment-resources-limits>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked"
                               @change="selAllContainers(resource)">
                    <span style="font-size: 12px">所有容器</span>
@@ -52,15 +53,17 @@
                 <template v-for="pod in resource.assetContainers">
                    <el-card shadow="hover" :class="pod | toPodClass" :key="pod.asset.name">
                    <!-- podName -->
-                   <div style="margin-bottom: 2px"><b style="color: black">{{ pod.asset.name }}</b>
-                    <el-popover placement="right" trigger="hover" v-if="false">
+                   <div style="margin-bottom: 2px">
+                     <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"></copy-span>
+                     <el-popover placement="right" trigger="hover" v-if="false">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
                          <br/>
                          <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
-                      </el-popover>
+                     </el-popover>
                    </div>
-                   <div><span class="label">容器组IP</span>{{ pod.asset.assetKey }}</div>
+                   <div><span class="label">容器组IP</span>
+                     <copy-span :content="pod.asset.assetKey" :show-icon="true"></copy-span></div>
                    <div><span class="label">启动时间</span>{{ pod.properties.startTime }}
                     <span style="color: #20A9D9">[{{ pod.ago }}]</span> 重启次数:
                      <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
@@ -102,6 +105,7 @@ import DeploymentReplicas from '@/components/opscloud/leo/child/DeploymentReplic
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
 import { toPodClass } from '@/filters/kubernetes.pod'
 import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
+import CopySpan from '@/components/opscloud/common/CopySpan.vue'
 
 export default {
   name: 'application-kubernetes-selector',
@@ -137,7 +141,8 @@ export default {
     SelectItem,
     PodPhaseTag,
     BusinessDocReader,
-    DeploymentResourcesLimits
+    DeploymentResourcesLimits,
+    CopySpan
   },
   filters: {
     toPodClass
