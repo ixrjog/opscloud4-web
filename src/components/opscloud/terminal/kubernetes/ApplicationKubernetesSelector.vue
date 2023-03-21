@@ -1,6 +1,11 @@
 <template>
   <div>
     <el-row style="margin-bottom: 5px;">
+      <el-button :type="webSocketState.type" class="button" style="margin-right: 5px">
+        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
+        <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
+           style="margin-right: 5px"></i>{{ webSocketState.name }}
+      </el-button>
       <el-select v-model="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="handleChange">
@@ -15,8 +20,9 @@
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">{{ env.envName }}
         </el-radio-button>
       </el-radio-group>
-      <el-button @click="fetchData" class="button"
-                 :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">刷新
+      <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
+                 :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
+        <i class="fas fa-circle-notch"></i>
       </el-button>
     </el-row>
     <el-row>
@@ -93,9 +99,7 @@
 
 <script>
 
-import {
-  GET_APPLICATION_KUBERNETES, QUERY_MY_APPLICATION_PAGE
-} from '@/api/modules/application/application.api.js'
+import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api.js'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import PodPhaseTag from '@/components/opscloud/common/tag/PodPhaseTag'
@@ -106,11 +110,33 @@ import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
 import { toPodClass } from '@/filters/kubernetes.pod'
 import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
 import CopySpan from '@/components/opscloud/common/CopySpan.vue'
+import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
+import util from '@/libs/util'
+import router from '@/router'
+
+const wsStates = {
+  success: {
+    name: 'WS连接成功',
+    type: 'success'
+  },
+  fail: {
+    name: 'WS连接断开',
+    type: 'warning'
+  }
+}
 
 export default {
   name: 'application-kubernetes-selector',
   data () {
     return {
+      socket: null,
+      socketURI: util.wsUrl(WebSocketAPI.KUBERNETES_DEPLOYMENT),
+      webSocketState: wsStates.fail,
+      wsStates: wsStates,
+      timers: {
+        retrySocketTimer: null,
+        queryJobTimer: null
+      },
       formStatus: {
         businessDoc: {
           visible: false,
@@ -130,6 +156,7 @@ export default {
   },
   watch: {},
   mounted () {
+    this.initSocket()
     this.getEnv('')
     this.getApplication('')
   },
@@ -148,6 +175,96 @@ export default {
     toPodClass
   },
   methods: {
+    setTimers () {
+      // retrySocket定时器
+      if (this.timers.retrySocketTimer === null) {
+        this.timers.retrySocketTimer = setInterval(() => {
+          this.retrySocket()
+        }, 10000)
+      }
+    },
+    retrySocket () {
+      if (this.socket.readyState !== 1) {
+        this.webSocketState = wsStates.fail
+        try {
+          this.socket.close()
+        } catch (e) {
+        }
+        this.socket = null
+        this.initSocket()
+      }
+    },
+    initSocket () {
+      this.socket = new WebSocket(this.socketURI)
+      this.socketOnClose()
+      this.socketOnOpen()
+      this.socketOnError()
+      this.socketOnMessage()
+      this.setTimers()
+    },
+    socketOnOpen () {
+      const token = util.cookies.get('token')
+      if (token === undefined && token === null && token === '') {
+        router.push({ name: 'login' })
+        return
+      }
+      // 连接成功后
+      this.socket.onopen = () => {
+        this.webSocketState = wsStates.success
+        try {
+          this.fetchData()
+        } catch (e) {
+        }
+      }
+    },
+    socketOnClose () {
+      this.socket.onclose = () => {
+      }
+    },
+    socketOnError () {
+      this.socket.onerror = () => {
+      }
+    },
+    socketOnSend (data) {
+      this.socket.send(data)
+    },
+    socketOnMessage () {
+      let _this = this
+      this.socket.onmessage = (message) => {
+        const messageJson = JSON.parse(message.data)
+        // 消息路由
+        switch (messageJson.messageType) {
+          case 'QUERY_KUBERNETES_DEPLOYMENT':
+            if (messageJson.body.id === _this.queryParam.applicationId) {
+              const map = new Map()
+              const newApp = messageJson.body
+              if (_this.application !== '') {
+                for (const deployment of _this.application.resources) {
+                  for (const pod of deployment.assetContainers) {
+                    for (const container of pod.children) {
+                      map.set(container.asset.assetKey, container.checked)
+                    }
+                  }
+                }
+                for (const deployment of newApp.resources) {
+                  for (const pod of deployment.assetContainers) {
+                    for (const container of pod.children) {
+                      if (map.has(container.asset.assetKey)) {
+                        container.checked = map.get(container.asset.assetKey)
+                      }
+                    }
+                  }
+                }
+              }
+              _this.application = newApp
+            }
+            break
+        }
+      }
+    },
+    sendMessage (message) {
+      this.socketOnSend(JSON.stringify(message))
+    },
     getEnv (name) {
       const requestBody = {
         envName: name,
@@ -194,7 +311,8 @@ export default {
           const pod = {
             name: item.asset.name,
             namespace: item.asset.assetKey2,
-            podIp: item.asset.assetKey, // nodeIP     hostIp: item.properties.hostIp
+            // nodeIP     hostIp: item.properties.hostIp
+            podIp: item.asset.assetKey,
             containers: containers.map(e => {
               return {
                 name: e.asset.name,
@@ -206,7 +324,7 @@ export default {
         }
       }
       if (pods.length === 0) {
-        this.$message.warning('未选中容器，无法执行当前操作！')
+        this.$message.warning('未选中容器！')
         return
       }
       const loginParam = {
@@ -233,13 +351,16 @@ export default {
       if (this.queryParam.applicationId === '') {
         return
       }
-      const requestBody = {
+      if (this.queryParam.envType === '') {
+        return
+      }
+      const queryMessage = {
+        token: util.cookies.get('token'),
+        messageType: 'QUERY_KUBERNETES_DEPLOYMENT',
         ...this.queryParam
       }
-      GET_APPLICATION_KUBERNETES(requestBody)
-        .then(res => {
-          this.application = res.body
-        })
+      this.sendMessage(queryMessage)
+      this.application = ''
     },
     selAllContainers (resource) {
       for (const assetContainer of resource.assetContainers) {
@@ -270,10 +391,10 @@ export default {
   //&select {
   //  margin-left: 5px;
   //}
-
-  &button {
-    margin-left: 8px;
-  }
+  //
+  //&button {
+  //  margin-left: 8px;
+  //}
 }
 
 .podClass {
