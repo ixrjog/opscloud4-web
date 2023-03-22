@@ -1,13 +1,20 @@
 <template>
   <el-tag v-if="properties['resources.limits.cpu'] !== undefined">
-    <span>cpu {{properties['resources.limits.cpu']}} memory {{ properties['resources.limits.memory'] }}</span>
+    <span>{{ CPU }} {{properties['resources.limits.cpu']}} {{ Memory }} {{ properties['resources.limits.memory'] }}</span>
   </el-tag>
 </template>
 
 <script>
+
 export default {
   name: 'DeploymentResourcesLimits',
-  props: ['properties']
+  props: ['properties'],
+  data () {
+    return {
+      CPU: 'cpu',
+      Memory: 'mem'
+    }
+  },
 }
 </script>
 

@@ -6,7 +6,7 @@
       </div>
       <div>
         <span class="tag-group">
-          <span v-for="item in roles" :key="item.id">
+          <span v-for="item in roles" :key="item.id" style="margin-bottom: 2px">
                <el-tooltip class="item" effect="light" :content="item.comment === '' ? '未定义': item.comment"
                            placement="top-start">
                   <el-tag size="mini" style="margin-left: 5px">{{ item.roleName }}</el-tag>

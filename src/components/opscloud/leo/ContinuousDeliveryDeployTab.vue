@@ -43,7 +43,12 @@
     </el-row>
     <!-- 任务&无状态版本详情 -->
     <el-row :gutter="20" v-if="data.deploymentVersionDetails.length > 0">
-      <el-divider content-position="left">任务&无状态版本详情</el-divider>
+      <el-divider content-position="left">任务&无状态版本详情
+        （<span><i class="fab fa-microsoft" style="color: #128ca8; margin-right: 1px"></i>新版本</span>、
+        <span><i class="fab fa-microsoft" style="color: #2bbe32; margin-right: 1px"></i>旧版本</span>、
+        <span><i class="fab fa-microsoft" style="color: #e56c0d; margin-right: 1px"></i>其他版本</span>、
+        <span><i class="fab fa-microsoft" style="color: #9d9fa3; margin-right: 1px"></i>离线版本</span>）
+      </el-divider>
       <leo-deployment-version-details
         :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
     </el-row>
@@ -337,8 +342,8 @@ export default {
         // 消息路由
         switch (messageJson.messageType) {
           case LeoRequestType.SUBSCRIBE_LEO_DEPLOY:
-            for(const deploy of messageJson.body.data ){
-              if(this.queryParam.applicationId === deploy.applicationId){
+            for (const deploy of messageJson.body.data) {
+              if (this.queryParam.applicationId === deploy.applicationId) {
                 this.setDetails(messageJson.body.data)
                 return
               }
@@ -348,7 +353,7 @@ export default {
             this.data.deployDetails = messageJson.body
             break
           case LeoRequestType.SUBSCRIBE_LEO_DEPLOYMENT_VERSION_DETAILS:
-            for(const version of messageJson.body ){
+            for (const version of messageJson.body) {
               if (this.queryParam.applicationId === version.applicationId && this.queryParam.envType === version.envType) {
                 this.data.deploymentVersionDetails = messageJson.body
                 return

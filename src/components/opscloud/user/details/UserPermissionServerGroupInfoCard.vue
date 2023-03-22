@@ -6,10 +6,10 @@
       </div>
       <div>
         <span class="tag-group">
-          <span v-for="item in groups" :key="item.id">
+          <span v-for="item in groups" :key="item.id" style="margin-bottom: 2px">
               <el-tooltip class="item" effect="light" :content="item.comment || '没有填写'" placement="bottom">
                  <el-tag size="mini" style="margin-left: 5px"
-                         :type=" item.userPermission.permissionRole === 'admin' ? 'danger': '' ">
+                         :type="item.userPermission.permissionRole === 'admin' ? 'danger': '' ">
                    {{ item.name }}</el-tag>
               </el-tooltip>
          </span>
