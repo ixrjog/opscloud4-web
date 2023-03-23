@@ -34,6 +34,14 @@ export function UPDATE_LEO_TEMPLATE_CONTENT (data) {
   })
 }
 
+export function UPGRADE_LEO_JOB_TEMPLATE (data) {
+  return request({
+    url: baseUrl + '/job/upgrade',
+    method: 'put',
+    data
+  })
+}
+
 export function DELETE_LEO_TEMPLATE_BY_ID (param) {
   return request({
     url: baseUrl + '/del',

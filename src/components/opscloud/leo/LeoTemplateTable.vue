@@ -60,6 +60,8 @@
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowUpgrade(scope.row)"
+                     :disabled="scope.row.jobSize === 0">升级</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.jobSize !==0">删除</el-button>
         </template>
       </el-table-column>
@@ -75,7 +77,11 @@
 
 <script>
 
-import { QUERY_LEO_TEMPLATE_PAGE, DELETE_LEO_TEMPLATE_BY_ID } from '@/api/modules/leo/leo.template.api'
+import {
+  QUERY_LEO_TEMPLATE_PAGE,
+  DELETE_LEO_TEMPLATE_BY_ID,
+  UPGRADE_LEO_JOB_TEMPLATE
+} from '@/api/modules/leo/leo.template.api'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.instance.api'
 
@@ -194,6 +200,20 @@ export default {
       }
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
+    },
+    handleRowUpgrade(row){
+      this.$confirm('此操作将批量升级所有关联任务模板版本?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        UPGRADE_LEO_JOB_TEMPLATE({ templateId: row.id }).then(res => {
+          this.$message.success('升级成功!')
+          this.fetchData()
+        })
+      }).catch(() => {
+        this.$message.info('已取消!')
+      })
     },
     handleAdd () {
       this.formStatus.template.visible = true

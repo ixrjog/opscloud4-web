@@ -69,7 +69,7 @@
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"></i>
-            <span>{{ scope.row.branch }}</span>
+          <span>{{ scope.row.branch }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="template" label="模板">
@@ -79,11 +79,7 @@
                       placement="top-start">
             <span>{{ scope.row.template.name }}</span>
           </el-tooltip>
-        </template>
-      </el-table-column>
-      <el-table-column prop="template" label="模板版本">
-        <template v-slot="scope">
-          <el-tag size="mini" :type="scope.row.verifyTemplateVersion.type">
+          <el-tag size="mini" :type="scope.row.verifyTemplateVersion.type" style="margin-left: 5px">
             {{ scope.row.verifyTemplateVersion.displayVersion }}
           </el-tag>
         </template>
@@ -93,8 +89,11 @@
           <env-tag :env="scope.row.env"></env-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="buildSize" label="构建次数" width="80"></el-table-column>
-      <el-table-column prop="deploySize" label="部署次数" width="80"></el-table-column>
+      <el-table-column prop="buildSize" label="构建/部署" width="80">
+        <template v-slot="scope">
+          <span>{{ scope.row.buildSize }}/{{ scope.row.deploySize }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
         <template v-slot="scope">
           <active-tag :is-active="scope.row.isActive"></active-tag>
@@ -105,12 +104,15 @@
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="280">
+      <el-table-column label="操作" width="350">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.isActive">删除</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowUpgrade(scope.row)"
+                     :disabled="scope.row.verifyTemplateVersion.isIdentical">升级</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)"
+                     :disabled="scope.row.isActive">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -128,7 +130,11 @@
 
 <script>
 
-import { QUERY_LEO_JOB_PAGE, DELETE_LEO_JOB_BY_ID } from '@/api/modules/leo/leo.job.api'
+import {
+  QUERY_LEO_JOB_PAGE,
+  DELETE_LEO_JOB_BY_ID,
+  UPGRADE_LEO_JOB_TEMPLATE_CONTENT
+} from '@/api/modules/leo/leo.job.api'
 import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
@@ -318,6 +324,13 @@ export default {
       this.formStatus.job.visible = true
       this.formStatus.job.operationType = false
       this.$refs.jobEditor.initData(Object.assign({}, row))
+    },
+    handleRowUpgrade (row) {
+      UPGRADE_LEO_JOB_TEMPLATE_CONTENT({ jobId: row.id })
+        .then((res) => {
+          this.$message.success('升级模板内容成功!')
+          this.fetchData()
+        })
     },
     handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {

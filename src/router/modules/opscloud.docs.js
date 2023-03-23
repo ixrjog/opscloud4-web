@@ -27,6 +27,15 @@ export default [
     }
   },
   {
+    path: '/docs/workorder/apollo',
+    name: 'docs-workorder-apollo',
+    component: () => import('@/pages/docs/workorder/apollo'),
+    meta: {
+      auth: true,
+      title: '文档-Apollo配置中心'
+    }
+  },
+  {
     path: '/docs/workorder/ram',
     name: 'docs-workorder-ram',
     component: () => import('@/pages/docs/workorder/ram'),
