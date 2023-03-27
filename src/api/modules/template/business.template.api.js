@@ -21,7 +21,7 @@ export function ADD_BUSINESS_TEMPLATE (data) {
 export function UPDATE_BUSINESS_TEMPLATE (data) {
   return request({
     url: baseUrl + '/update',
-    method: 'post',
+    method: 'put',
     data
   })
 }

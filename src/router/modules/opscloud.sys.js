@@ -82,6 +82,15 @@ export default [
     }
   },
   {
+    path: '/sys/template',
+    name: 'sys-template',
+    component: () => import('@/pages/sys/template'),
+    meta: {
+      auth: true,
+      title: '模板管理'
+    }
+  },
+  {
     path: '/sys/docs',
     name: 'sys-docs',
     component: () => import('@/pages/sys/docs'),

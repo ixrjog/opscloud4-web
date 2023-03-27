@@ -59,7 +59,6 @@ import D2Help from './components/d2-help'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 import 'animate.css'
 import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
-
 export default {
   data () {
     return {
