@@ -10,7 +10,8 @@ const cookies = {}
  */
 cookies.set = function (name = 'default', value = '', cookieSetting = {}) {
   const currentCookieSetting = {
-    expires: 1
+    // 过期时间
+    expires: 7
   }
   Object.assign(currentCookieSetting, cookieSetting)
   Cookies.set(`d2admin-${process.env.VUE_APP_VERSION}-${name}`, value, currentCookieSetting)

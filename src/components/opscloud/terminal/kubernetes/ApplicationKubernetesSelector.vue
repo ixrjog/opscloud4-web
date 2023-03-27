@@ -1,12 +1,16 @@
 <template>
   <div>
     <el-row style="margin-bottom: 5px;">
-      <el-button :type="webSocketState.type" class="button" style="margin-right: 5px">
+      <el-button :type="webSocketState.type" class="button">
         <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
            style="margin-right: 5px"></i>{{ webSocketState.name }}
       </el-button>
-      <el-select v-model="queryParam.applicationId" filterable clearable
+      <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">{{ env.envName }}
+        </el-radio-button>
+      </el-radio-group>
+      <el-select v-model="queryParam.applicationId" filterable clearable style="margin-left: 5px"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="handleChange">
         <el-option v-for="item in applicationOptions"
@@ -16,10 +20,6 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">{{ env.envName }}
-        </el-radio-button>
-      </el-radio-group>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
         <i class="fas fa-circle-notch"></i>
@@ -49,7 +49,7 @@
                      class="fab fa-wpforms" v-show="false"></i>Log</el-button>
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleTerminal(resource)"><i
+                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text" @click="handleTerminal(resource)"><i
                      class="fas fa-terminal" v-show="false"></i>Login</el-button>
                  </el-tooltip>
                </div>
@@ -152,6 +152,13 @@ export default {
       envOptions: [],
       application: '',
       applicationOptions: []
+    }
+  },
+  destroyed () {
+    clearInterval(this.timers.retrySocketTimer) // 销毁定时器
+    try {
+      this.socket.close()
+    } catch (e) {
     }
   },
   watch: {},

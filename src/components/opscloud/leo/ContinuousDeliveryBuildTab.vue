@@ -6,6 +6,9 @@
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
            style="margin-right: 5px"></i>{{ webSocketState.name }}
       </el-button>
+      <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
+        <el-radio-button v-for="env in envOptions" :label="env.envType">{{ env.envName }}</el-radio-button>
+      </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
@@ -17,9 +20,6 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType">{{ env.envName }}</el-radio-button>
-      </el-radio-group>
       <el-select v-if="false" v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
                  @change="fetchData">
@@ -156,7 +156,10 @@ export default {
   },
   destroyed () {
     clearInterval(this.timers.retrySocketTimer) // 销毁定时器
-    this.socket.close()
+    try {
+      this.socket.close()
+    } catch (e) {
+    }
   },
   computed: {},
   components: {

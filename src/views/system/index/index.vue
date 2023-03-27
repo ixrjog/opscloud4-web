@@ -64,8 +64,10 @@ export default {
   data () {
     return {
       navList: [],
-      // OPSCLOUD前端版本号
-      version: '4.2.3'
+      /**
+       * OPSCLOUD前端版本号
+       */
+      version: '4.2.4'
     }
   },
   components: {
