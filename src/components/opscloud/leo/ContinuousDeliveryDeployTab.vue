@@ -245,16 +245,7 @@ export default {
     this.getEnv()
   },
   destroyed () {
-    clearInterval(this.timers.retrySocketTimer) // 销毁定时器
-    try {
-      this.socket.close()
-    } catch (e) {
-    }
-    try {
-      this.line.remove()
-      this.line = null
-    } catch (e) {
-    }
+    this.exit()
   },
   computed: {},
   components: {
@@ -279,6 +270,19 @@ export default {
   },
   filters: {},
   methods: {
+    exit () {
+      // 销毁定时器
+      clearInterval(this.timers.retrySocketTimer)
+      try {
+        this.socket.close()
+      } catch (e) {
+      }
+      try {
+        this.line.remove()
+        this.line = null
+      } catch (e) {
+      }
+    },
     setTimers () {
       // retrySocket定时器
       if (this.timers.retrySocketTimer === null) {
@@ -308,8 +312,8 @@ export default {
     },
     socketOnOpen () {
       const token = util.cookies.get('token')
-      if (token === undefined && token === null && token === '') {
-        router.push({ name: 'login' })
+      if (!token || token === 'undefined') {
+        this.exit()
         return
       }
       // 连接成功后
@@ -364,6 +368,7 @@ export default {
             }
             break
           case LeoRequestType.AUTHENTICATION_FAILURE:
+            this.exit()
             router.push({ name: 'login' })
             break
         }

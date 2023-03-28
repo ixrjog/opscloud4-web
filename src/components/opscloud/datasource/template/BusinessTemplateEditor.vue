@@ -192,7 +192,6 @@ export default {
       this.getTemplate('')
     },
     initData (businessTemplate, instanceType) {
-      debugger
       this.activeName = 'base'
       this.button = {
         editing: false,

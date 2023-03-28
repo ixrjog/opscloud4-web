@@ -7,7 +7,7 @@
            style="margin-right: 5px"></i>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType">{{ env.envName }}</el-radio-button>
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{ env.envName }}</el-radio-button>
       </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
@@ -155,11 +155,7 @@ export default {
     this.getEnv()
   },
   destroyed () {
-    clearInterval(this.timers.retrySocketTimer) // 销毁定时器
-    try {
-      this.socket.close()
-    } catch (e) {
-    }
+    this.exit()
   },
   computed: {},
   components: {
@@ -174,6 +170,14 @@ export default {
   },
   filters: {},
   methods: {
+    exit () {
+      // 销毁定时器
+      clearInterval(this.timers.retrySocketTimer)
+      try {
+        this.socket.close()
+      } catch (e) {
+      }
+    },
     setTimers () {
       // retrySocket定时器
       if (this.timers.retrySocketTimer === null) {
@@ -203,8 +207,8 @@ export default {
     },
     socketOnOpen () {
       const token = util.cookies.get('token')
-      if (token === undefined && token === null && token === '') {
-        router.push({ name: 'login' })
+      if (!token || token === 'undefined') {
+        this.exit()
         return
       }
       // 连接成功后
@@ -249,7 +253,7 @@ export default {
         // 消息路由
         switch (messageJson.messageType) {
           case LeoRequestType.SUBSCRIBE_LEO_JOB:
-            for (let job of messageJson.body.data) {
+            for (const job of messageJson.body.data) {
               if (job.applicationId === this.queryParam.applicationId && job.envType === this.queryParam.envType) {
                 this.table.data = messageJson.body.data
                 this.table.pagination.total = messageJson.body.data.totalNum
@@ -258,7 +262,7 @@ export default {
             }
             break
           case LeoRequestType.SUBSCRIBE_LEO_BUILD:
-            for (let build of messageJson.body.data) {
+            for (const build of messageJson.body.data) {
               if (build.applicationId === this.queryParam.applicationId) {
                 this.builds = messageJson.body.data
                 return
@@ -266,6 +270,7 @@ export default {
             }
             break
           case LeoRequestType.AUTHENTICATION_FAILURE:
+            this.exit()
             router.push({ name: 'login' })
             break
         }

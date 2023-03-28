@@ -49,7 +49,8 @@
                      class="fab fa-wpforms" v-show="false"></i>Log</el-button>
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text" @click="handleTerminal(resource)"><i
+                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text"
+                              @click="handleTerminal(resource)"><i
                      class="fas fa-terminal" v-show="false"></i>Login</el-button>
                  </el-tooltip>
                </div>
@@ -155,11 +156,7 @@ export default {
     }
   },
   destroyed () {
-    clearInterval(this.timers.retrySocketTimer) // 销毁定时器
-    try {
-      this.socket.close()
-    } catch (e) {
-    }
+    this.exit()
   },
   watch: {},
   mounted () {
@@ -182,6 +179,14 @@ export default {
     toPodClass
   },
   methods: {
+    exit () {
+      // 销毁定时器
+      clearInterval(this.timers.retrySocketTimer)
+      try {
+        this.socket.close()
+      } catch (e) {
+      }
+    },
     setTimers () {
       // retrySocket定时器
       if (this.timers.retrySocketTimer === null) {
@@ -211,8 +216,8 @@ export default {
     },
     socketOnOpen () {
       const token = util.cookies.get('token')
-      if (token === undefined && token === null && token === '') {
-        router.push({ name: 'login' })
+      if (!token || token === 'undefined') {
+        this.exit()
         return
       }
       // 连接成功后
@@ -236,7 +241,7 @@ export default {
       this.socket.send(data)
     },
     socketOnMessage () {
-      let _this = this
+      const _this = this
       this.socket.onmessage = (message) => {
         const messageJson = JSON.parse(message.data)
         // 消息路由
@@ -265,6 +270,10 @@ export default {
               }
               _this.application = newApp
             }
+            break
+          case 'AUTHENTICATION_FAILURE':
+            this.exit()
+            router.push({ name: 'login' })
             break
         }
       }
