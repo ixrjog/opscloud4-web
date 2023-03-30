@@ -5,7 +5,7 @@
         <div><b>最新构建任务</b></div>
         <el-table :data="table.build.data" style="width: 100%">
           <el-table-column prop="jobName" label="名称" sortable></el-table-column>
-          <el-table-column prop="username" label="操作用户" width="100"></el-table-column>
+          <el-table-column prop="username" label="操作用户" width="120"></el-table-column>
           <el-table-column prop="buildDetails" label="环境类型" width="80">
             <template v-slot="scope">
               <span>{{ scope.row.buildDetails.build.dict.env }}</span>
@@ -41,13 +41,13 @@
         <div><b>最新部署任务</b></div>
         <el-table :data="table.deploy.data" style="width: 100%">
           <el-table-column prop="jobName" label="名称"></el-table-column>
-          <el-table-column prop="username" label="操作用户" width="100"></el-table-column>
+          <el-table-column prop="username" label="操作用户" width="120"></el-table-column>
           <el-table-column prop="deployDetails" label="环境类型" width="80">
             <template v-slot="scope">
               <span>{{ scope.row.deployDetails.deploy.dict.env }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="deployDetails" label="部署类型" width="80">
+          <el-table-column prop="deployDetails" label="部署类型" width="120">
             <template v-slot="scope">
               <span>{{ scope.row.deployDetails.deploy.deployType }}</span>
             </template>
