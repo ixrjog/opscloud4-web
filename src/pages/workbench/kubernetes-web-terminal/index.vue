@@ -209,10 +209,6 @@ export default {
 
 <style scoped>
 
-.el-button {
-  margin-left: 5px
-}
-
 .terminal-layout {
   margin-top: 5px;
 }
