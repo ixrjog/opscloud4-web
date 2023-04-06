@@ -2,7 +2,7 @@
   <div>
     <el-row style="margin-bottom: 20px">
       <el-card class="box-card" shadow="hover">
-        <div><b>最新构建任务</b></div>
+        <div><b>Latest {{queryParam.buildSize}} build task details</b></div>
         <el-table :data="table.build.data" style="width: 100%">
           <el-table-column prop="jobName" label="名称" sortable></el-table-column>
           <el-table-column prop="username" label="操作用户" width="120"></el-table-column>
@@ -38,7 +38,7 @@
     </el-row>
     <el-row>
       <el-card class="box-card" shadow="hover">
-        <div><b>最新部署任务</b></div>
+        <div><b>Latest {{queryParam.deploySize}} deploy task details</b></div>
         <el-table :data="table.deploy.data" style="width: 100%">
           <el-table-column prop="jobName" label="名称"></el-table-column>
           <el-table-column prop="username" label="操作用户" width="120"></el-table-column>
@@ -99,7 +99,8 @@ export default {
         fetchDataTimer: null
       },
       queryParam: {
-        size: 8
+        buildSize: 6,
+        deploySize: 10
       },
       table: {
         build: {
@@ -137,18 +138,19 @@ export default {
       }
     },
     getLatestBuild () {
-      GET_LATEST_LEO_BUILD({ size: this.queryParam.size })
+      GET_LATEST_LEO_BUILD({ size: this.queryParam.buildSize })
         .then(res => {
           this.table.build.data = res.body
         })
     },
     getLatestDeploy () {
-      GET_LATEST_LEO_DEPLOY({ size: this.queryParam.size })
+      GET_LATEST_LEO_DEPLOY({ size: this.queryParam.deploySize })
         .then(res => {
           this.table.deploy.data = res.body
         })
     },
     start () {
+      this.fetchData()
       this.setTimers()
     },
     fetchData () {
