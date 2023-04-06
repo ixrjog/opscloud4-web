@@ -66,7 +66,7 @@ export default {
       /**
        * OPSCLOUD前端版本号
        */
-      version: '4.3.0'
+      version: '4.4.0'
     }
   },
   components: {
