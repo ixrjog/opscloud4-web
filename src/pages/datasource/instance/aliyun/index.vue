@@ -389,21 +389,6 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="Log日志服务" name="log">
-        <el-row :gutter="20">
-          <el-col :span="10">
-            <el-card shadow="never">
-              <aliyun-log-table :instanceId="instance.id" ref="aliyunLogTable"
-                                @handleSelLog="handleSelLog"></aliyun-log-table>
-            </el-card>
-          </el-col>
-          <el-col :span="14">
-            <el-card shadow="never">
-              <aliyun-log-member-table ref="aliyunLogMemberTable"></aliyun-log-member-table>
-            </el-card>
-          </el-col>
-        </el-row>
-      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -413,8 +398,6 @@ import { PUSH_ASSET } from '@/api/modules/datasource/datasource.asset.api.js'
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
-import AliyunLogTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogTable'
-import AliyunLogMemberTable from '../../../../components/opscloud/datasource/aliyun/log/AliyunLogMemberTable'
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
 
@@ -809,8 +792,6 @@ export default {
   components: {
     AssetTable,
     DsChildrenTag,
-    AliyunLogTable,
-    AliyunLogMemberTable,
     EntryDetail,
     DatasourceInstanceTitle
   },
@@ -882,9 +863,6 @@ export default {
         this.$refs.domainTable.fetchData()
         return
       }
-      if (tab.name === 'log') {
-        this.$refs.aliyunLogTable.fetchData()
-      }
     },
     init () {
       setTimeout(() => {
@@ -942,9 +920,6 @@ export default {
       }).then(() => {
         this.$message.success('后台任务执行中！')
       })
-    },
-    handleSelLog (logId) {
-      this.$refs.aliyunLogMemberTable.initData(logId)
     },
     onCopy (e) {
       this.$message.success('内容已复制到剪切板！')
