@@ -14,8 +14,8 @@ export function toPodPhaseType (pod) {
   return pod.isComplete && pod.phase === 'Running' ? 'success' : 'warning'
 }
 
-export function toPodClass (pod) {
-  if (pod.properties.restartCount === '0') {
+export function toPodClass (podRestartCount) {
+  if (parseInt(podRestartCount) === 0) {
     return 'podNormal'
   } else {
     return 'podFault'

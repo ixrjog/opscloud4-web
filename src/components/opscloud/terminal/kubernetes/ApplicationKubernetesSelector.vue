@@ -58,7 +58,7 @@
               <!-- Pod容器组 -->
               <div class="podClass">
                 <template v-for="pod in resource.assetContainers">
-                   <el-card shadow="hover" :class="pod | toPodClass" :key="pod.asset.name">
+                   <el-card shadow="hover" :class="pod.properties.restartCount | toPodClass" :key="pod.asset.name">
                    <!-- podName -->
                    <div style="margin-bottom: 2px">
                      <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"></copy-span>
