@@ -27,6 +27,9 @@ export default {
     iamPolicy: {
       visible: false
     },
+    awsIamUpdateLoginProfile: {
+      visible: false
+    },
     nacos: {
       visible: false
     },
@@ -49,6 +52,9 @@ export default {
       subscription: { visible: false }
     },
     applicationScaleReplicas: {
+      visible: false
+    },
+    applicationReduceReplicas: {
       visible: false
     }
   }

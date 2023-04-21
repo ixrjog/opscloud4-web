@@ -49,10 +49,16 @@
                                     @close="fetchData"></sns-subscription-ticket-editor>
     <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas"
                                               ref="applicationScaleReplicasTicketEditor"
-                                              @close="fetchData"></application-scale-replicas-ticket-editor>
+                                              @close="fetchData"/>
+    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.applicationReduceReplicas"
+                                               ref="applicationReduceReplicasTicketEditor"
+                                               @close="fetchData"/>
     <apollo-ticket-editor :formStatus="formStatus.ticket.apollo"
                           ref="apolloTicketEditor"
-                          @close="fetchData"></apollo-ticket-editor>
+                          @close="fetchData"/>
+    <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile"
+                                                ref="awsIamUpdateLoginProfileTicketEditor"
+                                                @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -83,6 +89,10 @@ import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import ApplicationScaleReplicasTicketEditor
   from '@/components/opscloud/workorder/ticket/ApplicationScaleReplicasTicketEditor'
 import ApolloTicketEditor from '@/components/opscloud/workorder/ticket/ApolloTicketEditor.vue'
+import ApplicationReduceReplicasTicketEditor
+  from '@/components/opscloud/workorder/ticket/ApplicationReduceReplicasTicketEditor.vue'
+import AwsIamUpdateLoginProfileTicketEditor
+  from '@/components/opscloud/workorder/ticket/AwsIamUpdateLoginProfileTicketEditor.vue'
 
 export default {
   data () {
@@ -116,7 +126,9 @@ export default {
     SnsTopicTicketEditor,
     SnsSubscriptionTicketEditor,
     ApplicationScaleReplicasTicketEditor,
-    ApolloTicketEditor
+    ApplicationReduceReplicasTicketEditor,
+    ApolloTicketEditor,
+    AwsIamUpdateLoginProfileTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -218,9 +230,17 @@ export default {
           this.handleOpenTicketEditor(this.formStatus.ticket.applicationScaleReplicas)
           this.$refs.applicationScaleReplicasTicketEditor.initData(ticket)
           break
+        case this.workOrderKeyConstants.APPLICATION_REDUCE_REPLICAS:
+          this.handleOpenTicketEditor(this.formStatus.ticket.applicationReduceReplicas)
+          this.$refs.applicationReduceReplicasTicketEditor.initData(ticket)
+          break
         case this.workOrderKeyConstants.APOLLO:
           this.handleOpenTicketEditor(this.formStatus.ticket.apollo)
           this.$refs.apolloTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.AWS_IAM_UPDATE_LOGIN_PROFILE:
+          this.handleOpenTicketEditor(this.formStatus.ticket.awsIamUpdateLoginProfile)
+          this.$refs.awsIamUpdateLoginProfileTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
