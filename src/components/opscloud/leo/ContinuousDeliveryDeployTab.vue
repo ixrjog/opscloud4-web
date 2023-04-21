@@ -212,7 +212,9 @@ export default {
       leaderLineOptions: leaderLineOptions,
       topDeployId: '',
       data: {
+        // 查询当前的部署
         deploy: '',
+        // 部署详情列表
         deploys: [],
         deployDetails: {},
         deploymentVersionDetails: []
@@ -385,6 +387,10 @@ export default {
     sendMessage (message) {
       this.socketOnSend(JSON.stringify(message))
     },
+    /**
+     * 设置数据并重绘链接线
+     * @param deploys
+     */
     setDetails (deploys) {
       if (deploys.length === 0) {
         this.removeLine()
@@ -397,7 +403,14 @@ export default {
         this.topDeployId = deploys[0].id
       }
       if (this.data.deploy !== '') {
-        if (this.data.deploy.id < (this.topDeployId - 4)) {
+        let find = false
+        for (const d of deploys) {
+          if (d.id === this.data.deploy.id) {
+            find = true
+            break
+          }
+        }
+        if(!find){
           this.removeLine()
         }
       }
