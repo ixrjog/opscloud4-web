@@ -1,5 +1,7 @@
 <template>
-  <img :src="icon" :style="style">
+  <div class="img">
+    <img :src="icon">
+  </div>
 </template>
 
 <script>
@@ -53,77 +55,87 @@ export default {
       switch (this.instanceType) {
         case DsInstanceType.ALIYUN.name:
           this.icon = iconUrl.aliyun
-          this.style = 'width: 90px'
           break
         case DsInstanceType.AWS.name:
           this.icon = iconUrl.aws
-          this.style = 'width: 90px'
           break
         case DsInstanceType.LDAP.name:
           this.icon = iconUrl.ldap
-          this.style = 'width: 50px'
           break
         case DsInstanceType.NACOS.name:
           this.icon = iconUrl.nacos
-          this.style = 'width: 90px'
           break
         case DsInstanceType.KUBERNETES.name:
           this.icon = iconUrl.kubernetes
-          this.style = 'width: 90px'
           break
         case DsInstanceType.GITLAB.name:
           this.icon = iconUrl.gitlab
-          this.style = 'width: 90px'
           break
         case DsInstanceType.ZABBIX.name:
           this.icon = iconUrl.zabbix
-          this.style = 'width: 90px'
           break
         case DsInstanceType.DINGTALK_APP.name:
           this.icon = iconUrl.dingtalk
-          this.style = 'width: 50px'
           break
         case DsInstanceType.ANSIBLE.name:
           this.icon = iconUrl.ansible
-          this.style = 'width: 90px;'
           break
         case DsInstanceType.SONAR.name:
           this.icon = iconUrl.sonar
-          this.style = 'width: 90px'
           break
         case DsInstanceType.GUACAMOLE.name:
           this.icon = iconUrl.guacamole
-          this.style = 'width: 150px'
           break
         case DsInstanceType.JENKINS.name:
           this.icon = iconUrl.jenkins
-          this.style = 'width: 90px'
           break
         case DsInstanceType.NEXUS.name:
           this.icon = iconUrl.nexus
-          this.style = 'width: 90px'
           break
         case DsInstanceType.PROMETHEUS.name:
           this.icon = iconUrl.prometheus
-          this.style = 'width: 150px'
           break
         case DsInstanceType.HUAWEICLOUD.name:
           this.icon = iconUrl.huaweiCloud
-          this.style = 'width: 150px'
           break
         case DsInstanceType.CONSUL.name:
           this.icon = iconUrl.consul
-          this.style = 'width: 50px'
           break
         default:
           this.icon = iconUrl.common
-          this.style = 'width: 50px'
       }
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+img {
+  width: 45px;
+  transition: all .2s ease-out;
+}
+
+.img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2),
+    -12px -12px 24px rgba(255, 255, 255, 1);
+  transition: all .2s ease-out;
+
+  &:hover {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.2),
+    0 0 0 rgba(255, 255, 255, 0.8),
+      inset -12px -12px 24px rgba(0, 0, 0, 0.1),
+      inset -12px -12px 24px rgba(255, 255, 255, 1)
+  }
+
+  &:hover img {
+    width: 40px;
+  }
+}
 
 </style>
