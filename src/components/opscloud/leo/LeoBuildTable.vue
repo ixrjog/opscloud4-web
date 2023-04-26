@@ -70,11 +70,11 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
     <leo-job-editor :formStatus="formStatus.job" ref="jobEditor"
-                    @close="fetchData"></leo-job-editor>
-    <leo-do-build-editor :form-status="formStatus.build" ref="doBuildEditor">
-    </leo-do-build-editor>
+                    @close="fetchData"/>
+    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage" ref="doBuildKubernetesImageEditor"/>
+    <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+                         :form-status="formStatus.businessTag" @close="fetchData"/>
   </div>
 </template>
 
@@ -93,8 +93,9 @@ import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor'
-import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
 import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails.vue'
+import LeoDoBuildMavenPublishEditor from '@/components/opscloud/leo/LeoDoBuildMavenPublishEditor.vue'
+import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuildKubernetesImageEditor.vue'
 
 const activeOptions = [{
   value: true,
@@ -152,8 +153,14 @@ export default {
           updateTitle: '更新任务配置'
         },
         build: {
-          visible: false,
-          labelWidth: '150px'
+          kubernetesImage: {
+            visible: false,
+            labelWidth: '150px'
+          },
+          mavenPublish: {
+            visible: false,
+            labelWidth: '150px'
+          }
         }
       },
       queryParam: {
@@ -190,7 +197,11 @@ export default {
     EnvTag,
     BusinessTagEditor,
     LeoJobEditor,
-    LeoDoBuildEditor,
+    /**
+     * 默认 kubernetes-image
+     */
+    LeoDoBuildKubernetesImageEditor,
+    LeoDoBuildMavenPublishEditor,
     LeoBuildDetails
   },
   filters: {},
@@ -302,8 +313,8 @@ export default {
       })
     },
     handleBuild (row) {
-      this.formStatus.build.visible = true
-      this.$refs.doBuildEditor.initData(Object.assign({}, row))
+      this.formStatus.build.kubernetesImage.visible = true
+      this.$refs.doBuildKubernetesImageEditor.initData(Object.assign({}, row))
     },
     fetchData () {
       if (this.queryParam.applicationId === '') return

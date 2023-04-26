@@ -18,7 +18,7 @@
               :value="item.value">
             </el-option>
           </el-select>
-<!--          <el-tag :type="scope.row.role | toPermissionRoleType">{{ scope.row.role | toPermissionRoleText }}</el-tag>-->
+          <!--          <el-tag :type="scope.row.role | toPermissionRoleType">{{ scope.row.role | toPermissionRoleText }}</el-tag>-->
         </template>
       </el-table-column>
       <slot name="extend">
@@ -37,9 +37,9 @@
       </el-table-column>
       <el-table-column label="操作" width="160" v-if="ticketPhase === orderPhase.NEW">
         <template v-slot="scope">
-<!--          <el-button v-if="tableLayout.role !== null && tableLayout.role" type="warning" plain size="mini"-->
-<!--                     @click="updateEntry(scope.row)">角色-->
-<!--          </el-button>-->
+          <!--          <el-button v-if="tableLayout.role !== null && tableLayout.role" type="warning" plain size="mini"-->
+          <!--                     @click="updateEntry(scope.row)">角色-->
+          <!--          </el-button>-->
           <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">移除</el-button>
         </template>
       </el-table-column>
@@ -82,7 +82,7 @@ export default {
       roleOptions: roleOptions
     }
   },
-  filters:{
+  filters: {
     toPermissionRoleType, toPermissionRoleText
   },
   methods: {

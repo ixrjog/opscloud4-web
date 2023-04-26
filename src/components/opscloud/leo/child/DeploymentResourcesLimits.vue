@@ -14,7 +14,7 @@ export default {
       CPU: 'cpu',
       Memory: 'mem'
     }
-  },
+  }
 }
 </script>
 

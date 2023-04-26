@@ -53,8 +53,7 @@
 <script>
 
 // API
-import { QUERY_MESSAGE_TEMPLATE_PAGE, UPDATE_MESSAGE_TEMPLATE } from '@/api/modules/template/message.template.api'
-import SelectItem from '@/components/opscloud/common/SelectItem.vue'
+import { UPDATE_MESSAGE_TEMPLATE } from '@/api/modules/template/message.template.api'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown.vue'
 import util from '@/libs/util'
 
@@ -89,7 +88,6 @@ export default {
   name: 'MessageTemplateEditor',
   props: ['formStatus'],
   components: {
-    SelectItem,
     MyMarkdown,
     editor: require('vue2-ace-editor')
   },

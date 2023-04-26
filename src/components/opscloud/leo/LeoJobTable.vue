@@ -120,11 +120,11 @@
                 @handleSizeChange="handleSizeChange"></pagination>
     <leo-job-editor :formStatus="formStatus.job" ref="jobEditor"
                     @close="fetchData"></leo-job-editor>
-    <leo-do-build-editor :form-status="formStatus.build" ref="doBuildEditor">
-    </leo-do-build-editor>
+    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage" ref="doBuildKubernetesImageEditor"/>
+    <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
-    <leo-build-history :form-status="formStatus.history" ref="leoBuildHistory"></leo-build-history>
+                         :form-status="formStatus.businessTag" @close="fetchData"/>
+    <leo-build-history :form-status="formStatus.history" ref="leoBuildHistory"/>
   </div>
 </template>
 
@@ -148,8 +148,9 @@ import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor'
-import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
 import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
+import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuildKubernetesImageEditor.vue'
+import LeoDoBuildMavenPublishEditor from '@/components/opscloud/leo/LeoDoBuildMavenPublishEditor.vue'
 
 const activeOptions = [{
   value: true,
@@ -188,8 +189,14 @@ export default {
           updateTitle: '更新任务配置'
         },
         build: {
-          visible: false,
-          labelWidth: '150px'
+          kubernetesImage: {
+            visible: false,
+            labelWidth: '150px'
+          },
+          mavenPublish: {
+            visible: false,
+            labelWidth: '150px'
+          }
         },
         history: {
           visible: false,
@@ -229,7 +236,8 @@ export default {
     EnvTag,
     BusinessTagEditor,
     LeoJobEditor,
-    LeoDoBuildEditor,
+    LeoDoBuildKubernetesImageEditor,
+    LeoDoBuildMavenPublishEditor,
     LeoBuildHistory
   },
   filters: {},
@@ -347,8 +355,16 @@ export default {
       })
     },
     handleBuild (row) {
-      this.formStatus.build.visible = true
-      this.$refs.doBuildEditor.initData(Object.assign({}, row))
+      const buildType = row?.configDetails?.job?.build?.type || 'kubernetes-image'
+      switch (buildType) {
+        case 'maven-publish':
+          this.formStatus.build.mavenPublish.visible = true
+          this.$refs.doBuildMavenPublishEditor.initData(Object.assign({}, row))
+          break
+        default:
+          this.formStatus.build.kubernetesImage.visible = true
+          this.$refs.doBuildKubernetesImageEditor.initData(Object.assign({}, row))
+      }
     },
     fetchData () {
       this.table.loading = true

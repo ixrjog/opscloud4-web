@@ -111,4 +111,3 @@ export function DELETE_WORK_ORDER_TICKET_BY_ORDER_AND_PHASE (param) {
     params: param
   })
 }
-

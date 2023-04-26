@@ -111,7 +111,7 @@
         </div>
       </el-col>
       <el-col :span="18" style="margin-top: 10px">
-        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
+        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照
         </el-tag>
         <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
           <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
@@ -146,9 +146,9 @@
         </div>
       </el-col>
     </el-row>
-    <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"></leo-create-deploy-editor>
+    <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"/>
     <leo-deploy-history :form-status="formStatus.history" :applicationId="queryParam.applicationId"
-                        :envType="queryParam.envType" ref="deployHistory"></leo-deploy-history>
+                        :envType="queryParam.envType" ref="deployHistory"/>
   </div>
 </template>
 
@@ -410,7 +410,7 @@ export default {
             break
           }
         }
-        if(!find){
+        if (!find) {
           this.removeLine()
         }
       }

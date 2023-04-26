@@ -54,13 +54,21 @@
                     build.buildDetails.build.gitLab.project.commit.webUrl !== null">
                 <a target="blank" :href="build.buildDetails.build.gitLab.project.commit.webUrl" style="color: #179bb9"><i class="fab fa-git-alt" style="margin-right: 1px"></i></a></span>
             </div>
-            <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}
-              <el-tag style="margin-left: 2px"
-                      :type="build.isImageExists ? 'success' : 'warning'">{{ build.isImageExists ? '已验证' : '未验证' }}</el-tag>
-            </div>
-            <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
             <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
             <div><span class="label">执行引擎</span> {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''}}</div>
+            <!--kubernetes-image-->
+            <template v-if="build.buildDetails.build.type=== 'kubernetes-image'">
+              <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}
+                <el-tag style="margin-left: 2px"
+                        :type="build.isImageExists ? 'success' : 'warning'">{{ build.isImageExists ? '已验证' : '未验证' }}</el-tag>
+              </div>
+              <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
+            </template>
+            <!--maven-publish-->
+            <template v-if="build.buildDetails.build.type=== 'maven-publish'">
+              <div><span class="label">构件仓库</span> {{ build.buildDetails.build.nexus.instance.name }}/{{ build.buildDetails.build.nexus.repository}}</div>
+              <div><span class="label">完整名称</span> {{ build.buildDetails.build.nexus.component.group }}:{{ build.buildDetails.build.nexus.component.name }}:{{ build.versionName }}</div>
+            </template>
           </el-row>
         </el-col>
       </el-row>

@@ -8,8 +8,6 @@
         <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
                          :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
                          cluster=""></deployment-name>
-
-
         <deploy-number-icon :deploy="deploy"></deploy-number-icon>
         <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
 <!--        操作用户-->

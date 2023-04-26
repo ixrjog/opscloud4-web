@@ -861,7 +861,6 @@ export default {
       }
       if (tab.name === 'domain') {
         this.$refs.domainTable.fetchData()
-        return
       }
     },
     init () {

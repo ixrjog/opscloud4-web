@@ -29,9 +29,6 @@
             </template>
           </el-table-column>
           <el-table-column label="操作" width="100">
-            <template v-slot="scope">
-              <!--              <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
-            </template>
           </el-table-column>
         </el-table>
       </el-card>
@@ -70,9 +67,9 @@
             </template>
           </el-table-column>
           <el-table-column label="操作" width="100">
-            <template v-slot="scope">
-              <!--              <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
-            </template>
+<!--            <template v-slot="scope">-->
+<!--                            <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
+<!--            </template>-->
           </el-table-column>
         </el-table>
       </el-card>
@@ -83,10 +80,6 @@
 <script>
 
 import { GET_LATEST_LEO_BUILD, GET_LATEST_LEO_DEPLOY } from '@/api/modules/report/report.api'
-import SelectItem from '@/components/opscloud/common/SelectItem.vue'
-import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
-import EnvTag from '@/components/opscloud/common/tag/EnvTag.vue'
-import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails.vue'
 import BuildResult from '@/components/opscloud/leo/child/BuildResult.vue'
 import DeployResult from '@/components/opscloud/leo/child/DeployResult.vue'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
@@ -114,10 +107,6 @@ export default {
   },
   components: {
     BuildResult,
-    SelectItem,
-    BusinessTags,
-    EnvTag,
-    LeoBuildDetails,
     DeployResult,
     DeploymentName
   },

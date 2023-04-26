@@ -33,7 +33,6 @@ export default {
     handleClick (tab, event) {
       if (tab.name === 'message') {
         this.$refs.messageTemplateTable.fetchData()
-        return
       }
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="构建任务"
+  <el-dialog title="MavenPublish 构建任务"
              :visible.sync="formStatus.visible" width="50%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="构建" name="build">
@@ -43,12 +43,18 @@
             <el-alert v-show="JSON.stringify(this.branch) !== '{}'"
                       style="margin-top: 5px; background-color: #e56c0d"
                       :closable="false">
-              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF"><i class="fab fa-git-alt" style="margin-right: 1px"></i><b>{{ branch.commitId }}</b></a>
+              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF"><i class="fab fa-git-alt"
+                                                                                      style="margin-right: 1px"></i><b>{{
+                  branch.commitId
+                }}</b></a>
               <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
             </el-alert>
           </el-form-item>
-          <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
-            <el-input v-model="doBuildParam.versionName"></el-input>
+          <el-form-item label="组件名称" :label-width="formStatus.labelWidth" required>
+            <el-input v-model="mavenPublishInfo.artifactId" readonly placeholder="自动填充，从配置文件获取"></el-input>
+          </el-form-item>
+          <el-form-item label="版本名称" :label-width="formStatus.labelWidth" required>
+            <el-input v-model="doBuildParam.versionName" readonly placeholder="自动填充，从配置文件获取"></el-input>
           </el-form-item>
           <el-form-item label="版本说明" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionDesc"></el-input>
@@ -70,7 +76,12 @@
 <script>
 
 // API
-import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
+import {
+  DO_BUILD,
+  GET_BUILD_BRANCH_OPTIONS,
+  CREATE_BUILD_BRANCH,
+  GET_BUILD_MAVEN_PUBLISH_INFO
+} from '@/api/modules/leo/leo.build.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 
 const options = {
@@ -101,6 +112,10 @@ export default {
       editing: false,
       branch: {},
       branchOptions: [],
+      mavenPublishInfo: {
+        artifactId: '',
+        version: ''
+      },
       branchOptionsLoading: false,
       options: options,
       style: { height: '400px' },
@@ -109,7 +124,7 @@ export default {
       }
     }
   },
-  name: 'LeoDoBuildEditor',
+  name: 'LeoDoBuildMavenPublishEditor',
   props: ['formStatus'],
   components: {
     SelectItem
@@ -132,10 +147,15 @@ export default {
     initData (leoJob) {
       this.activeName = 'build'
       this.branch = {}
+      this.mavenPublishInfo = {
+        artifactId: '',
+        version: ''
+      }
       this.buttons.doBuilding = false
       this.leoJob = leoJob
       this.doBuildParam.branch = leoJob.configDetails.job.gitLab.project.branch
       this.doBuildParam.jobId = this.leoJob.id
+      this.doBuildParam.versionName = ''
       this.getBranchOptionsParam = {
         jobId: this.leoJob.id,
         sshUrl: this.leoJob.configDetails.job.gitLab.project.sshUrl,
@@ -156,6 +176,10 @@ export default {
           const branch = option.options.find(e => (e.value === this.doBuildParam.branch))
           if (branch !== undefined) {
             this.branch = branch
+            // 清除配置
+            this.mavenPublishInfo.artifactId = ''
+            this.doBuildParam.versionName = ''
+            this.getMavenPublishInfo()
             break
           }
         }
@@ -168,6 +192,18 @@ export default {
           this.branchOptions = res.body.options
           this.branchOptionsLoading = false
           this.handleChange()
+        })
+    },
+    getMavenPublishInfo () {
+      const request = {
+        ref: this.doBuildParam.branch,
+        tools: this.leoJob.configDetails.job.build.tools,
+        ...this.getBranchOptionsParam
+      }
+      GET_BUILD_MAVEN_PUBLISH_INFO(request)
+        .then(res => {
+          this.mavenPublishInfo = res.body
+          this.doBuildParam.versionName = res.body.version
         })
     },
     createBranch () {
@@ -183,8 +219,24 @@ export default {
         })
     },
     doBuild () {
+      if (this.mavenPublishInfo.artifactId === '') {
+        this.$message.error('未指定组件名称！')
+        return
+      }
+      if (this.doBuildParam.versionName === '') {
+        this.$message.error('未指定版本名称！')
+        return
+      }
       this.buttons.doBuilding = true
-      DO_BUILD(this.doBuildParam).then(res => {
+      // 构建参数
+      const params = {
+        artifactId: this.mavenPublishInfo.artifactId,
+      }
+      const request = {
+        ...this.doBuildParam,
+        params: params
+      }
+      DO_BUILD(request).then(res => {
         if (res.success) {
           this.$message({
             type: 'success',

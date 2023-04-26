@@ -4,12 +4,18 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="leoJob">
-          <el-form-item label="显示名称" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="leoJob.name" placeholder="请输入内容"></el-input>
+          <el-form-item label="显示名称" :label-width="formStatus.labelWidth" required wit>
+            <el-input v-model="leoJob.name" placeholder="请输入内容" style="width: 500px"></el-input>
           </el-form-item>
           <el-form-item label="任务主键" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="leoJob.jobKey" placeholder="请输入内容"
-                      :disabled="leoJob.id !== '' && leoJob.id !== 0"></el-input>
+            <el-input v-model="leoJob.jobKey" placeholder="请输入内容" style="width: 500px"
+                      :disabled="leoJob.id !== '' && leoJob.id !== 0">
+              <template slot="append">
+                <el-button size="mini" type="primary" @click="handleBuildKey">
+                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                </el-button>
+              </template>
+            </el-input>
           </el-form-item>
           <el-form-item label="应用" :label-width="formStatus.labelWidth" required>
             <el-select v-model.trim="leoJob.applicationId" filterable clearable
@@ -299,6 +305,9 @@ export default {
           this.$message.success('创建CR仓库成功!')
         })
     },
+    handleBuildKey () {
+      this.leoJob.jobKey = this.leoJob.name.toUpperCase()
+    },
     handleAdd () {
       ADD_LEO_JOB(this.leoJob)
         .then(() => {
@@ -331,3 +340,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

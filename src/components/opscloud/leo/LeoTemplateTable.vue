@@ -61,8 +61,11 @@
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowUpgrade(scope.row)"
-                     :disabled="scope.row.jobSize === 0">升级</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)" :disabled="scope.row.jobSize !==0">删除</el-button>
+                     :disabled="scope.row.jobSize === 0">升级
+          </el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)"
+                     :disabled="scope.row.jobSize !==0">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -201,7 +204,7 @@ export default {
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
     },
-    handleRowUpgrade(row){
+    handleRowUpgrade (row) {
       this.$confirm('此操作将批量升级所有关联任务模板版本?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

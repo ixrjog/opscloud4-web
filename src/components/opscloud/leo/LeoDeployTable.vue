@@ -59,7 +59,6 @@ import Pagination from '../common/page/Pagination'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor'
-import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
 import LeoDeployDetails from '@/components/opscloud/leo/LeoDeployDetails.vue'
 
 const activeOptions = [{
@@ -124,7 +123,6 @@ export default {
     EnvTag,
     BusinessTagEditor,
     LeoJobEditor,
-    LeoDoBuildEditor,
     LeoDeployDetails
   },
   filters: {},
