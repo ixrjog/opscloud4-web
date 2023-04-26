@@ -229,10 +229,11 @@ export default {
 
     .position {
       position: absolute;
-      right: 0;
-      bottom: 10%;
-      left: 0;
-      margin: auto;
+      //right: 0;
+      bottom: 5%;
+      right: 3%;
+      //left: 0;
+      //margin-left: auto;
       opacity: 0.3;
     }
   }

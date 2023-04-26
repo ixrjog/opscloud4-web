@@ -5,7 +5,7 @@
         <h1>{{ title }}</h1>
       </div>
       <el-row style="margin-bottom: 5px" :gutter="24">
-        <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
+        <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
         <el-select
           v-model="queryParam.tagId" filterable clearable remote reserve-keyword
           placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">

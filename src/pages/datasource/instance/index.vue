@@ -1,11 +1,11 @@
-  <template>
+<template>
   <d2-container>
     <div>
       <h1>数据源实例</h1>
     </div>
     <div>
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: -5px">
-        <el-select v-model="queryParam.instanceType" clearable placeholder="数据源类型" filterable>
+        <el-select v-model="queryParam.instanceType" clearable placeholder="数据源类型" filterable @change="fetchData">
           <el-option
             v-for="item in dsInstanceType"
             :key="item.name"
