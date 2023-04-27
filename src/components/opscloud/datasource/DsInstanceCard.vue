@@ -234,7 +234,7 @@ export default {
       right: 3%;
       //left: 0;
       //margin-left: auto;
-      opacity: 0.3;
+      opacity: 0.8;
     }
   }
 }
