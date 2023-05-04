@@ -122,15 +122,15 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2),
-    -12px -12px 24px rgba(255, 255, 255, 1);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1),
+    -5px -5px 10px rgba(255, 255, 255, 0.5);
   transition: all .2s ease-out;
 
   &:hover {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.2),
     0 0 0 rgba(255, 255, 255, 0.8),
-      inset -12px -12px 24px rgba(0, 0, 0, 0.1),
-      inset -12px -12px 24px rgba(255, 255, 255, 1)
+      inset -5px -5px 10px rgba(0, 0, 0, 0.1),
+      inset -5px -5px 10px rgba(255, 255, 255, 0.5)
   }
 
   &:hover img {
