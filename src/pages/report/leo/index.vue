@@ -4,10 +4,13 @@
       <h1 v-if="false">{{ title }}</h1>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="持续交付报表" name="report">
-          <continuous-delivery-report ref="continuousDeliveryReport"></continuous-delivery-report>
+          <continuous-delivery-report ref="continuousDeliveryReport"/>
         </el-tab-pane>
         <el-tab-pane label="作业监控" name="monitor">
-          <continuous-delivery-monitor ref="continuousDeliveryMonitor"></continuous-delivery-monitor>
+          <continuous-delivery-monitor ref="continuousDeliveryMonitor"/>
+        </el-tab-pane>
+        <el-tab-pane label="持续交付Prod报表" name="prodReport">
+          <continuous-delivery-prod-report ref="continuousDeliveryProdReport"/>
         </el-tab-pane>
       </el-tabs>
     </template>
@@ -18,6 +21,7 @@
 
 import ContinuousDeliveryReport from '@/components/opscloud/report/leo/ContinuousDeliveryReport.vue'
 import ContinuousDeliveryMonitor from '@/components/opscloud/report/leo/ContinuousDeliveryMonitor.vue'
+import ContinuousDeliveryProdReport from '@/components/opscloud/report/leo/ContinuousDeliveryProdReport.vue'
 
 export default {
   name: 'ContinuousDelivery',
@@ -35,7 +39,8 @@ export default {
   },
   components: {
     ContinuousDeliveryReport,
-    ContinuousDeliveryMonitor
+    ContinuousDeliveryMonitor,
+    ContinuousDeliveryProdReport
   },
   methods: {
     handleClick (tab, event) {
@@ -45,6 +50,9 @@ export default {
       }
       if (tab.name === 'monitor') {
         this.$refs.continuousDeliveryMonitor.start()
+      }
+      if (tab.name === 'prodReport') {
+        this.$refs.continuousDeliveryProdReport.fetchData()
       }
     }
   }
