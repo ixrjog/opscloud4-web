@@ -150,6 +150,7 @@ export default {
         queryName: name,
         applicationId: this.application.id,
         envType: this.env.envType,
+        buildType: 'kubernetes-image',
         extend: false,
         page: 1,
         length: 20
