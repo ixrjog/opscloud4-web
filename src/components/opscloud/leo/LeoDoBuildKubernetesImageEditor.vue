@@ -165,6 +165,8 @@ export default {
         openTag: false
       }
       this.getBranchOptions()
+      this.doBuildParam.assetId = ''
+
       if (this.leoJob.envType === 4) {
         this.doBuildParam.autoDeploy = false
       } else {
