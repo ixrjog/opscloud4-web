@@ -43,9 +43,28 @@
             <el-alert v-show="JSON.stringify(this.branch) !== '{}'"
                       style="margin-top: 5px; background-color: #e56c0d"
                       :closable="false">
-              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF"><i class="fab fa-git-alt" style="margin-right: 1px"></i><b>{{ branch.commitId }}</b></a>
+              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF"><i class="fab fa-git-alt"
+                                                                                      style="margin-right: 1px"></i><b>{{
+                  branch.commitId
+                }}</b></a>
               <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
             </el-alert>
+          </el-form-item>
+          <el-form-item label="部署选项" :label-width="formStatus.labelWidth" required>
+            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">构建后自动部署</el-checkbox>
+          </el-form-item>
+          <el-form-item label="Deployment" :label-width="formStatus.labelWidth">
+            <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
+                       :disabled="!this.doBuildParam.autoDeploy"
+                       placeholder="选择Deployment" style="width: 500px" :remote-method="getLeoDeployDeployment">
+              <el-option
+                v-for="item in deployDeploymentOptions"
+                :key="item.businessId"
+                :label="item.name"
+                :value="item.businessId">
+                <select-item :name="item.name" :comment="item.resourceType"></select-item>
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
@@ -72,6 +91,7 @@
 // API
 import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
+import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -90,6 +110,8 @@ export default {
         jobId: '',
         branch: '',
         params: {},
+        assetId: '',
+        autoDeploy: true,
         versionName: '',
         versionDesc: ''
       },
@@ -102,6 +124,7 @@ export default {
       branch: {},
       branchOptions: [],
       branchOptionsLoading: false,
+      deployDeploymentOptions: [],
       options: options,
       style: { height: '400px' },
       buttons: {
@@ -142,6 +165,11 @@ export default {
         openTag: false
       }
       this.getBranchOptions()
+      if (this.leoJob.envType === 4) {
+        this.doBuildParam.autoDeploy = false
+      } else {
+        this.getLeoDeployDeployment()
+      }
     },
     handleClick (tab, event) {
       if (tab.name === 'build') {
@@ -160,6 +188,21 @@ export default {
           }
         }
       }
+    },
+    getLeoDeployDeployment () {
+      if (!this.doBuildParam.autoDeploy) return
+      if (this.doBuildParam.jobId === '') return
+      const requestBody = {
+        jobId: this.doBuildParam.jobId
+      }
+      QUERY_LEO_DEPLOY_DEPLOYMENT(requestBody)
+        .then(res => {
+          this.deployDeploymentOptions = res.body
+          // 单个则默认选中
+          if (this.deployDeploymentOptions.length === 1) {
+            this.doDeployParam.assetId = this.deployDeploymentOptions[0].businessId
+          }
+        })
     },
     getBranchOptions () {
       this.branchOptionsLoading = true
