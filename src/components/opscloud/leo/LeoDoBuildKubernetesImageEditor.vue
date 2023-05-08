@@ -200,7 +200,7 @@ export default {
           this.deployDeploymentOptions = res.body
           // 单个则默认选中
           if (this.deployDeploymentOptions.length === 1) {
-            this.doDeployParam.assetId = this.deployDeploymentOptions[0].businessId
+            this.doBuildParam.assetId = this.deployDeploymentOptions[0].businessId
           }
         })
     },
