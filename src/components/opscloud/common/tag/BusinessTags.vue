@@ -3,7 +3,7 @@
     <span v-for="item in tags" :key="item.id" :style="spanStyle">
       <el-tooltip class="item" effect="light" :content="item.comment === '' ? '未定义': item.comment"
                   placement="top-start">
-        <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px" :style="{ color: item.color }">
+        <el-tag size="mini" style="margin-left: 5px" :style="{ color: item.color }">
           {{ item.tagKey }}
         </el-tag>
       </el-tooltip>

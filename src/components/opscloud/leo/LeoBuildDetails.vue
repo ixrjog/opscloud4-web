@@ -7,6 +7,7 @@
         <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ build.ago }}</span>
         <span style="margin-left: 8px"><i
           class="fab fa-teamspeak"></i>{{ build.buildDetails.build.dict.displayName }}</span>
+        <business-tags :tags="build.tags" style="margin-left: 5px"/>
         <el-tooltip class="item" effect="light" content="停止构建" placement="top-start" v-if="!build.isFinish">
           <el-button class="btn" type="text" @click="stopBuild(build.id)" :loading="buttons.stopping">
             <i class="far fa-stop-circle"></i>
@@ -94,6 +95,7 @@ import PipelineStep from '@/components/opscloud/leo/child/PipelineStep'
 
 import TerminalWithConsoleStream from '@/components/opscloud/leo/child/TerminalWithConsoleStream'
 import LeoBuildDetailsEditor from '@/components/opscloud/leo/LeoBuildDetailsEditor'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 
 const layout = {
   nodeSpacingH: 90, // 节点间距
@@ -131,7 +133,8 @@ export default {
     TerminalWithConsoleStream,
     BuildNumberIcon,
     BuildResult,
-    LeoBuildDetailsEditor
+    LeoBuildDetailsEditor,
+    BusinessTags
   },
   mounted () {
   },

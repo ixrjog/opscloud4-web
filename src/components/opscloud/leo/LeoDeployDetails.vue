@@ -2,18 +2,11 @@
   <div>
     <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
       <div slot="header">
-<!--        <b style="margin-right: 5px;color: #ef0808">{{ deploy.deployDetails.deploy.kubernetes.deployment.namespace === null ? 'Null'-->
-<!--          : deploy.deployDetails.deploy.kubernetes.deployment.namespace }}:{{ deploy.deployDetails.deploy.kubernetes.deployment.name }}</b>-->
-
         <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
                          :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
                          cluster=""></deployment-name>
         <deploy-number-icon :deploy="deploy"></deploy-number-icon>
         <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
-<!--        操作用户-->
-<!--        <span style="margin-left: 8px"-->
-<!--              v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null"><i-->
-<!--          class="fab fa-teamspeak"></i>{{ deploy.deployDetails.deploy.dict.displayName }}</span>-->
       </div>
       <el-row>
         <el-col :span="12">
@@ -24,6 +17,7 @@
               </span>
           <div><span class="label"
                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>{{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
+            <business-tags :tags="deploy.tags" style="margin-left: 5px"/>
           </div>
 <!--          <div><span class="label">部署状态</span>{{ deploy.deployStatus }}</div>-->
           <div><span class="label">部署结果</span>
@@ -54,6 +48,7 @@
 import DeployResult from '@/components/opscloud/leo/child/DeployResult.vue'
 import DeployNumberIcon from '@/components/opscloud/leo/child/DeployNumberIcon.vue'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 
 export default {
   name: 'LeoDeployDetails',
@@ -61,7 +56,8 @@ export default {
   components: {
     DeploymentName,
     DeployNumberIcon,
-    DeployResult
+    DeployResult,
+    BusinessTags
   }
 }
 </script>
