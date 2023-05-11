@@ -86,7 +86,17 @@ export default [
     component: () => import('@/pages/docs/workorder/gitlab'),
     meta: {
       auth: true,
-      title: '文档-Gitlab帮助'
+      title: '文档-GitLab帮助'
+    }
+  },
+  {
+    path: '/docs/workorder/deploy',
+    name: 'docs-workorder-deploy',
+    component: () => import('@/pages/docs/workorder/deploy'),
+    meta: {
+      auth: true,
+      title: '文档-应用发布申请帮助'
     }
   }
+
 ]
