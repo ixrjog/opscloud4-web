@@ -16,7 +16,7 @@
               <span>{{ scope.row.buildDetails.build.gitLab.project.sshUrl }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="buildDetails" label="构建分支" width="200">
+          <el-table-column prop="buildDetails" label="构建分支" width="80">
             <template v-slot="scope">
               <span>{{ scope.row.buildDetails.build.dict.branch }}</span>
             </template>
@@ -26,6 +26,11 @@
           <el-table-column prop="buildResult" label="构建结果" width="120">
             <template v-slot="scope">
               <build-result :build="scope.row"></build-result>
+            </template>
+          </el-table-column>
+          <el-table-column prop="tags" label="标签" width="120">
+            <template v-slot="scope">
+              <business-tags :tags="scope.row.tags"/>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="100">
@@ -66,6 +71,11 @@
               <deploy-result :deploy="scope.row"></deploy-result>
             </template>
           </el-table-column>
+          <el-table-column prop="tags" label="标签" width="120">
+            <template v-slot="scope">
+              <business-tags :tags="scope.row.tags"/>
+            </template>
+          </el-table-column>
           <el-table-column label="操作" width="100">
 <!--            <template v-slot="scope">-->
 <!--                            <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
@@ -83,6 +93,7 @@ import { GET_LATEST_LEO_BUILD, GET_LATEST_LEO_DEPLOY } from '@/api/modules/repor
 import BuildResult from '@/components/opscloud/leo/child/BuildResult.vue'
 import DeployResult from '@/components/opscloud/leo/child/DeployResult.vue'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 
 export default {
   name: 'ContinuousDeliveryMonitor',
@@ -108,7 +119,8 @@ export default {
   components: {
     BuildResult,
     DeployResult,
-    DeploymentName
+    DeploymentName,
+    BusinessTags
   },
   computed: {},
   destroyed () {
