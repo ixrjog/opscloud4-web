@@ -1,5 +1,5 @@
 <template>
-  <div class="img">
+  <div class="img" style="vertical-align: bottom;display: ">
     <img :src="icon">
   </div>
 </template>
@@ -24,7 +24,8 @@ const iconUrl = {
   prometheus: require('@/static/icons/ds-prometheus.svg'),
   huaweiCloud: require('@/static/icons/ds-huaweiCloud.svg'),
   consul: require('@/static/icons/ds-consul.svg'),
-  common: require('@/static/icons/ds-common.svg')
+  common: require('@/static/icons/ds-common.svg'),
+  aliyunDevops: require('@/static/icons/ds-aliyunDevops.svg')
 }
 
 export default {
