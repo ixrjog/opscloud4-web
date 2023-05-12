@@ -138,8 +138,14 @@ export default {
   },
   methods: {
     handleOpen () {
+      let basePath;
+      if(this.instance.instanceType === "ALIYUN_DEVOPS"){
+        basePath = 'devops'
+      }else {
+        basePath = this.instance.instanceType.toLocaleLowerCase()
+      }
       this.$router.push({
-        path: '/datasource/instance/' + this.instance.instanceType.toLocaleLowerCase() + '?id=' + this.instance.id + '&uuid=' + this.instance.uuid
+        path: '/datasource/instance/' + basePath + '?id=' + this.instance.id + '&uuid=' + this.instance.uuid
       })
     },
     needSetDSConfig (instanceType) {

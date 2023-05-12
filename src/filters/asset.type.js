@@ -52,6 +52,12 @@ export function getAssetTypeText (value) {
       return 'ACR命名空间'
     case DsInstanceAssetType.ALIYUN.ACR_REPOSITORY:
       return 'ACR仓库'
+    case DsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_PROJECT:
+      return '项目'
+    case DsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_SPRINT:
+      return '迭代'
+    case DsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_WORKITEM:
+      return '工作项'
     case DsInstanceAssetType.AWS.IAM_USER:
       return 'IAM用户'
     case DsInstanceAssetType.AWS.IAM_ACCESS_KEY:
