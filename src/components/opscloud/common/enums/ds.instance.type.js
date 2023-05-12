@@ -196,6 +196,16 @@ const DsInstanceType = Object.freeze({
         label: 'LXHL'
       }
     ]
+  },
+  ALIYUN_DEVOPS: {
+    type: 54,
+    name: 'ALIYUN_DEVOPS',
+    instanceType: [
+      {
+        value: 'ALIYUN_DEVOPS',
+        label: 'ALIYUN_DEVOPS'
+      }
+    ]
   }
 })
 

@@ -64,7 +64,6 @@ import CloneDeploymentEditor from '@/components/opscloud/leo/child/CloneDeployme
 import { DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
 
-
 export default {
   name: 'LeoDeploymentVersionDetails',
   props: ['deploymentVersionDetails'],

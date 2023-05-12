@@ -1,5 +1,5 @@
 <template>
-  <div class="img" style="vertical-align: bottom;display: ">
+  <div class="img">
     <img :src="icon">
   </div>
 </template>
@@ -101,6 +101,9 @@ export default {
           break
         case DsInstanceType.CONSUL.name:
           this.icon = iconUrl.consul
+          break
+        case DsInstanceType.ALIYUN_DEVOPS.name:
+          this.icon = iconUrl.aliyunDevops
           break
         default:
           this.icon = iconUrl.common

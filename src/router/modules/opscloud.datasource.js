@@ -55,6 +55,15 @@ export default [
     }
   },
   {
+    path: '/datasource/instance/devops',
+    name: 'datasource-instance-devops',
+    component: () => import('@/pages/datasource/instance/devops'),
+    meta: {
+      auth: true,
+      title: '云效数据源实例'
+    }
+  },
+  {
     path: '/datasource/instance/aws',
     name: 'datasource-instance-aws',
     component: () => import('@/pages/datasource/instance/aws'),

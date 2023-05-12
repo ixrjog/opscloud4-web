@@ -27,7 +27,7 @@ export default {
   methods: {
     showName (user) {
       return (user.name === null || user.name === '' || user.name === user.displayName)
-    },
+    }
     // tagColor (user) {
     //   if (user.userPermission?.permissionRole && user.userPermission.permissionRole === 'admin') {
     //     return 'danger'

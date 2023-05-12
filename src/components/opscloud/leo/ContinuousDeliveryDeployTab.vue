@@ -55,7 +55,7 @@
     <!-- 最新部署 -->
     <el-row v-if="data.deploys.length > 0" :gutter="20">
       <el-divider content-position="left">最新部署任务</el-divider>
-      <el-col :span="6" style="margin-top: 10px">
+      <el-col :span="7" style="margin-top: 10px">
         <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
@@ -95,6 +95,7 @@
                 v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
                 <span class="label">部署类型</span>
                 {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
+                <business-tags :tags="deploy.tags"/>
               </div>
               <div><span class="label">部署结果</span>
                 <deploy-result style="margin-left: 5px" :deploy="deploy">
@@ -110,8 +111,8 @@
           </template>
         </div>
       </el-col>
-      <el-col :span="18" style="margin-top: 10px">
-        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照(点击左侧最新任务)
+      <el-col :span="17" style="margin-top: 10px">
+        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照
         </el-tag>
         <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
           <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
@@ -146,9 +147,9 @@
         </div>
       </el-col>
     </el-row>
-    <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"></leo-create-deploy-editor>
+    <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"/>
     <leo-deploy-history :form-status="formStatus.history" :applicationId="queryParam.applicationId"
-                        :envType="queryParam.envType" ref="deployHistory"></leo-deploy-history>
+                        :envType="queryParam.envType" ref="deployHistory"/>
   </div>
 </template>
 
@@ -172,6 +173,7 @@ import { STOP_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import LeoDeploymentVersionDetails from '@/components/opscloud/leo/LeoDeploymentVersionDetails.vue'
 import router from '@/router'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 
 const leaderLineOptions = {
   color: '#e56c0d',
@@ -259,7 +261,8 @@ export default {
     DeployVersion,
     LeoDeployHistory,
     LeoDeploymentVersionDetails,
-    DeploymentName
+    DeploymentName,
+    BusinessTags
   },
   watch: {
     // 监听数据
@@ -410,7 +413,7 @@ export default {
             break
           }
         }
-        if(!find){
+        if (!find) {
           this.removeLine()
         }
       }

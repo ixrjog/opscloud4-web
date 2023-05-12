@@ -436,7 +436,7 @@ const tableLayout = {
         alias: '镜像名称'
       },
       assetKey: {
-        alias: '镜像id',
+        alias: '镜像ID',
         show: false
       },
       assetKey2: {
@@ -861,7 +861,6 @@ export default {
       }
       if (tab.name === 'domain') {
         this.$refs.domainTable.fetchData()
-        return
       }
     },
     init () {

@@ -18,6 +18,14 @@ export function GET_BUILD_BRANCH_OPTIONS (data) {
   })
 }
 
+export function GET_BUILD_MAVEN_PUBLISH_INFO (data) {
+  return request({
+    url: baseUrl + '/maven/publish/get',
+    method: 'post',
+    data
+  })
+}
+
 export function CREATE_BUILD_BRANCH (data) {
   return request({
     url: baseUrl + '/branch/create',

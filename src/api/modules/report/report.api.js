@@ -64,6 +64,13 @@ export function GET_LEO_REPORT () {
   })
 }
 
+export function GET_LEO_PROD_REPORT () {
+  return request({
+    url: baseUrl + '/leo/prod/get',
+    method: 'get'
+  })
+}
+
 export function GET_LATEST_LEO_BUILD (param) {
   return request({
     url: '/leo/latest/build/get',

@@ -16,7 +16,7 @@
               <span>{{ scope.row.buildDetails.build.gitLab.project.sshUrl }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="buildDetails" label="构建分支" width="200">
+          <el-table-column prop="buildDetails" label="构建分支" width="80">
             <template v-slot="scope">
               <span>{{ scope.row.buildDetails.build.dict.branch }}</span>
             </template>
@@ -28,10 +28,12 @@
               <build-result :build="scope.row"></build-result>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="100">
+          <el-table-column prop="tags" label="标签" width="120">
             <template v-slot="scope">
-              <!--              <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
+              <business-tags :tags="scope.row.tags"/>
             </template>
+          </el-table-column>
+          <el-table-column label="操作" width="100">
           </el-table-column>
         </el-table>
       </el-card>
@@ -69,10 +71,15 @@
               <deploy-result :deploy="scope.row"></deploy-result>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="100">
+          <el-table-column prop="tags" label="标签" width="120">
             <template v-slot="scope">
-              <!--              <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
+              <business-tags :tags="scope.row.tags"/>
             </template>
+          </el-table-column>
+          <el-table-column label="操作" width="100">
+<!--            <template v-slot="scope">-->
+<!--                            <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
+<!--            </template>-->
           </el-table-column>
         </el-table>
       </el-card>
@@ -83,13 +90,10 @@
 <script>
 
 import { GET_LATEST_LEO_BUILD, GET_LATEST_LEO_DEPLOY } from '@/api/modules/report/report.api'
-import SelectItem from '@/components/opscloud/common/SelectItem.vue'
-import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
-import EnvTag from '@/components/opscloud/common/tag/EnvTag.vue'
-import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails.vue'
 import BuildResult from '@/components/opscloud/leo/child/BuildResult.vue'
 import DeployResult from '@/components/opscloud/leo/child/DeployResult.vue'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 
 export default {
   name: 'ContinuousDeliveryMonitor',
@@ -114,12 +118,9 @@ export default {
   },
   components: {
     BuildResult,
-    SelectItem,
-    BusinessTags,
-    EnvTag,
-    LeoBuildDetails,
     DeployResult,
-    DeploymentName
+    DeploymentName,
+    BusinessTags
   },
   computed: {},
   destroyed () {

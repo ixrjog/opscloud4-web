@@ -12,20 +12,20 @@
       </el-row>
     </div>
     <el-table :data="table.data" style="width: 100%">
-      <el-table-column prop="username" label="用户名" width="100"></el-table-column>
-      <el-table-column prop="displayName" label="显示名" width="100"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="250"></el-table-column>
+      <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="displayName" label="显示名"></el-table-column>
+      <el-table-column prop="email" label="邮箱"></el-table-column>
       <el-table-column prop="roles" label="角色">
         <template slot-scope="scope">
           <role-tags :roles="scope.row.roles"></role-tags>
         </template>
       </el-table-column>
-      <el-table-column prop="tags" label="标签" width="200">
+      <el-table-column prop="tags" label="标签">
         <template slot-scope="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" label="操作" width="280">
+      <el-table-column fixed="right" label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="warning" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
         </template>

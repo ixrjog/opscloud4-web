@@ -7,7 +7,10 @@
            style="margin-right: 5px"></i>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{ env.envName }}</el-radio-button>
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{
+            env.envName
+          }}
+        </el-radio-button>
       </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
@@ -66,8 +69,9 @@
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"></pagination>
-    <leo-do-build-editor :form-status="formStatus.build" ref="doBuildEditor"></leo-do-build-editor>
-    <leo-build-history :form-status="formStatus.history" ref="buildHistory"></leo-build-history>
+    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage" ref="doBuildKubernetesImageEditor"/>
+    <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
+    <leo-build-history :form-status="formStatus.history" ref="buildHistory"/>
     <el-divider>Latest build details</el-divider>
     <div v-for="build in builds" :key="build.id" style="font-size: 12px">
       <template>
@@ -88,13 +92,14 @@ import SelectItem from '../common/SelectItem'
 import BusinessTags from '../common/tag/BusinessTags'
 import Pagination from '../common/page/Pagination'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
-import LeoDoBuildEditor from '@/components/opscloud/leo/LeoDoBuildEditor'
 
 import util from '@/libs/util'
 import LeoBuildDetails from '@/components/opscloud/leo/LeoBuildDetails'
 import LatestBuildInfo from '@/components/opscloud/leo/child/LatestBuildInfo'
 import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 import router from '@/router'
+import LeoDoBuildMavenPublishEditor from '@/components/opscloud/leo/LeoDoBuildMavenPublishEditor.vue'
+import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuildKubernetesImageEditor.vue'
 
 const wsStates = {
   success: {
@@ -133,8 +138,14 @@ export default {
       builds: [],
       formStatus: {
         build: {
-          visible: false,
-          labelWidth: '150px'
+          kubernetesImage: {
+            visible: false,
+            labelWidth: '150px'
+          },
+          mavenPublish: {
+            visible: false,
+            labelWidth: '150px'
+          }
         },
         history: {
           visible: false,
@@ -164,7 +175,8 @@ export default {
     BusinessTags,
     EnvTag,
     LeoBuildDetails,
-    LeoDoBuildEditor,
+    LeoDoBuildKubernetesImageEditor,
+    LeoDoBuildMavenPublishEditor,
     LatestBuildInfo,
     LeoBuildHistory
   },
@@ -312,8 +324,19 @@ export default {
         })
     },
     handleBuild (row) {
-      this.formStatus.build.visible = true
-      this.$refs.doBuildEditor.initData(Object.assign({}, row))
+      const buildType = row?.configDetails?.job?.build?.type || 'kubernetes-image'
+      switch (buildType) {
+        case 'maven-publish':
+          this.formStatus.build.mavenPublish.visible = true
+          this.$refs.doBuildMavenPublishEditor.initData(Object.assign({}, row))
+          break
+        /**
+         * 'kubernetes-image'
+         */
+        default:
+          this.formStatus.build.kubernetesImage.visible = true
+          this.$refs.doBuildKubernetesImageEditor.initData(Object.assign({}, row))
+      }
     },
     handleHistory (row) {
       this.formStatus.history.visible = true

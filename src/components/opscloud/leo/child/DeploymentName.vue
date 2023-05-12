@@ -1,6 +1,6 @@
 <template>
   <span>
-    <b :style="style">{{ cluster === '' ? '' : cluster + ':' }}{{ namespace === '' ? '' : namespace + ':' }}{{ deployment }}</b>
+      <b :style="style">{{ cluster === '' ? '' : cluster + ':' }}{{namespace === '' ? '' : namespace + ':'}}{{ deployment }}</b>
   </span>
 </template>
 
@@ -11,7 +11,8 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      style: ''
+      style: '',
+      name: ''
     }
   },
   props: {
@@ -29,7 +30,7 @@ export default {
       type: String,
       required: true,
       default: ''
-    },
+    }
   },
   name: 'DeploymentName',
   computed: {

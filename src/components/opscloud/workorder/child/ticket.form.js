@@ -56,6 +56,9 @@ export default {
     },
     applicationReduceReplicas: {
       visible: false
+    },
+    applicationDeploy: {
+      visible: false
     }
   }
 }

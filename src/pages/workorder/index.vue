@@ -59,6 +59,9 @@
     <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile"
                                                 ref="awsIamUpdateLoginProfileTicketEditor"
                                                 @close="fetchData"/>
+    <application-deploy-ticket-editor :formStatus="formStatus.ticket.applicationDeploy"
+                                      ref="applicationDeployTicketEditor"
+                                      @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -93,6 +96,7 @@ import ApplicationReduceReplicasTicketEditor
   from '@/components/opscloud/workorder/ticket/ApplicationReduceReplicasTicketEditor.vue'
 import AwsIamUpdateLoginProfileTicketEditor
   from '@/components/opscloud/workorder/ticket/AwsIamUpdateLoginProfileTicketEditor.vue'
+import ApplicationDeployTicketEditor from '@/components/opscloud/workorder/ticket/ApplicationDeployTicketEditor.vue'
 
 export default {
   data () {
@@ -128,7 +132,8 @@ export default {
     ApplicationScaleReplicasTicketEditor,
     ApplicationReduceReplicasTicketEditor,
     ApolloTicketEditor,
-    AwsIamUpdateLoginProfileTicketEditor
+    AwsIamUpdateLoginProfileTicketEditor,
+    ApplicationDeployTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -241,6 +246,10 @@ export default {
         case this.workOrderKeyConstants.AWS_IAM_UPDATE_LOGIN_PROFILE:
           this.handleOpenTicketEditor(this.formStatus.ticket.awsIamUpdateLoginProfile)
           this.$refs.awsIamUpdateLoginProfileTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APPLICATION_DEPLOY:
+          this.handleOpenTicketEditor(this.formStatus.ticket.applicationDeploy)
+          this.$refs.applicationDeployTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

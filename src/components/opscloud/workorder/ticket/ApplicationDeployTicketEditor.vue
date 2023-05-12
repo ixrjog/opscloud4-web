@@ -2,9 +2,8 @@
   <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '70%': '50%'"
              :before-close="beforeClose">
     <!--页眉-->
-    <template slot="title">
-      <ticket-title v-if="ticketView !== null" :id="ticketView.ticketId"
-                    :title="ticketView.workOrder.name"></ticket-title>
+    <template slot="title" v-if="ticketView !== null">
+      <ticket-title :id="ticketView.ticketId" :title="ticketView.workOrder.name"></ticket-title>
     </template>
     <!--页眉-->
     <!--工单视图-->
@@ -12,22 +11,20 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-asset-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
-                                         :instanceType="'AWS'"
-                                         :assetType="'IAM_USER'"
-                                         :workOrderTicketId="ticketView.ticketId"
-                                         :entryDesc="tableLayout.entryName"
-                                         ref="ticketEntrySelector"
-                                         @handleNotify="fetchData"></ticket-asset-entry-selector>
+            <ticket-leo-build-entry-selector
+              v-if="ticketView.ticketPhase === 'NEW'"
+              :workOrderTicketId="ticketView.ticketId"
+              :entryDesc="tableLayout.entryName"
+              @handleNotify="fetchData"/>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
                                 :tableLayout="tableLayout"
                                 ref="ticketEntryTable">
               <template v-slot:extend>
-                <el-table-column prop="assetKey2" label="ARN">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.entry.assetKey2 }}</span>
+                <el-table-column prop="entry" label="应用名称">
+                  <template v-slot="scope">
+                    <el-tag size="mini">{{ scope.row.entry.application.name }}</el-tag>
                   </template>
                 </el-table-column>
               </template>
@@ -39,9 +36,8 @@
                           :ticketPhase="ticketView.ticketPhase"></workflow-nodes>
         </el-timeline-item>
         <el-timeline-item timestamp="申请说明" placement="top">
-          <el-input type="textarea" :rows="2"
+          <el-input type="textarea" :rows="2" v-model="ticketView.comment"
                     :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
-                    v-model="ticketView.comment"
                     :readonly="ticketView.ticketPhase !== 'NEW'"></el-input>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
@@ -83,20 +79,24 @@
 </template>
 
 <script>
-import TicketAssetEntrySelector from '@/components/opscloud/workorder/child/TicketAssetEntrySelector'
+
+import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
+import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
-import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
 import {
+  APPROVE_WORK_ORDER_TICKET,
   SAVE_WORK_ORDER_TICKET,
-  SUBMIT_WORK_ORDER_TICKET,
-  APPROVE_WORK_ORDER_TICKET
+  SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
+import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
+import TicketLeoBuildEntrySelector from '@/components/opscloud/workorder/child/TicketLeoBuildEntrySelector.vue'
 
 const TableLayout = {
-  instance: true,
-  entryName: 'IAM用户名'
+  instance: false,
+  entryName: '构建版本'
 }
 
 export default {
@@ -110,12 +110,14 @@ export default {
       approving: false
     }
   },
-  name: 'AwsIamUpdateLoginProfileTicketEditor',
+  name: 'ApplicationDeployTicketEditor',
   props: ['formStatus'],
   components: {
+    SelectItem,
     TicketTitle,
     NodeView,
-    TicketAssetEntrySelector,
+    TicketEntrySelector,
+    TicketLeoBuildEntrySelector,
     TicketEntryTable,
     WorkflowNodes
   },
@@ -124,15 +126,12 @@ export default {
   },
   methods: {
     initData (ticketView) {
-      this.ticketView = ticketView
       this.approvalComment = ''
       this.submitting = false
       this.saving = false
       this.approving = false
+      this.ticketView = ticketView
       this.$nextTick(() => {
-        if (this.ticketView.ticketPhase === 'NEW') {
-          this.$refs.ticketEntrySelector.getDsInstance()
-        }
         this.fetchData()
       }, 200)
     },

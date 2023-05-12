@@ -132,6 +132,9 @@ export default {
         case this.dsInstanceType.LXHL.type:
           instanceType = this.dsInstanceType.LXHL
           break
+        case this.dsInstanceType.ALIYUN_DEVOPS.type:
+          instanceType = this.dsInstanceType.ALIYUN_DEVOPS
+          break
         default:
           this.$message({
             message: '未知的数据源实例类型',
