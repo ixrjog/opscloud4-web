@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span style="margin-right: 5px">可注入变量:</span>
+    <div style="margin-right: 5px">可注入变量:</div>
     <el-tag v-if="kind === 1" size="mini" :type="tag.type" style="margin-right: 5px"
             v-for="tag in examples.USERNAME_WITH_PASSWORD" :key="tag.name">
       {{ tag.name }}

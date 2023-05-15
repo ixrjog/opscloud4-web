@@ -41,9 +41,9 @@
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="数据源属性" name="dsProps">
-          <el-form-item label="凭据配置" label-position="top" required>
+          <el-form-item label="凭据配置" label-position="top">
             <el-select v-model.trim="credential" value-key="id" filterable clearable
-                       remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential">
+                       remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential" style="width: 300px">
               <el-option v-for="item in credentialOptions"
                          :key="item.id"
                          :label="item.title"
@@ -51,7 +51,7 @@
                 <select-item :name="item.title" :comment="item.username"></select-item>
               </el-option>
             </el-select>
-            <el-card shadow="never" style="margin-top: 5px" v-if="credential !== ''">
+            <el-card shadow="never" style="margin-top: 5px;background: #e56c0d" v-if="credential !== ''">
               <credential-kind-example-tag :kinds="credentialKindOptions"
                                            :kind="credential.kind"></credential-kind-example-tag>
             </el-card>
