@@ -138,10 +138,12 @@ export default {
   },
   methods: {
     handleOpen () {
-      let basePath;
-      if(this.instance.instanceType === "ALIYUN_DEVOPS"){
+      let basePath
+      if (this.instance.instanceType === 'ALIYUN_DEVOPS') {
         basePath = 'devops'
-      }else {
+      } else if (this.instance.instanceType === 'METER_SPHERE') {
+        basePath = 'metersphere'
+      } else {
         basePath = this.instance.instanceType.toLocaleLowerCase()
       }
       this.$router.push({

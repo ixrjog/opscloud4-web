@@ -206,6 +206,16 @@ const DsInstanceType = Object.freeze({
         label: 'ALIYUN_DEVOPS'
       }
     ]
+  },
+  METER_SPHERE: {
+    type: 55,
+    name: 'METER_SPHERE',
+    instanceType: [
+      {
+        value: 'METER_SPHERE',
+        label: 'METER_SPHERE'
+      }
+    ]
   }
 })
 

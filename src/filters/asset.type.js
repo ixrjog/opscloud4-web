@@ -123,6 +123,10 @@ export function getAssetTypeText (value) {
       return 'ECS'
     case DsInstanceAssetType.CONSUL.CONSUL_SERVICE:
       return '服务'
+    case DsInstanceAssetType.METER_SPHERE.METER_SPHERE_BUILD_HOOK:
+      return '构建Hook'
+    case DsInstanceAssetType.METER_SPHERE.METER_SPHERE_DEPLOY_HOOK:
+      return '部署Hook'
     default:
       return value
   }

@@ -25,7 +25,8 @@ const iconUrl = {
   huaweiCloud: require('@/static/icons/ds-huaweiCloud.svg'),
   consul: require('@/static/icons/ds-consul.svg'),
   common: require('@/static/icons/ds-common.svg'),
-  aliyunDevops: require('@/static/icons/ds-aliyunDevops.svg')
+  aliyunDevops: require('@/static/icons/ds-aliyunDevops.svg'),
+  meterSphere: require('@/static/icons/ds-metersphere.svg')
 }
 
 export default {
@@ -104,6 +105,9 @@ export default {
           break
         case DsInstanceType.ALIYUN_DEVOPS.name:
           this.icon = iconUrl.aliyunDevops
+          break
+        case DsInstanceType.METER_SPHERE.name:
+          this.icon = iconUrl.meterSphere
           break
         default:
           this.icon = iconUrl.common

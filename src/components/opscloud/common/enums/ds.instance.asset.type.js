@@ -96,7 +96,11 @@ const DsInstanceAssetType = Object.freeze({
   },
   CONSUL: {
     CONSUL_SERVICE: 'CONSUL_SERVICE'
-  }
+  },
+  METER_SPHERE: {
+    METER_SPHERE_BUILD_HOOK: 'METER_SPHERE_BUILD_HOOK',
+    METER_SPHERE_DEPLOY_HOOK: 'METER_SPHERE_DEPLOY_HOOK'
+  },
 })
 
 export default DsInstanceAssetType

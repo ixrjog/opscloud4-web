@@ -2,7 +2,7 @@
   <div v-if="JSON.stringify(announcements) !== '[]'" style="margin-bottom: 10px">
     <el-carousel trigger="click" height="150px" :interval="10000">
       <el-carousel-item v-for="announcement in announcements" :key="announcement.id">
-        <h2>{{ announcement.title }}</h2>
+        <h4>{{ announcement.title }}</h4>
         <p v-html="announcement.content"></p>
       </el-carousel-item>
     </el-carousel>
@@ -45,8 +45,10 @@ export default {
 /*  margin: 0 0 0 50px;*/
 /*}*/
 
-.el-carousel__item h2 {
+.el-carousel__item h4 {
   margin-left: 15px;
+  margin-block-start: 0.3em;
+  margin-block-end: 0.3em;
 }
 
 .el-carousel__item p {

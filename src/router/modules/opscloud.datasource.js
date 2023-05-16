@@ -179,6 +179,15 @@ export default [
       auth: true,
       title: '钉钉应用数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/metersphere',
+    name: 'datasource-instance-metersphere',
+    component: () => import('@/pages/datasource/instance/metersphere'),
+    meta: {
+      auth: true,
+      title: 'MeterSphere数据源实例'
+    }
   }
 
 ]
