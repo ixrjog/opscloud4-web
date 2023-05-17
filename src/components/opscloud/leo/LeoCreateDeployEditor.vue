@@ -135,9 +135,7 @@ export default {
   },
   name: 'LeoCreateDeployEditor',
   props: ['formStatus'],
-  components: {
-    SelectItem
-  },
+  components: {},
   mixins: [],
   mounted () {
   },

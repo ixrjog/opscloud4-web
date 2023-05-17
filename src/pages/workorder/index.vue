@@ -12,56 +12,28 @@
                         ref="myTicketCard"></my-ticket-card>
       </el-col>
     </el-row>
-    <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor"
-                                @close="fetchData"></server-group-ticket-editor>
-    <application-permission-ticket-editor :formStatus="formStatus.ticket.applicationPermission"
-                                          ref="applicationPermissionTicketEditor"
-                                          @close="fetchData"></application-permission-ticket-editor>
-    <confluence-ticket-editor :formStatus="formStatus.ticket.confluence" ref="confluenceTicketEditor"
-                              @close="fetchData"></confluence-ticket-editor>
-    <vpn-ticket-editor :formStatus="formStatus.ticket.vpn" ref="vpnTicketEditor" @close="fetchData"></vpn-ticket-editor>
-    <grafana-ticket-editor :formStatus="formStatus.ticket.grafana" ref="grafanaTicketEditor"
-                           @close="fetchData"></grafana-ticket-editor>
-    <nexus-ticket-editor :formStatus="formStatus.ticket.nexus" ref="nexusTicketEditor"
-                         @close="fetchData"></nexus-ticket-editor>
-    <ram-policy-ticket-editor :formStatus="formStatus.ticket.ramPolicy" ref="ramPolicyTicketEditor"
-                              @close="fetchData"></ram-policy-ticket-editor>
-    <iam-policy-ticket-editor :formStatus="formStatus.ticket.iamPolicy" ref="iamPolicyTicketEditor"
-                              @close="fetchData"></iam-policy-ticket-editor>
-    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor"
-                         @close="fetchData"></nacos-ticket-editor>
-    <gitlab-project-ticket-editor :formStatus="formStatus.ticket.gitlab.project" ref="gitlabProjectTicketEditor"
-                                  @close="fetchData"></gitlab-project-ticket-editor>
-    <gitlab-group-ticket-editor :formStatus="formStatus.ticket.gitlab.group" ref="gitlabGroupTicketEditor"
-                                @close="fetchData"></gitlab-group-ticket-editor>
-    <ons-topic-ticket-editor :formStatus="formStatus.ticket.ons.topic" ref="onsTopicTicketEditor"
-                             @close="fetchData"></ons-topic-ticket-editor>
-    <ons-group-ticket-editor :formStatus="formStatus.ticket.ons.group" ref="onsGroupTicketEditor"
-                             @close="fetchData"></ons-group-ticket-editor>
-    <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor"
-                                   @close="fetchData"></employee-resign-ticket-editor>
-    <sqs-ticket-editor :formStatus="formStatus.ticket.sqs" ref="sqsTicketEditor"
-                       @close="fetchData"></sqs-ticket-editor>
-    <sns-topic-ticket-editor :formStatus="formStatus.ticket.sns.topic" ref="snsTopicTicketEditor"
-                             @close="fetchData"></sns-topic-ticket-editor>
-    <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription"
-                                    ref="snsSubscriptionTicketEditor"
-                                    @close="fetchData"></sns-subscription-ticket-editor>
-    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas"
-                                              ref="applicationScaleReplicasTicketEditor"
-                                              @close="fetchData"/>
-    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.applicationReduceReplicas"
-                                               ref="applicationReduceReplicasTicketEditor"
-                                               @close="fetchData"/>
-    <apollo-ticket-editor :formStatus="formStatus.ticket.apollo"
-                          ref="apolloTicketEditor"
-                          @close="fetchData"/>
-    <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile"
-                                                ref="awsIamUpdateLoginProfileTicketEditor"
-                                                @close="fetchData"/>
-    <application-deploy-ticket-editor :formStatus="formStatus.ticket.applicationDeploy"
-                                      ref="applicationDeployTicketEditor"
-                                      @close="fetchData"/>
+    <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor" @close="fetchData"/>
+    <application-permission-ticket-editor :formStatus="formStatus.ticket.applicationPermission" ref="applicationPermissionTicketEditor" @close="fetchData"/>
+    <confluence-ticket-editor :formStatus="formStatus.ticket.confluence" ref="confluenceTicketEditor" @close="fetchData"/>
+    <vpn-ticket-editor :formStatus="formStatus.ticket.vpn" ref="vpnTicketEditor" @close="fetchData"/>
+    <grafana-ticket-editor :formStatus="formStatus.ticket.grafana" ref="grafanaTicketEditor" @close="fetchData"/>
+    <nexus-ticket-editor :formStatus="formStatus.ticket.nexus" ref="nexusTicketEditor" @close="fetchData"/>
+    <ram-policy-ticket-editor :formStatus="formStatus.ticket.ramPolicy" ref="ramPolicyTicketEditor" @close="fetchData"/>
+    <iam-policy-ticket-editor :formStatus="formStatus.ticket.iamPolicy" ref="iamPolicyTicketEditor" @close="fetchData"/>
+    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor" @close="fetchData"></nacos-ticket-editor>
+    <gitlab-project-ticket-editor :formStatus="formStatus.ticket.gitlab.project" ref="gitlabProjectTicketEditor" @close="fetchData"/>
+    <gitlab-group-ticket-editor :formStatus="formStatus.ticket.gitlab.group" ref="gitlabGroupTicketEditor" @close="fetchData"/>
+    <ons-topic-ticket-editor :formStatus="formStatus.ticket.ons.topic" ref="onsTopicTicketEditor" @close="fetchData"/>
+    <ons-group-ticket-editor :formStatus="formStatus.ticket.ons.group" ref="onsGroupTicketEditor" @close="fetchData"/>
+    <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor" @close="fetchData"/>
+    <sqs-ticket-editor :formStatus="formStatus.ticket.sqs" ref="sqsTicketEditor" @close="fetchData"></sqs-ticket-editor>
+    <sns-topic-ticket-editor :formStatus="formStatus.ticket.sns.topic" ref="snsTopicTicketEditor" @close="fetchData"/>
+    <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription" ref="snsSubscriptionTicketEditor" @close="fetchData"/>
+    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas" ref="applicationScaleReplicasTicketEditor" @close="fetchData"/>
+    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.applicationReduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
+    <apollo-ticket-editor :formStatus="formStatus.ticket.apollo" ref="apolloTicketEditor" @close="fetchData"/>
+    <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile" ref="awsIamUpdateLoginProfileTicketEditor" @close="fetchData"/>
+    <application-deploy-ticket-editor :formStatus="formStatus.ticket.applicationDeploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
