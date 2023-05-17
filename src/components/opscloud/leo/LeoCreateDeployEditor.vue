@@ -45,7 +45,7 @@
             <el-col :span="6">
               <el-radio v-model="doDeployParam.deployType" label="REDEPLOY" border>重启 Redeploy</el-radio>
               <el-alert class="radio-desc" :closable="false"
-                        title="不变更版本，只滚动重启所有副本"
+                        title="不变更版本，只滚动重启所有副本。离线的Canary环境重新上线"
                         type="info">
               </el-alert>
             </el-col>
@@ -74,8 +74,12 @@
                          :key="item.id"
                          :label="item.versionName"
                          :value="item.id">
-                <select-item :name="item.versionName"
-                             :comment="item.ago + ' #' + item.buildNumber + '次构建'"></select-item>
+                  <span style="float: left">{{ item.versionName }}</span>
+                <span :style="{float: 'right', color: '#8492a6', fontSize: '13px',marginLeft: '15px'}">{{item.ago}} #{{item.buildNumber}}次构建
+                  <span v-if="item.ticketId !== 0" style="color: #0da815">[<i class="fas fa-check" v-if="item.ticketId !== 0" style="margin-right: 1px"/>工单]</span>
+                </span>
+<!--                <select-item :name="item.versionName"-->
+<!--                             :comment="item.ago + ' #' + item.buildNumber + '次构建'"></select-item>-->
               </el-option>
             </el-select>
           </el-form-item>
