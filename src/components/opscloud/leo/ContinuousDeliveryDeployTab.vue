@@ -23,17 +23,10 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-select v-if="false" v-model="queryParam.envType" clearable filterable
-                 remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
-                 @change="fetchData">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
-        </el-option>
-      </el-select>
+      <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
+                 :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
+        <i class="fas fa-circle-notch"></i>
+      </el-button>
       <el-button type="primary" size="mini" @click="createDeploy"
                  :disabled="queryParam.applicationId === '' || queryParam.envType === ''">创建部署任务
       </el-button>
@@ -42,20 +35,27 @@
       </el-button>
     </el-row>
     <!-- 任务&无状态版本详情 -->
-    <el-row :gutter="20" v-if="data.deploymentVersionDetails.length > 0">
+    <!--    v-if="data.deploymentVersionDetails.length > 0"-->
+    <el-row :gutter="20">
       <el-divider content-position="left">任务&无状态版本详情
         （<span><i class="fab fa-microsoft" style="color: #128ca8; margin-right: 1px"></i>新版本</span>、
         <span><i class="fab fa-microsoft" style="color: #2bbe32; margin-right: 1px"></i>旧版本</span>、
         <span><i class="fab fa-microsoft" style="color: #e56c0d; margin-right: 1px"></i>其他版本</span>、
         <span><i class="fab fa-microsoft" style="color: #9d9fa3; margin-right: 1px"></i>离线版本</span>）
       </el-divider>
-      <leo-deployment-version-details
-        :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
+      <span v-loading="versionLoading">
+        <div v-if="versionLoading" style="height: 60px; color: #909399; text-align: center">暂无数据</div>
+        <leo-deployment-version-details
+          :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
+      </span>
     </el-row>
     <!-- 最新部署 -->
-    <el-row v-if="data.deploys.length > 0" :gutter="20">
+    <!--    v-if="data.deploys.length > 0"-->
+    <el-row :gutter="20">
       <el-divider content-position="left">最新部署任务</el-divider>
-      <el-col :span="7" style="margin-top: 10px">
+      <span v-loading="deployLoading">
+        <div v-if="deployLoading" style="height: 60px; color: #909399; text-align: center">暂无数据</div>
+        <el-col :span="7" style="margin-top: 10px">
         <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
@@ -146,6 +146,7 @@
           </el-tabs>
         </div>
       </el-col>
+      </span>
     </el-row>
     <leo-create-deploy-editor :form-status="formStatus.deploy" ref="createDeployEditor"/>
     <leo-deploy-history :form-status="formStatus.history" :applicationId="queryParam.applicationId"
@@ -174,6 +175,10 @@ import LeoDeploymentVersionDetails from '@/components/opscloud/leo/LeoDeployment
 import router from '@/router'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
+import {
+  QUERY_MY_LEO_JOB_DEPLOY_PAGE,
+  QUERY_MY_LEO_JOB_DEPLOYMENT_VERSION_DETAILS
+} from '@/api/modules/leo/leo.job.api'
 
 const leaderLineOptions = {
   color: '#e56c0d',
@@ -240,7 +245,9 @@ export default {
       applicationOptions: [],
       buttons: {
         stopping: false
-      }
+      },
+      deployLoading: false,
+      versionLoading: false
     }
   },
   mounted () {
@@ -512,7 +519,7 @@ export default {
     handleSubscribeDeploymentVersionDetails () {
       if (this.queryParam.applicationId === '') return
       if (this.queryParam.envType === '') return
-      this.data.deploymentVersionDetails = {}
+      // this.data.deploymentVersionDetails = {}
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: LeoRequestType.SUBSCRIBE_LEO_DEPLOYMENT_VERSION_DETAILS,
@@ -538,6 +545,23 @@ export default {
     },
     fetchData () {
       if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
+      const requestBody = {
+        ...this.queryParam,
+        page: 1,
+        length: 3
+      }
+      this.deployLoading = true
+      QUERY_MY_LEO_JOB_DEPLOY_PAGE(requestBody)
+        .then(res => {
+          this.data.deploymentVersionDetails = res.body.data
+          this.deployLoading = false
+        })
+      this.versionLoading = true
+      QUERY_MY_LEO_JOB_DEPLOYMENT_VERSION_DETAILS(requestBody)
+        .then(res => {
+          this.data.deploymentVersionDetails = res.body
+          this.versionLoading = false
+        })
       this.handleSubscribeLeoDeploy()
       this.handleSubscribeDeploymentVersionDetails()
       this.setDetails([])

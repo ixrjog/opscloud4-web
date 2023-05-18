@@ -10,6 +10,14 @@ export function QUERY_LEO_JOB_PAGE (data) {
   })
 }
 
+export function QUERY_MY_LEO_JOB_PAGE (data) {
+  return request({
+    url: baseUrl + '/my/page/query',
+    method: 'post',
+    data
+  })
+}
+
 export function QUERY_LEO_JOB_BUILD_PAGE (data) {
   return request({
     url: baseUrl + '/build/page/query',
@@ -18,9 +26,33 @@ export function QUERY_LEO_JOB_BUILD_PAGE (data) {
   })
 }
 
+export function QUERY_MY_LEO_JOB_BUILD_PAGE (data) {
+  return request({
+    url: baseUrl + '/my/build/page/query',
+    method: 'post',
+    data
+  })
+}
+
 export function QUERY_LEO_JOB_DEPLOY_PAGE (data) {
   return request({
     url: baseUrl + '/deploy/page/query',
+    method: 'post',
+    data
+  })
+}
+
+export function QUERY_MY_LEO_JOB_DEPLOY_PAGE (data) {
+  return request({
+    url: baseUrl + '/my/deploy/page/query',
+    method: 'post',
+    data
+  })
+}
+
+export function QUERY_MY_LEO_JOB_DEPLOYMENT_VERSION_DETAILS (data) {
+  return request({
+    url: baseUrl + '/my/deployment/version/details/query',
     method: 'post',
     data
   })

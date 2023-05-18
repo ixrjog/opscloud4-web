@@ -23,19 +23,12 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-select v-if="false" v-model="queryParam.envType" clearable filterable
-                 remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
-                 @change="fetchData">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
-        </el-option>
-      </el-select>
+      <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
+                 :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
+        <i class="fas fa-circle-notch"></i>
+      </el-button>
     </el-row>
-    <el-table :data="table.data" style="width: 100%">
+    <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
       <el-table-column prop="name" label="名称" sortable></el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
@@ -100,6 +93,9 @@ import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 import router from '@/router'
 import LeoDoBuildMavenPublishEditor from '@/components/opscloud/leo/LeoDoBuildMavenPublishEditor.vue'
 import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuildKubernetesImageEditor.vue'
+import {
+  QUERY_MY_LEO_JOB_PAGE
+} from '@/api/modules/leo/leo.job.api'
 
 const wsStates = {
   success: {
@@ -128,6 +124,7 @@ export default {
         id: ''
       },
       table: {
+        loading: false,
         data: [],
         pagination: {
           currentPage: 1,
@@ -368,9 +365,19 @@ export default {
     },
     fetchData () {
       if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
+      const requestBody = {
+        ...this.queryParam,
+        page: this.table.pagination.currentPage,
+        length: this.table.pagination.pageSize
+      }
+      this.table.loading = true
+      QUERY_MY_LEO_JOB_PAGE(requestBody)
+        .then(res => {
+          this.table.data = res.body.data
+          this.table.pagination.total = res.body.totalNum
+          this.table.loading = false
+        })
       this.handleSubscribeLeoJob()
-      this.table.data = []
-      this.table.pagination.total = 0
       this.handleQueryLeoBuild()
       this.builds = []
     }

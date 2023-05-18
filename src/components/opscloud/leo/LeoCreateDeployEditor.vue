@@ -104,8 +104,6 @@
 <script>
 
 // API
-import SelectItem from '@/components/opscloud/common/SelectItem'
-
 import { QUERY_LEO_JOB_PAGE } from '@/api/modules/leo/leo.job.api'
 import { QUERY_LEO_DEPLOY_VERSION, QUERY_LEO_DEPLOY_DEPLOYMENT, DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 
