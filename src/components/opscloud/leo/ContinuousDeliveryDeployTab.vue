@@ -45,8 +45,8 @@
       </el-divider>
       <span v-loading="versionLoading">
         <div v-if="versionLoading" style="height: 60px; color: #909399; text-align: center">暂无数据</div>
-        <leo-deployment-version-details
-          :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
+        <leo-deployment-version-details v-if="data.deploymentVersionDetails.length > 0"
+                                        :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
       </span>
     </el-row>
     <!-- 最新部署 -->
@@ -55,9 +55,9 @@
       <el-divider content-position="left">最新部署任务</el-divider>
       <span v-loading="deployLoading">
         <div v-if="deployLoading" style="height: 60px; color: #909399; text-align: center">暂无数据</div>
-        <el-col :span="7" style="margin-top: 10px">
-        <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
-          <template>
+        <el-col :span="7" style="margin-top: 10px" v-if="data.deploys.length > 0">
+          <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
+            <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
               <div slot="header">
                 <deployment-name
@@ -111,10 +111,9 @@
           </template>
         </div>
       </el-col>
-      <el-col :span="17" style="margin-top: 10px">
-        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照
-        </el-tag>
-        <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
+        <el-col :span="17" style="margin-top: 10px" v-if="data.deploys.length > 0">
+          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照</el-tag>
+          <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
           <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
                    v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.show"
                    ref="previousVersionTab">
@@ -550,21 +549,21 @@ export default {
         page: 1,
         length: 3
       }
-      this.deployLoading = true
-      QUERY_MY_LEO_JOB_DEPLOY_PAGE(requestBody)
-        .then(res => {
-          this.data.deploymentVersionDetails = res.body.data
-          this.deployLoading = false
-        })
       this.versionLoading = true
       QUERY_MY_LEO_JOB_DEPLOYMENT_VERSION_DETAILS(requestBody)
         .then(res => {
           this.data.deploymentVersionDetails = res.body
           this.versionLoading = false
         })
+
+      this.deployLoading = true
+      QUERY_MY_LEO_JOB_DEPLOY_PAGE(requestBody)
+        .then(res => {
+          this.setDetails(res.body.data)
+          this.deployLoading = false
+        })
       this.handleSubscribeLeoDeploy()
       this.handleSubscribeDeploymentVersionDetails()
-      this.setDetails([])
       this.data.deployDetails = {}
     }
   }
