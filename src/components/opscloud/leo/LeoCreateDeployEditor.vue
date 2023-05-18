@@ -106,6 +106,7 @@
 // API
 import { QUERY_LEO_JOB_PAGE } from '@/api/modules/leo/leo.job.api'
 import { QUERY_LEO_DEPLOY_VERSION, QUERY_LEO_DEPLOY_DEPLOYMENT, DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 
 export default {
   data () {
@@ -133,7 +134,9 @@ export default {
   },
   name: 'LeoCreateDeployEditor',
   props: ['formStatus'],
-  components: {},
+  components: {
+    SelectItem
+  },
   mixins: [],
   mounted () {
   },
