@@ -34,9 +34,11 @@
               </span>
             </div>
             <div><span class="label">环境分组</span>{{ deployment.name }}</div>
+            <div><span class="label">资源限制</span>
+              <deployment-resources-limits :properties="deployment.properties"></deployment-resources-limits>
+            </div>
             <div><span class="label">副本数量</span>
               <deployment-replicas :replicas="deployment.replicas"></deployment-replicas>
-              <deployment-resources-limits :properties="deployment.properties"></deployment-resources-limits>
             </div>
             <div><span class="label">版本名称</span>{{ deployment.versionName }}
               <el-popover placement="right" trigger="hover">
