@@ -66,6 +66,18 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="关联项目" :label-width="formStatus.labelWidth">
+            <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
+                       placeholder="选择关联项目" style="width: 500px" :remote-method="getPoject">
+              <el-option
+                v-for="item in projectOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.name">
+                <select-item :name="item.name" :comment="item.comment"></select-item>
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
           </el-form-item>
@@ -92,6 +104,8 @@
 import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
+import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -111,6 +125,7 @@ export default {
         branch: '',
         params: {},
         assetId: '',
+        projectId: '',
         autoDeploy: true,
         versionName: '',
         versionDesc: ''
@@ -125,6 +140,8 @@ export default {
       branchOptions: [],
       branchOptionsLoading: false,
       deployDeploymentOptions: [],
+      businessType: BusinessType,
+      projectOptions: [],
       options: options,
       style: { height: '400px' },
       buttons: {
@@ -172,6 +189,7 @@ export default {
       } else {
         this.getLeoDeployDeployment()
       }
+      this.getProject()
     },
     handleClick (tab, event) {
       if (tab.name === 'build') {
@@ -203,6 +221,25 @@ export default {
           // 单个则默认选中
           if (this.deployDeploymentOptions.length === 1) {
             this.doBuildParam.assetId = this.deployDeploymentOptions[0].businessId
+          }
+        })
+    },
+    getProject () {
+      if (this.leoJob === {}) return
+      const requestBody = {
+        businessType: this.businessType.APPLICATION,
+        businessId: this.leoJob.applicationId,
+        resourceType: this.businessType.APPLICATION,
+        extend: true,
+        page: 1,
+        length: 20
+      }
+      QUERY_RES_PROJECT_PAGE(requestBody)
+        .then(res => {
+          this.projectOptions = res.body
+          // 单个则默认选中
+          if (this.projectOptions.length === 1) {
+            this.doBuildParam.projectId = this.projectOptions[0].id
           }
         })
     },
