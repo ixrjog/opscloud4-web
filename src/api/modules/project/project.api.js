@@ -2,7 +2,6 @@ import { request } from '@/api/_service.js'
 
 const baseUrl = '/project'
 
-
 export function QUERY_PROJECT_PAGE (data) {
   return request({
     url: baseUrl + '/page/query',

@@ -120,6 +120,7 @@ import { QUERY_LEO_JOB_PAGE } from '@/api/modules/leo/leo.job.api'
 import { QUERY_LEO_DEPLOY_VERSION, QUERY_LEO_DEPLOY_DEPLOYMENT, DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
 
 export default {
   data () {
@@ -140,6 +141,7 @@ export default {
       // 部署版本
       deployVersionOptions: [],
       deployDeploymentOptions: [],
+      businessType: BusinessType,
       projectOptions: [],
       style: { height: '400px' },
       buttons: {
@@ -242,7 +244,7 @@ export default {
       if (this.leoJob === {}) return
       const requestBody = {
         businessType: this.businessType.APPLICATION,
-        businessId: this.leoJob.applicationId,
+        businessId: this.application.id,
         resourceType: 'APPLICATION',
         extend: true,
         relation: false,
