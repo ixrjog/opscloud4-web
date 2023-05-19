@@ -11,6 +11,7 @@ import datasource from './modules/opscloud.datasource'
 import workbench from './modules/opscloud.workbench'
 import workorder from './modules/opscloud.workorder'
 import application from './modules/opscloud.application'
+import project from './modules/opscloud.project'
 import task from './modules/opscloud.task'
 import docs from './modules/opscloud.docs'
 import leo from './modules/opscloud.leo'
@@ -81,10 +82,14 @@ const frameIn = [
       ...rbac,
       // 应用
       ...application,
+      // 任务
       ...task,
+      // 文档
       ...docs,
       // 发布模块
-      ...leo
+      ...leo,
+      // 项目
+      ...project
     ]
   },
   playground,

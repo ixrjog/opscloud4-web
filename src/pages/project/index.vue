@@ -1,0 +1,297 @@
+<template>
+  <d2-container>
+    <template>
+      <div>
+        <h1>{{ title }}</h1>
+      </div>
+      <el-row style="margin-bottom: 5px" :gutter="24">
+        <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
+        <el-select
+          v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+          placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
+          <el-option
+            v-for="item in tagOptions"
+            :key="item.id"
+            :label="item.tagKey"
+            :value="item.id">
+          </el-option>
+        </el-select>
+        <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
+        <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
+      </el-row>
+      <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
+        <el-table-column label="应用" width="200px">
+          <template v-slot="scope">
+            <el-row>
+              <span>{{ scope.row.name }}</span>
+              <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
+                         @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
+              </el-button>
+            </el-row>
+            <el-row v-if="false">
+              <el-tag disable-transitions type="primary" plain size="mini">{{ scope.row.projectKey }}</el-tag>
+            </el-row>
+            <el-row>
+              <b style="color: #9d9fa3">{{ scope.row.comment }}</b>
+            </el-row>
+            <!--Tags-->
+            <business-tags :tags="scope.row.tags"></business-tags>
+          </template>
+        </el-table-column>
+        <el-table-column prop="resourceMap" label="绑定资源" width="400px">
+          <template v-slot="scope">
+            <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key" class="resDiv">
+              <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getProjectResText }}</b>
+              </el-divider>
+              <div v-for="item in value" :key="item.id">
+                <el-tooltip effect="dark" :content="item.comment" placement="top-start"
+                            :disabled="!item.comment">
+                  <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
+                    {{ item.name }}
+                  </el-tag>
+                </el-tooltip>
+              </div>
+            </div>
+            <div>
+              <el-divider content-position="left"><b style="color: #9d9fa3">应用</b></el-divider>
+              <div v-for="item in scope.row.applicationList" :key="item.id">
+                <el-tooltip effect="dark" :content="item.comment" placement="top-start"
+                            :disabled="!item.comment">
+                  <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
+                    {{ item.name }}
+                  </el-tag>
+                </el-tooltip>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="users" label="授权用户" width="350">
+          <template v-slot="scope">
+            <users-tag :users="scope.row.users"></users-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="200">
+          <template v-slot="scope">
+            <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+            <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
+            <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                  @handleSizeChange="handleSizeChange"></pagination>
+      <project-editor ref="projectEditor" :formStatus="formStatus.project"
+                      @close="fetchData"></project-editor>
+      <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
+                           :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+      <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
+    </template>
+  </d2-container>
+</template>
+
+<script>
+
+import Pagination from '@/components/opscloud/common/page/Pagination'
+import ProjectDsInstanceAssetType from '@/components/opscloud/common/enums/project.ds.instance.asset.type'
+import UsersTag from '../../components/opscloud/common/tag/UsersTag'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
+import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEditor'
+import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
+import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
+import ProjectEditor from '@/components/opscloud/project/ProjectEditor'
+import { DELETE_PROJECT, QUERY_PROJECT_PAGE } from '@/api/modules/project/project.api'
+
+export default {
+  name: 'ProjectTable',
+  data () {
+    return {
+      title: '项目管理',
+      instance: {
+        id: ''
+      },
+      table: {
+        data: [],
+        loading: false,
+        pagination: {
+          currentPage: 1,
+          pageSize: 10,
+          total: 0
+        }
+      },
+      options: {
+        stripe: true
+      },
+      businessType: BusinessType.PROJECT,
+      queryParam: {
+        queryName: '',
+        tagId: ''
+      },
+      formStatus: {
+        project: {
+          visible: false,
+          operationType: true,
+          addTitle: '新增项目配置',
+          updateTitle: '更新项目配置'
+        },
+        businessTag: {
+          visible: false,
+          title: '编辑项目标签'
+        },
+        businessDoc: {
+          visible: false,
+          title: '项目文档'
+        }
+      },
+      tagOptions: []
+    }
+  },
+  filters: {
+    getProjectResText (value) {
+      switch (value) {
+        case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_PROJECT:
+          return '项目'
+        case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_SPRINT:
+          return '迭代'
+        case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_WORKITEM:
+          return '工作项'
+        default:
+          return value
+      }
+    }
+  },
+  computed: {},
+  mounted () {
+    this.getTag('')
+    this.fetchData()
+  },
+  components: {
+    Pagination,
+    ProjectEditor,
+    UsersTag,
+    BusinessTagEditor,
+    BusinessDocReader,
+    BusinessTags
+  },
+  methods: {
+    paginationCurrentChange (currentPage) {
+      this.table.pagination.currentPage = currentPage
+      this.fetchData()
+    },
+    handleSizeChange (size) {
+      this.table.pagination.pageSize = size
+      this.fetchData()
+    },
+    handleDocRead (row) {
+      this.$refs.businessDocReader.initData(Object.assign({}, row.document))
+      this.formStatus.businessDoc.visible = true
+    },
+    getTag (name) {
+      const requestBody = {
+        tagKey: name,
+        businessType: this.businessType,
+        append: true,
+        page: 1,
+        length: 20
+      }
+      QUERY_TAG_PAGE(requestBody)
+        .then(res => {
+          this.tagOptions = res.body.data
+        })
+    },
+    handleAdd () {
+      this.formStatus.project.operationType = true
+      const project = {
+        id: '',
+        name: '',
+        projectKey: '',
+        projectType: 0,
+        isActive: true,
+        comment: ''
+      }
+      this.$refs.projectEditor.initData(project)
+      this.formStatus.project.visible = true
+    },
+    handleRowTagEdit (row) {
+      this.instance.id = row.id
+      const businessTags = {
+        tagIds: row.tags !== null ? row.tags.map(e => e.id) : []
+      }
+      this.$refs.businessTagEditor.initData(businessTags)
+      this.formStatus.businessTag.visible = true
+    },
+    handleRowEdit (row) {
+      this.formStatus.project.operationType = false
+      this.formStatus.project.visible = true
+      this.$refs.projectEditor.initData(Object.assign({}, row))
+    },
+    handleRowDel (row) {
+      this.$confirm('此操作将删除当前配置?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DELETE_PROJECT({ id: row.id })
+          .then(res => {
+            this.fetchData()
+            this.$message.success('删除成功!')
+          })
+      }).catch(() => {
+        this.$message.info('已取消删除')
+      })
+    },
+    fetchData () {
+      this.loading = true
+      const requestBody = {
+        ...this.queryParam,
+        extend: 1,
+        page: this.table.pagination.currentPage,
+        length: this.table.pagination.pageSize
+      }
+      QUERY_PROJECT_PAGE(requestBody)
+        .then(res => {
+          this.table.data = res.body.data
+          this.table.pagination.total = res.body.totalNum
+          this.table.loading = false
+        })
+    },
+    onCopy (e) {
+      this.$message.success('内容已复制到剪切板！')
+    },
+    onError (e) {
+      this.$message.error('抱歉，复制失败！')
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
+
+.el-select {
+  margin-left: 5px;
+}
+
+.el-button {
+  margin-left: 5px;
+}
+
+.nameCopy i {
+  display: none;
+}
+
+.nameCopy:hover i {
+  display: inline;
+}
+
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 12px 0;
+}
+</style>
