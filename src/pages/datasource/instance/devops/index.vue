@@ -8,9 +8,16 @@
                      :tableLayout="tableLayout.project"
                      ref="projectTable">
           <template v-slot:extend>
-            <el-table-column prop="tree" label="迭代" width="300">
+            <el-table-column prop="tree" label="迭代" width="250">
               <template v-slot="scope">
                     <span v-for="sprint in scope.row.tree.ALIYUN_DEVOPS_SPRINT" :key="sprint.id">
+                      <el-tag size="mini" style="margin-right: 2px">{{ sprint.name }}</el-tag>
+                    </span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="tree" label="工作项" width="250">
+              <template v-slot="scope">
+                    <span v-for="sprint in scope.row.tree.ALIYUN_DEVOPS_WORKITEM" :key="sprint.id">
                       <el-tag size="mini" style="margin-right: 2px">{{ sprint.name }}</el-tag>
                     </span>
               </template>
