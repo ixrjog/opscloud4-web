@@ -6,7 +6,7 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: 'WebTerminal'
+      title: 'Web-Terminal'
     }
   },
   {
@@ -16,7 +16,7 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: 'SSH服务器'
+      title: 'SSH-Server'
     }
   },
   {
@@ -26,7 +26,7 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: '远程桌面'
+      title: 'Remote-Desktop'
     }
   },
   {
@@ -36,7 +36,7 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: '容器终端'
+      title: 'Kubernetes-Terminal'
     }
   },
   {
@@ -46,7 +46,7 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: '持续交付'
+      title: 'Continuous-Delivery'
     }
   }
 ]
