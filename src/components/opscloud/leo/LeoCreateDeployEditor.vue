@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="部署任务" :visible.sync="formStatus.visible" width="70%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="部署" name="deploy">
+      <el-tab-pane label="Home" name="deploy">
         <el-form :model="application">
           <el-form-item label="应用名称" :label-width="formStatus.labelWidth">
             <el-input v-model="application.name" readonly></el-input>

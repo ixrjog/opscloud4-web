@@ -28,10 +28,10 @@
         <i class="fas fa-circle-notch"></i>
       </el-button>
       <el-button type="primary" size="mini" @click="createDeploy"
-                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">创建部署任务
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">Create Deploy Task
       </el-button>
       <el-button type="primary" plain size="mini" @click="handleHistory()"
-                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">历史
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">History
       </el-button>
     </el-row>
     <!-- 任务&无状态版本详情 -->

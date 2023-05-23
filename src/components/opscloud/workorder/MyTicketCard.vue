@@ -1,10 +1,6 @@
 <template>
   <div>
     <el-card shadow="hover">
-      <div slot="header" class="clearfix">
-        <span>{{ title }}</span>
-        <el-button style="float: right; padding: 3px 0" type="text" @click="fetchData">刷新</el-button>
-      </div>
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
         <el-radio-group v-model="queryParam.ticketPhase" size="mini" @change="fetchData">
           <el-radio-button :label="ticketPhase.ALL">全部</el-radio-button>
@@ -15,7 +11,7 @@
           <el-radio-button :label="ticketPhase.FAILED">{{ ticketPhase.FAILED | toPhaseText }}</el-radio-button>
           <el-radio-button :label="ticketPhase.CLOSED">{{ ticketPhase.CLOSED | toPhaseText }}</el-radio-button>
         </el-radio-group>
-        <el-select v-model.trim="queryParam.workOrderId" filterable clearable @change="fetchData"
+        <el-select v-model.trim="queryParam.workOrderId" filterable clearable @change="fetchData" size="mini"
                    placeholder="请选择工单类型">
           <el-option v-for="item in workOrderOptions"
                      :key="item.id"
@@ -24,6 +20,7 @@
             <span style="float: left"><i :class="item.icon" style="margin-right: 5px"></i>{{ item.name }}</span>
           </el-option>
         </el-select>
+        <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"><i class="fas fa-circle-notch"></i></el-button>
         <el-button type="danger" plain size="mini" :disabled="queryParam.workOrderId === ''" @click="delOrderTicket">批量删除</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
