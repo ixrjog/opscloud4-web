@@ -1,25 +1,24 @@
 <template>
-  <el-dialog title="KubernetesImage 构建任务"
+  <el-dialog title="KubernetesImage Build Task"
              :visible.sync="formStatus.visible" width="50%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="构建" name="build">
+      <el-tab-pane label="Home" name="build">
         <el-form :model="leoJob">
-          <el-form-item label="任务名称" :label-width="formStatus.labelWidth">
+          <el-form-item label="Job Name" :label-width="formStatus.labelWidth">
             <el-input v-model="leoJob.name" readonly></el-input>
           </el-form-item>
-          <el-form-item label="任务主键" :label-width="formStatus.labelWidth">
+          <el-form-item label="Job Key" :label-width="formStatus.labelWidth">
             <el-input v-model="leoJob.jobKey" readonly></el-input>
           </el-form-item>
-          <el-form-item label="项目地址" :label-width="formStatus.labelWidth">
+          <el-form-item label="GitLab SshURL" :label-width="formStatus.labelWidth">
             <el-input v-if="JSON.stringify(leoJob) !== '{}'"
                       v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
                       readonly style="width: 500px"></el-input>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
-                         style="margin-left: 20px" @change="getBranchOptions">查询<span
-              style="margin-left: 2px">Tag</span>
+                         style="margin-left: 20px" @change="getBranchOptions"><span style="margin-left: 2px">Query tags</span>
             </el-checkbox>
           </el-form-item>
-          <el-form-item label="构建分支" :label-width="formStatus.labelWidth" required>
+          <el-form-item label="Branch" :label-width="formStatus.labelWidth" required>
             <el-select v-model.trim="doBuildParam.branch" filterable style="width: 500px"
                        :loading="branchOptionsLoading" loading-text="正在加载选项" remote @change="handleChange">
               <el-option-group v-for="group in branchOptions" :key="group.label" :label="group.label">
@@ -50,8 +49,8 @@
               <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
             </el-alert>
           </el-form-item>
-          <el-form-item label="部署选项" :label-width="formStatus.labelWidth" required>
-            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">构建后自动部署</el-checkbox>
+          <el-form-item label="Deploy Options" :label-width="formStatus.labelWidth" required>
+            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">Automatically deploy after build completed</el-checkbox>
           </el-form-item>
           <el-form-item label="Deployment" :label-width="formStatus.labelWidth">
             <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
@@ -66,7 +65,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="关联项目" :label-width="formStatus.labelWidth">
+          <el-form-item label="Project" :label-width="formStatus.labelWidth">
             <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
                        placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
               <el-option
@@ -78,22 +77,22 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
+          <el-form-item label="Version Name" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
           </el-form-item>
-          <el-form-item label="版本说明" :label-width="formStatus.labelWidth">
+          <el-form-item label="Version Desc" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionDesc"></el-input>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" @click="doBuild" icon="fa fa-play" :loading="buttons.doBuilding"
-                     :disabled="buttons.building"><span style="margin-left: 2px">执行构建</span>
+                     :disabled="buttons.building"><span style="margin-left: 2px">Do Build</span>
           </el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">Close</el-button>
     </div>
   </el-dialog>
 </template>

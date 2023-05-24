@@ -37,14 +37,14 @@
     <!-- 任务&无状态版本详情 -->
     <!--    v-if="data.deploymentVersionDetails.length > 0"-->
     <el-row :gutter="20">
-      <el-divider content-position="left">任务&无状态版本详情
-        （<span><i class="fab fa-microsoft" style="color: #128ca8; margin-right: 1px"></i>新版本</span>、
-        <span><i class="fab fa-microsoft" style="color: #2bbe32; margin-right: 1px"></i>旧版本</span>、
-        <span><i class="fab fa-microsoft" style="color: #e56c0d; margin-right: 1px"></i>其他版本</span>、
-        <span><i class="fab fa-microsoft" style="color: #9d9fa3; margin-right: 1px"></i>离线版本</span>）
+      <el-divider content-position="left">Task & Kubernetes Deployment Version Details
+        （<span><i class="far fa-square" style="color: #128ca8; margin-right: 1px"></i>Blue Version</span>、
+        <span><i class="far fa-square" style="color: #2bbe32; margin-right: 1px"></i>Green Version</span>、
+        <span><i class="far fa-square" style="color: #e56c0d; margin-right: 1px"></i>Other</span>、
+        <span><i class="far fa-square" style="color: #9d9fa3; margin-right: 1px"></i>Offline</span>）
       </el-divider>
       <span v-loading="versionLoading">
-        <div v-if="versionLoading" style="height: 60px; color: #909399; text-align: center">暂无数据</div>
+        <div v-if="versionLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
         <leo-deployment-version-details v-if="data.deploymentVersionDetails.length > 0"
                                         :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
       </span>
@@ -52,9 +52,9 @@
     <!-- 最新部署 -->
     <!--    v-if="data.deploys.length > 0"-->
     <el-row :gutter="20">
-      <el-divider content-position="left">最新部署任务</el-divider>
+      <el-divider content-position="left">Latest Deployment Tasks</el-divider>
       <span v-loading="deployLoading">
-        <div v-if="deployLoading" style="height: 60px; color: #909399; text-align: center">暂无数据</div>
+        <div v-if="deployLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
         <el-col :span="7" style="margin-top: 10px" v-if="data.deploys.length > 0">
           <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
             <template>
@@ -112,7 +112,7 @@
         </div>
       </el-col>
         <el-col :span="17" style="margin-top: 10px" v-if="data.deploys.length > 0">
-          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>部署详情快照</el-tag>
+          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>Deployment Details Snapshot</el-tag>
           <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
           <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
                    v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.show"

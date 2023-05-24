@@ -1,15 +1,15 @@
 <template>
-  <el-dialog title="部署任务" :visible.sync="formStatus.visible" width="70%">
+  <el-dialog title="Deploy Task" :visible.sync="formStatus.visible" width="70%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Home" name="deploy">
         <el-form :model="application">
-          <el-form-item label="应用名称" :label-width="formStatus.labelWidth">
+          <el-form-item label="Application Name" :label-width="formStatus.labelWidth">
             <el-input v-model="application.name" readonly></el-input>
           </el-form-item>
-          <el-form-item label="任务环境" :label-width="formStatus.labelWidth">
+          <el-form-item label="Job Env" :label-width="formStatus.labelWidth">
             <el-input v-model="env.envName" readonly style="width: 500px"></el-input>
           </el-form-item>
-          <el-form-item label="构建任务" :label-width="formStatus.labelWidth" required>
+          <el-form-item label="Build Job Name" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.jobId" filterable clearable remote reserve-keyword @change="selLeoJob"
                        placeholder="搜索并选择任务" style="width: 500px" :remote-method="getLeoJob">
               <el-option
@@ -34,7 +34,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="部署类型" :label-width="formStatus.labelWidth" required>
+          <el-form-item label="Deploy Type" :label-width="formStatus.labelWidth" required>
             <el-col :span="6">
               <el-radio v-model="doDeployParam.deployType" label="ROLLING" border>滚动 Rolling</el-radio>
               <el-alert class="radio-desc" :closable="false"
@@ -65,7 +65,7 @@
               </el-alert>
             </el-col>
           </el-form-item>
-          <el-form-item label="发布版本" :label-width="formStatus.labelWidth" required
+          <el-form-item label="Release Version" :label-width="formStatus.labelWidth" required
                         v-if="doDeployParam.deployType === 'ROLLING'">
             <el-select v-model="doDeployParam.buildId" filterable clearable remote reserve-keyword
                        :disabled="doDeployParam.jobId === ''"
@@ -83,7 +83,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="关联项目" :label-width="formStatus.labelWidth">
+          <el-form-item label="Project" :label-width="formStatus.labelWidth">
             <el-select v-model="doDeployParam.projectId" filterable clearable remote reserve-keyword
                        placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
               <el-option
@@ -95,20 +95,20 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="部署说明" :label-width="formStatus.labelWidth">
+          <el-form-item label="Deploy Desc" :label-width="formStatus.labelWidth">
             <el-input v-model="doDeployParam.comment"></el-input>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" @click="doDeploy" icon="fa fa-play" :loading="buttons.doDeploying"
                      :disabled="buttons.doDeploying || doDeployParam.jobId === '' ||  (doDeployParam.deployType === 'ROLLING' &&  doDeployParam.buildId === '') || doDeployParam.assetId === ''">
-            <span style="margin-left: 2px">执行部署</span>
+            <span style="margin-left: 2px">Do Deploy</span>
           </el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">Close</el-button>
     </div>
   </el-dialog>
 </template>
