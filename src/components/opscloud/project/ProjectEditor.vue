@@ -7,7 +7,7 @@
           <el-form-item label="项目名称" required>
             <el-input v-model="project.name" placeholder="请输入内容"></el-input>
           </el-form-item>
-          <el-form-item label="项目Key" :required="true">
+          <el-form-item label="项目Key" :required="true" v-if="false">
             <el-input v-model="project.projectKey" placeholder="请输入内容">
               <template slot="append">
                 <el-button size="mini" type="primary" @click="handleBuildKey">
@@ -16,8 +16,24 @@
               </template>
             </el-input>
           </el-form-item>
+          <el-form-item label="项目类型" required>
+            <el-radio-group v-model="project.projectType" size="mini">
+              <el-radio-button label="DAILY">日常</el-radio-button>
+              <el-radio-button label="PROJECT">项目</el-radio-button>
+              <el-radio-button label="URGENT">紧急</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="项目状态" required>
+            <el-radio-group v-model="project.projectStatus" size="mini">
+              <el-radio-button label="PENDING">未开始</el-radio-button>
+              <el-radio-button label="PROGRESS">进行中</el-radio-button>
+              <el-radio-button label="PAUSE">暂停</el-radio-button>
+              <el-radio-button label="CANCEL">取消</el-radio-button>
+              <el-radio-button label="DELIVERED">已发布</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
           <el-form-item label="有效" required>
-            <el-select v-model="project.isActive" placeholder="选择">
+            <el-select v-model="project.isActive" placeholder="选择" style="width: 220px;">
               <el-option
                 v-for="item in activeOptions"
                 :key="item.value"
@@ -25,6 +41,18 @@
                 :value="item.value">
               </el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="开始时间" required>
+            <div class="block">
+              <el-date-picker v-model="project.startTime" type="date" placeholder="选择日期" value-format="timestamp">
+              </el-date-picker>
+            </div>
+          </el-form-item>
+          <el-form-item label="结束时间">
+            <div class="block">
+              <el-date-picker v-model="project.endTime" type="date" placeholder="选择日期" value-format="timestamp">
+              </el-date-picker>
+            </div>
           </el-form-item>
           <el-form-item label="描述">
             <el-input v-model="project.comment" placeholder="请输入内容"></el-input>
@@ -35,7 +63,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="绑定资源" name="resource" v-if="project.id !== ''" class="resTabPane">
+      <el-tab-pane label="项目资源" name="resource" v-if="project.id !== ''" class="resTabPane">
         <el-col :span="10">
           <el-form :model="queryParam" label-width="80px">
             <el-form-item label="业务类型">
@@ -64,11 +92,11 @@
               </el-select>
             </el-form-item>
             <el-form-item label="选择项目">
-              <el-select v-model="queryParam.resourceParentId" filterable :disabled="queryParam.businessType === ''"
+              <el-select v-model="queryParam.resourceParentId" filterable :disabled="queryParam.businessType === ''"  clearable
                          remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getDevOpsProjectResource"
                          @change="getResource('')">
                 <el-option
-                  v-for="item in ParentResOptions"
+                  v-for="item in parentResOptions"
                   :key="item.businessId"
                   :label="item.name"
                   :value="item.businessId">
@@ -79,13 +107,14 @@
               </el-select>
             </el-form-item>
             <el-form-item label="资源类型">
-              <el-select v-model="queryParam.assetType" :disabled="queryParam.resourceParentId === ''"
+              <el-select v-model="queryParam.assetType" :disabled="queryParam.resourceParentId === ''" clearable
                          @change="getResource('')" placeholder="选择资源类型">
                 <el-option
                   v-for="item in assetTypeOptions"
                   :key="item.id"
-                  :label="item.value"
+                  :label="item.value | getProjectResAssetText"
                   :value="item.value">
+                  <span>{{ item.value | getProjectResAssetText }}</span>
                 </el-option>
               </el-select>
             </el-form-item>
@@ -106,7 +135,7 @@
             </el-form-item>
             <el-form-item>
               <el-button size="mini" type="primary" @click="handleBindResources"
-                         :disabled="queryParam.resource === '' || JSON.stringify(queryParam.resource) === '{}'">绑定
+                         :disabled="queryParam.resource === '' || JSON.stringify(queryParam.resource) === '{}'">添加
               </el-button>
             </el-form-item>
           </el-form>
@@ -125,7 +154,7 @@
           </div>
         </el-col>
       </el-tab-pane>
-      <el-tab-pane label="绑定应用" name="application" v-if="project.id !== ''&& project.id !== 0">
+      <el-tab-pane label="项目应用" name="application" v-if="project.id !== ''&& project.id !== 0">
         <el-col :span="10">
           <el-form :model="bindAppParam">
             <el-form-item label="应用">
@@ -142,7 +171,7 @@
             </el-form-item>
             <el-form-item>
               <el-button size="mini" type="primary" @click="handleBindAppResources"
-                         :disabled="JSON.stringify(bindAppParam.application) === '{}'">绑定
+                         :disabled="JSON.stringify(bindAppParam.application) === '{}'">添加
               </el-button>
             </el-form-item>
           </el-form>
@@ -161,7 +190,7 @@
           </div>
         </el-col>
       </el-tab-pane>
-      <el-tab-pane label="用户授权" name="permissionUser" v-if="project.id !== ''&& project.id !== 0">
+      <el-tab-pane label="项目成员" name="permissionUser" v-if="project.id !== ''&& project.id !== 0">
         <permission-user-tab :businessType="businessType.PROJECT" :businessId="project.id"
                              ref="permissionUserTab"></permission-user-tab>
       </el-tab-pane>
@@ -190,6 +219,7 @@ import {
 import ProjectDsInstanceAssetType from '@/components/opscloud/common/enums/project.ds.instance.asset.type'
 import { QUERY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
+import { getProjectResAssetText } from '@/filters/project'
 
 const activeOptions = [{
   value: true,
@@ -219,7 +249,7 @@ export default {
       ProjectDsInstanceAssetType: ProjectDsInstanceAssetType,
       applicationOptions: [],
       resOptions: [],
-      ParentResOptions: [],
+      parentResOptions: [],
       dsInstanceOptions: [],
       assetTypeOptions: [],
       activeOptions: activeOptions
@@ -238,11 +268,12 @@ export default {
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_SPRINT:
           return '迭代'
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_WORKITEM:
-          return '工作项'
+          return '需求'
         default:
           return value
       }
-    }
+    },
+    getProjectResAssetText
   },
   mounted () {
   },
@@ -278,8 +309,9 @@ export default {
     getAssetType () {
       this.clearResOptions()
       this.queryParam.assetType = ''
-      this.ParentResOptions = []
+      this.parentResOptions = []
       this.assetTypeOptions = []
+      this.getDevOpsProjectResource('')
       const obj = this.ProjectDsInstanceAssetType[this.queryParam.dsInstance.instanceType]
       if (obj) {
         for (const item in obj) {
@@ -289,12 +321,10 @@ export default {
         }
         return
       }
-      this.assetTypeOptions = []
-      this.ParentResOptions = []
     },
     clearResOptions () {
       this.resOptions = []
-      this.ParentResOptions = []
+      this.parentResOptions = []
       this.queryParam.resource = ''
     },
     getDevOpsProjectResource (queryName) {
@@ -311,7 +341,7 @@ export default {
       }
       PREVIEW_PROJECT_RES_PAGE(requestBody)
         .then(({ body }) => {
-          this.ParentResOptions = body.data
+          this.parentResOptions = body.data
         })
     },
     getResource (queryName) {
@@ -343,7 +373,7 @@ export default {
       BIND_PROJECT_RES(this.queryParam.resource)
         .then(() => {
           this.getProjectResource()
-          this.$message.success('绑定成功')
+          this.$message.success('添加成功')
         })
     },
     handleBindAppResources () {
@@ -361,7 +391,7 @@ export default {
       BIND_PROJECT_RES(requestBody)
         .then(() => {
           this.getProjectResource()
-          this.$message.success('绑定成功')
+          this.$message.success('添加成功')
         })
     },
     getBusinessType () {
@@ -396,7 +426,7 @@ export default {
     handleResBind () {
       BIND_PROJECT_RES()
         .then(() => {
-          this.$message.success('绑定成功')
+          this.$message.success('添加成功')
           this.getProjectResource()
         })
     },

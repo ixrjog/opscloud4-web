@@ -6,6 +6,22 @@
       </div>
       <el-row style="margin-bottom: 5px" :gutter="24">
         <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
+        <el-select v-model="queryParam.projectType" clearable placeholder="项目类型" @change="fetchData">
+          <el-option
+            v-for="item in projectTypeOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        <el-select v-model="queryParam.projectStatus" clearable placeholder="项目状态" @change="fetchData">
+          <el-option
+            v-for="item in projectStatusOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
         <el-select
           v-model="queryParam.tagId" filterable clearable remote reserve-keyword
           placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
@@ -20,7 +36,7 @@
         <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column label="应用" width="200px">
+        <el-table-column label="项目名称" width="200px">
           <template v-slot="scope">
             <el-row>
               <span>{{ scope.row.name }}</span>
@@ -38,21 +54,21 @@
             <business-tags :tags="scope.row.tags"></business-tags>
           </template>
         </el-table-column>
-        <el-table-column prop="resourceMap" label="绑定资源" width="400px">
+        <el-table-column prop="resourceMap" label="项目资源" width="400px">
           <template v-slot="scope">
             <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key" class="resDiv">
               <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getProjectResText }}</b>
               </el-divider>
-              <div v-for="item in value" :key="item.id">
+              <span v-for="item in value" :key="item.id">
                 <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                             :disabled="!item.comment">
                   <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
                     {{ item.name }}
                   </el-tag>
                 </el-tooltip>
-              </div>
+              </span>
             </div>
-            <div>
+            <div v-if="JSON.stringify(scope.row.applicationList) !== '[]'">
               <el-divider content-position="left"><b style="color: #9d9fa3">应用</b></el-divider>
               <div v-for="item in scope.row.applicationList" :key="item.id">
                 <el-tooltip effect="dark" :content="item.comment" placement="top-start"
@@ -65,11 +81,23 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="users" label="授权用户" width="350">
+        <el-table-column prop="users" label="项目成员" width="150">
           <template v-slot="scope">
             <users-tag :users="scope.row.users"></users-tag>
           </template>
         </el-table-column>
+        <el-table-column prop="projectType" label="项目类型" width="80">
+          <template v-slot="scope">
+            <span>{{ scope.row.projectType | getProjectTypeText }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="projectStatus" label="项目状态" width="80">
+          <template v-slot="scope">
+            <span>{{ scope.row.projectStatus | getProjectStatusText }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="startTime" label="开始时间" width="80"></el-table-column>
+        <el-table-column prop="endTime" label="结束时间" width="80"></el-table-column>
         <el-table-column label="操作" width="200">
           <template v-slot="scope">
             <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -101,6 +129,35 @@ import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ProjectEditor from '@/components/opscloud/project/ProjectEditor'
 import { DELETE_PROJECT, QUERY_PROJECT_PAGE } from '@/api/modules/project/project.api'
+import { getProjectStatusText, getProjectTypeText } from '@/filters/project'
+
+const projectTypeOptions = [{
+  value: 'DAILY',
+  label: '日常'
+}, {
+  value: 'PROJECT',
+  label: '项目'
+}, {
+  value: 'URGENT',
+  label: '紧急'
+}]
+
+const projectStatusOptions = [{
+  value: 'PENDING',
+  label: '未开始'
+}, {
+  value: 'PROGRESS',
+  label: '进行中'
+}, {
+  value: 'PAUSE',
+  label: '暂停'
+}, {
+  value: 'CANCEL',
+  label: '取消'
+}, {
+  value: 'DELIVERED',
+  label: '已发布'
+}]
 
 export default {
   name: 'ProjectTable',
@@ -143,7 +200,9 @@ export default {
           title: '项目文档'
         }
       },
-      tagOptions: []
+      tagOptions: [],
+      projectTypeOptions: projectTypeOptions,
+      projectStatusOptions: projectStatusOptions
     }
   },
   filters: {
@@ -152,11 +211,13 @@ export default {
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_SPRINT:
           return '迭代'
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_WORKITEM:
-          return '工作项'
+          return '需求'
         default:
           return value
       }
-    }
+    },
+    getProjectTypeText,
+    getProjectStatusText
   },
   computed: {},
   mounted () {
@@ -203,7 +264,10 @@ export default {
         id: '',
         name: '',
         projectKey: '',
-        projectType: 0,
+        projectType: 'DAILY',
+        projectStatus: 'PENDING',
+        startTime: Date.now(),
+        endTime: '',
         isActive: true,
         comment: ''
       }
@@ -239,7 +303,7 @@ export default {
       })
     },
     fetchData () {
-      this.loading = true
+      this.table.loading = true
       const requestBody = {
         ...this.queryParam,
         extend: 1,
