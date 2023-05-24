@@ -149,8 +149,6 @@ export default {
   filters: {
     getProjectResText (value) {
       switch (value) {
-        case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_PROJECT:
-          return '项目'
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_SPRINT:
           return '迭代'
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_WORKITEM:

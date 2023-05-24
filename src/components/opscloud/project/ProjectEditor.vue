@@ -63,9 +63,24 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源类型">
-              <el-select v-model="queryParam.assetType" placeholder="选择资源类型"
+            <el-form-item label="选择项目">
+              <el-select v-model="queryParam.resourceParentId" filterable :disabled="queryParam.businessType === ''"
+                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getDevOpsProjectResource"
                          @change="getResource('')">
+                <el-option
+                  v-for="item in ParentResOptions"
+                  :key="item.businessId"
+                  :label="item.name"
+                  :value="item.businessId">
+                  <span style="float: left">{{ item.name }}</span>
+                  <span
+                    style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{ item.comment }}</span>
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="资源类型">
+              <el-select v-model="queryParam.assetType" :disabled="queryParam.resourceParentId === ''"
+                         @change="getResource('')" placeholder="选择资源类型">
                 <el-option
                   v-for="item in assetTypeOptions"
                   :key="item.id"
@@ -76,7 +91,7 @@
             </el-form-item>
             <el-form-item label="绑定资源">
               <el-select v-model="queryParam.resource" filterable clearable value-key="businessId"
-                         :disabled="queryParam.businessType === ''"
+                         :disabled="queryParam.assetType === ''"
                          remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getResource">
                 <el-option
                   v-for="item in resOptions"
@@ -195,7 +210,8 @@ export default {
         resource: '',
         dsInstance: {},
         assetType: '',
-        businessType: BusinessType.ASSET
+        businessType: BusinessType.ASSET,
+        resourceParentId: ''
       },
       bindAppParam: {
         application: {}
@@ -203,6 +219,7 @@ export default {
       ProjectDsInstanceAssetType: ProjectDsInstanceAssetType,
       applicationOptions: [],
       resOptions: [],
+      ParentResOptions: [],
       dsInstanceOptions: [],
       assetTypeOptions: [],
       activeOptions: activeOptions
@@ -218,8 +235,6 @@ export default {
   filters: {
     getProjectResText (value) {
       switch (value) {
-        case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_PROJECT:
-          return '项目'
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_SPRINT:
           return '迭代'
         case ProjectDsInstanceAssetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_WORKITEM:
@@ -263,6 +278,7 @@ export default {
     getAssetType () {
       this.clearResOptions()
       this.queryParam.assetType = ''
+      this.ParentResOptions = []
       this.assetTypeOptions = []
       const obj = this.ProjectDsInstanceAssetType[this.queryParam.dsInstance.instanceType]
       if (obj) {
@@ -274,28 +290,43 @@ export default {
         return
       }
       this.assetTypeOptions = []
+      this.ParentResOptions = []
     },
     clearResOptions () {
       this.resOptions = []
+      this.ParentResOptions = []
       this.queryParam.resource = ''
     },
-    getResource (queryName) {
+    getDevOpsProjectResource (queryName) {
       this.clearResOptions()
-      let projectResType
-      switch (this.queryParam.businessType) {
-        case this.businessType.ASSET:
-          projectResType = this.queryParam.assetType
-          break
-        default:
-          this.$message.warning('暂不支持绑定该类型')
-      }
       const requestBody = {
         queryName: queryName,
         instanceId: this.queryParam.dsInstance !== {} ? this.queryParam.dsInstance.id : '',
         instanceUuid: this.queryParam.dsInstance !== {} ? this.queryParam.dsInstance.uuid : '',
         projectId: this.project.id,
         businessType: this.queryParam.businessType,
-        projectResType: projectResType,
+        projectResType: 'ALIYUN_DEVOPS_PROJECT',
+        page: 1,
+        length: 20
+      }
+      PREVIEW_PROJECT_RES_PAGE(requestBody)
+        .then(({ body }) => {
+          this.ParentResOptions = body.data
+        })
+    },
+    getResource (queryName) {
+      this.clearResOptions()
+      if (this.queryParam.assetType === '') {
+        return
+      }
+      const requestBody = {
+        queryName: queryName,
+        instanceId: this.queryParam.dsInstance !== {} ? this.queryParam.dsInstance.id : '',
+        instanceUuid: this.queryParam.dsInstance !== {} ? this.queryParam.dsInstance.uuid : '',
+        projectId: this.project.id,
+        businessType: this.businessType.ASSET,
+        projectResType: this.queryParam.assetType,
+        parentId: this.queryParam.resourceParentId,
         page: 1,
         length: 20
       }
