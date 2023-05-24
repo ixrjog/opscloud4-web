@@ -40,6 +40,7 @@
     <sns-topic-ticket-editor :formStatus="formStatus.ticket.sns.topic" ref="snsTopicTicketEditor" @close="fetchData"/>
     <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription" ref="snsSubscriptionTicketEditor" @close="fetchData"/>
     <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas" ref="applicationScaleReplicasTicketEditor" @close="fetchData"/>
+    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.applicationReduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
     <apollo-ticket-editor :formStatus="formStatus.ticket.apollo" ref="apolloTicketEditor" @close="fetchData"/>
     <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile" ref="awsIamUpdateLoginProfileTicketEditor" @close="fetchData"/>
     <application-deploy-ticket-editor :formStatus="formStatus.ticket.applicationDeploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
@@ -77,6 +78,8 @@ import ApolloTicketEditor from '@/components/opscloud/workorder/ticket/ApolloTic
 import ApplicationDeployTicketEditor from '@/components/opscloud/workorder/ticket/ApplicationDeployTicketEditor.vue'
 import AwsIamUpdateLoginProfileTicketEditor
   from '@/components/opscloud/workorder/ticket/AwsIamUpdateLoginProfileTicketEditor.vue'
+import ApplicationReduceReplicasTicketEditor
+  from '@/components/opscloud/workorder/ticket/ApplicationReduceReplicasTicketEditor.vue'
 
 export default {
   data () {
@@ -93,6 +96,7 @@ export default {
     }
   },
   components: {
+    ApplicationReduceReplicasTicketEditor,
     WorkOrderReport,
     WorkOrderGroupTable,
     WorkOrderTable,
@@ -234,6 +238,10 @@ export default {
         case this.workOrderKeyConstants.APPLICATION_SCALE_REPLICAS:
           this.handleOpenTicketEditor(this.formStatus.ticket.applicationScaleReplicas)
           this.$refs.applicationScaleReplicasTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APPLICATION_REDUCE_REPLICAS:
+          this.handleOpenTicketEditor(this.formStatus.ticket.applicationReduceReplicas)
+          this.$refs.applicationReduceReplicasTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APOLLO:
           this.handleOpenTicketEditor(this.formStatus.ticket.apollo)

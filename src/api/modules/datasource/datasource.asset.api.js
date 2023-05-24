@@ -56,3 +56,11 @@ export function SET_ASSET_ACTIVE (data) {
     params: data
   })
 }
+
+export function DELETE_ASSET_BY_TYPE (param) {
+  return request({
+    url: baseUrl + '/type/del',
+    method: 'delete',
+    params: param
+  })
+}

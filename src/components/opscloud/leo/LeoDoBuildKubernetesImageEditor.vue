@@ -68,12 +68,12 @@
           </el-form-item>
           <el-form-item label="关联项目" :label-width="formStatus.labelWidth">
             <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
-                       placeholder="选择关联项目" style="width: 500px" :remote-method="getPoject">
+                       placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
               <el-option
                 v-for="item in projectOptions"
                 :key="item.id"
                 :label="item.name"
-                :value="item.name">
+                :value="item.id">
                 <select-item :name="item.name" :comment="item.comment"></select-item>
               </el-option>
             </el-select>
@@ -189,7 +189,9 @@ export default {
       } else {
         this.getLeoDeployDeployment()
       }
-      this.getProject()
+      this.projectOptions = []
+      this.doBuildParam.projectId = ''
+      this.getProject('')
     },
     handleClick (tab, event) {
       if (tab.name === 'build') {
@@ -224,19 +226,21 @@ export default {
           }
         })
     },
-    getProject () {
+    getProject (name) {
       if (this.leoJob === {}) return
       const requestBody = {
         businessType: this.businessType.APPLICATION,
         businessId: this.leoJob.applicationId,
-        resourceType: this.businessType.APPLICATION,
+        resourceType: 'APPLICATION',
         extend: true,
+        relation: false,
+        queryName: name,
         page: 1,
         length: 20
       }
       QUERY_RES_PROJECT_PAGE(requestBody)
         .then(res => {
-          this.projectOptions = res.body
+          this.projectOptions = res.body.data
           // 单个则默认选中
           if (this.projectOptions.length === 1) {
             this.doBuildParam.projectId = this.projectOptions[0].id

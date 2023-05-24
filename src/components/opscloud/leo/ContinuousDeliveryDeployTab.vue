@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-button :type="webSocketState.type" class="button">
+      <el-button :type="webSocketState.type" class="button" size="mini">
         <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
            style="margin-right: 5px"></i>{{ webSocketState.name }}
@@ -12,7 +12,7 @@
           }}
         </el-radio-button>
       </el-radio-group>
-      <el-select v-model="queryParam.applicationId" filterable clearable
+      <el-select v-model="queryParam.applicationId" filterable clearable size="mini"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
         <el-option
@@ -28,10 +28,10 @@
         <i class="fas fa-circle-notch"></i>
       </el-button>
       <el-button type="primary" size="mini" @click="createDeploy"
-                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">创建部署任务
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">Create Deploy Task
       </el-button>
       <el-button type="primary" plain size="mini" @click="handleHistory()"
-                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">历史
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">History
       </el-button>
     </el-row>
     <!-- 任务&无状态版本详情 -->

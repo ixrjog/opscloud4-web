@@ -1,6 +1,5 @@
 <template>
   <d2-container>
-    <h1>我的工单</h1>
     <el-row :gutter="20">
       <el-col :span="6">
         <work-order-card @createTicket="createTicket"></work-order-card>

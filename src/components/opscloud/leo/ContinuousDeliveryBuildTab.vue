@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-button :type="webSocketState.type" class="button">
+      <el-button :type="webSocketState.type" class="button" size="mini">
         <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
            style="margin-right: 5px"></i>{{ webSocketState.name }}
@@ -12,7 +12,7 @@
           }}
         </el-radio-button>
       </el-radio-group>
-      <el-select v-model.trim="queryParam.applicationId" filterable clearable
+      <el-select v-model.trim="queryParam.applicationId" filterable clearable size="mini"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
         <el-option
@@ -29,34 +29,34 @@
       </el-button>
     </el-row>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
-      <el-table-column prop="name" label="名称" sortable></el-table-column>
-      <el-table-column prop="branch" label="首选分支" sortable>
+      <el-table-column prop="name" label="Name" sortable></el-table-column>
+      <el-table-column prop="branch" label="Preferred Branch" sortable>
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"></i>
           <span>{{ scope.row.branch }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="latestBuildInfos" label="最新构建">
+      <el-table-column prop="latestBuildInfos" label="Latest Build">
         <template v-slot="scope">
           <latest-build-info :buildInfos="scope.row.latestBuildInfos"></latest-build-info>
         </template>
       </el-table-column>
-      <el-table-column prop="env" label="环境" width="80">
+      <el-table-column prop="env" label="Env" width="80">
         <template v-slot="scope">
           <env-tag :env="scope.row.env"></env-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="buildSize" label="构建次数" width="80">
+      <el-table-column prop="buildSize" label="Builds" width="80">
       </el-table-column>
-      <el-table-column prop="tags" label="标签" width="200">
+      <el-table-column prop="tags" label="Tags" width="200">
         <template v-slot="scope">
           <business-tags :tags="scope.row.tags"></business-tags>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column label="Operate" width="200">
         <template v-slot="scope">
-          <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>
-          <el-button type="primary" plain size="mini" @click="handleHistory(scope.row)">历史</el-button>
+          <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">Build</el-button>
+          <el-button type="primary" plain size="mini" @click="handleHistory(scope.row)">History</el-button>
         </template>
       </el-table-column>
     </el-table>

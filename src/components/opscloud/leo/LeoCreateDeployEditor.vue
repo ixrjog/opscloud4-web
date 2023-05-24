@@ -1,17 +1,17 @@
 <template>
   <el-dialog title="部署任务" :visible.sync="formStatus.visible" width="70%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="部署" name="deploy">
+      <el-tab-pane label="Home" name="deploy">
         <el-form :model="application">
           <el-form-item label="应用名称" :label-width="formStatus.labelWidth">
             <el-input v-model="application.name" readonly></el-input>
           </el-form-item>
           <el-form-item label="任务环境" :label-width="formStatus.labelWidth">
-            <el-input v-model="env.envName" readonly style="width: 400px"></el-input>
+            <el-input v-model="env.envName" readonly style="width: 500px"></el-input>
           </el-form-item>
           <el-form-item label="构建任务" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.jobId" filterable clearable remote reserve-keyword @change="selLeoJob"
-                       placeholder="搜索并选择任务" style="width: 400px" :remote-method="getLeoJob">
+                       placeholder="搜索并选择任务" style="width: 500px" :remote-method="getLeoJob">
               <el-option
                 v-for="item in jobOptions"
                 :key="item.id"
@@ -24,7 +24,7 @@
           <el-form-item label="Deployment" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.assetId" filterable clearable remote reserve-keyword
                        :disabled="this.doDeployParam.jobId === ''"
-                       placeholder="选择Deployment" style="width: 400px" :remote-method="getLeoDeployDeployment">
+                       placeholder="选择Deployment" style="width: 500px" :remote-method="getLeoDeployDeployment">
               <el-option
                 v-for="item in deployDeploymentOptions"
                 :key="item.businessId"
@@ -83,6 +83,18 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="关联项目" :label-width="formStatus.labelWidth">
+            <el-select v-model="doDeployParam.projectId" filterable clearable remote reserve-keyword
+                       placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
+              <el-option
+                v-for="item in projectOptions"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"></select-item>
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="部署说明" :label-width="formStatus.labelWidth">
             <el-input v-model="doDeployParam.comment"></el-input>
           </el-form-item>
@@ -107,6 +119,8 @@
 import { QUERY_LEO_JOB_PAGE } from '@/api/modules/leo/leo.job.api'
 import { QUERY_LEO_DEPLOY_VERSION, QUERY_LEO_DEPLOY_DEPLOYMENT, DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import SelectItem from '@/components/opscloud/common/SelectItem.vue'
+import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
+import BusinessType from '@/components/opscloud/common/enums/business.type'
 
 export default {
   data () {
@@ -120,12 +134,15 @@ export default {
         buildId: '',
         // deployment
         assetId: '',
+        projectId: '',
         deployType: 'ROLLING'
       },
       jobOptions: [],
       // 部署版本
       deployVersionOptions: [],
       deployDeploymentOptions: [],
+      businessType: BusinessType,
+      projectOptions: [],
       style: { height: '400px' },
       buttons: {
         doDeploying: false
@@ -210,6 +227,7 @@ export default {
         jobId: '',
         buildId: '',
         assetId: '',
+        projectId: '',
         deployType: 'ROLLING'
       }
       this.jobOptions = []
@@ -219,6 +237,29 @@ export default {
       this.env = data.env
       this.buttons.doDeploying = false
       this.getLeoJob('')
+      this.doDeployParam.projectId = ''
+      this.getProject('')
+    },
+    getProject (name) {
+      if (this.leoJob === {}) return
+      const requestBody = {
+        businessType: this.businessType.APPLICATION,
+        businessId: this.application.id,
+        resourceType: 'APPLICATION',
+        extend: true,
+        relation: false,
+        queryName: name,
+        page: 1,
+        length: 20
+      }
+      QUERY_RES_PROJECT_PAGE(requestBody)
+        .then(res => {
+          this.projectOptions = res.body.data
+          // 单个则默认选中
+          if (this.projectOptions.length === 1) {
+            this.doDeployParam.projectId = this.projectOptions[0].id
+          }
+        })
     },
     handleClick (tab, event) {
       if (tab.name === 'build') {

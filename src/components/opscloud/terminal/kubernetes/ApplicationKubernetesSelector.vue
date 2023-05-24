@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row style="margin-bottom: 5px;">
-      <el-button :type="webSocketState.type" class="button">
+      <el-button :type="webSocketState.type" class="button" size="mini">
         <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
            style="margin-right: 5px"></i>{{ webSocketState.name }}
@@ -10,7 +10,7 @@
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">{{ env.envName }}
         </el-radio-button>
       </el-radio-group>
-      <el-select v-model="queryParam.applicationId" filterable clearable style="margin-left: 5px"
+      <el-select v-model="queryParam.applicationId" filterable clearable style="margin-left: 5px" size="mini"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="handleChange">
         <el-option v-for="item in applicationOptions"
@@ -20,7 +20,7 @@
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
-      <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
+      <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini" :loading="loading"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
         <i class="fas fa-circle-notch"></i>
       </el-button>
@@ -34,7 +34,7 @@
                  <deployment-name :deployment="resource.name" namespace=""
                                   :cluster="resource.instance.instanceName"></deployment-name>
                  <business-tags :tags="resource.tags"></business-tags>
-                 <el-tag style="margin-left: 5px">
+                 <el-tag style="margin-left: 5px" size="mini">
                     副本
                    <deployment-replicas :replicas="resource.assetContainers.length"></deployment-replicas>
                  </el-tag>
@@ -114,6 +114,8 @@ import CopySpan from '@/components/opscloud/common/CopySpan.vue'
 import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
 import util from '@/libs/util'
 import router from '@/router'
+import { GET_KUBERNETES_DEPLOYMENT } from '@/api/modules/kubernetes/kubernetes.api'
+import { UPGRADE_LEO_JOB_TEMPLATE } from '@/api/modules/leo/leo.template.api'
 
 const wsStates = {
   success: {
@@ -152,7 +154,8 @@ export default {
       },
       envOptions: [],
       application: '',
-      applicationOptions: []
+      applicationOptions: [],
+      loading: false
     }
   },
   destroyed () {
@@ -241,41 +244,45 @@ export default {
       this.socket.send(data)
     },
     socketOnMessage () {
-      const _this = this
       this.socket.onmessage = (message) => {
         const messageJson = JSON.parse(message.data)
         // 消息路由
-        switch (messageJson.messageType) {
-          case 'QUERY_KUBERNETES_DEPLOYMENT':
-            if (messageJson.body.id === _this.queryParam.applicationId) {
-              const map = new Map()
-              const newApp = messageJson.body
-              if (_this.application !== '') {
-                for (const deployment of _this.application.resources) {
-                  for (const pod of deployment.assetContainers) {
-                    for (const container of pod.children) {
-                      map.set(container.asset.assetKey, container.checked)
-                    }
+        this.processMessages(messageJson)
+      }
+    },
+    processMessages (msgBody) {
+      const messageJson = msgBody
+      const _this = this
+      switch (messageJson.messageType) {
+        case 'QUERY_KUBERNETES_DEPLOYMENT':
+          if (messageJson.body.id === _this.queryParam.applicationId) {
+            const map = new Map()
+            const newApp = messageJson.body
+            if (_this.application !== '') {
+              for (const deployment of _this.application.resources) {
+                for (const pod of deployment.assetContainers) {
+                  for (const container of pod.children) {
+                    map.set(container.asset.assetKey, container.checked)
                   }
                 }
-                for (const deployment of newApp.resources) {
-                  for (const pod of deployment.assetContainers) {
-                    for (const container of pod.children) {
-                      if (map.has(container.asset.assetKey)) {
-                        container.checked = map.get(container.asset.assetKey)
-                      }
+              }
+              for (const deployment of newApp.resources) {
+                for (const pod of deployment.assetContainers) {
+                  for (const container of pod.children) {
+                    if (map.has(container.asset.assetKey)) {
+                      container.checked = map.get(container.asset.assetKey)
                     }
                   }
                 }
               }
-              _this.application = newApp
             }
-            break
-          case 'AUTHENTICATION_FAILURE':
-            this.exit()
-            router.push({ name: 'login' })
-            break
-        }
+            _this.application = newApp
+          }
+          break
+        case 'AUTHENTICATION_FAILURE':
+          this.exit()
+          router.push({ name: 'login' })
+          break
       }
     },
     sendMessage (message) {
@@ -370,6 +377,17 @@ export default {
       if (this.queryParam.envType === '') {
         return
       }
+      this.loading = true
+      GET_KUBERNETES_DEPLOYMENT({
+        applicationId: this.queryParam.applicationId,
+        envType: this.queryParam.envType
+      })
+        .then(res => {
+          this.processMessages(res.body)
+          this.loading = false
+        }).catch(() => {
+        this.loading = false
+      })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',

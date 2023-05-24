@@ -5,6 +5,7 @@
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handlePull">拉取</el-button>
       <el-button @click="handleScan">扫描</el-button>
+      <el-button @click="handleDelete">删除</el-button>
       <slot name="button">
         <!--扩展字段-->
       </slot>
@@ -67,7 +68,7 @@ import {
   PULL_ASSET,
   SCAN_ASSET_BUSINESS,
   SET_ASSET_ACTIVE,
-  DELETE_ASSET_BY_ID
+  DELETE_ASSET_BY_ID, DELETE_ASSET_BY_TYPE
 } from '@/api/modules/datasource/datasource.asset.api.js'
 import Pagination from '../../common/page/Pagination'
 import BusinessTagEditor from '../../common/tag/BusinessTagEditor'
@@ -202,6 +203,22 @@ export default {
         assetType: this.assetType
       }).then(() => {
         this.$message.success('后台任务执行中！')
+      })
+    },
+    handleDelete () {
+      this.$confirm('此操作将删除当前页面所有资产?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DELETE_ASSET_BY_TYPE({
+          instanceId: this.instanceId,
+          assetType: this.assetType
+        }).then(() => {
+          this.$message.success('后台任务执行中！')
+        })
+      }).catch(() => {
+        this.$message.info('已取消删除!')
       })
     },
     handleRowTagEdit (row) {
