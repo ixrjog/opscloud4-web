@@ -130,6 +130,7 @@ import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ProjectEditor from '@/components/opscloud/project/ProjectEditor'
 import { DELETE_PROJECT, QUERY_PROJECT_PAGE } from '@/api/modules/project/project.api'
 import { getProjectStatusText, getProjectTypeText } from '@/filters/project'
+import tools from '@/libs/tools'
 
 const projectTypeOptions = [{
   value: 'DAILY',
@@ -266,7 +267,8 @@ export default {
         projectKey: '',
         projectType: 'DAILY',
         projectStatus: 'PENDING',
-        startTime: Date.now(),
+        // yyyy-MM-dd
+        startTime: tools.dateFormatter(new Date),
         endTime: '',
         isActive: true,
         comment: ''

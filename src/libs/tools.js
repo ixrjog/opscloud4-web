@@ -91,4 +91,15 @@ tools.instanceId = function (id) {
   return id.split('#')[0] + '#' + this.uuid()
 }
 
+/**
+ * 时间格式yyyy-MM-dd
+ * @param date
+ */
+tools.dateFormatter = function (date) {
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const strDate = date.getDate().toString().padStart(2, '0')
+  return `${date.getFullYear()}-${month}-${strDate}`
+}
+
+
 export default tools
