@@ -94,6 +94,7 @@
                 <select-item :name="item.name" :comment="item.comment"></select-item>
               </el-option>
             </el-select>
+            <el-button style="margin-left: 5px" @click="openUrl">Jump to Create Project</el-button>
           </el-form-item>
           <el-form-item label="Deploy Desc" :label-width="formStatus.labelWidth">
             <el-input v-model="doDeployParam.comment"></el-input>
@@ -265,6 +266,12 @@ export default {
       if (tab.name === 'build') {
         this.editing = false
       }
+    },
+    openUrl () {
+      this.formStatus.visible = false
+      this.$router.push({
+        path: '/project'
+      })
     },
     doDeploy () {
       this.buttons.doDeploying = true
