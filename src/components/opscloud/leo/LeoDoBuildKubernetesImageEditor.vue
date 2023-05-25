@@ -15,7 +15,8 @@
                       v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
                       readonly style="width: 500px"></el-input>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
-                         style="margin-left: 20px" @change="getBranchOptions"><span style="margin-left: 2px">Query tags</span>
+                         style="margin-left: 20px" @change="getBranchOptions"><span
+              style="margin-left: 2px">Query tags</span>
             </el-checkbox>
           </el-form-item>
           <el-form-item label="Branch" :label-width="formStatus.labelWidth" required>
@@ -50,7 +51,9 @@
             </el-alert>
           </el-form-item>
           <el-form-item label="Deploy Options" :label-width="formStatus.labelWidth" required>
-            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">Automatically deploy after build completed</el-checkbox>
+            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">Automatically deploy after
+              build completed
+            </el-checkbox>
           </el-form-item>
           <el-form-item label="Deployment" :label-width="formStatus.labelWidth">
             <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
@@ -76,6 +79,7 @@
                 <select-item :name="item.name" :comment="item.comment"></select-item>
               </el-option>
             </el-select>
+            <el-button style="margin-left: 5px" @click="openUrl">Jump to Create Project</el-button>
           </el-form-item>
           <el-form-item label="Version Name" :label-width="formStatus.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
@@ -105,6 +109,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
+import util from '@/libs/util'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -209,6 +214,12 @@ export default {
           }
         }
       }
+    },
+    openUrl () {
+      this.formStatus.visible = false
+      this.$router.push({
+        path: '/project'
+      })
     },
     getLeoDeployDeployment () {
       if (!this.doBuildParam.autoDeploy) return
