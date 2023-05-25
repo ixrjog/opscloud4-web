@@ -44,14 +44,14 @@
           </el-form-item>
           <el-form-item label="开始时间" required>
             <div class="block">
-              <el-date-picker v-model="project.startTime" type="date" placeholder="选择日期" value-format="timestamp">
-              </el-date-picker>
+              <el-date-picker v-model="project.startTime" type="date" placeholder="选择日期"
+                              value-format="yyyy-MM-dd"></el-date-picker>
             </div>
           </el-form-item>
           <el-form-item label="结束时间">
             <div class="block">
-              <el-date-picker v-model="project.endTime" type="date" placeholder="选择日期" value-format="timestamp">
-              </el-date-picker>
+              <el-date-picker v-model="project.endTime" type="date" placeholder="选择日期"
+                              value-format="yyyy-MM-dd"></el-date-picker>
             </div>
           </el-form-item>
           <el-form-item label="描述">
@@ -92,7 +92,8 @@
               </el-select>
             </el-form-item>
             <el-form-item label="选择项目">
-              <el-select v-model="queryParam.resourceParentId" filterable :disabled="queryParam.businessType === ''"  clearable
+              <el-select v-model="queryParam.resourceParentId" filterable :disabled="queryParam.businessType === ''"
+                         clearable
                          remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getDevOpsProjectResource"
                          @change="getResource('')">
                 <el-option
@@ -319,7 +320,6 @@ export default {
             value: item
           })
         }
-        return
       }
     },
     clearResOptions () {
@@ -447,6 +447,10 @@ export default {
     },
     handleSave () {
       const requestBody = Object.assign({}, this.project)
+      requestBody.startTime = new Date(this.project.startTime).getTime()
+      if (this.project.endTime) {
+        requestBody.endTime = new Date(this.project.endTime).getTime()
+      }
       if (this.formStatus.operationType) {
         ADD_PROJECT(requestBody)
           .then(() => {
