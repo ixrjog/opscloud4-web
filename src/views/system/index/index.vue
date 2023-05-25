@@ -2,7 +2,8 @@
   <!--  class="page"-->
   <d2-container class="page">
     <div align="center">
-      <echarts-font text="OPSCLOUD" :font-size="50"></echarts-font>
+      <logo2></logo2>
+      <echarts-font v-if="false" text="OPSCLOUD" :font-size="50"></echarts-font>
       <a target="blank" href="https://github.com/ixrjog/opscloud4">
         <img
           style="position: absolute; top: 0; right: 0; border: 0; width: 120px;"
@@ -33,7 +34,7 @@
           <p class="d2-page-cover__title">Version {{ version }}</p>
           <p class="d2-page-cover__build-time">FINAL BUILD TIME {{ $buildTime }}</p>
         </div>
-<!--                  <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
+        <!--                  <span class="btn-group__btn" @click="$open('https://github.com/d2-projects')">开源组织</span> |-->
         <!--          <span class="btn-group__btn" @click="$open('https://d2.pub/zh/doc/d2-admin')">文档</span> |-->
         <!--          <span class="btn-group__btn" @click="$open('https://github.com/d2-projects/d2-admin-start-kit')">简化版</span> |-->
         <!--          <span class="btn-group__btn" @click="$open('https://juejin.im/user/57a48b632e958a006691b946/posts')">掘金</span> |-->
@@ -59,26 +60,30 @@ import D2Help from './components/d2-help'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 import 'animate.css'
 import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
+import Logo2 from '@/components/opscloud/common/Logo2'
+
 export default {
   data () {
     return {
+      fontStyle: '',
       navList: [],
       /**
        * OPSCLOUD前端版本号
        */
-      version: '4.4.6'
+      version: '4.4.6',
     }
   },
   components: {
     D2Badge,
     D2Help,
     EchartsFont,
-    DocumentZone
+    DocumentZone,
+    // eslint-disable-next-line no-undef
+    Logo2
   },
   mounted () {
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
