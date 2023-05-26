@@ -15,6 +15,30 @@ export function getProjectStatusText (value) {
   }
 }
 
+export function getProjectStatusStyle (value) {
+  let color
+  switch (value) {
+    case 'PENDING':
+      color = '#f85d63'
+      break
+    case 'PROGRESS':
+      color = '#079d58'
+      break
+    case 'PAUSE':
+      color = '#ee893c'
+      break
+    case 'CANCEL':
+      color = '#a9a7a4'
+      break
+    case 'DELIVERED':
+      color = '#179bb9'
+      break
+    default:
+      color = '#a9a7a4'
+  }
+  return 'color: ' + color
+}
+
 export function getProjectTypeText (value) {
   switch (value) {
     case 'DAILY':
@@ -26,6 +50,24 @@ export function getProjectTypeText (value) {
     default:
       return '未定义'
   }
+}
+
+export function getProjectTypeStyle (value) {
+  let color
+  switch (value) {
+    case 'PROJECT':
+      color = '#0cb3cb'
+      break
+    case 'DAILY':
+      color = '#0ad97c'
+      break
+    case 'URGENT':
+      color = '#e56c0d'
+      break
+    default:
+      color = '#a9a7a4'
+  }
+  return 'color: ' + color
 }
 
 export function getProjectResAssetText (value) {

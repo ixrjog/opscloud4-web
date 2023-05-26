@@ -2,10 +2,18 @@
   <d2-container>
     <template>
       <div>
-        <h1>{{ title }}</h1>
+        <h1 v-show="false">{{ title }}</h1>
       </div>
-      <el-row style="margin-bottom: 5px" :gutter="24">
+      <announcement-carousel :kind="2"></announcement-carousel>
+      <el-row style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
+        <el-radio-group v-model="queryParam.projectType" size="mini" @change="fetchData" style="margin-left: 5px"
+                        v-if="false">
+          <el-radio-button label="">所有</el-radio-button>
+          <el-radio-button label="DAILY">日常</el-radio-button>
+          <el-radio-button label="PROJECT">项目</el-radio-button>
+          <el-radio-button label="URGENT">紧急</el-radio-button>
+        </el-radio-group>
         <el-select v-model="queryParam.projectType" clearable placeholder="项目类型" @change="fetchData">
           <el-option
             v-for="item in projectTypeOptions"
@@ -14,6 +22,15 @@
             :value="item.value">
           </el-option>
         </el-select>
+        <el-radio-group v-model="queryParam.projectStatus" size="mini" @change="fetchData" style="margin-left: 5px"
+                        v-if="false">
+          <el-radio-button label="">所有</el-radio-button>
+          <el-radio-button label="PENDING">未开始</el-radio-button>
+          <el-radio-button label="PROGRESS">进行中</el-radio-button>
+          <el-radio-button label="PAUSE">暂停</el-radio-button>
+          <el-radio-button label="CANCEL">取消</el-radio-button>
+          <el-radio-button label="DELIVERED">已发布</el-radio-button>
+        </el-radio-group>
         <el-select v-model="queryParam.projectStatus" clearable placeholder="项目状态" @change="fetchData">
           <el-option
             v-for="item in projectStatusOptions"
@@ -88,12 +105,17 @@
         </el-table-column>
         <el-table-column prop="projectType" label="项目类型" width="80">
           <template v-slot="scope">
-            <span>{{ scope.row.projectType | getProjectTypeText }}</span>
+            <el-tag :style="scope.row.projectType | getProjectTypeStyle">{{
+                scope.row.projectType | getProjectTypeText
+              }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="projectStatus" label="项目状态" width="80">
           <template v-slot="scope">
-            <span>{{ scope.row.projectStatus | getProjectStatusText }}</span>
+            <el-tag :style="scope.row.projectStatus | getProjectStatusStyle"><i class="el-icon-loading" v-show="scope.row.projectStatus === 'PROGRESS'"/>
+              {{ scope.row.projectStatus | getProjectStatusText }}
+            </el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="startTime" label="开始时间" width="80"></el-table-column>
@@ -129,8 +151,15 @@ import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ProjectEditor from '@/components/opscloud/project/ProjectEditor'
 import { DELETE_PROJECT, QUERY_PROJECT_PAGE } from '@/api/modules/project/project.api'
-import { getProjectStatusText, getProjectTypeText } from '@/filters/project'
+import {
+  getProjectStatusColor, getProjectStatusStyle,
+  getProjectStatusText,
+  getProjectTypeColor,
+  getProjectTypeStyle,
+  getProjectTypeText
+} from '@/filters/project'
 import tools from '@/libs/tools'
+import AnnouncementCarousel from '@/components/opscloud/sys/AnnouncementCarousel.vue'
 
 const projectTypeOptions = [{
   value: 'DAILY',
@@ -183,6 +212,8 @@ export default {
       businessType: BusinessType.PROJECT,
       queryParam: {
         queryName: '',
+        projectType: '',
+        projectStatus: '',
         tagId: ''
       },
       formStatus: {
@@ -218,7 +249,9 @@ export default {
       }
     },
     getProjectTypeText,
-    getProjectStatusText
+    getProjectTypeStyle,
+    getProjectStatusText,
+    getProjectStatusStyle
   },
   computed: {},
   mounted () {
@@ -226,14 +259,17 @@ export default {
     this.fetchData()
   },
   components: {
+    AnnouncementCarousel,
     Pagination,
     ProjectEditor,
     UsersTag,
     BusinessTagEditor,
     BusinessDocReader,
-    BusinessTags
+    BusinessTags,
   },
   methods: {
+    getProjectStatusStyle,
+    getProjectTypeStyle,
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
