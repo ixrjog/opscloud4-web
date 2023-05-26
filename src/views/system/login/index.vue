@@ -24,7 +24,9 @@
           flex="dir:top main:center cross:center">
           <!-- logo -->
           <!--          <img class="page-login&#45;&#45;logo" src="./image/logo@2x.png">-->
-          <echarts-font text="OPSCLOUD" :font-size="50" font-color="#2a6cd9"></echarts-font>
+          <logo></logo>
+          <echarts-font v-if="false" text="OPSCLOUD" :font-size="50" font-color="#2a6cd9"></echarts-font>
+          <!--          <echarts-font text="OPSCLOUD" :font-size="50" font-color="#2a6cd9"></echarts-font>-->
           <!--          <div style="font-size: 30px; color: #2a6cd9;margin-bottom: 10px">OPSCLOUD 4 IaC</div>-->
           <!-- form -->
           <div class="page-login--form">
@@ -139,6 +141,7 @@ import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
 import localeMixin from '@/locales/mixin.js'
 import ui from '@/libs/util.ui'
+import Logo from '@/components/opscloud/common/Logo'
 import EchartsFont from '@/components/opscloud/common/EchartsFont'
 
 const wordcloud = [
@@ -146,7 +149,7 @@ const wordcloud = [
 ]
 
 export default {
-  components: { EchartsFont },
+  components: { EchartsFont, Logo },
   mixins: [
     localeMixin
   ],
