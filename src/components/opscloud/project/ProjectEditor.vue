@@ -191,7 +191,7 @@
           </div>
         </el-col>
       </el-tab-pane>
-      <el-tab-pane label="项目成员" name="permissionUser" v-if="project.id !== ''&& project.id !== 0">
+      <el-tab-pane label="项目成员" name="permissionUser" v-if="false">
         <permission-user-tab :businessType="businessType.PROJECT" :businessId="project.id"
                              ref="permissionUserTab"></permission-user-tab>
       </el-tab-pane>
