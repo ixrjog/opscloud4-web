@@ -138,6 +138,9 @@ export default {
         case this.dsInstanceType.METER_SPHERE.type:
           instanceType = this.dsInstanceType.METER_SPHERE
           break
+        case this.dsInstanceType.APOLLO.type:
+          instanceType = this.dsInstanceType.APOLLO
+          break
         default:
           this.$message({
             message: '未知的数据源实例类型',

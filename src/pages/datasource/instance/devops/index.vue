@@ -128,7 +128,6 @@ const tableLayout = {
       show: false
     }
   }
-
 }
 
 export default {
