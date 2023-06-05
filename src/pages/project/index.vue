@@ -108,7 +108,12 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="deployCount" label="部署次数" width="80"/>
+        <el-table-column prop="deployCount" label="PROD部署" width="80">
+          <template v-slot="scope">
+              {{ scope.row.envDeployCount.prod }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="deployCount" label="部署总数" width="80"/>
         <el-table-column prop="startTime" label="开始时间" width="80"/>
         <el-table-column prop="endTime" label="结束时间" width="80"/>
         <el-table-column label="操作" width="200">
