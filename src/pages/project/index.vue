@@ -7,23 +7,20 @@
       <announcement-carousel :kind="2"></announcement-carousel>
       <el-row style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
-        <el-radio-group v-model="queryParam.projectType" size="mini" @change="fetchData" style="margin-left: 5px"
-                        v-if="false">
+        <el-radio-group v-model="queryParam.projectType" size="mini" @change="fetchData" style="margin-left: 5px" v-if="false">
           <el-radio-button label="">所有</el-radio-button>
           <el-radio-button label="DAILY">日常</el-radio-button>
           <el-radio-button label="PROJECT">项目</el-radio-button>
           <el-radio-button label="URGENT">紧急</el-radio-button>
         </el-radio-group>
         <el-select v-model="queryParam.projectType" clearable placeholder="项目类型" @change="fetchData">
-          <el-option
-            v-for="item in projectTypeOptions"
+          <el-option v-for="item in projectTypeOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
           </el-option>
         </el-select>
-        <el-radio-group v-model="queryParam.projectStatus" size="mini" @change="fetchData" style="margin-left: 5px"
-                        v-if="false">
+        <el-radio-group v-model="queryParam.projectStatus" size="mini" @change="fetchData" style="margin-left: 5px" v-if="false">
           <el-radio-button label="">所有</el-radio-button>
           <el-radio-button label="PENDING">未开始</el-radio-button>
           <el-radio-button label="PROGRESS">进行中</el-radio-button>
@@ -32,8 +29,7 @@
           <el-radio-button label="DELIVERED">已发布</el-radio-button>
         </el-radio-group>
         <el-select v-model="queryParam.projectStatus" clearable placeholder="项目状态" @change="fetchData">
-          <el-option
-            v-for="item in projectStatusOptions"
+          <el-option v-for="item in projectStatusOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -42,8 +38,7 @@
         <el-select
           v-model="queryParam.tagId" filterable clearable remote reserve-keyword
           placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
-          <el-option
-            v-for="item in tagOptions"
+          <el-option v-for="item in tagOptions"
             :key="item.id"
             :label="item.tagKey"
             :value="item.id">
@@ -88,11 +83,8 @@
             <div v-if="JSON.stringify(scope.row.applicationList) !== '[]'">
               <el-divider content-position="left"><b style="color: #9d9fa3">应用</b></el-divider>
               <div v-for="item in scope.row.applicationList" :key="item.id">
-                <el-tooltip effect="dark" :content="item.comment" placement="top-start"
-                            :disabled="!item.comment">
-                  <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
-                    {{ item.name }}
-                  </el-tag>
+                <el-tooltip effect="dark" :content="item.comment" placement="top-start" :disabled="!item.comment">
+                  <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">{{ item.name }}</el-tag>
                 </el-tooltip>
               </div>
             </div>
@@ -105,9 +97,7 @@
         </el-table-column>
         <el-table-column prop="projectType" label="项目类型" width="80">
           <template v-slot="scope">
-            <el-tag :style="scope.row.projectType | getProjectTypeStyle">{{
-                scope.row.projectType | getProjectTypeText
-              }}
+            <el-tag :style="scope.row.projectType | getProjectTypeStyle">{{scope.row.projectType | getProjectTypeText}}
             </el-tag>
           </template>
         </el-table-column>
@@ -118,8 +108,9 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="startTime" label="开始时间" width="80"></el-table-column>
-        <el-table-column prop="endTime" label="结束时间" width="80"></el-table-column>
+        <el-table-column prop="deployCount" label="部署次数" width="80"/>
+        <el-table-column prop="startTime" label="开始时间" width="80"/>
+        <el-table-column prop="endTime" label="结束时间" width="80"/>
         <el-table-column label="操作" width="200">
           <template v-slot="scope">
             <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -151,13 +142,7 @@ import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ProjectEditor from '@/components/opscloud/project/ProjectEditor'
 import { DELETE_PROJECT, QUERY_PROJECT_PAGE } from '@/api/modules/project/project.api'
-import {
-  getProjectStatusColor, getProjectStatusStyle,
-  getProjectStatusText,
-  getProjectTypeColor,
-  getProjectTypeStyle,
-  getProjectTypeText
-} from '@/filters/project'
+import { getProjectStatusStyle, getProjectStatusText, getProjectTypeStyle, getProjectTypeText } from '@/filters/project'
 import tools from '@/libs/tools'
 import AnnouncementCarousel from '@/components/opscloud/sys/AnnouncementCarousel.vue'
 
@@ -268,8 +253,6 @@ export default {
     BusinessTags,
   },
   methods: {
-    getProjectStatusStyle,
-    getProjectTypeStyle,
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()

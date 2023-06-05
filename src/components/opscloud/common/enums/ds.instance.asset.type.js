@@ -103,7 +103,7 @@ const DsInstanceAssetType = Object.freeze({
   },
   APOLLO: {
     APOLLO_APP: 'APOLLO_APP'
-  },
+  }
 })
 
 export default DsInstanceAssetType
