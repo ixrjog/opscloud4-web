@@ -12,7 +12,7 @@
       </el-col>
     </el-row>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor" @close="fetchData"/>
-    <application-permission-ticket-editor :formStatus="formStatus.ticket.applicationPermission" ref="applicationPermissionTicketEditor" @close="fetchData"/>
+    <application-permission-ticket-editor :formStatus="formStatus.ticket.application.permission" ref="applicationPermissionTicketEditor" @close="fetchData"/>
     <confluence-ticket-editor :formStatus="formStatus.ticket.confluence" ref="confluenceTicketEditor" @close="fetchData"/>
     <vpn-ticket-editor :formStatus="formStatus.ticket.vpn" ref="vpnTicketEditor" @close="fetchData"/>
     <grafana-ticket-editor :formStatus="formStatus.ticket.grafana" ref="grafanaTicketEditor" @close="fetchData"/>
@@ -28,11 +28,12 @@
     <sqs-ticket-editor :formStatus="formStatus.ticket.sqs" ref="sqsTicketEditor" @close="fetchData"></sqs-ticket-editor>
     <sns-topic-ticket-editor :formStatus="formStatus.ticket.sns.topic" ref="snsTopicTicketEditor" @close="fetchData"/>
     <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription" ref="snsSubscriptionTicketEditor" @close="fetchData"/>
-    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas" ref="applicationScaleReplicasTicketEditor" @close="fetchData"/>
-    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.applicationReduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
+    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.application.scaleReplicas" ref="applicationScaleReplicasTicketEditor" @close="fetchData"/>
+    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.application.reduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
     <apollo-ticket-editor :formStatus="formStatus.ticket.apollo" ref="apolloTicketEditor" @close="fetchData"/>
     <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile" ref="awsIamUpdateLoginProfileTicketEditor" @close="fetchData"/>
-    <application-deploy-ticket-editor :formStatus="formStatus.ticket.applicationDeploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
+    <application-deploy-ticket-editor :formStatus="formStatus.ticket.application.deploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
+    <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -68,6 +69,7 @@ import ApplicationReduceReplicasTicketEditor
 import AwsIamUpdateLoginProfileTicketEditor
   from '@/components/opscloud/workorder/ticket/AwsIamUpdateLoginProfileTicketEditor.vue'
 import ApplicationDeployTicketEditor from '@/components/opscloud/workorder/ticket/ApplicationDeployTicketEditor.vue'
+import NewApplicationTicketEditor from '@/components/opscloud/workorder/ticket/NewApplicationTicketEditor.vue'
 
 export default {
   data () {
@@ -104,7 +106,8 @@ export default {
     ApplicationReduceReplicasTicketEditor,
     ApolloTicketEditor,
     AwsIamUpdateLoginProfileTicketEditor,
-    ApplicationDeployTicketEditor
+    ApplicationDeployTicketEditor,
+    NewApplicationTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -139,7 +142,7 @@ export default {
           this.$refs.serverGroupTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_PERMISSION:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationPermission)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.permission)
           this.$refs.applicationPermissionTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.CONFLUENCE:
@@ -203,11 +206,11 @@ export default {
           this.$refs.snsSubscriptionTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_SCALE_REPLICAS:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationScaleReplicas)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.scaleReplicas)
           this.$refs.applicationScaleReplicasTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_REDUCE_REPLICAS:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationReduceReplicas)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.reduceReplicas)
           this.$refs.applicationReduceReplicasTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APOLLO:
@@ -219,8 +222,12 @@ export default {
           this.$refs.awsIamUpdateLoginProfileTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_DEPLOY:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationDeploy)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.deploy)
           this.$refs.applicationDeployTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.NEW_APPLICATION:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.new)
+          this.$refs.newApplicationTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

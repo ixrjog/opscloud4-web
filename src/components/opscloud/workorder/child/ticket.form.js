@@ -59,6 +59,23 @@ export default {
     },
     applicationDeploy: {
       visible: false
+    },
+    application: {
+      permission: {
+        visible: false
+      },
+      scaleReplicas: {
+        visible: false
+      },
+      reduceReplicas: {
+        visible: false
+      },
+      deploy: {
+        visible: false
+      },
+      new: {
+        visible: false
+      }
     }
   }
 }
