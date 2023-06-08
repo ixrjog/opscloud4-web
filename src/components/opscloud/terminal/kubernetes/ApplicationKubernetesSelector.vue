@@ -31,27 +31,21 @@
             <el-card shadow="never" class="deploymentClass" style="font-size: 10px">
                <div style="margin-top: -10px">
                  <!-- Deployment无状态 -->
-                 <deployment-name :deployment="resource.name" namespace=""
-                                  :cluster="resource.instance.instanceName"></deployment-name>
-                 <business-tags :tags="resource.tags"></business-tags>
+                 <deployment-name :deployment="resource.name" namespace="" :cluster="resource.instance.instanceName"/>
+                 <business-tags :tags="resource.tags"/>
                  <el-tag style="margin-left: 5px" size="mini">
                     副本
-                   <deployment-replicas :replicas="resource.assetContainers.length"></deployment-replicas>
+                   <deployment-replicas :replicas="resource.assetContainers.length"/>
                  </el-tag>
-                 <deployment-resources-limits style="margin-left: 5px"
-                                              :properties="resource.asset.properties"></deployment-resources-limits>
-                 <el-checkbox style="margin-left: 5px" v-model="resource.checked"
-                              @change="selAllContainers(resource)">
+                 <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"/>
+                 <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="selAllContainers(resource)">
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
                  <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i
-                     class="fab fa-wpforms" v-show="false"></i>Log</el-button>
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i class="fab fa-wpforms" v-show="false"></i>Log</el-button>
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text"
-                              @click="handleTerminal(resource)"><i
-                     class="fas fa-terminal" v-show="false"></i>Login</el-button>
+                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text" @click="handleTerminal(resource)"><i class="fas fa-terminal" v-show="false"/>Login</el-button>
                  </el-tooltip>
                </div>
                <el-divider/>
@@ -63,7 +57,7 @@
                    <div style="margin-bottom: 2px">
                      <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"></copy-span>
                      <el-popover placement="right" trigger="hover" v-if="false">
-                         <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                         <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"/>
                          <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
                          <br/>
                          <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
@@ -77,15 +71,13 @@
                        {{ pod.properties.restartCount }}</span>
                    </div>
                    <div><span class="label">版本名称</span>{{ pod.properties.versionName }}</div>
-                   <div><span class="label">镜像地址</span>{{ pod.properties.image }}</div>
+                   <div v-if="false"><span class="label">镜像地址</span>{{ pod.properties.image }}</div>
+                   <div><span class="label">镜像地址</span><container-image-display :image="pod.properties.image"/></div>
                    <pod-phase-tag :pod="pod"></pod-phase-tag>
-                     <i class="fab fa-docker" style="margin-right: 5px"></i>
+                     <i class="fab fa-docker" style="margin-right: 5px"/>
                      <el-checkbox v-for="container in pod.children" :key="container.asset.name"
-                                  style="margin-right: 1px"
-                                  v-model="container.checked">
-                       <span style="font-size: 12px">
-                         {{ container.asset.name }}
-                       </span>
+                                  style="margin-right: 1px" v-model="container.checked">
+                       <span style="font-size: 12px">{{ container.asset.name }}</span>
                      </el-checkbox>
                </el-card>
                 </template>
@@ -116,6 +108,7 @@ import util from '@/libs/util'
 import router from '@/router'
 import { GET_KUBERNETES_DEPLOYMENT } from '@/api/modules/kubernetes/kubernetes.api'
 import { UPGRADE_LEO_JOB_TEMPLATE } from '@/api/modules/leo/leo.template.api'
+import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
 
 const wsStates = {
   success: {
@@ -176,7 +169,8 @@ export default {
     PodPhaseTag,
     BusinessDocReader,
     DeploymentResourcesLimits,
-    CopySpan
+    CopySpan,
+    ContainerImageDisplay
   },
   filters: {
     toPodClass
@@ -437,7 +431,7 @@ export default {
       margin-bottom: 5px;
       margin-right: 5px;
       position: relative;
-      width: 360px;
+      width: 368px;
       display: inline-block;
 
       /deep/ .el-card__body {

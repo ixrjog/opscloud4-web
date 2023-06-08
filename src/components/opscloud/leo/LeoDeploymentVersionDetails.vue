@@ -49,7 +49,8 @@
                    }}</span>
               </el-popover>
             </div>
-               <div><span class="label">镜像地址</span>{{ deployment.image }}</div>
+               <div v-if="false"><span class="label">镜像地址</span>{{ deployment.image }}</div>
+               <div><span class="label">镜像地址</span><container-image-display :image="deployment.image"/></div>
             </el-card>
           </el-col>
         </span>
@@ -65,6 +66,7 @@ import { toDeploymentVersionClass } from '@/filters/kubernetes.pod'
 import CloneDeploymentEditor from '@/components/opscloud/leo/child/CloneDeploymentEditor.vue'
 import { DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
+import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
 
 export default {
   name: 'LeoDeploymentVersionDetails',
@@ -83,6 +85,7 @@ export default {
     }
   },
   components: {
+    ContainerImageDisplay,
     CloneDeploymentEditor,
     DeploymentReplicas,
     DeploymentResourcesLimits,

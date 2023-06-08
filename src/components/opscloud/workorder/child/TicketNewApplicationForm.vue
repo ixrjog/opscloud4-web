@@ -109,8 +109,11 @@ export default {
       this.buttonAdding = true
       const requestBody = {
         ...this.ticketEntry,
-        ...this.applicationData
+        name: this.applicationData.name,
+        comment: this.applicationData.comment
       }
+      this.ticketEntry.entry.levelTag = this.applicationData.levelTag
+      requestBody.content = JSON.stringify(this.ticketEntry.entry)
       ADD_WORK_ORDER_TICKET_ENTRY(requestBody).then(() => {
         this.buttonAdding = false
         this.ticketEntry = ''

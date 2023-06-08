@@ -12,8 +12,7 @@
           <el-form-item label="Build Job Name" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.jobId" filterable clearable remote reserve-keyword @change="selLeoJob"
                        placeholder="搜索并选择任务" style="width: 500px" :remote-method="getLeoJob">
-              <el-option
-                v-for="item in jobOptions"
+              <el-option v-for="item in jobOptions"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id">
@@ -173,6 +172,7 @@ export default {
         envType: this.env.envType,
         buildType: 'kubernetes-image',
         extend: false,
+        isActive: true,
         page: 1,
         length: 20
       }
