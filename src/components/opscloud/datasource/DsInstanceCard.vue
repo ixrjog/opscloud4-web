@@ -46,7 +46,7 @@
           <ds-asset-types :assetDetails="instance.assetDetails"/>
         </el-col>
         <el-col :span="6">
-          <business-tags :tags="instance.tags" :is-block=true/>
+          <business-tags :tags="instance.tags" :is-block=true />
         </el-col>
       </el-row>
       <el-row v-else>

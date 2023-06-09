@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="document.displayName + formStatus.title" :visible.sync="formStatus.visible">
     <el-row>

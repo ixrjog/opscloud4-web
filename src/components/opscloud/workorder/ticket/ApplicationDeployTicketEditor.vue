@@ -91,7 +91,6 @@ import {
   SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
 import SelectItem from '@/components/opscloud/common/SelectItem.vue'
-import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import TicketLeoBuildEntrySelector from '@/components/opscloud/workorder/child/TicketLeoBuildEntrySelector.vue'
 
 const TableLayout = {
@@ -113,7 +112,6 @@ export default {
   name: 'ApplicationDeployTicketEditor',
   props: ['formStatus'],
   components: {
-    SelectItem,
     TicketTitle,
     NodeView,
     TicketEntrySelector,
