@@ -30,6 +30,9 @@ export default {
     awsIamUpdateLoginProfile: {
       visible: false
     },
+    aliyunRamUpdateLoginProfile: {
+      visible: false
+    },
     nacos: {
       visible: false
     },

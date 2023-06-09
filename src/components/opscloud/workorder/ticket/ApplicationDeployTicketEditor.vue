@@ -12,11 +12,10 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-leo-build-entry-selector
-              v-if="ticketView.ticketPhase === 'NEW'"
-              :workOrderTicketId="ticketView.ticketId"
-              :entryDesc="tableLayout.entryName"
-              @handleNotify="fetchData"/>
+            <ticket-leo-build-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
+                                             :workOrderTicketId="ticketView.ticketId"
+                                             :entryDesc="tableLayout.entryName"
+                                             @handleNotify="fetchData"/>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"

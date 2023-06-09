@@ -1,14 +1,15 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <el-row :gutter="20">
       <el-col :span="6">
-        <work-order-card @createTicket="createTicket"></work-order-card>
+        <work-order-card @createTicket="createTicket"/>
       </el-col>
       <el-col :span="18">
         <my-ticket-card @editTicket="editTicket"
                         @previewTicket="previewTicket"
                         @approvalTicket="approvalTicket"
-                        ref="myTicketCard"></my-ticket-card>
+                        ref="myTicketCard"/>
       </el-col>
     </el-row>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor" @close="fetchData"/>
@@ -32,6 +33,7 @@
     <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.application.reduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
     <apollo-ticket-editor :formStatus="formStatus.ticket.apollo" ref="apolloTicketEditor" @close="fetchData"/>
     <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile" ref="awsIamUpdateLoginProfileTicketEditor" @close="fetchData"/>
+    <aliyun-ram-update-login-profile-ticket-editor :formStatus="formStatus.ticket.aliyunRamUpdateLoginProfile" ref="aliyunRamUpdateLoginProfileTicketEditor"  @close="fetchData"/>
     <application-deploy-ticket-editor :formStatus="formStatus.ticket.application.deploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
     <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
   </d2-container>
@@ -70,6 +72,8 @@ import AwsIamUpdateLoginProfileTicketEditor
   from '@/components/opscloud/workorder/ticket/AwsIamUpdateLoginProfileTicketEditor.vue'
 import ApplicationDeployTicketEditor from '@/components/opscloud/workorder/ticket/ApplicationDeployTicketEditor.vue'
 import NewApplicationTicketEditor from '@/components/opscloud/workorder/ticket/NewApplicationTicketEditor.vue'
+import AliyunRamUpdateLoginProfileTicketEditor
+  from '@/components/opscloud/workorder/ticket/AliyunRamUpdateLoginProfileTicketEditor.vue'
 
 export default {
   data () {
@@ -106,6 +110,7 @@ export default {
     ApplicationReduceReplicasTicketEditor,
     ApolloTicketEditor,
     AwsIamUpdateLoginProfileTicketEditor,
+    AliyunRamUpdateLoginProfileTicketEditor,
     ApplicationDeployTicketEditor,
     NewApplicationTicketEditor
   },
@@ -116,13 +121,6 @@ export default {
         formStatus.operationType = false
       })
     },
-    /**
-     * param:{
-     *   workOrderKey,
-     *   ticket
-     * }
-     * @param param
-     */
     previewTicket (ticket) {
       this.openTicketEditor(ticket.workOrderKey, ticket)
     },
@@ -220,6 +218,10 @@ export default {
         case this.workOrderKeyConstants.AWS_IAM_UPDATE_LOGIN_PROFILE:
           this.handleOpenTicketEditor(this.formStatus.ticket.awsIamUpdateLoginProfile)
           this.$refs.awsIamUpdateLoginProfileTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.ALIYUN_RAM_UPDATE_LOGIN_PROFILE:
+          this.handleOpenTicketEditor(this.formStatus.ticket.aliyunRamUpdateLoginProfile)
+          this.$refs.aliyunRamUpdateLoginProfileTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_DEPLOY:
           this.handleOpenTicketEditor(this.formStatus.ticket.application.deploy)

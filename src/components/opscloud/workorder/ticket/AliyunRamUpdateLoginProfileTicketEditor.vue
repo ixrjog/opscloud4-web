@@ -24,7 +24,7 @@
                                 :ticketPhase="ticketView.ticketPhase"
                                 :tableLayout="tableLayout" ref="ticketEntryTable">
               <template v-slot:extend>
-                <el-table-column prop="assetKey2" label="ARN">
+                <el-table-column prop="assetKey2" label="Mail">
                   <template v-slot="scope">
                     <span>{{ scope.row.entry.assetKey2 }}</span>
                   </template>
