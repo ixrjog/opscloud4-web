@@ -1,44 +1,44 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-select v-model="queryParam.protocol" placeholder="选择协议类型" clearable>
-        <el-option
-          v-for="item in protocolOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+        <el-option v-for="item in protocolOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
         </el-option>
       </el-select>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="username" label="用户名"/>
       <el-table-column prop="protocol" label="协议">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" disable-transitions>{{ scope.row.protocol }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="accountType" label="账户类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" disable-transitions>{{ scope.row.accountType === 0 ? '普通账户' : '管理员账户' }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="serverSize" label="服务器数量"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="serverSize" label="服务器数量"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <server-account-editor :formStatus="formStatus.account" ref="serverAccountEditor" :protocolOptions="protocolOptions"
                            :accountTypeOptions="accountTypeOptions"
-                           @close="fetchData"></server-account-editor>
+                           @close="fetchData"/>
   </div>
 </template>
 

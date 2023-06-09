@@ -1,12 +1,12 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-button @click="fetchData" class="button">查询</el-button>
-      <!--      <el-button @click="handleAdd" class="button">新增</el-button>-->
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
       <el-table-column prop="msgKey" label="Key">
         <template v-slot="scope">
           <el-tag>{{ scope.row.msgKey }}</el-tag>
@@ -14,19 +14,18 @@
       </el-table-column>
       <el-table-column prop="msgType" label="消息格式">
       </el-table-column>
-      <el-table-column prop="consumer" label="消费者"></el-table-column>
-      <el-table-column prop="title" label="消息标题"></el-table-column>
+      <el-table-column prop="consumer" label="消费者"/>
+      <el-table-column prop="title" label="消息标题"/>
       <el-table-column label="操作" width="230">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
-          <!--          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <message-template-editor :formStatus="formStatus.message" ref="messageTemplateEditor"
-                             @close="fetchData"></message-template-editor>
+                             @close="fetchData"/>
   </div>
 </template>
 

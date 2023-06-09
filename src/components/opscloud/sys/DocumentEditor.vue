@@ -1,10 +1,12 @@
+<!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle" :visible.sync="formStatus.visible" width="50%">
+  <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
+             :visible.sync="formStatus.visible" width="50%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="文档信息" name="base">
         <el-form :model="document">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="document.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="document.name" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="文档挂载区" :label-width="labelWidth" required>
             <el-select v-model="document.mountZone" filterable clearable
@@ -14,41 +16,40 @@
                          :key="item.id"
                          :label="item.mountZone"
                          :value="item.mountZone">
-                <select-item :name="item.mountZone" :comment="item.name"></select-item>
+                <select-item :name="item.mountZone" :comment="item.name"/>
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
             <el-select v-model="document.isActive" placeholder="选择">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="图标" :label-width="labelWidth" required>
             <el-input v-model="document.icon">
-              <template slot="append"><i :class="document.icon"></i></template>
+              <template slot="append"><i :class="document.icon"/></template>
             </el-input>
           </el-form-item>
           <el-form-item label="文档Key" :label-width="labelWidth" required>
-            <el-input v-model="document.documentKey"></el-input>
+            <el-input v-model="document.documentKey"/>
           </el-form-item>
           <el-form-item label="序列" :label-width="labelWidth" required>
-            <el-input v-model="document.seq"></el-input>
+            <el-input v-model="document.seq"/>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="document.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="document.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="文档内容" name="content">
-        <my-markdown v-if="!editing" :content="document.content" :key="key"></my-markdown>
+        <my-markdown v-if="!editing" :content="document.content" :key="key"/>
         <editor v-if="editing" v-model="document.content" @init="editorInit" lang="yaml" theme="chrome"
                 height="400"
-                :options="options" ref="editor"></editor>
+                :options="options" ref="editor"/>
         <el-row>
           <div style="width:100%;text-align:center;margin-top:10px">
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑文档</el-button>

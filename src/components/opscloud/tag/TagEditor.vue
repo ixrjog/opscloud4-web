@@ -1,17 +1,14 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="tag">
       <el-form-item label="标签关键字" :label-width="labelWidth" required>
-        <el-input v-model="tag.tagKey" placeholder="请输入内容" :disabled="!formStatus.operationType"></el-input>
+        <el-input v-model="tag.tagKey" placeholder="请输入内容" :disabled="!formStatus.operationType"/>
       </el-form-item>
       <el-form-item label="标签业务类型" :label-width="labelWidth" required>
-        <el-select v-model="tag.businessType" placeholder="选择分类" >
-          <el-option
-            v-for="item in businessTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+        <el-select v-model="tag.businessType" placeholder="选择分类">
+          <el-option v-for="item in businessTypeOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>

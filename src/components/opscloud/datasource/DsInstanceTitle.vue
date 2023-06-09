@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div style="display: flex">
     <h1>{{ datasourceNane }}</h1>

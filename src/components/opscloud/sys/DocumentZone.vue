@@ -1,9 +1,10 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div v-if="docZone.zone.isActive" :key="key">
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane v-for="doc in docZone.docs" :name="doc.documentKey" :key="doc.id">
-        <span slot="label"><i :class="doc.icon"></i> {{ doc.name }}</span>
-        <my-markdown :content="doc.content"></my-markdown>
+        <span slot="label"><i :class="doc.icon"/> {{ doc.name }}</span>
+        <my-markdown :content="doc.content"/>
       </el-tab-pane>
     </el-tabs>
   </div>

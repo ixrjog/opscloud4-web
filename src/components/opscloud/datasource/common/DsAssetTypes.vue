@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div class="meta-cardInfo">
     <div v-for="assetDetail in assetDetails" :key="assetDetail.assetType">

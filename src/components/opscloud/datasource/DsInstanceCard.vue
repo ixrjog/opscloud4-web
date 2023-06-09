@@ -1,73 +1,74 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
         <el-tag style="margin-right: 5px" size="mini">{{ instance.instanceType }}</el-tag>
-        <my-span :content="instance.instanceName" style="font-size: 14px"></my-span>
+        <my-span :content="instance.instanceName" style="font-size: 14px"/>
         <el-button class="job-size" circle type="primary" v-show="instance.jobSize > 0">
           {{ instance.jobSize }}
         </el-button>
         <span class="btn-group">
           <el-tooltip class="item" effect="dark" content="实例任务" placement="top-start">
           <el-button type="text" @click="handleSchedule">
-            <i class="fas fa-recycle"></i>
+            <i class="fas fa-recycle"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例配置" placement="top-start">
           <el-button type="text" @click="handleRegistered">
-            <i class="far fa-id-card"></i>
+            <i class="far fa-id-card"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例配置文件" placement="top-start">
           <el-button type="text" @click="handleEditor">
-            <i class="far fa-sun"></i>
+            <i class="far fa-sun"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="下发配置文件" placement="top-start">
           <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handleSetConfig">
-            <i class="far fa-clipboard"></i>
+            <i class="far fa-clipboard"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例标签" placement="top-start">
           <el-button type="text" @click="handleTagEdit">
-            <i class="far fa-bookmark"></i>
+            <i class="far fa-bookmark"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例资产详情" placement="top-start">
           <el-button type="text" @click="handleOpen">
-            <i class="far fa-paper-plane"></i>
+            <i class="far fa-paper-plane"/>
           </el-button>
         </el-tooltip>
         </span>
       </div>
       <el-row v-if="JSON.stringify(instance.tags) !== '[]'">
         <el-col :span="18">
-          <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
+          <ds-asset-types :assetDetails="instance.assetDetails"/>
         </el-col>
         <el-col :span="6">
-          <business-tags :tags="instance.tags" :is-block=true></business-tags>
+          <business-tags :tags="instance.tags" :is-block=true/>
         </el-col>
       </el-row>
       <el-row v-else>
         <el-col>
-          <ds-asset-types :assetDetails="instance.assetDetails"></ds-asset-types>
+          <ds-asset-types :assetDetails="instance.assetDetails"/>
         </el-col>
       </el-row>
       <ds-instance-icon :is-active="instance.isActive" :instance-type="instance.instanceType"
-                        class="position"></ds-instance-icon>
+                        class="position"/>
     </el-card>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType"
-                         :business-id="instance.id" :form-status="formStatus.businessTag"></business-tag-editor>
+                         :business-id="instance.id" :form-status="formStatus.businessTag"/>
     <ds-config-editor :form-status="formStatus.config"
                       :ds-type-options="dsTypeOptions"
                       :active-options="activeOptions"
-                      ref="dsConfigEditor"></ds-config-editor>
+                      ref="dsConfigEditor"/>
     <ds-instance-register-editor :form-status="formStatus.instance"
                                  :ds-type-options="dsTypeOptions"
                                  :active-options="activeOptions"
-                                 ref="dsInstanceRegisterEditor"></ds-instance-register-editor>
+                                 ref="dsInstanceRegisterEditor"/>
     <ds-instance-schedule-editor :form-status="formStatus.schedule"
-                                 ref="dsInstanceScheduleEditor"></ds-instance-schedule-editor>
+                                 ref="dsInstanceScheduleEditor"/>
   </div>
 </template>
 

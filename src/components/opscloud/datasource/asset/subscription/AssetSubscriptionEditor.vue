@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" :before-close="handleClose">
@@ -7,41 +8,36 @@
           <el-form-item label="数据源类型" :label-width="labelWidth" required>
             <el-select v-model="instanceQueryParam.instanceType" placeholder="选择类型"
                        :disabled="assetSubscription.id !== ''">
-              <el-option
-                v-for="item in dsTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in dsTypeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="数据源实例" :label-width="labelWidth" required>
             <el-select v-model.trim="instance" filterable clearable
                        :disabled="assetSubscription.id !== '' || instanceQueryParam.instanceType === ''"
                        @change="changeInstance"
-                       remote reserve-keyword placeholder="搜索实例" :remote-method="getInstance" @clear="clearInstance">
-              <el-option
-                v-for="item in dsInstanceOptions"
-                :key="item.uuid"
-                :label="item.instanceName"
-                :value="item">
-              </el-option>
+                       remote reserve-keyword placeholder="搜索实例" :remote-method="getInstance"
+                       @clear="clearInstance">
+              <el-option v-for="item in dsInstanceOptions"
+                         :key="item.uuid"
+                         :label="item.instanceName"
+                         :value="item"/>
             </el-select>
           </el-form-item>
           <el-form-item label="订阅资产" :label-width="labelWidth" required>
             <el-select v-model.trim="asset" filterable clearable
                        :disabled="assetSubscription.id !== '' || instance === ''"
                        remote reserve-keyword placeholder="搜索资产" :remote-method="getAsset" @clear="getAsset('')">
-              <el-option
-                v-for="item in dsAssetOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item">
-              </el-option>
+              <el-option v-for="item in dsAssetOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item"/>
             </el-select>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="assetSubscription.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="assetSubscription.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -49,17 +45,17 @@
         <el-form :model="assetSubscription">
           <el-form-item label="PLAYBOOK(YML)" label-position="top">
             <br/>
-            <my-highlight v-if="!editing" :code="assetSubscription.playbook" lang="yaml"></my-highlight>
+            <my-highlight v-if="!editing" :code="assetSubscription.playbook" lang="yaml"/>
             <editor v-if="editing" v-model="assetSubscription.playbook" @init="editorInit" lang="yaml" theme="chrome"
                     height="250"
-                    :options="options"></editor>
+                    :options="options"/>
           </el-form-item>
           <el-form-item label="VARS" label-position="top">
             <br/>
-            <my-highlight v-if="!editing" :code="assetSubscription.vars" lang="yaml"></my-highlight>
+            <my-highlight v-if="!editing" :code="assetSubscription.vars" lang="yaml"/>
             <editor v-if="editing" v-model="assetSubscription.vars" @init="editorInit" lang="yaml" theme="chrome"
                     height="80"
-                    :options="options" ref="editor"></editor>
+                    :options="options" ref="editor"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">

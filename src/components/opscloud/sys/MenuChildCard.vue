@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-card shadow="hover" v-show="menuId !== ''">
     <div slot="header" style="height: 15px">
@@ -11,17 +12,17 @@
       <div v-for="(menuChild,index) in menuChildList" :key="index">
         <el-form :inline="true" :model="menuChild" label-width="60px">
           <el-form-item style="margin-left: 20px">
-            <i class="fas fa-align-justify handle" style="margin-right: 10px;"></i>
+            <i class="fas fa-align-justify handle" style="margin-right: 10px;"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menuChild.title" placeholder="请输入名称"></el-input>
+            <el-input v-model="menuChild.title" placeholder="请输入名称"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menuChild.path" class="input" placeholder="请输入路径"></el-input>
+            <el-input v-model="menuChild.path" class="input" placeholder="请输入路径"/>
           </el-form-item>
           <el-form-item required>
             <el-input v-model="menuChild.icon" placeholder="请输入图标">
-              <i slot="suffix" :class=menuChild.icon aria-hidden="true"></i>
+              <i slot="suffix" :class=menuChild.icon aria-hidden="true"/>
             </el-input>
           </el-form-item>
           <el-form-item style="float: right">

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-card shadow="hover">
     <div slot="header" style="height: 15px">
@@ -11,14 +12,14 @@
       <div v-for="(menu,index) in menuList" :key="index">
         <el-form :inline="true" :model="menu" label-width="60px">
           <el-form-item style="margin-left: 20px">
-            <i class="fas fa-align-justify handle" style="margin-right: 10px;"></i>
+            <i class="fas fa-align-justify handle" style="margin-right: 10px;"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menu.title" placeholder="请输入名称"></el-input>
+            <el-input v-model="menu.title" placeholder="请输入名称"/>
           </el-form-item>
           <el-form-item required>
             <el-input v-model="menu.icon" placeholder="请输入图标">
-              <i slot="suffix" :class=menu.icon aria-hidden="true"></i>
+              <i slot="suffix" :class=menu.icon aria-hidden="true"/>
             </el-input>
           </el-form-item>
           <span style="float: right">

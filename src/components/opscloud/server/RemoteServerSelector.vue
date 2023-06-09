@@ -1,67 +1,63 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字查询"/>
       <el-select v-model.trim="queryParam.serverGroupId" filterable clearable
                  remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup">
-        <el-option
-          v-for="item in serverGroupOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-        </el-option>
+        <el-option v-for="item in serverGroupOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id"/>
       </el-select>
       <el-select v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
+        <el-option v-for="item in envOptions"
+                   :key="item.id"
+                   :label="item.envName"
+                   :value="item.envType">
+          <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select
         v-model="queryParam.tagId" filterable clearable remote reserve-keyword
         placeholder="请输入关键词搜索标签" :remote-method="getTag">
-        <el-option
-          v-for="item in tagOptions"
-          :key="item.id"
-          :label="item.tagKey"
-          :value="item.id">
-        </el-option>
+        <el-option v-for="item in tagOptions"
+                   :key="item.id"
+                   :label="item.tagKey"
+                   :value="item.id"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.name }}</span>
           <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
-                     @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
+                     @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"/>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="serialNumber" label="序号" width="80" sortable></el-table-column>
-      <el-table-column prop="publicIp" label="公网IP" width="120"></el-table-column>
-      <el-table-column prop="privateIp" label="私网IP" width="120"></el-table-column>
+      <el-table-column prop="serialNumber" label="序号" width="80" sortable/>
+      <el-table-column prop="publicIp" label="公网IP" width="120"/>
+      <el-table-column prop="privateIp" label="私网IP" width="120"/>
       <el-table-column prop="env" label="环境" width="80">
-        <template slot-scope="scope">
-          <env-tag :env="scope.row.env"></env-tag>
+        <template v-slot="scope">
+          <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签">
-        <template slot-scope="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+        <template v-slot="scope">
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column prop="account" label="授权账户">
-        <template slot-scope="scope">
-          <server-accounts-button :server="scope.row" @handleRemote="handleRemote"></server-accounts-button>
+        <template v-slot="scope">
+          <server-accounts-button :server="scope.row" @handleRemote="handleRemote"/>
         </template>
       </el-table-column>
     </el-table>
-    <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
+    <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"/>
   </div>
 </template>
 

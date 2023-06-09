@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-select v-model="queryParam.mountZone" filterable clearable
                  remote reserve-keyword placeholder="搜索挂载区" :remote-method="getZone" @change="fetchData">
@@ -8,33 +9,31 @@
                    :key="item.id"
                    :label="item.mountZone"
                    :value="item.mountZone">
-          <select-item :name="item.mountZone" :comment="item.name"></select-item>
+          <select-item :name="item.mountZone" :comment="item.name"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
-      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
       <el-table-column prop="icon" label="图标">
         <template v-slot="scope">
           <i :class="scope.row.icon"></i>
         </template>
       </el-table-column>
-      <el-table-column prop="documentKey" label="Key"></el-table-column>
-      <el-table-column prop="mountZone" label="文档挂载区"></el-table-column>
-      <el-table-column prop="seq" label="顺序" sortable></el-table-column>
+      <el-table-column prop="documentKey" label="Key"/>
+      <el-table-column prop="mountZone" label="文档挂载区"/>
+      <el-table-column prop="seq" label="顺序" sortable/>
       <el-table-column prop="isActive" label="有效">
         <template v-slot="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
+          <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="230">
@@ -45,9 +44,8 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <document-editor :formStatus="formStatus.doc" ref="documentEditor"
-                     @close="fetchData"></document-editor>
+                @handleSizeChange="handleSizeChange"/>
+    <document-editor :formStatus="formStatus.doc" ref="documentEditor" @close="fetchData"/>
   </div>
 </template>
 

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
@@ -5,68 +6,66 @@
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="数据源信息" name="dsInfo">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="datasourceConfig.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="datasourceConfig.name" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="数据源类型" :label-width="labelWidth" required>
             <el-select v-model="datasourceConfig.dsType" placeholder="选择类型">
-              <el-option
-                v-for="item in dsTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+              <el-option v-for="item in dsTypeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="分类" :label-width="labelWidth" required>
-            <el-input v-model="datasourceConfig.kind" placeholder="请输入内容"></el-input>
+            <el-input v-model="datasourceConfig.kind" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="数据源接入点" :label-width="labelWidth">
-            <el-input v-model="datasourceConfig.dsUrl" placeholder="请输入内容(url或接入点)"></el-input>
+            <el-input v-model="datasourceConfig.dsUrl" placeholder="请输入内容(url或接入点)"/>
           </el-form-item>
           <el-form-item label="版本" :label-width="labelWidth">
-            <el-input v-model="datasourceConfig.version" placeholder="请输入内容"></el-input>
+            <el-input v-model="datasourceConfig.version" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
             <el-select v-model="datasourceConfig.isActive" placeholder="选择类型">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="datasourceConfig.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="datasourceConfig.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="数据源属性" name="dsProps">
           <el-form-item label="凭据配置" label-position="top">
             <el-select v-model.trim="credential" value-key="id" filterable clearable
-                       remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential" style="width: 300px">
+                       remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential"
+                       style="width: 300px">
               <el-option v-for="item in credentialOptions"
                          :key="item.id"
                          :label="item.title"
                          :value="item">
-                <select-item :name="item.title" :comment="item.username"></select-item>
+                <select-item :name="item.title" :comment="item.username"/>
               </el-option>
             </el-select>
             <el-card shadow="never" style="margin-top: 5px;background: #e56c0d" v-if="credential !== ''">
               <credential-kind-example-tag :kinds="credentialKindOptions"
-                                           :kind="credential.kind"></credential-kind-example-tag>
+                                           :kind="credential.kind"/>
             </el-card>
           </el-form-item>
           <el-form-item label="属性(YML)" label-position="top" required>
             <br/>
-            <my-highlight v-if="!editing" :code="datasourceConfig.propsYml" lang="yaml"></my-highlight>
+            <my-highlight v-if="!editing" :code="datasourceConfig.propsYml" lang="yaml"/>
             <editor v-if="editing" v-model="datasourceConfig.propsYml" @init="editorInit" lang="yaml" theme="chrome"
                     height="400"
-                    :options="options"></editor>
+                    :options="options"/>
           </el-form-item>
           <div style="width:100%;text-align:center">
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑属性</el-button>
           </div>
-
         </el-tab-pane>
       </el-tabs>
     </el-form>

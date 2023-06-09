@@ -1,11 +1,12 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row style="margin-bottom: 20px">
       <el-card class="box-card" shadow="hover">
-        <div><b>Latest {{queryParam.buildSize}} build task details</b></div>
+        <div><b>Latest {{ queryParam.buildSize }} build task details</b></div>
         <el-table :data="table.build.data" style="width: 100%">
-          <el-table-column prop="jobName" label="名称" sortable></el-table-column>
-          <el-table-column prop="username" label="操作用户" width="120"></el-table-column>
+          <el-table-column prop="jobName" label="名称" sortable/>
+          <el-table-column prop="username" label="操作用户" width="120"/>
           <el-table-column prop="buildDetails" label="环境类型" width="80">
             <template v-slot="scope">
               <span>{{ scope.row.buildDetails.build.dict.env }}</span>
@@ -25,7 +26,7 @@
           </el-table-column>
           <el-table-column prop="buildResult" label="构建结果" width="120">
             <template v-slot="scope">
-              <build-result :build="scope.row"></build-result>
+              <build-result :build="scope.row"/>
             </template>
           </el-table-column>
           <el-table-column prop="tags" label="标签" width="120">
@@ -40,7 +41,7 @@
     </el-row>
     <el-row>
       <el-card class="box-card" shadow="hover">
-        <div><b>Latest {{queryParam.deploySize}} deploy task details</b></div>
+        <div><b>Latest {{ queryParam.deploySize }} deploy task details</b></div>
         <el-table :data="table.deploy.data" style="width: 100%">
           <el-table-column prop="jobName" label="名称"></el-table-column>
           <el-table-column prop="username" label="操作用户" width="120"></el-table-column>
@@ -59,7 +60,7 @@
               <deployment-name
                 :deployment="scope.row.deployDetails.deploy.kubernetes.deployment !== null ? scope.row.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
                 :namespace="scope.row.deployDetails.deploy.kubernetes.deployment !== null ? scope.row.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
-                cluster=""></deployment-name>
+                cluster=""/>
             </template>
           </el-table-column>
           <el-table-column prop="versionName" label="部署版本">
@@ -68,7 +69,7 @@
           </el-table-column>
           <el-table-column prop="deployResult" label="部署结果" width="120">
             <template v-slot="scope">
-              <deploy-result :deploy="scope.row"></deploy-result>
+              <deploy-result :deploy="scope.row"/>
             </template>
           </el-table-column>
           <el-table-column prop="tags" label="标签" width="120">
@@ -77,9 +78,9 @@
             </template>
           </el-table-column>
           <el-table-column label="操作" width="100">
-<!--            <template v-slot="scope">-->
-<!--                            <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
-<!--            </template>-->
+            <!--            <template v-slot="scope">-->
+            <!--                            <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">构建</el-button>-->
+            <!--            </template>-->
           </el-table-column>
         </el-table>
       </el-card>

@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handlePull">拉取</el-button>
@@ -13,35 +14,34 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="assetId" :label="tableLayout.assetId.alias"
                        v-if="tableLayout.assetId.show !== undefined ? tableLayout.assetId.show : true"
-                       show-overflow-tooltip></el-table-column>
+                       show-overflow-tooltip/>
       <el-table-column prop="name" :label="tableLayout.name.alias"
-                       show-overflow-tooltip></el-table-column>
+                       show-overflow-tooltip/>
       <el-table-column prop="assetKey" :label="tableLayout.assetKey.alias"
-                       v-if="tableLayout.assetKey.show" show-overflow-tooltip></el-table-column>
+                       v-if="tableLayout.assetKey.show" show-overflow-tooltip/>
       <el-table-column prop="assetKey2" :label="tableLayout.assetKey2.alias"
-                       v-if="tableLayout.assetKey2.show" show-overflow-tooltip></el-table-column>
-      <el-table-column prop="zone" :label="tableLayout.zone.alias" v-if="tableLayout.zone.show"></el-table-column>
+                       v-if="tableLayout.assetKey2.show" show-overflow-tooltip/>
+      <el-table-column prop="zone" :label="tableLayout.zone.alias" v-if="tableLayout.zone.show"/>
       <slot name="extend">
         <!--扩展字段-->
       </slot>
       <el-table-column prop="isActive" label="有效" v-if="enableActive" width="70">
-        <template slot-scope="scope">
-          <i class="fas fa-circle" :style="{ color: scope.row.isActive? '#0ca80c' : '#ce3f13' }"></i>
+        <template v-slot="scope">
+          <i class="fas fa-circle" :style="{ color: scope.row.isActive? '#0ca80c' : '#ce3f13' }"/>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签">
-        <template slot-scope="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+        <template v-slot="scope">
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <slot name="operation" :row="scope.row"></slot>
           <el-button type="primary" plain size="mini"
                      v-if="scope.row.convertBusinessTypes != null && JSON.stringify(scope.row.convertBusinessTypes) !== '{}'"
                      @click="handleImport(scope.row.convertBusinessTypes)">导入
           </el-button>
-
           <el-button v-show="enableActive" :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
                      @click="handleSetActive(scope.row)">{{ scope.row.isActive ? '无效' : '有效' }}
           </el-button>
@@ -52,12 +52,12 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <business-tag-editor ref="businessTagEditor" :businessType="businessType" :businessId="businessId"
-                         :formStatus="formStatus.businessTag" @close="fetchData"></business-tag-editor>
-    <server-editor :formStatus="formStatus.server" ref="serverEditor" @close="fetchData"></server-editor>
-    <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
-    <user-group-editor :formStatus="formStatus.userGroup" ref="userGroupEditor" @close="fetchData"></user-group-editor>
+                         :formStatus="formStatus.businessTag" @close="fetchData"/>
+    <server-editor :formStatus="formStatus.server" ref="serverEditor" @close="fetchData"/>
+    <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"/>
+    <user-group-editor :formStatus="formStatus.userGroup" ref="userGroupEditor" @close="fetchData"/>
   </div>
 </template>
 

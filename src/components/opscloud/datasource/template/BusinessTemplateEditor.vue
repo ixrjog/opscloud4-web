@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
@@ -5,55 +6,52 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="businessTemplate">
           <el-form-item label="名称" :label-width="labelWidth">
-            <el-input v-model="businessTemplate.name" placeholder="不填写则自动生成"></el-input>
+            <el-input v-model="businessTemplate.name" placeholder="不填写则自动生成"/>
           </el-form-item>
           <el-form-item label="实例类型" :label-width="labelWidth" required>
             <el-select v-model="queryParam.instanceType" placeholder="选择类型">
-              <el-option
-                v-for="item in instanceTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in instanceTypeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
             <el-select v-model.trim="queryParam.envType" clearable
-                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv" @change="handleChangeTemplate">
-              <el-option
-                v-for="item in envOptions"
-                :key="item.envType"
-                :label="item.envName"
-                :value="item.envType">
-                <select-item :name="item.envName" :comment="item.comment"></select-item>
+                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"
+                       @change="handleChangeTemplate">
+              <el-option v-for="item in envOptions"
+                         :key="item.envType"
+                         :label="item.envName"
+                         :value="item.envType">
+                <select-item :name="item.envName" :comment="item.comment"/>
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="模板Key" :label-width="labelWidth" required>
             <el-select v-model="queryParam.templateKey" placeholder="选择类型" @change="handleChangeTemplate">
-              <el-option
-                v-for="item in keyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+              <el-option v-for="item in keyOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="模板" :label-width="labelWidth" required>
             <el-select v-model="businessTemplate.templateId" filterable clearable
                        :disabled="queryParam.templateKey === '' || businessTemplate.envType === ''"
-                       remote reserve-keyword placeholder="选择模板" :remote-method="getTemplate" @clear="getTemplate('')">
-              <el-option
-                v-for="item in templateOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <select-item :name="item.name" :comment="item.templateKey"></select-item>
+                       remote reserve-keyword placeholder="选择模板" :remote-method="getTemplate"
+                       @clear="getTemplate('')">
+              <el-option v-for="item in templateOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id">
+                <select-item :name="item.name" :comment="item.templateKey"/>
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="businessTemplate.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="businessTemplate.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -61,19 +59,17 @@
         <el-form :model="businessTemplate" label-position="top">
           <el-form-item label="模板">
             <my-highlight :code="businessTemplate.template.content"
-                          :lang="businessTemplate.template.templateType" :myStyle="style">
-            </my-highlight>
+                          :lang="businessTemplate.template.templateType" :myStyle="style"/>
           </el-form-item>
           <el-form-item label="变量">
             <my-highlight v-show="!button.editing" :code="businessTemplate.vars"
-                          :lang="businessTemplate.template.templateType">
-            </my-highlight>
+                          :lang="businessTemplate.template.templateType"/>
             <editor v-if="button.editing" v-model="businessTemplate.vars"
                     @init="editorInit"
                     :lang="businessTemplate.template.templateType"
                     theme="chrome"
                     height="200"
-                    :options="options"></editor>
+                    :options="options"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">

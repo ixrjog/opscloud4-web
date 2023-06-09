@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div v-if="JSON.stringify(announcements) !== '[]'" style="margin-bottom: 10px">
     <el-carousel trigger="click" height="150px" :interval="10000">

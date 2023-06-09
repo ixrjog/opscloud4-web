@@ -1,14 +1,14 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover">
       <el-row>
         <span style="float: right">
-          <el-button type="text" icon="el-icon-refresh" style="margin-left: 5px"
-                     @click="fetchData" size="mini" plain></el-button>
+          <el-button type="text" icon="el-icon-refresh" style="margin-left: 5px" @click="fetchData" size="mini" plain/>
         </span>
       </el-row>
       <el-row>
-        <div id="prodDeployChart" style="height:250px; width: 100%"></div>
+        <div id="prodDeployChart" style="height:250px; width: 100%"/>
       </el-row>
     </el-card>
   </div>

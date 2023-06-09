@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div class="img">
-    <img :src="icon">
+    <img :src="icon" alt=""/>
   </div>
 </template>
 
