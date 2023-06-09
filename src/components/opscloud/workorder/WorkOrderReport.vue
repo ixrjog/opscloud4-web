@@ -1,13 +1,14 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row>
       <el-col>
-        <work-order-name-stats-report ref="workOrderNameStatsReport"></work-order-name-stats-report>
+        <work-order-name-stats-report ref="workOrderNameStatsReport"/>
       </el-col>
     </el-row>
     <!--  :gutter="20"-->
     <el-row style="margin-top: 10px">
-      <work-order-month-stats-report ref="workOrderMonthStatsReport"></work-order-month-stats-report>
+      <work-order-month-stats-report ref="workOrderMonthStatsReport"/>
     </el-row>
   </div>
 </template>

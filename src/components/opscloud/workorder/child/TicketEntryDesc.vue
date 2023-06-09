@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div v-if="JSON.stringify(ticketEntry) !== '{}'">
     <div style="margin: 0 0 20px">
@@ -95,7 +96,7 @@ export default {
     /deep/ .el-card__header {
       padding: 10px 10px;
       border-bottom: 1px solid #EBEEF5;
-      -webkit-box-sizing: border-box;
+      // -webkit-box-sizing: border-box;
       box-sizing: border-box;
     }
   }

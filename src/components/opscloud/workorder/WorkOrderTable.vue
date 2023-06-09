@@ -1,56 +1,55 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-select v-model.trim="queryParam.workOrderGroupId" filterable clearable
                  remote reserve-keyword placeholder="搜索工单组" :remote-method="getGroup" @clear="fetchData">
-        <el-option
-          v-for="item in workOrderGroupOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-        </el-option>
+        <el-option v-for="item in workOrderGroupOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id"/>
       </el-select>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="seq" label="顺序" width="80"></el-table-column>
+      <el-table-column prop="seq" label="顺序" width="80"/>
       <el-table-column prop="workOrderGroup" label="群组">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.workOrderGroup.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="名称">
-        <template slot-scope="scope">
-          <i :class="scope.row.icon"></i>
+        <template v-slot="scope">
+          <i :class="scope.row.icon"/>
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="类目颜色">
-        <template slot-scope="scope">
-          <el-color-picker v-model="scope.row.color"></el-color-picker>
+        <template v-slot="scope">
+          <el-color-picker v-model="scope.row.color"/>
         </template>
       </el-table-column>
       <el-table-column prop="workOrderKey" label="Key">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.workOrderKey }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="status" label="状态">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" :type="scope.row.status | toStatusColor">{{ scope.row.status | toStatusDesc }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <work-order-editor ref="workOrderEditor" :formStatus="formStatus" @close="fetchData"></work-order-editor>
+                @handleSizeChange="handleSizeChange"/>
+    <work-order-editor ref="workOrderEditor" :formStatus="formStatus" @close="fetchData"/>
   </div>
 </template>
 

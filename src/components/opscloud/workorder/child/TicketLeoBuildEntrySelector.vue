@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row :gutter="24">
@@ -8,19 +9,18 @@
                    :key="item.id"
                    :label="item.name"
                    :value="item.name">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="ticketEntry" filterable clearable value-key="name" :disabled="applicationName === ''"
                  style="display: inline-block; width: 250px; margin-left: 10px"
                  reserve-keyword placeholder="选择构建版本"
                  :loading="searchLoading">
-        <el-option
-          v-for="item in ticketEntryOptions"
-          :key="item.name"
-          :label="item.name"
-          :value="item">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in ticketEntryOptions"
+                   :key="item.name"
+                   :label="item.name"
+                   :value="item">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry()"

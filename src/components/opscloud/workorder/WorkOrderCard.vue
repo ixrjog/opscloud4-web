@@ -1,21 +1,22 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover">
       <el-collapse v-model="activeNames">
         <div v-for="(group,index) in workOrderView.workOrderGroups" :key="group.id">
           <el-collapse-item :name="index">
-            <template slot="title">
-              <i :class="group.icon" style="margin-right: 5px"></i>{{ group.name }}
+            <template v-slot:title>
+              <i :class="group.icon" style="margin-right: 5px"/>{{ group.name }}
             </template>
             <el-table :data="group.workOrders" stripe :show-header=false>
               <el-table-column label="工单">
                 <template slot-scope="scope">
                   <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"
-                     style="margin-right: 5px"></i>
+                     style="margin-right: 5px"/>
                   <span>{{ scope.row.name }}</span>
                   <span v-if="scope.row.docs !== null && scope.row.docs !== ''">
                      <a :href="scope.row.docs">
-                       <i class="fab fa-creative-commons-share" style="color: #008200; margin-left: 5px"></i>
+                       <i class="fab fa-creative-commons-share" style="color: #008200; margin-left: 5px"/>
                      </a>
                   </span>
                   <el-button :type="scope.row.status === 2 ? 'info' :'primary'" style="float: right"

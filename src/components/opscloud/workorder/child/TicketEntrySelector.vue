@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row :gutter="24">
@@ -5,12 +6,11 @@
                  style="display: inline-block; width: 250px; margin-left: 10px"
                  remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
                  :loading="searchLoading">
-        <el-option
-          v-for="item in ticketEntryOptions"
-          :key="item.name"
-          :label="item.name"
-          :value="item">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in ticketEntryOptions"
+                   :key="item.name"
+                   :label="item.name"
+                   :value="item">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry()"

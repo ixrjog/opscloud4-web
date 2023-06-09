@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新增</el-button>
@@ -8,15 +9,15 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="seq" label="顺序" width="80"></el-table-column>
       <el-table-column label="名称">
-        <template slot-scope="scope">
-          <i :class="scope.row.icon"></i>
+        <template v-slot="scope">
+          <i :class="scope.row.icon"/>
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="workOrderSize" label="工单数量"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="workOrderSize" label="工单数量"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" :disabled="scope.row.workOrderSize !== 0"
                      @click="handleRowDel(scope.row)">删除
@@ -25,9 +26,9 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <work-order-group-editor ref="workOrderGroupEditor" :formStatus="formStatus"
-                             @close="fetchData"></work-order-group-editor>
+                             @close="fetchData"/>
   </div>
 </template>
 

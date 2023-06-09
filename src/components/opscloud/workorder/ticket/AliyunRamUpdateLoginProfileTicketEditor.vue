@@ -3,8 +3,8 @@
   <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '70%': '50%'"
              :before-close="beforeClose">
     <!--页眉-->
-    <template v-slot:title v-if="ticketView !== null">
-      <ticket-title :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
+    <template v-slot:title>
+      <ticket-title v-if="ticketView !== null" :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
     </template>
     <!--页眉-->
     <!--工单视图-->
@@ -12,27 +12,38 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
-                                   :workOrderTicketId="ticketView.ticketId"
-                                   :entryDesc="tableLayout.entryName"
-                                   @handleNotify="fetchData"/>
+            <ticket-asset-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
+                                         :instanceType="'ALIYUN'"
+                                         :assetType="'RAM_USER'"
+                                         :workOrderTicketId="ticketView.ticketId"
+                                         :entryDesc="tableLayout.entryName"
+                                         ref="ticketEntrySelector"
+                                         @handleNotify="fetchData"/>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
-                                :tableLayout="tableLayout"
-                                ref="ticketEntryTable"/>
+                                :tableLayout="tableLayout" ref="ticketEntryTable">
+              <template v-slot:extend>
+                <el-table-column prop="assetKey2" label="ARN">
+                  <template v-slot="scope">
+                    <span>{{ scope.row.entry.assetKey2 }}</span>
+                  </template>
+                </el-table-column>
+              </template>
+            </ticket-entry-table>
           </el-card>
         </el-timeline-item>
         <el-timeline-item timestamp="审批选项" placement="top">
           <workflow-nodes :workflowView="ticketView.workflowView" :ticketPhase="ticketView.ticketPhase"/>
         </el-timeline-item>
         <el-timeline-item timestamp="申请说明" placement="top">
-          <el-input type="textarea" :rows="2" v-model="ticketView.comment"
+          <el-input type="textarea" :rows="2"
                     :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
+                    v-model="ticketView.comment"
                     :readonly="ticketView.ticketPhase !== 'NEW'"/>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
-          <node-view :nodeView="ticketView.nodeView"></node-view>
+          <node-view :nodeView="ticketView.nodeView"/>
         </el-timeline-item>
         <!--        审批意见只展示给当前审批人-->
         <el-timeline-item timestamp="审批意见" placement="top" v-if="ticketView.isApprover">
@@ -70,7 +81,7 @@
 </template>
 
 <script>
-import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
+import TicketAssetEntrySelector from '@/components/opscloud/workorder/child/TicketAssetEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
 import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
@@ -82,8 +93,8 @@ import {
 } from '@/api/modules/workorder/workorder.ticket.api'
 
 const TableLayout = {
-  instance: false,
-  entryName: 'Nexus权限'
+  instance: true,
+  entryName: 'RAM用户名'
 }
 
 export default {
@@ -97,12 +108,12 @@ export default {
       approving: false
     }
   },
-  name: 'NexusTicketEditor',
+  name: 'AliyunRamUpdateLoginProfileTicketEditor',
   props: ['formStatus'],
   components: {
     TicketTitle,
     NodeView,
-    TicketEntrySelector,
+    TicketAssetEntrySelector,
     TicketEntryTable,
     WorkflowNodes
   },
@@ -111,12 +122,15 @@ export default {
   },
   methods: {
     initData (ticketView) {
+      this.ticketView = ticketView
       this.approvalComment = ''
       this.submitting = false
       this.saving = false
       this.approving = false
-      this.ticketView = ticketView
       this.$nextTick(() => {
+        if (this.ticketView.ticketPhase === 'NEW') {
+          this.$refs.ticketEntrySelector.getDsInstance()
+        }
         this.fetchData()
       }, 200)
     },

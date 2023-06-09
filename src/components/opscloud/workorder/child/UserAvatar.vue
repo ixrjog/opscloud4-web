@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div class="userAvatar">
       <el-avatar v-if="user !== null && user.avatar !== null && user.avatar !== undefined"

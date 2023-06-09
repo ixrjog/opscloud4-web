@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-table :data="ticketEntries" style="width: 100%" v-loading="loading">
@@ -11,12 +12,10 @@
         <template v-slot="scope">
           <el-select v-model="scope.row.role" placeholder="请选择" @change="updateEntry(scope.row)"
                      :disabled="ticketPhase !== 'NEW'">
-            <el-option
-              v-for="item in roleOptions"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
+            <el-option v-for="item in roleOptions"
+                       :key="item.value"
+                       :label="item.label"
+                       :value="item.value"/>
           </el-select>
           <!--          <el-tag :type="scope.row.role | toPermissionRoleType">{{ scope.row.role | toPermissionRoleText }}</el-tag>-->
         </template>
@@ -24,9 +23,9 @@
       <slot name="extend">
         <!--扩展字段-->
       </slot>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="执行结果" v-if="ticketPhase === orderPhase.SUCCESS || ticketPhase === orderPhase.FAILED">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.result === null ? 'success': scope.row.result"
                       placement="top-start">
             <el-tag :type="scope.row.entryStatus === 1 ? 'success' : 'danger'">

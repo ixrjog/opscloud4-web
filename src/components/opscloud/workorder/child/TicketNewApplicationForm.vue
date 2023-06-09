@@ -1,27 +1,28 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="applicationData" label-width="120px">
       <el-form-item label="应用名称" required>
         <el-input v-model="applicationData.name"></el-input>
         <div style="margin-top: 5px">
-          <my-highlight code="Application Name Regex: [a-z][\\d0-9a-z-]{3,32}" lang="json"></my-highlight>
+          <my-highlight code="Application Name Regex: [a-z][\\d0-9a-z-]{3,32}" lang="json"/>
         </div>
       </el-form-item>
       <el-form-item label="应用级别" required>
         <el-radio-group v-model="applicationData.levelTag">
-          <el-radio-button label="A1"></el-radio-button>
-          <el-radio-button label="A2"></el-radio-button>
-          <el-radio-button label="A3"></el-radio-button>
-          <el-radio-button label="B1"></el-radio-button>
-          <el-radio-button label="B2"></el-radio-button>
-          <el-radio-button label="B3"></el-radio-button>
+          <el-radio-button label="A1"/>
+          <el-radio-button label="A2"/>
+          <el-radio-button label="A3"/>
+          <el-radio-button label="B1"/>
+          <el-radio-button label="B2"/>
+          <el-radio-button label="B3"/>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="GitLab实例">
         <el-select v-model="instanceUuid" filterable value-key="instanceName"
                    style="width: 400px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
           <el-option v-for="item in dsInstanceOptions" :key="item.uuid" :label="item.instanceName" :value="item.uuid">
-            <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+            <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
         </el-select>
       </el-form-item>
@@ -31,12 +32,12 @@
                    :remote-method="fetchData"
                    :loading="searchLoading" :disabled="instanceUuid === ''">
           <el-option v-for="item in ticketEntryOptions" :key="item.id" :label="item.entry.assetKey" :value="item">
-            <select-item :name="item.entry.assetKey" :comment="item.comment"></select-item>
+            <select-item :name="item.entry.assetKey" :comment="item.comment"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="描述" required>
-        <el-input v-model="applicationData.comment" placeholder="请输入应用描述"></el-input>
+        <el-input v-model="applicationData.comment" placeholder="请输入应用描述"/>
       </el-form-item>
       <el-form-item>
         <el-button plain type="primary" @click="addTicketEntry" :disabled="JSON.stringify(ticketEntry) === '{}'"
