@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>{{ title }}</h1>
@@ -6,20 +7,20 @@
         <my-ticket-card :isAdmin="true" :title="'所有工单'" @editTicket="editTicket"
                         @previewTicket="previewTicket"
                         @approvalTicket="approvalTicket"
-                        ref="myTicketCard"></my-ticket-card>
+                        ref="myTicketCard"/>
       </el-tab-pane>
       <el-tab-pane label="配置" name="workorder">
         <el-tabs tab-position="left" v-model="activeName.workorder">
           <el-tab-pane label="群组配置" name="groupMgmt">
-            <work-order-group-table ref="workOrderGroupTable"></work-order-group-table>
+            <work-order-group-table ref="workOrderGroupTable"/>
           </el-tab-pane>
           <el-tab-pane label="工单配置" name="workOrderMgmt">
-            <work-order-table ref="workOrderTable"></work-order-table>
+            <work-order-table ref="workOrderTable"/>
           </el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="报表" name="report">
-        <work-order-report ref="workOrderReport"></work-order-report>
+        <work-order-report ref="workOrderReport"/>
       </el-tab-pane>
     </el-tabs>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor" @close="fetchData"/>

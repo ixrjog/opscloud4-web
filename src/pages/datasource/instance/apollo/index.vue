@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
-                               datasource-nane="Apollo配置中心实例管理"></datasource-instance-title>
+                               datasource-nane="Apollo配置中心实例管理"/>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="应用" name="app">
         <asset-table :instanceId="instance.id" :assetType="assetType.APOLLO.APOLLO_APP"

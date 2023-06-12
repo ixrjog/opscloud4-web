@@ -1,12 +1,13 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>{{ title }}</h1>
     <el-row :gutter="20">
       <el-col :span="10">
-        <menu-card @handlerMenuChild="handlerMenuChild"></menu-card>
+        <menu-card @handlerMenuChild="handlerMenuChild"/>
       </el-col>
       <el-col :span="12">
-        <menu-child-card ref="menuChildCard"></menu-child-card>
+        <menu-child-card ref="menuChildCard"/>
       </el-col>
     </el-row>
   </d2-container>

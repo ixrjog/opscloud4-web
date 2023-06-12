@@ -1,18 +1,19 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>无效用户管理</h1>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
-      <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
+      <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"/>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column label="用户名" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-row>
-            <copy-span :content="scope.row.username"></copy-span>
+            <copy-span :content="scope.row.username"/>
             <el-button type="text" style="float:right" @click="openUserDetail(scope.row.username)">
-              <i style="margin-left: 5px" class="el-icon-position"></i>
+              <i style="margin-left: 5px" class="el-icon-position"/>
             </el-button>
           </el-row>
           <el-row>
@@ -20,24 +21,26 @@
             <span v-if="showName(scope.row)" style="margin-left: 5px">&lt;{{ scope.row.name }}&gt;</span>
           </el-row>
           <el-row>
-            <copy-span :content="scope.row.email"></copy-span>
+            <copy-span :content="scope.row.email"/>
           </el-row>
           <el-row>
             <el-tag :type="scope.row.mfa ? 'success': 'info'" size="mini">
-              <i class="fas fa-lock" v-if="scope.row.forceMfa" style="margin-right: 5px"></i>MFA
+              <i class="fas fa-lock" v-if="scope.row.forceMfa" style="margin-right: 5px"/>MFA
             </el-tag>
           </el-row>
         </template>
       </el-table-column>
       <el-table-column label="云账户" width="300">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div v-for="(value,key) in scope.row.amMap" :key="key" :label="key">
-            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAmTypeText }}</b></el-divider>
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">{{ key | getAmTypeText }}</b>
+            </el-divider>
             <div v-for="item in value" :key="item.instanceUuid">
               <el-tooltip class="item" effect="light" :content="item.instanceName" placement="right">
                 <span>{{ item.loginUser }}
                   <i class="fas fa-key" style="color:#67C23A;margin-left: 5px"
-                     v-if="JSON.stringify(item.accessKeys) !== '[]'"></i>
+                     v-if="JSON.stringify(item.accessKeys) !== '[]'"/>
                 </span>
               </el-tooltip>
             </div>
@@ -45,7 +48,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="businessPermissions" label="业务授权">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div v-for="(value, key) in scope.row.businessPermissions" :key="key">
             <el-divider content-position="left"><b style="color: #9d9fa3">{{ key }}</b></el-divider>
             <el-tag size="mini" :type="item.userPermission.permissionRole === 'admin' ? 'danger': '' "
@@ -55,12 +58,12 @@
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
-        <template slot-scope="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+        <template v-slot="scope">
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
                      @click="handleSetActive(scope.row)">{{ scope.row.isActive ? '无效' : '有效' }}
@@ -72,10 +75,10 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"></user-editor>
+                @handleSizeChange="handleSizeChange"/>
+    <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+                         :form-status="formStatus.businessTag" @close="fetchData"/>
   </d2-container>
 </template>
 

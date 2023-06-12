@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <el-row :gutter="20" v-show="!layout.status">
@@ -6,7 +7,7 @@
           <div slot="header" class="clearfix">
             <span>服务器列表</span>
           </div>
-          <remote-server-selector @handleRemote="handleRemote"></remote-server-selector>
+          <remote-server-selector @handleRemote="handleRemote"/>
         </el-card>
       </el-col>
       <el-col :span="6">
@@ -14,7 +15,7 @@
           <div slot="header" class="clearfix">
             <span>远程连接设置[RDP/VNC]</span>
           </div>
-          <screen-setting @handleSetting="handleSetting"></screen-setting>
+          <screen-setting @handleSetting="handleSetting"/>
         </el-card>
       </el-col>
     </el-row>
@@ -22,8 +23,7 @@
       <remote-item-layout v-if="remoteItemLayout.show"
                           :remoteServer="remoteServer"
                           @logout="handleLogout"
-                          ref="remoteItemLayout">
-      </remote-item-layout>
+                          ref="remoteItemLayout"/>
     </el-row>
   </d2-container>
 </template>

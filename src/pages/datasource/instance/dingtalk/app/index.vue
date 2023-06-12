@@ -1,31 +1,32 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="钉钉应用实例管理"></datasource-instance-title>
+                               datasource-nane="钉钉应用实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="通讯录用户" name="user">
         <asset-table :instanceId="instanceId" :assetType="assetType.DINGTALK_APP.DINGTALK_USER"
                      :tableLayout="tableLayout.user" ref="userTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="头像">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <el-avatar :src="scope.row.properties.avatar" :size="35">
-                  <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
+                  <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" alt=""/>
                 </el-avatar>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="手机">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 {{ scope.row.properties.mobile }}
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="工号">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 {{ scope.row.properties.jobNumber }}
               </template>
             </el-table-column>
             <el-table-column prop="description" label="描述">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 {{ scope.row.description }}
               </template>
             </el-table-column>

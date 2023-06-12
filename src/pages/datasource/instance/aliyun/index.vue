@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
@@ -11,7 +12,7 @@
                          ref="ecsTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey" label="IP地址" width="150">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.assetKey }}
                       <span style="color: #8492a6 ; font-size: 12px">私有</span>
                     </span>
@@ -21,7 +22,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column prop="properties" label="配置">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.cpu }} vCPU </span>
                     <span style="margin-right: 5px">{{ scope.row.properties.memory / 1024 }} GiB</span>
                     <div>{{ scope.row.properties.osType }}</div>
@@ -36,17 +37,17 @@
                          ref="imageTable">
               <template v-slot:extend>
                 <el-table-column label="操作系统" show-overflow-tooltip>
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.oSName }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column label="系统大小(GiB)">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.size }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column label="描述" show-overflow-tooltip>
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.description }}</span>
                   </template>
                 </el-table-column>
@@ -59,14 +60,14 @@
                          ref="vpcTable">
               <template v-slot:extend>
                 <el-table-column label="安全组" width="450">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <div v-for="sg in getSecurityGroups(scope.row)" :key="sg.id">
                       <el-tag size="mini" :type="sg.isActive?'success':'info'">{{ sg.name }}</el-tag>
                     </div>
                   </template>
                 </el-table-column>
                 <el-table-column label="交换机" width="350">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <el-tree :data="getVSwitches(scope.row)" accordion></el-tree>
                   </template>
                 </el-table-column>
@@ -83,19 +84,19 @@
                          ref="acrInstanceTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="域名">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.domain }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column label="命名空间" width="200">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span v-for="namespace in scope.row.tree.ACR_NAMESPACE" :key="namespace.id">
                       <el-tag size="mini" style="margin-right: 2px">{{ namespace.name }}</el-tag>
                     </span>
                   </template>
                 </el-table-column>
                 <el-table-column label="仓库" width="400">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span v-for="repository in scope.row.tree.ACR_REPOSITORY" :key="repository.id">
                       <el-tag size="mini" style="margin-right: 2px">{{ repository.name }}</el-tag>
                     </span>
@@ -118,7 +119,7 @@
                          ref="acrInstanceRepositoryTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="实例ID">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.instanceId }}</span>
                   </template>
                 </el-table-column>
@@ -135,12 +136,12 @@
                          ref="ramUserTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="授权的策略" width="300">
-                  <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.RAM_POLICY" :type="0"></ds-children-tag>
+                  <template v-slot="scope">
+                    <ds-children-tag :children="scope.row.children.RAM_POLICY" :type="0"/>
                   </template>
                 </el-table-column>
                 <el-table-column label="Access Key" width="200">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
                       <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
                     </div>
@@ -154,12 +155,12 @@
                          :tableLayout="tableLayout.ram.policy" :enableActive="true" ref="ramPolicyTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="成员用户" width="300">
-                  <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.RAM_USER" :type="4"></ds-children-tag>
+                  <template v-slot="scope">
+                    <ds-children-tag :children="scope.row.children.RAM_USER" :type="4"/>
                   </template>
                 </el-table-column>
                 <el-table-column label="描述">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.description }}</span>
                   </template>
                 </el-table-column>
@@ -176,27 +177,25 @@
                          ref="rdsInstanceTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="数据库类型">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.engine }} {{ scope.row.properties.engineVersion }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="properties" label="实例详情">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.instanceCPU }} 核</span>
                     <span> / {{ scope.row.properties.instanceMemory }} M</span>
                     <el-popover placement="right" trigger="hover">
                       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
-                      <entry-detail name="CPU" :value="scope.row.properties.instanceCPU" unit="核"></entry-detail>
+                      <entry-detail name="CPU" :value="scope.row.properties.instanceCPU" unit="核"/>
                       <br/>
-                      <entry-detail name="数据库内存" :value="scope.row.properties.instanceMemory"
-                                    unit="M"></entry-detail>
+                      <entry-detail name="数据库内存" :value="scope.row.properties.instanceMemory" unit="M"/>
                       <br/>
-                      <entry-detail name="存储空间" :value="scope.row.properties.instanceStorage"
-                                    unit="G"></entry-detail>
+                      <entry-detail name="存储空间" :value="scope.row.properties.instanceStorage" unit="G"/>
                       <br/>
-                      <entry-detail name="最大IOPS" :value="scope.row.properties.maxIOPS"></entry-detail>
+                      <entry-detail name="最大IOPS" :value="scope.row.properties.maxIOPS"/>
                       <br/>
-                      <entry-detail name="最大连接数" :value="scope.row.properties.maxConnections"></entry-detail>
+                      <entry-detail name="最大连接数" :value="scope.row.properties.maxConnections"/>
                       <br/>
                       <el-divider>
                         <span style="color: #8492a6 ; font-size: 12px">内网地址</span>
@@ -209,7 +208,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column label="数据库" width="300">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <div v-for="database in scope.row.tree.RDS_DATABASE" :key="database.id">
                       <el-tag size="mini">{{ database.name }}</el-tag>
                     </div>
@@ -223,8 +222,8 @@
                          :tableLayout="tableLayout.rds.database" ref="rdsDatabaseTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="RDS实例" width="350">
-                  <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.RDS_INSTANCE" :type="4"></ds-children-tag>
+                  <template v-slot="scope">
+                    <ds-children-tag :children="scope.row.children.RDS_INSTANCE" :type="4"/>
                   </template>
                 </el-table-column>
               </template>
@@ -235,23 +234,23 @@
                          :tableLayout="tableLayout.rds.redis.instance" ref="redisInstanceTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="数据库类型">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.kind }} {{ scope.row.properties.engineVersion }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="properties" label="实例详情">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.capacity }} MB</span>
                     <el-popover placement="right" trigger="hover">
                       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                       <entry-detail name="实例容量" :value="scope.row.properties.capacity"
-                                    unit="MB"></entry-detail>
+                                    unit="MB"/>
                       <br/>
-                      <entry-detail name="最大私网带宽" :value="scope.row.properties.bandwidth" unit="MB/s"></entry-detail>
+                      <entry-detail name="最大私网带宽" :value="scope.row.properties.bandwidth" unit="MB/s"/>
                       <br/>
-                      <entry-detail name="QPS" :value="scope.row.properties.qps"></entry-detail>
+                      <entry-detail name="QPS" :value="scope.row.properties.qps"/>
                       <br/>
-                      <entry-detail name="最大连接数" :value="scope.row.properties.connections"></entry-detail>
+                      <entry-detail name="最大连接数" :value="scope.row.properties.connections"/>
                       <el-divider>
                         <span style="color: #8492a6 ; font-size: 12px">连接信息-专有网络</span>
                       </el-divider>
@@ -289,37 +288,37 @@
                          ref="onsRocketMqInstanceTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="实例详情">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.kind }}</span>
                     <el-popover placement="right" width="650" trigger="hover">
                       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
                       <el-divider>
                         <span style="color: #8492a6; font-size: 12px">TCP 协议客户端接入点</span>
                       </el-divider>
-                      <entry-detail name="接入点" :value="scope.row.properties.tcpEndpoint" :copy="true"></entry-detail>
+                      <entry-detail name="接入点" :value="scope.row.properties.tcpEndpoint" :copy="true"/>
                       <br/>
                       <el-divider>
                         <span style="color: #8492a6; font-size: 12px">HTTP 协议客户端接入点</span>
                       </el-divider>
-                      <entry-detail name="内网" :value="scope.row.properties.httpInternetEndpoint"
-                                    :copy="true"></entry-detail>
+                      <entry-detail name="内网" :value="scope.row.properties.httpInternetEndpoint" :copy="true"/>
                       <br/>
-                      <entry-detail name="公网" :value="scope.row.properties.httpInternalEndpoint"
-                                    :copy="true"></entry-detail>
+                      <entry-detail name="公网" :value="scope.row.properties.httpInternalEndpoint" :copy="true"/>
                     </el-popover>
                   </template>
                 </el-table-column>
                 <el-table-column label="资源" width="300">
-                  <template slot-scope="scope">
-                    <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_TOPIC !== undefined"><b
-                      style="color: #9d9fa3">Topic</b></el-divider>
+                  <template v-slot="scope">
+                    <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_TOPIC !== undefined">
+                      <b style="color: #9d9fa3">Topic</b>
+                    </el-divider>
                     <div v-for="topic in scope.row.tree.ONS_ROCKETMQ_TOPIC" :key="topic.id">
                       <el-tooltip class="item" :content="topic.description" placement="bottom" effect="light">
                         <el-tag size="mini">{{ topic.name }}</el-tag>
                       </el-tooltip>
                     </div>
-                    <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_GROUP !== undefined"><b
-                      style="color: #9d9fa3">Group</b></el-divider>
+                    <el-divider content-position="left" v-if="scope.row.tree.ONS_ROCKETMQ_GROUP !== undefined">
+                      <b style="color: #9d9fa3">Group</b>
+                    </el-divider>
                     <div v-for="group in scope.row.tree.ONS_ROCKETMQ_GROUP" :key="group.id">
                       <el-tooltip class="item" :content="group.description" placement="bottom" effect="light">
                         <el-tag size="mini">{{ group.name }}</el-tag>
@@ -328,7 +327,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column prop="description" label="备注">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.description }}</span>
                   </template>
                 </el-table-column>
@@ -341,12 +340,12 @@
                          ref="onsRocketMqTopicTable">
               <template v-slot:extend>
                 <el-table-column prop="kind" label="消息类型">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.kind }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="description" label="备注">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.description }}</span>
                   </template>
                 </el-table-column>
@@ -359,12 +358,12 @@
                          ref="onsRocketMqGroupTable">
               <template v-slot:extend>
                 <el-table-column prop="kind" label="客户端协议">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.kind }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="description" label="备注">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.description }}</span>
                   </template>
                 </el-table-column>
@@ -378,14 +377,14 @@
                      :tableLayout="tableLayout.domain"
                      ref="domainTable">
           <template v-slot:extend>
-            <el-table-column prop="createdTime" label="注册时间"></el-table-column>
-            <el-table-column prop="expiredTime" label="到期时间"></el-table-column>
+            <el-table-column prop="createdTime" label="注册时间"/>
+            <el-table-column prop="expiredTime" label="到期时间"/>
             <el-table-column prop="properties" label="提示">
-              <template slot-scope="scope">
-                还有{{ scope.row.properties.ExpirationCurrDateDiff }}天过期
+              <template v-slot="scope">
+                <span>还有{{ scope.row.properties.ExpirationCurrDateDiff }}天过期</span>
               </template>
             </el-table-column>
-            <el-table-column prop="description" label="备注"></el-table-column>
+            <el-table-column prop="description" label="备注"/>
           </template>
         </asset-table>
       </el-tab-pane>

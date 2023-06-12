@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>剧本任务日志</h1>
@@ -6,14 +7,13 @@
         <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
           <div slot="header" class="clearfix" style="height: 15px">
             <el-tag size="mini">{{ s.instanceId }}</el-tag>
-            <env-tag style="margin-left: 5px" :env="s.env"></env-tag>
+            <env-tag style="margin-left: 5px" :env="s.env"/>
           </div>
           <terminal-item :terminalSettings="terminalSettings"
                          :server="s"
                          :ref="`terminal_${s.instanceId}`"
                          :id="`${s.instanceId}`"
-                         @sendMessage="sendMessage">
-          </terminal-item>
+                         @sendMessage="sendMessage"/>
         </el-card>
       </template>
     </div>

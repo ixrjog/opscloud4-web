@@ -43,13 +43,15 @@
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
                  <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i
-                     class="fab fa-wpforms" v-show="false"/>Log</el-button>
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)">
+                     <i class="fab fa-wpforms" v-show="false"/>Log
+                   </el-button>
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
                    <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text"
-                              @click="handleTerminal(resource)"><i class="fas fa-terminal"
-                                                                   v-show="false"/>Login</el-button>
+                              @click="handleTerminal(resource)">
+                     <i class="fas fa-terminal" v-show="false"/>Login
+                   </el-button>
                  </el-tooltip>
                </div>
                <el-divider/>
@@ -112,7 +114,6 @@ import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
 import util from '@/libs/util'
 import router from '@/router'
 import { GET_KUBERNETES_DEPLOYMENT } from '@/api/modules/kubernetes/kubernetes.api'
-import { UPGRADE_LEO_JOB_TEMPLATE } from '@/api/modules/leo/leo.template.api'
 import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
 
 const wsStates = {

@@ -1,38 +1,39 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>堡垒机终端审计报表</h1>
     <el-row :gutter="20">
       <el-col :span="6">
-        <info-card title="审计用户总数" tag="Users" :content="report.userTotal" footer="All user"></info-card>
+        <info-card title="审计用户总数" tag="Users" :content="report.userTotal" footer="All user"/>
       </el-col>
       <el-col :span="6">
-        <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal" footer="All session"></info-card>
+        <info-card title="审计会话总数" tag="Sessions" :content="report.sessionTotal" footer="All session"/>
       </el-col>
       <el-col :span="6">
         <info-card title="审计实例总数" tag="Instances" :content="report.instanceTotal"
                    footer="All instance"></info-card>
       </el-col>
       <el-col :span="6">
-        <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal" footer="All command"></info-card>
+        <info-card title="审计命令总数" tag="Commands" :content="report.commandTotal" footer="All command"/>
       </el-col>
     </el-row>
     <el-card class="box-card" shadow="hover">
       <el-row>
         <span style="float: right">
           <el-button type="text" icon="el-icon-refresh" style="margin-left: 5px"
-                     @click="fetchData" size="mini" plain></el-button>
+                     @click="fetchData" size="mini" plain />
         </span>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="12">
-          <div id="sessionReportChart" class="chart"></div>
+          <div id="sessionReportChart" class="chart"/>
         </el-col>
         <el-col :span="12">
-          <div id="instanceReportChart" class="chart"></div>
+          <div id="instanceReportChart" class="chart"/>
         </el-col>
       </el-row>
       <el-row>
-        <div id="commandReportChart" class="chart"></div>
+        <div id="commandReportChart" class="chart"/>
       </el-row>
     </el-card>
   </d2-container>

@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
-    <document-zone mount-zone="SSH-SERVER"></document-zone>
+    <document-zone mount-zone="SSH-SERVER"/>
   </d2-container>
 </template>
 

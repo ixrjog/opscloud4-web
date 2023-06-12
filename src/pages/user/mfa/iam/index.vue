@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>AWS IAM (虚拟)MFA</h1>
@@ -16,7 +17,7 @@
             </div>
             <el-card class="box-card" shadow="hover" style="margin-top: 15px">
               <el-col :span="10">
-                <vue-qr :text="item.qrcode" :size="150"></vue-qr>
+                <vue-qr :text="item.qrcode" :size="150"/>
               </el-col>
               <el-col :span="14">
                 <div style="margin: 0 auto; position: relative; transform: translateY(100%)">
@@ -28,7 +29,7 @@
         </div>
       </el-col>
       <el-col :span="16">
-        <document-zone mount-zone="MFA"></document-zone>
+        <document-zone mount-zone="MFA"/>
       </el-col>
     </el-row>
   </d2-container>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div v-show="layout.status === 0" v-if="false">
@@ -5,18 +6,18 @@
     </div>
     <!--      应用选择器-->
     <application-kubernetes-selector v-show="layout.status === 0"
-                                     @handleOpen="handleOpen"></application-kubernetes-selector>
+                                     @handleOpen="handleOpen"/>
     <el-row v-if="layout.status === 0" style="margin-top: 10px">
-      <document-zone mount-zone="KUBERNETES"></document-zone>
+      <document-zone mount-zone="KUBERNETES"/>
     </el-row>
     <el-row>
     </el-row>
-      <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
-        <el-button @click="handleChangeBatch"
+    <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
+      <el-button @click="handleChangeBatch"
                  v-if="this.layout.status === 1 && terminalLayout.loginParam.sessionType === 'CONTAINER_TERMINAL'"
                  :type="terminalTools.batchType" plain>命令同步
-        </el-button>
-      </el-tooltip>
+      </el-button>
+    </el-tooltip>
     <el-row>
       <!--          终端布局-->
       <kubernetes-terminal-layout class="terminal-layout" ref="terminalLayout"
@@ -25,11 +26,9 @@
                                   :containers="terminalLayout.containers"
                                   :colSpan="terminalLayout.colSpan"
                                   @handleLogoutByContainer="handleLogoutByContainer"
-                                  @handleRead="handleRead">
-      </kubernetes-terminal-layout>
+                                  @handleRead="handleRead"/>
     </el-row>
-    <business-doc-reader :form-status="formStatus.businessDoc"
-                         ref="businessDocReader"></business-doc-reader>
+    <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"/>
   </d2-container>
 </template>
 

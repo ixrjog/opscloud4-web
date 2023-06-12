@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
-                               datasource-nane="AWS实例管理"></datasource-instance-title>
+                               datasource-nane="AWS实例管理"/>
     <el-tabs v-model="activeName.name" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="弹性计算" name="elasticCompute">
         <el-tabs tab-position="left" v-model="activeName.ec2" @tab-click="handleClick">
@@ -11,7 +12,7 @@
                          ref="ec2Table">
               <template v-slot:extend>
                 <el-table-column prop="assetKey" label="IP地址" width="150">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.assetKey }}
                       <span style="color: #8492a6 ; font-size: 12px">私有</span>
                     </span>
@@ -21,12 +22,12 @@
                   </template>
                 </el-table-column>
                 <el-table-column prop="regionId" label="Region ID" width="90">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.regionId }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="properties" label="配置">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.cpu }} vCPU </span>
                     <span style="margin-right: 5px">{{ scope.row.properties.memory / 1024 }} GiB</span>
                     <div>{{ scope.row.properties.platformDetails }}</div>
@@ -45,7 +46,7 @@
                          ref="ecrRepositoryTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="实例ID" v-if="false">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.instanceId }}</span>
                   </template>
                 </el-table-column>
@@ -62,12 +63,12 @@
                          ref="iamUserTable">
               <template v-slot:extend>
                 <el-table-column prop="children" label="授权的策略" width="300">
-                  <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.IAM_POLICY" :type="5"></ds-children-tag>
+                  <template v-slot="scope">
+                    <ds-children-tag :children="scope.row.children.IAM_POLICY" :type="5"/>
                   </template>
                 </el-table-column>
                 <el-table-column label="Access Key" width="200">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <div v-for="ak in getAccessKeys(scope.row)" :key="ak.id">
                       <el-tag size="mini" :type="ak.isActive?'success':'info'">{{ ak.name }}</el-tag>
                     </div>
@@ -77,17 +78,19 @@
             </asset-table>
           </el-tab-pane>
           <el-tab-pane label="IAM策略" name="iamPolicy">
-            <asset-table :instanceId="instance.id" :assetType="assetType.AWS.IAM_POLICY"
-                         :tableLayout="tableLayout.iam.policy" :enableActive="true" ref="iamPolicyTable">
+            <asset-table :instanceId="instance.id"
+                         :assetType="assetType.AWS.IAM_POLICY"
+                         :tableLayout="tableLayout.iam.policy"
+                         :enableActive="true" ref="iamPolicyTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey2" label="ARN" width="400">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
                   </template>
                 </el-table-column>
                 <el-table-column prop="children" label="成员用户" width="200">
-                  <template slot-scope="scope">
-                    <ds-children-tag :children="scope.row.children.IAM_USER" :type="4"></ds-children-tag>
+                  <template v-slot="scope">
+                    <ds-children-tag :children="scope.row.children.IAM_USER" :type="4"/>
                   </template>
                 </el-table-column>
               </template>
@@ -103,18 +106,18 @@
                          ref="queueTable">
               <template v-slot:extend>
                 <el-table-column prop="properties" label="Region Id">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span style="display: block">{{ scope.row.regionId }}</span>
                     <span style="color: #8492a6;font-size: 10px">
                       {{ scope.row.regionId | getAWSRegionTypeText }}</span>
                     <el-popover placement="right" width="600" trigger="hover">
-                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
+                      <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"/>
                       <el-divider>
                         <span style="color: #8492a6; font-size: 12px">详细信息</span>
                       </el-divider>
-                      <entry-detail name="URL" :value="scope.row.assetKey" :copy="true"></entry-detail>
+                      <entry-detail name="URL" :value="scope.row.assetKey" :copy="true"/>
                       <br/>
-                      <entry-detail name="ARN" :value="scope.row.assetKey2" :copy="true"></entry-detail>
+                      <entry-detail name="ARN" :value="scope.row.assetKey2" :copy="true"/>
                       <br/>
                       <el-divider>
                         <span style="color: #8492a6; font-size: 12px">更多</span>
@@ -122,24 +125,22 @@
                       <el-row :gutter="20">
                         <el-col :span="12">
                           <entry-detail name="最大消息大小"
-                                        :value="util.bytesToSize(scope.row.properties.MaximumMessageSize)"></entry-detail>
+                                        :value="util.bytesToSize(scope.row.properties.MaximumMessageSize)"/>
                         </el-col>
                         <el-col :span="12">
                           <entry-detail name="默认可见性超时"
-                                        :value="util.formatSecond(scope.row.properties.VisibilityTimeout)"></entry-detail>
+                                        :value="util.formatSecond(scope.row.properties.VisibilityTimeout)"/>
                         </el-col>
                         <el-col :span="12">
                           <entry-detail name="消息保留周期"
-                                        :value="util.formatSecond(scope.row.properties.MessageRetentionPeriod)"></entry-detail>
+                                        :value="util.formatSecond(scope.row.properties.MessageRetentionPeriod)"/>
                         </el-col>
                         <el-col :span="12">
                           <entry-detail name="接收消息等待时间"
-                                        :value="scope.row.properties.ReceiveMessageWaitTimeSeconds"
-                                        unit="秒"></entry-detail>
+                                        :value="scope.row.properties.ReceiveMessageWaitTimeSeconds" unit="秒"/>
                         </el-col>
                         <el-col :span="12">
-                          <entry-detail name="交付延迟" :value="scope.row.properties.DelaySeconds"
-                                        unit="秒"></entry-detail>
+                          <entry-detail name="交付延迟" :value="scope.row.properties.DelaySeconds" unit="秒"/>
                         </el-col>
                       </el-row>
                       <br/>
@@ -147,7 +148,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column prop="createdTime" label="创建时间">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.createdTime }}</span>
                   </template>
                 </el-table-column>
@@ -159,14 +160,14 @@
                          :tableLayout="tableLayout.sns.topic" ref="topicTable">
               <template v-slot:extend>
                 <el-table-column label="Region ID">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span style="display: block">{{ scope.row.regionId }}</span>
                     <span style="color: #8492a6;font-size: 10px">
                       {{ scope.row.regionId | getAWSRegionTypeText }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="assetKey2" label="ARN" width="500" show-overflow-tooltip>
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <el-tag size="mini">{{ scope.row.assetKey2 }}</el-tag>
                   </template>
                 </el-table-column>
@@ -178,12 +179,12 @@
                          :tableLayout="tableLayout.sns.subscription" ref="subscriptionTable">
               <template v-slot:extend>
                 <el-table-column prop="protocol" label="协议" width="50">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.protocol }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="assetKey2" label="订阅关系" width="600">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <el-row>
                       <el-col :span="1">
                         <i class="fas fa-link" style="padding-top: 20px"></i>

@@ -1,17 +1,18 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container @scroll="({x, y}) => handleScroll(y)">
     <h1 v-show="false">持续交付2.0</h1>
-    <announcement-carousel :kind="1"></announcement-carousel>
+    <announcement-carousel :kind="1"/>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Build" name="build">
-        <continuous-delivery-build-tab ref="cDBuildTab"></continuous-delivery-build-tab>
+        <continuous-delivery-build-tab ref="cDBuildTab"/>
       </el-tab-pane>
       <el-tab-pane label="Deploy" name="deploy">
-        <continuous-delivery-deploy-tab ref="cDDeployTab"></continuous-delivery-deploy-tab>
+        <continuous-delivery-deploy-tab ref="cDDeployTab"/>
       </el-tab-pane>
     </el-tabs>
     <el-row style="margin-top: 20px">
-      <document-zone mount-zone="LEO_CD"></document-zone>
+      <document-zone mount-zone="LEO_CD"/>
     </el-row>
   </d2-container>
 </template>

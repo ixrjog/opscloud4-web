@@ -1,15 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>文档管理</h1>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="运维文档" name="ops">
-        <document-zone mount-zone="OPS_DOCS"></document-zone>
+        <document-zone mount-zone="OPS_DOCS"/>
       </el-tab-pane>
       <el-tab-pane label="文档区域管理" name="zone">
-        <document-zone-table ref="documentZoneTable"></document-zone-table>
+        <document-zone-table ref="documentZoneTable"/>
       </el-tab-pane>
       <el-tab-pane label="文档管理" name="document">
-        <document-table ref="documentTable"></document-table>
+        <document-table ref="documentTable"/>
       </el-tab-pane>
     </el-tabs>
   </d2-container>

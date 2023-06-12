@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
-                               datasource-nane="云效实例管理"></datasource-instance-title>
+                               datasource-nane="云效实例管理"/>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="项目" name="project">
         <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN_DEVOPS.ALIYUN_DEVOPS_PROJECT"
@@ -22,7 +23,7 @@
                     </span>
               </template>
             </el-table-column>
-            <el-table-column prop="description" label="备注"></el-table-column>
+            <el-table-column prop="description" label="备注"/>
           </template>
         </asset-table>
       </el-tab-pane>
@@ -38,7 +39,7 @@
                     </span>
               </template>
             </el-table-column>
-            <el-table-column prop="description" label="备注"></el-table-column>
+            <el-table-column prop="description" label="备注"/>
           </template>
         </asset-table>
       </el-tab-pane>
@@ -47,7 +48,7 @@
                      :tableLayout="tableLayout.workitem"
                      ref="workitemTable">
           <template v-slot:extend>
-            <el-table-column prop="description" label="工作项内容"></el-table-column>
+            <el-table-column prop="description" label="工作项内容"/>
           </template>
         </asset-table>
       </el-tab-pane>

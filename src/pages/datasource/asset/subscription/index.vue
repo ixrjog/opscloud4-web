@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -7,12 +8,10 @@
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" placeholder="名称"/>
         <el-select v-model="queryParam.isActive" clearable placeholder="有效">
-          <el-option
-            v-for="item in activeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in activeOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
         <el-button @click="handleAdd">新增</el-button>
         <el-button @click="fetchData">查询</el-button>
@@ -20,7 +19,7 @@
     </div>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="instance" label="实例名称" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-row>
             <span>{{ scope.row.instance.instanceName }}</span>
           </el-row>
@@ -30,32 +29,32 @@
         </template>
       </el-table-column>
       <el-table-column prop="instance" label="实例类型" width="120">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.instance.instanceType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="asset" label="资产类型" width="150">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.asset.assetType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="asset" label="资产详情">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.asset.assetKey2 }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
-        <template slot-scope="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
+        <template v-slot="scope">
+          <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
       <el-table-column prop="lastSubscriptionTime" label="发布时间" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <span>{{ scope.row.lastSubscriptionTime }}&lt;{{ scope.row.ago }}&gt;</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowPublish(scope.row)">发布</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowLog(scope.row)">日志</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -64,11 +63,11 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <asset-subscription-editor :form-status="formStatus.config"
                                ref="assetSubscriptionEditor"
-                               @close="fetchData"></asset-subscription-editor>
-    <view-log :formStatus="formStatus.log" ref="viewLog"></view-log>
+                               @close="fetchData"/>
+    <view-log :formStatus="formStatus.log" ref="viewLog"/>
   </d2-container>
 </template>
 

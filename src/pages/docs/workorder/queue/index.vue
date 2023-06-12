@@ -1,7 +1,7 @@
 <template>
   <d2-container>
     <h1>帮助文档</h1>
-    <document-zone mount-zone="WORKORDER_QUEUE"></document-zone>
+    <document-zone mount-zone="WORKORDER_QUEUE"/>
   </d2-container>
 </template>
 

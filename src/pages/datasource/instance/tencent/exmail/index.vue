@@ -1,14 +1,15 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="腾讯企业邮箱实例管理"></datasource-instance-title>
+                               datasource-nane="腾讯企业邮箱实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="邮箱用户" name="user">
         <asset-table :instanceId="instanceId" :assetType="assetType.TENCENT_EXMAIL.TENCENT_EXMAIL_USER" :tableLayout="tableLayout.user"
                      ref="accountTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="手机">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ scope.row.properties.mobile }}</span>
               </template>
             </el-table-column>

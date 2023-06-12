@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>会话播放</h1>
@@ -16,7 +17,7 @@
       <terminal-item :terminalSettings="terminalSettings" :server="sessionInstance"
                      @sendMessage="sendMessage"
                      ref="terminal"
-                     id="terminal"></terminal-item>
+                     id="terminal"/>
     </el-card>
   </d2-container>
 </template>

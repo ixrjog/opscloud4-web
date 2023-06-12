@@ -1,17 +1,17 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>剧本任务</h1>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="批量任务" name="batchTask">
-        <ansible-batch-task-table ref="ansbileBatchTaskTable"></ansible-batch-task-table>
+        <ansible-batch-task-table ref="ansibleBatchTaskTable"/>
       </el-tab-pane>
       <el-tab-pane label="任务详情" name="serverTask">
-        <server-task-table ref="serverTaskTable"></server-task-table>
+        <server-task-table ref="serverTaskTable"/>
       </el-tab-pane>
       <el-tab-pane label="剧本管理" name="playbook">
-        <ansible-playbook-table ref="ansiblePlaybookTable"></ansible-playbook-table>
+        <ansible-playbook-table ref="ansiblePlaybookTable"/>
       </el-tab-pane>
-
     </el-tabs>
   </d2-container>
 </template>

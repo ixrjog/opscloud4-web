@@ -34,16 +34,14 @@
         <el-option v-for="item in projectStatusOptions"
                    :key="item.value"
                    :label="item.label"
-                   :value="item.value">
-        </el-option>
+                   :value="item.value"/>
       </el-select>
       <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
                  placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
         <el-option v-for="item in tagOptions"
                    :key="item.id"
                    :label="item.tagKey"
-                   :value="item.id">
-        </el-option>
+                   :value="item.id"/>
       </el-select>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>

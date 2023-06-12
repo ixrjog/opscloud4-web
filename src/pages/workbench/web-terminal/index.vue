@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div v-show="terminalLayout.terminals.length === 0">
@@ -14,12 +15,12 @@
                       @handleChangeLoginUserType="handleChangeLoginUserType"
                       @handleChangeBatch="handleChangeBatch"
                       @handleChangeLayout="handleChangeLayout"
-                      @handleResize="handleResize"></terminal-tools>
+                      @handleResize="handleResize"/>
     </el-row>
     <el-row>
       <el-col :span="8">
         <!--          服务器树-->
-        <server-tree class="server-tree" ref="serverTree" v-show="terminalLayout.terminals.length === 0"></server-tree>
+        <server-tree class="server-tree" ref="serverTree" v-show="terminalLayout.terminals.length === 0"/>
       </el-col>
       <el-col>
         <!--          终端布局-->
@@ -31,11 +32,11 @@
                          :colSpan="terminalLayout.colSpan"
                          @handleLogoutByServerNode="handleLogoutByServerNode"
                          @handleLoginByServerNode="handleLoginByServerNode"
-                         @handleRead="handleRead"></terminal-layout>
+                         @handleRead="handleRead"/>
       </el-col>
     </el-row>
     <business-doc-reader :form-status="formStatus.businessDoc"
-                         ref="businessDocReader"></business-doc-reader>
+                         ref="businessDocReader"/>
   </d2-container>
 </template>
 
