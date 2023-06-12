@@ -1,15 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.groupName" placeholder="资源组名称" style="display: inline-block; max-width:200px"/>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button @click="handlerRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="groupName" label="资源组名称"></el-table-column>
-      <el-table-column prop="basePath" label="基本路径"></el-table-column>
-      <el-table-column prop="resourceSize" label="资源数量"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="groupName" label="资源组名称"/>
+      <el-table-column prop="basePath" label="基本路径"/>
+      <el-table-column prop="resourceSize" label="资源数量"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
@@ -18,8 +19,8 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <group-editor ref="groupEditor" :formStatus="formStatus.group" @close="fetchData"></group-editor>
+                @handleSizeChange="handleSizeChange"/>
+    <group-editor ref="groupEditor" :formStatus="formStatus.group" @close="fetchData"/>
   </div>
 </template>
 

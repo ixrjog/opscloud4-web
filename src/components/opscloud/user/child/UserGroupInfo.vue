@@ -1,21 +1,20 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="userGroup">
       <el-form-item label="名称" :label-width="labelWidth" required>
-        <el-input v-model="userGroup.name" placeholder="请输入内容" :disabled="!operationType"></el-input>
+        <el-input v-model="userGroup.name" placeholder="请输入内容" :disabled="!operationType"/>
       </el-form-item>
       <el-form-item label="工单申请" :label-width="labelWidth" :required="true">
         <el-select v-model="userGroup.allowOrder" placeholder="选择类型">
-          <el-option
-            v-for="item in allowOrderOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in allowOrderOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="userGroup.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="userGroup.comment" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
   </div>

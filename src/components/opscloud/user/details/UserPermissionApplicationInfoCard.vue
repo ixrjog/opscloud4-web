@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(apps) !== '[]'">

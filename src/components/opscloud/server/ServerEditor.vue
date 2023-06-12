@@ -13,8 +13,7 @@
               <el-option v-for="item in serverTypeOptions"
                          :key="item.value"
                          :label="item.label"
-                         :value="item.value">
-              </el-option>
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="服务器组" :label-width="labelWidth" required>
@@ -24,8 +23,7 @@
               <el-option v-for="item in serverGroupOptions"
                          :key="item.id"
                          :label="item.name"
-                         :value="item.id">
-              </el-option>
+                         :value="item.id"/>
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
@@ -34,8 +32,7 @@
               <el-option v-for="item in envOptions"
                          :key="item.envType"
                          :label="item.envName"
-                         :value="item.envType">
-              </el-option>
+                         :value="item.envType"/>
             </el-select>
           </el-form-item>
           <el-form-item label="系统类型" :label-width="labelWidth" required>
@@ -43,8 +40,7 @@
               <el-option v-for="item in osTypeOptions"
                          :key="item.value"
                          :label="item.label"
-                         :value="item.value">
-              </el-option>
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
@@ -52,8 +48,7 @@
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
-                         :value="item.value">
-              </el-option>
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="区" :label-width="labelWidth">

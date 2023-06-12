@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" width="75%">
@@ -5,21 +6,18 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="leoTemplate">
           <el-form-item label="显示名称" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="leoTemplate.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="leoTemplate.name" placeholder="请输入内容"/>
           </el-form-item>
-
           <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
             <el-select v-model="leoTemplate.isActive" placeholder="选择">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="说明" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoTemplate.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="leoTemplate.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -27,11 +25,11 @@
         <el-row>
           <el-card shadow="never">
             <my-highlight v-if="!editing && leoTemplate.templateConfig !== ''" :code="leoTemplate.templateConfig"
-                          lang="yaml" :myStyle="style"></my-highlight>
+                          lang="yaml" :myStyle="style"/>
             <editor v-if="editing && JSON.stringify(leoTemplate.templateConfig) !== '{}'"
                     v-model="leoTemplate.templateConfig" @init="editorInit"
                     lang="yaml" theme="chrome" height="400" :options="options" ref="editor"
-                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"></editor>
+                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"/>
           </el-card>
         </el-row>
         <el-row>
@@ -44,7 +42,7 @@
         <el-row>
           <el-card shadow="never">
             <my-highlight v-if="!editing && leoTemplate.templateContent !== ''" :code="viewTemplateContent"
-                          lang="html" :myStyle="style"></my-highlight>
+                          lang="html" :myStyle="style"/>
           </el-card>
         </el-row>
         <el-row>
@@ -58,7 +56,7 @@
       <el-tab-pane label="文档" name="doc">
         <el-row>
           <el-card shadow="never">
-            <my-markdown v-if="docs.template !== null" :content="docs.template.content"></my-markdown>
+            <my-markdown v-if="docs.template !== null" :content="docs.template.content"/>
           </el-card>
         </el-row>
       </el-tab-pane>

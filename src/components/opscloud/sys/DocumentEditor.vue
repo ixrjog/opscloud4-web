@@ -25,13 +25,14 @@
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
-                         :value="item.value">
-              </el-option>
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="图标" :label-width="labelWidth" required>
             <el-input v-model="document.icon">
-              <template slot="append"><i :class="document.icon"/></template>
+              <template v-slot:append>
+                <i :class="document.icon"/>
+              </template>
             </el-input>
           </el-form-item>
           <el-form-item label="文档Key" :label-width="labelWidth" required>

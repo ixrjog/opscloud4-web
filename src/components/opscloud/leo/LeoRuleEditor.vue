@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" width="50%">
@@ -9,12 +10,10 @@
           </el-form-item>
           <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
             <el-select v-model="leoRule.isActive" placeholder="选择">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="说明" :label-width="formStatus.labelWidth">
@@ -26,11 +25,11 @@
         <el-row>
           <el-card shadow="never">
             <my-highlight v-if="!editing && leoRule.ruleConfig !== ''" :code="leoRule.ruleConfig"
-                          lang="yaml" :myStyle="style"></my-highlight>
+                          lang="yaml" :myStyle="style"/>
             <editor v-if="editing && JSON.stringify(leoRule.ruleConfig) !== '{}'"
                     v-model="leoRule.ruleConfig" @init="editorInit"
                     lang="yaml" theme="chrome" height="200" :options="options" ref="editor"
-                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"></editor>
+                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"/>
           </el-card>
         </el-row>
         <el-row>
@@ -42,7 +41,7 @@
       <el-tab-pane label="文档" name="doc">
         <el-row>
           <el-card shadow="never">
-            <my-markdown v-if="docs.rule !== null" :content="docs.rule.content"></my-markdown>
+            <my-markdown v-if="docs.rule !== null" :content="docs.rule.content"/>
           </el-card>
         </el-row>
       </el-tab-pane>

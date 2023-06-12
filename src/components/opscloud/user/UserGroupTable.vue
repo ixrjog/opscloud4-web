@@ -1,26 +1,27 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" width="200"></el-table-column>
+      <el-table-column prop="name" label="名称" width="200"/>
       <el-table-column prop="allowOrder" label="工单申请" width="200">
-        <template slot-scope="scope">
-          <allow-tag :allow="scope.row.allowOrder"></allow-tag>
+        <template v-slot="scope">
+          <allow-tag :allow="scope.row.allowOrder"/>
         </template>
       </el-table-column>
       <el-table-column prop="userSize" label="成员数量" width="120"></el-table-column>
       <el-table-column prop="users" label="授权用户">
-        <template slot-scope="scope">
-          <users-tag :users="scope.row.users"></users-tag>
+        <template v-slot="scope">
+          <users-tag :users="scope.row.users"/>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述" width="300"></el-table-column>
       <el-table-column label="操作" width="220">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" :disabled="scope.row.userSize !== 0"
                      @click="handleRowDel(scope.row)">删除
@@ -29,8 +30,8 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <user-group-editor :formStatus="formStatus.userGroup" ref="userGroupEditor" @close="fetchData"></user-group-editor>
+                @handleSizeChange="handleSizeChange"/>
+    <user-group-editor :formStatus="formStatus.userGroup" ref="userGroupEditor" @close="fetchData"/>
   </div>
 </template>
 

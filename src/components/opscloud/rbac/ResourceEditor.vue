@@ -1,40 +1,37 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="resource">
       <el-form-item label="资源路径" :label-width="labelWidth" :required="true">
-        <el-input v-model="resource.resourceName" placeholder="请输入内容"></el-input>
+        <el-input v-model="resource.resourceName" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="资源组" :label-width="labelWidth" :required="true">
         <el-select v-model="resource.groupId" filterable clearable
                    remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup">
           <el-option v-for="item in groupOptions" :key="item.id" :label="item.groupName" :value="item.id">
-            <select-item :name="item.groupName" :comment="item.comment"></select-item>
+            <select-item :name="item.groupName" :comment="item.comment"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="鉴权" :label-width="labelWidth" :required="true">
         <el-select v-model="resource.needAuth" placeholder="是否鉴权">
-          <el-option
-            v-for="item in authOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in authOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="用户界面" :label-width="labelWidth" :required="true">
         <el-select v-model="resource.ui" placeholder="用户界面">
-          <el-option
-            v-for="item in uiOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in uiOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="resource.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="resource.comment" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

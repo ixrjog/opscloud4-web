@@ -1,16 +1,17 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0px;">
+    <el-row :gutter="24" style="margin-left: 0">
       <el-input v-model="queryParam.roleName" placeholder="角色名称"/>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
-      <el-table-column prop="roleName" label="名称" width="300"></el-table-column>
-      <el-table-column prop="accessLevel" label="访问等级" width="200"></el-table-column>
+      <el-table-column prop="roleName" label="名称" width="300"/>
+      <el-table-column prop="accessLevel" label="访问等级" width="200"/>
       <el-table-column prop="allowOrder" label="工单申请" width="200">
-        <template slot-scope="scope">
-          <allow-tag :allow="scope.row.allowOrder"></allow-tag>
+        <template v-slot="scope">
+          <allow-tag :allow="scope.row.allowOrder"/>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
@@ -23,10 +24,10 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <!-- role编辑-->
-    <role-editor ref="roleEditor" :formStatus="formStatus.role" @close="fetchData"></role-editor>
-    <role-menu-editor ref="roleMenuEditor" :formStatus="formStatus.roleMenu"></role-menu-editor>
+    <role-editor ref="roleEditor" :formStatus="formStatus.role" @close="fetchData"/>
+    <role-menu-editor ref="roleMenuEditor" :formStatus="formStatus.roleMenu"/>
   </div>
 </template>
 

@@ -1,14 +1,15 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="userGroup">
         <user-group-info :operationType="formStatus.operationType" ref="userGroupInfo"
-                         @close="handleClose"></user-group-info>
+                         @close="handleClose"/>
       </el-tab-pane>
-      <el-tab-pane label="用户授权" name="permissionUser" :disabled="JSON.stringify(userGroup) == '{}'">
+      <el-tab-pane label="用户授权" name="permissionUser" :disabled="JSON.stringify(userGroup) === '{}'">
         <permission-user-tab :businessType="businessType" :businessId="userGroup.id"
-                             ref="permissionUserTab"></permission-user-tab>
+                             ref="permissionUserTab"/>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">

@@ -1,64 +1,61 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
                  @change="fetchData">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
+        <el-option v-for="item in envOptions"
+                   :key="item.id"
+                   :label="item.envName"
+                   :value="item.envType">
+          <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.buildResult" clearable filterable placeholder="选择构建结果"
                  @change="fetchData">
-        <el-option
-          v-for="item in buildResultOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in buildResultOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">刷新</el-button>
     </el-row>
     <div v-for="build in table.data" :key="build.id" style="font-size: 12px">
       <template>
         <div>
-          <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"></leo-build-details>
+          <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"/>
         </div>
       </template>
     </div>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" v-if="false">
-      <el-table-column prop="name" label="名称" sortable></el-table-column>
+      <el-table-column prop="name" label="名称" sortable/>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
-          <i class="fa fa-code-fork" style="margin-right: 2px"></i>
+          <i class="fa fa-code-fork" style="margin-right: 2px"/>
           <span>{{ scope.row.branch }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="env" label="环境" width="80">
         <template v-slot="scope">
-          <env-tag :env="scope.row.env"></env-tag>
+          <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
       <el-table-column prop="buildSize" label="构建次数" width="80">
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
         <template v-slot="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="200">
@@ -68,10 +65,11 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <leo-job-editor :formStatus="formStatus.job" ref="jobEditor"
                     @close="fetchData"/>
-    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage" ref="doBuildKubernetesImageEditor"/>
+    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage"
+                                          ref="doBuildKubernetesImageEditor"/>
     <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"/>

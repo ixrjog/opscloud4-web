@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog title="KubernetesImage Build Task"
              :visible.sync="formStatus.visible" width="50%">
@@ -5,15 +6,15 @@
       <el-tab-pane label="Home" name="build">
         <el-form :model="leoJob">
           <el-form-item label="Job Name" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.name" readonly></el-input>
+            <el-input v-model="leoJob.name" readonly/>
           </el-form-item>
           <el-form-item label="Job Key" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.jobKey" readonly></el-input>
+            <el-input v-model="leoJob.jobKey" readonly/>
           </el-form-item>
           <el-form-item label="GitLab SshURL" :label-width="formStatus.labelWidth">
             <el-input v-if="JSON.stringify(leoJob) !== '{}'"
                       v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
-                      readonly style="width: 500px"></el-input>
+                      readonly style="width: 500px"/>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
                          style="margin-left: 20px" @change="getBranchOptions"><span
               style="margin-left: 2px">Query tags</span>
@@ -27,26 +28,26 @@
                            :key="item.value"
                            :label="item.label"
                            :value="item.value">
-                  <select-item :name="item.label" :comment="item.desc"></select-item>
+                  <select-item :name="item.label" :comment="item.desc"/>
                 </el-option>
               </el-option-group>
             </el-select>
             <el-button size="mini" type="primary" style="margin-left: 5px" @click="getBranchOptions"
                        :loading="branchOptionsLoading">
-              <i class="fas fa-circle-notch" aria-hidden="true"></i>
+              <i class="fas fa-circle-notch" aria-hidden="true"/>
             </el-button>
             <el-button size="mini" type="primary" style="margin-left: 5px" @click="createBranch"
                        :loading="branchOptionsLoading">
-              <i class="fab fa-hubspot" aria-hidden="true"></i>
+              <i class="fab fa-hubspot" aria-hidden="true"/>
             </el-button>
             <!--commit详情 :title="branch.commitId" :description="branch.commitMessage" -->
             <el-alert v-show="JSON.stringify(this.branch) !== '{}'"
                       style="margin-top: 5px; background-color: #e56c0d"
                       :closable="false">
-              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF"><i class="fab fa-git-alt"
-                                                                                      style="margin-right: 1px"></i><b>{{
-                  branch.commitId
-                }}</b></a>
+              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF">
+                <i class="fab fa-git-alt" style="margin-right: 1px"/>
+                <b>{{ branch.commitId }}</b>
+              </a>
               <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
             </el-alert>
           </el-form-item>
@@ -59,24 +60,22 @@
             <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
                        :disabled="!this.doBuildParam.autoDeploy"
                        placeholder="选择Deployment" style="width: 500px" :remote-method="getLeoDeployDeployment">
-              <el-option
-                v-for="item in deployDeploymentOptions"
-                :key="item.businessId"
-                :label="item.name"
-                :value="item.businessId">
-                <select-item :name="item.name" :comment="item.resourceType"></select-item>
+              <el-option v-for="item in deployDeploymentOptions"
+                         :key="item.businessId"
+                         :label="item.name"
+                         :value="item.businessId">
+                <select-item :name="item.name" :comment="item.resourceType"/>
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="Project" :label-width="formStatus.labelWidth">
             <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
                        placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
-              <el-option
-                v-for="item in projectOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <select-item :name="item.name" :comment="item.comment"></select-item>
+              <el-option v-for="item in projectOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"/>
               </el-option>
             </el-select>
             <el-button style="margin-left: 5px" @click="openUrl">Jump to Create Project</el-button>

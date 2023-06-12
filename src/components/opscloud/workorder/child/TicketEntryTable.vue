@@ -36,9 +36,6 @@
       </el-table-column>
       <el-table-column label="操作" width="160" v-if="ticketPhase === orderPhase.NEW">
         <template v-slot="scope">
-          <!--          <el-button v-if="tableLayout.role !== null && tableLayout.role" type="warning" plain size="mini"-->
-          <!--                     @click="updateEntry(scope.row)">角色-->
-          <!--          </el-button>-->
           <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">移除</el-button>
         </template>
       </el-table-column>

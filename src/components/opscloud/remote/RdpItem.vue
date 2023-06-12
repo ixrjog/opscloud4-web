@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card>
@@ -5,11 +6,11 @@
         <span>
           <el-tag size="mini">{{ server.name }}-{{ server.serialNumber }}:{{ server.privateIp }}</el-tag>
         </span>
-        <env-tag :env="server.env" class="env"></env-tag>
+        <env-tag :env="server.env" class="env"/>
         <el-button style="float: right; padding: 3px 0" type="text">Logout</el-button>
       </div>
       <div ref="viewport" class="viewport">
-        <div ref="display" class="display"></div>
+        <div ref="display" class="display"/>
       </div>
     </el-card>
   </div>

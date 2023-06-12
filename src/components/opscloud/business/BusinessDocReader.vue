@@ -3,10 +3,10 @@
   <el-dialog :title="document.displayName + formStatus.title" :visible.sync="formStatus.visible">
     <el-row>
       <el-card shadow="never">
-        <my-markdown v-if="!editing" :content="doc.content"></my-markdown>
+        <my-markdown v-if="!editing" :content="doc.content"/>
         <editor v-if="editing" v-model="doc.content" @init="editorInit" lang="yaml" theme="chrome"
                 height="400"
-                :options="options" ref="editor"></editor>
+                :options="options" ref="editor"/>
       </el-card>
     </el-row>
     <el-row>

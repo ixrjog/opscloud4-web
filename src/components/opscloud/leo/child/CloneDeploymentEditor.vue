@@ -1,12 +1,13 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="'从 ' + deploymentVersion.name + ' 克隆无状态分组'" :visible.sync="formStatus.visible" width="25%"
              append-to-body>
     <el-form :model="deploymentVersion">
       <el-form-item label="分组名称" :label-width="labelWidth" required>
-        <el-input v-model="deploymentVersion.deploymentName"></el-input>
+        <el-input v-model="deploymentVersion.deploymentName"/>
       </el-form-item>
       <el-form-item label="副本数量" :label-width="labelWidth" required>
-        <el-input v-model="deploymentVersion.replicas"></el-input>
+        <el-input v-model="deploymentVersion.replicas"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

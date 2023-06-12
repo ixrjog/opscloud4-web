@@ -1,20 +1,21 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-card class="box-card" shadow="hover">
     <div slot="header" class="clearfix">
       <span>{{ bind ? '绑定资源' : '未绑定资源' }}</span>
     </div>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="resourceName" label="资源路径"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="resourceName" label="资源路径"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column fixed="right" label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="success" plain size="mini" @click="handlerRowBind(scope.row)" v-if="!bind">绑定</el-button>
           <el-button type="danger" plain size="mini" @click="handlerRowUnbind(scope.row)" v-if="bind">解除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </el-card>
 </template>
 

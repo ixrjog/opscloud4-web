@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-row :gutter="10" style="margin-left: 5px; margin-bottom: 5px">
         <span v-for="version in deploymentVersionDetails" :key="version.jobName">
@@ -9,40 +10,40 @@
             <!--  head -->
             <div>
               <b>{{ version.jobName }}</b>
-              <env-tag :env="version.env" style="margin-left: 10px"></env-tag>
+              <env-tag :env="version.env" style="margin-left: 10px"/>
               <span style="float: right; color: #9d9fa3">
                 <!-- 一键回滚-->
                 <el-button type="text" @click="handleRollback(deployment)"
                            :disabled="deployment.replicas === 0"
                            v-show="deployment.versionType === 'BLUE' && deployment.doDeployVersion.active">
-                  <i class="fas fa-undo-alt"></i></el-button>
+                  <i class="fas fa-undo-alt"/></el-button>
                 <!-- 一键升级-->
                 <el-button type="text" @click="handleUpgrade(deployment)" :disabled="deployment.replicas === 0"
                            v-show="deployment.versionType === 'GREEN' && deployment.doDeployVersion.active">
-                  <i class="fas fa-redo-alt"></i>
+                  <i class="fas fa-redo-alt"/>
                 </el-button>
                 <!-- 一键追平-->
                 <el-button type="text" @click="handleUpgrade(deployment)" :disabled="deployment.replicas === 0"
-                             v-show="deployment.versionType === 'OTHER' && deployment.doDeployVersion.active">
-                  <i class="fas fa-random"></i>
+                           v-show="deployment.versionType === 'OTHER' && deployment.doDeployVersion.active">
+                  <i class="fas fa-random"/>
                 </el-button>
                 <!-- 重新部署-->
                 <el-button type="text" @click="handleRedeploy(deployment)" :disabled="deployment.replicas === 0"><i
-                  class="fab fa-instalod"></i></el-button>
+                  class="fab fa-instalod"/></el-button>
                 <!-- 克隆无状态-->
-                <el-button type="text" @click="handleClone(deployment)"><i class="fas fa-clone"></i></el-button>
+                <el-button type="text" @click="handleClone(deployment)"><i class="fas fa-clone"/></el-button>
               </span>
             </div>
             <div><span class="label">环境分组</span>{{ deployment.name }}</div>
             <div><span class="label">资源限制</span>
-              <deployment-resources-limits :properties="deployment.properties"></deployment-resources-limits>
+              <deployment-resources-limits :properties="deployment.properties"/>
             </div>
             <div><span class="label">副本数量</span>
-              <deployment-replicas :replicas="deployment.replicas"></deployment-replicas>
+              <deployment-replicas :replicas="deployment.replicas"/>
             </div>
             <div><span class="label">版本名称</span>{{ deployment.versionName }}
               <el-popover placement="right" trigger="hover">
-                <i class="el-icon-info" slot="reference"></i>
+                <i class="el-icon-info" slot="reference"/>
                  <span
                    style="font-size: 10px; color: #9d9fa3">{{
                      deployment.versionDesc === '' ? '用户未填写版本说明' : deployment.versionDesc
@@ -54,7 +55,7 @@
             </el-card>
           </el-col>
         </span>
-    <clone-deployment-editor :form-status="formStatus.clone" ref="cloneDeploymentEditor"></clone-deployment-editor>
+    <clone-deployment-editor :form-status="formStatus.clone" ref="cloneDeploymentEditor"/>
   </el-row>
 </template>
 

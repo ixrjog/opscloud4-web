@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover">
@@ -5,8 +6,7 @@
         <b class="title">{{ title }}</b>
         <el-tag v-if="false" style="float: right" type="text">{{ tag }}</el-tag>
       </div>
-      <div class="value">{{ content > 0 ? content.toLocaleString() : 0 }}
-      </div>
+      <div class="value">{{ content > 0 ? content.toLocaleString() : 0 }}</div>
       <div v-show="false" style="font-size: 10px; color: #B7B6B6">{{ footer }}</div>
     </el-card>
   </div>

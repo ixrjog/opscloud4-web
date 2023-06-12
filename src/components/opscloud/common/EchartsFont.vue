@@ -1,5 +1,6 @@
+<!--suppress HtmlUnknownTag -->
 <template>
-  <div id="echartsFont" style="height: 100px;width: 400px"></div>
+  <div id="echartsFont" style="height: 100px;width: 400px"/>
 </template>
 
 <script>

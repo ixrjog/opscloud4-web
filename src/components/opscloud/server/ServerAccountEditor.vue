@@ -11,8 +11,7 @@
           <el-option v-for="item in accountTypeOptions"
                      :key="item.value"
                      :label="item.label"
-                     :value="item.value">
-          </el-option>
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="协议类型" :label-width="labelWidth" required>
@@ -20,8 +19,7 @@
           <el-option v-for="item in protocolOptions"
                      :key="item.value"
                      :label="item.label"
-                     :value="item.value">
-          </el-option>
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="凭据" :label-width="labelWidth" required>

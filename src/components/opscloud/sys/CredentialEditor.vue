@@ -11,8 +11,7 @@
           <el-option v-for="item in kindOptions"
                      :key="item.value"
                      :label="item.label"
-                     :value="item.value">
-          </el-option>
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="凭据账户" :label-width="labelWidth" :required="true">

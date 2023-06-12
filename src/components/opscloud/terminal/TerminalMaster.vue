@@ -1,4 +1,4 @@
-<!--suppress JSUnresolvedVariable -->
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="title" :visible.sync="formStatus.visible" width="80%" :before-close='handleClose'>
     <slot></slot>
@@ -22,7 +22,7 @@
               </el-tooltip>
             </div>
             <terminal-item :terminalSettings="terminalSettings" :server="s" @sendMessage="sendMessage"
-                           :ref="`terminal_${s.name}`" :id="`${s.name}`"></terminal-item>
+                           :ref="`terminal_${s.name}`" :id="`${s.name}`"/>
           </el-card>
         </el-col>
       </template>

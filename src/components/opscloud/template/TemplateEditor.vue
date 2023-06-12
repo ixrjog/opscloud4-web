@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
@@ -5,45 +6,40 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="template">
           <el-form-item label="名称" :label-width="labelWidth">
-            <el-input v-model="template.name" placeholder="不填写则自动生成"></el-input>
+            <el-input v-model="template.name" placeholder="不填写则自动生成"/>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
             <el-select v-model.trim="template.envType" clearable
                        remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"
                        :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
-              <el-option
-                v-for="item in envOptions"
-                :key="item.envType"
-                :label="item.envName"
-                :value="item.envType">
-                <select-item :name="item.envName" :comment="item.comment"></select-item>
+              <el-option v-for="item in envOptions"
+                         :key="item.envType"
+                         :label="item.envName"
+                         :value="item.envType">
+                <select-item :name="item.envName" :comment="item.comment"/>
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="实例类型" :label-width="labelWidth" required>
             <el-select v-model="template.instanceType" placeholder="选择类型" @change="handleChangeInstanceType"
                        :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
-              <el-option
-                v-for="item in instanceTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in instanceTypeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="模板Key" :label-width="labelWidth" required>
             <el-select v-model="template.templateKey" placeholder="选择类型"
                        :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
-              <el-option
-                v-for="item in keyOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in keyOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="template.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="template.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -51,23 +47,23 @@
         <el-form :model="template" label-position="top">
           <el-form-item label="模板">
             <my-highlight v-show="!button.editing" :code="template.content"
-                          :lang="template.templateType" myStyle="style"></my-highlight>
+                          :lang="template.templateType" myStyle="style"/>
             <editor v-if="button.editing" v-model="template.content"
                     @init="editorInit"
                     :lang="template.templateType"
                     theme="chrome"
                     height="300"
-                    :options="options"></editor>
+                    :options="options"/>
           </el-form-item>
           <el-form-item label="变量">
             <my-highlight v-show="!button.editing" :code="template.vars"
-                          :lang="template.templateType"></my-highlight>
+                          :lang="template.templateType"/>
             <editor v-if="button.editing" v-model="template.vars"
                     @init="editorInit"
                     :lang="template.templateType"
                     theme="chrome"
                     height="150"
-                    :options="options"></editor>
+                    :options="options"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">

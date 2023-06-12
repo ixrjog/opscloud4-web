@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag v-if="taskResult !== null && taskResult !== ''" class="filters" :type="taskResult | getTaskResultType"
           size="mini">

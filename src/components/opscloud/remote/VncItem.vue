@@ -1,6 +1,6 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-<!--    <el-button type="primary" @submit="doGuacdConnect" @click="doGuacdConnect">连接</el-button>-->
     <el-card style="width: 1320px">
       <div ref="viewport" class="viewport">
         <div ref="display" class="display"></div>
@@ -282,27 +282,27 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    width: 100% !important;
-  }
+.el-input {
+  width: 100% !important;
+}
 
-  .el-select {
-    width: 100% !important;
-  }
+.el-select {
+  width: 100% !important;
+}
 
-  .el-main {
-    padding: 4px;
-  }
+.el-main {
+  padding: 4px;
+}
 
-  .display {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
+.display {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
 
-  .viewport {
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
-    width: 1280px;
-    height: 640px;
-  }
+.viewport {
+  /*box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);*/
+  width: 1280px;
+  height: 640px;
+}
 </style>

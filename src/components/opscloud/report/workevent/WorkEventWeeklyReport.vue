@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover">
-      <div id="workEventReport" style="width: 100%; height: 400px; margin-top: 20px"></div>
+      <div id="workEventReport" style="width: 100%; height: 400px; margin-top: 20px"/>
     </el-card>
   </div>
 </template>

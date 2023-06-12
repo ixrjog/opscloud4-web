@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div class="box">
     <h2>OPSCLOUD</h2>

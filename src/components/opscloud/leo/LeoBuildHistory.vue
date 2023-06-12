@@ -1,28 +1,28 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="leoJob.name" :visible.sync="formStatus.visible" width="90%">
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"/>
       <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
-    <pagination v-show="table.pagination.total !==0" :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+    <pagination v-show="table.pagination.total !==0" :pagination="table.pagination"
+                @paginationCurrentChange="paginationCurrentChange"
+                @handleSizeChange="handleSizeChange"/>
     <div v-for="build in table.data" :key="build.id" style="font-size: 12px">
       <template>
         <div>
-          <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"></leo-build-details>
+          <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"/>
         </div>
       </template>
     </div>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </el-dialog>
 </template>
 

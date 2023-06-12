@@ -74,13 +74,6 @@
         <div id="cDChart" style="height:250px; width: 100%"/>
       </el-row>
     </el-card>
-    <!--    <div v-if="false" v-for="instance in report.instances" :key="instance.instanceId" style="margin-bottom: 20px">-->
-    <!--      <jenkins-build-executor-status-card-->
-    <!--        :instanceId="instance.instanceId"-->
-    <!--        :ref="`instance_${instance.instanceId}_buildExecutor`">-->
-    <!--      </jenkins-build-executor-status-card>-->
-    <!--    </div>-->
-
   </div>
 </template>
 

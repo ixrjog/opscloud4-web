@@ -1,6 +1,6 @@
+<!--suppress HtmlUnknownTag -->
 <template>
-  <el-tag size="mini" disable-transitions>{{ sessionType | getSessionTypeText }}
-  </el-tag>
+  <el-tag size="mini" disable-transitions>{{ sessionType | getSessionTypeText }}</el-tag>
 </template>
 
 <script>

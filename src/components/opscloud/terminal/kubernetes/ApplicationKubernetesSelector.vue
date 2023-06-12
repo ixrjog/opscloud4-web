@@ -1,10 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row style="margin-bottom: 5px;">
       <el-button :type="webSocketState.type" class="button" size="mini">
-        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
+        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"/>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
-           style="margin-right: 5px"></i>{{ webSocketState.name }}
+           style="margin-right: 5px"/>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">{{ env.envName }}
@@ -17,12 +18,12 @@
                    :key="item.id"
                    :label="item.name"
                    :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini" :loading="loading"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
-        <i class="fas fa-circle-notch"></i>
+        <i class="fas fa-circle-notch"/>
       </el-button>
     </el-row>
     <el-row>
@@ -42,29 +43,32 @@
                    <span style="font-size: 12px">所有容器</span>
                  </el-checkbox>
                  <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i class="fab fa-wpforms" v-show="false"></i>Log</el-button>
+                   <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)"><i
+                     class="fab fa-wpforms" v-show="false"/>Log</el-button>
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text" @click="handleTerminal(resource)"><i class="fas fa-terminal" v-show="false"/>Login</el-button>
+                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text"
+                              @click="handleTerminal(resource)"><i class="fas fa-terminal"
+                                                                   v-show="false"/>Login</el-button>
                  </el-tooltip>
                </div>
                <el-divider/>
               <!-- Pod容器组 -->
-              <div class="podClass">
+               <div class="podClass">
                 <template v-for="pod in resource.assetContainers">
                    <el-card shadow="hover" :class="pod.properties.restartCount | toPodClass" :key="pod.asset.name">
                    <!-- podName -->
                    <div style="margin-bottom: 2px">
-                     <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"></copy-span>
+                     <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"/>
                      <el-popover placement="right" trigger="hover" v-if="false">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"/>
-                         <i class="fas fa-cannabis"></i><span style="margin-left: 5px">{{ pod.properties.image }}</span>
+                         <i class="fas fa-cannabis"/><span style="margin-left: 5px">{{ pod.properties.image }}</span>
                          <br/>
-                         <i class="fas fa-globe"></i><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
+                         <i class="fas fa-globe"/><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
                      </el-popover>
                    </div>
                    <div><span class="label">容器组IP</span>
-                     <copy-span :content="pod.asset.assetKey" :show-icon="true"></copy-span></div>
+                     <copy-span :content="pod.asset.assetKey" :show-icon="true"/></div>
                    <div><span class="label">启动时间</span>{{ pod.properties.startTime }}
                     <span style="color: #20A9D9">[{{ pod.ago }}]</span> 重启次数:
                      <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
@@ -72,21 +76,22 @@
                    </div>
                    <div><span class="label">版本名称</span>{{ pod.properties.versionName }}</div>
                    <div v-if="false"><span class="label">镜像地址</span>{{ pod.properties.image }}</div>
-                   <div><span class="label">镜像地址</span><container-image-display :image="pod.properties.image"/></div>
-                   <pod-phase-tag :pod="pod"></pod-phase-tag>
+                   <div><span class="label">镜像地址</span><container-image-display
+                     :image="pod.properties.image"/></div>
+                   <pod-phase-tag :pod="pod"/>
                      <i class="fab fa-docker" style="margin-right: 5px"/>
                      <el-checkbox v-for="container in pod.children" :key="container.asset.name"
                                   style="margin-right: 1px" v-model="container.checked">
                        <span style="font-size: 12px">{{ container.asset.name }}</span>
                      </el-checkbox>
-               </el-card>
+                  </el-card>
                 </template>
               </div>
             </el-card>
           </span>
       </template>
     </el-row>
-    <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
+    <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"/>
   </div>
 </template>
 

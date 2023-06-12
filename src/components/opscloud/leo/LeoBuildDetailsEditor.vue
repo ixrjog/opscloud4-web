@@ -1,30 +1,29 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog title="构建详情" :visible.sync="formStatus.visible" width="50%" append-to-body>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="版本信息" name="build" v-if="leoBuild != null">
         <el-form :model="leoBuild">
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoBuild.versionName"></el-input>
+            <el-input v-model="leoBuild.versionName"/>
           </el-form-item>
           <el-form-item label="版本描述" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoBuild.versionDesc"></el-input>
+            <el-input v-model="leoBuild.versionDesc"/>
           </el-form-item>
           <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
             <el-select v-model="leoBuild.isActive" placeholder="选择类型">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="构建详情" name="buildConfig"  v-if="leoBuild != null">
+      <el-tab-pane label="构建详情" name="buildConfig" v-if="leoBuild != null">
         <el-row>
           <el-card shadow="never">
-            <my-highlight :code="leoBuild.buildConfig" lang="yaml" :myStyle="style"></my-highlight>
+            <my-highlight :code="leoBuild.buildConfig" lang="yaml" :myStyle="style"/>
           </el-card>
         </el-row>
       </el-tab-pane>

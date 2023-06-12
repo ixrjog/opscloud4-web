@@ -1,30 +1,31 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="playbook">
       <el-form-item label="名称" :label-width="labelWidth" :required="true">
-        <el-input v-model="playbook.name" placeholder="请输入内容"></el-input>
+        <el-input v-model="playbook.name" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="Playbook" :label-width="labelWidth" :required="true">
-        <my-highlight v-show="!editing" :code="playbook.playbook" lang="yaml"></my-highlight>
+        <my-highlight v-show="!editing" :code="playbook.playbook" lang="yaml"/>
         <editor v-show="editing" v-model="playbook.playbook" @init="editorInit" lang="yaml" theme="chrome"
                 height="250"
-                :options="options"></editor>
+                :options="options"/>
       </el-form-item>
       <el-form-item label="Vars" :label-width="labelWidth">
-        <my-highlight v-show="!editing" :code="playbook.vars" lang="yaml"></my-highlight>
+        <my-highlight v-show="!editing" :code="playbook.vars" lang="yaml"/>
         <editor v-show="editing" v-model="playbook.vars" @init="editorInit" lang="yaml" theme="chrome"
                 height="80"
-                :options="options"></editor>
+                :options="options"/>
       </el-form-item>
       <el-form-item label="Tags" :label-width="labelWidth">
-        <my-highlight v-show="!editing" :code="playbook.tags" lang="yaml"></my-highlight>
+        <my-highlight v-show="!editing" :code="playbook.tags" lang="yaml"/>
         <editor v-show="editing" v-model="playbook.tags" @init="editorInit" lang="yaml" theme="chrome"
                 height="80"
-                :options="options"></editor>
+                :options="options"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="playbook.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="playbook.comment" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div style="width:100%;text-align:center">

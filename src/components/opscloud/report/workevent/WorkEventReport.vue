@@ -1,37 +1,36 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row>
       <el-select v-model="workRole" placeholder="选择角色" class="select" @change="initChart" value-key="id">
-        <el-option
-          v-for="item in workRoleOptions"
-          :key="item.id"
-          :label="item.workRoleName"
-          :value="item">
-        </el-option>
+        <el-option v-for="item in workRoleOptions"
+                   :key="item.id"
+                   :label="item.workRoleName"
+                   :value="item"/>
       </el-select>
       <el-button @click="initChart" class="button">刷新</el-button>
     </el-row>
     <el-row :gutter="10">
       <el-col :span="10">
-        <work-event-item-report ref="workEventItemReport"></work-event-item-report>
+        <work-event-item-report ref="workEventItemReport"/>
       </el-col>
       <el-col :span="14">
-        <work-event-weekly-report ref="workEventWeeklyReport"></work-event-weekly-report>
+        <work-event-weekly-report ref="workEventWeeklyReport"/>
       </el-col>
     </el-row>
     <el-row :gutter="10" style="margin-top: 10px">
       <span v-if="JSON.stringify(workRole) !== '{}' && workRole.workRoleKey ==='SUPPORT'">
         <el-col :span="12" style="margin-bottom: 10px">
-          <work-event-intercept-report ref="workEventInterceptReport"></work-event-intercept-report>
+          <work-event-intercept-report ref="workEventInterceptReport"/>
         </el-col>
         <el-col :span="12" style="margin-bottom: 10px">
-          <work-event-time-report ref="workEventTimeReport"></work-event-time-report>
+          <work-event-time-report ref="workEventTimeReport"/>
         </el-col>
         <el-col :span="12" style="margin-bottom: 10px">
-          <work-event-solve-report ref="workEventSolveReport"></work-event-solve-report>
+          <work-event-solve-report ref="workEventSolveReport"/>
         </el-col>
         <el-col :span="12" style="margin-bottom: 10px">
-          <work-event-fault-report ref="workEventFaultReport"></work-event-fault-report>
+          <work-event-fault-report ref="workEventFaultReport"/>
         </el-col>
       </span>
     </el-row>

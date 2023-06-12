@@ -25,7 +25,7 @@
       <el-table-column prop="name" label="名称"/>
       <el-table-column prop="icon" label="图标">
         <template v-slot="scope">
-          <i :class="scope.row.icon"></i>
+          <i :class="scope.row.icon"/>
         </template>
       </el-table-column>
       <el-table-column prop="documentKey" label="Key"/>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div :id="container.instanceId" class="xterm"></div>
 </template>

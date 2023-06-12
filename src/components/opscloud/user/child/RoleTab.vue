@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form>
@@ -5,8 +6,7 @@
                    :props="{ key: 'id', label: 'roleName' }"
                    :data="roleOptions"
                    :titles="['所有标签', '当前标签']"
-                   @change="handlerSave">
-      </el-transfer>
+                   @change="handlerSave"/>
     </el-form>
   </div>
 </template>

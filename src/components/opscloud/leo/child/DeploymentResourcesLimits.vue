@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag v-if="properties['resources.limits.cpu'] !== undefined" size="mini">
     <span>{{ CPU }} {{properties['resources.limits.cpu']}} {{ Memory }} {{ properties['resources.limits.memory'] }}</span>

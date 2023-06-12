@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag size="mini">{{ kinds.find(e => e.value === kind).label }}</el-tag>
 </template>

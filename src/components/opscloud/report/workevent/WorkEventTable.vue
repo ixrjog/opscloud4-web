@@ -1,81 +1,81 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row>
       <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询" class="input"/>
       <el-select v-model="queryParam.workRoleId" placeholder="选择角色" class="select" clearable
                  @change="workRoleChange">
-        <el-option
-          v-for="item in workRoleOptions"
-          :key="item.id"
-          :label="item.workRoleName"
-          :value="item.id">
+        <el-option v-for="item in workRoleOptions"
+                   :key="item.id"
+                   :label="item.workRoleName"
+                   :value="item.id">
         </el-option>
       </el-select>
-      <el-cascader :options="workItemOptions" :props="workItemProps" clearable
+      <el-cascader :options="workItemOptions"
+                   :props="workItemProps" clearable
                    @change="handleChange" class="cascader" placeholder="选择类目" collapse-tags>
       </el-cascader>
       <el-select v-model="queryParam.username" filterable remote reserve-keyword placeholder="搜索用户"
                  :remote-method="getUser" class="select" clearable>
-        <el-option
-          v-for="user in userOptions"
-          :key="user.username"
-          :label="user.displayName"
-          :value="user.username">
-          <select-item :name="user.username" :comment="user.displayName"></select-item>
+        <el-option v-for="user in userOptions"
+                   :key="user.username"
+                   :label="user.displayName"
+                   :value="user.username">
+          <select-item :name="user.username" :comment="user.displayName"/>
         </el-option>
       </el-select>
-      <el-date-picker
-        v-model="workEventTime" type="daterange" unlink-panels value-format="timestamp" class="picker" size="mini"
-        start-placeholder="开始" range-separator="-" end-placeholder="结束" :default-time="['00:00:00', '23:59:59']">
+      <el-date-picker v-model="workEventTime"
+                      type="daterange"
+                      unlink-panels value-format="timestamp" class="picker"
+                      size="mini"
+                      start-placeholder="开始" range-separator="-" end-placeholder="结束"
+                      :default-time="['00:00:00', '23:59:59']">
       </el-date-picker>
-      <el-select
-        v-model="queryParam.tagId" filterable clearable remote reserve-keyword
-        placeholder="请输入关键词搜索标签" :remote-method="getTag" class="select">
-        <el-option
-          v-for="item in tagOptions"
-          :key="item.id"
-          :label="item.tagKey"
-          :value="item.id">
-        </el-option>
+      <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+                 placeholder="请输入关键词搜索标签" :remote-method="getTag" class="select">
+        <el-option v-for="item in tagOptions"
+                   :key="item.id"
+                   :label="item.tagKey"
+                   :value="item.id"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column label="用户详情" width="200">
-        <template slot-scope="props">
-          <span>{{ props.row.workRole.workRoleName }}</span>
-          <user-tag :user="props.row.user"></user-tag>
+        <template v-slot="scope">
+          <span>{{ scope.row.workRole.workRoleName }}</span>
+          <user-tag :user="scope.row.user"></user-tag>
           <div>
-            <span style="margin-right: 2px">{{ props.row.workEventTime }}</span>
-            <span style="color: #20A9D9">[{{ props.row.ago }}]</span>
+            <span style="margin-right: 2px">{{ scope.row.workEventTime }}</span>
+            <span style="color: #20A9D9">[{{ scope.row.ago }}]</span>
           </div>
         </template>
       </el-table-column>
       <el-table-column label="事件类目" prop="workItemTree" width="150" show-overflow-tooltip>
-        <template slot-scope="props">
-          <el-tooltip class="item" effect="dark" :content="props.row.workItem.comment" placement="top-start">
-            <el-tag :style="{color: props.row.workItem.color }">{{ props.row.workItem.workItemName }}</el-tag>
+        <template v-slot="scope">
+          <el-tooltip class="item" effect="dark" :content="scope.row.workItem.comment" placement="top-start">
+            <el-tag :style="{color: scope.row.workItem.color }">{{ scope.row.workItem.workItemName }}</el-tag>
           </el-tooltip>
         </template>
       </el-table-column>
       <el-table-column prop="workEventCnt" label="次数" width="60"></el-table-column>
       <el-table-column prop="comment" label="事件内容">
-        <template slot-scope="props">
-          <my-markdown v-if="props.row.comment !== null" :content="props.row.comment"></my-markdown>
+        <template v-slot="scope">
+          <my-markdown v-if="scope.row.comment !== null" :content="scope.row.comment"/>
         </template>
       </el-table-column>
       <el-table-column label="属性" width="200">
-        <template slot-scope="props">
-           <span v-for="item in props.row.properties" :key="item.id">
+        <template v-slot="scope">
+           <span v-for="item in scope.row.properties" :key="item.id">
              <el-tag class="prop-tag" v-if="item.isShow" :type="item.feType">{{ item.feName }}</el-tag>
            </span>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="150">
-        <template slot-scope="props">
+        <template v-slot="scope">
           <div class="tag-group">
-              <span v-for="item in props.row.tags" :key="item.id">
+              <span v-for="item in scope.row.tags" :key="item.id">
                 <el-tooltip class="item" effect="light" :content="item.comment" placement="top-start">
                   <el-tag size="mini" style="margin-left: 5px" :style="{ color: item.color }">{{ item.tagKey }}</el-tag>
                 </el-tooltip>
@@ -84,7 +84,7 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" width="210">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
@@ -92,13 +92,13 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <work-event-editor ref="workEventEditor" :form-status="formStatus.workEvent"
-                       @closeDialog="dataChange"></work-event-editor>
+                       @closeDialog="dataChange"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+                         :form-status="formStatus.businessTag" @close="fetchData"/>
     <work-event-update-editor ref="workEventUpdateEditor" :form-status="formStatus.workEventUpdate"
-                              @closeDialog="dataChange"></work-event-update-editor>
+                              @closeDialog="dataChange"/>
   </div>
 </template>
 

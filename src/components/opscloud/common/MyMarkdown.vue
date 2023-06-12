@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <markdown-it-vue class="md-body" :content="content" :options="options"></markdown-it-vue>
+    <markdown-it-vue class="md-body" :content="content" :options="options"/>
   </div>
 </template>
 

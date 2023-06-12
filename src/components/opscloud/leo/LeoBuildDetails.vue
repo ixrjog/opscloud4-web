@@ -1,28 +1,30 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover" body-style="padding: 2px" class="card">
       <div slot="header">
         <el-tag>{{ build.jobName }}</el-tag>
-        <build-number-icon :build="build"></build-number-icon>
-        <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ build.ago }}</span>
-        <span style="margin-left: 8px"><i
-          class="fab fa-teamspeak"></i>{{ build.buildDetails.build.dict.displayName }}</span>
+        <build-number-icon :build="build"/>
+        <span style="margin-left: 5px"><i class="far fa-clock"/>{{ build.ago }}</span>
+        <span style="margin-left: 8px"><i class="fab fa-teamspeak"/>{{
+            build.buildDetails.build.dict.displayName
+          }}</span>
         <business-tags :tags="build.tags" style="margin-left: 5px"/>
         <el-tooltip class="item" effect="light" content="停止构建" placement="top-start" v-if="!build.isFinish">
           <el-button class="btn" type="text" @click="stopBuild(build.id)" :loading="buttons.stopping">
-            <i class="far fa-stop-circle"></i>
+            <i class="far fa-stop-circle"/>
           </el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="light" content="控制台流日志" placement="top-start">
           <el-button class="btn" type="text" style="margin-right: 10px" @click="consoleStream(build.id)"
                      :disabled="build.startTime === null || build.isDeletedBuildJob">
-            <i class="fas fa-print"></i>
+            <i class="fas fa-print"/>
           </el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="light" content="编辑构建详情" placement="top-start">
           <el-button class="btn" type="text" style="margin-right: 10px" @click="handleEdit(build)"
                      :disabled="!build.isFinish">
-            <i class="fas fa-edit"></i>
+            <i class="fas fa-edit"/>
           </el-button>
         </el-tooltip>
       </div>
@@ -38,11 +40,12 @@
               <span v-show="build.startTime !== null && build.startTime !== ''"> {{
                   build.startTime
                 }} - {{ build.endTime ? build.endTime : '?' }}
-              <span v-show="build.runtime !== null" style="margin-left: 2px">&lt;<b style="color: #3b97d7">{{build.runtime}}</b>&gt;</span>
+              <span v-show="build.runtime !== null" style="margin-left: 2px">&lt;<b
+                style="color: #3b97d7">{{ build.runtime }}</b>&gt;</span>
               </span>
             </div>
             <div><span class="label">构建结果</span>
-              <build-result style="margin-left: 5px" :build="build"></build-result>
+              <build-result style="margin-left: 5px" :build="build"/>
             </div>
             <div><span class="label">构件版本</span> {{ build.versionName }}</div>
             <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
@@ -53,34 +56,49 @@
                     build.buildDetails.build.gitLab.project !== null &&
                     build.buildDetails.build.gitLab.project.commit !== null &&
                     build.buildDetails.build.gitLab.project.commit.webUrl !== null">
-                <a target="blank" :href="build.buildDetails.build.gitLab.project.commit.webUrl" style="color: #179bb9"><i class="fab fa-git-alt" style="margin-right: 1px"></i></a></span>
+                <a target="blank" :href="build.buildDetails.build.gitLab.project.commit.webUrl"
+                   style="color: #179bb9"><i class="fab fa-git-alt" style="margin-right: 1px"/></a></span>
             </div>
             <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
-            <div><span class="label">执行引擎</span> {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''}}</div>
+            <div><span class="label">执行引擎</span>
+              {{
+                build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''
+              }}
+            </div>
             <!--kubernetes-image-->
             <template v-if="build.buildDetails.build.type=== 'kubernetes-image'">
               <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}
                 <el-tag style="margin-left: 2px"
-                        :type="build.isImageExists ? 'success' : 'warning'">{{ build.isImageExists ? '已验证' : '未验证' }}</el-tag>
+                        :type="build.isImageExists ? 'success' : 'warning'">{{
+                    build.isImageExists ? '已验证' : '未验证'
+                  }}
+                </el-tag>
               </div>
               <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
             </template>
             <!--maven-publish-->
             <template v-if="build.buildDetails.build.type=== 'maven-publish'">
-              <div><span class="label">构件仓库</span> {{ build.buildDetails.build.nexus.instance.name }}/{{ build.buildDetails.build.nexus.repository}}</div>
-              <div><span class="label">完整名称</span> {{ build.buildDetails.build.nexus.component.group }}:{{ build.buildDetails.build.nexus.component.name }}:{{ build.versionName }}</div>
+              <div>
+                <span class="label">构件仓库</span>
+                {{ build.buildDetails.build.nexus.instance.name }}/{{ build.buildDetails.build.nexus.repository }}
+              </div>
+              <div>
+                <span class="label">完整名称</span> {{ build.buildDetails.build.nexus.component.group }}:{{
+                  build.buildDetails.build.nexus.component.name
+                }}:{{ build.versionName }}
+              </div>
             </template>
           </el-row>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
-          <terminal-with-console-stream :buildId="build.id" ref="terminalWithConsoleStream"></terminal-with-console-stream>
-          <pipeline-step :ref="`pipelineStep${build.id}`"></pipeline-step>
+          <terminal-with-console-stream :buildId="build.id" ref="terminalWithConsoleStream"/>
+          <pipeline-step :ref="`pipelineStep${build.id}`"/>
         </el-col>
       </el-row>
     </el-card>
-    <leo-build-details-editor :form-status="formStatus.build" ref="buildDetailsEditor"></leo-build-details-editor>
+    <leo-build-details-editor :form-status="formStatus.build" ref="buildDetailsEditor"/>
   </div>
 </template>
 
@@ -179,7 +197,7 @@ export default {
 
 <style scoped>
 
->>>.el-card__header {
+>>> .el-card__header {
   height: 40px;
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
@@ -191,7 +209,7 @@ export default {
 /*  height: 200px;*/
 /*}*/
 
->>>.PWGx-PipelineGraph-container {
+>>> .PWGx-PipelineGraph-container {
   height: 160px;
 }
 

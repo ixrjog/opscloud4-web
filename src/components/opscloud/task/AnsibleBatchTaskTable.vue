@@ -1,8 +1,9 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-row :gutter="20">
     <el-col :span="8">
       <!--          服务器树-->
-      <server-tree class="server-tree" ref="serverTree"></server-tree>
+      <server-tree class="server-tree" ref="serverTree"/>
     </el-col>
     <el-col :span="16">
       <el-card shadow="hover" style="margin-top: 5px">
@@ -13,14 +14,11 @@
           <el-form-item label="Ansible实例" :label-width="labelWidth" required>
             <el-select v-model="dsInstance" filterable placeholder="选择Ansible实例"
                        value-key="id">
-              <el-option
-                v-for="item in dsInstanceOptions"
-                :key="item.id"
-                :label="item.instanceName"
-                :value="item">
-                <span style="float: left">{{ item.instanceType }}</span>
-                <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
-                {{ item.instanceName }}</span>
+              <el-option v-for="item in dsInstanceOptions"
+                         :key="item.id"
+                         :label="item.instanceName"
+                         :value="item">
+                <select-item :name="item.instanceType" :comment="item.instanceName"/>
               </el-option>
             </el-select>
           </el-form-item>
@@ -31,12 +29,10 @@
                        @change="handleSelPlaybook"
                        @clear="getPlaybook('')"
                        value-key="id">
-              <el-option
-                v-for="item in playbookOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item">
-              </el-option>
+              <el-option v-for="item in playbookOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item"/>
             </el-select>
             <el-button type="primary" plain size="mini" @click="handleOpenPlaybook" :disabled="playbook === ''">查看
             </el-button>
@@ -44,19 +40,18 @@
           <el-form-item label="变量(Vars)" :label-width="labelWidth">
             <editor v-model="serverTask.vars" @init="editorInit" lang="yaml" theme="chrome"
                     height="80"
-                    :options="options"></editor>
+                    :options="options"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
-          <el-button size="mini" type="primary" :disabled="submitting" @click="submitServerTask"><i
-            class="el-icon-loading" v-show="submitting"></i>提交任务
+          <el-button size="mini" type="primary" :disabled="submitting" @click="submitServerTask">
+            <i class="el-icon-loading" v-show="submitting"/>提交任务
           </el-button>
         </div>
       </el-card>
-      <server-task-info-card v-if="serverTaskInfo !== ''" :serverTaskInfo="serverTaskInfo"
-                             @close="close"></server-task-info-card>
+      <server-task-info-card v-if="serverTaskInfo !== ''" :serverTaskInfo="serverTaskInfo" @close="close"/>
     </el-col>
-    <ansible-playbook-editor :formStatus="formStatus.playbook" ref="playbookEditor"></ansible-playbook-editor>
+    <ansible-playbook-editor :formStatus="formStatus.playbook" ref="playbookEditor"/>
   </el-row>
 </template>
 
@@ -70,6 +65,7 @@ import AnsiblePlaybookEditor from './AnsiblePlaybookEditor'
 import DsInstanceType from '@/components/opscloud/common/enums/ds.instance.type.js'
 import tools from '@/libs/tools.js'
 import ServerTaskInfoCard from './child/ServerTaskInfoCard'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -112,6 +108,7 @@ export default {
     this.getPlaybook('')
   },
   components: {
+    SelectItem,
     editor: require('vue2-ace-editor'),
     ServerTree,
     AnsiblePlaybookEditor,

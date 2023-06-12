@@ -1,37 +1,38 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tabs type="border-card">
     <el-tab-pane label="复制任务">
-      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
         <el-select v-model.trim="queryParam.srcApplicationId" filterable clearable
                    remote reserve-keyword placeholder="选择源应用" :remote-method="getSrcApplication">
-          <el-option
-            v-for="item in srcApplicationOptions"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-            <select-item :name="item.name" :comment="item.comment"></select-item>
+          <el-option v-for="item in srcApplicationOptions"
+                     :key="item.id"
+                     :label="item.name"
+                     :value="item.id">
+            <select-item :name="item.name" :comment="item.comment"/>
           </el-option>
         </el-select>
         <el-select v-model.trim="queryParam.destApplicationId" filterable clearable @change="fetchData"
                    remote reserve-keyword placeholder="选择目标应用" :remote-method="getDestApplication">
-          <el-option
-            v-for="item in destApplicationOptions"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id">
-            <select-item :name="item.name" :comment="item.comment"></select-item>
+          <el-option v-for="item in destApplicationOptions"
+                     :key="item.id"
+                     :label="item.name"
+                     :value="item.id">
+            <select-item :name="item.name" :comment="item.comment"/>
           </el-option>
         </el-select>
-        <el-button @click="fetchData" :disabled="queryParam.destApplicationId === ''" plain size="mini" class="button">查询</el-button>
+        <el-button @click="fetchData" :disabled="queryParam.destApplicationId === ''" plain size="mini" class="button">
+          查询
+        </el-button>
         <el-button @click="handleClone" type="primary" plain size="mini"
                    :disabled="queryParam.srcApplicationId === '' || queryParam.destApplicationId === ''" class="button">
           复制
         </el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column prop="name" label="名称" sortable></el-table-column>
+        <el-table-column prop="name" label="名称" sortable/>
         <el-table-column prop="application" label="应用">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-tooltip class="item" effect="light"
                         :content="scope.row.application.comment === '' ? '未定义': scope.row.application.comment"
                         placement="top-start">
@@ -63,19 +64,19 @@
         </el-table-column>
         <el-table-column prop="env" label="环境" width="80">
           <template v-slot="scope">
-            <env-tag :env="scope.row.env"></env-tag>
+            <env-tag :env="scope.row.env"/>
           </template>
         </el-table-column>
         <el-table-column prop="buildSize" label="构建次数" width="80">
         </el-table-column>
         <el-table-column prop="isActive" label="有效" width="80">
           <template v-slot="scope">
-            <active-tag :is-active="scope.row.isActive"></active-tag>
+            <active-tag :is-active="scope.row.isActive"/>
           </template>
         </el-table-column>
         <el-table-column prop="tags" label="标签" width="200">
           <template v-slot="scope">
-            <business-tags :tags="scope.row.tags"></business-tags>
+            <business-tags :tags="scope.row.tags"/>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="280">
@@ -89,9 +90,8 @@
         </el-table-column>
       </el-table>
       <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                           :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
-      <leo-job-editor :formStatus="formStatus.job" ref="jobEditor"
-                      @close="fetchData"></leo-job-editor>
+                           :form-status="formStatus.businessTag" @close="fetchData"/>
+      <leo-job-editor :formStatus="formStatus.job" ref="jobEditor" @close="fetchData"/>
     </el-tab-pane>
   </el-tabs>
 </template>

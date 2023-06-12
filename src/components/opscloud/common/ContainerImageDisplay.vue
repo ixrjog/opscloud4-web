@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <span>
   <el-tooltip class="item" effect="dark" :content="image | toContainerRegistry" placement="top-end">

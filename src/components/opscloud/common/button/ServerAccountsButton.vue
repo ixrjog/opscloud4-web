@@ -1,10 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <span v-for="item in server.accounts" :key="item.id">
       <el-button type="primary" plain size="mini" @click="handleRemote(item)" style="margin: 0 5px 5px 0"
                  v-if="item.protocol!== 'ssh'">
-        <i class="fas fa-desktop" aria-hidden="true" v-show="item.protocol=== 'vnc'"></i>
-        <i class="fab fa-windows" aria-hidden="true" v-show="item.protocol=== 'rdp'"></i>
+        <i class="fas fa-desktop" aria-hidden="true" v-show="item.protocol=== 'vnc'"/>
+        <i class="fab fa-windows" aria-hidden="true" v-show="item.protocol=== 'rdp'"/>
         <span style="margin-left: 2px">{{ item.username }}</span>
       </el-button>
     </span>

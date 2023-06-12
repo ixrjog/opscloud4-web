@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(user.amMap) !== '{}'">
     <div slot="header" class="clearfix">云账户</div>
@@ -5,32 +6,32 @@
       <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAmTypeText }}</b></el-divider>
       <el-table :data="value" style="width: 100%">
         <el-table-column label="实例 / 账户">
-          <template slot-scope="props">
+          <template v-slot="scope">
             <el-row>
-              <span>{{ props.row.instanceName }}</span>
+              <span>{{ scope.row.instanceName }}</span>
             </el-row>
             <el-row class="amInfo">
               <el-tooltip class="item" effect="light" content="点击打开登录连接" placement="top-start">
-                <el-button style="padding: 3px 0" type="text" @click="openUrl(props.row.loginUrl)">
-                  {{ props.row.loginUser }}
+                <el-button style="padding: 3px 0" type="text" @click="openUrl(scope.row.loginUrl)">
+                  {{ scope.row.loginUser }}
                 </el-button>
               </el-tooltip>
-              <span v-clipboard:copy="props.row.loginUser" v-clipboard:success="onCopy"
+              <span v-clipboard:copy="scope.row.loginUser" v-clipboard:success="onCopy"
                     v-clipboard:error="onError">
-              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
+              <i style="margin-left: 5px" class="el-icon-copy-document"/>
             </span>
             </el-row>
           </template>
         </el-table-column>
         <el-table-column prop="accessKeys" label="Access Key">
-          <template slot-scope="props">
-            <div v-for="ak in props.row.accessKeys" :key="ak.assetId">
+          <template v-slot="scope">
+            <div v-for="ak in scope.row.accessKeys" :key="ak.assetId">
               <el-tag size="mini">{{ ak.assetId }}</el-tag>
             </div>
           </template>
         </el-table-column>
         <el-table-column prop="policies" label="策略" width="400">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div class="tag-group">
               <div v-for="policy in scope.row.policies" :key="policy.assetId">
                 <el-tooltip class="item" effect="light"

@@ -1,11 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.title" :visible.sync="formStatus.visible">
     <el-form :model="businessTags">
       <el-transfer v-model="businessTags.tagIds"
                    :props="{ key: 'id', label: 'tagKey' }"
                    :data="tagOptions"
-                   :titles="['所有标签', '当前标签']">
-      </el-transfer>
+                   :titles="['所有标签', '当前标签']"/>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>

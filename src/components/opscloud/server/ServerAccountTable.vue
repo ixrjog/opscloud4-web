@@ -7,8 +7,7 @@
         <el-option v-for="item in protocolOptions"
                    :key="item.value"
                    :label="item.label"
-                   :value="item.value">
-        </el-option>
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新增</el-button>

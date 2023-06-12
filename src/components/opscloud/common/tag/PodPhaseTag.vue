@@ -1,15 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag size="mini" style="float: right; margin-right: 5px" class="position" :type="pod | toPhaseType">
     {{ pod.properties.reason === undefined ? pod.properties.phase : pod.properties.reason }}
     <el-popover placement="right" trigger="hover">
       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"></i>
-      <entry-detail name="Initialized" :value="pod.properties.initialized"></entry-detail>
+      <entry-detail name="Initialized" :value="pod.properties.initialized"/>
       <br/>
-      <entry-detail name="Ready" :value="pod.properties.ready"></entry-detail>
+      <entry-detail name="Ready" :value="pod.properties.ready"/>
       <br/>
-      <entry-detail name="ContainersReady" :value="pod.properties.containersReady"></entry-detail>
+      <entry-detail name="ContainersReady" :value="pod.properties.containersReady"/>
       <br/>
-      <entry-detail name="PodScheduled" :value="pod.properties.podScheduled"></entry-detail>
+      <entry-detail name="PodScheduled" :value="pod.properties.podScheduled"/>
     </el-popover>
   </el-tag>
 </template>

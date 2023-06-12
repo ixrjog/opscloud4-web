@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row :gutter="2">
@@ -20,7 +21,7 @@
             <kubernetes-terminal-item :terminalSettings="terminalSettings" :container="container"
                                       @sendMessage="sendMessage"
                                       :ref="`terminal_${container.instanceId}`"
-                                      :id="`${container.instanceId}`"></kubernetes-terminal-item>
+                                      :id="`${container.instanceId}`"/>
           </el-card>
         </el-col>
       </div>

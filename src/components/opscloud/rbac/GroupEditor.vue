@@ -1,15 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="group">
       <el-form-item label="资源组名称" :label-width="labelWidth" required>
-        <el-input v-model="group.groupName" placeholder="请输入内容" ></el-input>
+        <el-input v-model="group.groupName" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="基本路径" :label-width="labelWidth">
-        <el-input v-model="group.basePath" placeholder="请输入内容" ></el-input>
+        <el-input v-model="group.basePath" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="group.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="group.comment" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

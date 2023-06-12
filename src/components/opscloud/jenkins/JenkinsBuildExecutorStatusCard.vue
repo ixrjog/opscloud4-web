@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover">
-      <div id="buildExecutorStatusChart" style="width: 100%; height: 400px;"></div>
+      <div id="buildExecutorStatusChart" style="width: 100%; height: 400px;"/>
     </el-card>
   </div>
 </template>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 10px">
@@ -6,23 +7,23 @@
         <el-button style="float: right; padding: 3px 0" type="text" @click="handleGrant">申请授权</el-button>
       </div>
       <el-table :data="user.accessTokens" style="width: 100%">
-        <el-table-column prop="tokenId" label="Token ID"></el-table-column>
-        <el-table-column prop="token" label="Access Token"></el-table-column>
+        <el-table-column prop="tokenId" label="Token ID"/>
+        <el-table-column prop="token" label="Access Token"/>
         <el-table-column prop="token" label="过期时间">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>{{ scope.row.expiredTime }}<b style="margin-left: 5px">{{ scope.row.later }}</b></span>
           </template>
         </el-table-column>
-        <el-table-column prop="comment" label="描述"></el-table-column>
+        <el-table-column prop="comment" label="描述"/>
         <el-table-column label="操作" width="110">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <el-button type="primary" plain size="mini" @click="handleRevoke(scope.row)">撤销</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
     <access-token-editor ref="accessTokenEditor" :form-status="formStatus.accessToken"
-                         @fetchData="fetchData"></access-token-editor>
+                         @fetchData="fetchData"/>
   </div>
 </template>
 
