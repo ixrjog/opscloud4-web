@@ -19,9 +19,10 @@
       <el-table-column prop="hostname" label="主机名"/>
       <el-table-column prop="hostIp" label="注册IP"/>
       <el-table-column prop="systemInfo" label="系统信息">
-        <template v-slot="scope" v-if="scope.row.systemInfo !== null">
-          <span>{{ scope.row.systemInfo.cpu.cpuNum }}C</span>/
-          <span>       {{ util.bytesToSize(scope.row.systemInfo.mem.total) }}</span>
+        <template v-slot="scope">
+          <span v-if="scope.row.systemInfo !== null">
+            {{ scope.row.systemInfo.cpu.cpuNum }}C/{{ util.bytesToSize(scope.row.systemInfo.mem.total) }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="activeSessionMap" label="活动会话" width="250" sortable>
@@ -40,7 +41,7 @@
       <el-table-column fixed="right" label="操作" width="280">
         <template v-slot="scope">
           <el-button :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
-                     @click="handleSetActive(scope.row)">{{scope.row.isActive ? '无效' : '有效'}}
+                     @click="handleSetActive(scope.row)">{{ scope.row.isActive ? '无效' : '有效' }}
           </el-button>
         </template>
       </el-table-column>
