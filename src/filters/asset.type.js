@@ -127,6 +127,10 @@ export function getAssetTypeText (value) {
       return '构建Hook'
     case DsInstanceAssetType.METER_SPHERE.METER_SPHERE_DEPLOY_HOOK:
       return '部署Hook'
+    case DsInstanceAssetType.APOLLO.APOLLO_APP:
+      return '应用'
+    case DsInstanceAssetType.APOLLO.APOLLO_INTERCEPT_RELEASE:
+      return '发布拦截'
     default:
       return value
   }

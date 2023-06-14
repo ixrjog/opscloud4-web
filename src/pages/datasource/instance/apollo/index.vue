@@ -18,6 +18,35 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="配置发布" name="release">
+        <asset-table :instanceId="instance.id" :assetType="assetType.APOLLO.APOLLO_INTERCEPT_RELEASE"
+                     :tableLayout="tableLayout.release"
+                     ref="releaseTable">
+          <template v-slot:extend>
+            <el-table-column prop="properties" label="操作用户">
+              <template v-slot="scope">{{ scope.row.properties.username }}</template>
+            </el-table-column>
+            <el-table-column prop="properties" label="变更拦截">
+              <template v-slot="scope">
+                <el-tag size="mini" :type="scope.row.properties.success === 'true' ? 'success' : 'danger'">
+                  {{ scope.row.properties.success === 'true' ? '通过' : '拦截' }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="properties" label="工单ID">
+              <template v-slot="scope">{{ scope.row.properties.ticketId }}</template>
+            </el-table-column>
+            <el-table-column label="返回信息" show-overflow-tooltip>
+              <template v-slot="scope">
+                <span>{{ scope.row.description }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="createdTime" label="操作时间">
+              <template v-slot="scope">{{ scope.row.createdTime }}</template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -46,6 +75,27 @@ const tableLayout = {
     assetKey2: {
       alias: '组织ID',
       show: true
+    },
+    zone: {
+      alias: '-',
+      show: false
+    }
+  },
+  release: {
+    assetId: {
+      alias: 'UUID',
+      show: false
+    },
+    name: {
+      alias: '应用名称'
+    },
+    assetKey: {
+      alias: '环境',
+      show: true
+    },
+    assetKey2: {
+      alias: '集群',
+      show: false
     },
     zone: {
       alias: '-',
@@ -81,6 +131,9 @@ export default {
       if (tab.name === 'app') {
         this.$refs.appTable.fetchData()
         return
+      }
+      if (tab.name === 'release') {
+        this.$refs.releaseTable.fetchData()
       }
     },
     init () {

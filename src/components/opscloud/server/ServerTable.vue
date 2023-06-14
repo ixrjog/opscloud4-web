@@ -63,7 +63,8 @@
         <template v-slot="scope">
           <span>{{ scope.row.name }}</span>
           <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
-                     @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"/>
+                     @click="handleDocRead(scope.row)">
+            <i class="fab fa-creative-commons-share"/>
           </el-button>
           <div>{{ scope.row.serverGroup.name }}</div>
         </template>
