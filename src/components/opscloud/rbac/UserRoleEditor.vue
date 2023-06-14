@@ -9,7 +9,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>
-      <el-button type="primary" size="mini" @click="handlerSave">确定</el-button>
+      <el-button type="primary" size="mini" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -50,7 +50,7 @@ export default {
       this.user = user
       this.roleIds = user.roles.map((item) => item.id)
     },
-    handlerSave () {
+    handleSave () {
       const requestBody = {
         username: this.user.username,
         roleIds: this.roleIds

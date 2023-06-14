@@ -52,7 +52,7 @@
           <el-input type="textarea" :rows="2"
                     :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
                     v-model="ticketView.comment"
-                    :readonly="ticketView.ticketPhase !== 'NEW'"></el-input>
+                    :readonly="ticketView.ticketPhase !== 'NEW'"/>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
           <node-view :nodeView="ticketView.nodeView"/>

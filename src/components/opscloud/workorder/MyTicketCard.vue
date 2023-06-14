@@ -18,10 +18,14 @@
                      :key="item.id"
                      :label="item.name"
                      :value="item.id">
-            <span style="float: left"><i :class="item.icon" style="margin-right: 5px"/>{{ item.name }}</span>
+            <span style="float: left">
+              <i :class="item.icon" style="margin-right: 5px"/>{{ item.name }}
+            </span>
           </el-option>
         </el-select>
-        <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"><i class="fas fa-circle-notch"/></el-button>
+        <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini">
+          <i class="fas fa-circle-notch"/>
+        </el-button>
         <el-button type="danger" plain size="mini" :disabled="queryParam.workOrderId === ''" @click="delOrderTicket">批量删除</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

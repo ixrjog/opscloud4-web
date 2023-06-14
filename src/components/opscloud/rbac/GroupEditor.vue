@@ -15,7 +15,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handlerSave">确定</el-button>
+      <el-button type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -40,7 +40,7 @@ export default {
     initData (group) {
       this.group = group
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_GROUP(requestBody)
         .then(res => {
           // 返回数据
@@ -52,7 +52,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_GROUP(requestBody)
         .then(res => {
           // 返回数据
@@ -64,11 +64,11 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    handleSave () {
       if (this.formStatus.operationType) {
-        this.handlerAdd(this.group)
+        this.handleAdd(this.group)
       } else {
-        this.handlerUpdate(this.group)
+        this.handleUpdate(this.group)
       }
     }
   }

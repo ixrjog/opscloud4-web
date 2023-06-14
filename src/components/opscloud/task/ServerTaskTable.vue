@@ -13,7 +13,7 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="taskUuid" label="任务" width="400">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <user-tag :user="scope.row.user"/>
           <div>剧本名称: {{ scope.row.taskName }}</div>
           <div>开始: {{ scope.row.startTime }}&lt;{{ scope.row.ago }}&gt;</div>
@@ -21,7 +21,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="serverTaskMembers" label="详情">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div style="margin-bottom: 5px;width: 705px">
             <el-tag size="mini">任务UUID: {{ scope.row.taskUuid }}</el-tag>
             <span style="margin-left: 5px">总计: {{ scope.row.memberSize }}</span>

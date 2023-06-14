@@ -20,7 +20,7 @@
         </el-option>
       </el-select>
       <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
-        placeholder="请输入关键词搜索标签" :remote-method="getTag">
+                 placeholder="请输入关键词搜索标签" :remote-method="getTag">
         <el-option v-for="item in tagOptions"
                    :key="item.id"
                    :label="item.tagKey"

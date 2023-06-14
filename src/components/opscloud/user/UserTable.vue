@@ -3,13 +3,12 @@
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
-      <el-select
-        v-model="queryParam.tagId" filterable clearable remote reserve-keyword
-        placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
+      <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+                 placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
         <el-option v-for="item in tagOptions"
-          :key="item.id"
-          :label="item.tagKey"
-          :value="item.id"/>
+                   :key="item.id"
+                   :label="item.tagKey"
+                   :value="item.id"/>
       </el-select>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"/>
       <el-button @click="fetchData">查询</el-button>

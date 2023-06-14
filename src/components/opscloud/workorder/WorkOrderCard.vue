@@ -10,7 +10,7 @@
             </template>
             <el-table :data="group.workOrders" stripe :show-header=false>
               <el-table-column label="工单">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"
                      style="margin-right: 5px"/>
                   <span>{{ scope.row.name }}</span>

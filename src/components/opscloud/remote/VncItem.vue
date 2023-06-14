@@ -7,7 +7,6 @@
       </div>
     </el-card>
   </div>
-
 </template>
 
 <script>

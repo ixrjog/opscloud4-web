@@ -3,7 +3,7 @@
   <div>
     <el-form :model="applicationData" label-width="120px">
       <el-form-item label="应用名称" required>
-        <el-input v-model="applicationData.name"></el-input>
+        <el-input v-model="applicationData.name"/>
         <div style="margin-top: 5px">
           <my-highlight code="Application Name Regex: [a-z][\\d0-9a-z-]{3,32}" lang="json"/>
         </div>

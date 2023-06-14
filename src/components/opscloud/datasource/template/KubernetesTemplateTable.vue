@@ -38,7 +38,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="vars" label="变量">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <my-highlight :code="scope.row.vars" :lang="scope.row.templateType"/>
         </template>
       </el-table-column>

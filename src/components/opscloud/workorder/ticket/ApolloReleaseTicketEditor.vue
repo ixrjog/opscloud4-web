@@ -70,20 +70,22 @@
 </template>
 
 <script>
+
+import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
-import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
 import {
+  APPROVE_WORK_ORDER_TICKET,
   SAVE_WORK_ORDER_TICKET,
-  SUBMIT_WORK_ORDER_TICKET,
-  APPROVE_WORK_ORDER_TICKET
+  SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
 
 const TableLayout = {
   instance: false,
-  entryName: 'Grafana权限'
+  role: false,
+  entryName: '发布配置的应用'
 }
 
 export default {
@@ -97,7 +99,7 @@ export default {
       approving: false
     }
   },
-  name: 'GrafanaTicketEditor',
+  name: 'ApolloReleaseTicketEditor',
   props: ['formStatus'],
   components: {
     TicketTitle,

@@ -36,7 +36,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handlerSave">确定</el-button>
+      <el-button type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -81,7 +81,7 @@ export default {
           this.groupOptions = res.body.data
         })
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_RESOURCE(requestBody)
         .then(res => {
           // 返回数据
@@ -93,7 +93,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_RESOURCE(requestBody)
         .then(res => {
           // 返回数据
@@ -105,12 +105,12 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    handleSave () {
       const requestBody = Object.assign({}, this.resource)
       if (this.formStatus.operationType) {
-        this.handlerAdd(requestBody)
+        this.handleAdd(requestBody)
       } else {
-        this.handlerUpdate(requestBody)
+        this.handleUpdate(requestBody)
       }
     }
   }

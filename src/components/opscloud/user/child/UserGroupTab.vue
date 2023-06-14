@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-select v-model.trim="userGroupId" clearable filterable
                  remote reserve-keyword placeholder="选择要授权的用户组" :remote-method="getUserGroup">
         <el-option v-for="item in userGroupOptions"

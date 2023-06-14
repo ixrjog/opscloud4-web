@@ -24,8 +24,7 @@
               <el-option v-for="item in allowOrderOptions"
                          :key="item.value"
                          :label="item.label"
-                         :value="item.value">
-              </el-option>
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">

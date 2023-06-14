@@ -10,10 +10,14 @@
       <el-table-column prop="name" label="名称" width="250px"></el-table-column>
       <el-table-column prop="playbook" label="剧本" width="800px">
         <template v-slot="scope">
-          <el-divider content-position="left"><b style="color: #9d9fa3">Playbook</b></el-divider>
+          <el-divider content-position="left">
+            <b style="color: #9d9fa3">Playbook</b>
+          </el-divider>
           <my-highlight :code="scope.row.playbook" lang="yaml"/>
           <template v-if="scope.row.vars !== null && scope.row.vars !== ''">
-            <el-divider content-position="left"><b style="color: #9d9fa3">Vars</b></el-divider>
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">Vars</b>
+            </el-divider>
             <my-highlight :code="scope.row.vars" lang="yaml"/>
           </template>
           <template v-if="scope.row.tags !== null && scope.row.tags !== ''">

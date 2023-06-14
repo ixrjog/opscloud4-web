@@ -13,8 +13,9 @@
               {{ user.credentialDetails.credentialMap.PUB_KEY[0].title }}
             </el-tag>
             <div style="font-size: 12px">
-              <i class="fas fa-fingerprint" style="color: #9d9fa3"><span
-                style="margin-left: 1px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}</span></i>
+              <i class="fas fa-fingerprint" style="color: #9d9fa3">
+                <span style="margin-left: 1px">{{ user.credentialDetails.credentialMap.PUB_KEY[0].fingerprint }}</span>
+              </i>
             </div>
           </el-card>
         </span>
@@ -25,21 +26,21 @@
               <el-tag size="mini" style="margin-bottom: 5px" type="success">{{ asset.description }}</el-tag>
               <i class="fab fa-gitlab" style="float: right"/>
               <div style="font-size: 12px">
-                <i class="fas fa-fingerprint" style="color: #9d9fa3"><span style="margin-left: 1px">{{
-                    asset.assetKey
-                  }}</span></i>
+                <i class="fas fa-fingerprint" style="color: #9d9fa3">
+                  <span style="margin-left: 1px">{{ asset.assetKey }}</span>
+                </i>
               </div>
             </el-card>
           </span>
         </span>
       </div>
     </el-card>
-    <pubkey-editor :form-status="formStatus.pubKey" ref="pubkeyEditor" @fetchData="fetchData"/>
+    <pub-key-editor :form-status="formStatus.pubKey" ref="pubKeyEditor" @fetchData="fetchData"/>
   </div>
 </template>
 
 <script>
-import PubkeyEditor from './UserCredentialPubKeyEditor'
+import PubKeyEditor from './UserCredentialPubKeyEditor'
 
 export default {
   name: 'UserCredentialPubKeyInfoCard',
@@ -56,7 +57,7 @@ export default {
     }
   },
   components: {
-    PubkeyEditor
+    PubKeyEditor
   },
   methods: {
     handleEdit () {
@@ -74,7 +75,7 @@ export default {
           credentialType: 0
         }
       }
-      this.$refs.pubkeyEditor.initData(pubKey)
+      this.$refs.pubKeyEditor.initData(pubKey)
       this.formStatus.pubKey.visible = true
     },
     fetchData () {
@@ -92,7 +93,6 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+//-webkit-box-sizing: border-box; box-sizing: border-box;
 }
 </style>

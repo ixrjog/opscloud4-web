@@ -34,8 +34,7 @@
                          :label="item.name"
                          :value="item"/>
             </el-select>
-            <el-button type="primary" plain size="mini" @click="handleOpenPlaybook" :disabled="playbook === ''">查看
-            </el-button>
+            <el-button type="primary" plain size="mini" @click="handleOpenPlaybook" :disabled="playbook === ''">查看</el-button>
           </el-form-item>
           <el-form-item label="变量(Vars)" :label-width="labelWidth">
             <editor v-model="serverTask.vars" @init="editorInit" lang="yaml" theme="chrome"

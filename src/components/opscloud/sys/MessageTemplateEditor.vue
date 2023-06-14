@@ -23,7 +23,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="messageTemplate.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="messageTemplate.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

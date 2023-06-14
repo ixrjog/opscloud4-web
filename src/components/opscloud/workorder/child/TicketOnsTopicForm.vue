@@ -47,7 +47,7 @@
         </el-tooltip>
         <el-alert type="info" :closable="false" style="margin-top: 10px;line-height: 1.5">
           <template v-slot:default>
-            <i class="el-icon-info" style="font-size: 14px;color: #409eff;"></i>
+            <i class="el-icon-info" style="font-size: 14px;color: #409eff;"/>
             <span v-if="topicData.messageType === messageType.type0.type">
               普通消息适用于系统间异步解耦、削峰填谷、日志服务、大规模机器的Cache同步以及实时计算分析等场景。
             </span>

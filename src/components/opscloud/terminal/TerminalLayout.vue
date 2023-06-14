@@ -13,7 +13,8 @@
               <business-tags v-if="server.tags !== null" :tags="server.tags" style="margin-left: 10px"/>
               <el-button type="text" v-if="server.document !== null"
                          style="margin-left: 10px"
-                         @click="handleRead(server)"><i class="fab fa-creative-commons-share"></i>
+                         @click="handleRead(server)">
+                <i class="fab fa-creative-commons-share"></i>
               </el-button>
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"

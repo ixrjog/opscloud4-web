@@ -45,7 +45,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="accessKeys" label="Access Key">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-for="ak in scope.row.accessKeys" :key="ak.assetId">
             {{ ak.assetId }}
           </el-tag>

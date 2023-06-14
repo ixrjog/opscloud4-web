@@ -39,7 +39,7 @@
                     :readonly="ticketView.ticketPhase !== 'NEW'"/>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
-          <node-view :nodeView="ticketView.nodeView"></node-view>
+          <node-view :nodeView="ticketView.nodeView"/>
         </el-timeline-item>
         <!--        审批意见只展示给当前审批人-->
         <el-timeline-item timestamp="审批意见" placement="top" v-if="ticketView.isApprover">

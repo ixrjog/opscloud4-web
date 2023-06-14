@@ -245,14 +245,14 @@ export default {
 
   .el-col {
     p {
-      margin: 0px;
+      margin: 0;
       color: #B7B6B6;
       font-size: 20px;
       font-weight: bolder;
     }
 
     & .el-tag {
-      margin: 5px 5px 5px 0px;
+      margin: 5px 5px 5px 0;
     }
   }
 }

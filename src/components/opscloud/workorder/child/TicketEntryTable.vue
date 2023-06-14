@@ -17,7 +17,6 @@
                        :label="item.label"
                        :value="item.value"/>
           </el-select>
-          <!--          <el-tag :type="scope.row.role | toPermissionRoleType">{{ scope.row.role | toPermissionRoleText }}</el-tag>-->
         </template>
       </el-table-column>
       <slot name="extend">

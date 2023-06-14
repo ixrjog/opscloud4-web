@@ -2,7 +2,7 @@
 <template>
   <div v-if="JSON.stringify(ticketEntry) !== '{}'">
     <div style="margin: 0 0 20px">
-      <my-span :content="ticketEntry.name" style="font-size: 20px"></my-span>
+      <my-span :content="ticketEntry.name" style="font-size: 20px"/>
       <span class="btn-group">
         <span v-if="ticketPhase === orderPhase.NEW">
           <el-button type="text" @click="removeEntry()">重新编辑</el-button>
@@ -16,9 +16,9 @@
           </el-tooltip>
         </span>
       </span>
-      <slot name="header" :ticketEntry="ticketEntry"></slot>
+      <slot name="header" :ticketEntry="ticketEntry"/>
     </div>
-    <slot name="body" :ticketEntry="ticketEntry"></slot>
+    <slot name="body" :ticketEntry="ticketEntry"/>
     <div v-if="JSON.stringify(ticketEntry) !== '{}'">
       <div style="margin: 10px 0 0">
         <span>{{ ticketEntry.comment }}</span>

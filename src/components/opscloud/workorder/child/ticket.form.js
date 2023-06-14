@@ -78,7 +78,11 @@ export default {
       },
       new: {
         visible: false
+      },
+      apolloRelease: {
+        visible: false
       }
+
     }
   }
 }

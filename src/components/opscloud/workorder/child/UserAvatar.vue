@@ -2,8 +2,8 @@
 <template>
   <div class="userAvatar">
       <el-avatar v-if="user !== null && user.avatar !== null && user.avatar !== undefined"
-                 :src="user.avatar" :size="size"></el-avatar>
-      <user-tag v-if="user !== null" :user="user"></user-tag>
+                 :src="user.avatar" :size="size"/>
+      <user-tag v-if="user !== null" :user="user"/>
   </div>
 </template>
 

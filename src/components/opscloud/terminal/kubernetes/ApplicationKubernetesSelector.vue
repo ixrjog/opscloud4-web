@@ -78,8 +78,9 @@
                    </div>
                    <div><span class="label">版本名称</span>{{ pod.properties.versionName }}</div>
                    <div v-if="false"><span class="label">镜像地址</span>{{ pod.properties.image }}</div>
-                   <div><span class="label">镜像地址</span><container-image-display
-                     :image="pod.properties.image"/></div>
+                   <div><span class="label">镜像地址</span>
+                     <container-image-display :image="pod.properties.image"/>
+                   </div>
                    <pod-phase-tag :pod="pod"/>
                      <i class="fab fa-docker" style="margin-right: 5px"/>
                      <el-checkbox v-for="container in pod.children" :key="container.asset.name"

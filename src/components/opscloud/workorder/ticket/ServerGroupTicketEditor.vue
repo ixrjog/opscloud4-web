@@ -20,8 +20,7 @@
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
                                 :tableLayout="tableLayout"
-                                ref="ticketEntryTable">
-            </ticket-entry-table>
+                                ref="ticketEntryTable"/>
           </el-card>
         </el-timeline-item>
         <el-timeline-item timestamp="审批选项" placement="top">

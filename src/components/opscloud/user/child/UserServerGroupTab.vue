@@ -18,7 +18,7 @@
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
       <el-table-column prop="serverGroupType" label="组类型">
         <template v-slot="scope">
           <el-tag size="mini" disable-transitions :style="{ color: scope.row.serverGroupType.color }">
@@ -40,7 +40,7 @@
           <el-button type="primary" plain size="mini" @click="handlerRowSet(scope.row)">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '降权' : '提权' }}
           </el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowRevoke(scope.row)">解除</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowRevoke(scope.row)">解除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -149,7 +149,7 @@ export default {
      * 解除
      * @param row
      */
-    handlerRowRevoke (row) {
+    handleRowRevoke (row) {
       const requestBody = {
         userId: this.user.id,
         businessType: this.businessType.SERVERGROUP,

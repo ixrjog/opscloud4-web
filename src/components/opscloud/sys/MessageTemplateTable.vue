@@ -12,8 +12,7 @@
           <el-tag>{{ scope.row.msgKey }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="msgType" label="消息格式">
-      </el-table-column>
+      <el-table-column prop="msgType" label="消息格式"/>
       <el-table-column prop="consumer" label="消费者"/>
       <el-table-column prop="title" label="消息标题"/>
       <el-table-column label="操作" width="230">

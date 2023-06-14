@@ -7,7 +7,7 @@
         <el-input v-model="credential.title" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="凭据分类" :label-width="labelWidth" :required="true">
-        <el-select v-model="credential.kind" placeholder="选择分类" @change="handlerSelKind">
+        <el-select v-model="credential.kind" placeholder="选择分类" @change="handleSelKind">
           <el-option v-for="item in kindOptions"
                      :key="item.value"
                      :label="item.label"
@@ -40,7 +40,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handlerSave">确定</el-button>
+      <el-button type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -92,9 +92,9 @@ export default {
     },
     initData (credential) {
       this.credential = credential
-      this.handlerSelKind()
+      this.handleSelKind()
     },
-    handlerSelKind () {
+    handleSelKind () {
       this.form.showCredential2 = false
       this.form.showPassphrase = false
       this.form.credentialHeight = 50
@@ -130,7 +130,7 @@ export default {
           break
       }
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_CREDENTIAL(requestBody)
         .then(res => {
           // 返回数据
@@ -142,7 +142,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_CREDENTIAL(requestBody)
         .then(res => {
           // 返回数据
@@ -154,11 +154,11 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    handleSave () {
       if (this.formStatus.operationType) {
-        this.handlerAdd(this.credential)
+        this.handleAdd(this.credential)
       } else {
-        this.handlerUpdate(this.credential)
+        this.handleUpdate(this.credential)
       }
     }
   }

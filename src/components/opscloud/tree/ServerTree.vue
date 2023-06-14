@@ -20,7 +20,7 @@
       <el-button @click="fetchData" :loading="searching">Query</el-button>
     </el-row>
     <el-tree style="margin-top: 5px" :data="serverTree.tree" show-checkbox ref="myServerTree" node-key="id">
-       <span class="custom-tree-node" slot-scope="{ node, data }">
+       <span class="custom-tree-node" v-slot="{ node, data }">
         <span>{{ node.label }}</span>
         <span>
              <business-tags v-if="data.server !== null && data.server.tags !== null" :tags="data.server.tags"/>

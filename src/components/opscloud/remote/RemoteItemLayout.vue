@@ -12,7 +12,7 @@
         <el-button style="float: right; padding: 3px 0" type="text" @click="logout">Logout</el-button>
       </div>
       <div ref="viewport" class="viewport" :style="{ width: screenWidth }">
-        <div ref="display" class="display"></div>
+        <div ref="display" class="display"/>
       </div>
     </el-card>
   </div>

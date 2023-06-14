@@ -7,7 +7,9 @@
       </el-form-item>
       <el-form-item label="密码" :label-width="labelWidth" :required="operationType">
         <el-input v-model="user.password" clearable placeholder="请输入内容">
-          <el-button v-slot:append @click="handleRandomWord"><i class="fas fa-key" aria-hidden="true"/></el-button>
+          <el-button v-slot:append @click="handleRandomWord">
+            <i class="fas fa-key" aria-hidden="true"/>
+          </el-button>
         </el-input>
       </el-form-item>
       <el-form-item label="显示名" :label-width="labelWidth" required>

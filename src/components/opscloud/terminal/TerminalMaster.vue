@@ -12,16 +12,17 @@
               </span>
               <el-tooltip class="item" effect="light" content="退出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text" @click="handleLogout(s.name)">
-                  <i class="fas fa-sign-out" aria-hidden="true"></i>
+                  <i class="fas fa-sign-out" aria-hidden="true"/>
                 </el-button>
               </el-tooltip>
               <el-tooltip class="item" effect="light" content="DuplicateSession复制会话" placement="top-start">
-                <el-button style="float: right; padding: 3px 0;margin-right: 20px" type="text"
-                           @click="handleDuplicateSession()"><i class="fas fa-clone" aria-hidden="true"></i>
+                <el-button style="float: right; padding: 3px 0;margin-right: 20px" type="text" @click="handleDuplicateSession()">
+                  <i class="fas fa-clone" aria-hidden="true"/>
                 </el-button>
               </el-tooltip>
             </div>
-            <terminal-item :terminalSettings="terminalSettings" :server="s" @sendMessage="sendMessage"
+            <terminal-item :terminalSettings="terminalSettings"
+                           :server="s" @sendMessage="sendMessage"
                            :ref="`terminal_${s.name}`" :id="`${s.name}`"/>
           </el-card>
         </el-col>

@@ -6,9 +6,9 @@
         <el-select v-model="instanceUuid" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword>
           <el-option v-for="item in dsInstanceOptions"
-            :key="item.uuid"
-            :label="item.instanceName"
-            :value="item.uuid">
+                     :key="item.uuid"
+                     :label="item.instanceName"
+                     :value="item.uuid">
             <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
         </el-select>
@@ -17,9 +17,9 @@
         <el-select v-model="snsTopicData.envName" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
           <el-option v-for="item in regionOptions"
-            :key="item.label"
-            :label="item.label"
-            :value="item.label">
+                     :key="item.label"
+                     :label="item.label"
+                     :value="item.label">
             <select-item :name="item.label" :comment="item.desc"/>
           </el-option>
         </el-select>

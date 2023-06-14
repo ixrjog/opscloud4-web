@@ -4,7 +4,7 @@
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.groupName" placeholder="资源组名称" style="display: inline-block; max-width:200px"/>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
-      <el-button @click="handlerRowAdd" style="margin-left: 5px">新增</el-button>
+      <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="groupName" label="资源组名称"/>
@@ -12,9 +12,9 @@
       <el-table-column prop="resourceSize" label="资源数量"/>
       <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="300">
-        <template slot-scope="scope">
-          <el-button type="primary" plain size="mini" @click="handlerRowEdit(scope.row)">编辑</el-button>
-          <el-button type="danger" plain size="mini" @click="handlerRowDel(scope.row)">删除</el-button>
+        <template v-slot="scope">
+          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,7 +73,7 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handlerRowDel (row) {
+    handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -87,7 +87,7 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handlerRowAdd () {
+    handleRowAdd () {
       const group = {
         id: '',
         groupName: '',
@@ -97,7 +97,7 @@ export default {
       this.formStatus.group.operationType = true
       this.formStatus.group.visible = true
     },
-    handlerRowEdit (row) {
+    handleRowEdit (row) {
       this.$refs.groupEditor.initData(Object.assign({}, row))
       this.formStatus.group.operationType = false
       this.formStatus.group.visible = true

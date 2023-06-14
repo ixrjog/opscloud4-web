@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <div :id="server.instanceId" class="xterm"></div>
+  <div :id="server.instanceId" class="xterm"/>
 </template>
 
 <script>

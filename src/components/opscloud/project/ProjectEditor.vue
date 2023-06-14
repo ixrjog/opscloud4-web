@@ -69,8 +69,7 @@
                 <el-option v-for="item in businessTypeOptions"
                            :key="item.value"
                            :label="item.label"
-                           :value="item.value">
-                </el-option>
+                           :value="item.value"/>
               </el-select>
             </el-form-item>
             <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源实例">
@@ -130,7 +129,9 @@
         </el-col>
         <el-col :span="14">
           <div v-for="(value,key) in project.resourceMap" :key="key" :label="key">
-            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getProjectResText }}</b></el-divider>
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">{{ key | getProjectResText }}</b>
+            </el-divider>
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
@@ -484,14 +485,14 @@ export default {
 
   .el-col {
     p {
-      margin: 0px;
+      margin: 0;
       color: #B7B6B6;
       font-size: 20px;
       font-weight: bolder;
     }
 
     & .el-tag {
-      margin: 5px 5px 5px 0px;
+      margin: 5px 5px 5px 0;
     }
 
     /*& .el-divider {*/

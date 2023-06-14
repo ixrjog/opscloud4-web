@@ -13,7 +13,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry()"
+      <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry"
                  :loading="buttonAdding"
                  style="margin-left: 10px">添加
       </el-button>

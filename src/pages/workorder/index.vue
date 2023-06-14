@@ -36,6 +36,7 @@
     <aliyun-ram-update-login-profile-ticket-editor :formStatus="formStatus.ticket.aliyunRamUpdateLoginProfile" ref="aliyunRamUpdateLoginProfileTicketEditor"  @close="fetchData"/>
     <application-deploy-ticket-editor :formStatus="formStatus.ticket.application.deploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
     <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
+    <apollo-release-ticket-editor :formStatus="formStatus.ticket.application.apolloRelease" ref="apolloReleaseTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -74,6 +75,7 @@ import ApplicationDeployTicketEditor from '@/components/opscloud/workorder/ticke
 import NewApplicationTicketEditor from '@/components/opscloud/workorder/ticket/NewApplicationTicketEditor.vue'
 import AliyunRamUpdateLoginProfileTicketEditor
   from '@/components/opscloud/workorder/ticket/AliyunRamUpdateLoginProfileTicketEditor.vue'
+import ApolloReleaseTicketEditor from '@/components/opscloud/workorder/ticket/ApolloReleaseTicketEditor.vue'
 
 export default {
   data () {
@@ -112,7 +114,8 @@ export default {
     AwsIamUpdateLoginProfileTicketEditor,
     AliyunRamUpdateLoginProfileTicketEditor,
     ApplicationDeployTicketEditor,
-    NewApplicationTicketEditor
+    NewApplicationTicketEditor,
+    ApolloReleaseTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -230,6 +233,10 @@ export default {
         case this.workOrderKeyConstants.NEW_APPLICATION:
           this.handleOpenTicketEditor(this.formStatus.ticket.application.new)
           this.$refs.newApplicationTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APOLLO_RELEASE:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.apolloRelease)
+          this.$refs.apolloReleaseTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
