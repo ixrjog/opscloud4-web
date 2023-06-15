@@ -11,32 +11,32 @@
         <span class="btn-group">
           <el-tooltip class="item" effect="dark" content="实例任务" placement="top-start">
           <el-button type="text" @click="handleSchedule">
-            <i class="fas fa-recycle"/>
+            <i class="fas fa-play"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例配置" placement="top-start">
           <el-button type="text" @click="handleRegistered">
-            <i class="far fa-id-card"/>
+            <i class="fas fa-edit"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例配置文件" placement="top-start">
           <el-button type="text" @click="handleEditor">
-            <i class="far fa-sun"/>
+            <i class="fab fa-instalod"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="下发配置文件" placement="top-start">
           <el-button type="text" v-if="needSetDSConfig(instance.instanceType)" @click="handleSetConfig">
-            <i class="far fa-clipboard"/>
+            <i class="fas fa-file-export"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例标签" placement="top-start">
           <el-button type="text" @click="handleTagEdit">
-            <i class="far fa-bookmark"/>
+            <i class="fas fa-tag"/>
           </el-button>
         </el-tooltip>
           <el-tooltip class="item" effect="dark" content="实例资产详情" placement="top-start">
           <el-button type="text" @click="handleOpen">
-            <i class="far fa-paper-plane"/>
+            <i class="fas fa-list-ul"/>
           </el-button>
         </el-tooltip>
         </span>

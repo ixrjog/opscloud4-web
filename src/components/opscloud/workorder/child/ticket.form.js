@@ -3,9 +3,6 @@ export default {
     serverGroup: {
       visible: false
     },
-    applicationPermission: {
-      visible: false
-    },
     confluence: {
       visible: false
     },
@@ -16,7 +13,12 @@ export default {
       visible: false
     },
     apollo: {
-      visible: false
+      permission: {
+        visible: false
+      },
+      release: {
+        visible: false
+      }
     },
     nexus: {
       visible: false
@@ -77,9 +79,6 @@ export default {
         visible: false
       },
       new: {
-        visible: false
-      },
-      apolloRelease: {
         visible: false
       },
       serDeploy: {

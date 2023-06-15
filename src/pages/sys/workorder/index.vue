@@ -42,10 +42,12 @@
     <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription" ref="snsSubscriptionTicketEditor" @close="fetchData"/>
     <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.application.scaleReplicas" ref="applicationScaleReplicasTicketEditor" @close="fetchData"/>
     <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.application.reduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
-    <apollo-ticket-editor :formStatus="formStatus.ticket.apollo" ref="apolloTicketEditor" @close="fetchData"/>
+    <apollo-ticket-editor :formStatus="formStatus.ticket.apollo.permission" ref="apolloTicketEditor" @close="fetchData"/>
+    <apollo-release-ticket-editor :formStatus="formStatus.ticket.apollo.release" ref="apolloReleaseTicketEditor" @close="fetchData"/>
     <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile" ref="awsIamUpdateLoginProfileTicketEditor" @close="fetchData"/>
     <application-deploy-ticket-editor :formStatus="formStatus.ticket.application.deploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
     <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
+    <ser-deploy-ticket-editor :formStatus="formStatus.ticket.application.serDeploy" ref="serDeployTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -83,6 +85,8 @@ import AwsIamUpdateLoginProfileTicketEditor
 import ApplicationReduceReplicasTicketEditor
   from '@/components/opscloud/workorder/ticket/ApplicationReduceReplicasTicketEditor.vue'
 import NewApplicationTicketEditor from '@/components/opscloud/workorder/ticket/NewApplicationTicketEditor.vue'
+import ApolloReleaseTicketEditor from '@/components/opscloud/workorder/ticket/ApolloReleaseTicketEditor.vue'
+import SerDeployTicketEditor from '@/components/opscloud/workorder/ticket/SerDeployTicketEditor.vue'
 
 export default {
   data () {
@@ -123,9 +127,11 @@ export default {
     SnsSubscriptionTicketEditor,
     ApplicationScaleReplicasTicketEditor,
     ApolloTicketEditor,
+    ApolloReleaseTicketEditor,
     AwsIamUpdateLoginProfileTicketEditor,
     ApplicationDeployTicketEditor,
-    NewApplicationTicketEditor
+    NewApplicationTicketEditor,
+    SerDeployTicketEditor
   },
   computed: {},
   mounted () {
@@ -150,13 +156,6 @@ export default {
         formStatus.operationType = false
       })
     },
-    /**
-     * param:{
-     *   workOrderKey,
-     *   ticket
-     * }
-     * @param param
-     */
     previewTicket (ticket) {
       this.openTicketEditor(ticket.workOrderKey, ticket)
     },
@@ -248,8 +247,12 @@ export default {
           this.$refs.applicationReduceReplicasTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APOLLO:
-          this.handleOpenTicketEditor(this.formStatus.ticket.apollo)
+          this.handleOpenTicketEditor(this.formStatus.ticket.apollo.permission)
           this.$refs.apolloTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APOLLO_RELEASE:
+          this.handleOpenTicketEditor(this.formStatus.ticket.apollo.release)
+          this.$refs.apolloReleaseTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.AWS_IAM_UPDATE_LOGIN_PROFILE:
           this.handleOpenTicketEditor(this.formStatus.ticket.awsIamUpdateLoginProfile)
@@ -262,6 +265,10 @@ export default {
         case this.workOrderKeyConstants.NEW_APPLICATION:
           this.handleOpenTicketEditor(this.formStatus.ticket.application.new)
           this.$refs.newApplicationTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.SER_DEPLOY:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.serDeploy)
+          this.$refs.serDeployTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
