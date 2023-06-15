@@ -25,7 +25,7 @@
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="类目颜色">
+      <el-table-column label="类目颜色" width="100">
         <template v-slot="scope">
           <el-color-picker v-model="scope.row.color"/>
         </template>
@@ -35,7 +35,7 @@
           <el-tag size="mini">{{ scope.row.workOrderKey }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="status" label="状态">
+      <el-table-column prop="status" label="状态" width="100">
         <template v-slot="scope">
           <el-tag size="mini" :type="scope.row.status | toStatusColor">{{ scope.row.status | toStatusDesc }}</el-tag>
         </template>
