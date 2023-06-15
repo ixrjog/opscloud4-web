@@ -81,8 +81,10 @@ export default {
       },
       apolloRelease: {
         visible: false
+      },
+      serDeploy: {
+        visible: false
       }
-
     }
   }
 }

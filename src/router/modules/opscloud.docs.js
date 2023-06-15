@@ -97,6 +97,15 @@ export default [
       auth: true,
       title: '文档-应用发布申请帮助'
     }
+  },
+  {
+    path: '/docs/workorder/ser',
+    name: 'docs-workorder-ser',
+    component: () => import('@/pages/docs/workorder/ser'),
+    meta: {
+      auth: true,
+      title: '文档-风控Ser包发布帮助'
+    }
   }
 
 ]

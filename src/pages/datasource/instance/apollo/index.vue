@@ -55,10 +55,7 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
-import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
-import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
-
 
 const tableLayout = {
   app: {
@@ -122,8 +119,6 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag,
-    EntryDetail,
     DatasourceInstanceTitle
   },
   methods: {
