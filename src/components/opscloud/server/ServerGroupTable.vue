@@ -24,6 +24,11 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="users" label="授权用户" width="350">
+        <template v-slot="scope">
+          <users-tag :users="scope.row.users"/>
+        </template>
+      </el-table-column>
       <el-table-column prop="allowOrder" label="工单申请" width="200">
         <template v-slot="scope">
           <allow-tag :allow="scope.row.allowOrder"/>
@@ -57,6 +62,7 @@ import Pagination from '../common/page/Pagination'
 import ServerGroupEditor from './ServerGroupEditor'
 import AllowTag from '@/components/opscloud/common/tag/AllowTag'
 import SelectItem from '@/components/opscloud/common/SelectItem.vue'
+import UsersTag from '@/components/opscloud/common/tag/UsersTag.vue'
 
 export default {
   name: 'ServerGroupTable',
@@ -96,6 +102,7 @@ export default {
   },
   computed: {},
   components: {
+    UsersTag,
     ServerGroupEditor,
     AllowTag,
     Pagination,
