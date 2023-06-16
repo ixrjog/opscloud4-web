@@ -70,7 +70,7 @@ export default {
       /**
        * OPSCLOUD前端版本号
        */
-      version: '4.4.8',
+      version:  process.env.VUE_APP_OC_VERSION
     }
   },
   components: {
@@ -82,6 +82,7 @@ export default {
     Logo2
   },
   mounted () {
+    console.log(process.env)
   },
   methods: {}
 }
