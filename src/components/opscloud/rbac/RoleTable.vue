@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
+    <el-row :gutter="24" style="margin-left: 0; margin-bottom: 5px">
       <el-input v-model="queryParam.roleName" placeholder="角色名称"/>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>

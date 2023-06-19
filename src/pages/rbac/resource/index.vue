@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
-    <h1>角色管理</h1>
+    <h1>资源管理</h1>
     <el-tabs v-model="activeName">
       <el-tab-pane label="资源" name="resource">
         <resource-table/>

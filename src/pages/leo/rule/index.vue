@@ -3,7 +3,7 @@
   <d2-container>
     <el-tabs v-model="activeName">
       <el-tab-pane label="规则配置" name="rule">
-        <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+        <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
           <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
             <el-option v-for="item in activeOptions"
                        :key="item.value"
@@ -189,10 +189,6 @@ export default {
 .el-input {
   display: inline-block;
   max-width: 200px;
-}
-
-.el-select {
-  margin-left: 5px;
 }
 
 .el-button {

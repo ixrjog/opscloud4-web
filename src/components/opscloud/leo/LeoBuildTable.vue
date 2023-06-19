@@ -341,11 +341,7 @@ export default {
 }
 
 .el-select {
-  margin-left: 5px;
-}
-
-.el-button {
-  margin-left: 5px;
+  margin-right: 5px;
 }
 
 </style>

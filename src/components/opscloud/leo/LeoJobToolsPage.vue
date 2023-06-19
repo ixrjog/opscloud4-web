@@ -247,16 +247,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
 }
 
 .el-select {
-  margin-left: 5px;
+  margin-right: 5px;
 }
 
-.el-button {
-  margin-left: 5px;
-}
 </style>

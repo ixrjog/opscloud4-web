@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
+    <el-row :gutter="24" style="margin-left: 0; margin-bottom: 5px">
       <el-input v-model="queryParam.resourceName" @change="fetchData" placeholder="资源名称"/>
       <el-select v-model="queryParam.groupId" filterable clearable @change="fetchData"
                  remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup"
