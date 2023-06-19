@@ -83,18 +83,20 @@
               </span>
           </div>
           <div v-if="JSON.stringify(scope.row.applicationList) !== '[]'">
-            <el-divider content-position="left"><b style="color: #9d9fa3">应用</b></el-divider>
-            <div v-for="item in scope.row.applicationList" :key="item.id">
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">应用</b>
+            </el-divider>
+            <span v-for="item in scope.row.applicationList" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start" :disabled="!item.comment">
                 <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">{{ item.name }}</el-tag>
               </el-tooltip>
-            </div>
+            </span>
           </div>
         </template>
       </el-table-column>
       <el-table-column prop="users" label="项目成员" width="150">
         <template v-slot="scope">
-          <users-tag :users="scope.row.users"></users-tag>
+          <users-tag :users="scope.row.users"/>
         </template>
       </el-table-column>
       <el-table-column prop="projectType" label="项目类型" width="80">
