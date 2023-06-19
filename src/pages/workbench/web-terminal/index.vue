@@ -35,6 +35,9 @@
                          @handleRead="handleRead"/>
       </el-col>
     </el-row>
+    <el-row style="margin-top: 20px">
+      <document-zone mount-zone="WEB_TERMINAL"/>
+    </el-row>
     <business-doc-reader :form-status="formStatus.businessDoc"
                          ref="businessDocReader"/>
   </d2-container>
@@ -49,6 +52,7 @@ import TerminalLayout from '../../../components/opscloud/terminal/TerminalLayout
 import { mapState } from 'vuex'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
+import DocumentZone from "@/components/opscloud/sys/DocumentZone.vue";
 
 export default {
   name: 'web-terminal',
@@ -91,6 +95,7 @@ export default {
     this.handleLogout()
   },
   components: {
+    DocumentZone,
     ServerTree,
     TerminalTools,
     TerminalLayout,
