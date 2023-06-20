@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-card style="margin-top: 5px" class="box-card" shadow="hover">
+  <el-card class="box-card" shadow="hover">
     <div slot="header" class="clearfix">
       <span><i class="fas fa-list" aria-hidden="true"/></span>
       <el-tag size="mini" style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>

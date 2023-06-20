@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0; margin-bottom: 5px">
+    <el-row :gutter="24" style="margin-left: 0">
       <el-input v-model="queryParam.resourceName" @change="fetchData" placeholder="资源名称"/>
       <el-select v-model="queryParam.groupId" filterable clearable @change="fetchData"
                  remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup"
@@ -19,6 +19,7 @@
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
       <el-table-column prop="resourceName" label="资源" width="400"/>
       <el-table-column prop="comment" label="描述"/>

@@ -4,7 +4,7 @@
     <div>
       <h1>集群配置</h1>
     </div>
-    <el-row :gutter="24" style="margin-bottom: 5px">
+    <el-row :gutter="24">
       <el-input v-model="queryParam.tagKey" placeholder="标签关键字"/>
       <el-select v-model="queryParam.businessType" clearable placeholder="业务类型">
         <el-option v-for="item in businessTypeOptions"
@@ -14,6 +14,7 @@
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称"/>
       <el-table-column prop="hostname" label="主机名"/>

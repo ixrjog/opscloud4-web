@@ -2,7 +2,7 @@
 <template>
   <el-tabs type="border-card">
     <el-tab-pane label="复制任务">
-      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+      <el-row :gutter="24" style="margin-left: 0">
         <el-select v-model.trim="queryParam.srcApplicationId" filterable clearable
                    remote reserve-keyword placeholder="选择源应用" :remote-method="getSrcApplication">
           <el-option v-for="item in srcApplicationOptions"
@@ -29,6 +29,7 @@
           复制
         </el-button>
       </el-row>
+      <div style="height: 5px"/>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column prop="name" label="名称" sortable/>
         <el-table-column prop="application" label="应用">

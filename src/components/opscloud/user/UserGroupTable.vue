@@ -1,11 +1,12 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row>
       <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新建</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"/>
       <el-table-column prop="allowOrder" label="工单申请" width="200">

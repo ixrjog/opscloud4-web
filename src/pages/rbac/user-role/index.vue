@@ -4,13 +4,12 @@
     <div>
       <h1>用户角色配置</h1>
     </div>
-    <div style="margin-bottom: 5px">
-      <el-row :gutter="24" style="margin-bottom: 5px">
-        <el-input v-model="queryParam.queryName" placeholder="用户名" class="input-search-bar"/>
-        <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
-        <el-button @click="fetchData" class="search-bar">查询</el-button>
-      </el-row>
-    </div>
+    <el-row :gutter="24">
+      <el-input v-model="queryParam.queryName" placeholder="用户名" class="input-search-bar"/>
+      <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
+      <el-button @click="fetchData" class="search-bar">查询</el-button>
+    </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="username" label="用户名"/>
       <el-table-column prop="displayName" label="显示名"/>
@@ -39,14 +38,14 @@
 
 <script>
 
-import { QUERY_USER_PAGE } from '@/api/modules/user/user.api.js'
+import {QUERY_USER_PAGE} from '@/api/modules/user/user.api.js'
 import RoleTags from '../../../components/opscloud/rbac/child/RoleTags'
 import UserRoleEditor from '../../../components/opscloud/rbac/UserRoleEditor'
 import Pagination from '../../../components/opscloud/common/page/Pagination'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 
 export default {
-  data () {
+  data() {
     return {
       table: {
         data: [],
@@ -71,7 +70,7 @@ export default {
     }
   },
   computed: {},
-  mounted () {
+  mounted() {
     this.fetchData()
   },
   components: {
@@ -81,19 +80,19 @@ export default {
     BusinessTags
   },
   methods: {
-    paginationCurrentChange (currentPage) {
+    paginationCurrentChange(currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handleRowEdit (row) {
+    handleRowEdit(row) {
       this.$refs.userRoleEditor.initData(row)
       this.formStatus.role.visible = true
     },
-    fetchData () {
+    fetchData() {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,

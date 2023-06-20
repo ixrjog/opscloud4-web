@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"/>
       <el-select v-model="queryParam.instanceUuid" filterable value-key="instanceName"
                  style="width: 250px;" placeholder="选择数据源实例" reserve-keyword @change="fetchData" clearable>
@@ -29,6 +29,7 @@
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新建</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" sortable/>
       <el-table-column prop="instance" label="实例">

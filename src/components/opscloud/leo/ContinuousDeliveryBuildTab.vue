@@ -1,16 +1,15 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row>
       <el-button :type="webSocketState.type" class="button" size="mini">
         <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"/>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
            style="margin-right: 5px"/>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{
-            env.envName
-          }}
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
+          {{ env.envName === 'gray' ? 'sit' : env.envName}}
         </el-radio-button>
       </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable size="mini"
@@ -28,6 +27,7 @@
         <i class="fas fa-circle-notch"/>
       </el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
       <el-table-column prop="name" label="Name" sortable></el-table-column>
       <el-table-column prop="branch" label="Preferred Branch" sortable>

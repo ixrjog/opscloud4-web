@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row>
       <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-select v-model="queryParam.serverGroupTypeId" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType">
@@ -15,26 +15,27 @@
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称"/>
-      <el-table-column prop="serverGroupType" label="组类型">
+      <el-table-column prop="serverGroupType" label="组类型" width="200">
         <template v-slot="scope">
           <el-tag size="mini" disable-transitions :style="{ color: scope.row.serverGroupType.color }">
             {{ scope.row.serverGroupType.name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="users" label="授权用户" width="350">
+      <el-table-column prop="users" label="授权用户">
         <template v-slot="scope">
           <users-tag :users="scope.row.users"/>
         </template>
       </el-table-column>
-      <el-table-column prop="allowOrder" label="工单申请" width="200">
+      <el-table-column prop="allowOrder" label="工单申请" width="100">
         <template v-slot="scope">
           <allow-tag :allow="scope.row.allowOrder"/>
         </template>
       </el-table-column>
-      <el-table-column prop="serverSize" label="服务器数量"/>
+      <el-table-column prop="serverSize" label="服务器数量" width="100"/>
       <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="280">
         <template v-slot="scope">

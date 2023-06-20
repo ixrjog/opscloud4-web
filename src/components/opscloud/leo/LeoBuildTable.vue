@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row :gutter="24" style="margin-left: 0">
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
@@ -31,6 +31,7 @@
       </el-select>
       <el-button @click="fetchData" class="button">刷新</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <div v-for="build in table.data" :key="build.id" style="font-size: 12px">
       <template>
         <div>

@@ -8,9 +8,8 @@
            style="margin-right: 5px"/>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{
-            env.envName
-          }}
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
+          {{ env.envName === 'gray' ? 'sit' : env.envName}}
         </el-radio-button>
       </el-radio-group>
       <el-select v-model="queryParam.applicationId" filterable clearable size="mini"

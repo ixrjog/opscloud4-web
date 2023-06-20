@@ -6,8 +6,8 @@
         <work-order-name-stats-report ref="workOrderNameStatsReport"/>
       </el-col>
     </el-row>
-    <!--  :gutter="20"-->
-    <el-row style="margin-top: 10px">
+    <div style="height: 5px"/>
+    <el-row>
       <work-order-month-stats-report ref="workOrderMonthStatsReport"/>
     </el-row>
   </div>

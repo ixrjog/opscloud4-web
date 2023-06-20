@@ -8,7 +8,8 @@
            style="margin-right: 5px"/>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
-        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">{{ env.envName }}
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.id">
+          {{ env.envName === 'gray' ? 'sit' : env.envName}}
         </el-radio-button>
       </el-radio-group>
       <el-select v-model="queryParam.applicationId" filterable clearable style="margin-left: 5px" size="mini"
@@ -48,8 +49,7 @@
                    </el-button>
                    </el-tooltip>
                  <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
-                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text"
-                              @click="handleTerminal(resource)">
+                   <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text" @click="handleTerminal(resource)">
                      <i class="fas fa-terminal" v-show="false"/>Login
                    </el-button>
                  </el-tooltip>

@@ -69,7 +69,7 @@
               </div>
             </div>
             <el-divider></el-divider>
-            <span>{{ task.taskDesc }}</span>
+            <span style="color: #9d9fa3">{{ task.taskDesc }}</span>
           </el-card>
         </div>
         <ser-deploy-task-editor ref="serDeployTaskEditor" :formStatus="formStatus.serDeployTask"
@@ -104,11 +104,10 @@
             <el-table :data="taskItemList" style="width: 100%">
               <el-table-column prop="itemName" label="包名" width="180">
                 <template slot-scope="scope">
-                  <div>{{scope.row.itemName}}</div>
-                  <div>{{scope.row.itemSize}}</div>
+                  <span>{{ scope.row.itemName }}</span>
+                  <p style="color: #9d9fa3;margin: 7px 0">{{ scope.row.itemSize }}</p>
                 </template>
               </el-table-column>
-<!--              <el-table-column prop="itemSize" label="大小" width="180"></el-table-column>-->
               <el-table-column prop="itemMd5" label="MD5" width="320"></el-table-column>
               <el-table-column label="上传人" width="180">
                 <template slot-scope="scope">

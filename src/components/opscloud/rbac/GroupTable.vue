@@ -1,11 +1,12 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row :gutter="24" style="margin-left: 0">
       <el-input v-model="queryParam.groupName" placeholder="资源组名称" style="display: inline-block; max-width:200px"/>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="groupName" label="资源组名称"/>
       <el-table-column prop="basePath" label="基本路径"/>

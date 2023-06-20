@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row :gutter="24" style="margin-left: 0">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-select v-model="queryParam.mountZone" filterable clearable
                  remote reserve-keyword placeholder="搜索挂载区" :remote-method="getZone" @change="fetchData">
@@ -21,6 +21,7 @@
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
       <el-table-column prop="name" label="名称"/>
       <el-table-column prop="icon" label="图标">
