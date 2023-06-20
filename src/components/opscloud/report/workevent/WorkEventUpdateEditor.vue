@@ -1,8 +1,9 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="title" :visible.sync="formStatus.visible" width="40%" :before-close="handleClose">
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
-        <my-span :content="workEventData.workItemTree" style="font-size: 14px"></my-span>
+        <my-span :content="workEventData.workItemTree" style="font-size: 14px"/>
         <span style="float: right;margin-left: 5px">
           <span style="margin-right: 2px">{{ workEventData.workEventTime }}</span>
           <span style="color: #20A9D9">[{{ workEventData.ago }}]</span>
@@ -37,10 +38,10 @@
           </el-form-item>
         </span>
         <el-form-item label="事件次数">
-          <el-input-number controls-position="right" :min="1" v-model="workEventData.workEventCnt"></el-input-number>
+          <el-input-number controls-position="right" :min="1" v-model="workEventData.workEventCnt"/>
         </el-form-item>
         <el-form-item label="事件说明">
-          <el-input type="textarea" :rows="4" v-model="workEventData.comment"></el-input>
+          <el-input type="textarea" :rows="4" v-model="workEventData.comment"/>
         </el-form-item>
       </el-form>
     </el-card>

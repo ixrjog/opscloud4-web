@@ -1,12 +1,13 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
       <div slot="header">
         <deployment-name :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
                          :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
-                         cluster=""></deployment-name>
-        <deploy-number-icon :deploy="deploy"></deploy-number-icon>
-        <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
+                         cluster=""/>
+        <deploy-number-icon :deploy="deploy"/>
+        <span style="margin-left: 5px"><i class="far fa-clock"/>{{ deploy.ago }}</span>
       </div>
       <el-row>
         <el-col :span="12">
@@ -19,9 +20,8 @@
                      v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">部署类型</span>{{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
             <business-tags :tags="deploy.tags" style="margin-left: 5px"/>
           </div>
-<!--          <div><span class="label">部署状态</span>{{ deploy.deployStatus }}</div>-->
           <div><span class="label">部署结果</span>
-            <deploy-result :deploy="deploy"></deploy-result>
+            <deploy-result :deploy="deploy"/>
           </div>
           <div><span class="label">发布版本</span>{{ deploy.versionName === null ? '-': deploy.versionName }}</div>
           <div><span class="label">操作用户</span>{{

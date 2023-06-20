@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div class="podClass">
     <el-card shadow="hover" :class="pod.restartCount | toPodClass">
@@ -8,7 +9,7 @@
       <div><span class="label">启动时间</span>{{ pod.startTime }}<span style="color: #00a2d4"> [{{ pod.ago }}]</span> 重启次数:
         <span :style="pod.restartCount === 0 ?  'color: #67C23A' : 'color: #F56C6C'">{{ pod.restartCount }}</span>
       </div>
-      <pod-conditions :pod="pod"></pod-conditions>
+      <pod-conditions :pod="pod"/>
     </el-card>
   </div>
 </template>

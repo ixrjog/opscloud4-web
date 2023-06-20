@@ -1,20 +1,21 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <div v-show="show">
-      <el-divider></el-divider>
+      <el-divider/>
       <el-row>
         <b class="outputTitle">Console stream</b>
-        <i style="margin-left: 10px" class="el-icon-loading" v-if="streaming"></i>
+        <i style="margin-left: 10px" class="el-icon-loading" v-if="streaming"/>
         <el-button type="text" @click="logout">
-          <i class="far fa-times-circle"></i>
+          <i class="far fa-times-circle"/>
         </el-button>
         <el-tooltip class="item" effect="light" content="适应窗体" placement="top-start">
           <el-button type="text" @click="fit">
-            <i class="fas fa-arrows-alt"></i>
+            <i class="fas fa-arrows-alt"/>
           </el-button>
         </el-tooltip>
       </el-row>
-      <div :id="id" class="xterm"></div>
+      <div :id="id" class="xterm"/>
     </div>
   </div>
 </template>

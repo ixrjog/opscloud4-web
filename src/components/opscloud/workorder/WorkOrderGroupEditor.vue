@@ -1,30 +1,29 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="workOrderGroup" label-width="80px">
       <el-form-item label="名称" :required="true">
-        <el-input v-model="workOrderGroup.name" placeholder="请输入工单群组名称"></el-input>
+        <el-input v-model="workOrderGroup.name" placeholder="请输入工单群组名称"/>
       </el-form-item>
       <el-form-item label="类型">
         <el-select v-model="workOrderGroup.groupType">
-          <el-option
-            v-for="item in groupTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in groupTypeOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="顺序">
-        <el-input v-model.number="workOrderGroup.seq" placeholder="请输入工单群组顺序"></el-input>
+        <el-input v-model.number="workOrderGroup.seq" placeholder="请输入工单群组顺序"/>
       </el-form-item>
       <el-form-item label="图标">
         <el-input v-model="workOrderGroup.icon" placeholder="请输入工单群组图标">
-          <i slot="suffix" :class=workOrderGroup.icon aria-hidden="true"></i>
+          <i slot="suffix" :class=workOrderGroup.icon aria-hidden="true"/>
         </el-input>
       </el-form-item>
       <el-form-item label="描述">
-        <el-input v-model="workOrderGroup.comment" placeholder="请输入工单群组描述"></el-input>
+        <el-input v-model="workOrderGroup.comment" placeholder="请输入工单群组描述"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

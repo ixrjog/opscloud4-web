@@ -1,8 +1,9 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>{{ title }}</h1>
     <div>
-      <work-order-report ref="workOrderReport"></work-order-report>
+      <work-order-report ref="workOrderReport"/>
     </div>
   </d2-container>
 </template>

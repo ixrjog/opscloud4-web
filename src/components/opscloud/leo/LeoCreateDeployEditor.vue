@@ -1,23 +1,23 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog title="Deploy Task" :visible.sync="formStatus.visible" width="70%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Home" name="deploy">
         <el-form :model="application">
           <el-form-item label="Application Name" :label-width="formStatus.labelWidth">
-            <el-input v-model="application.name" readonly></el-input>
+            <el-input v-model="application.name" readonly/>
           </el-form-item>
           <el-form-item label="Job Env" :label-width="formStatus.labelWidth">
-            <el-input v-model="env.envName" readonly style="width: 500px"></el-input>
+            <el-input v-model="env.envName" readonly style="width: 500px"/>
           </el-form-item>
           <el-form-item label="Build Job Name" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.jobId" filterable clearable remote reserve-keyword @change="selLeoJob"
                        placeholder="搜索并选择任务" style="width: 500px" :remote-method="getLeoJob">
-              <el-option
-                v-for="item in jobOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <select-item :name="item.name" :comment="item.jobKey"></select-item>
+              <el-option v-for="item in jobOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id">
+                <select-item :name="item.name" :comment="item.jobKey"/>
               </el-option>
             </el-select>
           </el-form-item>
@@ -25,12 +25,11 @@
             <el-select v-model="doDeployParam.assetId" filterable clearable remote reserve-keyword
                        :disabled="this.doDeployParam.jobId === ''"
                        placeholder="选择Deployment" style="width: 500px" :remote-method="getLeoDeployDeployment">
-              <el-option
-                v-for="item in deployDeploymentOptions"
-                :key="item.businessId"
-                :label="item.name"
-                :value="item.businessId">
-                <select-item :name="item.name" :comment="item.resourceType"></select-item>
+              <el-option v-for="item in deployDeploymentOptions"
+                         :key="item.businessId"
+                         :label="item.name"
+                         :value="item.businessId">
+                <select-item :name="item.name" :comment="item.resourceType"/>
               </el-option>
             </el-select>
           </el-form-item>
@@ -39,15 +38,13 @@
               <el-radio v-model="doDeployParam.deployType" label="ROLLING" border>滚动 Rolling</el-radio>
               <el-alert class="radio-desc" :closable="false"
                         title="渐进式创建新版本，然后停止老版本，自动完成整个流程 (滚动比例25%)"
-                        type="info">
-              </el-alert>
+                        type="info"/>
             </el-col>
             <el-col :span="6">
               <el-radio v-model="doDeployParam.deployType" label="REDEPLOY" border>重启 Redeploy</el-radio>
               <el-alert class="radio-desc" :closable="false"
                         title="不变更版本，只滚动重启所有副本。离线的Canary环境重新上线"
-                        type="info">
-              </el-alert>
+                        type="info"/>
             </el-col>
             <!--            小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署-->
             <el-col :span="6">
@@ -61,8 +58,7 @@
               <el-radio v-model="doDeployParam.deployType" label="BG" border :disabled="true">蓝绿 Blue/Green</el-radio>
               <el-alert class="radio-desc" :closable="false"
                         title="创建出新版本，与老版本并存，通过切换流量实现发布与回滚"
-                        type="info">
-              </el-alert>
+                        type="info"/>
             </el-col>
           </el-form-item>
           <el-form-item label="Release Version" :label-width="formStatus.labelWidth" required
@@ -74,30 +70,31 @@
                          :key="item.id"
                          :label="item.versionName"
                          :value="item.id">
-                  <span style="float: left">{{ item.versionName }}</span>
-                <span :style="{float: 'right', color: '#8492a6', fontSize: '13px',marginLeft: '15px'}">{{item.ago}} #{{item.buildNumber}}次构建
-                  <span v-if="item.ticketId !== 0" style="color: #0da815">[<i class="fas fa-check" v-if="item.ticketId !== 0" style="margin-right: 1px"/>工单]</span>
+                <span style="float: left">{{ item.versionName }}</span>
+                <span :style="{float: 'right', color: '#8492a6', fontSize: '13px',marginLeft: '15px'}">{{ item.ago }} #{{
+                    item.buildNumber
+                  }}次构建
+                  <span v-if="item.ticketId !== 0" style="color: #0da815">[<i class="fas fa-check"
+                                                                              v-if="item.ticketId !== 0"
+                                                                              style="margin-right: 1px"/>工单]</span>
                 </span>
-<!--                <select-item :name="item.versionName"-->
-<!--                             :comment="item.ago + ' #' + item.buildNumber + '次构建'"></select-item>-->
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="Project" :label-width="formStatus.labelWidth">
             <el-select v-model="doDeployParam.projectId" filterable clearable remote reserve-keyword
                        placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
-              <el-option
-                v-for="item in projectOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <select-item :name="item.name" :comment="item.comment"></select-item>
+              <el-option v-for="item in projectOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"/>
               </el-option>
             </el-select>
             <el-button style="margin-left: 5px" @click="openUrl">Jump to Create Project</el-button>
           </el-form-item>
           <el-form-item label="Deploy Desc" :label-width="formStatus.labelWidth">
-            <el-input v-model="doDeployParam.comment"></el-input>
+            <el-input v-model="doDeployParam.comment"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
@@ -173,6 +170,7 @@ export default {
         envType: this.env.envType,
         buildType: 'kubernetes-image',
         extend: false,
+        isActive: true,
         page: 1,
         length: 20
       }

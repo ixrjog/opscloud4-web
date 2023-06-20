@@ -1,21 +1,22 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0px;">
+    <el-row :gutter="24" style="margin-left: 0; margin-bottom: 5px">
       <el-input v-model="queryParam.roleName" placeholder="角色名称"/>
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
     </el-row>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
-      <el-table-column prop="roleName" label="名称" width="300"></el-table-column>
-      <el-table-column prop="accessLevel" label="访问等级" width="200"></el-table-column>
+      <el-table-column prop="roleName" label="名称" width="300"/>
+      <el-table-column prop="accessLevel" label="访问等级" width="200"/>
       <el-table-column prop="allowOrder" label="工单申请" width="200">
-        <template slot-scope="scope">
-          <allow-tag :allow="scope.row.allowOrder"></allow-tag>
+        <template v-slot="scope">
+          <allow-tag :allow="scope.row.allowOrder"/>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleEditMenu(scope.row)">菜单</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
@@ -23,10 +24,10 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <!-- role编辑-->
-    <role-editor ref="roleEditor" :formStatus="formStatus.role" @close="fetchData"></role-editor>
-    <role-menu-editor ref="roleMenuEditor" :formStatus="formStatus.roleMenu"></role-menu-editor>
+    <role-editor ref="roleEditor" :formStatus="formStatus.role" @close="fetchData"/>
+    <role-menu-editor ref="roleMenuEditor" :formStatus="formStatus.roleMenu"/>
   </div>
 </template>
 

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div v-if="workflowView.nodes.length !== 0">
     <el-card shadow="hover">
@@ -15,11 +16,11 @@
                              :key="auditUser.id"
                              :label="auditUser.displayName"
                              :value="auditUser">
-                    <select-item :name="auditUser.username" :comment="auditUser.displayName"></select-item>
+                    <select-item :name="auditUser.username" :comment="auditUser.displayName"/>
                   </el-option>
                 </el-select>
                 <span style="display: inline-block">
-                  <user-avatar :user="node.auditUser" :size="avatar.size"></user-avatar>
+                  <user-avatar :user="node.auditUser" :size="avatar.size"/>
                 </span>
               </div>
             </el-form-item>
@@ -28,7 +29,7 @@
             <el-form-item label="自动分配">
               <span v-for="auditUser in node.auditUsers" :key="auditUser.id"
                     style="margin-right: 5px;display: inline-block">
-                <user-avatar :user="auditUser" :size="avatar.size"></user-avatar>
+                <user-avatar :user="auditUser" :size="avatar.size"/>
                </span>
             </el-form-item>
           </span>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -7,27 +8,25 @@
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" placeholder="名称"/>
         <el-select v-model="queryParam.kind" clearable placeholder="凭据分类">
-          <el-option
-            v-for="item in kindOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in kindOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
         <el-button @click="fetchData">查询</el-button>
         <el-button @click="handlerAdd">新增</el-button>
       </el-row>
     </div>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="title" label="凭据标题" width="250"></el-table-column>
-      <el-table-column prop="quantityUsed" label="使用数量" width="80"></el-table-column>
-      <el-table-column prop="username" label="凭据账户" width="250"></el-table-column>
+      <el-table-column prop="title" label="凭据标题" width="250"/>
+      <el-table-column prop="quantityUsed" label="使用数量" width="80"/>
+      <el-table-column prop="username" label="凭据账户" width="250"/>
       <el-table-column prop="kind" label="凭据分类" width="150">
         <template slot-scope="scope">
-          <credential-kind-tag :kinds="kindOptions" :kind="scope.row.kind"></credential-kind-tag>
+          <credential-kind-tag :kinds="kindOptions" :kind="scope.row.kind"/>
         </template>
       </el-table-column>
-      <el-table-column prop="fingerprint" label="指纹" width="250"></el-table-column>
+      <el-table-column prop="fingerprint" label="指纹" width="250"/>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -40,9 +39,9 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <credential-editor ref="credentialEditor" :formStatus="formStatus.credential" :kind-options="kindOptions"
-                       @close="fetchData"></credential-editor>
+                       @close="fetchData"/>
   </d2-container>
 </template>
 

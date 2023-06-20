@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -8,21 +9,20 @@
         <el-input v-model="queryParam.queryName" placeholder="用户名" class="input-search-bar"/>
         <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
         <el-button @click="fetchData" class="search-bar">查询</el-button>
-        <!--          <el-button @click="handlerSyncUserRole" class="search-bar">同步</el-button>-->
       </el-row>
     </div>
     <el-table :data="table.data" style="width: 100%">
-      <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="displayName" label="显示名"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
+      <el-table-column prop="username" label="用户名"/>
+      <el-table-column prop="displayName" label="显示名"/>
+      <el-table-column prop="email" label="邮箱"/>
       <el-table-column prop="roles" label="角色">
-        <template slot-scope="scope">
-          <role-tags :roles="scope.row.roles"></role-tags>
+        <template v-slot="scope">
+          <role-tags :roles="scope.row.roles"/>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签">
-        <template slot-scope="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+        <template v-slot="scope">
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
@@ -32,8 +32,8 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <user-role-editor :form-status="formStatus.role" ref="userRoleEditor" @close="fetchData"></user-role-editor>
+                @handleSizeChange="handleSizeChange"/>
+    <user-role-editor :form-status="formStatus.role" ref="userRoleEditor" @close="fetchData"/>
   </d2-container>
 </template>
 

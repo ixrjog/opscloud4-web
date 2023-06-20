@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" :before-close="handleClose">
@@ -5,13 +6,13 @@
       <el-tab-pane label="项目配置" name="config">
         <el-form :model="project" label-width="150px">
           <el-form-item label="项目名称" required>
-            <el-input v-model="project.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="project.name" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="项目Key" :required="true" v-if="false">
             <el-input v-model="project.projectKey" placeholder="请输入内容">
-              <template slot="append">
+              <template v-slot:append>
                 <el-button size="mini" type="primary" @click="handleBuildKey">
-                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  <i class="fa fa-arrow-up" aria-hidden="true"/>
                 </el-button>
               </template>
             </el-input>
@@ -34,24 +35,20 @@
           </el-form-item>
           <el-form-item label="有效" required>
             <el-select v-model="project.isActive" placeholder="选择" style="width: 220px;">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="开始时间" required>
             <div class="block">
-              <el-date-picker v-model="project.startTime" type="date" placeholder="选择日期"
-                              value-format="yyyy-MM-dd"></el-date-picker>
+              <el-date-picker v-model="project.startTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"/>
             </div>
           </el-form-item>
           <el-form-item label="结束时间">
             <div class="block">
-              <el-date-picker v-model="project.endTime" type="date" placeholder="选择日期"
-                              value-format="yyyy-MM-dd"></el-date-picker>
+              <el-date-picker v-model="project.endTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"/>
             </div>
           </el-form-item>
           <el-form-item label="描述">
@@ -69,25 +66,21 @@
             <el-form-item label="业务类型">
               <el-select v-model="queryParam.businessType" filterable placeholder="选择绑定资源业务类型"
                          @change="handleSelectBusinessType">
-                <el-option
-                  v-for="item in businessTypeOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
+                <el-option v-for="item in businessTypeOptions"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value"/>
               </el-select>
             </el-form-item>
             <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源实例">
               <el-select v-model="queryParam.dsInstance" filterable placeholder="选择资源实例"
                          value-key="id" @change="getAssetType">
-                <el-option
-                  v-for="item in dsInstanceOptions"
-                  :key="item.id"
-                  :label="item.instanceName"
-                  :value="item">
+                <el-option v-for="item in dsInstanceOptions"
+                           :key="item.id"
+                           :label="item.instanceName"
+                           :value="item">
                   <span style="float: left">{{ item.instanceType }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
-                {{ item.instanceName }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{item.instanceName}}</span>
                 </el-option>
               </el-select>
             </el-form-item>
@@ -96,25 +89,21 @@
                          clearable
                          remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getDevOpsProjectResource"
                          @change="getResource('')">
-                <el-option
-                  v-for="item in parentResOptions"
-                  :key="item.businessId"
-                  :label="item.name"
-                  :value="item.businessId">
-                  <span style="float: left">{{ item.name }}</span>
-                  <span
-                    style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{ item.comment }}</span>
+                <el-option v-for="item in parentResOptions"
+                           :key="item.businessId"
+                           :label="item.name"
+                           :value="item.businessId">
+                  <select-item :name="item.name" :comment="item.comment"/>
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="资源类型">
               <el-select v-model="queryParam.assetType" :disabled="queryParam.resourceParentId === ''" clearable
                          @change="getResource('')" placeholder="选择资源类型">
-                <el-option
-                  v-for="item in assetTypeOptions"
-                  :key="item.id"
-                  :label="item.value | getProjectResAssetText"
-                  :value="item.value">
+                <el-option v-for="item in assetTypeOptions"
+                           :key="item.id"
+                           :label="item.value | getProjectResAssetText"
+                           :value="item.value">
                   <span>{{ item.value | getProjectResAssetText }}</span>
                 </el-option>
               </el-select>
@@ -123,14 +112,11 @@
               <el-select v-model="queryParam.resource" filterable clearable value-key="businessId"
                          :disabled="queryParam.assetType === ''"
                          remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getResource">
-                <el-option
-                  v-for="item in resOptions"
-                  :key="item.businessId"
-                  :label="item.name"
-                  :value="item">
-                  <span style="float: left">{{ item.name }}</span>
-                  <span
-                    style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{ item.comment }}</span>
+                <el-option v-for="item in resOptions"
+                           :key="item.businessId"
+                           :label="item.name"
+                           :value="item">
+                  <select-item :name="item.name" :comment="item.comment"/>
                 </el-option>
               </el-select>
             </el-form-item>
@@ -143,7 +129,9 @@
         </el-col>
         <el-col :span="14">
           <div v-for="(value,key) in project.resourceMap" :key="key" :label="key">
-            <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getProjectResText }}</b></el-divider>
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">{{ key | getProjectResText }}</b>
+            </el-divider>
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
@@ -161,12 +149,11 @@
             <el-form-item label="应用">
               <el-select v-model="bindAppParam.application" filterable value-key="id"
                          remote reserve-keyword placeholder="选择要绑定的应用" :remote-method="getApplication">
-                <el-option
-                  v-for="item in applicationOptions"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item">
-                  <select-item :name="item.name" :comment="item.comment"></select-item>
+                <el-option v-for="item in applicationOptions"
+                           :key="item.id"
+                           :label="item.name"
+                           :value="item">
+                  <select-item :name="item.name" :comment="item.comment"/>
                 </el-option>
               </el-select>
             </el-form-item>
@@ -191,14 +178,14 @@
           </div>
         </el-col>
       </el-tab-pane>
-      <el-tab-pane label="项目成员" name="permissionUser" v-if="project.id !== ''&& project.id !== 0">
+      <el-tab-pane label="项目成员" name="permissionUser" v-if="false">
         <permission-user-tab :businessType="businessType.PROJECT" :businessId="project.id"
-                             ref="permissionUserTab"></permission-user-tab>
+                             ref="permissionUserTab"/>
       </el-tab-pane>
       <el-tab-pane label="业务文档" name="document" :disabled="project.id === '' || project.id === 0">
         <business-doc-editor v-if="project.id !== ''&& project.id !== 0"
                              :business-type="project.businessType" :business-id="project.businessId"
-                             ref="businessDocEditor"></business-doc-editor>
+                             ref="businessDocEditor"/>
       </el-tab-pane>
     </el-tabs>
   </el-dialog>
@@ -498,14 +485,14 @@ export default {
 
   .el-col {
     p {
-      margin: 0px;
+      margin: 0;
       color: #B7B6B6;
       font-size: 20px;
       font-weight: bolder;
     }
 
     & .el-tag {
-      margin: 5px 5px 5px 0px;
+      margin: 5px 5px 5px 0;
     }
 
     /*& .el-divider {*/

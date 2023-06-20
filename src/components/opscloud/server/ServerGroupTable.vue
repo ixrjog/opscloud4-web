@@ -1,38 +1,43 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-select v-model="queryParam.serverGroupTypeId" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType">
-        <el-option
-          v-for="item in groupTypeOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in groupTypeOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
-      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
       <el-table-column prop="serverGroupType" label="组类型">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" disable-transitions :style="{ color: scope.row.serverGroupType.color }">
             {{ scope.row.serverGroupType.name }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="allowOrder" label="工单申请" width="200">
-        <template slot-scope="scope">
-          <allow-tag :allow="scope.row.allowOrder"></allow-tag>
+      <el-table-column prop="users" label="授权用户" width="350">
+        <template v-slot="scope">
+          <users-tag :users="scope.row.users"/>
         </template>
       </el-table-column>
-      <el-table-column prop="serverSize" label="服务器数量"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="allowOrder" label="工单申请" width="200">
+        <template v-slot="scope">
+          <allow-tag :allow="scope.row.allowOrder"/>
+        </template>
+      </el-table-column>
+      <el-table-column prop="serverSize" label="服务器数量"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" :disabled="scope.row.serverSize !== 0"
                      @click="handleRowDel(scope.row)">删除
@@ -41,9 +46,9 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <server-group-editor :formStatus="formStatus.serverGroup" ref="serverGroupEditor"
-                         @close="fetchData"></server-group-editor>
+                         @close="fetchData"/>
   </div>
 </template>
 
@@ -57,6 +62,7 @@ import Pagination from '../common/page/Pagination'
 import ServerGroupEditor from './ServerGroupEditor'
 import AllowTag from '@/components/opscloud/common/tag/AllowTag'
 import SelectItem from '@/components/opscloud/common/SelectItem.vue'
+import UsersTag from '@/components/opscloud/common/tag/UsersTag.vue'
 
 export default {
   name: 'ServerGroupTable',
@@ -96,6 +102,7 @@ export default {
   },
   computed: {},
   components: {
+    UsersTag,
     ServerGroupEditor,
     AllowTag,
     Pagination,

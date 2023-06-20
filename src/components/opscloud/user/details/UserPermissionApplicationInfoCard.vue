@@ -1,8 +1,9 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(apps) !== '[]'">
       <div slot="header" class="clearfix">
-        <span>授权的应用<i class="header-icon el-icon-info"></i>(深色标签拥有管理员权限)</span>
+        <span>授权的应用<i class="header-icon el-icon-info"/>(深色标签拥有管理员权限)</span>
       </div>
       <div>
         <span class="tag-group">
@@ -10,7 +11,8 @@
               <el-tooltip class="item" effect="light" :content="item.comment || '没有填写'" placement="bottom">
                  <el-tag size="mini" style="margin-left: 5px"
                          :type=" item.userPermission.permissionRole === 'admin' ? 'danger': '' ">
-                   {{ item.name }}</el-tag>
+                   {{ item.name }}
+                 </el-tag>
               </el-tooltip>
          </span>
        </span>

@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
-                               datasource-nane="Kubernetes实例管理"></datasource-instance-title>
+                               datasource-nane="Kubernetes实例管理"/>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="Node节点" name="node">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NODE"
@@ -44,7 +45,7 @@
                      :tableLayout="tableLayout.service" ref="serviceTable">
           <template v-slot:extend>
             <el-table-column label="容器组数量" show-overflow-tooltip>
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ scope.row.properties.replicas }}</span>
               </template>
             </el-table-column>
@@ -56,7 +57,7 @@
                      :tableLayout="tableLayout.pod" ref="podTable">
           <template v-slot:extend>
             <el-table-column label="节点" show-overflow-tooltip>
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <el-tooltip class="item" effect="dark" :content="scope.row.properties.nodeName" placement="top-start">
                   <span>{{ scope.row.properties.hostIp }}</span>
                 </el-tooltip>
@@ -66,8 +67,7 @@
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="业务模板" name="template">
-        <kubernetes-template-table :instanceUuid="instance.uuid" ref="templateTable">
-        </kubernetes-template-table>
+        <kubernetes-template-table :instanceUuid="instance.uuid" ref="templateTable"/>
       </el-tab-pane>
     </el-tabs>
   </d2-container>

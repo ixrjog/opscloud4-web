@@ -1,9 +1,10 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>模板管理</h1>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="消息模板管理" name="message">
-        <message-template-table ref="messageTemplateTable"></message-template-table>
+        <message-template-table ref="messageTemplateTable"/>
       </el-tab-pane>
     </el-tabs>
   </d2-container>

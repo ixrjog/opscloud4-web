@@ -1,9 +1,9 @@
+<!--suppress HtmlUnknownTag -->
 <template>
-  <el-transfer
-    v-model="accountIds"
-    :props="{ key: 'id', label: 'displayName' }"
-    :data="accountOptions"
-    :titles="['所有账户', '当前账户']">
+  <el-transfer v-model="accountIds"
+               :props="{ key: 'id', label: 'displayName' }"
+               :data="accountOptions"
+               :titles="['所有账户', '当前账户']">
   </el-transfer>
 </template>
 
@@ -11,6 +11,7 @@
 // API
 import { QUERY_SERVER_ACCOUNT_PAGE, UPDATE_SERVER_ACCOUNT_PERMISSION } from '@/api/modules/server/server.account.api.js'
 import tools from '@/libs/tools.js'
+
 export default {
   data () {
     return {
@@ -60,8 +61,8 @@ export default {
 
 <style>
 
-  .el-transfer-panel {
-    width: 250px;
-  }
+.el-transfer-panel {
+  width: 250px;
+}
 
 </style>

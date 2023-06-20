@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div class="img">
-    <img :src="icon">
+    <img :src="icon" alt=""/>
   </div>
 </template>
 
@@ -26,7 +27,8 @@ const iconUrl = {
   consul: require('@/static/icons/ds-consul.svg'),
   common: require('@/static/icons/ds-common.svg'),
   aliyunDevops: require('@/static/icons/ds-aliyunDevops.svg'),
-  meterSphere: require('@/static/icons/ds-metersphere.svg')
+  meterSphere: require('@/static/icons/ds-metersphere.svg'),
+  apollo: require('@/static/icons/ds-apollo.svg')
 }
 
 export default {
@@ -108,6 +110,9 @@ export default {
           break
         case DsInstanceType.METER_SPHERE.name:
           this.icon = iconUrl.meterSphere
+          break
+        case DsInstanceType.APOLLO.name:
+          this.icon = iconUrl.apollo
           break
         default:
           this.icon = iconUrl.common

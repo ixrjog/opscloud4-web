@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag size="mini">{{ dsTypeOptions.find(e=> e.value === dsType).label }}</el-tag>
 </template>

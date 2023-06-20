@@ -1,30 +1,26 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="tag">
       <el-form-item label="标签关键字" :label-width="labelWidth" required>
-        <el-input v-model="tag.tagKey" placeholder="请输入内容" :disabled="!formStatus.operationType"></el-input>
+        <el-input v-model="tag.tagKey" placeholder="请输入内容" :disabled="!formStatus.operationType"/>
       </el-form-item>
       <el-form-item label="标签业务类型" :label-width="labelWidth" required>
-        <el-select v-model="tag.businessType" placeholder="选择分类" >
-          <el-option
-            v-for="item in businessTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+        <el-select v-model="tag.businessType" placeholder="选择分类">
+          <el-option v-for="item in businessTypeOptions" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="颜色" :label-width="labelWidth" required>
-        <el-color-picker v-model="tag.color"></el-color-picker>
+        <el-color-picker v-model="tag.color"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="tag.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="tag.comment" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handlerSave">确定</el-button>
+      <el-button type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -48,7 +44,7 @@ export default {
     initData (tag) {
       this.tag = tag
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_TAG(requestBody)
         .then(res => {
           // 返回数据
@@ -60,7 +56,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_TAG(requestBody)
         .then(res => {
           // 返回数据
@@ -72,11 +68,11 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    handleSave () {
       if (this.formStatus.operationType) {
-        this.handlerAdd(this.tag)
+        this.handleAdd(this.tag)
       } else {
-        this.handlerUpdate(this.tag)
+        this.handleUpdate(this.tag)
       }
     }
   }

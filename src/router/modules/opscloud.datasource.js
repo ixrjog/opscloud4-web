@@ -188,6 +188,14 @@ export default [
       auth: true,
       title: 'MeterSphere数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/apollo',
+    name: 'datasource-instance-apollo',
+    component: () => import('@/pages/datasource/instance/apollo'),
+    meta: {
+      auth: true,
+      title: 'Apollo配置中心数据源实例'
+    }
   }
-
 ]

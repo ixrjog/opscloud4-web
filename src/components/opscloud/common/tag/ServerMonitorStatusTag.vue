@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag size="mini" disable-transitions :type="monitorStatus | getServerMonitorStatusType">
     {{ monitorStatus  | getServerMonitorStatusText }}

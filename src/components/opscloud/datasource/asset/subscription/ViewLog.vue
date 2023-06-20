@@ -1,8 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog :title="formStatus.title"
-             :visible.sync="formStatus.visible">
+  <el-dialog :title="formStatus.title" :visible.sync="formStatus.visible">
     <el-tag style="margin-bottom: 10px" size="mini">{{ ago }}</el-tag>
-    <my-highlight :code="log" lang="yaml"></my-highlight>
+    <my-highlight :code="log" lang="yaml"/>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>
     </div>
@@ -48,14 +48,14 @@ export default {
 
   .el-col {
     p {
-      margin: 0px;
+      margin: 0;
       color: #B7B6B6;
       font-size: 20px;
       font-weight: bolder;
     }
 
     & .el-tag {
-      margin: 5px 5px 5px 0px;
+      margin: 5px 5px 5px 0;
     }
   }
 }

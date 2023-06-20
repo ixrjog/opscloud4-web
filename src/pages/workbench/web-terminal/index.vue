@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div v-show="terminalLayout.terminals.length === 0">
@@ -14,12 +15,12 @@
                       @handleChangeLoginUserType="handleChangeLoginUserType"
                       @handleChangeBatch="handleChangeBatch"
                       @handleChangeLayout="handleChangeLayout"
-                      @handleResize="handleResize"></terminal-tools>
+                      @handleResize="handleResize"/>
     </el-row>
     <el-row>
       <el-col :span="8">
         <!--          服务器树-->
-        <server-tree class="server-tree" ref="serverTree" v-show="terminalLayout.terminals.length === 0"></server-tree>
+        <server-tree class="server-tree" ref="serverTree" v-show="terminalLayout.terminals.length === 0"/>
       </el-col>
       <el-col>
         <!--          终端布局-->
@@ -31,11 +32,14 @@
                          :colSpan="terminalLayout.colSpan"
                          @handleLogoutByServerNode="handleLogoutByServerNode"
                          @handleLoginByServerNode="handleLoginByServerNode"
-                         @handleRead="handleRead"></terminal-layout>
+                         @handleRead="handleRead"/>
       </el-col>
     </el-row>
+    <el-row style="margin-top: 20px">
+      <document-zone mount-zone="WEB_TERMINAL"/>
+    </el-row>
     <business-doc-reader :form-status="formStatus.businessDoc"
-                         ref="businessDocReader"></business-doc-reader>
+                         ref="businessDocReader"/>
   </d2-container>
 </template>
 
@@ -48,6 +52,7 @@ import TerminalLayout from '../../../components/opscloud/terminal/TerminalLayout
 import { mapState } from 'vuex'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
+import DocumentZone from "@/components/opscloud/sys/DocumentZone.vue";
 
 export default {
   name: 'web-terminal',
@@ -90,6 +95,7 @@ export default {
     this.handleLogout()
   },
   components: {
+    DocumentZone,
     ServerTree,
     TerminalTools,
     TerminalLayout,

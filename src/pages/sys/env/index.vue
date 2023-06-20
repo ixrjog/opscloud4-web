@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <template>
@@ -13,23 +14,23 @@
                 :default-sort="{prop: 'envType', order: 'ascending'}">
         <el-table-column prop="name" label="名称">
           <template v-slot="scope">
-            <env-tag :env="scope.row"></env-tag>
+            <env-tag :env="scope.row"/>
           </template>
         </el-table-column>
         <el-table-column prop="name" label="终端提示色">
           <template v-slot="scope">
             <prompt-color-tag v-if="scope.row.promptColor !== null" :env="scope.row"
-                              :promptColorOptions="promptColorOptions"></prompt-color-tag>
+                              :promptColorOptions="promptColorOptions"/>
           </template>
         </el-table-column>
-        <el-table-column prop="envType" label="类型值" sortable></el-table-column>
-        <el-table-column prop="seq" label="顺序" sortable></el-table-column>
+        <el-table-column prop="envType" label="类型值" sortable/>
+        <el-table-column prop="seq" label="顺序" sortable/>
         <el-table-column prop="isActive" label="有效">
           <template v-slot="scope">
-            <active-tag :is-active="scope.row.isActive"></active-tag>
+            <active-tag :is-active="scope.row.isActive"/>
           </template>
         </el-table-column>
-        <el-table-column prop="comment" label="描述"></el-table-column>
+        <el-table-column prop="comment" label="描述"/>
         <el-table-column fixed="right" label="操作" width="280">
           <template v-slot="scope">
             <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
@@ -38,9 +39,9 @@
         </el-table-column>
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                  @handleSizeChange="handleSizeChange"></pagination>
+                  @handleSizeChange="handleSizeChange"/>
       <env-editor :formStatus="formStatus.env" ref="envEditor" :promptColorOptions="promptColorOptions"
-                  @close="fetchData"></env-editor>
+                  @close="fetchData"/>
     </template>
   </d2-container>
 </template>

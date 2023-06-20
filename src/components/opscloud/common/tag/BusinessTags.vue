@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
     <span class="tag-group">
     <span v-for="item in tags" :key="item.id" :style="spanStyle">

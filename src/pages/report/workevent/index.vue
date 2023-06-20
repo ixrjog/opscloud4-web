@@ -1,13 +1,14 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <template>
       <h1>{{ title }}</h1>
       <el-tabs v-model="activeName">
         <el-tab-pane label="报表" name="report">
-          <work-event-report ref="workEventReport" :work-role-options="workRoleOptions"></work-event-report>
+          <work-event-report ref="workEventReport" :work-role-options="workRoleOptions"/>
         </el-tab-pane>
         <el-tab-pane label="详情" name="detail">
-          <work-event-table @refreshData="refreshData" :work-role-options="workRoleOptions"></work-event-table>
+          <work-event-table @refreshData="refreshData" :work-role-options="workRoleOptions"/>
         </el-tab-pane>
       </el-tabs>
     </template>

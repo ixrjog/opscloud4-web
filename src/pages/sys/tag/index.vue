@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -6,12 +7,11 @@
     <el-row :gutter="24" style="margin-bottom: 5px">
       <el-input v-model="queryParam.tagKey" placeholder="标签关键字"/>
       <el-select v-model="queryParam.businessType" clearable placeholder="业务类型">
-        <el-option
-          v-for="item in businessTypeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-          <select-item :name="item.label" :comment="item.comment"></select-item>
+        <el-option v-for="item in businessTypeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
+          <select-item :name="item.label" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
@@ -28,8 +28,8 @@
           <el-tag size="mini" disable-transitions>{{ scope.row.businessTypeEnum }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="quantityUsed" label="使用数量" width="100"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="quantityUsed" label="使用数量" width="100"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="280">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
@@ -42,9 +42,9 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <tag-editor ref="tagEditor" :formStatus="formStatus.tag" :business-type-options="businessTypeOptions"
-                @close="fetchData"></tag-editor>
+                @close="fetchData"/>
   </d2-container>
 </template>
 

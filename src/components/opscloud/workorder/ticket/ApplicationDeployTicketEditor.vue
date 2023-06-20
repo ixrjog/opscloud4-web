@@ -1,9 +1,10 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '70%': '50%'"
              :before-close="beforeClose">
     <!--页眉-->
-    <template slot="title" v-if="ticketView !== null">
-      <ticket-title :id="ticketView.ticketId" :title="ticketView.workOrder.name"></ticket-title>
+    <template v-slot:title v-if="ticketView !== null">
+      <ticket-title :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
     </template>
     <!--页眉-->
     <!--工单视图-->
@@ -11,11 +12,10 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-leo-build-entry-selector
-              v-if="ticketView.ticketPhase === 'NEW'"
-              :workOrderTicketId="ticketView.ticketId"
-              :entryDesc="tableLayout.entryName"
-              @handleNotify="fetchData"/>
+            <ticket-leo-build-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
+                                             :workOrderTicketId="ticketView.ticketId"
+                                             :entryDesc="tableLayout.entryName"
+                                             @handleNotify="fetchData"/>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
@@ -38,14 +38,14 @@
         <el-timeline-item timestamp="申请说明" placement="top">
           <el-input type="textarea" :rows="2" v-model="ticketView.comment"
                     :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
-                    :readonly="ticketView.ticketPhase !== 'NEW'"></el-input>
+                    :readonly="ticketView.ticketPhase !== 'NEW'"/>
         </el-timeline-item>
         <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
-          <node-view :nodeView="ticketView.nodeView"></node-view>
+          <node-view :nodeView="ticketView.nodeView"/>
         </el-timeline-item>
         <!--        审批意见只展示给当前审批人-->
         <el-timeline-item timestamp="审批意见" placement="top" v-if="ticketView.isApprover">
-          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="approvalComment"></el-input>
+          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="approvalComment"/>
         </el-timeline-item>
       </el-timeline>
     </div>
@@ -91,7 +91,6 @@ import {
   SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
 import SelectItem from '@/components/opscloud/common/SelectItem.vue'
-import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
 import TicketLeoBuildEntrySelector from '@/components/opscloud/workorder/child/TicketLeoBuildEntrySelector.vue'
 
 const TableLayout = {
@@ -113,7 +112,6 @@ export default {
   name: 'ApplicationDeployTicketEditor',
   props: ['formStatus'],
   components: {
-    SelectItem,
     TicketTitle,
     NodeView,
     TicketEntrySelector,

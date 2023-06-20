@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <template>
@@ -6,15 +7,12 @@
       </div>
       <el-row style="margin-bottom: 5px" :gutter="24">
         <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
-        <el-select
-          v-model="queryParam.tagId" filterable clearable remote reserve-keyword
-          placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
-          <el-option
-            v-for="item in tagOptions"
-            :key="item.id"
-            :label="item.tagKey"
-            :value="item.id">
-          </el-option>
+        <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+                   placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
+          <el-option v-for="item in tagOptions"
+                     :key="item.id"
+                     :label="item.tagKey"
+                     :value="item.id"/>
         </el-select>
         <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
         <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
@@ -35,13 +33,15 @@
               <b style="color: #9d9fa3">{{ scope.row.comment }}</b>
             </el-row>
             <!--Tags-->
-            <business-tags :tags="scope.row.tags"></business-tags>
+            <business-tags :tags="scope.row.tags"/>
           </template>
         </el-table-column>
         <el-table-column prop="resourceMap" label="绑定资源" width="400px">
           <template v-slot="scope">
             <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key" class="resDiv">
-              <el-divider content-position="left"><b style="color: #9d9fa3">{{ key | getAppResText }}</b></el-divider>
+              <el-divider content-position="left">
+                <b style="color: #9d9fa3">{{ key | getAppResText }}</b>
+              </el-divider>
               <div v-for="item in value" :key="item.id">
                 <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                             :disabled="!item.comment">
@@ -56,7 +56,7 @@
         </el-table-column>
         <el-table-column prop="users" label="授权用户" width="350">
           <template v-slot="scope">
-            <users-tag :users="scope.row.users"></users-tag>
+            <users-tag :users="scope.row.users"/>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="200">
@@ -68,12 +68,12 @@
         </el-table-column>
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                  @handleSizeChange="handleSizeChange"></pagination>
+                  @handleSizeChange="handleSizeChange"/>
       <application-editor ref="applicationEditor" :formStatus="formStatus.application"
-                          @close="fetchData"></application-editor>
+                          @close="fetchData"/>
       <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                           :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
-      <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"></business-doc-reader>
+                           :form-status="formStatus.businessTag" @close="fetchData"/>
+      <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"/>
     </template>
   </d2-container>
 </template>

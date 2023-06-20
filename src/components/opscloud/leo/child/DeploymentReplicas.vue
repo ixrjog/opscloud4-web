@@ -1,9 +1,9 @@
 <template>
   <span>
     <span v-for="index of replicas" :key="index">
-     <i class="fas fa-square" :style="replicasStyle"></i>
-     <span v-if="index % 5 === 0" style="margin-right: 2px"></span>
-     </span> x{{ replicas }}
+     <i class="fas fa-square" :style="replicasStyle"/>
+     <span v-if="index % 5 === 0" style="margin-right: 2px"/>
+    </span> x{{ replicas }}
   </span>
 </template>
 

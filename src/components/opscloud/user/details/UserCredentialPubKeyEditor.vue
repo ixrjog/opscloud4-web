@@ -1,15 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.title" :visible.sync="formStatus.visible" :before-close="close">
     <el-form :model="userCredential">
       <el-form-item label="标题" :label-width="formStatus.labelWidth">
-        <el-input v-model="userCredential.title" placeholder="自动识别" readonly></el-input>
+        <el-input v-model="userCredential.title" placeholder="自动识别" readonly/>
       </el-form-item>
       <el-form-item label="公钥指纹" :label-width="formStatus.labelWidth">
-        <el-input v-model="userCredential.fingerprint" placeholder="自动识别" readonly></el-input>
+        <el-input v-model="userCredential.fingerprint" placeholder="自动识别" readonly/>
       </el-form-item>
       <el-form-item label="公钥" :label-width="formStatus.labelWidth" :required="true">
         <el-input v-model="userCredential.credential" type="textarea"
-                  :autosize="{ minRows: 4, maxRows: 16}" clearable placeholder="请输入内容"></el-input>
+                  :autosize="{ minRows: 4, maxRows: 16}" clearable placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

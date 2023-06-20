@@ -1,27 +1,26 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="snsTopicData" label-width="120px" ref="snsTopicDataForm" :rules="rules">
       <el-form-item label="AWS实例" prop="instanceUuid">
         <el-select v-model="instanceUuid" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword>
-          <el-option
-            v-for="item in dsInstanceOptions"
-            :key="item.uuid"
-            :label="item.instanceName"
-            :value="item.uuid">
-            <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+          <el-option v-for="item in dsInstanceOptions"
+                     :key="item.uuid"
+                     :label="item.instanceName"
+                     :value="item.uuid">
+            <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="环境">
         <el-select v-model="snsTopicData.envName" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
-          <el-option
-            v-for="item in regionOptions"
-            :key="item.label"
-            :label="item.label"
-            :value="item.label">
-            <select-item :name="item.label" :comment="item.desc"></select-item>
+          <el-option v-for="item in regionOptions"
+                     :key="item.label"
+                     :label="item.label"
+                     :value="item.label">
+            <select-item :name="item.label" :comment="item.desc"/>
           </el-option>
         </el-select>
       </el-form-item>
@@ -60,7 +59,7 @@
         </div>
       </el-form-item>
       <el-form-item label="描述" prop="remark">
-        <el-input v-model="snsTopicData.remark" placeholder="请输入备注，例如：用户 - 领券队列"></el-input>
+        <el-input v-model="snsTopicData.remark" placeholder="请输入备注，例如：用户 - 领券队列"/>
       </el-form-item>
       <el-form-item>
         <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">保存</el-button>

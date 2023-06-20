@@ -1,16 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-form label-width="100px">
         <el-form-item label="AWS实例">
           <el-select v-model="dsInstance" filterable placeholder="选择AWS实例" style="width: 300px"
                      value-key="id" @change="selInstance">
-            <el-option
-              v-for="item in dsInstanceOptions"
-              :key="item.id"
-              :label="item.instanceName"
-              :value="item">
-              <select-item :name="item.instanceType" :comment="item.instanceName"></select-item>
+            <el-option v-for="item in dsInstanceOptions"
+                       :key="item.id"
+                       :label="item.instanceName"
+                       :value="item">
+              <select-item :name="item.instanceType" :comment="item.instanceName"/>
             </el-option>
           </el-select>
           <el-button @click="handleAddRamUser" :disabled="!button.create.disabled" :loading="button.create.creating">
@@ -20,13 +20,12 @@
         <el-form-item label="IAM策略">
           <el-select v-model.trim="policy" filterable clearable style="width: 300px" :disabled="dsInstance === null"
                      remote reserve-keyword placeholder="选择IAM策略" value-key="id" :remote-method="getAsset">
-            <el-option
-              v-for="item in policyOptions"
-              :key="item.id"
-              :label="item.name"
-              :value="item"
-              :disabled="!item.isActive">
-              <select-item :name="item.name" :comment="item.description"></select-item>
+            <el-option v-for="item in policyOptions"
+                       :key="item.id"
+                       :label="item.name"
+                       :value="item"
+                       :disabled="!item.isActive">
+              <select-item :name="item.name" :comment="item.description"/>
             </el-option>
           </el-select>
           <el-button @click="handleGrantPolicy" :disabled="policy === null" :loading="button.grant.granting">授权
@@ -36,7 +35,7 @@
     </el-row>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column label="实例 / 账户">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-row>
             <span>{{ scope.row.instanceName }}</span>
           </el-row>
@@ -46,14 +45,14 @@
         </template>
       </el-table-column>
       <el-table-column prop="accessKeys" label="Access Key">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag v-for="ak in scope.row.accessKeys" :key="ak.assetId">
             {{ ak.assetId }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="policies" label="策略">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div class="tag-group">
             <div v-for="policy in scope.row.policies" :key="policy.assetId">
               <el-tooltip class="item" effect="light" :content="policy.assetKey2" placement="top-start">

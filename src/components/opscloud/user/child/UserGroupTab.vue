@@ -1,34 +1,33 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-select v-model.trim="userGroupId" clearable filterable
                  remote reserve-keyword placeholder="选择要授权的用户组" :remote-method="getUserGroup">
-        <el-option
-          v-for="item in userGroupOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-        </el-option>
+        <el-option v-for="item in userGroupOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id"/>
       </el-select>
       <el-button type="primary" plain size="mini" @click="handlerGrant()" :disabled="userGroupId === ''">授权
       </el-button>
     </el-row>
     <el-divider></el-divider>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model="queryParam.queryName" placeholder="名称"></el-input>
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+      <el-input v-model="queryParam.queryName" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="200">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="danger" plain size="mini" @click="handlerRowRevoke(scope.row)">解除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </div>
 </template>
 

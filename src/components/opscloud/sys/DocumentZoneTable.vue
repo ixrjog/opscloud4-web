@@ -1,26 +1,25 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
       <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="mountZone" label="文档挂载区"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
+      <el-table-column prop="mountZone" label="文档挂载区"/>
       <el-table-column prop="isActive" label="有效">
         <template v-slot="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
+          <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="230">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -28,10 +27,10 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <!--    <server-editor :formStatus="formStatus.server" ref="serverEditor" @close="fetchData"></server-editor>-->
     <document-zone-editor :formStatus="formStatus.zone" ref="documentZoneEditor"
-                          @close="fetchData"></document-zone-editor>
+                          @close="fetchData"/>
   </div>
 </template>
 

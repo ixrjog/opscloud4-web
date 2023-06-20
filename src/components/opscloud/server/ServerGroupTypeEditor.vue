@@ -1,15 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="serverGroupType">
       <el-form-item label="名称" :label-width="formStatus.labelWidth">
-        <el-input v-model="serverGroupType.name" placeholder="请输入内容"></el-input>
+        <el-input v-model="serverGroupType.name" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="颜色" :label-width="formStatus.labelWidth">
-        <el-color-picker v-model="serverGroupType.color"></el-color-picker>
+        <el-color-picker v-model="serverGroupType.color"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="formStatus.labelWidth">
-        <el-input v-model="serverGroupType.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="serverGroupType.comment" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

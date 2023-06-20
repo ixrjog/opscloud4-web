@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" :before-close="closeEditor">
@@ -5,31 +6,30 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="workOrder" label-width="80px">
           <el-form-item label="名称" :required="true">
-            <el-input v-model="workOrder.name" placeholder="请输入工单名称"></el-input>
+            <el-input v-model="workOrder.name" placeholder="请输入工单名称"/>
           </el-form-item>
           <el-form-item label="类目颜色" :required="true">
-            <el-color-picker v-model="workOrder.color"></el-color-picker>
+            <el-color-picker v-model="workOrder.color"/>
           </el-form-item>
           <el-form-item label="Key" :required="true">
-            <el-input v-model="workOrder.workOrderKey" disabled></el-input>
+            <el-input v-model="workOrder.workOrderKey" disabled/>
           </el-form-item>
           <el-form-item label="群组" :required="true">
-            <el-select v-model="workOrder.workOrderGroupId" filterable remote reserve-keyword placeholder="关键字搜索群组"
+            <el-select v-model="workOrder.workOrderGroupId" filterable remote reserve-keyword
+                       placeholder="关键字搜索群组"
                        :remote-method="getWorkOrderGroups">
-              <el-option
-                v-for="item in workOrderGroupOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
+              <el-option v-for="item in workOrderGroupOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id"/>
             </el-select>
           </el-form-item>
           <el-form-item label="顺序" :required="true">
-            <el-input v-model.number="workOrder.seq" placeholder="请输入工单顺序"></el-input>
+            <el-input v-model.number="workOrder.seq" placeholder="请输入工单顺序"/>
           </el-form-item>
           <el-form-item label="图标">
             <el-input v-model="workOrder.icon" placeholder="请输入工单图标">
-              <i slot="suffix" :class=workOrder.icon aria-hidden="true"></i>
+              <i slot="suffix" :class=workOrder.icon aria-hidden="true"/>
             </el-input>
           </el-form-item>
           <el-form-item label="状态" :required="true">
@@ -41,19 +41,19 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="帮助">
-            <el-input v-model.number="workOrder.docs" placeholder="只支持内部跳转"></el-input>
+            <el-input v-model.number="workOrder.docs" placeholder="只支持内部跳转"/>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="workOrder.comment" placeholder="请输入工单描述"></el-input>
+            <el-input v-model="workOrder.comment" placeholder="请输入工单描述"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="工作流" name="workflow">
         <el-form :model="workOrder" label-position="top">
           <el-form-item label="工作流(YML)" required>
-            <my-highlight v-if="!editing" :code="workOrder.workflow" lang="yaml"></my-highlight>
+            <my-highlight v-if="!editing" :code="workOrder.workflow" lang="yaml"/>
             <editor v-if="editing" v-model="workOrder.workflow" @init="editorInit" lang="yaml" theme="chrome"
-                    height="250" :options="options"></editor>
+                    height="250" :options="options"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">

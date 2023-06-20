@@ -1,38 +1,42 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <el-row :gutter="20">
       <el-col :span="6">
-        <work-order-card @createTicket="createTicket"></work-order-card>
+        <work-order-card @createTicket="createTicket"/>
       </el-col>
       <el-col :span="18">
         <my-ticket-card @editTicket="editTicket"
                         @previewTicket="previewTicket"
                         @approvalTicket="approvalTicket"
-                        ref="myTicketCard"></my-ticket-card>
+                        ref="myTicketCard"/>
       </el-col>
     </el-row>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor" @close="fetchData"/>
-    <application-permission-ticket-editor :formStatus="formStatus.ticket.applicationPermission" ref="applicationPermissionTicketEditor" @close="fetchData"/>
+    <application-permission-ticket-editor :formStatus="formStatus.ticket.application.permission" ref="applicationPermissionTicketEditor" @close="fetchData"/>
     <confluence-ticket-editor :formStatus="formStatus.ticket.confluence" ref="confluenceTicketEditor" @close="fetchData"/>
     <vpn-ticket-editor :formStatus="formStatus.ticket.vpn" ref="vpnTicketEditor" @close="fetchData"/>
     <grafana-ticket-editor :formStatus="formStatus.ticket.grafana" ref="grafanaTicketEditor" @close="fetchData"/>
     <nexus-ticket-editor :formStatus="formStatus.ticket.nexus" ref="nexusTicketEditor" @close="fetchData"/>
     <ram-policy-ticket-editor :formStatus="formStatus.ticket.ramPolicy" ref="ramPolicyTicketEditor" @close="fetchData"/>
     <iam-policy-ticket-editor :formStatus="formStatus.ticket.iamPolicy" ref="iamPolicyTicketEditor" @close="fetchData"/>
-    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor" @close="fetchData"></nacos-ticket-editor>
+    <nacos-ticket-editor :formStatus="formStatus.ticket.nacos" ref="nacosTicketEditor" @close="fetchData"/>
     <gitlab-project-ticket-editor :formStatus="formStatus.ticket.gitlab.project" ref="gitlabProjectTicketEditor" @close="fetchData"/>
     <gitlab-group-ticket-editor :formStatus="formStatus.ticket.gitlab.group" ref="gitlabGroupTicketEditor" @close="fetchData"/>
     <ons-topic-ticket-editor :formStatus="formStatus.ticket.ons.topic" ref="onsTopicTicketEditor" @close="fetchData"/>
     <ons-group-ticket-editor :formStatus="formStatus.ticket.ons.group" ref="onsGroupTicketEditor" @close="fetchData"/>
     <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor" @close="fetchData"/>
-    <sqs-ticket-editor :formStatus="formStatus.ticket.sqs" ref="sqsTicketEditor" @close="fetchData"></sqs-ticket-editor>
+    <sqs-ticket-editor :formStatus="formStatus.ticket.sqs" ref="sqsTicketEditor" @close="fetchData"/>
     <sns-topic-ticket-editor :formStatus="formStatus.ticket.sns.topic" ref="snsTopicTicketEditor" @close="fetchData"/>
     <sns-subscription-ticket-editor :formStatus="formStatus.ticket.sns.subscription" ref="snsSubscriptionTicketEditor" @close="fetchData"/>
-    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.applicationScaleReplicas" ref="applicationScaleReplicasTicketEditor" @close="fetchData"/>
-    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.applicationReduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
-    <apollo-ticket-editor :formStatus="formStatus.ticket.apollo" ref="apolloTicketEditor" @close="fetchData"/>
+    <application-scale-replicas-ticket-editor :formStatus="formStatus.ticket.application.scaleReplicas" ref="applicationScaleReplicasTicketEditor" @close="fetchData"/>
+    <application-reduce-replicas-ticket-editor :formStatus="formStatus.ticket.application.reduceReplicas" ref="applicationReduceReplicasTicketEditor" @close="fetchData"/>
+    <apollo-ticket-editor :formStatus="formStatus.ticket.apollo.permission" ref="apolloTicketEditor" @close="fetchData"/>
+    <apollo-release-ticket-editor :formStatus="formStatus.ticket.apollo.release" ref="apolloReleaseTicketEditor" @close="fetchData"/>
     <aws-iam-update-login-profile-ticket-editor :formStatus="formStatus.ticket.awsIamUpdateLoginProfile" ref="awsIamUpdateLoginProfileTicketEditor" @close="fetchData"/>
-    <application-deploy-ticket-editor :formStatus="formStatus.ticket.applicationDeploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
+    <application-deploy-ticket-editor :formStatus="formStatus.ticket.application.deploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
+    <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
+    <ser-deploy-ticket-editor :formStatus="formStatus.ticket.application.serDeploy" ref="serDeployTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -68,6 +72,11 @@ import ApplicationReduceReplicasTicketEditor
 import AwsIamUpdateLoginProfileTicketEditor
   from '@/components/opscloud/workorder/ticket/AwsIamUpdateLoginProfileTicketEditor.vue'
 import ApplicationDeployTicketEditor from '@/components/opscloud/workorder/ticket/ApplicationDeployTicketEditor.vue'
+import NewApplicationTicketEditor from '@/components/opscloud/workorder/ticket/NewApplicationTicketEditor.vue'
+import AliyunRamUpdateLoginProfileTicketEditor
+  from '@/components/opscloud/workorder/ticket/AliyunRamUpdateLoginProfileTicketEditor.vue'
+import ApolloReleaseTicketEditor from '@/components/opscloud/workorder/ticket/ApolloReleaseTicketEditor.vue'
+import SerDeployTicketEditor from '@/components/opscloud/workorder/ticket/SerDeployTicketEditor.vue'
 
 export default {
   data () {
@@ -104,7 +113,11 @@ export default {
     ApplicationReduceReplicasTicketEditor,
     ApolloTicketEditor,
     AwsIamUpdateLoginProfileTicketEditor,
-    ApplicationDeployTicketEditor
+    AliyunRamUpdateLoginProfileTicketEditor,
+    ApplicationDeployTicketEditor,
+    NewApplicationTicketEditor,
+    ApolloReleaseTicketEditor,
+    SerDeployTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -113,13 +126,6 @@ export default {
         formStatus.operationType = false
       })
     },
-    /**
-     * param:{
-     *   workOrderKey,
-     *   ticket
-     * }
-     * @param param
-     */
     previewTicket (ticket) {
       this.openTicketEditor(ticket.workOrderKey, ticket)
     },
@@ -139,7 +145,7 @@ export default {
           this.$refs.serverGroupTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_PERMISSION:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationPermission)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.permission)
           this.$refs.applicationPermissionTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.CONFLUENCE:
@@ -203,24 +209,40 @@ export default {
           this.$refs.snsSubscriptionTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_SCALE_REPLICAS:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationScaleReplicas)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.scaleReplicas)
           this.$refs.applicationScaleReplicasTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APPLICATION_REDUCE_REPLICAS:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationReduceReplicas)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.reduceReplicas)
           this.$refs.applicationReduceReplicasTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APOLLO:
-          this.handleOpenTicketEditor(this.formStatus.ticket.apollo)
+          this.handleOpenTicketEditor(this.formStatus.ticket.apollo.permission)
           this.$refs.apolloTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.AWS_IAM_UPDATE_LOGIN_PROFILE:
           this.handleOpenTicketEditor(this.formStatus.ticket.awsIamUpdateLoginProfile)
           this.$refs.awsIamUpdateLoginProfileTicketEditor.initData(ticket)
           break
+        case this.workOrderKeyConstants.ALIYUN_RAM_UPDATE_LOGIN_PROFILE:
+          this.handleOpenTicketEditor(this.formStatus.ticket.aliyunRamUpdateLoginProfile)
+          this.$refs.aliyunRamUpdateLoginProfileTicketEditor.initData(ticket)
+          break
         case this.workOrderKeyConstants.APPLICATION_DEPLOY:
-          this.handleOpenTicketEditor(this.formStatus.ticket.applicationDeploy)
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.deploy)
           this.$refs.applicationDeployTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.NEW_APPLICATION:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.new)
+          this.$refs.newApplicationTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APOLLO_RELEASE:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.apollo.release)
+          this.$refs.apolloReleaseTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.SER_DEPLOY:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.serDeploy)
+          this.$refs.serDeployTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

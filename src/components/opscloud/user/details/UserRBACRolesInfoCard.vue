@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 10px">
@@ -29,7 +30,7 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
+  //-webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 

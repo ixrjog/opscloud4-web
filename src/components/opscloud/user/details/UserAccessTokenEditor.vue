@@ -1,24 +1,22 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="title" :visible.sync="formStatus.visible" :before-close="handleClose">
     <el-form :model="accessToken">
       <el-form-item label="令牌ID" :label-width="formStatus.labelWidth">
-        <el-input v-model="accessToken.tokenId" placeholder="自动生成" readonly></el-input>
+        <el-input v-model="accessToken.tokenId" placeholder="自动生成" readonly/>
       </el-form-item>
       <el-form-item label="令牌" :label-width="formStatus.labelWidth">
-        <el-input v-model="accessToken.token" clearable placeholder="自动生成" readonly>
-        </el-input>
+        <el-input v-model="accessToken.token" clearable placeholder="自动生成" readonly/>
       </el-form-item>
       <el-form-item label="过期时间" :label-width="formStatus.labelWidth" :required="true">
-        <el-date-picker
-          v-model="accessToken.expiredTime" value-format="yyyy-MM-dd HH:mm:ss"
-          align="right"
-          type="date"
-          placeholder="选择日期"
-          :picker-options="pickerOptions">
-        </el-date-picker>
+        <el-date-picker v-model="accessToken.expiredTime" value-format="yyyy-MM-dd HH:mm:ss"
+                        align="right"
+                        type="date"
+                        placeholder="选择日期"
+                        :picker-options="pickerOptions"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="formStatus.labelWidth" :required="true">
-        <el-input v-model="accessToken.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="accessToken.comment" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

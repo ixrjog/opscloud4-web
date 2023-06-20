@@ -1,32 +1,31 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="sqsData" label-width="120px" ref="sqsDataForm" :rules="rules">
       <el-form-item label="AWS实例" prop="instanceUuid">
         <el-select v-model="instanceUuid" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword>
-          <el-option
-            v-for="item in dsInstanceOptions"
-            :key="item.uuid"
-            :label="item.instanceName"
-            :value="item.uuid">
-            <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+          <el-option v-for="item in dsInstanceOptions"
+                     :key="item.uuid"
+                     :label="item.instanceName"
+                     :value="item.uuid">
+            <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="环境">
         <el-select v-model="sqsData.envName" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
-          <el-option
-            v-for="item in regionOptions"
-            :key="item.label"
-            :label="item.label"
-            :value="item.label">
-            <select-item :name="item.label" :comment="item.desc"></select-item>
+          <el-option v-for="item in regionOptions"
+                     :key="item.label"
+                     :label="item.label"
+                     :value="item.label">
+            <select-item :name="item.label" :comment="item.desc"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="队列名称" prop="queueName">
-        <el-input v-model="sqsData.queueName"></el-input>
+        <el-input v-model="sqsData.queueName"/>
         <span style="height: 18px;font-size: 10px;color: #909399">
          以 {{ queueNamePrefix }} 开头,以 {{ queueNameSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 80 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>
@@ -34,10 +33,10 @@
       <el-form-item label="队列类型" prop="queueType">
         <el-radio-group v-model="sqsData.queueType">
           <el-radio label="0">标准
-            <el-alert type="info" :closable="false" description="至少传送一次，消息的传送顺序不固定"></el-alert>
+            <el-alert type="info" :closable="false" description="至少传送一次，消息的传送顺序不固定"/>
           </el-radio>
           <el-radio label="1" disabled>FIFO(暂不支持)
-            <el-alert type="info" :closable="false" description="先进先出传送消息，消息的传送顺序固定不变"></el-alert>
+            <el-alert type="info" :closable="false" description="先进先出传送消息，消息的传送顺序固定不变"/>
           </el-radio>
         </el-radio-group>
       </el-form-item>
@@ -48,9 +47,9 @@
               <el-form-item label="可见性超时" prop="visibilityTimeout">
                 <el-input v-model="sqsData.visibilityTimeout">
                   <el-select v-model="unit.visibilityTimeoutUnit" slot="append" style="width: 80px">
-                    <el-option label="秒" :value="time.second"></el-option>
-                    <el-option label="分钟" :value="time.minute"></el-option>
-                    <el-option label="小时" :value="time.hour"></el-option>
+                    <el-option label="秒" :value="time.second"/>
+                    <el-option label="分钟" :value="time.minute"/>
+                    <el-option label="小时" :value="time.hour"/>
                   </el-select>
                 </el-input>
                 <span style="height: 18px;font-size: 10px;color: #909399">
@@ -62,10 +61,10 @@
               <el-form-item label="消息保留周期" prop="messageRetentionPeriod">
                 <el-input v-model="sqsData.messageRetentionPeriod">
                   <el-select v-model="unit.messageRetentionPeriodUnit" slot="append" style="width: 80px">
-                    <el-option label="秒" :value="time.second"></el-option>
-                    <el-option label="分钟" :value="time.minute"></el-option>
-                    <el-option label="小时" :value="time.hour"></el-option>
-                    <el-option label="天" :value="time.day"></el-option>
+                    <el-option label="秒" :value="time.second"/>
+                    <el-option label="分钟" :value="time.minute"/>
+                    <el-option label="小时" :value="time.hour"/>
+                    <el-option label="天" :value="time.day"/>
                   </el-select>
                 </el-input>
                 <span style="height: 18px;font-size: 10px;color: #909399">
@@ -115,7 +114,7 @@
       </el-collapse>
       <br/>
       <el-form-item label="描述" prop="remark">
-        <el-input v-model="sqsData.remark" placeholder="请输入备注，例如：用户 - 领券队列"></el-input>
+        <el-input v-model="sqsData.remark" placeholder="请输入备注，例如：用户 - 领券队列"/>
       </el-form-item>
       <el-form-item>
         <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">保存</el-button>

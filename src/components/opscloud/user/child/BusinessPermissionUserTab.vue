@@ -1,39 +1,40 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-select v-model.trim="userId" clearable filterable
                  remote reserve-keyword placeholder="选择要授权的用户" :remote-method="getUser">
-        <el-option
-          v-for="item in userOptions"
-          :key="item.id"
-          :label="item.username"
-          :value="item.id">
-          <select-item :name="item.username" :comment="item.displayName"></select-item>
+        <el-option v-for="item in userOptions"
+                   :key="item.id"
+                   :label="item.username"
+                   :value="item.id">
+          <select-item :name="item.username" :comment="item.displayName"/>
         </el-option>
       </el-select>
       <el-checkbox label="过滤系统用户" v-model="queryUserParam.filterTag" @change="getUser('')"
-                   style="margin-left: 5px"></el-checkbox>
-      <el-button type="primary" plain size="mini" @click="handleGrant()" :disabled="userId === ''">授权
+                   style="margin-left: 5px"/>
+      <el-button type="primary" plain size="mini" @click="handleGrant()" :disabled="userId === ''">
+        授权
       </el-button>
     </el-row>
-    <el-divider></el-divider>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-divider/>
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="displayName" label="显示名"></el-table-column>
+      <el-table-column prop="username" label="用户名"/>
+      <el-table-column prop="displayName" label="显示名"/>
       <el-table-column label="角色">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini" :type="scope.row.userPermission.permissionRole === 'admin' ?   'danger' :'info'">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '管理员' : '普通用户' }}
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
+      <el-table-column prop="email" label="邮箱"/>
       <el-table-column label="操作" width="180">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handlerRowSet(scope.row)">
             {{ scope.row.userPermission.permissionRole === 'admin' ? '降权' : '提权' }}
           </el-button>
@@ -42,7 +43,7 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </div>
 </template>
 

@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <div id="keywords" class="keywords"></div>
+    <div id="keywords" class="keywords"/>
   </div>
 </template>
 

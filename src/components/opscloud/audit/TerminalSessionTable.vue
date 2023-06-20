@@ -1,42 +1,38 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.username" placeholder="输入关键字查询"/>
       <el-select v-model="queryParam.sessionType" clearable placeholder="会话类型">
-        <el-option
-          v-for="item in sessionTypeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in sessionTypeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-select v-model="queryParam.serverHostname" clearable placeholder="会话实例">
-        <el-option
-          v-for="item in instanceOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.name">
-        </el-option>
+        <el-option v-for="item in instanceOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.name"/>
       </el-select>
       <el-select v-model="queryParam.sessionClosed" clearable placeholder="会话状态">
-        <el-option
-          v-for="item in sessionStatusOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in sessionStatusOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleBatchClose" class="button" :disabled="multipleSelection.length === 0">批量关闭</el-button>
+      <el-button @click="handleBatchClose" class="button" :disabled="multipleSelection.length === 0">批量关闭
+      </el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" ref="multipleTable"
               @selection-change="handleSelectionChange" tooltip-effect="dark">
       <el-table-column type="selection" width="55">
       </el-table-column>
       <el-table-column prop="sessionId" label="会话" width="350">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div>
-            <user-tag :user="scope.row.user" v-if="scope.row.user"></user-tag>
+            <user-tag :user="scope.row.user" v-if="scope.row.user"/>
           </div>
           <!--          用户端@服务端-->
           <div>
@@ -48,21 +44,21 @@
         </template>
       </el-table-column>
       <el-table-column prop="sessionType" label="会话类型" width="110" sortable>
-        <template slot-scope="scope">
-          <session-type-tag :sessionType="scope.row.sessionType"></session-type-tag>
+        <template v-slot="scope">
+          <session-type-tag :sessionType="scope.row.sessionType"/>
         </template>
       </el-table-column>
       <el-table-column label="会话实例">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div class="session-instances">
           <span v-for="sessionInstance in scope.row.sessionInstances" :key="sessionInstance.id">
-            <terminal-session-instance-info :sessionInstance="sessionInstance"></terminal-session-instance-info>
+            <terminal-session-instance-info :sessionInstance="sessionInstance"/>
           </span>
           </div>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="120">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="danger" plain size="mini" v-if="scope.row.sessionClosed === false"
                      @click="handleClose(scope.row)">关闭
           </el-button>
@@ -70,7 +66,7 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </div>
 </template>
 

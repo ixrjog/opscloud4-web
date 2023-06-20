@@ -1,7 +1,7 @@
 <template>
   <span class="icon">
-    <i class="el-icon-loading" v-show="!build.isFinish"></i>
-    <i class="fas fa-hashtag"></i>{{ build.buildNumber }}
+    <i class="el-icon-loading" v-show="!build.isFinish"/>
+    <i class="fas fa-hashtag"/>{{ build.buildNumber }}
   </span>
 </template>
 

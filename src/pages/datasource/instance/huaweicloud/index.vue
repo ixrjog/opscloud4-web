@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
-                               datasource-nane="华为云实例管理"></datasource-instance-title>
+                               datasource-nane="华为云实例管理"/>
     <el-tabs v-model="activeName.name" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="云服务器" name="cloudServer">
         <el-tabs tab-position="left" v-model="activeName.ecs" @tab-click="handleClick">
@@ -11,7 +12,7 @@
                          ref="ecsTable">
               <template v-slot:extend>
                 <el-table-column prop="assetKey" label="IP地址" width="150">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.assetKey }}
                       <span style="color: #8492a6 ; font-size: 12px">私有</span>
                     </span>
@@ -21,12 +22,12 @@
                   </template>
                 </el-table-column>
                 <el-table-column prop="regionId" label="Region ID" width="100">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.regionId }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column prop="properties" label="配置">
-                  <template slot-scope="scope">
+                  <template v-slot="scope">
                     <span>{{ scope.row.properties.vcpus }} vCPU </span>
                     <span style="margin-right: 5px">{{ scope.row.properties.ram / 1024 }} GiB</span>
                     <div>{{ scope.row.properties.osType }}</div>

@@ -1,16 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <span v-for="item in buildInfos" :key="item.buildNumber">
        <span slot="reference">
             <el-tag :style="{ backgroundColor: item.color, color: '#FFFFFF',width: '50px' }">
-              <i class="el-icon-loading" v-if="item.running"></i>{{ item.buildNumber }}</el-tag>
+              <i class="el-icon-loading" v-if="item.running"/>{{ item.buildNumber }}</el-tag>
         </span>
-<!--      <el-popover placement="top-start" trigger="hover">-->
-<!--        <span slot="reference">-->
-<!--            <el-tag :style="{ backgroundColor: item.color, color: '#FFFFFF',width: '50px' }">-->
-<!--              <i class="el-icon-loading" v-if="item.running"></i>{{ item.buildNumber }}</el-tag>-->
-<!--        </span>-->
-<!--      </el-popover>-->
     </span>
   </div>
 </template>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row :gutter="2">
@@ -8,11 +9,12 @@
               <span>
                 <el-tag size="mini">{{ server.label }}</el-tag>
               </span>
-              <env-tag :env="server.env" class="env"></env-tag>
-              <business-tags v-if="server.tags !== null" :tags="server.tags" style="margin-left: 10px"></business-tags>
+              <env-tag :env="server.env" class="env"/>
+              <business-tags v-if="server.tags !== null" :tags="server.tags" style="margin-left: 10px"/>
               <el-button type="text" v-if="server.document !== null"
                          style="margin-left: 10px"
-                         @click="handleRead(server)"><i class="fab fa-creative-commons-share"></i>
+                         @click="handleRead(server)">
+                <i class="fab fa-creative-commons-share"></i>
               </el-button>
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"
@@ -27,7 +29,7 @@
               </el-tooltip>
             </div>
             <terminal-item :terminalSettings="terminalSettings" :server="server" @sendMessage="sendMessage"
-                           :ref="`terminal_${server.instanceId}`" :id="`${server.instanceId}`"></terminal-item>
+                           :ref="`terminal_${server.instanceId}`" :id="`${server.instanceId}`"/>
           </el-card>
         </el-col>
       </div>

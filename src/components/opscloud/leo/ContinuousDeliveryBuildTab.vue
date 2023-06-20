@@ -1,10 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-button :type="webSocketState.type" class="button" size="mini">
-        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
+        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"/>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
-           style="margin-right: 5px"></i>{{ webSocketState.name }}
+           style="margin-right: 5px"/>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{
@@ -15,42 +16,41 @@
       <el-select v-model.trim="queryParam.applicationId" filterable clearable size="mini"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
-        <i class="fas fa-circle-notch"></i>
+        <i class="fas fa-circle-notch"/>
       </el-button>
     </el-row>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
       <el-table-column prop="name" label="Name" sortable></el-table-column>
       <el-table-column prop="branch" label="Preferred Branch" sortable>
         <template v-slot="scope">
-          <i class="fa fa-code-fork" style="margin-right: 2px"></i>
+          <i class="fa fa-code-fork" style="margin-right: 2px"/>
           <span>{{ scope.row.branch }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="latestBuildInfos" label="Latest Build">
         <template v-slot="scope">
-          <latest-build-info :buildInfos="scope.row.latestBuildInfos"></latest-build-info>
+          <latest-build-info :buildInfos="scope.row.latestBuildInfos"/>
         </template>
       </el-table-column>
       <el-table-column prop="env" label="Env" width="80">
         <template v-slot="scope">
-          <env-tag :env="scope.row.env"></env-tag>
+          <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
       <el-table-column prop="buildSize" label="Builds" width="80">
       </el-table-column>
       <el-table-column prop="tags" label="Tags" width="200">
         <template v-slot="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column label="Operate" width="200">
@@ -61,14 +61,15 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage" ref="doBuildKubernetesImageEditor"/>
+                @handleSizeChange="handleSizeChange"/>
+    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage"
+                                          ref="doBuildKubernetesImageEditor"/>
     <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
     <leo-build-history :form-status="formStatus.history" ref="buildHistory"/>
     <el-divider>Latest build details</el-divider>
     <div v-for="build in builds" :key="build.id" style="font-size: 12px">
       <template>
-        <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"></leo-build-details>
+        <leo-build-details :build="build" :ref="`leoBuildDetails_${build.id}`"/>
       </template>
     </div>
   </div>

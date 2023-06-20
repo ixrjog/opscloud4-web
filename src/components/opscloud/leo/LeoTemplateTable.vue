@@ -1,40 +1,36 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"/>
       <el-select v-model="queryParam.instanceUuid" filterable value-key="instanceName"
                  style="width: 250px;" placeholder="选择数据源实例" reserve-keyword @change="fetchData" clearable>
-        <el-option
-          v-for="item in dsInstanceOptions"
-          :key="item.uuid"
-          :label="item.instanceName"
-          :value="item.uuid">
-          <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+        <el-option v-for="item in dsInstanceOptions"
+                   :key="item.uuid"
+                   :label="item.instanceName"
+                   :value="item.uuid">
+          <select-item :name="item.instanceName" :comment="item.instanceType"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-select
         v-model="queryParam.tagId" filterable clearable remote reserve-keyword
         placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
-        <el-option
-          v-for="item in tagOptions"
-          :key="item.id"
-          :label="item.tagKey"
-          :value="item.id">
-        </el-option>
+        <el-option v-for="item in tagOptions"
+                   :key="item.id"
+                   :label="item.tagKey"
+                   :value="item.id"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新建</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" sortable></el-table-column>
+      <el-table-column prop="name" label="名称" sortable/>
       <el-table-column prop="instance" label="实例">
         <template v-slot="scope">
           <span>{{ scope.row.instance.instanceName }}</span>
@@ -45,15 +41,15 @@
           <span>{{ scope.row.version }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="jobSize" label="任务数量" width="80"></el-table-column>
+      <el-table-column prop="jobSize" label="任务数量" width="80"/>
       <el-table-column prop="isActive" label="有效" width="80">
         <template v-slot="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
+          <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
         <template v-slot="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="280">
@@ -70,11 +66,11 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <leo-template-editor :formStatus="formStatus.template" ref="templateEditor"
-                         @close="fetchData"></leo-template-editor>
+                         @close="fetchData"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
-                         :form-status="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+                         :form-status="formStatus.businessTag" @close="fetchData"/>
   </div>
 </template>
 

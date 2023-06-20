@@ -1,21 +1,22 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="Ldap实例管理"></datasource-instance-title>
+                               datasource-nane="Ldap实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="账户" name="account">
         <asset-table :instanceId="instanceId" :assetType="assetType.LDAP.USER" :tableLayout="tableLayout.account"
                      ref="accountTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="手机" width="100">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span v-if="scope.row.properties.mobile === '0'"></span>
                 <span v-else>{{ scope.row.properties.mobile }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="children" label="成员(账户组)" width="550">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.GROUP" :type="0"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.GROUP" :type="0"/>
               </template>
             </el-table-column>
           </template>
@@ -26,8 +27,8 @@
                      ref="groupTable">
           <template v-slot:extend>
             <el-table-column prop="children" label="成员(账户)" width="800">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.USER" :type="1"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.USER" :type="1"/>
               </template>
             </el-table-column>
           </template>

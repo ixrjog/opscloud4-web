@@ -1,63 +1,56 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"/>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model.trim="queryParam.templateId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择模板" :remote-method="getTemplate"
                  @change="fetchData">
-        <el-option
-          v-for="item in templateOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in templateOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv" @change="fetchData">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
+        <el-option v-for="item in envOptions"
+                   :key="item.id"
+                   :label="item.envName"
+                   :value="item.envType">
+          <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
-      <el-select
-        v-model="queryParam.tagId" filterable clearable remote reserve-keyword
-        placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
-        <el-option
-          v-for="item in tagOptions"
-          :key="item.id"
-          :label="item.tagKey"
-          :value="item.id">
-        </el-option>
+      <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+                 placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
+        <el-option v-for="item in tagOptions"
+                   :key="item.id"
+                   :label="item.tagKey"
+                   :value="item.id"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="application" label="应用">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tooltip class="item" effect="light"
                       :content="scope.row.application.comment === '' ? '未定义': scope.row.application.comment"
                       placement="top-start">
@@ -68,7 +61,7 @@
       <el-table-column prop="name" label="名称" sortable></el-table-column>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
-          <i class="fa fa-code-fork" style="margin-right: 2px"></i>
+          <i class="fa fa-code-fork" style="margin-right: 2px"/>
           <span>{{ scope.row.branch }}</span>
         </template>
       </el-table-column>
@@ -86,7 +79,7 @@
       </el-table-column>
       <el-table-column prop="env" label="环境" width="80">
         <template v-slot="scope">
-          <env-tag :env="scope.row.env"></env-tag>
+          <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
       <el-table-column prop="buildSize" label="构建/部署" width="80">
@@ -96,12 +89,12 @@
       </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
         <template v-slot="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
+          <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
       <el-table-column prop="tags" label="标签" width="200">
         <template v-slot="scope">
-          <business-tags :tags="scope.row.tags"></business-tags>
+          <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="350">
@@ -110,17 +103,20 @@
           <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
           <el-button type="primary" plain size="mini" @click="handleRowUpgrade(scope.row)"
-                     :disabled="scope.row.verifyTemplateVersion.isIdentical">升级</el-button>
+                     :disabled="scope.row.verifyTemplateVersion.isIdentical">升级
+          </el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)"
-                     :disabled="scope.row.isActive">删除</el-button>
+                     :disabled="scope.row.isActive">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <leo-job-editor :formStatus="formStatus.job" ref="jobEditor"
                     @close="fetchData"></leo-job-editor>
-    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage" ref="doBuildKubernetesImageEditor"/>
+    <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage"
+                                          ref="doBuildKubernetesImageEditor"/>
     <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"/>

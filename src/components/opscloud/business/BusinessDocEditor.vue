@@ -1,10 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row>
       <el-card shadow="never">
-        <my-markdown v-if="!editing && content !== ''" :content="content"></my-markdown>
+        <my-markdown v-if="!editing && content !== ''" :content="content"/>
         <editor v-if="editing && JSON.stringify(document) !== '{}'" v-model="content" @init="editorInit"
-                lang="yaml" theme="chrome" height="400" :options="options" ref="editor"></editor>
+                lang="yaml" theme="chrome" height="400" :options="options" ref="editor"/>
       </el-card>
     </el-row>
     <el-row>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog title="MavenPublish 构建任务"
              :visible.sync="formStatus.visible" width="50%">
@@ -5,15 +6,15 @@
       <el-tab-pane label="构建" name="build">
         <el-form :model="leoJob">
           <el-form-item label="任务名称" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.name" readonly></el-input>
+            <el-input v-model="leoJob.name" readonly/>
           </el-form-item>
           <el-form-item label="任务主键" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.jobKey" readonly></el-input>
+            <el-input v-model="leoJob.jobKey" readonly/>
           </el-form-item>
           <el-form-item label="项目地址" :label-width="formStatus.labelWidth">
             <el-input v-if="JSON.stringify(leoJob) !== '{}'"
                       v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
-                      readonly style="width: 500px"></el-input>
+                      readonly style="width: 500px"/>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
                          style="margin-left: 20px" @change="getBranchOptions">查询<span
               style="margin-left: 2px">Tag</span>
@@ -27,42 +28,43 @@
                            :key="item.value"
                            :label="item.label"
                            :value="item.value">
-                  <select-item :name="item.label" :comment="item.desc"></select-item>
+                  <select-item :name="item.label" :comment="item.desc"/>
                 </el-option>
               </el-option-group>
             </el-select>
             <el-button size="mini" type="primary" style="margin-left: 5px" @click="getBranchOptions"
                        :loading="branchOptionsLoading">
-              <i class="fas fa-circle-notch" aria-hidden="true"></i>
+              <i class="fas fa-circle-notch" aria-hidden="true"/>
             </el-button>
             <el-button size="mini" type="primary" style="margin-left: 5px" @click="createBranch"
                        :loading="branchOptionsLoading">
-              <i class="fab fa-hubspot" aria-hidden="true"></i>
+              <i class="fab fa-hubspot" aria-hidden="true"/>
             </el-button>
             <!--commit详情 :title="branch.commitId" :description="branch.commitMessage" -->
             <el-alert v-show="JSON.stringify(this.branch) !== '{}'"
                       style="margin-top: 5px; background-color: #e56c0d"
                       :closable="false">
-              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF"><i class="fab fa-git-alt"
-                                                                                      style="margin-right: 1px"></i><b>{{
-                  branch.commitId
-                }}</b></a>
+              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF">
+                <i class="fab fa-git-alt" style="margin-right: 1px"/>
+                <b>{{ branch.commitId }}</b>
+              </a>
               <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
             </el-alert>
           </el-form-item>
           <el-form-item label="组件名称" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="mavenPublishInfo.artifactId" readonly placeholder="自动填充，从配置文件获取"></el-input>
+            <el-input v-model="mavenPublishInfo.artifactId" readonly placeholder="自动填充，从配置文件获取"/>
           </el-form-item>
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="doBuildParam.versionName" readonly placeholder="自动填充，从配置文件获取"></el-input>
+            <el-input v-model="doBuildParam.versionName" readonly placeholder="自动填充，从配置文件获取"/>
           </el-form-item>
           <el-form-item label="版本说明" :label-width="formStatus.labelWidth">
-            <el-input v-model="doBuildParam.versionDesc"></el-input>
+            <el-input v-model="doBuildParam.versionDesc"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" @click="doBuild" icon="fa fa-play" :loading="buttons.doBuilding"
-                     :disabled="buttons.building"><span style="margin-left: 2px">执行构建</span>
+                     :disabled="buttons.building">
+            <span style="margin-left: 2px">执行构建</span>
           </el-button>
         </div>
       </el-tab-pane>

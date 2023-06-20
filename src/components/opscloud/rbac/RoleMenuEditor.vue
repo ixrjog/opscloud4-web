@@ -1,18 +1,19 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="title" :visible.sync="formStatus.visible">
     <el-row style="margin-bottom: 10px">
       <el-form label-width="80px">
         <el-form-item label="角色名称">
-          <el-input v-model="roleName" readonly></el-input>
+          <el-input v-model="roleName" readonly/>
         </el-form-item>
       </el-form>
     </el-row>
     <el-row :gutter="20">
       <el-col :span="6">
-        <el-tree :data="menuOptions" show-checkbox node-key="value" ref="menuTree"></el-tree>
+        <el-tree :data="menuOptions" show-checkbox node-key="value" ref="menuTree"/>
       </el-col>
       <el-col :span="18">
-        <my-highlight v-if="editing" :code="menuContent" lang="json" :myStyle="style"></my-highlight>
+        <my-highlight v-if="editing" :code="menuContent" lang="json" :myStyle="style"/>
       </el-col>
     </el-row>
     <div slot="footer" class="dialog-footer">
@@ -83,8 +84,8 @@ export default {
           this.$message.success('保存成功')
           this.getAuthRoleMenuDetail()
         }).catch(() => {
-          this.loading = false
-        })
+        this.loading = false
+      })
     },
     initData (role) {
       this.menuContent = ''

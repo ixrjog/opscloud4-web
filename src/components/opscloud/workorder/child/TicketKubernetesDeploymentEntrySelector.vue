@@ -1,27 +1,27 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row :gutter="24">
       <el-select v-model="instanceUuid" filterable clearable value-key="instanceName"
-                 placeholder="选择数据源实例" style="display: inline-block; width: 250px; margin-left: 10px" reserve-keyword
+                 placeholder="选择数据源实例" style="display: inline-block; width: 250px; margin-left: 10px"
+                 reserve-keyword
                  @change="selInstance">
-        <el-option
-          v-for="item in dsInstanceOptions"
-          :key="item.uuid"
-          :label="item.instanceName"
-          :value="item.uuid">
-          <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+        <el-option v-for="item in dsInstanceOptions"
+                   :key="item.uuid"
+                   :label="item.instanceName"
+                   :value="item.uuid">
+          <select-item :name="item.instanceName" :comment="item.instanceType"/>
         </el-option>
       </el-select>
       <el-select v-model="ticketEntry" filterable clearable value-key="name"
                  style="display: inline-block; width: 250px; margin-left: 10px"
                  remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
                  :loading="searchLoading" :disabled="instanceUuid === ''">
-        <el-option
-          v-for="item in ticketEntryOptions"
-          :key="item.name"
-          :label="item.name"
-          :value="item">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in ticketEntryOptions"
+                   :key="item.name"
+                   :label="item.name"
+                   :value="item">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry()"

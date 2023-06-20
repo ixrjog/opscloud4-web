@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" width="50%">
@@ -5,35 +6,32 @@
       <el-tab-pane label="文档信息" name="base">
         <el-form :model="messageTemplate">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="messageTemplate.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="messageTemplate.name" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="Key" :label-width="labelWidth" required>
-            <el-input v-model="messageTemplate.msgKey" placeholder="请输入内容" readonly></el-input>
+            <el-input v-model="messageTemplate.msgKey" placeholder="请输入内容" readonly/>
           </el-form-item>
           <el-form-item label="消息格式" :label-width="labelWidth" required>
-            <el-input v-model="messageTemplate.msgType" placeholder="请输入内容" readonly></el-input>
+            <el-input v-model="messageTemplate.msgType" placeholder="请输入内容" readonly/>
           </el-form-item>
-
           <el-form-item label="消费者" :label-width="labelWidth" required>
             <el-select v-model="messageTemplate.consumer" placeholder="选择">
-              <el-option
-                v-for="item in consumerOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in consumerOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="messageTemplate.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="messageTemplate.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="消息模板内容" name="content">
-        <my-markdown v-if="!editing" :content="messageTemplate.msgTemplate" :key="key"></my-markdown>
+        <my-markdown v-if="!editing" :content="messageTemplate.msgTemplate" :key="key"/>
         <editor v-if="editing" v-model="messageTemplate.msgTemplate" @init="editorInit" lang="yaml" theme="chrome"
                 height="400"
-                :options="options" ref="editor"></editor>
+                :options="options" ref="editor"/>
         <el-row v-if="false">
           <div style="width:100%;text-align:center;margin-top:10px">
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑文档</el-button>

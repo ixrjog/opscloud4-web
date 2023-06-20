@@ -1,20 +1,19 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-select v-model.trim="applicationId" clearable filterable
                  remote reserve-keyword placeholder="选择要授权的应用" :remote-method="getApplication">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-        </el-option>
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id"/>
       </el-select>
       <el-button type="primary" plain size="mini" @click="handleGrant()" :disabled="applicationId === ''">授权
       </el-button>
     </el-row>
     <el-divider></el-divider>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
     </el-row>
@@ -38,7 +37,7 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </div>
 </template>
 

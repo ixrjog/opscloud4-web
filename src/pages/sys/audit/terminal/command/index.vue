@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <template>
@@ -14,21 +15,21 @@
         <el-table-column prop="input" label="Input/Output">
           <template v-slot="scope">
             <el-row style="margin-bottom: 2px">
-              <div :id="`terminal_input_${scope.row.id}`" class="xterm"></div>
+              <div :id="`terminal_input_${scope.row.id}`" class="xterm"/>
             </el-row>
             <el-row>
-              <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
+              <div :id="`terminal_output_${scope.row.id}`" class="xterm"/>
             </el-row>
           </template>
         </el-table-column>
         <el-table-column prop="output" label="输出" v-if="false">
           <template v-slot="scope">
-            <div :id="`terminal_output_${scope.row.id}`" class="xterm"></div>
+            <div :id="`terminal_output_${scope.row.id}`" class="xterm"/>
           </template>
         </el-table-column>
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                  @handleSizeChange="handleSizeChange"></pagination>
+                  @handleSizeChange="handleSizeChange"/>
     </template>
   </d2-container>
 </template>

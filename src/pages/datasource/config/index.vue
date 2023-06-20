@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -7,20 +8,16 @@
       <el-row :gutter="24" style="margin-bottom: 5px">
         <el-input v-model="queryParam.queryName" placeholder="名称"/>
         <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">
-          <el-option
-            v-for="item in dsTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in dsTypeOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
         <el-select v-model="queryParam.isActive" clearable placeholder="有效">
-          <el-option
-            v-for="item in activeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in activeOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
         <el-button @click="handleAdd">新增</el-button>
         <el-button @click="fetchData">查询</el-button>
@@ -29,25 +26,25 @@
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="dsType" label="数据源类型" width="150">
-        <template slot-scope="scope">
-          <datasource-type-tag :ds-type="scope.row.dsType" :ds-type-options="dsTypeOptions"></datasource-type-tag>
+        <template v-slot="scope">
+          <datasource-type-tag :ds-type="scope.row.dsType" :ds-type-options="dsTypeOptions"/>
         </template>
       </el-table-column>
       <el-table-column prop="kind" label="分类"></el-table-column>
       <el-table-column prop="version" label="版本" width="150"></el-table-column>
       <el-table-column prop="isRegistered" label="注册实例" width="150">
-        <template slot-scope="scope">
-          <whether-tag :whether="scope.row.isRegistered"></whether-tag>
+        <template v-slot="scope">
+          <whether-tag :whether="scope.row.isRegistered"/>
         </template>
       </el-table-column>
       <el-table-column prop="isActive" label="有效" width="150">
-        <template slot-scope="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
+        <template v-slot="scope">
+          <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" :disabled="scope.row.isRegistered"
                      @click="handleRowRegister(scope.row)">注册
           </el-button>
@@ -56,18 +53,17 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <datasource-config-editor :form-status="formStatus.config"
                               :ds-type-options="dsTypeOptions"
                               :active-options="activeOptions"
                               ref="datasourceConfigEditor"
-                              @close="fetchData"></datasource-config-editor>
+                              @close="fetchData"/>
     <datasource-instance-register-editor :form-status="formStatus.instance"
                                          :ds-type-options="dsTypeOptions"
                                          :active-options="activeOptions"
                                          ref="datasourceInstanceRegisterEditor"
-                                         @close="fetchData">
-    </datasource-instance-register-editor>
+                                         @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -220,18 +216,18 @@ export default {
 </script>
 
 <style scoped>
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-    margin-left: 10px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+  margin-left: 10px;
+}
 
-  .el-select {
-    margin-left: 5px;
-  }
+.el-select {
+  margin-left: 5px;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

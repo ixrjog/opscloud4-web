@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag size="mini" class="filters" :type="whether | getWhetherType">{{whether| getWhetherText}}</el-tag>
 </template>

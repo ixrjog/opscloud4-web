@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" :before-close="handleClose">
@@ -5,29 +6,27 @@
       <el-tab-pane label="应用配置" name="config">
         <el-form :model="application" label-width="150px">
           <el-form-item label="应用名称" required>
-            <el-input v-model="application.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="application.name" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="应用Key" :required="true">
             <el-input v-model="application.applicationKey" placeholder="请输入内容">
-              <template slot="append">
+              <template v-slot:append>
                 <el-button size="mini" type="primary" @click="handleBuildKey">
-                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  <i class="fa fa-arrow-up" aria-hidden="true"/>
                 </el-button>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item label="有效" required>
             <el-select v-model="application.isActive" placeholder="选择">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="application.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="application.comment" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
@@ -41,51 +40,46 @@
             <el-form-item label="业务类型">
               <el-select v-model="queryParam.businessType" filterable placeholder="选择绑定资源业务类型"
                          @change="handleSelectBusinessType">
-                <el-option
-                  v-for="item in businessTypeOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
+                <el-option v-for="item in businessTypeOptions"
+                           :key="item.value"
+                           :label="item.label"
+                           :value="item.value"/>
               </el-select>
             </el-form-item>
             <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源实例">
               <el-select v-model="queryParam.dsInstance" filterable placeholder="选择资源实例"
                          value-key="id" @change="getAssetType">
-                <el-option
-                  v-for="item in dsInstanceOptions"
-                  :key="item.id"
-                  :label="item.instanceName"
-                  :value="item">
+                <el-option v-for="item in dsInstanceOptions"
+                           :key="item.id"
+                           :label="item.instanceName"
+                           :value="item">
                   <span style="float: left">{{ item.instanceType }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
-                {{ item.instanceName }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{
+                      item.instanceName
+                    }}</span>
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源类型">
               <el-select v-model="queryParam.assetType" placeholder="选择资源类型"
                          @change="getResource('')">
-                <el-option
-                  v-for="item in assetTypeOptions"
-                  :key="item.id"
-                  :label="item.value"
-                  :value="item.value">
-                </el-option>
+                <el-option v-for="item in assetTypeOptions"
+                           :key="item.id"
+                           :label="item.value"
+                           :value="item.value"/>
               </el-select>
             </el-form-item>
             <el-form-item label="绑定资源">
               <el-select v-model="queryParam.resource" filterable clearable value-key="businessId"
                          :disabled="queryParam.businessType === ''"
                          remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getResource">
-                <el-option
-                  v-for="item in resOptions"
-                  :key="item.businessId"
-                  :label="item.name"
-                  :value="item">
-                  <span style="float: left">{{ item.name }}</span>
-                  <span
-                    style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{ item.comment }}</span>
+                <el-option v-for="item in resOptions"
+                           :key="item.businessId"
+                           :label="item.name"
+                           :value="item">
+                  <select-item :name="item.name" :comment="item.comment"/>
+                  <!--                  <span style="float: left">{{ item.name }}</span><span-->
+                  <!--                  style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{ item.comment }}</span>-->
                 </el-option>
               </el-select>
             </el-form-item>
@@ -102,8 +96,9 @@
             <span v-for="item in value" :key="item.id">
               <el-tooltip effect="dark" :content="item.comment" placement="top-start"
                           :disabled="!item.comment">
-                <el-tag size="mini" closable @close="handleResUnbind(item.id)"><span
-                  v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}</el-tag>
+                <el-tag size="mini" closable @close="handleResUnbind(item.id)">
+                  <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}
+                </el-tag>
               </el-tooltip>
             </span>
           </div>
@@ -111,12 +106,12 @@
       </el-tab-pane>
       <el-tab-pane label="用户授权" name="permissionUser" v-if="application.id !== ''&& application.id !== 0">
         <permission-user-tab :businessType="businessType.APPLICATION" :businessId="application.id"
-                             ref="permissionUserTab"></permission-user-tab>
+                             ref="permissionUserTab"/>
       </el-tab-pane>
       <el-tab-pane label="业务文档" name="document" :disabled="application.id === '' || application.id === 0">
         <business-doc-editor v-if="application.id !== ''&& application.id !== 0"
                              :business-type="application.businessType" :business-id="application.businessId"
-                             ref="businessDocEditor"></business-doc-editor>
+                             ref="businessDocEditor"/>
       </el-tab-pane>
     </el-tabs>
   </el-dialog>
@@ -138,6 +133,7 @@ import { QUERY_DATASOURCE_INSTANCE } from '@/api/modules/datasource/datasource.i
 import AppDsInstanceAssetType from '@/components/opscloud/common/enums/application.ds.instance.asset.type'
 import PermissionUserTab from '../user/child/BusinessPermissionUserTab'
 import BusinessDocEditor from '@/components/opscloud/business/BusinessDocEditor'
+import SelectItem from '@/components/opscloud/common/SelectItem.vue'
 
 const activeOptions = [{
   value: true,
@@ -170,6 +166,7 @@ export default {
   name: 'ApplicationDialog',
   props: ['formStatus'],
   components: {
+    SelectItem,
     BusinessDocEditor,
     PermissionUserTab
   },

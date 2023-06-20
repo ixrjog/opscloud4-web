@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.name" placeholder="名称"/>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd">新增</el-button>
@@ -8,31 +9,36 @@
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="250px"></el-table-column>
       <el-table-column prop="playbook" label="剧本" width="800px">
-        <template slot-scope="scope">
-          <el-divider content-position="left"><b style="color: #9d9fa3">Playbook</b></el-divider>
-          <my-highlight :code="scope.row.playbook" lang="yaml"></my-highlight>
+        <template v-slot="scope">
+          <el-divider content-position="left">
+            <b style="color: #9d9fa3">Playbook</b>
+          </el-divider>
+          <my-highlight :code="scope.row.playbook" lang="yaml"/>
           <template v-if="scope.row.vars !== null && scope.row.vars !== ''">
-            <el-divider content-position="left"><b style="color: #9d9fa3">Vars</b></el-divider>
-            <my-highlight :code="scope.row.vars" lang="yaml"></my-highlight>
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">Vars</b>
+            </el-divider>
+            <my-highlight :code="scope.row.vars" lang="yaml"/>
           </template>
           <template v-if="scope.row.tags !== null && scope.row.tags !== ''">
-            <el-divider content-position="left"><b style="color: #9d9fa3">Tags</b></el-divider>
-            <my-highlight :code="scope.row.tags" lang="yaml"></my-highlight>
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">Tags</b>
+            </el-divider>
+            <my-highlight :code="scope.row.tags" lang="yaml"/>
           </template>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
-    <ansible-playbook-editor :formStatus="formStatus.playbook" ref="playbookEditor"
-                             @close="fetchData"></ansible-playbook-editor>
+                @handleSizeChange="handleSizeChange"/>
+    <ansible-playbook-editor :formStatus="formStatus.playbook" ref="playbookEditor" @close="fetchData"/>
   </div>
 </template>
 
@@ -145,20 +151,20 @@ export default {
 
 <style scoped>
 
-  .el-input {
-    display: inline-block;
-    max-width: 200px;
-  }
+.el-input {
+  display: inline-block;
+  max-width: 200px;
+}
 
-  .d2-highlight {
-    margin-top: 5px;
-    font-size: 10px;
-    background-color: #dad8c8;
-    line-height: 110%;
-  }
+.d2-highlight {
+  margin-top: 5px;
+  font-size: 10px;
+  background-color: #dad8c8;
+  line-height: 110%;
+}
 
-  .el-button {
-    margin-left: 5px;
-  }
+.el-button {
+  margin-left: 5px;
+}
 
 </style>

@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover">
-      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0;">
         <el-radio-group v-model="queryParam.ticketPhase" size="mini" @change="fetchData">
           <el-radio-button :label="ticketPhase.ALL">全部</el-radio-button>
           <el-radio-button :label="ticketPhase.NEW">{{ ticketPhase.NEW | toPhaseText }}</el-radio-button>
@@ -17,33 +18,37 @@
                      :key="item.id"
                      :label="item.name"
                      :value="item.id">
-            <span style="float: left"><i :class="item.icon" style="margin-right: 5px"></i>{{ item.name }}</span>
+            <span style="float: left">
+              <i :class="item.icon" style="margin-right: 5px"/>{{ item.name }}
+            </span>
           </el-option>
         </el-select>
-        <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"><i class="fas fa-circle-notch"></i></el-button>
+        <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini">
+          <i class="fas fa-circle-notch"/>
+        </el-button>
         <el-button type="danger" plain size="mini" :disabled="queryParam.workOrderId === ''" @click="delOrderTicket">批量删除</el-button>
       </el-row>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column prop="id" label="编号" width="80"></el-table-column>
+        <el-table-column prop="id" label="编号" width="80"/>
         <el-table-column prop="workorder" label="工单">
           <template v-slot="scope">
-            <i :class="scope.row.workOrder.icon" style="margin-right: 5px"></i>{{ scope.row.workOrder.name }}
+            <i :class="scope.row.workOrder.icon" style="margin-right: 5px"/>{{ scope.row.workOrder.name }}
           </template>
         </el-table-column>
         <el-table-column prop="createUser" label="申请人">
           <template v-slot="scope">
-            <user-avatar :user="scope.row.createUser" :size="24"></user-avatar>
+            <user-avatar :user="scope.row.createUser" :size="24"/>
           </template>
         </el-table-column>
         <el-table-column prop="ticketPhase" label="进度" width="120">
           <template v-slot="scope">
             <el-tag class="filters" :type="scope.row.ticketPhase | toPhaseType" size="mini">
-              <i class="el-icon-loading" v-show="scope.row.ticketPhase === 'PROCESSING'"></i>
+              <i class="el-icon-loading" v-show="scope.row.ticketPhase === 'PROCESSING'"/>
               {{ scope.row.ticketPhase | toPhaseText }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="ago" label="申请时间" width="120"></el-table-column>
+        <el-table-column prop="ago" label="申请时间" width="120"/>
         <el-table-column label="操作" width="180">
           <template v-slot="scope">
             <el-button v-if="scope.row.ticketPhase !== 'NEW' && !scope.row.isApprover"
@@ -76,7 +81,7 @@
         </el-table-column>
       </el-table>
       <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                  @handleSizeChange="handleSizeChange"></pagination>
+                  @handleSizeChange="handleSizeChange"/>
     </el-card>
   </div>
 </template>

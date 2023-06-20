@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div style="display: inline-block">
     <span v-if="showIcon" class="copyClass">

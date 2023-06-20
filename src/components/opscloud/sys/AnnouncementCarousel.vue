@@ -1,9 +1,10 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div v-if="JSON.stringify(announcements) !== '[]'" style="margin-bottom: 10px">
     <el-carousel trigger="click" height="150px" :interval="10000">
       <el-carousel-item v-for="announcement in announcements" :key="announcement.id">
         <h4>{{ announcement.title }}</h4>
-        <p v-html="announcement.content"></p>
+        <p v-html="announcement.content"/>
       </el-carousel-item>
     </el-carousel>
   </div>

@@ -1,27 +1,26 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="snsSubscriptionData" label-width="120px" ref="snsSubscriptionDataForm" :rules="rules">
       <el-form-item label="AWS实例">
         <el-select v-model="instanceUuid" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword>
-          <el-option
-            v-for="item in dsInstanceOptions"
-            :key="item.uuid"
-            :label="item.instanceName"
-            :value="item.uuid">
-            <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+          <el-option v-for="item in dsInstanceOptions"
+                     :key="item.uuid"
+                     :label="item.instanceName"
+                     :value="item.uuid">
+            <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="环境">
         <el-select v-model="snsSubscriptionData.envName" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''" @change="regionIdChange">
-          <el-option
-            v-for="item in regionOptions"
-            :key="item.label"
-            :label="item.label"
-            :value="item.label">
-            <select-item :name="item.label" :comment="item.desc"></select-item>
+          <el-option v-for="item in regionOptions"
+                     :key="item.label"
+                     :label="item.label"
+                     :value="item.label">
+            <select-item :name="item.label" :comment="item.desc"/>
           </el-option>
         </el-select>
       </el-form-item>
@@ -30,12 +29,10 @@
                    style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索 SNS 主题"
                    :remote-method="fetchSnsTopicData" @change="snsTopicChange"
                    :disabled="snsSubscriptionData.regionId === ''">
-          <el-option
-            v-for="item in snsTopicEntryOptions"
-            :key="item.name"
-            :label="item.name"
-            :value="item">
-          </el-option>
+          <el-option v-for="item in snsTopicEntryOptions"
+                     :key="item.name"
+                     :label="item.name"
+                     :value="item"/>
         </el-select>
       </el-form-item>
       <el-form-item label="订阅协议">
@@ -46,20 +43,17 @@
                    style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索 SQS 队列"
                    :remote-method="fetchSqsData" @change="sqsChange"
                    :disabled="snsSubscriptionData.topicArn === ''">
-          <el-option
-            v-for="item in sqsEntryOptions"
-            :key="item.name"
-            :label="item.name"
-            :value="item">
-          </el-option>
+          <el-option v-for="item in sqsEntryOptions"
+                     :key="item.name"
+                     :label="item.name"
+                     :value="item"/>
         </el-select>
       </el-form-item>
       <el-form-item label="描述" prop="remark">
-        <el-input v-model="snsSubscriptionData.remark" placeholder="请输入备注"></el-input>
+        <el-input v-model="snsSubscriptionData.remark" placeholder="请输入备注"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">保存
-        </el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">保存</el-button>
       </el-form-item>
     </el-form>
   </div>

@@ -1,49 +1,48 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="groupData" label-width="120px">
       <el-form-item label="阿里云实例">
         <el-select v-model="instanceUuid" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
-          <el-option
-            v-for="item in dsInstanceOptions"
-            :key="item.uuid"
-            :label="item.instanceName"
-            :value="item.uuid">
-            <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+          <el-option v-for="item in dsInstanceOptions"
+                     :key="item.uuid"
+                     :label="item.instanceName"
+                     :value="item.uuid">
+            <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="ONS实例">
         <el-select v-model="ticketEntry" filterable value-key="name"
-                   style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索ONS实例" :remote-method="fetchData"
+                   style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索ONS实例"
+                   :remote-method="fetchData"
                    :loading="searchLoading" :disabled="instanceUuid === ''" @change="onsInstanceChange">
-          <el-option
-            v-for="item in ticketEntryOptions"
-            :key="item.name"
-            :label="item.name"
-            :value="item">
-            <select-item :name="item.name" :comment="item.comment"></select-item>
+          <el-option v-for="item in ticketEntryOptions"
+                     :key="item.name"
+                     :label="item.name"
+                     :value="item">
+            <select-item :name="item.name" :comment="item.comment"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="GID" required>
-        <el-input v-model="groupData.groupId" :disabled="added"></el-input>
+        <el-input v-model="groupData.groupId" :disabled="added"/>
         <span style="height: 18px;font-size: 10px;color: #909399">
           以 “GID_”开头，只能包含大写字母、数字和下划线（_），最多 64 个字符
         </span>
       </el-form-item>
       <el-form-item label="客户端协议" required>
         <el-radio-group v-model="groupData.groupType" :disabled="added">
-          <el-radio-button :label="groupType.tcp.type"></el-radio-button>
-          <el-radio-button :label="groupType.http.type"></el-radio-button>
+          <el-radio-button :label="groupType.tcp.type"/>
+          <el-radio-button :label="groupType.http.type"/>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="描述" required>
-        <el-input v-model="groupData.remark" :disabled="added" placeholder="请输入备注，例如:营销 - 促销优惠"></el-input>
+        <el-input v-model="groupData.remark" :disabled="added" placeholder="请输入备注，例如:营销 - 促销优惠"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">添加
-        </el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">添加</el-button>
       </el-form-item>
     </el-form>
   </div>

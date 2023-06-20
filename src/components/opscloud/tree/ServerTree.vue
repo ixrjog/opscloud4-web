@@ -1,19 +1,20 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-card style="margin-top: 5px" class="box-card" shadow="hover">
     <div slot="header" class="clearfix">
-      <span><i class="fas fa-list" aria-hidden="true"></i></span>
+      <span><i class="fas fa-list" aria-hidden="true"/></span>
       <el-tag size="mini" style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
     </div>
     <el-row>
-      <el-input v-model="queryParam.name" placeholder="Name" style="display: inline-block; width: 180px;" @change="fetchData"/>
+      <el-input v-model="queryParam.name" placeholder="Name" style="display: inline-block; width: 180px;"
+                @change="fetchData"/>
       <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable style="margin-left: 5px"
                  remote reserve-keyword placeholder="Namespace" :remote-method="getGroupType" :loading="loading">
-        <el-option
-          v-for="item in groupTypeOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in groupTypeOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button @click="fetchData" :loading="searching">Query</el-button>
@@ -22,8 +23,7 @@
        <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
         <span>
-             <business-tags v-if="data.server !== null && data.server.tags !== null"
-                            :tags="data.server.tags"></business-tags>
+             <business-tags v-if="data.server !== null && data.server.tags !== null" :tags="data.server.tags"/>
         </span>
       </span>
     </el-tree>

@@ -1,10 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <h1>帮助文档</h1>
     <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
       <el-tab-pane :name="docKeys.CHANNEL_VPN_README">
         <span slot="label"><i class="fab fa-instalod"></i> 渠道VPN</span>
-        <my-markdown v-if="docs.vpn !== null" :content="docs.vpn.content"></my-markdown>
+        <my-markdown v-if="docs.vpn !== null" :content="docs.vpn.content"/>
       </el-tab-pane>
     </el-tabs>
   </d2-container>

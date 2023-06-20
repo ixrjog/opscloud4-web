@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row>
@@ -5,14 +6,14 @@
                  remote reserve-keyword placeholder="输入关键词搜索角色" :remote-method="getRole"
                  style="display: inline-block; max-width:200px">
         <el-option v-for="item in roleOptions" :key="item.id" :label="item.roleName" :value="item.id">
-          <select-item :name="item.roleName" :comment="item.comment"></select-item>
+          <select-item :name="item.roleName" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="groupId" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup"
                  style="margin-left: 5px">
         <el-option v-for="item in groupOptions" :key="item.id" :label="item.groupName" :value="item.id">
-          <select-item :name="item.groupName" :comment="item.comment"></select-item>
+          <select-item :name="item.groupName" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button @click="fetchData" style="margin-left: 5px" :disabled="roleId === ''">查询</el-button>
@@ -20,11 +21,11 @@
     <el-row :gutter="20" style="margin-top: 10px">
       <el-col :span="12">
         <role-resource-table :group-id="groupId" :role-id="roleId" :bind="false" ref="bindRoleResource"
-                             @fetchData="fetchData"></role-resource-table>
+                             @fetchData="fetchData"/>
       </el-col>
       <el-col :span="12">
         <role-resource-table :group-id="groupId" :role-id="roleId" :bind="true" ref="unbindRoleResource"
-                             @fetchData="fetchData"></role-resource-table>
+                             @fetchData="fetchData"/>
       </el-col>
     </el-row>
   </div>

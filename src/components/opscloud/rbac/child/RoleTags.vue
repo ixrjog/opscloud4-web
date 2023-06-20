@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <span class="tag-group">
     <span v-for="item in roles" :key="item.id">

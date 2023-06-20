@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card shadow="hover" :style="{ width: itemWidth }">
@@ -7,11 +8,11 @@
             {{ remoteServer.server.name }}-{{ remoteServer.server.serialNumber }}:{{ remoteServer.server.privateIp }}
           </el-tag>
         </span>
-        <env-tag style="margin-left: 5px" :env="remoteServer.server.env" class="env"></env-tag>
+        <env-tag style="margin-left: 5px" :env="remoteServer.server.env" class="env"/>
         <el-button style="float: right; padding: 3px 0" type="text" @click="logout">Logout</el-button>
       </div>
       <div ref="viewport" class="viewport" :style="{ width: screenWidth }">
-        <div ref="display" class="display"></div>
+        <div ref="display" class="display"/>
       </div>
     </el-card>
   </div>

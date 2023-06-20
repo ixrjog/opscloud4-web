@@ -1,28 +1,29 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" :before-close="handleClose">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="基本信息" name="user">
         <user-info :operationType="formStatus.operationType" ref="userInfo" @close="handleClose"
-                   @refreshData="refreshData"></user-info>
+                   @refreshData="refreshData"/>
       </el-tab-pane>
       <el-tab-pane label="服务器授权" name="serverGroup" :disabled="user.id === '' || user.id === 0">
-        <user-server-group-tab :user="user" ref="userServerGroupTab"></user-server-group-tab>
+        <user-server-group-tab :user="user" ref="userServerGroupTab"/>
       </el-tab-pane>
       <el-tab-pane label="用户组授权" name="userGroup" :disabled="user.id === '' || user.id === 0">
-        <user-group-tab :user="user" ref="userGroupTab"></user-group-tab>
+        <user-group-tab :user="user" ref="userGroupTab"/>
       </el-tab-pane>
       <el-tab-pane label="应用授权" name="application" :disabled="user.id === '' || user.id === 0">
-        <user-application-tab :user="user" ref="userApplicationTab"></user-application-tab>
+        <user-application-tab :user="user" ref="userApplicationTab"/>
       </el-tab-pane>
       <el-tab-pane label="RAM授权" name="ram" :disabled="user.id === '' || user.id === 0">
-        <ram-tab :user="user" ref="ramTab"></ram-tab>
+        <ram-tab :user="user" ref="ramTab"/>
       </el-tab-pane>
       <el-tab-pane label="IAM授权" name="iam" :disabled="user.id === '' || user.id === 0">
-        <iam-tab :user="user" ref="iamTab"></iam-tab>
+        <iam-tab :user="user" ref="iamTab"/>
       </el-tab-pane>
       <el-tab-pane label="角色授权" name="role" :disabled="user.id === '' || user.id === 0">
-        <role-tab :user="user" ref="roleTab"></role-tab>
+        <role-tab :user="user" ref="roleTab"/>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">

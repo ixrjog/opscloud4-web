@@ -1,24 +1,21 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="screenSetting">
       <el-form-item label="屏幕分辨率" :label-width="labelWidth">
         <el-select v-model="screenSetting.screenResolution" placeholder="选择类型" @change="handleSetting">
-          <el-option
-            v-for="item in screenResolutionOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in screenResolutionOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="屏幕DPI" :label-width="labelWidth">
         <el-select v-model="screenSetting.screenDpi" placeholder="选择类型">
-          <el-option
-            v-for="item in screenDpiOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in screenDpiOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
     </el-form>

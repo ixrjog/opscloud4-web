@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -6,51 +7,47 @@
     <el-row :gutter="24" style="margin-bottom: 5px">
       <el-input v-model="queryParam.tagKey" placeholder="标签关键字"/>
       <el-select v-model="queryParam.businessType" clearable placeholder="业务类型">
-        <el-option
-          v-for="item in businessTypeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in businessTypeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%" :row-class-name="tableRowClassName">
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="hostname" label="主机名"></el-table-column>
-      <el-table-column prop="hostIp" label="注册IP"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
+      <el-table-column prop="hostname" label="主机名"/>
+      <el-table-column prop="hostIp" label="注册IP"/>
       <el-table-column prop="systemInfo" label="系统信息">
-        <template slot-scope="scope" v-if="scope.row.systemInfo !== null">
-          <span>{{ scope.row.systemInfo.cpu.cpuNum }}C</span>/
-          <span>       {{ util.bytesToSize(scope.row.systemInfo.mem.total) }}</span>
+        <template v-slot="scope">
+          <span v-if="scope.row.systemInfo !== null">
+            {{ scope.row.systemInfo.cpu.cpuNum }}C/{{ util.bytesToSize(scope.row.systemInfo.mem.total) }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="activeSessionMap" label="活动会话" width="250" sortable>
-        <template slot-scope="scope">
-         <div>WebTerminal: {{scope.row.activeSessionMap.WEB_TERMINAL}}</div>
-          <div>KubernetesTerminal: {{scope.row.activeSessionMap.KUBERNETES_TERMINAL}}</div>
-          <div>SSH-Server: {{scope.row.activeSessionMap.SSH_SERVER}}</div>
+        <template v-slot="scope">
+          <div>WebTerminal: {{ scope.row.activeSessionMap.WEB_TERMINAL }}</div>
+          <div>KubernetesTerminal: {{ scope.row.activeSessionMap.KUBERNETES_TERMINAL }}</div>
+          <div>SSH-Server: {{ scope.row.activeSessionMap.SSH_SERVER }}</div>
         </template>
       </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
-        <template slot-scope="scope">
-          <active-tag :is-active="scope.row.isActive"></active-tag>
+        <template v-slot="scope">
+          <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
       <el-table-column prop="comment" label="描述"></el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-button :type="scope.row.isActive ? 'danger' : 'success'" plain size="mini"
-                     @click="handleSetActive(scope.row)">{{
-              scope.row.isActive ?
-                '无效' : '有效'
-            }}
+                     @click="handleSetActive(scope.row)">{{ scope.row.isActive ? '无效' : '有效' }}
           </el-button>
         </template>
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </d2-container>
 </template>
 

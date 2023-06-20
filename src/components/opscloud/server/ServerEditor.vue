@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" width="75%">
@@ -5,88 +6,80 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="server">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="server.name" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.name" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="服务器类型" :label-width="labelWidth" required>
             <el-select v-model="server.serverType" placeholder="选择类型">
-              <el-option
-                v-for="item in serverTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in serverTypeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="服务器组" :label-width="labelWidth" required>
             <el-select v-model="server.serverGroupId" filterable clearable
-                       remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup" @clear="getGroup('')">
-              <el-option
-                v-for="item in serverGroupOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
+                       remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup"
+                       @clear="getGroup('')">
+              <el-option v-for="item in serverGroupOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id"/>
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
             <el-select v-model="server.envType" clearable
                        remote reserve-keyword placeholder="选择环境" :remote-method="getEnv">
-              <el-option
-                v-for="item in envOptions"
-                :key="item.envType"
-                :label="item.envName"
-                :value="item.envType">
-              </el-option>
+              <el-option v-for="item in envOptions"
+                         :key="item.envType"
+                         :label="item.envName"
+                         :value="item.envType"/>
             </el-select>
           </el-form-item>
           <el-form-item label="系统类型" :label-width="labelWidth" required>
             <el-select v-model="server.osType" placeholder="选择类型">
-              <el-option
-                v-for="item in osTypeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in osTypeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
             <el-select v-model="server.isActive" placeholder="选择">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="区" :label-width="labelWidth">
-            <el-input v-model="server.area" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.area" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="公网IP" :label-width="labelWidth">
-            <el-input v-model="server.publicIp" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.publicIp" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="私网IP" :label-width="labelWidth" required>
-            <el-input v-model="server.privateIp" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.privateIp" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="序号" :label-width="labelWidth" required>
-            <el-input v-model.number="server.serialNumber" placeholder="请输入内容"></el-input>
+            <el-input v-model.number="server.serialNumber" placeholder="请输入内容"/>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="server.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="server.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="属性配置" name="property" :disabled="server.id === '' || server.id === 0">
         <business-property-editor :business-type="server.businessType"
                                   :business-id="server.businessId"
-                                  ref="businessPropertyEditor"></business-property-editor>
+                                  ref="businessPropertyEditor"/>
       </el-tab-pane>
       <el-tab-pane label="账户配置" name="account" :disabled="server.id === '' || server.id === 0">
-        <server-account-transfer :serverId="server.id" ref="serverAccountTransfer"></server-account-transfer>
+        <server-account-transfer :serverId="server.id" ref="serverAccountTransfer"/>
       </el-tab-pane>
       <el-tab-pane label="业务文档" name="document" :disabled="server.id === '' || server.id === 0">
-        <business-doc-editor v-if="server.id !== ''&& server.id !== 0" :business-type="server.businessType" :business-id="server.businessId"
-                             ref="businessDocEditor"></business-doc-editor>
+        <business-doc-editor v-if="server.id !== ''&& server.id !== 0" :business-type="server.businessType"
+                             :business-id="server.businessId"
+                             ref="businessDocEditor"/>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">

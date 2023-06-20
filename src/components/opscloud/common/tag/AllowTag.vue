@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag class="filters" :type="allow | getAllowType" size="mini">{{allow| getAllowText}}</el-tag>
 </template>

@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="MeterSphere实例管理"></datasource-instance-title>
+                               datasource-nane="MeterSphere实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="Build Hook" name="buildHook">
         <asset-table :instanceId="instanceId" :assetType="assetType.METER_SPHERE.METER_SPHERE_BUILD_HOOK"
@@ -16,14 +17,12 @@
             </el-table-column>
             <el-table-column prop="properties" label="Hook">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.hook != ''" :code="scope.row.properties.hook"
-                              lang="json"></my-highlight>
+                <my-highlight v-if="scope.row.properties.hook !== ''" :code="scope.row.properties.hook" lang="json"/>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="Result">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.body != ''" :code="scope.row.properties.body"
-                              lang="json"></my-highlight>
+                <my-highlight v-if="scope.row.properties.body !== ''" :code="scope.row.properties.body" lang="json"/>
               </template>
             </el-table-column>
           </template>
@@ -42,14 +41,12 @@
             </el-table-column>
             <el-table-column prop="properties" label="Hook">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.hook != ''" :code="scope.row.properties.hook"
-                              lang="json"></my-highlight>
+                <my-highlight v-if="scope.row.properties.hook !== ''" :code="scope.row.properties.hook" lang="json"/>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="Result">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.body != ''" :code="scope.row.properties.body"
-                              lang="json"></my-highlight>
+                <my-highlight v-if="scope.row.properties.body !== ''" :code="scope.row.properties.body" lang="json"/>
               </template>
             </el-table-column>
           </template>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-card class="box-card" shadow="hover" style="margin-bottom: 10px"
            v-if="JSON.stringify(user.ramUsers) !== '[]'">
@@ -16,22 +17,22 @@
             </el-tooltip>
             <span v-clipboard:copy="props.row.loginUser" v-clipboard:success="onCopy"
                   v-clipboard:error="onError">
-              <i style="margin-left: 5px" class="el-icon-copy-document"></i>
+              <i style="margin-left: 5px" class="el-icon-copy-document"/>
             </span>
           </el-row>
         </template>
       </el-table-column>
       <el-table-column prop="accessKeys" label="Access Key">
-        <template v-scope="props">
-          <div  v-for="ak in props.row.accessKeys" :key="ak.assetId">
+        <template v-slot="scope">
+          <div v-for="ak in scope.row.accessKeys" :key="ak.assetId">
             <el-tag size="mini">{{ ak.assetId }}</el-tag>
           </div>
         </template>
       </el-table-column>
       <el-table-column prop="ramPolicies" label="策略" width="400">
-        <template slot-scope="props">
+        <template v-slot="scope">
           <div class="tag-group">
-            <div v-for="policy in props.row.ramPolicies" :key="policy.assetId">
+            <div v-for="policy in scope.row.ramPolicies" :key="policy.assetId">
               <el-tooltip class="item" effect="light" :content="policy.description" placement="top-start">
                 <el-tag size="mini">{{ policy.name }}</el-tag>
               </el-tooltip>
@@ -65,7 +66,7 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
+  //-webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 

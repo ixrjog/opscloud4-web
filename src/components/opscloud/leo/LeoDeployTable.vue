@@ -1,48 +1,45 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-select v-model.trim="queryParam.applicationId" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
                  @change="fetchData">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
+        <el-option v-for="item in envOptions"
+                   :key="item.id"
+                   :label="item.envName"
+                   :value="item.envType">
+          <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.deployResult" clearable filterable placeholder="选择部署结果"
                  @change="fetchData">
-        <el-option
-          v-for="item in deployResultOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in deployResultOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">刷新</el-button>
     </el-row>
     <div v-for="deploy in table.data" :key="deploy.id" style="font-size: 12px">
       <template>
         <div>
-          <leo-deploy-details :deploy="deploy" :ref="`leoDeployDetails_${deploy.id}`"></leo-deploy-details>
+          <leo-deploy-details :deploy="deploy" :ref="`leoDeployDetails_${deploy.id}`"/>
         </div>
       </template>
     </div>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </div>
 </template>
 
@@ -186,11 +183,7 @@ export default {
 }
 
 .el-select {
-  margin-left: 5px;
-}
-
-.el-button {
-  margin-left: 5px;
+  margin-right: 5px;
 }
 
 </style>

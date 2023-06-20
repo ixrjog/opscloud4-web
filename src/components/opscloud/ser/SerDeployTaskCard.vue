@@ -32,7 +32,7 @@
         </el-option>
       </el-select>
       <el-button @click="fetchData" :disabled="checkFetchData()">查询</el-button>
-      <el-button @click="handleAdd" :disabled="checkFetchData()">新增</el-button>
+      <el-button @click="handleAdd" :disabled="checkFetchData()" style="margin: 0">新增</el-button>
     </el-row>
     <el-row :gutter="10">
       <el-col :span="8">
@@ -102,8 +102,13 @@
               </div>
             </div>
             <el-table :data="taskItemList" style="width: 100%">
-              <el-table-column prop="itemName" label="包名" width="180"></el-table-column>
-              <el-table-column prop="itemSize" label="大小" width="180"></el-table-column>
+              <el-table-column prop="itemName" label="包名" width="180">
+                <template slot-scope="scope">
+                  <div>{{scope.row.itemName}}</div>
+                  <div>{{scope.row.itemSize}}</div>
+                </template>
+              </el-table-column>
+<!--              <el-table-column prop="itemSize" label="大小" width="180"></el-table-column>-->
               <el-table-column prop="itemMd5" label="MD5" width="320"></el-table-column>
               <el-table-column label="上传人" width="180">
                 <template slot-scope="scope">
@@ -117,7 +122,6 @@
                       <i class="fas fa-trash"></i>
                     </el-button>
                   </el-tooltip>
-                  <!--                  <el-button plain size="mini" type="danger" @click="handleItemDelete(scope.row)">删除</el-button>-->
                 </template>
               </el-table-column>
             </el-table>

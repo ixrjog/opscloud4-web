@@ -1,18 +1,16 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <div style="margin-right: 5px">可注入变量:</div>
-    <el-tag v-if="kind === 1" size="mini" :type="tag.type" style="margin-right: 5px"
-            v-for="tag in examples.USERNAME_WITH_PASSWORD" :key="tag.name">
+    <div style="margin-right: 5px; color: white">Available environment variables</div>
+    <span v-if="kind === 1" v-for="tag in examples.USERNAME_WITH_PASSWORD" :key="tag.name" style="color: #d9d9d9">
       {{ tag.name }}
-    </el-tag>
-    <el-tag v-if="kind === 4" size="mini" :type="tag.type" style="margin-right: 5px"
-            v-for="tag in examples.TOKEN" :key="tag.name">
+    </span>
+    <span v-if="kind === 4" v-for="tag in examples.TOKEN" :key="tag.name" style="color: #d9d9d9">
       {{ tag.name }}
-    </el-tag>
-    <el-tag v-if="kind === 5" size="mini" :type="tag.type" style="margin-right: 5px"
-            v-for="tag in examples.ACCESS_KEY" :key="tag.name">
+    </span>
+    <span v-if="kind === 5" v-for="tag in examples.ACCESS_KEY" :key="tag.name" style="color: #d9d9d9">
       {{ tag.name }}
-    </el-tag>
+    </span>
   </div>
 </template>
 

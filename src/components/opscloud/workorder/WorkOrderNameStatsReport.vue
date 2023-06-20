@@ -1,13 +1,14 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover">
       <el-row>
         <span style="float: right">
           <el-button type="text" icon="el-icon-refresh" style="margin-left: 5px"
-                     @click="fetchData" size="mini" plain></el-button>
+                     @click="fetchData" size="mini" plain/>
         </span>
       </el-row>
-      <div id="workOrderNameStatsReport" style="height:450px;width: 100%"></div>
+      <div id="workOrderNameStatsReport" style="height: 450px; width: 100%"/>
     </el-card>
   </div>
 </template>

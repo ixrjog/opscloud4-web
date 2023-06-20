@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <pre class="my-highlight hljs" v-html="highlightHTML" :style="myStyle"></pre>
 </template>

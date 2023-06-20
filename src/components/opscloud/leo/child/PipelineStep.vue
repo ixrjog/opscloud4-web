@@ -1,12 +1,13 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div v-if="steps !== null && steps.length !== 0">
-    <el-divider></el-divider>
+    <el-divider/>
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix">
         <b style="color: #5b5d66; margin-left: 10px;">Steps Log</b>
         <el-tooltip class="item" effect="light" content="关闭步骤详情" placement="top-start">
           <el-button class="stepsButton" type="text" @click="closeSteps">
-            <i class="far fa-times-circle"></i>
+            <i class="far fa-times-circle"/>
           </el-button>
         </el-tooltip>
       </div>
@@ -17,7 +18,7 @@
           <!--        <el-tag effect="dark" style="margin-left: 5px" :type="step.result|  getStepResultType">Step {{i +1}}-->
           <!--        </el-tag>-->
         </div>
-        <terminal-with-log :ref="`terminal-log${i}`" :step="step"></terminal-with-log>
+        <terminal-with-log :ref="`terminal-log${i}`" :step="step"/>
       </div>
     </el-card>
   </div>

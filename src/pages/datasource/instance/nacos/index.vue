@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="Nacos实例管理"></datasource-instance-title>
+                               datasource-nane="Nacos实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="集群节点" name="node">
         <asset-table :instanceId="instanceId" :assetType="assetType.NACOS.NACOS_CLUSTER_NODE"
@@ -9,7 +10,7 @@
                      ref="nodeTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="节点状态">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>
                  <el-tag size="mini" :type="scope.row.properties.state === 'UP' ? 'success' : 'info'">
                    {{ scope.row.properties.state }}
@@ -26,12 +27,12 @@
                      ref="permissionTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="资源">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ scope.row.properties.resource }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="动作">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ scope.row.properties.action }}</span>
               </template>
             </el-table-column>

@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
@@ -8,14 +9,12 @@
                      :tableLayout="tableLayout.project" ref="projectTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="地址" width="400">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <div>
-                  <!--                  <el-tag size="mini" style="margin-right: 5px">SSH</el-tag>-->
                   <span v-clipboard:copy="scope.row.assetKey" v-clipboard:success="onCopy"
                         v-clipboard:error="onError">{{ scope.row.assetKey }}</span>
                 </div>
                 <div>
-                  <!--                  <el-tag size="mini" style="margin-right: 5px">HTTP</el-tag>-->
                   <el-link :href="scope.row.assetKey2" target="_blank" type="primary" :underline="false"
                            style="font-size: 12px">
                     {{ scope.row.assetKey2 }}
@@ -24,13 +23,13 @@
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="命名空间">
-              <template slot-scope="scope">
-                {{ scope.row.properties.namespaceName }}
+              <template v-slot="scope">
+                <span>{{ scope.row.properties.namespaceName }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="description" label="描述">
-              <template slot-scope="scope">
-                {{ scope.row.description }}
+              <template v-slot="scope">
+                <span>{{ scope.row.description }}</span>
               </template>
             </el-table-column>
           </template>
@@ -41,13 +40,13 @@
                      :tableLayout="tableLayout.group" ref="groupTable">
           <template v-slot:extend>
             <el-table-column prop="children" label="成员(项目)" width="500px">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.GITLAB_PROJECT" :type="2"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.GITLAB_PROJECT" :type="2"/>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="描述">
-              <template slot-scope="scope">
-                {{ scope.row.properties.description }}
+              <template v-slot="scope">
+                <span>{{ scope.row.properties.description }}</span>
               </template>
             </el-table-column>
           </template>
@@ -58,13 +57,13 @@
                      ref="userTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="管理员">
-              <template slot-scope="scope">
-                <whether-tag :whether="scope.row.properties.isAdmin"></whether-tag>
+              <template v-slot="scope">
+                <whether-tag :whether="scope.row.properties.isAdmin"/>
               </template>
             </el-table-column>
             <el-table-column prop="children" label="密钥" width="200" v-if="false">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.GITLAB_SSHKEY" :type="2"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.GITLAB_SSHKEY" :type="2"/>
               </template>
             </el-table-column>
           </template>
@@ -75,11 +74,6 @@
                      :tableLayout="tableLayout.sshKey"
                      ref="sshKeyTable">
           <template v-slot:extend>
-            <!--            <el-table-column prop="properties" label="用户名">-->
-            <!--              <template slot-scope="scope">-->
-            <!--                <span>{{ scope.row.properties.username }}</span>-->
-            <!--              </template>-->
-            <!--            </el-table-column>-->
           </template>
         </asset-table>
       </el-tab-pane>

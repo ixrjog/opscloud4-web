@@ -1,8 +1,9 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-card class="box-card" shadow="hover" style="margin-bottom: 10px" v-if="JSON.stringify(groups) !== '[]'">
       <div slot="header" class="clearfix">
-        <span>授权的服务器组<i class="header-icon el-icon-info"></i>(深色标签拥有管理员权限)</span>
+        <span>授权的服务器组<i class="header-icon el-icon-info"/>(深色标签拥有管理员权限)</span>
       </div>
       <div>
         <span class="tag-group">

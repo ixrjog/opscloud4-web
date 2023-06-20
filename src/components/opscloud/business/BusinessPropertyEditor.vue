@@ -1,12 +1,13 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="businessProperty">
       <el-form-item label="属性(YML)" label-position="top">
         <br/>
-        <my-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"></my-highlight>
+        <my-highlight v-if="!editing" :code="businessProperty.property" lang="yaml"/>
         <editor v-if="editing" v-model="businessProperty.property" @init="editorInit" lang="yaml" theme="chrome"
                 height="400"
-                :options="options" ref="editor"></editor>
+                :options="options" ref="editor"/>
       </el-form-item>
     </el-form>
     <div style="width:100%;text-align:center">

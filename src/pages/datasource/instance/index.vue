@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -6,18 +7,16 @@
     <div>
       <el-row :gutter="24" style="margin-bottom: 5px; margin-left: -5px">
         <el-select v-model="queryParam.instanceType" clearable placeholder="数据源类型" filterable @change="fetchData">
-          <el-option
-            v-for="item in dsInstanceType"
-            :key="item.name"
-            :label="item.name"
-            :value="item.name">
-          </el-option>
+          <el-option v-for="item in dsInstanceType"
+                     :key="item.name"
+                     :label="item.name"
+                     :value="item.name"/>
         </el-select>
         <el-button @click="fetchData">查询</el-button>
       </el-row>
       <el-row :gutter="10">
         <el-col :span="8" v-for="instance in dsInstances" :key="instance.id">
-          <datasource-instance-card :instance="instance"></datasource-instance-card>
+          <datasource-instance-card :instance="instance"/>
         </el-col>
       </el-row>
     </div>

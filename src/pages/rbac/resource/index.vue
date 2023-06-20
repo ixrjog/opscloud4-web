@@ -1,12 +1,13 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
-    <h1>角色管理</h1>
+    <h1>资源管理</h1>
     <el-tabs v-model="activeName">
       <el-tab-pane label="资源" name="resource">
-        <resource-table></resource-table>
+        <resource-table/>
       </el-tab-pane>
       <el-tab-pane label="资源组" name="resourceGroup">
-        <group-table></group-table>
+        <group-table/>
       </el-tab-pane>
     </el-tabs>
   </d2-container>

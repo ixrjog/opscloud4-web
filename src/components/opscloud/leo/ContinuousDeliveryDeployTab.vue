@@ -1,10 +1,11 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-button :type="webSocketState.type" class="button" size="mini">
-        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"></i>
+        <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"/>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
-           style="margin-right: 5px"></i>{{ webSocketState.name }}
+           style="margin-right: 5px"/>{{ webSocketState.name }}
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">{{
@@ -15,17 +16,16 @@
       <el-select v-model="queryParam.applicationId" filterable clearable size="mini"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item.id">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
-        <i class="fas fa-circle-notch"></i>
+        <i class="fas fa-circle-notch"/>
       </el-button>
       <el-button type="primary" size="mini" @click="createDeploy"
                  :disabled="queryParam.applicationId === '' || queryParam.envType === ''">Create Deploy Task
@@ -43,16 +43,18 @@
         <span><i class="far fa-square" style="color: #e56c0d; margin-right: 1px"></i>Other</span>、
         <span><i class="far fa-square" style="color: #9d9fa3; margin-right: 1px"></i>Offline</span>）
       </el-divider>
+      <!--suppress VueUnrecognizedDirective -->
       <span v-loading="versionLoading">
         <div v-if="versionLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
         <leo-deployment-version-details v-if="data.deploymentVersionDetails.length > 0"
-                                        :deployment-version-details="data.deploymentVersionDetails"></leo-deployment-version-details>
+                                        :deployment-version-details="data.deploymentVersionDetails"/>
       </span>
     </el-row>
     <!-- 最新部署 -->
     <!--    v-if="data.deploys.length > 0"-->
     <el-row :gutter="20">
       <el-divider content-position="left">Latest Deployment Tasks</el-divider>
+      <!--suppress VueUnrecognizedDirective -->
       <span v-loading="deployLoading">
         <div v-if="deployLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
         <el-col :span="7" style="margin-top: 10px" v-if="data.deploys.length > 0">
@@ -63,24 +65,25 @@
                 <deployment-name
                   :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
                   :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
-                  cluster=""></deployment-name>
-                <deploy-number-icon :deploy="deploy"></deploy-number-icon>
+                  cluster=""/>
+                <deploy-number-icon :deploy="deploy"/>
                 <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
                 <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                   <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                           :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
                           :id="`deploy_${deploy.id}`">
-                    <i class="fas fa-plus-circle"></i></el-tag>
+                    <i class="fas fa-plus-circle"/>
+                  </el-tag>
                   <el-button class="btn" type="text" style="margin-right: 10px" v-if="false"
                              @click="queryDeployDetails(deploy.id)" :disabled="deploy.startTime === null">
-                    <i class="fab fa-sistrix"></i>
+                    <i class="fab fa-sistrix"/>
                   </el-button>
                 </el-tooltip>
                 <el-tooltip class="item" effect="light" content="停止部署" placement="top-start"
                             v-if="!deploy.isFinish">
                   <el-button class="btn" style="margin-right: 10px" type="text" @click="stopDeploy(deploy.id)"
                              :loading="buttons.stopping">
-                    <i class="far fa-stop-circle"></i>
+                    <i class="far fa-stop-circle"/>
                   </el-button>
                 </el-tooltip>
               </div>
@@ -97,12 +100,10 @@
                 {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
                 <business-tags :tags="deploy.tags"/>
               </div>
-              <div><span class="label">部署结果</span>
-                <deploy-result style="margin-left: 5px" :deploy="deploy">
-                </deploy-result>
-              </div>
-              <div><span class="label">发布版本</span> {{ deploy.versionName === null ? '-' : deploy.versionName }}
-              </div>
+              <div><span class="label">部署结果</span><deploy-result style="margin-left: 5px" :deploy="deploy"/></div>
+              <div><span class="label">发布版本</span> {{
+                  deploy.versionName === null ? '-' : deploy.versionName
+                }}</div>
               <div><span class="label">操作用户</span> {{
                   deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
                 }}
@@ -112,17 +113,18 @@
         </div>
       </el-col>
         <el-col :span="17" style="margin-top: 10px" v-if="data.deploys.length > 0">
-          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"></i>Deployment Details Snapshot</el-tag>
+          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"
+                                                                    style="margin-left: 2px"/>Deployment Details Snapshot</el-tag>
           <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
           <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
                    v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.show"
                    ref="previousVersionTab">
             <!-- 版本1 -->
             <el-tab-pane :label="data.deployDetails.versionDetails1.title">
-              <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"></deploy-version>
+              <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"/>
               <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
                     style="font-size: 12px; display: inline-block;">
-                <pod-version :pod="pod"></pod-version>
+                <pod-version :pod="pod"/>
               </span>
             </el-tab-pane>
             <el-col>
@@ -134,10 +136,10 @@
             <!-- 版本2-->
             <el-tab-pane :label="data.deployDetails.versionDetails2.title">
               <deploy-version :version="data.deployDetails.versionDetails2" :type="'version2'"
-                              :replicas="data.deployDetails.replicas"></deploy-version>
+                              :replicas="data.deployDetails.replicas"/>
               <span v-for="pod in data.deployDetails.versionDetails2.pods" :key="pod.name"
                     style="font-size: 12px; display: inline-block;">
-                <pod-version :pod="pod"></pod-version>
+                <pod-version :pod="pod"/>
               </span>
             </el-tab-pane>
             <el-col>

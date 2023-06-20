@@ -1,7 +1,8 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="SonarQube实例管理"></datasource-instance-title>
+                               datasource-nane="SonarQube实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="项目管理" name="project">
         <asset-table :instanceId="instanceId" :assetType="assetType.SONAR.SONAR_PROJECT"

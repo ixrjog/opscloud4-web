@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
@@ -8,23 +9,23 @@
                      :tableLayout="tableLayout.service" ref="serviceTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="Health Checks">
-              <template slot-scope="scope">
-                <entry-detail :value="scope.row.properties.checksPassing" name="ChecksPassing"></entry-detail>
+              <template v-slot="scope">
+                <entry-detail :value="scope.row.properties.checksPassing" name="ChecksPassing"/>
                 <br/>
-                <entry-detail :value="scope.row.properties.checksCritical" name="ChecksCritical"></entry-detail>
+                <entry-detail :value="scope.row.properties.checksCritical" name="ChecksCritical"/>
                 <br/>
-                <entry-detail :value="scope.row.properties.checksWarning" name="ChecksWarning"></entry-detail>
+                <entry-detail :value="scope.row.properties.checksWarning" name="ChecksWarning"/>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="Nodes">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <div v-for="node in JSON.parse(scope.row.properties.nodes )" :key="node">
                   {{ node }}
                 </div>
               </template>
             </el-table-column>
             <el-table-column prop="description" label="描述" v-if="false">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 {{ scope.row.description }}
               </template>
             </el-table-column>

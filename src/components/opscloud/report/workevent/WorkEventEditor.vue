@@ -1,15 +1,14 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="title" :visible.sync="formStatus.visible" width="50%" :before-close="handleClose">
     <el-row :gutter="24" style="margin-bottom: 5px">
       <el-form label-width="80px">
         <el-form-item label="角色" required>
           <el-select v-model="workRoleId" placeholder="选择角色" class="select" @change="workRoleChange">
-            <el-option
-              v-for="item in workRoleOptions"
-              :key="item.id"
-              :label="item.workRoleName"
-              :value="item.id">
-            </el-option>
+            <el-option v-for="item in workRoleOptions"
+                       :key="item.id"
+                       :label="item.workRoleName"
+                       :value="item.id"/>
           </el-select>
         </el-form-item>
         <el-form-item label="类目" required>
@@ -27,7 +26,7 @@
       <el-row v-for="(workEvent,index) in workEventData.workEventList" :key="index" style="margin-bottom: 10px">
         <el-card shadow="hover">
           <div slot="header" class="clearfix">
-            <my-span :content="workEvent.workItemName" style="font-size: 14px"></my-span>
+            <my-span :content="workEvent.workItemName" style="font-size: 14px"/>
             <el-button @click.prevent="handleDel(workEvent)" type="text"
                        style="float: right;margin-left: 5px;color: #F56C6C">删除
             </el-button>
@@ -60,13 +59,13 @@
             </el-form-item>
           </span>
           <el-form-item label="事件次数" required>
-            <el-input-number controls-position="right" :min="1" v-model="workEvent.workEventCnt"></el-input-number>
+            <el-input-number controls-position="right" :min="1" v-model="workEvent.workEventCnt"/>
           </el-form-item>
           <el-form-item label="事件时间" required>
-            <el-date-picker v-model="workEvent.workEventTime" type="date" value-format="timestamp"></el-date-picker>
+            <el-date-picker v-model="workEvent.workEventTime" type="date" value-format="timestamp"/>
           </el-form-item>
           <el-form-item label="事件说明">
-            <el-input type="textarea" :rows="4" v-model="workEvent.comment"></el-input>
+            <el-input type="textarea" :rows="4" v-model="workEvent.comment"/>
           </el-form-item>
         </el-card>
       </el-row>

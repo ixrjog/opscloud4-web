@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible" width="75%">
@@ -5,14 +6,14 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="leoJob">
           <el-form-item label="显示名称" :label-width="formStatus.labelWidth" required wit>
-            <el-input v-model="leoJob.name" placeholder="请输入内容" style="width: 500px"></el-input>
+            <el-input v-model="leoJob.name" placeholder="请输入内容" style="width: 500px"/>
           </el-form-item>
           <el-form-item label="任务主键" :label-width="formStatus.labelWidth" required>
             <el-input v-model="leoJob.jobKey" placeholder="请输入内容" style="width: 500px"
                       :disabled="leoJob.id !== '' && leoJob.id !== 0">
-              <template slot="append">
+              <template v-slot:append>
                 <el-button size="mini" type="primary" @click="handleBuildKey">
-                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                  <i class="fa fa-arrow-up" aria-hidden="true"/>
                 </el-button>
               </template>
             </el-input>
@@ -21,12 +22,11 @@
             <el-select v-model.trim="leoJob.applicationId" filterable clearable
                        remote reserve-keyword placeholder="搜索应用" :remote-method="getApplication"
                        @clear="getApplication('')">
-              <el-option
-                v-for="item in applicationOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <select-item :name="item.name" :comment="item.comment"></select-item>
+              <el-option v-for="item in applicationOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"/>
               </el-option>
             </el-select>
           </el-form-item>
@@ -34,38 +34,33 @@
             <el-select v-model.trim="leoJob.templateId" filterable clearable
                        remote reserve-keyword placeholder="搜索任务模板" :remote-method="getTemplate"
                        @clear="getTemplate('')">
-              <el-option
-                v-for="item in templateOptions"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <select-item :name="item.name" :comment="item.comment"></select-item>
+              <el-option v-for="item in templateOptions"
+                         :key="item.id"
+                         :label="item.name"
+                         :value="item.id">
+                <select-item :name="item.name" :comment="item.comment"/>
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="formStatus.labelWidth" required>
             <el-select v-model.trim="leoJob.envType" clearable
                        remote reserve-keyword placeholder="选择环境" :remote-method="getEnv">
-              <el-option
-                v-for="item in envOptions"
-                :key="item.envType"
-                :label="item.envName"
-                :value="item.envType">
-              </el-option>
+              <el-option v-for="item in envOptions"
+                         :key="item.envType"
+                         :label="item.envName"
+                         :value="item.envType"/>
             </el-select>
           </el-form-item>
           <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
             <el-select v-model="leoJob.isActive" placeholder="选择">
-              <el-option
-                v-for="item in activeOptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+              <el-option v-for="item in activeOptions"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value"/>
             </el-select>
           </el-form-item>
           <el-form-item label="说明" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="leoJob.comment" placeholder="请输入内容"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -73,11 +68,11 @@
         <el-row>
           <el-card shadow="never">
             <my-highlight v-if="!editing && leoJob.jobConfig !== ''" :code="leoJob.jobConfig"
-                          lang="yaml" :myStyle="style"></my-highlight>
+                          lang="yaml" :myStyle="style"/>
             <editor v-if="editing && JSON.stringify(leoJob.jobConfig) !== '{}'"
                     v-model="leoJob.jobConfig" @init="editorInit"
                     lang="yaml" theme="chrome" height="400" :options="options" ref="editor"
-                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"></editor>
+                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"/>
           </el-card>
         </el-row>
         <el-row>
@@ -92,7 +87,7 @@
           <el-card shadow="never">
             <my-highlight v-if="!editing && JSON.stringify(leoJob.templateContent) !== '{}'"
                           :code="leoJob.templateContent"
-                          lang="xml" :myStyle="style"></my-highlight>
+                          lang="xml" :myStyle="style"/>
           </el-card>
         </el-row>
         <el-row>
@@ -105,12 +100,12 @@
       </el-tab-pane>
       <el-tab-pane label="用户授权" name="permissionUser" v-if="leoJob.id !== ''&& leoJob.id !== 0">
         <permission-user-tab :businessType="businessType.LEO_JOB" :businessId="leoJob.id"
-                             ref="permissionUserTab"></permission-user-tab>
+                             ref="permissionUserTab"/>
       </el-tab-pane>
       <el-tab-pane label="文档" name="doc">
         <el-row>
           <el-card shadow="never">
-            <my-markdown v-if="docs.job !== null" :content="docs.job.content"></my-markdown>
+            <my-markdown v-if="docs.job !== null" :content="docs.job.content"/>
           </el-card>
         </el-row>
       </el-tab-pane>

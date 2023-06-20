@@ -1,24 +1,22 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
       <el-select v-model="queryParam.envType" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv">
-        <el-option
-          v-for="item in envOptions"
-          :key="item.id"
-          :label="item.envName"
-          :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"></select-item>
+        <el-option v-for="item in envOptions"
+                   :key="item.id"
+                   :label="item.envName"
+                   :value="item.envType">
+          <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-select v-model="queryParam.instanceType" clearable placeholder="选择实例类型">
-        <el-option
-          v-for="item in instanceTypeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in instanceTypeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
@@ -27,13 +25,13 @@
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
       <el-table-column prop="env" label="环境" width="80">
         <template slot-scope="scope">
-          <env-tag :env="scope.row.env"></env-tag>
+          <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
       <el-table-column prop="bizTemplateSize" label="使用" width="80">
       </el-table-column>
       <el-table-column prop="env" label="实例类型/模板Key" width="170">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.instanceType }}</el-tag>
           <br/>
           <el-tag size="mini">{{ scope.row.templateKey }}</el-tag>
@@ -41,16 +39,16 @@
       </el-table-column>
       <el-table-column prop="content" label="模板内容">
         <template slot-scope="scope">
-          <my-highlight :code="scope.row.content" :lang="scope.row.templateType" :myStyle="style"></my-highlight>
+          <my-highlight :code="scope.row.content" :lang="scope.row.templateType" :myStyle="style"/>
         </template>
       </el-table-column>
       <el-table-column prop="vars" label="变量" width="350">
-        <template slot-scope="scope">
-          <my-highlight :code="scope.row.vars" :lang="scope.row.templateType" :myStyle="style"></my-highlight>
+        <template v-slot="scope">
+          <my-highlight :code="scope.row.vars" :lang="scope.row.templateType" :myStyle="style"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="220">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <slot name="operation" :row="scope.row"></slot>
           <el-button type="primary" plain size="mini"
                      @click="handleRowEdit(scope.row)">编辑
@@ -62,11 +60,11 @@
       </el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
     <template-editor :formStatus="formStatus.template"
                      :instanceTypeOptions="instanceTypeOptions"
                      :templateTypeOptions="templateTypeOptions"
-                     ref="templateEditor" @close="fetchData"></template-editor>
+                     ref="templateEditor" @close="fetchData"/>
   </div>
 </template>
 

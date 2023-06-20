@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <span class="tag-group">
     <span v-for="child in children" :key="child.id">

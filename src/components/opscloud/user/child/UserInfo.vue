@@ -1,31 +1,34 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="user">
       <el-form-item label="用户名" :label-width="labelWidth" required>
-        <el-input v-model="user.username" placeholder="请输入内容" :disabled="!operationType"></el-input>
+        <el-input v-model="user.username" placeholder="请输入内容" :disabled="!operationType"/>
       </el-form-item>
       <el-form-item label="密码" :label-width="labelWidth" :required="operationType">
         <el-input v-model="user.password" clearable placeholder="请输入内容">
-          <el-button slot="append" @click="handlerRandomWord"><i class="fas fa-key" aria-hidden="true"></i></el-button>
+          <el-button slot="append" @click="handleRandomWord">
+            <i class="fas fa-key" aria-hidden="true"/>
+          </el-button>
         </el-input>
       </el-form-item>
       <el-form-item label="显示名" :label-width="labelWidth" required>
-        <el-input v-model="user.displayName" placeholder="请输入内容"></el-input>
+        <el-input v-model="user.displayName" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="姓名" :label-width="labelWidth">
-        <el-input v-model="user.name" placeholder="请输入内容"></el-input>
+        <el-input v-model="user.name" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="电话" :label-width="labelWidth">
-        <el-input v-model="user.phone" placeholder="请输入内容"></el-input>
+        <el-input v-model="user.phone" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="邮箱" :label-width="labelWidth" required>
-        <el-input v-model="user.email" placeholder="请输入内容"></el-input>
+        <el-input v-model="user.email" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="微信" :label-width="labelWidth">
-        <el-input v-model="user.wechat" placeholder="请输入内容"></el-input>
+        <el-input v-model="user.wechat" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="留言" :label-width="labelWidth">
-        <el-input v-model="user.comment" placeholder="请输入内容"></el-input>
+        <el-input v-model="user.comment" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="自动授权" :label-width="labelWidth" v-show="operationType">
         <el-checkbox v-model="user.needInitializeDefaultConfiguration">创建用户初始化默认配置（角色、用户组等）</el-checkbox>
@@ -52,7 +55,7 @@ export default {
     initData (user) {
       this.user = user
     },
-    handlerRandomWord () {
+    handleRandomWord () {
       this.user.password = tools.randomWord(20)
     },
     handleUpdate (request) {

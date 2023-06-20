@@ -1,19 +1,20 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="Ansible实例管理"></datasource-instance-title>
+                               datasource-nane="Ansible实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="主机清单" name="hosts">
-        <asset-ansible-hosts-info :instanceId="instanceId" :assetType="assetType.ANSIBLE.ANSIBLE_HOSTS" ref="hostsInfo">
-        </asset-ansible-hosts-info>
+        <asset-ansible-hosts-info :instanceId="instanceId" :assetType="assetType.ANSIBLE.ANSIBLE_HOSTS"
+                                  ref="hostsInfo"/>
       </el-tab-pane>
       <el-tab-pane label="版本" name="version">
         <asset-table :instanceId="instanceId" :assetType="assetType.ANSIBLE.ANSIBLE_VERSION"
                      :tableLayout="tableLayout.version" ref="versionTable">
           <template v-slot:extend>
             <el-table-column prop="description" label="版本详情" width="700px">
-              <template slot-scope="scope">
-                <my-highlight v-if="scope.row.description != ''" :code="scope.row.description" lang="sh"></my-highlight>
+              <template v-slot="scope">
+                <my-highlight v-if="scope.row.description !== ''" :code="scope.row.description" lang="sh"/>
               </template>
             </el-table-column>
           </template>

@@ -1,19 +1,20 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="Zabbix实例管理"></datasource-instance-title>
+                               datasource-nane="Zabbix实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="问题" name="problem">
         <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_TRIGGER" ref="problemTable"
                      :tableLayout="tableLayout.problem">
           <template v-slot:extend>
             <el-table-column label="主机">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"/>
               </template>
             </el-table-column>
             <el-table-column label="级别">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <el-tag size="mini">{{ scope.row.kind | getProblemSeverityText }}</el-tag>
               </template>
             </el-table-column>
@@ -25,7 +26,7 @@
                      ref="userTable">
           <template v-slot:extend class="user-template">
             <el-table-column label="告警媒介" width="250">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <el-row v-if="scope.row.properties && scope.row.properties.email">
                   <i class="far fa-envelope"></i>
                   <span style="margin-left: 5px">{{ scope.row.properties.email }}</span>
@@ -37,8 +38,8 @@
               </template>
             </el-table-column>
             <el-table-column prop="children" label="成员(用户组)" width="600">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.ZABBIX_USER_GROUP" :type="3"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_USER_GROUP" :type="3"/>
               </template>
             </el-table-column>
           </template>
@@ -50,8 +51,8 @@
                      ref="userGroupTable">
           <template v-slot:extend>
             <el-table-column prop="children" label="成员(用户)" width="600">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.ZABBIX_USER" :type="4"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_USER" :type="4"/>
               </template>
             </el-table-column>
           </template>
@@ -62,20 +63,22 @@
                      :tableLayout="tableLayout.host">
           <template v-slot:extend>
             <el-table-column label="主机组" width="600">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.ZABBIX_HOST_GROUP" :type="3"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST_GROUP" :type="3"/>
               </template>
             </el-table-column>
           </template>
         </asset-table>
       </el-tab-pane>
       <el-tab-pane label="主机组" name="hostGroup">
-        <asset-table :instanceId="instanceId" :assetType="assetType.ZABBIX.ZABBIX_HOST_GROUP" ref="hostGroupTable"
+        <asset-table :instanceId="instanceId"
+                     :assetType="assetType.ZABBIX.ZABBIX_HOST_GROUP"
+                     ref="hostGroupTable"
                      :tableLayout="tableLayout.hostGroup">
           <template v-slot:extend>
             <el-table-column label="主机" width="600">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"/>
               </template>
             </el-table-column>
           </template>
@@ -86,8 +89,8 @@
                      :tableLayout="tableLayout.template">
           <template v-slot:extend>
             <el-table-column label="主机" width="600">
-              <template slot-scope="scope">
-                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"></ds-children-tag>
+              <template v-slot="scope">
+                <ds-children-tag :children="scope.row.children.ZABBIX_HOST" :type="3"/>
               </template>
             </el-table-column>
           </template>

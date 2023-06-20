@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-card shadow="hover">
     <div>
@@ -6,20 +7,22 @@
       </el-tag>
     </div>
     <el-row>
-      <i class="far fa-clock"></i>{{ sessionInstance.openTime }}[{{ sessionInstance.sessionDuration }}s]
+      <i class="far fa-clock"/>{{ sessionInstance.openTime }}[{{ sessionInstance.sessionDuration }}s]
       <div>
-        <i class="fas fa-video"></i>{{ util.bytesToSize(sessionInstance.outputSize) }}
-        <i class="far fa-address-card"></i>{{ sessionInstance.loginUser }}
+        <i class="fas fa-video"/>{{ util.bytesToSize(sessionInstance.outputSize) }}
+        <i class="far fa-address-card"/>{{ sessionInstance.loginUser }}
       </div>
     </el-row>
     <el-row style="float: right; padding: 3px 0">
       <span v-if="sessionInstance.commandSize !== 0">
         <el-badge :value="sessionInstance.commandSize" class="item" type="primary" style="font-size: 4px">
-          <el-button type="text" style="float: right; padding: 3px 0" @click="handleCommand(sessionInstance)"><i class="fas fa-greater-than-equal"></i>CMD
+          <el-button type="text" style="float: right; padding: 3px 0" @click="handleCommand(sessionInstance)">
+            <i class="fas fa-greater-than-equal"/>CMD
           </el-button>
         </el-badge>
       </span>
-      <el-button type="text" @click="handlePlay(sessionInstance)"><i class="fas fa-play"></i>Play
+      <el-button type="text" @click="handlePlay(sessionInstance)">
+        <i class="fas fa-play"/>Play
       </el-button>
     </el-row>
   </el-card>

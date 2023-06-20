@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag disable-transitions size="mini" :style="{ backgroundColor: item.label }">
     {{ item.label }}

@@ -1,6 +1,7 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handlePull">构建配置</el-button>
     </el-row>
@@ -10,12 +11,12 @@
           <el-tag size="mini">{{ asset.assetKey }}</el-tag>
           <span style="margin-left: 20px;font-size: 12px">{{ asset.assetKey2 }}</span>
         </div>
-        <my-highlight v-if="asset.description != null && asset.description != ''" :code="asset.description"
-                      lang="sh"></my-highlight>
+        <my-highlight v-if="asset.description !== null && asset.description !== ''" :code="asset.description"
+                      lang="sh"/>
       </el-card>
     </div>
     <business-tag-editor ref="businessTagEditor" :businessType="businessType" :businessId="businessId"
-                         :formStatus="formStatus.businessTag" @close="fetchData"></business-tag-editor>
+                         :formStatus="formStatus.businessTag" @close="fetchData"/>
   </div>
 </template>
 
@@ -103,7 +104,7 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
+  //-webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 

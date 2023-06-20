@@ -1,22 +1,19 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
+    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
       <el-input v-model="queryParam.username" placeholder="输入关键字查询用户"/>
       <el-select v-model="queryParam.platformId" clearable placeholder="平台">
-        <el-option
-          v-for="item in platformOptions"
-          :key="item.platformId"
-          :label="item.name"
-          :value="item.platformId">
-        </el-option>
+        <el-option v-for="item in platformOptions"
+                   :key="item.platformId"
+                   :label="item.name"
+                   :value="item.platformId"/>
       </el-select>
       <el-select v-model="queryParam.result" clearable placeholder="认证结果">
-        <el-option
-          v-for="item in resultOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
+        <el-option v-for="item in resultOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
       </el-select>
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
@@ -24,23 +21,17 @@
       <el-table-column prop="platformName" label="平台" width="150" sortable></el-table-column>
       <el-table-column prop="username" label="用户名" width="300" sortable></el-table-column>
       <el-table-column prop="otp" label="使用OTP" width="100">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.otp ? 'success' : 'info'">{{
-              scope.row.otp ? '是' : '否'
-            }}
-          </el-tag>
+        <template v-slot="scope">
+          <el-tag :type="scope.row.otp ? 'success' : 'info'">{{scope.row.otp ? '是' : '否'}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="result" label="认证结果" width="150">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.result ? 'success' : 'danger'">{{
-              scope.row.result ? '认证成功' : '认证失败'
-            }}
-          </el-tag>
+        <template v-slot="scope">
+          <el-tag :type="scope.row.result ? 'success' : 'danger'">{{scope.row.result ? '认证成功' : '认证失败'}}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" label="认证时间" width="250">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div>
             <span style="margin-right: 2px">{{ scope.row.createTime }}</span>
             <span style="color: #20A9D9">[{{ scope.row.ago }}]</span>
@@ -50,7 +41,7 @@
       <el-table-column prop="resultMsg" label="认证信息"></el-table-column>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"></pagination>
+                @handleSizeChange="handleSizeChange"/>
   </div>
 </template>
 

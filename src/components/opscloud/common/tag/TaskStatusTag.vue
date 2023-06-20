@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-tag class="filters" :type="taskStatus | getTaskStatusType" size="mini" v-if="taskStatus !=='FINALIZED'">
     <i class="el-icon-loading" v-show="taskStatus === 'EXECUTING'"/>{{ taskStatus| getTaskStatusText }}

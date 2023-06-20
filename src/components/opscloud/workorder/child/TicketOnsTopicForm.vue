@@ -1,28 +1,28 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-form :model="topicData" label-width="120px">
       <el-form-item label="阿里云实例">
         <el-select v-model="instanceUuid" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
-          <el-option
-            v-for="item in dsInstanceOptions"
-            :key="item.uuid"
-            :label="item.instanceName"
-            :value="item.uuid">
-            <select-item :name="item.instanceName" :comment="item.instanceType"></select-item>
+          <el-option v-for="item in dsInstanceOptions"
+                     :key="item.uuid"
+                     :label="item.instanceName"
+                     :value="item.uuid">
+            <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="ONS实例">
         <el-select v-model="ticketEntry" filterable value-key="name"
-                   style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索ONS实例" :remote-method="fetchData"
+                   style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索ONS实例"
+                   :remote-method="fetchData"
                    :loading="searchLoading" :disabled="instanceUuid === ''" @change="onsInstanceChange">
-          <el-option
-            v-for="item in ticketEntryOptions"
-            :key="item.name"
-            :label="item.name"
-            :value="item">
-            <select-item :name="item.name" :comment="item.comment"></select-item>
+          <el-option v-for="item in ticketEntryOptions"
+                     :key="item.name"
+                     :label="item.name"
+                     :value="item">
+            <select-item :name="item.name" :comment="item.comment"/>
           </el-option>
         </el-select>
       </el-form-item>
@@ -42,12 +42,12 @@
         </el-radio-group>
         <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right">
           <el-link href="https://help.aliyun.com/document_detail/155952.html" :underline="false" target="_blank">
-            <i class="el-icon-info" style="margin-left: 5px;height: 200%"></i>
+            <i class="el-icon-info" style="margin-left: 5px;height: 200%"/>
           </el-link>
         </el-tooltip>
         <el-alert type="info" :closable="false" style="margin-top: 10px;line-height: 1.5">
           <template v-slot:default>
-            <i class="el-icon-info" style="font-size: 14px;color: #409eff;"></i>
+            <i class="el-icon-info" style="font-size: 14px;color: #409eff;"/>
             <span v-if="topicData.messageType === messageType.type0.type">
               普通消息适用于系统间异步解耦、削峰填谷、日志服务、大规模机器的Cache同步以及实时计算分析等场景。
             </span>
@@ -67,11 +67,10 @@
         </el-alert>
       </el-form-item>
       <el-form-item label="描述" required>
-        <el-input v-model="topicData.remark" :disabled="added" placeholder="请输入备注，例如：用户 - 领券消息"></el-input>
+        <el-input v-model="topicData.remark" :disabled="added" placeholder="请输入备注，例如：用户 - 领券消息"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">添加
-        </el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">添加</el-button>
       </el-form-item>
     </el-form>
   </div>

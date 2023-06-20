@@ -1,5 +1,6 @@
+<!--suppress HtmlUnknownTag -->
 <template>
-  <div :id="container.instanceId" class="xterm"></div>
+  <div :id="container.instanceId" class="xterm"/>
 </template>
 
 <script>

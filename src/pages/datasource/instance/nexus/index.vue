@@ -1,14 +1,15 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <datasource-instance-title v-if="instanceId !== null" :instance-id="instanceId"
-                               datasource-nane="Sonatype Nexus Repository实例管理"></datasource-instance-title>
+                               datasource-nane="Sonatype Nexus Repository实例管理"/>
     <el-tabs v-model="activeName" v-if="instanceId !== null" @tab-click="handleClick">
       <el-tab-pane label="资产管理" name="asset">
         <asset-table :instanceId="instanceId" :assetType="assetType.NEXUS.NEXUS_ASSET" :tableLayout="tableLayout.user"
                      ref="assetTable">
           <template v-slot:extend>
             <el-table-column prop="properties" label="md5">
-              <template slot-scope="scope">
+              <template v-slot="scope">
                 <span>{{ scope.row.properties.md5 }}</span>
               </template>
             </el-table-column>

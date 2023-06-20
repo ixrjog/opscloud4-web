@@ -3,9 +3,6 @@ export default {
     serverGroup: {
       visible: false
     },
-    applicationPermission: {
-      visible: false
-    },
     confluence: {
       visible: false
     },
@@ -16,7 +13,12 @@ export default {
       visible: false
     },
     apollo: {
-      visible: false
+      permission: {
+        visible: false
+      },
+      release: {
+        visible: false
+      }
     },
     nexus: {
       visible: false
@@ -28,6 +30,9 @@ export default {
       visible: false
     },
     awsIamUpdateLoginProfile: {
+      visible: false
+    },
+    aliyunRamUpdateLoginProfile: {
       visible: false
     },
     nacos: {
@@ -59,6 +64,26 @@ export default {
     },
     applicationDeploy: {
       visible: false
+    },
+    application: {
+      permission: {
+        visible: false
+      },
+      scaleReplicas: {
+        visible: false
+      },
+      reduceReplicas: {
+        visible: false
+      },
+      deploy: {
+        visible: false
+      },
+      new: {
+        visible: false
+      },
+      serDeploy: {
+        visible: false
+      }
     }
   }
 }

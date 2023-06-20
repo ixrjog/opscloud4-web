@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row :gutter="24" v-if="JSON.stringify(report) !== '{}'">
@@ -10,7 +11,7 @@
           <span class="value">{{
               report.dashboard.userTotal > 0 ? report.dashboard.userTotal.toLocaleString() : 0
             }}</span>
-          <span style="margin-right: 40px"></span>
+          <span style="margin-right: 40px"/>
           <span class="label">授权用户</span>
           <span class="value">{{
               report.dashboard.authorizedUserTotal > 0 ? report.dashboard.authorizedUserTotal.toLocaleString() : 0
@@ -26,7 +27,7 @@
           <span class="value">{{
               report.dashboard.applicationTotal > 0 ? report.dashboard.applicationTotal.toLocaleString() : 0
             }}</span>
-          <span style="margin-right: 40px"></span>
+          <span style="margin-right: 40px"/>
           <span class="label">任务总数</span>
           <span class="value">{{
               report.dashboard.jobTotal > 0 ? report.dashboard.jobTotal.toLocaleString() : 0
@@ -53,12 +54,12 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card class="box-card" shadow="hover">
-          <div id="buildChart" style="height:280px; width: 100%"></div>
+          <div id="buildChart" style="height:280px; width: 100%"/>
         </el-card>
       </el-col>
       <el-col :span="12">
         <el-card class="box-card" shadow="hover">
-          <div id="deployChart" style="height:280px; width: 100%"></div>
+          <div id="deployChart" style="height:280px; width: 100%"/>
         </el-card>
       </el-col>
     </el-row>
@@ -66,20 +67,13 @@
       <el-row>
         <span style="float: right">
           <el-button type="text" icon="el-icon-refresh" style="margin-left: 5px"
-                     @click="fetchData" size="mini" plain></el-button>
+                     @click="fetchData" size="mini" plain/>
         </span>
       </el-row>
       <el-row>
-        <div id="cDChart" style="height:250px; width: 100%"></div>
+        <div id="cDChart" style="height:250px; width: 100%"/>
       </el-row>
     </el-card>
-    <!--    <div v-if="false" v-for="instance in report.instances" :key="instance.instanceId" style="margin-bottom: 20px">-->
-    <!--      <jenkins-build-executor-status-card-->
-    <!--        :instanceId="instance.instanceId"-->
-    <!--        :ref="`instance_${instance.instanceId}_buildExecutor`">-->
-    <!--      </jenkins-build-executor-status-card>-->
-    <!--    </div>-->
-
   </div>
 </template>
 

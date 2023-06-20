@@ -216,6 +216,16 @@ const DsInstanceType = Object.freeze({
         label: 'METER_SPHERE'
       }
     ]
+  },
+  APOLLO: {
+    type: 56,
+    name: 'APOLLO',
+    instanceType: [
+      {
+        value: 'APOLLO',
+        label: 'APOLLO'
+      }
+    ]
   }
 })
 

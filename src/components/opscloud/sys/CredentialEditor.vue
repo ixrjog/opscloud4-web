@@ -1,38 +1,46 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
              :visible.sync="formStatus.visible">
     <el-form :model="credential">
       <el-form-item label="凭据标题" :label-width="labelWidth" required>
-        <el-input v-model="credential.title" placeholder="请输入内容"></el-input>
+        <el-input v-model="credential.title" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item label="凭据分类" :label-width="labelWidth" :required="true">
-        <el-select v-model="credential.kind" placeholder="选择分类" @change="handlerSelKind">
-          <el-option
-            v-for="item in kindOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+        <el-select v-model="credential.kind" placeholder="选择分类" @change="handleSelKind">
+          <el-option v-for="item in kindOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="凭据账户" :label-width="labelWidth" :required="true">
-        <el-input v-model="credential.username" placeholder="请输入内容"></el-input>
+        <el-input v-model="credential.username" placeholder="请输入内容"/>
       </el-form-item>
       <el-form-item :label="form.credentialLabel" :label-width="labelWidth" :required="true">
-        <editor v-model="credential.credential" @init="editorInit" theme="chrome" :height="form.credentialHeight"
-                :options="options"></editor>
+        <editor v-model="credential.credential"
+                @init="editorInit"
+                theme="chrome"
+                :height="form.credentialHeight"
+                :options="options"/>
       </el-form-item>
-      <el-form-item :label="form.credential2Label" :label-width="labelWidth" :required="true" v-if="form.showCredential2">
-        <editor v-model="credential.credential2" @init="editorInit" theme="chrome" height="100"
-                :options="options"></editor>
+      <el-form-item :label="form.credential2Label"
+                    :label-width="labelWidth"
+                    :required="true"
+                    v-if="form.showCredential2">
+        <editor v-model="credential.credential2"
+                @init="editorInit"
+                theme="chrome"
+                height="100"
+                :options="options"/>
       </el-form-item>
       <el-form-item label="密码短语" :label-width="labelWidth" v-show="form.showPassphrase">
-        <el-input v-model="credential.passphrase" placeholder="请输入内容"></el-input>
+        <el-input v-model="credential.passphrase" placeholder="请输入内容"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handlerSave">确定</el-button>
+      <el-button type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -84,9 +92,9 @@ export default {
     },
     initData (credential) {
       this.credential = credential
-      this.handlerSelKind()
+      this.handleSelKind()
     },
-    handlerSelKind () {
+    handleSelKind () {
       this.form.showCredential2 = false
       this.form.showPassphrase = false
       this.form.credentialHeight = 50
@@ -122,7 +130,7 @@ export default {
           break
       }
     },
-    handlerUpdate (requestBody) {
+    handleUpdate (requestBody) {
       UPDATE_CREDENTIAL(requestBody)
         .then(res => {
           // 返回数据
@@ -134,7 +142,7 @@ export default {
           this.$emit('close')
         })
     },
-    handlerAdd (requestBody) {
+    handleAdd (requestBody) {
       ADD_CREDENTIAL(requestBody)
         .then(res => {
           // 返回数据
@@ -146,11 +154,11 @@ export default {
           this.$emit('close')
         })
     },
-    handlerSave () {
+    handleSave () {
       if (this.formStatus.operationType) {
-        this.handlerAdd(this.credential)
+        this.handleAdd(this.credential)
       } else {
-        this.handlerUpdate(this.credential)
+        this.handleUpdate(this.credential)
       }
     }
   }

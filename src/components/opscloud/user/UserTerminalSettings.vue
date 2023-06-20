@@ -1,23 +1,24 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="title" :visible.sync="formStatus.visible" width="30%">
     <el-form :model="terminalSettings" :label-width="labelWidth">
       <el-form-item label="Foreground">
-        <el-color-picker v-model="terminalSettings.theme.foreground"></el-color-picker>
+        <el-color-picker v-model="terminalSettings.theme.foreground"/>
       </el-form-item>
       <el-form-item label="Background">
-        <el-color-picker v-model="terminalSettings.theme.background"></el-color-picker>
+        <el-color-picker v-model="terminalSettings.theme.background"/>
       </el-form-item>
       <el-form-item label="Cursor">
-        <el-color-picker v-model="terminalSettings.theme.cursor"></el-color-picker>
+        <el-color-picker v-model="terminalSettings.theme.cursor"/>
       </el-form-item>
       <el-form-item label="Cursor Accent" v-if="false">
-        <el-color-picker v-model="terminalSettings.theme.cursorAccent"></el-color-picker>
+        <el-color-picker v-model="terminalSettings.theme.cursorAccent"/>
       </el-form-item>
       <el-form-item label="Selection">
-        <el-color-picker v-model="terminalSettings.theme.selection"></el-color-picker>
+        <el-color-picker v-model="terminalSettings.theme.selection"/>
       </el-form-item>
       <el-form-item label="Windows Rows">
-        <el-input-number v-model="terminalSettings.rows" :min="22" :max="60" label="终端行数"></el-input-number>
+        <el-input-number v-model="terminalSettings.rows" :min="22" :max="60" label="终端行数"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
