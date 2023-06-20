@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import D2PageCover from '@/components/d2-page-cover/index.vue'
+import D2PageCover from '@/components/d2-page-cover/index-bak.vue'
 
 describe('d2-page-cover', () => {
   // 存在且是Vue组件实例

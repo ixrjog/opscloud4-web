@@ -48,5 +48,15 @@ export default [
       cache: true,
       title: 'Continuous-Delivery'
     }
+  },
+  {
+    path: '/workbench/ser-deploy',
+    name: 'ser-deploy',
+    component: () => import('@/pages/workbench/ser-deploy/index'),
+    meta: {
+      auth: true,
+      cache: true,
+      title: '风控规则变更'
+    }
   }
 ]
