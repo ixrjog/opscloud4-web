@@ -240,8 +240,7 @@ export default {
           this.applicationOptions = body.data
         })
     },
-    fetchData () {
-      this.initData()
+    _fetchData() {
       const requestBody = {
         ...this.queryParam,
         applicationId: this.applicationId,
@@ -254,6 +253,10 @@ export default {
           this.table.data = body.data
           this.table.pagination.total = body.totalNum
         })
+    },
+    fetchData () {
+      this.initData()
+      this._fetchData()
     },
     handlerIsFinish () {
 
@@ -281,13 +284,13 @@ export default {
       return process.env.VUE_APP_API + actionUri
     },
     beforeUpload (file) {
-      const token = util.cookies.get('token')
-      this.uploadHeaders['Authorization'] = token
+      this.uploadHeaders['Authorization'] = util.cookies.get('token')
       this.uploadHeaders['x-task-uuid'] = this.serDeployTaskUuid
       this.$message.info('正在上传')
     },
     onSuccess (response, file, fileList) {
       this.$message.success('上传成功')
+      this._fetchData()
       this.getSerDeployTask()
     },
     onError (err, file, fileList) {
@@ -321,6 +324,7 @@ export default {
         DELETE_SER_DEPLOY_TASK_ITEM({ id: row.id }).then(() => {
           this.$message.success('删除成功!')
           this.getSerDeployTask()
+          this._fetchData()
         })
       }).catch(() => {
         this.$message.info('已取消删除!')
