@@ -2,10 +2,10 @@
 <template>
   <d2-container>
     <template>
-      <div>
+      <div v-show="false">
         <h1>{{ title }}</h1>
       </div>
-      <el-row style="margin-bottom: 5px" :gutter="24">
+      <el-row :gutter="24" style="margin-left: 0">
         <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
         <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
                    placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
@@ -17,13 +17,14 @@
         <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
         <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
       </el-row>
+      <div style="height: 5px"/>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
         <el-table-column label="应用" width="200px">
           <template v-slot="scope">
             <el-row>
               <span>{{ scope.row.name }}</span>
               <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
-                         @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"></i>
+                         @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"/>
               </el-button>
             </el-row>
             <el-row v-if="false">

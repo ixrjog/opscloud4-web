@@ -1,12 +1,12 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-row :gutter="20">
+  <el-row :gutter="10">
     <el-col :span="8">
       <!--          服务器树-->
       <server-tree class="server-tree" ref="serverTree"/>
     </el-col>
     <el-col :span="16">
-      <el-card shadow="hover" style="margin-top: 5px">
+      <el-card shadow="hover">
         <div slot="header" class="clearfix">
           <span style="margin-left: 20px;font-size: 12px">任务配置</span>
         </div>

@@ -17,26 +17,26 @@
                       @handleChangeLayout="handleChangeLayout"
                       @handleResize="handleResize"/>
     </el-row>
-    <el-row>
+    <el-row :gutter="10" style="margin-top: 5px">
       <el-col :span="8">
         <!--          服务器树-->
         <server-tree class="server-tree" ref="serverTree" v-show="terminalLayout.terminals.length === 0"/>
       </el-col>
-      <el-col>
-        <!--          终端布局-->
-        <terminal-layout class="terminal-layout" ref="terminalLayout"
-                         :terminalSettings="terminalSettings"
-                         :terminals="terminalLayout.terminals"
-                         :uuid="terminalLayout.uuid"
-                         :loginType="terminalLayout.loginType"
-                         :colSpan="terminalLayout.colSpan"
-                         @handleLogoutByServerNode="handleLogoutByServerNode"
-                         @handleLoginByServerNode="handleLoginByServerNode"
-                         @handleRead="handleRead"/>
+      <el-col :span="16" v-show="terminalLayout.terminals.length === 0">
+        <document-zone mount-zone="WEB_TERMINAL"/>
       </el-col>
     </el-row>
-    <el-row style="margin-top: 20px">
-      <document-zone mount-zone="WEB_TERMINAL"/>
+    <el-row>
+      <!--          终端布局-->
+      <terminal-layout class="terminal-layout" ref="terminalLayout"
+                       :terminalSettings="terminalSettings"
+                       :terminals="terminalLayout.terminals"
+                       :uuid="terminalLayout.uuid"
+                       :loginType="terminalLayout.loginType"
+                       :colSpan="terminalLayout.colSpan"
+                       @handleLogoutByServerNode="handleLogoutByServerNode"
+                       @handleLoginByServerNode="handleLoginByServerNode"
+                       @handleRead="handleRead"/>
     </el-row>
     <business-doc-reader :form-status="formStatus.businessDoc"
                          ref="businessDocReader"/>
@@ -225,15 +225,13 @@ export default {
 </script>
 
 <style scoped>
+
 .el-button {
   margin-left: 5px
-}
-
-.server-tree {
-  margin-top: 5px;
 }
 
 .terminal-layout {
   margin-top: 5px;
 }
+
 </style>

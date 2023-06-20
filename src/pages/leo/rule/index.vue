@@ -3,7 +3,7 @@
   <d2-container>
     <el-tabs v-model="activeName">
       <el-tab-pane label="规则配置" name="rule">
-        <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+        <el-row :gutter="24" style="margin-left: 0">
           <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
             <el-option v-for="item in activeOptions"
                        :key="item.value"
@@ -13,6 +13,7 @@
           <el-button @click="fetchData" class="button">查询</el-button>
           <el-button @click="handleAdd" class="button">新增</el-button>
         </el-row>
+        <div style="height: 5px"/>
         <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
           <el-table-column prop="name" label="名称" sortable width="300"/>
           <el-table-column prop="displayName" label="规则" sortable/>

@@ -4,7 +4,7 @@
     <div>
       <h1>标签配置</h1>
     </div>
-    <el-row :gutter="24" style="margin-bottom: 5px">
+    <el-row :gutter="24">
       <el-input v-model="queryParam.tagKey" placeholder="标签关键字"/>
       <el-select v-model="queryParam.businessType" clearable placeholder="业务类型">
         <el-option v-for="item in businessTypeOptions"
@@ -17,6 +17,7 @@
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="tagKey" label="标签关键字">
         <template v-slot="scope">

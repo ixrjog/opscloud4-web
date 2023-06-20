@@ -5,7 +5,7 @@
       <h1 v-show="false">{{ title }}</h1>
     </div>
     <announcement-carousel :kind="2"/>
-    <el-row style="margin-bottom: 5px">
+    <el-row>
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
       <el-radio-group v-model="queryParam.projectType" size="mini" @change="fetchData" style="margin-left: 5px"
                       v-if="false">
@@ -46,6 +46,7 @@
       <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
       <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column label="项目名称" width="200px">
         <template v-slot="scope">
