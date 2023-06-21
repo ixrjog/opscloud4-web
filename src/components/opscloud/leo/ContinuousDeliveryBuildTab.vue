@@ -9,7 +9,7 @@
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
-          {{ env.envName === 'gray' ? 'sit' : env.envName}}
+          {{ env.envName === 'gray' ? 'sit' : env.envName }}
         </el-radio-button>
       </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable size="mini"
@@ -22,6 +22,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
+      <el-input v-model="queryParam.queryName" @change="fetchData" clearable  placeholder="输入关键字查询任务名称"/>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
         <i class="fas fa-circle-notch"/>
@@ -77,8 +78,8 @@
 
 <script>
 
-import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
-import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
+import {QUERY_MY_APPLICATION_PAGE} from '@/api/modules/application/application.api'
+import {QUERY_ENV_PAGE} from '@/api/modules/sys/sys.env.api'
 
 import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
 import LeoRequestType from '@/components/opscloud/common/enums/leo.request.js'
@@ -111,7 +112,7 @@ const wsStates = {
 
 export default {
   name: 'continuous-delivery-build-tab',
-  data () {
+  data() {
     return {
       socket: null,
       socketURI: util.wsUrl(WebSocketAPI.CONTINUOUS_DELIVERY_BUILD),
@@ -152,18 +153,19 @@ export default {
       },
       queryParam: {
         applicationId: '',
+        queryName: "",
         envType: 1
       },
       envOptions: [],
       applicationOptions: []
     }
   },
-  mounted () {
+  mounted() {
     this.initSocket()
     this.getApplication('')
     this.getEnv()
   },
-  destroyed () {
+  destroyed() {
     this.exit()
   },
   computed: {},
@@ -180,7 +182,7 @@ export default {
   },
   filters: {},
   methods: {
-    exit () {
+    exit() {
       // 销毁定时器
       clearInterval(this.timers.retrySocketTimer)
       try {
@@ -188,7 +190,7 @@ export default {
       } catch (e) {
       }
     },
-    setTimers () {
+    setTimers() {
       // retrySocket定时器
       if (this.timers.retrySocketTimer === null) {
         this.timers.retrySocketTimer = setInterval(() => {
@@ -196,7 +198,7 @@ export default {
         }, 10000)
       }
     },
-    retrySocket () {
+    retrySocket() {
       if (this.socket.readyState !== 1) {
         this.webSocketState = wsStates.fail
         try {
@@ -207,7 +209,7 @@ export default {
         this.initSocket()
       }
     },
-    initSocket () {
+    initSocket() {
       this.socket = new WebSocket(this.socketURI)
       this.socketOnClose()
       this.socketOnOpen()
@@ -215,7 +217,7 @@ export default {
       this.socketOnMessage()
       this.setTimers()
     },
-    socketOnOpen () {
+    socketOnOpen() {
       const token = util.cookies.get('token')
       if (!token || token === 'undefined') {
         this.exit()
@@ -232,17 +234,17 @@ export default {
         }
       }
     },
-    socketOnClose () {
+    socketOnClose() {
       this.socket.onclose = () => {
         // console.log('continuous-delivery连接关闭！')
       }
     },
-    socketOnError () {
+    socketOnError() {
       this.socket.onerror = () => {
         // console.log('socket continuous-delivery连接失败')
       }
     },
-    socketOnSend (data) {
+    socketOnSend(data) {
       this.socket.send(data)
     },
     /**
@@ -257,7 +259,7 @@ export default {
      * }
      *
      */
-    socketOnMessage () {
+    socketOnMessage() {
       this.socket.onmessage = (message) => {
         const messageJson = JSON.parse(message.data)
         // 消息路由
@@ -281,23 +283,23 @@ export default {
             break
           case LeoRequestType.AUTHENTICATION_FAILURE:
             this.exit()
-            router.push({ name: 'login' })
+            router.push({name: 'login'})
             break
         }
       }
     },
-    sendMessage (message) {
+    sendMessage(message) {
       this.socketOnSend(JSON.stringify(message))
     },
-    paginationCurrentChange (currentPage) {
+    paginationCurrentChange(currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getEnv (name) {
+    getEnv(name) {
       const requestBody = {
         envName: name,
         isActive: true,
@@ -309,7 +311,7 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    getApplication (name) {
+    getApplication(name) {
       const requestBody = {
         queryName: name,
         extend: false,
@@ -321,7 +323,7 @@ export default {
           this.applicationOptions = res.body.data
         })
     },
-    handleBuild (row) {
+    handleBuild(row) {
       const buildType = row?.configDetails?.job?.build?.type || 'kubernetes-image'
       switch (buildType) {
         case 'maven-publish':
@@ -336,11 +338,11 @@ export default {
           this.$refs.doBuildKubernetesImageEditor.initData(Object.assign({}, row))
       }
     },
-    handleHistory (row) {
+    handleHistory(row) {
       this.formStatus.history.visible = true
       this.$refs.buildHistory.initData(Object.assign({}, row))
     },
-    handleSubscribeLeoJob () {
+    handleSubscribeLeoJob() {
       if (this.queryParam.applicationId === '') return
       if (this.queryParam.envType === '') return
       const queryMessage = {
@@ -352,7 +354,7 @@ export default {
       }
       this.sendMessage(queryMessage)
     },
-    handleQueryLeoBuild () {
+    handleQueryLeoBuild() {
       if (this.queryParam.applicationId === '') return
       if (this.queryParam.envType === '') return
       const queryMessage = {
@@ -364,7 +366,7 @@ export default {
       }
       this.sendMessage(queryMessage)
     },
-    fetchData () {
+    fetchData() {
       if (this.queryParam.applicationId === '' || this.queryParam.envType === '') return
       const requestBody = {
         ...this.queryParam,
@@ -391,6 +393,7 @@ export default {
 .el-input {
   display: inline-block;
   max-width: 200px;
+  margin-left: 5px;
 }
 
 .el-select {
