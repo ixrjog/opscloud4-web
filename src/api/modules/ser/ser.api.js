@@ -41,3 +41,19 @@ export function DELETE_SER_DEPLOY_TASK_ITEM (param) {
     params: param
   })
 }
+
+export function ADD_SER_DEPLOY_SUB_TASK (data) {
+  return request({
+    url: baseUrl + '/subtask/add',
+    method: 'post',
+    data
+  })
+}
+
+export function DEPLOY_SUB_TASK (data) {
+  return request({
+    url: baseUrl + '/subtask/deploy',
+    method: 'post',
+    data
+  })
+}

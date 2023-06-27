@@ -1,13 +1,13 @@
 <template>
   <div>
-    <el-row style="margin-bottom: 5px">
-      <el-select v-model.trim="applicationId" filterable @change="fetchData"
+    <el-row>
+      <el-select v-model.trim="application" filterable @change="fetchData" value-key="id"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication">
         <el-option
           v-for="item in applicationOptions"
           :key="item.id"
           :label="item.name"
-          :value="item.id">
+          :value="item">
           <select-item :name="item.name" :comment="item.comment"></select-item>
         </el-option>
       </el-select>
@@ -34,6 +34,9 @@
       <el-button @click="fetchData" :disabled="checkFetchData()">查询</el-button>
       <el-button @click="handleAdd" :disabled="checkFetchData()" style="margin: 0">新增</el-button>
     </el-row>
+    <el-divider content-position="left" v-if="JSON.stringify(table.data) !== '[]'">
+      {{ application.name }} - {{ application.comment }}
+    </el-divider>
     <el-row :gutter="10">
       <el-col :span="8">
         <div v-for="task in table.data" :key="task.id">
@@ -75,7 +78,7 @@
         <ser-deploy-task-editor ref="serDeployTaskEditor" :formStatus="formStatus.serDeployTask"
                                 @close="fetchData"></ser-deploy-task-editor>
         <el-pagination background @current-change="paginationCurrentChange"
-                       @size-change="handleSizeChange"
+                       @size-change="handleSizeChange" hide-on-single-page
                        layout="total, prev, pager, next"
                        :total="table.pagination.total"
                        :current-page="table.pagination.currentPage"
@@ -95,39 +98,109 @@
                   :headers="uploadHeaders"
                   :before-upload="beforeUpload"
                   :on-success="onSuccess"
-                  :on-error="onError">
+                  :on-error="onError"
+                  v-if="JSON.stringify(subTaskList) === '[]'">
                   <i class="el-icon-upload"></i>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em>，只支持 ser 包</div>
                 </el-upload>
               </div>
             </div>
             <el-table :data="taskItemList" style="width: 100%">
-              <el-table-column prop="itemName" label="包名" width="180">
+              <el-table-column prop="itemName" label="包名">
                 <template slot-scope="scope">
                   <span>{{ scope.row.itemName }}</span>
-                  <p style="color: #9d9fa3;margin: 7px 0">{{ scope.row.itemSize }}</p>
+                  <p style="color: #9d9fa3;margin: 0">{{ scope.row.itemSize }}</p>
                 </template>
               </el-table-column>
-              <el-table-column prop="itemMd5" label="MD5" width="320"></el-table-column>
-              <el-table-column label="上传人" width="180">
+              <el-table-column prop="itemMd5" label="MD5"></el-table-column>
+              <el-table-column label="上传人">
                 <template slot-scope="scope">
                   <user-tag :user="scope.row.deployUser"></user-tag>
                 </template>
               </el-table-column>
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-tooltip class="item" effect="dark" content="移除" placement="top-start">
-                    <el-button type="text" @click="handleItemDelete(scope.row)" style="padding: 2px">
-                      <i class="fas fa-trash"></i>
-                    </el-button>
-                  </el-tooltip>
+                  <el-button type="text" @click="handleItemDelete(scope.row)" style="padding: 2px">
+                    移除
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>
           </el-card>
         </el-row>
         <el-row>
-          <el-card class="subTaskCard"></el-card>
+          <el-card class="subTaskCard">
+            <div slot="header" class="clearfix">
+              <my-span content="发布记录" style="font-size: 14px;margin-right: 10px"></my-span>
+              <span style="float: right;margin-left: 5px">
+                <el-dropdown trigger="click" @command="handleSubTaskAdd">
+                  <span class="el-dropdown-link">
+                    <i class="el-icon-plus el-icon--right" style="margin-right: 2px"></i>新增发布
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item v-for="env in envList" :key="env.id"
+                                      :command="env.envType">
+                      {{ env.envName }}
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </span>
+            </div>
+            <div>
+              <el-timeline>
+                <el-timeline-item v-for="subTask in subTaskList" :key="subTask.id"
+                                  :timestamp="subTask.createTime" placement="top">
+                  <el-card>
+                    <div slot="header" class="clearfix">
+                      <el-tag>{{ subTask.env.envName }}</el-tag>
+                      <span style="margin-left: 5px" v-if="subTask.ago"><i class="far fa-clock"/>{{ subTask.ago }}</span>
+                      <span style="float: right;margin-left: 5px">
+                        <el-button type="text" @click="handlerDeploySubTask(subTask)" style="padding: 2px">
+                          发布</el-button>
+                      </span>
+                    </div>
+                    <el-row>
+                      <el-col :span="12">
+                        <div class="label">
+                          <span>执行时间</span>
+                          <span v-show="subTask.startTime !== null && subTask.startTime !== ''">
+                          {{ subTask.startTime }} - {{ subTask.endTime ? subTask.endTime : '?' }}
+                        </span>
+                          <span v-show="subTask.runtime !== null" style="margin-left: 2px">
+                          <b style="color: #3b97d7"> {{ subTask.runtime }}</b>
+                        </span>
+                        </div>
+                        <div class="label">
+                          <span>部署状态</span>
+                          <span>{{ subTask.taskStatus }}</span>
+                        </div>
+                        <div class="label">
+                          <span>部署结果</span>
+                          <span>{{ subTask.taskResult }}</span>
+                        </div>
+                      </el-col>
+                      <el-col :span="12">
+                        <el-collapse accordion>
+                          <el-collapse-item>
+                            <template slot="title">
+                              Request<i class="fas fa-hiking" style="margin-left: 5px"></i>
+                            </template>
+                            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念</div>
+                          </el-collapse-item>
+                          <el-collapse-item>
+                            <template slot="title">
+                              Response<i class="fas fa-piggy-bank" style="margin-left: 5px"></i>
+                            </template>
+                            <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作</div>
+                          </el-collapse-item>
+                        </el-collapse>
+                      </el-col>
+                    </el-row>
+                  </el-card>
+                </el-timeline-item>
+              </el-timeline>
+            </div>
+          </el-card>
         </el-row>
       </el-col>
     </el-row>
@@ -136,7 +209,8 @@
 
 <script>
 import {
-  DELETE_SER_DEPLOY_TASK_ITEM,
+  ADD_SER_DEPLOY_SUB_TASK,
+  DELETE_SER_DEPLOY_TASK_ITEM, DEPLOY_SUB_TASK,
   GET_SER_DEPLOY_TASK_BY_UUID,
   QUERY_SER_DEPLOY_TASK_PAGE
 } from '@/api/modules/ser/ser.api'
@@ -146,6 +220,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import mySpan from '@/components/opscloud/common/MySpan'
 import util from '@/libs/util'
 import UserTag from '@/components/opscloud/common/tag/UserTag'
+import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 
 const activeOptions = [{
   value: true,
@@ -168,7 +243,7 @@ export default {
   props: {},
   data () {
     return {
-      applicationId: '',
+      application: {},
       table: {
         data: [],
         pagination: {
@@ -196,8 +271,10 @@ export default {
       uploadHeaders: {},
       taskItemList: [],
       subTaskList: [],
+      envList: [],
       serDeployTaskName: '',
-      serDeployTaskUuid: ''
+      serDeployTaskUuid: '',
+      serDeployTaskId: ''
     }
   },
   components: {
@@ -211,7 +288,7 @@ export default {
   },
   methods: {
     checkFetchData () {
-      return this.applicationId === ''
+      return JSON.stringify(this.application) === '{}'
     },
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
@@ -226,6 +303,7 @@ export default {
       this.subTaskList = []
       this.serDeployTaskName = ''
       this.serDeployTaskUuid = ''
+      this.serDeployTaskId = ''
     },
     getApplication () {
       const requestBody = {
@@ -240,10 +318,10 @@ export default {
           this.applicationOptions = body.data
         })
     },
-    _fetchData() {
+    _fetchData () {
       const requestBody = {
         ...this.queryParam,
-        applicationId: this.applicationId,
+        applicationId: this.application.id,
         extend: true,
         page: this.table.pagination.currentPage,
         length: this.table.pagination.pageSize
@@ -258,19 +336,16 @@ export default {
       this.initData()
       this._fetchData()
     },
-    handlerIsFinish () {
-
-    },
     handleAdd () {
       this.formStatus.serDeployTask.operationType = true
       const serDeployTask = {
-        applicationId: this.applicationId,
+        applicationId: this.application.id,
         taskName: '',
         taskDesc: '',
         isActive: true,
         isFinish: false
       }
-      this.$refs.serDeployTaskEditor.initData(serDeployTask)
+      this.$refs.serDeployTaskEditor.initData(serDeployTask, this.application)
       this.formStatus.serDeployTask.visible = true
     },
     handlerRowSel (row) {
@@ -278,6 +353,8 @@ export default {
       this.subTaskList = row.subTaskList
       this.serDeployTaskName = row.taskName
       this.serDeployTaskUuid = row.taskUuid
+      this.serDeployTaskId = row.id
+      this.getEnv()
     },
     getUploadUri () {
       const actionUri = 'ser/upload'
@@ -306,13 +383,13 @@ export default {
       this.formStatus.serDeployTask.operationType = false
       const serDeployTask = {
         id: row.id,
-        applicationId: row.applicationId,
+        applicationId: row.application.id,
         taskName: row.taskName,
         taskDesc: row.taskDesc,
         isActive: row.isActive,
         isFinish: row.isFinish
       }
-      this.$refs.serDeployTaskEditor.initData(serDeployTask)
+      this.$refs.serDeployTaskEditor.initData(serDeployTask, this.application)
       this.formStatus.serDeployTask.visible = true
     },
     handleItemDelete (row) {
@@ -328,6 +405,51 @@ export default {
         })
       }).catch(() => {
         this.$message.info('已取消删除!')
+      })
+    },
+    getEnv () {
+      const requestBody = {
+        envName: '',
+        isActive: true,
+        page: 1,
+        length: 20
+      }
+      QUERY_ENV_PAGE(requestBody)
+        .then(({ body }) => {
+          this.envList = body.data
+        })
+    },
+    handleSubTaskAdd (envType) {
+      this.$confirm('确认新增发布，新增发布后 Ser 包将无法变更?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const serDeploySubTask = {
+          serDeployTaskId: this.serDeployTaskId,
+          applicationId: this.application.id,
+          envType: envType
+        }
+        ADD_SER_DEPLOY_SUB_TASK(serDeploySubTask).then(() => {
+          this._fetchData()
+          this.getSerDeployTask()
+        })
+      }).catch(() => {
+        this.$message.info('已取消!')
+      })
+    },
+    handlerDeploySubTask (subTask) {
+      this.$confirm('确认发布 Ser 包吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        DEPLOY_SUB_TASK({ serDeploySubTaskId: subTask.id }).then(() => {
+          this._fetchData()
+          this.getSerDeployTask()
+        })
+      }).catch(() => {
+        this.$message.info('已取消!')
       })
     }
   }
@@ -376,7 +498,7 @@ export default {
   > div {
     position: relative;
     float: left;
-    width: 50%;
+    width: 30%;
     text-align: left;
 
     p {
@@ -422,6 +544,28 @@ export default {
 }
 
 .subTaskCard {
+  .label {
+    line-height: 35px;
+
+    span:first-child {
+      margin-right: 5px;
+      color: #B7B6B6;
+    }
+  }
+
+  /deep/ .el-collapse-item__content {
+    padding-bottom: 10px
+  }
 
 }
+
+.el-divider__text, .el-link {
+  font-size: 14px;
+  color: #9d9fa3;
+}
+
+.el-divider--horizontal {
+  margin: 16px 0;
+}
+
 </style>
