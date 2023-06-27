@@ -119,6 +119,7 @@
     <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage"
                                           ref="doBuildKubernetesImageEditor"/>
     <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
+    <leo-do-build-front-end-editor :form-status="formStatus.build.frontEnd" ref="doBuildFrontEndEditor"/>
     <business-tag-editor ref="businessTagEditor" :business-type="businessType" :business-id="instance.id"
                          :form-status="formStatus.businessTag" @close="fetchData"/>
     <leo-build-history :form-status="formStatus.history" ref="leoBuildHistory"/>
@@ -132,9 +133,9 @@ import {
   DELETE_LEO_JOB_BY_ID,
   UPGRADE_LEO_JOB_TEMPLATE_CONTENT
 } from '@/api/modules/leo/leo.job.api'
-import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
-import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api.js'
-import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
+import {QUERY_MY_APPLICATION_PAGE} from '@/api/modules/application/application.api'
+import {QUERY_TAG_PAGE} from '@/api/modules/tag/tag.api.js'
+import {QUERY_ENV_PAGE} from '@/api/modules/sys/sys.env.api'
 
 import SelectItem from '../common/SelectItem'
 import ActiveTag from '../common/tag/ActiveTag'
@@ -143,11 +144,12 @@ import BusinessTagEditor from '../common/tag/BusinessTagEditor'
 import Pagination from '../common/page/Pagination'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
-import { QUERY_LEO_TEMPLATE_PAGE } from '@/api/modules/leo/leo.template.api'
+import {QUERY_LEO_TEMPLATE_PAGE} from '@/api/modules/leo/leo.template.api'
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor'
 import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuildKubernetesImageEditor.vue'
 import LeoDoBuildMavenPublishEditor from '@/components/opscloud/leo/LeoDoBuildMavenPublishEditor.vue'
+import LeoDoBuildFrontEndEditor from "@/components/opscloud/leo/LeoDoBuildFrontEndEditor.vue";
 
 const activeOptions = [{
   value: true,
@@ -159,7 +161,7 @@ const activeOptions = [{
 
 export default {
   name: 'leoJobTable',
-  data () {
+  data() {
     return {
       instance: {
         id: ''
@@ -190,6 +192,9 @@ export default {
             visible: false,
             labelWidth: '150px'
           },
+          frontEnd: {
+            visible: false,
+          },
           mavenPublish: {
             visible: false,
             labelWidth: '150px'
@@ -217,7 +222,7 @@ export default {
       activeOptions: activeOptions
     }
   },
-  mounted () {
+  mounted() {
     this.fetchData()
     this.getApplication('')
     this.getTemplate('')
@@ -234,20 +239,21 @@ export default {
     BusinessTagEditor,
     LeoJobEditor,
     LeoDoBuildKubernetesImageEditor,
+    LeoDoBuildFrontEndEditor,
     LeoDoBuildMavenPublishEditor,
     LeoBuildHistory
   },
   filters: {},
   methods: {
-    paginationCurrentChange (currentPage) {
+    paginationCurrentChange(currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getEnv (name) {
+    getEnv(name) {
       const requestBody = {
         envName: name,
         page: 1,
@@ -258,7 +264,7 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    getTag (name) {
+    getTag(name) {
       const requestBody = {
         tagKey: name,
         businessType: this.businessType,
@@ -271,7 +277,7 @@ export default {
           this.tagOptions = res.body.data
         })
     },
-    getApplication (name) {
+    getApplication(name) {
       const requestBody = {
         queryName: name,
         extend: false,
@@ -283,7 +289,7 @@ export default {
           this.applicationOptions = res.body.data
         })
     },
-    getTemplate (name) {
+    getTemplate(name) {
       const requestBody = {
         queryName: name,
         extend: false,
@@ -295,7 +301,7 @@ export default {
           this.templateOptions = res.body.data
         })
     },
-    handleRowTagEdit (row) {
+    handleRowTagEdit(row) {
       this.instance.id = row.id
       const businessTags = {
         tagIds: row.tags !== null ? row.tags.map(e => e.id) : []
@@ -303,7 +309,7 @@ export default {
       this.$refs.businessTagEditor.initData(businessTags)
       this.formStatus.businessTag.visible = true
     },
-    handleAdd () {
+    handleAdd() {
       this.formStatus.job.visible = true
       this.formStatus.job.operationType = true
       const job = {
@@ -325,25 +331,25 @@ export default {
       }
       this.$refs.jobEditor.initData(job)
     },
-    handleRowEdit (row) {
+    handleRowEdit(row) {
       this.formStatus.job.visible = true
       this.formStatus.job.operationType = false
       this.$refs.jobEditor.initData(Object.assign({}, row))
     },
-    handleRowUpgrade (row) {
-      UPGRADE_LEO_JOB_TEMPLATE_CONTENT({ jobId: row.id })
+    handleRowUpgrade(row) {
+      UPGRADE_LEO_JOB_TEMPLATE_CONTENT({jobId: row.id})
         .then((res) => {
           this.$message.success('升级模板内容成功!')
           this.fetchData()
         })
     },
-    handleRowDel (row) {
+    handleRowDel(row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        DELETE_LEO_JOB_BY_ID({ jobId: row.id }).then(res => {
+        DELETE_LEO_JOB_BY_ID({jobId: row.id}).then(res => {
           this.$message.success('删除成功!')
           this.fetchData()
         })
@@ -351,19 +357,23 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handleBuild (row) {
+    handleBuild(row) {
       const buildType = row?.configDetails?.job?.build?.type || 'kubernetes-image'
       switch (buildType) {
         case 'maven-publish':
           this.formStatus.build.mavenPublish.visible = true
           this.$refs.doBuildMavenPublishEditor.initData(Object.assign({}, row))
           break
+        case 'front-end':
+          this.formStatus.build.frontEnd.visible = true
+          this.$refs.doBuildFrontEndEditor.initData(Object.assign({}, row))
+          break
         default:
           this.formStatus.build.kubernetesImage.visible = true
           this.$refs.doBuildKubernetesImageEditor.initData(Object.assign({}, row))
       }
     },
-    fetchData () {
+    fetchData() {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,

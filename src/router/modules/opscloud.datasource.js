@@ -197,5 +197,14 @@ export default [
       auth: true,
       title: 'Apollo配置中心数据源实例'
     }
+  },
+  {
+    path: '/datasource/instance/arms',
+    name: 'datasource-instance-arms',
+    component: () => import('@/pages/datasource/instance/arms'),
+    meta: {
+      auth: true,
+      title: 'ARMS应用实时监控服务数据源实例'
+    }
   }
 ]

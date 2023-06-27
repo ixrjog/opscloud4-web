@@ -22,7 +22,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-input v-model="queryParam.queryName" @change="fetchData" clearable  placeholder="输入关键字查询任务名称"/>
+      <el-input v-model="queryParam.queryName" @change="fetchData" clearable placeholder="输入关键字查询任务名称"/>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
         <i class="fas fa-circle-notch"/>
@@ -65,6 +65,7 @@
                 @handleSizeChange="handleSizeChange"/>
     <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage"
                                           ref="doBuildKubernetesImageEditor"/>
+    <leo-do-build-front-end-editor :form-status="formStatus.build.frontEnd" ref="doBuildFrontEndEditor"/>
     <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>
     <leo-build-history :form-status="formStatus.history" ref="buildHistory"/>
     <el-divider>Latest build details</el-divider>
@@ -98,6 +99,7 @@ import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuil
 import {
   QUERY_MY_LEO_JOB_PAGE
 } from '@/api/modules/leo/leo.job.api'
+import LeoDoBuildFrontEndEditor from "@/components/opscloud/leo/LeoDoBuildFrontEndEditor.vue";
 
 const wsStates = {
   success: {
@@ -141,6 +143,9 @@ export default {
             visible: false,
             labelWidth: '150px'
           },
+          frontEnd: {
+            visible: false
+          },
           mavenPublish: {
             visible: false,
             labelWidth: '150px'
@@ -176,6 +181,7 @@ export default {
     EnvTag,
     LeoBuildDetails,
     LeoDoBuildKubernetesImageEditor,
+    LeoDoBuildFrontEndEditor,
     LeoDoBuildMavenPublishEditor,
     LatestBuildInfo,
     LeoBuildHistory
@@ -329,6 +335,10 @@ export default {
         case 'maven-publish':
           this.formStatus.build.mavenPublish.visible = true
           this.$refs.doBuildMavenPublishEditor.initData(Object.assign({}, row))
+          break
+        case 'front-end':
+          this.formStatus.build.frontEnd.visible = true
+          this.$refs.doBuildFrontEndEditor.initData(Object.assign({}, row))
           break
         /**
          * 'kubernetes-image'

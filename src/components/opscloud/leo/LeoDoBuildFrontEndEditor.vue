@@ -1,26 +1,27 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog title="KubernetesImage Build Task"
+  <el-dialog title="Front-End Build Task"
              :visible.sync="formStatus.visible" width="50%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Home" name="build">
         <el-form :model="leoJob">
-          <el-form-item label="Job Name" :label-width="formStatus.labelWidth">
+          <el-form-item label="Job Name" :label-width="form.labelWidth">
             <el-input v-model="leoJob.name" readonly/>
           </el-form-item>
-          <el-form-item label="Job Key" :label-width="formStatus.labelWidth">
+          <el-form-item label="Job Key" :label-width="form.labelWidth">
             <el-input v-model="leoJob.jobKey" readonly/>
           </el-form-item>
-          <el-form-item label="GitLab SshURL" :label-width="formStatus.labelWidth">
+          <el-form-item label="GitLab SshURL" :label-width="form.labelWidth">
             <el-input v-if="JSON.stringify(leoJob) !== '{}'"
                       v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
                       readonly style="width: 500px"/>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
-                         style="margin-left: 20px" @change="getBranchOptions"><span
-              style="margin-left: 2px">Query tags</span>
+                         style="margin-left: 20px" @change="getBranchOptions">
+              <span style="margin-left: 2px">Query tags</span>
             </el-checkbox>
           </el-form-item>
-          <el-form-item label="Branch" :label-width="formStatus.labelWidth" required>
+          <!-- 分支 -->
+          <el-form-item label="Branch" :label-width="form.labelWidth" required>
             <el-select v-model.trim="doBuildParam.branch" filterable style="width: 500px"
                        :loading="branchOptionsLoading" loading-text="正在加载选项" remote @change="handleChange">
               <el-option-group v-for="group in branchOptions" :key="group.label" :label="group.label">
@@ -51,24 +52,7 @@
               <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
             </el-alert>
           </el-form-item>
-          <el-form-item label="Deploy Options" :label-width="formStatus.labelWidth" required>
-            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">Automatically deploy after
-              build completed
-            </el-checkbox>
-          </el-form-item>
-          <el-form-item label="Deployment" :label-width="formStatus.labelWidth">
-            <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
-                       :disabled="!this.doBuildParam.autoDeploy"
-                       placeholder="选择Deployment" style="width: 500px" :remote-method="getLeoDeployDeployment">
-              <el-option v-for="item in deployDeploymentOptions"
-                         :key="item.businessId"
-                         :label="item.name"
-                         :value="item.businessId">
-                <select-item :name="item.name" :comment="item.resourceType"/>
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="Project" :label-width="formStatus.labelWidth">
+          <el-form-item label="Project" :label-width="form.labelWidth">
             <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
                        placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
               <el-option v-for="item in projectOptions"
@@ -80,10 +64,10 @@
             </el-select>
             <el-button style="margin-left: 5px" @click="openUrl">Jump to Create Project</el-button>
           </el-form-item>
-          <el-form-item label="Version Name" :label-width="formStatus.labelWidth">
+          <el-form-item label="Version Name" :label-width="form.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
           </el-form-item>
-          <el-form-item label="Version Desc" :label-width="formStatus.labelWidth">
+          <el-form-item label="Version Desc" :label-width="form.labelWidth">
             <el-input v-model="doBuildParam.versionDesc"></el-input>
           </el-form-item>
         </el-form>
@@ -91,12 +75,11 @@
           <el-button size="mini" type="primary" @click="doBuild" icon="fa fa-play" :loading="buttons.doBuilding"
                      :disabled="buttons.building"><span style="margin-left: 2px">Do Build</span>
           </el-button>
-          <br/>
         </div>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="formStatus.visible = false">Close</el-button>
+      <el-button size="mini" @click="form.visible = false">Close</el-button>
     </div>
   </el-dialog>
 </template>
@@ -104,11 +87,11 @@
 <script>
 
 // API
-import {DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH} from '@/api/modules/leo/leo.build.api'
+import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
-import {QUERY_LEO_DEPLOY_DEPLOYMENT} from '@/api/modules/leo/leo.deploy.api'
+import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
-import {QUERY_RES_PROJECT_PAGE} from '@/api/modules/project/project.api'
+import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
 import util from '@/libs/util'
 
 const options = {
@@ -120,9 +103,12 @@ const options = {
 }
 
 export default {
-  data() {
+  data () {
     return {
       activeName: 'build',
+      form: {
+        labelWidth: '200px'
+      },
       leoJob: {},
       doBuildParam: {
         jobId: '',
@@ -147,19 +133,19 @@ export default {
       businessType: BusinessType,
       projectOptions: [],
       options: options,
-      style: {height: '400px'},
+      style: { height: '400px' },
       buttons: {
         doBuilding: false
       }
     }
   },
-  name: 'LeoDoBuildKubernetesImageEditor',
+  name: 'LeoDoBuildFrontEndEditor',
   props: ['formStatus'],
   components: {
     SelectItem
   },
   mixins: [],
-  mounted() {
+  mounted () {
   },
   methods: {
     editorInit: function () {
@@ -173,7 +159,7 @@ export default {
       require('brace/snippets/yaml')
       require('brace/snippets/xml')
     },
-    initData(leoJob) {
+    initData (leoJob) {
       this.activeName = 'build'
       this.branch = {}
       this.buttons.doBuilding = false
@@ -197,12 +183,12 @@ export default {
       this.doBuildParam.projectId = ''
       this.getProject('')
     },
-    handleClick(tab, event) {
+    handleClick (tab, event) {
       if (tab.name === 'build') {
         this.editing = false
       }
     },
-    handleChange() {
+    handleChange () {
       if (JSON.stringify(this.branchOptions) === '[]') {
         this.branch = {}
       } else {
@@ -215,13 +201,13 @@ export default {
         }
       }
     },
-    openUrl() {
+    openUrl () {
       this.formStatus.visible = false
       this.$router.push({
         path: '/project'
       })
     },
-    getLeoDeployDeployment() {
+    getLeoDeployDeployment () {
       if (!this.doBuildParam.autoDeploy) return
       if (this.doBuildParam.jobId === '') return
       const requestBody = {
@@ -236,7 +222,7 @@ export default {
           }
         })
     },
-    getProject(name) {
+    getProject (name) {
       if (this.leoJob === {}) return
       const requestBody = {
         businessType: this.businessType.APPLICATION,
@@ -257,7 +243,7 @@ export default {
           }
         })
     },
-    getBranchOptions() {
+    getBranchOptions () {
       this.branchOptionsLoading = true
       GET_BUILD_BRANCH_OPTIONS(this.getBranchOptionsParam)
         .then(res => {
@@ -266,7 +252,7 @@ export default {
           this.handleChange()
         })
     },
-    createBranch() {
+    createBranch () {
       this.branchOptionsLoading = true
       const request = {
         ref: this.doBuildParam.branch,
@@ -278,7 +264,7 @@ export default {
           this.branchOptionsLoading = false
         })
     },
-    doBuild() {
+    doBuild () {
       this.buttons.doBuilding = true
       DO_BUILD(this.doBuildParam).then(res => {
         if (res.success) {
@@ -298,7 +284,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
