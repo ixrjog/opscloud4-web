@@ -226,6 +226,16 @@ const DsInstanceType = Object.freeze({
         label: 'APOLLO'
       }
     ]
+  },
+  ALIYUN_ARMS: {
+    type: 58,
+    name: 'ALIYUN_ARMS',
+    instanceType: [
+      {
+        value: 'ALIYUN_ARMS',
+        label: 'ALIYUN_ARMS'
+      }
+    ]
   }
 })
 

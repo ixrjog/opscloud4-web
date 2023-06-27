@@ -136,6 +136,9 @@ export default {
         case this.dsInstanceType.APOLLO.type:
           instanceType = this.dsInstanceType.APOLLO
           break
+        case this.dsInstanceType.ALIYUN_ARMS.type:
+          instanceType = this.dsInstanceType.ALIYUN_ARMS
+          break
         default:
           this.$message({
             message: '未知的数据源实例类型',

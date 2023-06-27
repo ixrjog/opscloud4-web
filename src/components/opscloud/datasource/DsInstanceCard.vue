@@ -144,6 +144,8 @@ export default {
         basePath = 'devops'
       } else if (this.instance.instanceType === 'METER_SPHERE') {
         basePath = 'metersphere'
+      } else if (this.instance.instanceType === 'ALIYUN_ARMS') {
+        basePath = 'arms'
       } else {
         basePath = this.instance.instanceType.toLocaleLowerCase()
       }
