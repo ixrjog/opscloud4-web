@@ -49,7 +49,7 @@
       </el-table-column>
       <el-table-column prop="buildSize" label="Builds" width="80">
       </el-table-column>
-      <el-table-column prop="tags" label="Tags" width="200">
+      <el-table-column prop="tags" label="Tags" width="250">
         <template v-slot="scope">
           <business-tags :tags="scope.row.tags"/>
         </template>
