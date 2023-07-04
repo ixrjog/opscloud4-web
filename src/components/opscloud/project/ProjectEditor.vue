@@ -80,25 +80,27 @@
                            :label="item.instanceName"
                            :value="item">
                   <span style="float: left">{{ item.instanceType }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{item.instanceName}}</span>
+                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
+                    {{ item.instanceName }}
+                  </span>
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="选择项目">
-              <el-select v-model="queryParam.resourceParentId" filterable :disabled="queryParam.businessType === ''"
-                         clearable
-                         remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getDevOpsProjectResource"
+              <el-select v-model="queryParam.assetId" filterable :disabled="queryParam.businessType === ''"
+                         clearable remote reserve-keyword placeholder="关键字搜索资源"
+                         :remote-method="getDevOpsProjectResource"
                          @change="getResource('')">
                 <el-option v-for="item in parentResOptions"
                            :key="item.businessId"
                            :label="item.name"
-                           :value="item.businessId">
+                           :value="item.asset.assetId">
                   <select-item :name="item.name" :comment="item.comment"/>
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="资源类型">
-              <el-select v-model="queryParam.assetType" :disabled="queryParam.resourceParentId === ''" clearable
+              <el-select v-model="queryParam.assetType" :disabled="queryParam.assetId === ''" clearable
                          @change="getResource('')" placeholder="选择资源类型">
                 <el-option v-for="item in assetTypeOptions"
                            :key="item.id"
@@ -229,7 +231,7 @@ export default {
         dsInstance: {},
         assetType: '',
         businessType: BusinessType.ASSET,
-        resourceParentId: ''
+        assetId: ''
       },
       bindAppParam: {
         application: {}
@@ -343,7 +345,7 @@ export default {
         projectId: this.project.id,
         businessType: this.businessType.ASSET,
         projectResType: this.queryParam.assetType,
-        parentId: this.queryParam.resourceParentId,
+        assetKey: this.queryParam.assetId,
         page: 1,
         length: 20
       }
