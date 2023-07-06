@@ -9,16 +9,11 @@
             <el-input v-model="template.name" placeholder="不填写则自动生成"/>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
-            <el-select v-model.trim="template.envType" clearable
-                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"
-                       :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
-              <el-option v-for="item in envOptions"
-                         :key="item.envType"
-                         :label="item.envName"
-                         :value="item.envType">
-                <select-item :name="item.envName" :comment="item.comment"/>
-              </el-option>
-            </el-select>
+            <el-radio-group v-model="template.envType" size="mini">
+              <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
+                {{ env.envName }}
+              </el-radio-button>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label="实例类型" :label-width="labelWidth" required>
             <el-select v-model="template.instanceType" placeholder="选择类型" @change="handleChangeInstanceType"
@@ -86,8 +81,8 @@
 <script>
 
 // API
-import { QUERY_TEMPLATE_PAGE, ADD_TEMPLATE, UPDATE_TEMPLATE } from '@/api/modules/template/template.api.js'
-import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api.js'
+import {QUERY_TEMPLATE_PAGE, ADD_TEMPLATE, UPDATE_TEMPLATE} from '@/api/modules/template/template.api.js'
+import {QUERY_ENV_PAGE} from '@/api/modules/sys/sys.env.api.js'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
@@ -105,15 +100,18 @@ const keyOptions = [{
 }, {
   value: 'SERVICE',
   label: 'SERVICE'
-}]
+}, {
+  value: 'INGRESS',
+  label: 'INGRESS'
+}
+]
 
 export default {
-  data () {
+  data() {
     return {
       activeName: 'base',
       labelWidth: '150px',
       options: options,
-      envOptions: [],
       keyOptions: keyOptions,
       template: '',
       button: {
@@ -121,19 +119,18 @@ export default {
         ok: false,
         creating: false
       },
-      style: { height: '400px' }
+      style: {height: '400px'}
     }
   },
   name: 'TemplateEditor',
-  props: ['formStatus', 'instanceTypeOptions'],
+  props: ['formStatus', 'instanceTypeOptions', 'envOptions'],
   components: {
     MyHighlight,
     SelectItem,
     editor: require('vue2-ace-editor')
   },
   mixins: [],
-  mounted () {
-    this.getEnv('')
+  mounted() {
   },
   methods: {
     editorInit: function () {
@@ -145,18 +142,7 @@ export default {
       // snippet
       require('brace/snippets/yaml')
     },
-    getEnv (name) {
-      const requestBody = {
-        envName: name,
-        page: 1,
-        length: 20
-      }
-      QUERY_ENV_PAGE(requestBody)
-        .then(res => {
-          this.envOptions = res.body.data
-        })
-    },
-    getTemplate (name) {
+    getTemplate(name) {
       if (this.queryParam.envType === '') return
       const requestBody = {
         queryName: name,
@@ -170,10 +156,10 @@ export default {
           this.templateOptions = res.body.data
         })
     },
-    handleChangeInstanceType () {
+    handleChangeInstanceType() {
 
     },
-    initData (template) {
+    initData(template) {
       this.activeName = 'base'
       this.button = {
         editing: false,
@@ -182,10 +168,10 @@ export default {
       }
       this.template = template
     },
-    handleEditing () {
+    handleEditing() {
       this.button.editing = true
     },
-    handleUpdate () {
+    handleUpdate() {
       this.button.ok = true
       UPDATE_TEMPLATE(this.template).then(() => {
         this.$message.success('保存成功!')
@@ -195,7 +181,7 @@ export default {
         this.button.ok = false
       })
     },
-    handleAdd () {
+    handleAdd() {
       this.button.creating = true
       ADD_TEMPLATE(this.template).then((res) => {
         this.template = res.body

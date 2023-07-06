@@ -1,17 +1,13 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row>
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
-      <el-select v-model="queryParam.envType" clearable filterable
-                 remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv">
-        <el-option v-for="item in envOptions"
-                   :key="item.id"
-                   :label="item.envName"
-                   :value="item.envType">
-          <select-item :name="item.envName" :comment="item.comment"/>
-        </el-option>
-      </el-select>
+      <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
+        <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
+          {{ env.envName }}
+        </el-radio-button>
+      </el-radio-group>
       <el-select v-model="queryParam.instanceType" clearable placeholder="选择实例类型">
         <el-option v-for="item in instanceTypeOptions"
                    :key="item.value"
@@ -21,10 +17,11 @@
       <el-button @click="fetchData">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200"></el-table-column>
       <el-table-column prop="env" label="环境" width="80">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
@@ -38,11 +35,11 @@
         </template>
       </el-table-column>
       <el-table-column prop="content" label="模板内容">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <my-highlight :code="scope.row.content" :lang="scope.row.templateType" :myStyle="style"/>
         </template>
       </el-table-column>
-      <el-table-column prop="vars" label="变量" width="350">
+      <el-table-column prop="vars" label="自定义变量" width="350">
         <template v-slot="scope">
           <my-highlight :code="scope.row.vars" :lang="scope.row.templateType" :myStyle="style"/>
         </template>
@@ -63,6 +60,7 @@
                 @handleSizeChange="handleSizeChange"/>
     <template-editor :formStatus="formStatus.template"
                      :instanceTypeOptions="instanceTypeOptions"
+                     :envOptions="envOptions"
                      :templateTypeOptions="templateTypeOptions"
                      ref="templateEditor" @close="fetchData"/>
   </div>
@@ -73,7 +71,7 @@
 import {
   QUERY_TEMPLATE_PAGE, DELETE_TEMPLATE_BY_ID
 } from '@/api/modules/template/template.api.js'
-import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
+import {QUERY_ENV_PAGE} from '@/api/modules/sys/sys.env.api'
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
@@ -93,7 +91,7 @@ const templateTypeOptions = [{
 export default {
   name: 'TemplateTable',
   props: {},
-  data () {
+  data() {
     return {
       table: {
         data: [],
@@ -117,16 +115,16 @@ export default {
       instanceTypeOptions: instanceTypeOptions,
       templateTypeOptions: templateTypeOptions,
       queryParam: {
-        envType: '',
+        envType: 1,
         queryName: '',
         extend: true
       },
-      style: { height: '200px' }
+      style: {height: '200px'}
     }
   },
   computed: {},
-  mounted () {
-    this.getEnv('')
+  mounted() {
+    this.getEnv()
   },
   components: {
     TemplateEditor,
@@ -136,17 +134,18 @@ export default {
     MyHighlight
   },
   methods: {
-    paginationCurrentChange (currentPage) {
+    paginationCurrentChange(currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getEnv (name) {
+    getEnv(name) {
       const requestBody = {
         envName: name,
+        isActive: true,
         page: 1,
         length: 20
       }
@@ -155,7 +154,7 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    handleRowDel (row) {
+    handleRowDel(row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -169,11 +168,11 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handleAdd () {
+    handleAdd() {
       const template = {
         id: '',
         name: '',
-        envType: this.queryParam.envType === '' ? 0 : this.queryParam.envType,
+        envType: this.queryParam.envType === '' ? 1 : this.queryParam.envType,
         instanceType: this.queryParam.instanceType === '' ? '' : this.queryParam.instanceType,
         templateKey: '',
         templateType: 'yaml',
@@ -185,12 +184,12 @@ export default {
       this.formStatus.template.operationType = true
       this.formStatus.template.visible = true
     },
-    handleRowEdit (row) {
+    handleRowEdit(row) {
       this.$refs.templateEditor.initData(row)
       this.formStatus.template.operationType = false
       this.formStatus.template.visible = true
     },
-    fetchData () {
+    fetchData() {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,
@@ -213,6 +212,10 @@ export default {
 .el-input {
   display: inline-block;
   max-width: 200px;
+}
+
+.el-radio-group {
+  margin-left: 5px;
 }
 
 .el-select {
