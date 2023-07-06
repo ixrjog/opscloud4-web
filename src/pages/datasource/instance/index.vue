@@ -68,7 +68,6 @@ export default {
   },
   computed: {},
   mounted () {
-    this.fetchData()
   },
   components: {
     DatasourceInstanceCard
