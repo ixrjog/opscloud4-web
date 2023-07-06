@@ -8,25 +8,25 @@
       </div>
       <el-form :model="user" label-width="60px">
         <el-form-item label="用户名">
-          <el-input v-model="user.username" readonly/>
+          <el-input v-model="user.username" size="mini" readonly/>
         </el-form-item>
         <el-form-item label="显示名">
-          <el-input v-model="user.displayName" readonly/>
+          <el-input v-model="user.displayName" size="mini" readonly/>
         </el-form-item>
         <el-form-item label="姓名">
-          <el-input v-model="user.name" readonly/>
+          <el-input v-model="user.name" size="mini" readonly/>
         </el-form-item>
         <el-form-item label="电话">
-          <el-input v-model="user.phone" readonly/>
+          <el-input v-model="user.phone" size="mini" readonly/>
         </el-form-item>
         <el-form-item label="邮箱">
-          <el-input v-model="user.email" readonly/>
+          <el-input v-model="user.email" size="mini" readonly/>
         </el-form-item>
         <el-form-item label="微信">
-          <el-input v-model="user.wechat" readonly/>
+          <el-input v-model="user.wechat" size="mini" readonly/>
         </el-form-item>
         <el-form-item label="留言">
-          <el-input v-model="user.comment" readonly/>
+          <el-input v-model="user.comment" size="mini" readonly/>
         </el-form-item>
       </el-form>
     </el-card>

@@ -8,14 +8,14 @@
           {{ env.envName }}
         </el-radio-button>
       </el-radio-group>
-      <el-select v-model="queryParam.instanceType" clearable placeholder="选择实例类型">
+      <el-select v-model="queryParam.instanceType" size="mini" clearable placeholder="选择实例类型">
         <el-option v-for="item in instanceTypeOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handleAdd" size="mini" class="button">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

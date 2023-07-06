@@ -5,10 +5,10 @@
       <div>
         <h1>{{ title }}</h1>
       </div>
-      <el-row :gutter="24">
-        <el-input v-model="queryParam.envName" clearable placeholder="名称" class="input-bar"/>
-        <el-button @click="fetchData" class="button">查询</el-button>
-        <el-button @click="handleAdd" class="button">新增</el-button>
+      <el-row>
+        <el-input v-model="queryParam.envName" size="mini" clearable placeholder="名称" class="input-bar"/>
+        <el-button @click="fetchData" size="mini" class="button">查询</el-button>
+        <el-button @click="handleAdd" size="mini" class="button">新增</el-button>
       </el-row>
       <div style="height: 5px"/>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName"
@@ -205,7 +205,6 @@ export default {
 .input-bar {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .button {

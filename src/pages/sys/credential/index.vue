@@ -4,16 +4,16 @@
     <div>
       <h1>{{ title }}</h1>
     </div>
-    <el-row :gutter="24">
-      <el-input v-model="queryParam.queryName" placeholder="名称"/>
-      <el-select v-model="queryParam.kind" clearable placeholder="凭据分类">
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="名称"/>
+      <el-select v-model="queryParam.kind" size="mini" clearable placeholder="凭据分类">
         <el-option v-for="item in kindOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handlerAdd">新增</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handlerAdd" size="mini">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
@@ -155,10 +155,10 @@ export default {
 </script>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {

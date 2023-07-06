@@ -5,17 +5,17 @@
       <div v-show="false">
         <h1>{{ title }}</h1>
       </div>
-      <el-row :gutter="24" style="margin-left: 0">
-        <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
-        <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+      <el-row>
+        <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" placeholder="输入关键字模糊查询"/>
+        <el-select v-model="queryParam.tagId" size="mini" filterable clearable remote reserve-keyword
                    placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
           <el-option v-for="item in tagOptions"
                      :key="item.id"
                      :label="item.tagKey"
                      :value="item.id"/>
         </el-select>
-        <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
-        <el-button style="margin-left: 5px" @click="handleAdd">新增</el-button>
+        <el-button @click="fetchData" size="mini" style="margin-left: 5px">查询</el-button>
+        <el-button style="margin-left: 5px" size="mini" @click="handleAdd">新增</el-button>
       </el-row>
       <div style="height: 5px"/>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

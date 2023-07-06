@@ -1,9 +1,9 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"/>
-      <el-select v-model.trim="queryParam.applicationId" filterable clearable
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="输入关键字查询" @change="fetchData"/>
+      <el-select v-model.trim="queryParam.applicationId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
         <el-option v-for="item in applicationOptions"
@@ -13,7 +13,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model.trim="queryParam.templateId" filterable clearable
+      <el-select v-model.trim="queryParam.templateId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择模板" :remote-method="getTemplate"
                  @change="fetchData">
         <el-option v-for="item in templateOptions"
@@ -23,7 +23,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.envType" clearable filterable
+      <el-select v-model="queryParam.envType" size="mini" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv" @change="fetchData">
         <el-option v-for="item in envOptions"
                    :key="item.id"
@@ -32,21 +32,21 @@
           <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
+      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="有效" @change="fetchData">
         <el-option v-for="item in activeOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+      <el-select v-model="queryParam.tagId" size="mini" filterable clearable remote reserve-keyword
                  placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
         <el-option v-for="item in tagOptions"
                    :key="item.id"
                    :label="item.tagKey"
                    :value="item.id"/>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
+      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
+      <el-button @click="handleAdd" size="mini" class="button">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

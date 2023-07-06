@@ -15,13 +15,13 @@
             <i class="fas fa-align-justify handle" style="margin-right: 10px;"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menuChild.title" placeholder="请输入名称"/>
+            <el-input v-model="menuChild.title" size="mini" placeholder="请输入名称"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menuChild.path" class="input" placeholder="请输入路径"/>
+            <el-input v-model="menuChild.path" size="mini" class="input" placeholder="请输入路径"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menuChild.icon" placeholder="请输入图标">
+            <el-input v-model="menuChild.icon" size="mini" placeholder="请输入图标">
               <i slot="suffix" :class=menuChild.icon aria-hidden="true"/>
             </el-input>
           </el-form-item>

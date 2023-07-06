@@ -2,8 +2,8 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model="queryParam.name" placeholder="名称"/>
-      <el-select v-model="queryParam.serverGroupTypeId" filterable clearable
+      <el-input v-model="queryParam.name" size="mini" placeholder="名称"/>
+      <el-select v-model="queryParam.serverGroupTypeId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType">
         <el-option v-for="item in groupTypeOptions"
                    :key="item.id"
@@ -12,8 +12,8 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd">新增</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handleAdd" size="mini">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">

@@ -1,23 +1,23 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
-      <el-input v-model="queryParam.resourceName" @change="fetchData" placeholder="资源名称"/>
-      <el-select v-model="queryParam.groupId" filterable clearable @change="fetchData"
+    <el-row>
+      <el-input v-model="queryParam.resourceName" size="mini" @change="fetchData" placeholder="资源名称"/>
+      <el-select v-model="queryParam.groupId" size="mini" filterable clearable @change="fetchData"
                  remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup"
                  style="margin-left: 5px">
         <el-option v-for="item in groupOptions" :key="item.id" :label="item.groupName" :value="item.id">
           <select-item :name="item.groupName" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.needAuth" clearable placeholder="鉴权" style="margin-left: 5px">
+      <el-select v-model="queryParam.needAuth" size="mini" clearable placeholder="鉴权" style="margin-left: 5px">
         <el-option v-for="item in authOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" style="margin-left: 5px">查询</el-button>
-      <el-button @click="handleRowAdd" style="margin-left: 5px">新增</el-button>
+      <el-button @click="fetchData" size="mini" style="margin-left: 5px">查询</el-button>
+      <el-button @click="handleRowAdd" size="mini" style="margin-left: 5px">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">

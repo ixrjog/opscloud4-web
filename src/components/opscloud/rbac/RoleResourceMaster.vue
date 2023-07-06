@@ -2,21 +2,21 @@
 <template>
   <div>
     <el-row>
-      <el-select v-model="roleId" filterable clearable
+      <el-select v-model="roleId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜索角色" :remote-method="getRole"
                  style="display: inline-block; max-width:200px">
         <el-option v-for="item in roleOptions" :key="item.id" :label="item.roleName" :value="item.id">
           <select-item :name="item.roleName" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="groupId" filterable clearable
+      <el-select v-model="groupId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup"
                  style="margin-left: 5px">
         <el-option v-for="item in groupOptions" :key="item.id" :label="item.groupName" :value="item.id">
           <select-item :name="item.groupName" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-button @click="fetchData" style="margin-left: 5px" :disabled="roleId === ''">查询</el-button>
+      <el-button @click="fetchData" size="mini" style="margin-left: 5px" :disabled="roleId === ''">查询</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-row :gutter="20">

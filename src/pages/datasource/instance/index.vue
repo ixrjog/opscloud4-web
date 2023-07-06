@@ -5,15 +5,16 @@
       <h1>数据源实例</h1>
     </div>
     <div>
-      <el-row :gutter="24" style="margin-bottom: 5px; margin-left: -5px">
-        <el-select v-model="queryParam.instanceType" clearable placeholder="数据源类型" filterable @change="fetchData">
+      <el-row>
+        <el-select v-model="queryParam.instanceType" size="mini" clearable placeholder="数据源类型" filterable @change="fetchData">
           <el-option v-for="item in dsInstanceType"
                      :key="item.name"
                      :label="item.name"
                      :value="item.name"/>
         </el-select>
-        <el-button @click="fetchData">查询</el-button>
+        <el-button @click="fetchData" size="mini">查询</el-button>
       </el-row>
+      <div style="height: 5px"/>
       <el-row :gutter="10">
         <el-col :span="8" v-for="instance in dsInstances" :key="instance.id">
           <datasource-instance-card :instance="instance"/>
@@ -95,7 +96,6 @@ export default {
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {
@@ -109,7 +109,7 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
+  //-webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 

@@ -15,10 +15,10 @@
             <i class="fas fa-align-justify handle" style="margin-right: 10px;"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menu.title" placeholder="请输入名称"/>
+            <el-input v-model="menu.title" size="mini" placeholder="请输入名称"/>
           </el-form-item>
           <el-form-item required>
-            <el-input v-model="menu.icon" placeholder="请输入图标">
+            <el-input v-model="menu.icon" size="mini" placeholder="请输入图标">
               <i slot="suffix" :class=menu.icon aria-hidden="true"/>
             </el-input>
           </el-form-item>

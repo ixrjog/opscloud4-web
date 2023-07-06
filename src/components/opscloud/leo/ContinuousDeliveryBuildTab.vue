@@ -22,7 +22,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-input v-model="queryParam.queryName" @change="fetchData" clearable placeholder="输入关键字查询任务名称"/>
+      <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" clearable placeholder="输入关键字查询任务名称"/>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
         <i class="fas fa-circle-notch"/>

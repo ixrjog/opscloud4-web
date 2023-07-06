@@ -4,19 +4,18 @@
     <div>
       <h1>资产订阅配置</h1>
     </div>
-    <div style="margin-bottom: 5px">
-      <el-row :gutter="24" style="margin-bottom: 5px">
-        <el-input v-model="queryParam.queryName" placeholder="名称"/>
-        <el-select v-model="queryParam.isActive" clearable placeholder="有效">
-          <el-option v-for="item in activeOptions"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"/>
-        </el-select>
-        <el-button @click="handleAdd">新增</el-button>
-        <el-button @click="fetchData">查询</el-button>
-      </el-row>
-    </div>
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="名称"/>
+      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="有效">
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
+      </el-select>
+      <el-button @click="handleAdd" size="mini">新增</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+    </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="instance" label="实例名称" width="200">
         <template v-slot="scope">
@@ -91,7 +90,7 @@ const activeOptions = [{
 }]
 
 export default {
-  data () {
+  data() {
     return {
       table: {
         data: [],
@@ -123,7 +122,7 @@ export default {
     }
   },
   computed: {},
-  mounted () {
+  mounted() {
     this.fetchData()
   },
   components: {
@@ -133,15 +132,15 @@ export default {
     ViewLog
   },
   methods: {
-    paginationCurrentChange (currentPage) {
+    paginationCurrentChange(currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handleAdd () {
+    handleAdd() {
       const assetSubscription = {
         id: '',
         instanceUuid: '',
@@ -155,12 +154,12 @@ export default {
       this.formStatus.config.operationType = true
       this.formStatus.config.visible = true
     },
-    handleRowEdit (row) {
+    handleRowEdit(row) {
       this.$refs.assetSubscriptionEditor.initData(Object.assign({}, row))
       this.formStatus.config.operationType = false
       this.formStatus.config.visible = true
     },
-    handleRowDel (row) {
+    handleRowDel(row) {
       DELETE_ASSET_SUBSCRIPTION_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功')
@@ -171,18 +170,18 @@ export default {
      * 发布
      * @param row
      */
-    handleRowPublish (row) {
+    handleRowPublish(row) {
       this.table.loading = true
       PUBLISH_ASSET_SUBSCRIPTION_BY_ID(row.id)
         .then(res => {
           this.table.loading = false
         })
     },
-    handleRowLog (row) {
+    handleRowLog(row) {
       this.$refs.viewLog.initData(row.lastSubscriptionLog, row.ago)
       this.formStatus.log.visible = true
     },
-    fetchData () {
+    fetchData() {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,
@@ -201,10 +200,10 @@ export default {
 </script>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {

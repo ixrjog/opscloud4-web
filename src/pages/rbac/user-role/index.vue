@@ -4,10 +4,10 @@
     <div>
       <h1>用户角色配置</h1>
     </div>
-    <el-row :gutter="24">
-      <el-input v-model="queryParam.queryName" placeholder="用户名" class="input-search-bar"/>
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="用户名" class="input-search-bar"/>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
-      <el-button @click="fetchData" class="search-bar">查询</el-button>
+      <el-button @click="fetchData" size="mini" class="search-bar">查询</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%">
