@@ -57,3 +57,19 @@ export function DEPLOY_SUB_TASK (data) {
     data
   })
 }
+
+export function DEPLOY_SUB_TASK_CALLBACK (data) {
+  return request({
+    url: baseUrl + '/subtask/deploy/callback',
+    method: 'post',
+    data
+  })
+}
+
+export function QUERY_CURRENT_SER (data) {
+  return request({
+    url: baseUrl + '/current/query',
+    method: 'post',
+    data
+  })
+}

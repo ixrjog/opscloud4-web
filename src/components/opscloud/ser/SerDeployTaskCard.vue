@@ -31,12 +31,22 @@
           :value="item.value">
         </el-option>
       </el-select>
+      <el-radio-group v-model="queryCurrentSerParam.envName" size="mini" @change="queryCurrentSer"
+                      :disabled="checkFetchData()" style="margin-right: 5px">
+        <el-radio-button v-for="env in envOptions" :label="env.envName" :key="env.envName">
+        </el-radio-button>
+      </el-radio-group>
       <el-button @click="fetchData" :disabled="checkFetchData()">查询</el-button>
       <el-button @click="handleAdd" :disabled="checkFetchData()" style="margin: 0">新增</el-button>
     </el-row>
     <el-divider content-position="left" v-if="JSON.stringify(table.data) !== '[]'">
       {{ application.name }} - {{ application.comment }}
     </el-divider>
+    <el-row v-if="JSON.stringify(currentSerList) !== '[]'" style="margin-top: 10px">
+      <div class="serCard">
+        <el-card></el-card>
+      </div>
+    </el-row>
     <el-row :gutter="10">
       <el-col :span="8">
         <div v-for="task in table.data" :key="task.id">
@@ -115,7 +125,7 @@
               <el-table-column prop="itemMd5" label="MD5"></el-table-column>
               <el-table-column label="上传人">
                 <template slot-scope="scope">
-                  <user-tag :user="scope.row.deployUser"></user-tag>
+                  <user-tag :user="scope.row.reloadUser"></user-tag>
                 </template>
               </el-table-column>
               <el-table-column label="操作">
@@ -138,7 +148,7 @@
                     <i class="el-icon-plus el-icon--right" style="margin-right: 2px"></i>新增发布
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item v-for="env in envList" :key="env.id"
+                    <el-dropdown-item v-for="env in envOptions" :key="env.id"
                                       :command="env.envType">
                       {{ env.envName }}
                     </el-dropdown-item>
@@ -153,7 +163,8 @@
                   <el-card>
                     <div slot="header" class="clearfix">
                       <el-tag>{{ subTask.env.envName }}</el-tag>
-                      <span style="margin-left: 5px" v-if="subTask.ago"><i class="far fa-clock"/>{{ subTask.ago }}</span>
+                      <span style="margin-left: 5px" v-if="subTask.ago"><i class="far fa-clock"/>
+                        {{ subTask.ago }}</span>
                       <span style="float: right;margin-left: 5px">
                         <el-button type="text" @click="handlerDeploySubTask(subTask)" style="padding: 2px">
                           发布</el-button>
@@ -171,6 +182,10 @@
                         </span>
                         </div>
                         <div class="label">
+                          <span>部署人员</span>
+                          <user-tag :user="subTask.deployUser"></user-tag>
+                        </div>
+                        <div class="label">
                           <span>部署状态</span>
                           <span>{{ subTask.taskStatus }}</span>
                         </div>
@@ -185,13 +200,19 @@
                             <template slot="title">
                               Request<i class="fas fa-hiking" style="margin-left: 5px"></i>
                             </template>
-                            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念</div>
+                            <div>{{ subTask.requestContent }}</div>
                           </el-collapse-item>
                           <el-collapse-item>
                             <template slot="title">
                               Response<i class="fas fa-piggy-bank" style="margin-left: 5px"></i>
                             </template>
-                            <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作</div>
+                            <div>{{ subTask.responseContent }}</div>
+                          </el-collapse-item>
+                          <el-collapse-item>
+                            <template slot="title">
+                              Callback<i class="fas fa-shipping-fast" style="margin-left: 5px"></i>
+                            </template>
+                            <div>{{ subTask.callbackContent }}</div>
                           </el-collapse-item>
                         </el-collapse>
                       </el-col>
@@ -211,7 +232,7 @@
 import {
   ADD_SER_DEPLOY_SUB_TASK,
   DELETE_SER_DEPLOY_TASK_ITEM, DEPLOY_SUB_TASK,
-  GET_SER_DEPLOY_TASK_BY_UUID,
+  GET_SER_DEPLOY_TASK_BY_UUID, QUERY_CURRENT_SER,
   QUERY_SER_DEPLOY_TASK_PAGE
 } from '@/api/modules/ser/ser.api'
 import SerDeployTaskEditor from '@/components/opscloud/ser/SerDeployTaskEditor'
@@ -252,6 +273,9 @@ export default {
           total: 0
         }
       },
+      queryCurrentSerParam: {
+        envName: ''
+      },
       queryParam: {
         queryName: '',
         isActive: '',
@@ -271,7 +295,8 @@ export default {
       uploadHeaders: {},
       taskItemList: [],
       subTaskList: [],
-      envList: [],
+      currentSerList: [],
+      envOptions: [],
       serDeployTaskName: '',
       serDeployTaskUuid: '',
       serDeployTaskId: ''
@@ -284,6 +309,7 @@ export default {
     mySpan
   },
   mounted () {
+    this.getEnv()
     this.getApplication('')
   },
   methods: {
@@ -301,6 +327,7 @@ export default {
     initData () {
       this.taskItemList = []
       this.subTaskList = []
+      this.currentSerList = []
       this.serDeployTaskName = ''
       this.serDeployTaskUuid = ''
       this.serDeployTaskId = ''
@@ -354,7 +381,6 @@ export default {
       this.serDeployTaskName = row.taskName
       this.serDeployTaskUuid = row.taskUuid
       this.serDeployTaskId = row.id
-      this.getEnv()
     },
     getUploadUri () {
       const actionUri = 'ser/upload'
@@ -416,7 +442,7 @@ export default {
       }
       QUERY_ENV_PAGE(requestBody)
         .then(({ body }) => {
-          this.envList = body.data
+          this.envOptions = body.data
         })
     },
     handleSubTaskAdd (envType) {
@@ -445,12 +471,25 @@ export default {
         type: 'warning'
       }).then(() => {
         DEPLOY_SUB_TASK({ serDeploySubTaskId: subTask.id }).then(() => {
+          this.$message.success('发布完成')
           this._fetchData()
           this.getSerDeployTask()
         })
       }).catch(() => {
         this.$message.info('已取消!')
       })
+    },
+    queryCurrentSer () {
+      if (this.queryCurrentSerParam.envName !== '') {
+        const requestBody = {
+          ...this.queryCurrentSerParam,
+          applicationName: this.application.name
+        }
+        QUERY_CURRENT_SER(requestBody)
+          .then(({ body }) => {
+            this.currentSerList = body.data
+          })
+      }
     }
   }
 }
