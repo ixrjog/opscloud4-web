@@ -6,9 +6,9 @@
       <el-tag size="mini" style="float: right" disable-transitions>Size: {{ serverSize }}</el-tag>
     </div>
     <el-row>
-      <el-input v-model="queryParam.name" placeholder="Name" style="display: inline-block; width: 180px;"
+      <el-input v-model="queryParam.name" size="mini" placeholder="Name" style="display: inline-block; width: 180px;"
                 @change="fetchData"/>
-      <el-select v-model.trim="queryParam.serverGroupTypeId" filterable clearable style="margin-left: 5px"
+      <el-select v-model.trim="queryParam.serverGroupTypeId" size="mini" filterable clearable style="margin-left: 5px"
                  remote reserve-keyword placeholder="Namespace" :remote-method="getGroupType" :loading="loading">
         <el-option v-for="item in groupTypeOptions"
                    :key="item.id"
@@ -17,7 +17,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-button @click="fetchData" :loading="searching">Query</el-button>
+      <el-button @click="fetchData" size="mini" :loading="searching">Query</el-button>
     </el-row>
     <el-tree style="margin-top: 5px" :data="serverTree.tree" show-checkbox ref="myServerTree" node-key="id">
        <span class="custom-tree-node" slot-scope="{ node, data }">
@@ -101,7 +101,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 
 /*.el-select {*/
 /*  margin-left: 5px;*/
@@ -114,7 +114,7 @@ export default {
 .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
+  //-webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 

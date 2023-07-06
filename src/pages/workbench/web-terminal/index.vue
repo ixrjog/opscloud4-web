@@ -17,7 +17,8 @@
                       @handleChangeLayout="handleChangeLayout"
                       @handleResize="handleResize"/>
     </el-row>
-    <el-row :gutter="10" style="margin-top: 5px">
+    <div style="height: 5px"/>
+    <el-row :gutter="10">
       <el-col :span="8">
         <!--          服务器树-->
         <server-tree class="server-tree" ref="serverTree" v-show="terminalLayout.terminals.length === 0"/>
