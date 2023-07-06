@@ -2,15 +2,15 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询" style="margin-right: 5px"/>
+      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询" size="mini" style="margin-right: 5px"/>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
           {{ env.envName }}
         </el-radio-button>
       </el-radio-group>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
-      <el-button @click="handleScan" class="button">扫描</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handleAdd" class="button" size="mini">新增</el-button>
+      <el-button @click="handleScan" class="button" size="mini">扫描</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

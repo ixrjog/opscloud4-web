@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
+      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询" size="mini"/>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
           {{ env.envName }}

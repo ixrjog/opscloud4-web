@@ -2,11 +2,11 @@
 <template>
   <div>
     <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handlePull">拉取</el-button>
-      <el-button @click="handleScan">扫描</el-button>
-      <el-button @click="handleDelete">删除</el-button>
+      <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" placeholder="输入关键字模糊查询"/>
+      <el-button size="mini" @click="fetchData">查询</el-button>
+      <el-button size="mini" @click="handlePull">拉取</el-button>
+      <el-button size="mini" @click="handleScan">扫描</el-button>
+      <el-button size="mini" @click="handleDelete">删除</el-button>
       <slot name="button">
         <!--扩展字段-->
       </slot>
