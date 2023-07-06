@@ -4,7 +4,7 @@
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
                                datasource-nane="Kubernetes实例管理"/>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
-      <el-tab-pane label="Node节点" name="node">
+      <el-tab-pane label="Node" name="node">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NODE"
                      :tableLayout="tableLayout.node" ref="nodeTable">
           <template v-slot:extend>
@@ -16,14 +16,14 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="Namespace命名空间" name="namespace">
+      <el-tab-pane label="Namespace" name="namespace">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NAMESPACE"
                      :tableLayout="tableLayout.namespace" ref="namespaceTable">
           <template v-slot:extend>
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="Deployment无状态" name="deployment">
+      <el-tab-pane label="Deployment" name="deployment">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_DEPLOYMENT"
                      :tableLayout="tableLayout.deployment" ref="deploymentTable">
           <template v-slot:extend>
@@ -40,7 +40,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="Service服务" name="service">
+      <el-tab-pane label="Service" name="service">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_SERVICE"
                      :tableLayout="tableLayout.service" ref="serviceTable">
           <template v-slot:extend>
@@ -52,7 +52,24 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="Pod容器组" name="pod">
+      <el-tab-pane label="Ingress" name="ingress">
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_INGRESS"
+                     :tableLayout="tableLayout.ingress" ref="ingressTable">
+          <template v-slot:extend>
+            <el-table-column label="Ingress Class Name" show-overflow-tooltip>
+              <template v-slot="scope">
+                <span>{{ scope.row.properties.ingressClassName }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="Rules" show-overflow-tooltip>
+              <template v-slot="scope">
+                <span>{{ scope.row.properties.rules }}</span>
+              </template>
+            </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="Pod" name="pod">
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_POD"
                      :tableLayout="tableLayout.pod" ref="podTable">
           <template v-slot:extend>
@@ -121,6 +138,26 @@ const tableLayout = {
     }
   },
   deployment: {
+    assetId: {
+      alias: 'UID'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '命名空间',
+      show: true
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  ingress: {
     assetId: {
       alias: 'UID'
     },
