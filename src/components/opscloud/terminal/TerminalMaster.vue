@@ -5,7 +5,7 @@
     <div v-for="s in servers" :key="s.name">
       <template>
         <el-col :span="24">
-          <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
+          <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px; margin-bottom: 10px">
             <div slot="header" class="clearfix" style="height: 15px">
               <span>
                 <el-tag size="mini">{{ s.name }}</el-tag>
