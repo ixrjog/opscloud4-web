@@ -43,8 +43,21 @@
       {{ application.name }} - {{ application.comment }}
     </el-divider>
     <el-row v-if="JSON.stringify(currentSerList) !== '[]'" style="margin-top: 10px">
-      <div class="serCard">
-        <el-card></el-card>
+      <div class="serCardDiv">
+        <el-card v-for="ser in currentSerList" class="serCard" :style="isLastHalfHour(ser)">
+          <p>包名
+            <span>{{ ser.serName }}</span>
+          </p>
+          <p>MD5
+            <span>{{ ser.serMd5 }}</span>
+          </p>
+          <p>大小
+            <span>{{ ser.serSize }}</span>
+          </p>
+          <p>最后更新时间
+            <span>{{ ser.lastModified }}</span>
+          </p>
+        </el-card>
       </div>
     </el-row>
     <el-row :gutter="10">
@@ -163,21 +176,24 @@
                   <el-card>
                     <div slot="header" class="clearfix">
                       <el-tag>{{ subTask.env.envName }}</el-tag>
-                      <span style="margin-left: 5px" v-if="subTask.ago"><i class="far fa-clock"/>
+                      <span style="margin-left: 5px;vertical-align: bottom" v-if="subTask.startTime"><i
+                        class="far fa-clock"/>
                         {{ subTask.ago }}</span>
                       <span style="float: right;margin-left: 5px">
+                        <el-button type="text" @click="handlerRefreshDeploySubTask" style="padding: 2px">
+                          刷新</el-button>
                         <el-button type="text" @click="handlerDeploySubTask(subTask)" style="padding: 2px">
                           发布</el-button>
                       </span>
                     </div>
                     <el-row>
-                      <el-col :span="12">
+                      <el-col :span="8">
                         <div class="label">
                           <span>执行时间</span>
-                          <span v-show="subTask.startTime !== null && subTask.startTime !== ''">
+                          <span v-show="subTask.startTime">
                           {{ subTask.startTime }} - {{ subTask.endTime ? subTask.endTime : '?' }}
                         </span>
-                          <span v-show="subTask.runtime !== null" style="margin-left: 2px">
+                          <span v-show="subTask.runtime" style="margin-left: 2px">
                           <b style="color: #3b97d7"> {{ subTask.runtime }}</b>
                         </span>
                         </div>
@@ -194,25 +210,25 @@
                           <span>{{ subTask.taskResult }}</span>
                         </div>
                       </el-col>
-                      <el-col :span="12">
+                      <el-col :span="16">
                         <el-collapse accordion>
                           <el-collapse-item>
                             <template slot="title">
                               Request<i class="fas fa-hiking" style="margin-left: 5px"></i>
                             </template>
-                            <div>{{ subTask.requestContent }}</div>
+                            <span>{{ subTask.requestContent }}</span>
                           </el-collapse-item>
                           <el-collapse-item>
                             <template slot="title">
                               Response<i class="fas fa-piggy-bank" style="margin-left: 5px"></i>
                             </template>
-                            <div>{{ subTask.responseContent }}</div>
+                            <span>{{ subTask.responseContent }}</span>
                           </el-collapse-item>
                           <el-collapse-item>
                             <template slot="title">
                               Callback<i class="fas fa-shipping-fast" style="margin-left: 5px"></i>
                             </template>
-                            <div>{{ subTask.callbackContent }}</div>
+                            <span style="white-space: pre-line">{{ subTask.callbackContent }}</span>
                           </el-collapse-item>
                         </el-collapse>
                       </el-col>
@@ -362,6 +378,7 @@ export default {
     fetchData () {
       this.initData()
       this._fetchData()
+      this.queryCurrentSer()
     },
     handleAdd () {
       this.formStatus.serDeployTask.operationType = true
@@ -457,12 +474,18 @@ export default {
           envType: envType
         }
         ADD_SER_DEPLOY_SUB_TASK(serDeploySubTask).then(() => {
+          this.$message.success('新增完成')
           this._fetchData()
           this.getSerDeployTask()
         })
       }).catch(() => {
         this.$message.info('已取消!')
       })
+    },
+    handlerRefreshDeploySubTask () {
+      this._fetchData()
+      this.getSerDeployTask()
+      this.queryCurrentSer()
     },
     handlerDeploySubTask (subTask) {
       this.$confirm('确认发布 Ser 包吗?', '提示', {
@@ -487,9 +510,15 @@ export default {
         }
         QUERY_CURRENT_SER(requestBody)
           .then(({ body }) => {
-            this.currentSerList = body.data
+            this.currentSerList = body
           })
       }
+    },
+    isLastHalfHour (ser) {
+      if (ser.isLastHalfHour) {
+        return 'border: 2px solid #e56c0d'
+      }
+      return ''
     }
   }
 }
@@ -517,7 +546,6 @@ export default {
 
 .el-card {
   margin-bottom: 10px;
-  position: relative;
 
   /deep/ .el-card__header {
     padding: 10px;
@@ -605,6 +633,36 @@ export default {
 
 .el-divider--horizontal {
   margin: 16px 0;
+}
+
+.serCardDiv {
+
+  .serCard {
+    position: relative;
+    float: left;
+    max-width: 350px;
+    text-align: left;
+    line-height: 1.5em;
+    margin-right: 5px;
+    margin-bottom: 5px;
+
+    /deep/ .el-card__body {
+      padding: 8px;
+    }
+
+    p {
+      font-size: 8px;
+      margin: 0;
+      color: #9d9fa3;
+    }
+
+    span {
+      margin-left: 10px;
+      float: right;
+      color: #303133;
+    }
+
+  }
 }
 
 </style>
