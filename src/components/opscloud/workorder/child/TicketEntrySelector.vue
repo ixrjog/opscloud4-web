@@ -1,9 +1,9 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24">
-      <el-select v-model="ticketEntry" filterable clearable value-key="name"
-                 style="display: inline-block; width: 250px; margin-left: 10px"
+    <el-row>
+      <el-select v-model="ticketEntry" size="mini" filterable clearable value-key="name"
+                 style="display: inline-block; width: 250px"
                  remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
                  :loading="searchLoading">
         <el-option v-for="item in ticketEntryOptions"

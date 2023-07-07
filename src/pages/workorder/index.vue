@@ -12,6 +12,7 @@
                         ref="myTicketCard"/>
       </el-col>
     </el-row>
+    <aliyun-ram-update-login-profile-ticket-editor :formStatus="formStatus.ticket.aliyunRamUpdateLoginProfile" ref="aliyunRamUpdateLoginProfileTicketEditor" @close="fetchData"/>
     <server-group-ticket-editor :formStatus="formStatus.ticket.serverGroup" ref="serverGroupTicketEditor" @close="fetchData"/>
     <application-permission-ticket-editor :formStatus="formStatus.ticket.application.permission" ref="applicationPermissionTicketEditor" @close="fetchData"/>
     <confluence-ticket-editor :formStatus="formStatus.ticket.confluence" ref="confluenceTicketEditor" @close="fetchData"/>
@@ -237,7 +238,7 @@ export default {
           this.$refs.newApplicationTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.APOLLO_RELEASE:
-          this.handleOpenTicketEditor(this.formStatus.ticket.application.apollo.release)
+          this.handleOpenTicketEditor(this.formStatus.ticket.apollo.release)
           this.$refs.apolloReleaseTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.SER_DEPLOY:

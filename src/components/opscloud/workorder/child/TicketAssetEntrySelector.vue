@@ -1,9 +1,9 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24">
-      <el-select v-model="instanceUuid" filterable clearable value-key="instanceName"
-                 placeholder="选择数据源实例" style="display: inline-block; width: 250px; margin-left: 10px"
+    <el-row>
+      <el-select v-model="instanceUuid" size="mini" filterable clearable value-key="instanceName"
+                 placeholder="选择数据源实例" style="display: inline-block; width: 250px"
                  reserve-keyword
                  @change="selInstance">
         <el-option v-for="item in dsInstanceOptions"
@@ -13,7 +13,7 @@
           <select-item :name="item.instanceName" :comment="item.instanceType"/>
         </el-option>
       </el-select>
-      <el-select v-model="ticketEntry" filterable clearable value-key="name"
+      <el-select v-model="ticketEntry" size="mini" filterable clearable value-key="name"
                  style="display: inline-block; width: 250px; margin-left: 10px"
                  remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
                  :loading="searchLoading" :disabled="instanceUuid === ''">

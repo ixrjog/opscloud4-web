@@ -3,7 +3,7 @@
   <div>
     <el-form :model="sqsData" label-width="120px" ref="sqsDataForm" :rules="rules">
       <el-form-item label="AWS实例" prop="instanceUuid">
-        <el-select v-model="instanceUuid" filterable value-key="instanceName"
+        <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword>
           <el-option v-for="item in dsInstanceOptions"
                      :key="item.uuid"
@@ -14,7 +14,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="环境">
-        <el-select v-model="sqsData.envName" filterable style="width: 250px;" placeholder="请选择环境"
+        <el-select v-model="sqsData.envName" size="mini" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
           <el-option v-for="item in regionOptions"
                      :key="item.label"
@@ -25,7 +25,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="队列名称" prop="queueName">
-        <el-input v-model="sqsData.queueName"/>
+        <el-input v-model="sqsData.queueName" size="mini"/>
         <span style="height: 18px;font-size: 10px;color: #909399">
          以 {{ queueNamePrefix }} 开头,以 {{ queueNameSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 80 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>
@@ -45,8 +45,8 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="可见性超时" prop="visibilityTimeout">
-                <el-input v-model="sqsData.visibilityTimeout">
-                  <el-select v-model="unit.visibilityTimeoutUnit" slot="append" style="width: 80px">
+                <el-input v-model="sqsData.visibilityTimeout" size="mini">
+                  <el-select v-model="unit.visibilityTimeoutUnit"  slot="append" style="width: 80px">
                     <el-option label="秒" :value="time.second"/>
                     <el-option label="分钟" :value="time.minute"/>
                     <el-option label="小时" :value="time.hour"/>
@@ -59,7 +59,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="消息保留周期" prop="messageRetentionPeriod">
-                <el-input v-model="sqsData.messageRetentionPeriod">
+                <el-input v-model="sqsData.messageRetentionPeriod" size="mini">
                   <el-select v-model="unit.messageRetentionPeriodUnit" slot="append" style="width: 80px">
                     <el-option label="秒" :value="time.second"/>
                     <el-option label="分钟" :value="time.minute"/>
@@ -76,7 +76,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="交付延迟" prop="delaySeconds">
-                <el-input v-model="sqsData.delaySeconds" class="input-with-select">
+                <el-input v-model="sqsData.delaySeconds" size="mini" class="input-with-select">
                   <el-select v-model="unit.delaySecondsUnit" slot="append" style="width: 80px">
                     <el-option label="秒" :value="time.second"></el-option>
                     <el-option label="分钟" :value="time.minute"></el-option>
@@ -89,7 +89,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="最大消息大小" prop="maximumMessageSize">
-                <el-input v-model="sqsData.maximumMessageSize">
+                <el-input v-model="sqsData.maximumMessageSize" size="mini">
                   <template slot="append">KB</template>
                 </el-input>
                 <span style="height: 18px;font-size: 10px;color: #909399">
@@ -101,7 +101,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="接收消息等待" prop="receiveMessageWaitTimeSeconds">
-                <el-input v-model="sqsData.receiveMessageWaitTimeSeconds">
+                <el-input v-model="sqsData.receiveMessageWaitTimeSeconds" size="mini">
                   <template slot="append">秒</template>
                 </el-input>
                 <span style="height: 18px;font-size: 10px;color: #909399">
@@ -114,10 +114,10 @@
       </el-collapse>
       <br/>
       <el-form-item label="描述" prop="remark">
-        <el-input v-model="sqsData.remark" placeholder="请输入备注，例如：用户 - 领券队列"/>
+        <el-input v-model="sqsData.remark" placeholder="请输入备注，例如：用户 - 领券队列" size="mini"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">保存</el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">保存</el-button>
       </el-form-item>
     </el-form>
   </div>

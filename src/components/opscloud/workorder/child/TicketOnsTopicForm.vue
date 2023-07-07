@@ -3,7 +3,7 @@
   <div>
     <el-form :model="topicData" label-width="120px">
       <el-form-item label="阿里云实例">
-        <el-select v-model="instanceUuid" filterable value-key="instanceName"
+        <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
           <el-option v-for="item in dsInstanceOptions"
                      :key="item.uuid"
@@ -14,7 +14,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="ONS实例">
-        <el-select v-model="ticketEntry" filterable value-key="name"
+        <el-select v-model="ticketEntry" size="mini" filterable value-key="name"
                    style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索ONS实例"
                    :remote-method="fetchData"
                    :loading="searchLoading" :disabled="instanceUuid === ''" @change="onsInstanceChange">
@@ -27,13 +27,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Topic" required>
-        <el-input v-model="topicData.topic" :disabled="added"></el-input>
+        <el-input v-model="topicData.topic" :disabled="added" size="mini"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
           以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,最多 64 个字符
         </span>
       </el-form-item>
       <el-form-item label="消息类型" required>
-        <el-radio-group v-model="topicData.messageType" :disabled="added">
+        <el-radio-group v-model="topicData.messageType" size="mini" :disabled="added">
           <el-radio-button :label="messageType.type0.type">{{ messageType.type0.desc }}</el-radio-button>
           <el-radio-button :label="messageType.type1.type">{{ messageType.type1.desc }}</el-radio-button>
           <el-radio-button :label="messageType.type2.type">{{ messageType.type2.desc }}</el-radio-button>
@@ -67,10 +67,10 @@
         </el-alert>
       </el-form-item>
       <el-form-item label="描述" required>
-        <el-input v-model="topicData.remark" :disabled="added" placeholder="请输入备注，例如：用户 - 领券消息"/>
+        <el-input v-model="topicData.remark" :disabled="added" placeholder="请输入备注，例如：用户 - 领券消息" size="mini"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">添加</el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">添加</el-button>
       </el-form-item>
     </el-form>
   </div>

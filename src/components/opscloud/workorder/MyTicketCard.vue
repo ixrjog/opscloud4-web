@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-card shadow="hover">
-      <el-row :gutter="24" style="margin-left: 0">
+      <el-row>
         <el-radio-group v-model="queryParam.ticketPhase" size="mini" @change="fetchData">
           <el-radio-button :label="ticketPhase.ALL">全部</el-radio-button>
           <el-radio-button :label="ticketPhase.NEW">{{ ticketPhase.NEW | toPhaseText }}</el-radio-button>
@@ -26,7 +26,9 @@
         <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini">
           <i class="fas fa-circle-notch"/>
         </el-button>
-        <el-button type="danger" plain size="mini" :disabled="queryParam.workOrderId === ''" @click="delOrderTicket">批量删除</el-button>
+        <el-button type="danger" plain size="mini" :disabled="queryParam.workOrderId === ''" @click="delOrderTicket">
+          批量删除
+        </el-button>
       </el-row>
       <div style="height: 5px"/>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
@@ -275,7 +277,6 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 

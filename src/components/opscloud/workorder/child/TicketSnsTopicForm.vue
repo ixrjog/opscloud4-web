@@ -3,7 +3,7 @@
   <div>
     <el-form :model="snsTopicData" label-width="120px" ref="snsTopicDataForm" :rules="rules">
       <el-form-item label="AWS实例" prop="instanceUuid">
-        <el-select v-model="instanceUuid" filterable value-key="instanceName"
+        <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword>
           <el-option v-for="item in dsInstanceOptions"
                      :key="item.uuid"
@@ -14,7 +14,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="环境">
-        <el-select v-model="snsTopicData.envName" filterable style="width: 250px;" placeholder="请选择环境"
+        <el-select v-model="snsTopicData.envName" size="mini" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''">
           <el-option v-for="item in regionOptions"
                      :key="item.label"
@@ -25,13 +25,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="主题名称" prop="topic">
-        <el-input v-model="snsTopicData.topic"></el-input>
+        <el-input v-model="snsTopicData.topic" size="mini"></el-input>
         <span style="height: 18px;font-size: 10px;color: #909399">
           以 {{ topicPrefix }} 开头,以 {{ topicSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 256 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>
       </el-form-item>
       <el-form-item label="主题类型" prop="topicType">
-        <el-radio-group v-model="snsTopicData.topicType" @change="topicTypeChange">
+        <el-radio-group v-model="snsTopicData.topicType" size="mini" @change="topicTypeChange">
           <el-radio label="0">标准
             <el-alert type="info" :closable="false">
               <div style="font-size: 10px;color: #909399;width: 260px">
@@ -59,10 +59,10 @@
         </div>
       </el-form-item>
       <el-form-item label="描述" prop="remark">
-        <el-input v-model="snsTopicData.remark" placeholder="请输入备注，例如：用户 - 领券队列"/>
+        <el-input v-model="snsTopicData.remark" placeholder="请输入备注，例如：用户 - 领券队列" size="mini"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">保存</el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
