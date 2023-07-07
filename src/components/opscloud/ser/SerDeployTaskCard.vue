@@ -1,43 +1,40 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <div>
     <el-row>
-      <el-select v-model.trim="application" filterable @change="fetchData" value-key="id"
+      <el-select v-model.trim="application" size="mini" filterable @change="fetchData" value-key="id"
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication">
-        <el-option
-          v-for="item in applicationOptions"
-          :key="item.id"
-          :label="item.name"
-          :value="item">
-          <select-item :name="item.name" :comment="item.comment"></select-item>
+        <el-option v-for="item in applicationOptions"
+                   :key="item.id"
+                   :label="item.name"
+                   :value="item">
+          <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
       <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"
-                :disabled="checkFetchData()"/>
-      <el-select v-model="queryParam.isActive" clearable placeholder="是否有效" @change="fetchData"
+                :disabled="checkFetchData()" size="mini"/>
+      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="是否有效" @change="fetchData"
                  :disabled="checkFetchData()">
-        <el-option
-          v-for="item in activeOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.isFinish" clearable placeholder="是否完成" @change="fetchData"
+      <el-select v-model="queryParam.isFinish" size="mini" clearable placeholder="是否完成" @change="fetchData"
                  :disabled="checkFetchData()">
-        <el-option
-          v-for="item in finishOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+        <el-option v-for="item in finishOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value">
         </el-option>
       </el-select>
       <el-radio-group v-model="queryCurrentSerParam.envName" size="mini" @change="queryCurrentSer"
                       :disabled="checkFetchData()" style="margin-right: 5px">
-        <el-radio-button v-for="env in envOptions" :label="env.envName" :key="env.envName">
-        </el-radio-button>
+        <el-radio-button v-for="env in envOptions" :label="env.envName" :key="env.envName"/>
       </el-radio-group>
-      <el-button @click="fetchData" :disabled="checkFetchData()">查询</el-button>
-      <el-button @click="handleAdd" :disabled="checkFetchData()" style="margin: 0">新增</el-button>
+      <el-button size="mini" @click="fetchData" :disabled="checkFetchData()">查询</el-button>
+      <el-button size="mini" @click="handleAdd" :disabled="checkFetchData()" style="margin: 0">新增</el-button>
     </el-row>
     <el-divider content-position="left" v-if="JSON.stringify(table.data) !== '[]'">
       {{ application.name }} - {{ application.comment }}
@@ -65,7 +62,7 @@
         <div v-for="task in table.data" :key="task.id">
           <el-card>
             <div slot="header" class="clearfix">
-              <my-span :content="task.taskName" style="font-size: 14px;margin-right: 10px"></my-span>
+              <my-span :content="task.taskName" style="font-size: 14px;margin-right: 10px"/>
               <el-tooltip class="item" effect="dark" :content="task.taskUuid" placement="top-start">
                 <i class="fas fa-info-circle"></i>
               </el-tooltip>
@@ -113,36 +110,35 @@
             <div>
               <h2>{{ serDeployTaskName }}</h2>
               <div>
-                <el-upload
-                  drag
-                  accept=".ser"
-                  class="upload-demo"
-                  :action="getUploadUri()"
-                  :headers="uploadHeaders"
-                  :before-upload="beforeUpload"
-                  :on-success="onSuccess"
-                  :on-error="onError"
-                  v-if="JSON.stringify(subTaskList) === '[]'">
-                  <i class="el-icon-upload"></i>
+                <el-upload drag
+                           accept=".ser"
+                           class="upload-demo"
+                           :action="getUploadUri()"
+                           :headers="uploadHeaders"
+                           :before-upload="beforeUpload"
+                           :on-success="onSuccess"
+                           :on-error="onError"
+                           v-if="JSON.stringify(subTaskList) === '[]'">
+                  <i class="el-icon-upload"/>
                   <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em>，只支持 ser 包</div>
                 </el-upload>
               </div>
             </div>
             <el-table :data="taskItemList" style="width: 100%">
               <el-table-column prop="itemName" label="包名">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <span>{{ scope.row.itemName }}</span>
                   <p style="color: #9d9fa3;margin: 0">{{ scope.row.itemSize }}</p>
                 </template>
               </el-table-column>
               <el-table-column prop="itemMd5" label="MD5"></el-table-column>
               <el-table-column label="上传人">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <user-tag :user="scope.row.reloadUser"></user-tag>
                 </template>
               </el-table-column>
               <el-table-column label="操作">
-                <template slot-scope="scope">
+                <template v-slot="scope">
                   <el-button type="text" @click="handleItemDelete(scope.row)" style="padding: 2px">
                     移除
                   </el-button>
@@ -175,11 +171,11 @@
                                   :timestamp="subTask.createTime" placement="top">
                   <el-card>
                     <div slot="header" class="clearfix">
-                      <el-tag>{{ subTask.env.envName }}</el-tag>
-                      <span style="margin-left: 5px;vertical-align: bottom" v-if="subTask.startTime"><i
-                        class="far fa-clock"/>
-                        {{ subTask.ago }}</span>
-                      <span style="float: right;margin-left: 5px">
+                      <env-tag :env="subTask.env"/>
+                      <span style="margin-left: 5px;vertical-align: bottom" v-if="subTask.startTime">
+                        <i class="far fa-clock"/>{{ subTask.ago }}
+                      </span>
+                      <span style="float: right; margin-left: 5px">
                         <el-button type="text" @click="handlerRefreshDeploySubTask" style="padding: 2px">
                           刷新</el-button>
                         <el-button type="text" @click="handlerDeploySubTask(subTask)" style="padding: 2px">
@@ -199,7 +195,7 @@
                         </div>
                         <div class="label">
                           <span>部署人员</span>
-                          <user-tag :user="subTask.deployUser"></user-tag>
+                          <user-tag :user="subTask.deployUser"/>
                         </div>
                         <div class="label">
                           <span>部署状态</span>
@@ -258,6 +254,7 @@ import mySpan from '@/components/opscloud/common/MySpan'
 import util from '@/libs/util'
 import UserTag from '@/components/opscloud/common/tag/UserTag'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
+import EnvTag from "@/components/opscloud/common/tag/EnvTag.vue";
 
 const activeOptions = [{
   value: true,
@@ -319,6 +316,7 @@ export default {
     }
   },
   components: {
+    EnvTag,
     UserTag,
     SelectItem,
     SerDeployTaskEditor,
