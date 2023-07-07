@@ -1,27 +1,26 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog title="MavenPublish 构建任务"
-             :visible.sync="formStatus.visible" width="50%">
+  <el-dialog title="MavenPublish 构建任务" :visible.sync="formStatus.visible" width="50%">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="构建" name="build">
         <el-form :model="leoJob">
           <el-form-item label="任务名称" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.name" readonly/>
+            <el-input v-model="leoJob.name" readonly size="mini"/>
           </el-form-item>
           <el-form-item label="任务主键" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.jobKey" readonly/>
+            <el-input v-model="leoJob.jobKey" readonly size="mini"/>
           </el-form-item>
           <el-form-item label="项目地址" :label-width="formStatus.labelWidth">
             <el-input v-if="JSON.stringify(leoJob) !== '{}'"
                       v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
-                      readonly style="width: 500px"/>
+                      readonly style="width: 500px" size="mini"/>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
-                         style="margin-left: 20px" @change="getBranchOptions">查询<span
-              style="margin-left: 2px">Tag</span>
+                         style="margin-left: 20px" @change="getBranchOptions">
+              <span style="margin-left: 2px">Query tags</span>
             </el-checkbox>
           </el-form-item>
           <el-form-item label="构建分支" :label-width="formStatus.labelWidth" required>
-            <el-select v-model.trim="doBuildParam.branch" filterable style="width: 500px"
+            <el-select v-model.trim="doBuildParam.branch" size="mini" filterable style="width: 500px"
                        :loading="branchOptionsLoading" loading-text="正在加载选项" remote @change="handleChange">
               <el-option-group v-for="group in branchOptions" :key="group.label" :label="group.label">
                 <el-option v-for="item in group.options"
@@ -52,13 +51,13 @@
             </el-alert>
           </el-form-item>
           <el-form-item label="组件名称" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="mavenPublishInfo.artifactId" readonly placeholder="自动填充，从配置文件获取"/>
+            <el-input v-model="mavenPublishInfo.artifactId" readonly placeholder="自动填充，从配置文件获取" size="mini"/>
           </el-form-item>
           <el-form-item label="版本名称" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="doBuildParam.versionName" readonly placeholder="自动填充，从配置文件获取"/>
+            <el-input v-model="doBuildParam.versionName" readonly placeholder="自动填充，从配置文件获取" size="mini"/>
           </el-form-item>
           <el-form-item label="版本说明" :label-width="formStatus.labelWidth">
-            <el-input v-model="doBuildParam.versionDesc"/>
+            <el-input v-model="doBuildParam.versionDesc" size="mini"/>
           </el-form-item>
         </el-form>
         <div style="width:100%;text-align:center">
@@ -232,7 +231,7 @@ export default {
       this.buttons.doBuilding = true
       // 构建参数
       const params = {
-        artifactId: this.mavenPublishInfo.artifactId,
+        artifactId: this.mavenPublishInfo.artifactId
       }
       const request = {
         ...this.doBuildParam,

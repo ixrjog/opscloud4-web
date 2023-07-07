@@ -16,8 +16,8 @@
                       v-model="leoJob.configDetails.job.gitLab.project.sshUrl"
                       readonly style="width: 500px"/>
             <el-checkbox v-model="getBranchOptionsParam.openTag"
-                         style="margin-left: 20px" @change="getBranchOptions"><span
-              style="margin-left: 2px">Query tags</span>
+                         style="margin-left: 20px" @change="getBranchOptions">
+              <span style="margin-left: 2px">Query tags</span>
             </el-checkbox>
           </el-form-item>
           <el-form-item label="Branch" size="mini" :label-width="formStatus.labelWidth" required>
