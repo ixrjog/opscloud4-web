@@ -6,6 +6,7 @@
       <el-button @click="fetchData" size="mini">查询</el-button>
       <el-button @click="handlerAdd" size="mini">新增</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="id" label="类型ID"/>
       <el-table-column prop="name" label="名称">

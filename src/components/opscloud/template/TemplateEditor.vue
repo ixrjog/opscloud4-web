@@ -6,7 +6,7 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="template">
           <el-form-item label="名称" :label-width="labelWidth">
-            <el-input v-model="template.name" placeholder="不填写则自动生成"/>
+            <el-input v-model="template.name" placeholder="不填写则自动生成" size="mini"/>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
             <el-radio-group v-model="template.envType" size="mini">
@@ -16,7 +16,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="实例类型" :label-width="labelWidth" required>
-            <el-select v-model="template.instanceType" placeholder="选择类型" @change="handleChangeInstanceType"
+            <el-select v-model="template.instanceType" size="mini" placeholder="选择类型" @change="handleChangeInstanceType"
                        :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
               <el-option v-for="item in instanceTypeOptions"
                          :key="item.value"
@@ -25,7 +25,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="模板Key" :label-width="labelWidth" required>
-            <el-select v-model="template.templateKey" placeholder="选择类型"
+            <el-select v-model="template.templateKey" size="mini" placeholder="选择类型"
                        :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
               <el-option v-for="item in keyOptions"
                          :key="item.value"
@@ -34,7 +34,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="template.comment" placeholder="请输入内容"/>
+            <el-input v-model="template.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

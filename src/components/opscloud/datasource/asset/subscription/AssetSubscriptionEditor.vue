@@ -6,7 +6,7 @@
       <el-tab-pane label="基本配置" name="config">
         <el-form :model="assetSubscription" label-width="150px">
           <el-form-item label="数据源类型" :label-width="labelWidth" required>
-            <el-select v-model="instanceQueryParam.instanceType" placeholder="选择类型"
+            <el-select v-model="instanceQueryParam.instanceType" size="mini" placeholder="选择类型"
                        :disabled="assetSubscription.id !== ''">
               <el-option v-for="item in dsTypeOptions"
                          :key="item.value"
@@ -15,7 +15,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="数据源实例" :label-width="labelWidth" required>
-            <el-select v-model.trim="instance" filterable clearable
+            <el-select v-model.trim="instance" size="mini" filterable clearable
                        :disabled="assetSubscription.id !== '' || instanceQueryParam.instanceType === ''"
                        @change="changeInstance"
                        remote reserve-keyword placeholder="搜索实例" :remote-method="getInstance"
@@ -27,7 +27,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="订阅资产" :label-width="labelWidth" required>
-            <el-select v-model.trim="asset" filterable clearable
+            <el-select v-model.trim="asset" size="mini" filterable clearable
                        :disabled="assetSubscription.id !== '' || instance === ''"
                        remote reserve-keyword placeholder="搜索资产" :remote-method="getAsset" @clear="getAsset('')">
               <el-option v-for="item in dsAssetOptions"
@@ -37,7 +37,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="assetSubscription.comment" placeholder="请输入内容"/>
+            <el-input v-model="assetSubscription.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

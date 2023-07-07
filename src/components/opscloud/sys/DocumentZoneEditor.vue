@@ -3,10 +3,10 @@
   <el-dialog :title="formStatus.updateTitle" :visible.sync="formStatus.visible" width="50%">
     <el-form :model="zone">
       <el-form-item label="名称" :label-width="labelWidth" required>
-        <el-input v-model="zone.name" placeholder="请输入内容"/>
+        <el-input v-model="zone.name" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="有效" :label-width="labelWidth" required>
-        <el-select v-model="zone.isActive" placeholder="选择">
+        <el-select v-model="zone.isActive" size="mini" placeholder="选择">
           <el-option v-for="item in activeOptions"
                      :key="item.value"
                      :label="item.label"
@@ -14,10 +14,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="挂载区" :label-width="labelWidth">
-        <el-input v-model="zone.mountZone" readonly/>
+        <el-input v-model="zone.mountZone" readonly size="mini"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="zone.comment" placeholder="请输入内容"/>
+        <el-input v-model="zone.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

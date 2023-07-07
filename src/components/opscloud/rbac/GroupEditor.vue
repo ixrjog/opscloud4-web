@@ -4,18 +4,18 @@
              :visible.sync="formStatus.visible">
     <el-form :model="group">
       <el-form-item label="资源组名称" :label-width="labelWidth" required>
-        <el-input v-model="group.groupName" placeholder="请输入内容"/>
+        <el-input v-model="group.groupName" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="基本路径" :label-width="labelWidth">
-        <el-input v-model="group.basePath" placeholder="请输入内容"/>
+        <el-input v-model="group.basePath" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="group.comment" placeholder="请输入内容"/>
+        <el-input v-model="group.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleSave">确定</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>

@@ -6,11 +6,11 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="leoJob">
           <el-form-item label="显示名称" :label-width="formStatus.labelWidth" required wit>
-            <el-input v-model="leoJob.name" placeholder="请输入内容" style="width: 500px"/>
+            <el-input v-model="leoJob.name" placeholder="请输入内容" style="width: 500px" size="mini"/>
           </el-form-item>
           <el-form-item label="任务主键" :label-width="formStatus.labelWidth" required>
             <el-input v-model="leoJob.jobKey" placeholder="请输入内容" style="width: 500px"
-                      :disabled="leoJob.id !== '' && leoJob.id !== 0">
+                      :disabled="leoJob.id !== '' && leoJob.id !== 0" size="mini">
               <template v-slot:append>
                 <el-button size="mini" type="primary" @click="handleBuildKey">
                   <i class="fa fa-arrow-up" aria-hidden="true"/>
@@ -19,7 +19,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="应用" :label-width="formStatus.labelWidth" required>
-            <el-select v-model.trim="leoJob.applicationId" filterable clearable
+            <el-select v-model.trim="leoJob.applicationId" size="mini" filterable clearable
                        remote reserve-keyword placeholder="搜索应用" :remote-method="getApplication"
                        @clear="getApplication('')">
               <el-option v-for="item in applicationOptions"
@@ -31,7 +31,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="任务模板" :label-width="formStatus.labelWidth" required>
-            <el-select v-model.trim="leoJob.templateId" filterable clearable
+            <el-select v-model.trim="leoJob.templateId" size="mini" filterable clearable
                        remote reserve-keyword placeholder="搜索任务模板" :remote-method="getTemplate"
                        @clear="getTemplate('')">
               <el-option v-for="item in templateOptions"
@@ -43,7 +43,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="formStatus.labelWidth" required>
-            <el-select v-model.trim="leoJob.envType" clearable
+            <el-select v-model.trim="leoJob.envType" size="mini" clearable
                        remote reserve-keyword placeholder="选择环境" :remote-method="getEnv">
               <el-option v-for="item in envOptions"
                          :key="item.envType"
@@ -52,7 +52,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
-            <el-select v-model="leoJob.isActive" placeholder="选择">
+            <el-select v-model="leoJob.isActive" size="mini" placeholder="选择">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -60,7 +60,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="说明" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoJob.comment" placeholder="请输入内容"/>
+            <el-input v-model="leoJob.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

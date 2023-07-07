@@ -1,8 +1,8 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-select v-model.trim="serverGroupId" clearable filterable
+    <el-row>
+      <el-select v-model.trim="serverGroupId" size="mini" clearable filterable
                  remote reserve-keyword placeholder="选择要授权的服务器组" :remote-method="getServerGroup">
         <el-option v-for="item in serverGroupOptions"
                    :key="item.id"
@@ -13,10 +13,11 @@
       </el-button>
     </el-row>
     <el-divider/>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-input v-model="queryParam.queryName" placeholder="名称"/>
-      <el-button @click="fetchData">查询</el-button>
+    <el-row>
+      <el-input v-model="queryParam.queryName" placeholder="名称" size="mini"/>
+      <el-button size="mini" @click="fetchData">查询</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称"/>
       <el-table-column prop="serverGroupType" label="组类型">

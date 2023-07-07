@@ -6,10 +6,10 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="leoTemplate">
           <el-form-item label="显示名称" :label-width="formStatus.labelWidth" required>
-            <el-input v-model="leoTemplate.name" placeholder="请输入内容"/>
+            <el-input v-model="leoTemplate.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
-            <el-select v-model="leoTemplate.isActive" placeholder="选择">
+            <el-select v-model="leoTemplate.isActive" size="mini" placeholder="选择">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -17,7 +17,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="说明" :label-width="formStatus.labelWidth">
-            <el-input v-model="leoTemplate.comment" placeholder="请输入内容"/>
+            <el-input v-model="leoTemplate.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

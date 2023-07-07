@@ -6,10 +6,10 @@
       <el-tab-pane label="文档信息" name="base">
         <el-form :model="document">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="document.name" placeholder="请输入内容"/>
+            <el-input v-model="document.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="文档挂载区" :label-width="labelWidth" required>
-            <el-select v-model="document.mountZone" filterable clearable
+            <el-select v-model="document.mountZone" size="mini" filterable clearable
                        remote reserve-keyword placeholder="搜索文档挂载区" :remote-method="getZone"
                        @clear="getZone('')">
               <el-option v-for="item in zoneOptions"
@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
-            <el-select v-model="document.isActive" placeholder="选择">
+            <el-select v-model="document.isActive" size="mini" placeholder="选择">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -29,20 +29,20 @@
             </el-select>
           </el-form-item>
           <el-form-item label="图标" :label-width="labelWidth" required>
-            <el-input v-model="document.icon">
+            <el-input v-model="document.icon" size="mini">
               <template v-slot:append>
                 <i :class="document.icon"/>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item label="文档Key" :label-width="labelWidth" required>
-            <el-input v-model="document.documentKey"/>
+            <el-input v-model="document.documentKey" size="mini"/>
           </el-form-item>
           <el-form-item label="序列" :label-width="labelWidth" required>
-            <el-input v-model="document.seq"/>
+            <el-input v-model="document.seq" size="mini"/>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="document.comment" placeholder="请输入内容"/>
+            <el-input v-model="document.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

@@ -5,7 +5,7 @@
       <h1>用户角色配置</h1>
     </div>
     <el-row>
-      <el-input v-model="queryParam.queryName" size="mini" placeholder="用户名" class="input-search-bar"/>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="用户名"/>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"></el-checkbox>
       <el-button @click="fetchData" size="mini" class="search-bar">查询</el-button>
     </el-row>
@@ -111,13 +111,13 @@ export default {
 </script>
 
 <style scoped>
-.input-search-bar {
+
+.el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
-.search-bar {
+.el-button {
   margin-left: 5px;
 }
 

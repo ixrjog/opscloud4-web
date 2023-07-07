@@ -6,16 +6,16 @@
       <el-tab-pane label="文档信息" name="base">
         <el-form :model="messageTemplate">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="messageTemplate.name" placeholder="请输入内容"/>
+            <el-input v-model="messageTemplate.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="Key" :label-width="labelWidth" required>
-            <el-input v-model="messageTemplate.msgKey" placeholder="请输入内容" readonly/>
+            <el-input v-model="messageTemplate.msgKey" placeholder="请输入内容" readonly size="mini"/>
           </el-form-item>
           <el-form-item label="消息格式" :label-width="labelWidth" required>
-            <el-input v-model="messageTemplate.msgType" placeholder="请输入内容" readonly/>
+            <el-input v-model="messageTemplate.msgType" placeholder="请输入内容" readonly size="mini"/>
           </el-form-item>
           <el-form-item label="消费者" :label-width="labelWidth" required>
-            <el-select v-model="messageTemplate.consumer" placeholder="选择">
+            <el-select v-model="messageTemplate.consumer" size="mini" placeholder="选择">
               <el-option v-for="item in consumerOptions"
                          :key="item.value"
                          :label="item.label"
@@ -23,7 +23,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="messageTemplate.comment" placeholder="请输入内容"/>
+            <el-input v-model="messageTemplate.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

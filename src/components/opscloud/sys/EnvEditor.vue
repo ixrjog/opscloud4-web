@@ -4,20 +4,20 @@
              :visible.sync="formStatus.visible">
     <el-form :model="env">
       <el-form-item label="环境名称" :label-width="labelWidth" prop="envName" required>
-        <el-input v-model="env.envName" placeholder="请输入内容"/>
+        <el-input v-model="env.envName" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="类型值" :label-width="labelWidth" prop="envType" required>
         <el-input v-model="env.envType" placeholder="请输入内容"
-                  :disabled="!formStatus.operationType"/>
+                  :disabled="!formStatus.operationType" size="mini"/>
       </el-form-item>
       <el-form-item label="顺序" :label-width="labelWidth" prop="seq" required>
-        <el-input v-model="env.seq" placeholder="请输入内容"/>
+        <el-input v-model="env.seq" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="环境颜色" :label-width="labelWidth">
         <el-color-picker v-model="env.color"/>
       </el-form-item>
       <el-form-item label="终端提示色" :label-width="labelWidth" required>
-        <el-select v-model="env.promptColor" placeholder="选择类型">
+        <el-select v-model="env.promptColor" size="mini" placeholder="选择类型">
           <el-option v-for="item in promptColorOptions"
                      :key="item.value"
                      :label="item.label"
@@ -27,7 +27,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="有效" :label-width="labelWidth" required>
-        <el-select v-model="env.isActive" placeholder="选择类型">
+        <el-select v-model="env.isActive" size="mini" placeholder="选择类型">
           <el-option v-for="item in activeOptions"
                      :key="item.value"
                      :label="item.label"
@@ -36,7 +36,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="env.comment" placeholder="请输入内容"/>
+        <el-input v-model="env.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

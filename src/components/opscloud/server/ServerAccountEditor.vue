@@ -4,10 +4,10 @@
              :visible.sync="formStatus.visible">
     <el-form :model="serverAccount">
       <el-form-item label="用户名" :label-width="labelWidth">
-        <el-input v-model="serverAccount.username" placeholder="请输入内容"/>
+        <el-input v-model="serverAccount.username" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="账户类型" :label-width="labelWidth" required>
-        <el-select v-model="serverAccount.accountType" placeholder="选择账户类型" clearable>
+        <el-select v-model="serverAccount.accountType" size="mini" placeholder="选择账户类型" clearable>
           <el-option v-for="item in accountTypeOptions"
                      :key="item.value"
                      :label="item.label"
@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="协议类型" :label-width="labelWidth" required>
-        <el-select v-model="serverAccount.protocol" placeholder="选择协议类型" clearable>
+        <el-select v-model="serverAccount.protocol" size="mini" placeholder="选择协议类型" clearable>
           <el-option v-for="item in protocolOptions"
                      :key="item.value"
                      :label="item.label"
@@ -23,7 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="凭据" :label-width="labelWidth" required>
-        <el-select v-model="serverAccount.credentialId" filterable clearable
+        <el-select v-model="serverAccount.credentialId" size="mini" filterable clearable
                    remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential">
           <el-option v-for="item in credentialOptions" :key="item.id" :label="item.title" :value="item.id">
             <select-item :name="item.title" :comment="item.username"/>
@@ -31,7 +31,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="serverAccount.comment" placeholder="请输入内容"/>
+        <el-input v-model="serverAccount.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

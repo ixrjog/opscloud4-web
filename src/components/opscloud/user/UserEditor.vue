@@ -28,7 +28,7 @@
     </el-tabs>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleSave">确定</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>

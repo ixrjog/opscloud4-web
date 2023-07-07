@@ -4,7 +4,7 @@
              :visible.sync="formStatus.visible">
     <el-form :model="credential">
       <el-form-item label="凭据标题" :label-width="labelWidth" required>
-        <el-input v-model="credential.title" placeholder="请输入内容"/>
+        <el-input v-model="credential.title" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="凭据分类" :label-width="labelWidth" :required="true">
         <el-select v-model="credential.kind" placeholder="选择分类" @change="handleSelKind">
@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="凭据账户" :label-width="labelWidth" :required="true">
-        <el-input v-model="credential.username" placeholder="请输入内容"/>
+        <el-input v-model="credential.username" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item :label="form.credentialLabel" :label-width="labelWidth" :required="true">
         <editor v-model="credential.credential"
@@ -35,12 +35,12 @@
                 :options="options"/>
       </el-form-item>
       <el-form-item label="密码短语" :label-width="labelWidth" v-show="form.showPassphrase">
-        <el-input v-model="credential.passphrase" placeholder="请输入内容"/>
+        <el-input v-model="credential.passphrase" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleSave">确定</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>

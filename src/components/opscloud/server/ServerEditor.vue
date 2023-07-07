@@ -6,10 +6,10 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="server">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="server.name" placeholder="请输入内容"/>
+            <el-input v-model="server.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="服务器类型" :label-width="labelWidth" required>
-            <el-select v-model="server.serverType" placeholder="选择类型">
+            <el-select v-model="server.serverType" size="mini" placeholder="选择类型">
               <el-option v-for="item in serverTypeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -17,7 +17,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="服务器组" :label-width="labelWidth" required>
-            <el-select v-model="server.serverGroupId" filterable clearable
+            <el-select v-model="server.serverGroupId" size="mini" filterable clearable
                        remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup"
                        @clear="getGroup('')">
               <el-option v-for="item in serverGroupOptions"
@@ -27,7 +27,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
-            <el-select v-model="server.envType" clearable
+            <el-select v-model="server.envType" size="mini" clearable
                        remote reserve-keyword placeholder="选择环境" :remote-method="getEnv">
               <el-option v-for="item in envOptions"
                          :key="item.envType"
@@ -36,7 +36,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="系统类型" :label-width="labelWidth" required>
-            <el-select v-model="server.osType" placeholder="选择类型">
+            <el-select v-model="server.osType" size="mini" placeholder="选择类型">
               <el-option v-for="item in osTypeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -44,7 +44,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
-            <el-select v-model="server.isActive" placeholder="选择">
+            <el-select v-model="server.isActive" size="mini" placeholder="选择">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -52,19 +52,19 @@
             </el-select>
           </el-form-item>
           <el-form-item label="区" :label-width="labelWidth">
-            <el-input v-model="server.area" placeholder="请输入内容"/>
+            <el-input v-model="server.area" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="公网IP" :label-width="labelWidth">
-            <el-input v-model="server.publicIp" placeholder="请输入内容"/>
+            <el-input v-model="server.publicIp" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="私网IP" :label-width="labelWidth" required>
-            <el-input v-model="server.privateIp" placeholder="请输入内容"/>
+            <el-input v-model="server.privateIp" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="序号" :label-width="labelWidth" required>
-            <el-input v-model.number="server.serialNumber" placeholder="请输入内容"/>
+            <el-input v-model.number="server.serialNumber" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="server.comment" placeholder="请输入内容"/>
+            <el-input v-model="server.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
