@@ -90,7 +90,7 @@ const activeOptions = [{
 }]
 
 export default {
-  data() {
+  data () {
     return {
       table: {
         data: [],
@@ -122,7 +122,7 @@ export default {
     }
   },
   computed: {},
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   components: {
@@ -132,15 +132,15 @@ export default {
     ViewLog
   },
   methods: {
-    paginationCurrentChange(currentPage) {
+    paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handleAdd() {
+    handleAdd () {
       const assetSubscription = {
         id: '',
         instanceUuid: '',
@@ -154,12 +154,12 @@ export default {
       this.formStatus.config.operationType = true
       this.formStatus.config.visible = true
     },
-    handleRowEdit(row) {
+    handleRowEdit (row) {
       this.$refs.assetSubscriptionEditor.initData(Object.assign({}, row))
       this.formStatus.config.operationType = false
       this.formStatus.config.visible = true
     },
-    handleRowDel(row) {
+    handleRowDel (row) {
       DELETE_ASSET_SUBSCRIPTION_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功')
@@ -170,18 +170,18 @@ export default {
      * 发布
      * @param row
      */
-    handleRowPublish(row) {
+    handleRowPublish (row) {
       this.table.loading = true
       PUBLISH_ASSET_SUBSCRIPTION_BY_ID(row.id)
         .then(res => {
           this.table.loading = false
         })
     },
-    handleRowLog(row) {
+    handleRowLog (row) {
       this.$refs.viewLog.initData(row.lastSubscriptionLog, row.ago)
       this.formStatus.log.visible = true
     },
-    fetchData() {
+    fetchData () {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,

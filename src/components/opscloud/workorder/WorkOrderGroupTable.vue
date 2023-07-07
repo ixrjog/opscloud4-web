@@ -1,10 +1,10 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
-      <el-input v-model="queryParam.name" placeholder="名称"/>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd">新增</el-button>
+    <el-row>
+      <el-input v-model="queryParam.name" size="mini" placeholder="名称"/>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handleAdd" size="mini">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

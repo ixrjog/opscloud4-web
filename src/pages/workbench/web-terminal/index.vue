@@ -53,7 +53,7 @@ import TerminalLayout from '../../../components/opscloud/terminal/TerminalLayout
 import { mapState } from 'vuex'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
-import DocumentZone from "@/components/opscloud/sys/DocumentZone.vue";
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   name: 'web-terminal',
@@ -201,7 +201,7 @@ export default {
      * isNotify : boolean
      * }
      * 单个终端退出
-     * @param id
+     * @param serverNode
      */
     handleLogoutByServerNode (serverNode) {
       this.terminalLayout.serverNodes = this.terminalLayout.serverNodes.filter(function (n) {

@@ -81,9 +81,7 @@
 <script>
 
 // API
-import {QUERY_TEMPLATE_PAGE, ADD_TEMPLATE, UPDATE_TEMPLATE} from '@/api/modules/template/template.api.js'
-import {QUERY_ENV_PAGE} from '@/api/modules/sys/sys.env.api.js'
-import SelectItem from '@/components/opscloud/common/SelectItem'
+import { QUERY_TEMPLATE_PAGE, ADD_TEMPLATE, UPDATE_TEMPLATE } from '@/api/modules/template/template.api.js'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
 const options = {
@@ -107,7 +105,7 @@ const keyOptions = [{
 ]
 
 export default {
-  data() {
+  data () {
     return {
       activeName: 'base',
       labelWidth: '150px',
@@ -119,18 +117,17 @@ export default {
         ok: false,
         creating: false
       },
-      style: {height: '400px'}
+      style: { height: '400px' }
     }
   },
   name: 'TemplateEditor',
   props: ['formStatus', 'instanceTypeOptions', 'envOptions'],
   components: {
     MyHighlight,
-    SelectItem,
     editor: require('vue2-ace-editor')
   },
   mixins: [],
-  mounted() {
+  mounted () {
   },
   methods: {
     editorInit: function () {
@@ -142,7 +139,7 @@ export default {
       // snippet
       require('brace/snippets/yaml')
     },
-    getTemplate(name) {
+    getTemplate (name) {
       if (this.queryParam.envType === '') return
       const requestBody = {
         queryName: name,
@@ -156,10 +153,10 @@ export default {
           this.templateOptions = res.body.data
         })
     },
-    handleChangeInstanceType() {
+    handleChangeInstanceType () {
 
     },
-    initData(template) {
+    initData (template) {
       this.activeName = 'base'
       this.button = {
         editing: false,
@@ -168,10 +165,10 @@ export default {
       }
       this.template = template
     },
-    handleEditing() {
+    handleEditing () {
       this.button.editing = true
     },
-    handleUpdate() {
+    handleUpdate () {
       this.button.ok = true
       UPDATE_TEMPLATE(this.template).then(() => {
         this.$message.success('保存成功!')
@@ -181,7 +178,7 @@ export default {
         this.button.ok = false
       })
     },
-    handleAdd() {
+    handleAdd () {
       this.button.creating = true
       ADD_TEMPLATE(this.template).then((res) => {
         this.template = res.body

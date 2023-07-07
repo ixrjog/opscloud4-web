@@ -1,16 +1,16 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
-      <el-input v-model="queryParam.name" placeholder="名称"/>
-      <el-select v-model.trim="queryParam.workOrderGroupId" filterable clearable
+    <el-row>
+      <el-input v-model="queryParam.name" size="mini" placeholder="名称"/>
+      <el-select v-model.trim="queryParam.workOrderGroupId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="搜索工单组" :remote-method="getGroup" @clear="fetchData">
         <el-option v-for="item in workOrderGroupOptions"
                    :key="item.id"
                    :label="item.name"
                    :value="item.id"/>
       </el-select>
-      <el-button @click="fetchData">查询</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

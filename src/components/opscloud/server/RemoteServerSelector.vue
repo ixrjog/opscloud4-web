@@ -1,16 +1,16 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字查询"/>
-      <el-select v-model.trim="queryParam.serverGroupId" filterable clearable
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="输入关键字查询"/>
+      <el-select v-model.trim="queryParam.serverGroupId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup">
         <el-option v-for="item in serverGroupOptions"
                    :key="item.id"
                    :label="item.name"
                    :value="item.id"/>
       </el-select>
-      <el-select v-model="queryParam.envType" clearable filterable
+      <el-select v-model="queryParam.envType" size="mini" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv">
         <el-option v-for="item in envOptions"
                    :key="item.id"
@@ -19,14 +19,14 @@
           <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+      <el-select v-model="queryParam.tagId" size="mini" filterable clearable remote reserve-keyword
                  placeholder="请输入关键词搜索标签" :remote-method="getTag">
         <el-option v-for="item in tagOptions"
                    :key="item.id"
                    :label="item.tagKey"
                    :value="item.id"/>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
+      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="name" label="名称" width="200">

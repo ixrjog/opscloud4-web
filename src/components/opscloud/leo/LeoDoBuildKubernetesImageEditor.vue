@@ -104,12 +104,11 @@
 <script>
 
 // API
-import {DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH} from '@/api/modules/leo/leo.build.api'
+import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
-import {QUERY_LEO_DEPLOY_DEPLOYMENT} from '@/api/modules/leo/leo.deploy.api'
+import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
-import {QUERY_RES_PROJECT_PAGE} from '@/api/modules/project/project.api'
-import util from '@/libs/util'
+import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -120,7 +119,7 @@ const options = {
 }
 
 export default {
-  data() {
+  data () {
     return {
       activeName: 'build',
       leoJob: {},
@@ -147,7 +146,7 @@ export default {
       businessType: BusinessType,
       projectOptions: [],
       options: options,
-      style: {height: '400px'},
+      style: { height: '400px' },
       buttons: {
         doBuilding: false
       }
@@ -159,7 +158,7 @@ export default {
     SelectItem
   },
   mixins: [],
-  mounted() {
+  mounted () {
   },
   methods: {
     editorInit: function () {
@@ -173,7 +172,7 @@ export default {
       require('brace/snippets/yaml')
       require('brace/snippets/xml')
     },
-    initData(leoJob) {
+    initData (leoJob) {
       this.activeName = 'build'
       this.branch = {}
       this.buttons.doBuilding = false
@@ -197,12 +196,12 @@ export default {
       this.doBuildParam.projectId = ''
       this.getProject('')
     },
-    handleClick(tab, event) {
+    handleClick (tab, event) {
       if (tab.name === 'build') {
         this.editing = false
       }
     },
-    handleChange() {
+    handleChange () {
       if (JSON.stringify(this.branchOptions) === '[]') {
         this.branch = {}
       } else {
@@ -215,13 +214,13 @@ export default {
         }
       }
     },
-    openUrl() {
+    openUrl () {
       this.formStatus.visible = false
       this.$router.push({
         path: '/project'
       })
     },
-    getLeoDeployDeployment() {
+    getLeoDeployDeployment () {
       if (!this.doBuildParam.autoDeploy) return
       if (this.doBuildParam.jobId === '') return
       const requestBody = {
@@ -236,7 +235,7 @@ export default {
           }
         })
     },
-    getProject(name) {
+    getProject (name) {
       if (this.leoJob === {}) return
       const requestBody = {
         businessType: this.businessType.APPLICATION,
@@ -257,7 +256,7 @@ export default {
           }
         })
     },
-    getBranchOptions() {
+    getBranchOptions () {
       this.branchOptionsLoading = true
       GET_BUILD_BRANCH_OPTIONS(this.getBranchOptionsParam)
         .then(res => {
@@ -266,7 +265,7 @@ export default {
           this.handleChange()
         })
     },
-    createBranch() {
+    createBranch () {
       this.branchOptionsLoading = true
       const request = {
         ref: this.doBuildParam.branch,
@@ -278,7 +277,7 @@ export default {
           this.branchOptionsLoading = false
         })
     },
-    doBuild() {
+    doBuild () {
       this.buttons.doBuilding = true
       DO_BUILD(this.doBuildParam).then(res => {
         if (res.success) {

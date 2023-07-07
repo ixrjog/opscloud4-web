@@ -57,7 +57,7 @@ import CredentialKindTag from '../../../components/opscloud/common/tag/Credentia
 import CredentialEditor from '../../../components/opscloud/sys/CredentialEditor'
 
 export default {
-  data() {
+  data () {
     return {
       title: '系统凭据配置',
       table: {
@@ -85,7 +85,7 @@ export default {
     }
   },
   computed: {},
-  mounted() {
+  mounted () {
     this.getKindOptions()
     this.fetchData()
   },
@@ -95,21 +95,21 @@ export default {
     CredentialKindTag
   },
   methods: {
-    paginationCurrentChange(currentPage) {
+    paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getKindOptions() {
+    getKindOptions () {
       GET_CREDENTIAL_KIND_OPTIONS()
         .then(res => {
           this.kindOptions = res.body.options
         })
     },
-    handlerAdd() {
+    handlerAdd () {
       const credential = {
         title: '',
         kind: 1,
@@ -124,19 +124,19 @@ export default {
       this.formStatus.credential.operationType = true
       this.formStatus.credential.visible = true
     },
-    handleRowEdit(row) {
+    handleRowEdit (row) {
       this.$refs.credentialEditor.initData(Object.assign({}, row))
       this.formStatus.credential.operationType = false
       this.formStatus.credential.visible = true
     },
-    handleRowDel(row) {
+    handleRowDel (row) {
       DELETE_CREDENTIAL_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功!')
           this.fetchData()
         })
     },
-    fetchData() {
+    fetchData () {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,
