@@ -93,7 +93,7 @@
           <active-tag :is-active="scope.row.isActive"/>
         </template>
       </el-table-column>
-      <el-table-column prop="tags" label="标签" width="200">
+      <el-table-column prop="tags" label="标签">
         <template v-slot="scope">
           <business-tags :tags="scope.row.tags"/>
         </template>

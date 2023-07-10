@@ -9,7 +9,7 @@
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
-          {{ env.envName === 'gray' ? 'sit' : env.envName }}
+          {{ env.envName }}
         </el-radio-button>
       </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable size="mini"
