@@ -197,7 +197,7 @@ export default {
         businessType: 5, // Asset
         businessId: 0,
         templateId: '',
-        envType: this.queryParam.envType === '' ? 0 : this.queryParam.envType,
+        envType: this.queryParam.envType === '' ? 1 : this.queryParam.envType,
         content: '',
         vars: '',
         comment: ''

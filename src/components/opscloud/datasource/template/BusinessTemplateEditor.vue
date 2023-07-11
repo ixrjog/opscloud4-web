@@ -17,16 +17,21 @@
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
-            <el-select v-model.trim="queryParam.envType" clearable
-                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"
-                       @change="handleChangeTemplate">
-              <el-option v-for="item in envOptions"
-                         :key="item.envType"
-                         :label="item.envName"
-                         :value="item.envType">
-                <select-item :name="item.envName" :comment="item.comment"/>
-              </el-option>
-            </el-select>
+            <el-radio-group v-model="queryParam.envType" size="mini" @change="handleChangeTemplate">
+              <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
+                {{ env.envName }}
+              </el-radio-button>
+            </el-radio-group>
+<!--            <el-select v-model.trim="queryParam.envType" clearable-->
+<!--                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"-->
+<!--                       @change="handleChangeTemplate">-->
+<!--              <el-option v-for="item in envOptions"-->
+<!--                         :key="item.envType"-->
+<!--                         :label="item.envName"-->
+<!--                         :value="item.envType">-->
+<!--                <select-item :name="item.envName" :comment="item.comment"/>-->
+<!--              </el-option>-->
+<!--            </el-select>-->
           </el-form-item>
           <el-form-item label="模板Key" :label-width="labelWidth" required>
             <el-select v-model="queryParam.templateKey" placeholder="选择类型" @change="handleChangeTemplate">
@@ -160,6 +165,7 @@ export default {
     getEnv (name) {
       const requestBody = {
         envName: name,
+        isActive: true,
         page: 1,
         length: 20
       }

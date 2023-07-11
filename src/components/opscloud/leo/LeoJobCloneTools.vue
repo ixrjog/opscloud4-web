@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <el-tabs type="border-card">
-    <el-tab-pane label="复制任务">
+    <el-tab-pane label="全环境复制">
       <el-row>
         <el-select v-model.trim="queryParam.srcApplicationId" size="mini" filterable clearable
                    remote reserve-keyword placeholder="选择源应用" :remote-method="getSrcApplication">
@@ -109,7 +109,7 @@ import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ActiveTag from '@/components/opscloud/common/tag/ActiveTag.vue'
 
 export default {
-  name: 'LeoJobToolsPage',
+  name: 'LeoJobCloneTools',
   data () {
     return {
       instance: {

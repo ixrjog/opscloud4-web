@@ -13,7 +13,9 @@
         <leo-deploy-table/>
       </el-tab-pane>
       <el-tab-pane label="配置工具" name="tools">
-        <leo-job-tools-page/>
+        <leo-job-clone-tools/>
+        <div style="height: 5px"/>
+        <leo-job-one-clone-tools/>
       </el-tab-pane>
       <el-tab-pane label="帮助文档" name="docs">
         <document-zone mount-zone="LEO_MGMT"/>
@@ -27,8 +29,9 @@
 import LeoJobTable from '@/components/opscloud/leo/LeoJobTable'
 import LeoBuildTable from '@/components/opscloud/leo/LeoBuildTable'
 import LeoDeployTable from '@/components/opscloud/leo/LeoDeployTable.vue'
-import LeoJobToolsPage from '@/components/opscloud/leo/LeoJobToolsPage.vue'
 import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
+import LeoJobCloneTools from '@/components/opscloud/leo/LeoJobCloneTools.vue'
+import LeoJobOneCloneTools from '@/components/opscloud/leo/LeoJobOneCloneTools.vue'
 
 export default {
   name: 'leoJob',
@@ -43,7 +46,8 @@ export default {
     LeoJobTable,
     LeoBuildTable,
     LeoDeployTable,
-    LeoJobToolsPage,
+    LeoJobCloneTools,
+    LeoJobOneCloneTools,
     DocumentZone
   },
   methods: {}

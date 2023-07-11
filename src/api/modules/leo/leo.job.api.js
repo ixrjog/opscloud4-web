@@ -105,3 +105,11 @@ export function CLONE_LEO_JOB (data) {
     data
   })
 }
+
+export function CLONE_LEO_ONE_JOB (data) {
+  return request({
+    url: baseUrl + '/one/clone',
+    method: 'post',
+    data
+  })
+}
