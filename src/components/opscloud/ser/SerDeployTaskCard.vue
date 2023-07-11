@@ -43,22 +43,7 @@
       {{ application.name }} - {{ application.comment }}
     </el-divider>
     <el-row v-if="JSON.stringify(currentSerList) !== '[]'" style="margin-top: 10px">
-      <div class="serCardDiv">
-        <el-card v-for="ser in currentSerList" class="serCard" :style="isLastHalfHour(ser)">
-          <p>包名
-            <span>{{ ser.serName }}</span>
-          </p>
-          <p>MD5
-            <span>{{ ser.serMd5 }}</span>
-          </p>
-          <p>大小
-            <span>{{ ser.serSize }}</span>
-          </p>
-          <p>最后更新时间
-            <span>{{ ser.lastModified }}</span>
-          </p>
-        </el-card>
-      </div>
+      <ser-simple-card current-ser-list="currentSerList"></ser-simple-card>
     </el-row>
     <el-row :gutter="10">
       <el-col :span="8">
@@ -258,6 +243,7 @@ import mySpan from '@/components/opscloud/common/MySpan'
 import util from '@/libs/util'
 import UserTag from '@/components/opscloud/common/tag/UserTag'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
+import SerSimpleCard from '@/components/opscloud/ser/SerSimpleCard'
 
 const activeOptions = [{
   value: true,
@@ -322,7 +308,8 @@ export default {
     UserTag,
     SelectItem,
     SerDeployTaskEditor,
-    mySpan
+    mySpan,
+    SerSimpleCard
   },
   mounted () {
     this.getEnv()
@@ -420,6 +407,7 @@ export default {
       GET_SER_DEPLOY_TASK_BY_UUID({ taskUuid: this.serDeployTaskUuid })
         .then(({ body }) => {
           this.taskItemList = body.taskItemList
+          this.subTaskList = body.subTaskList
         })
     },
     handlerRowEdit (row) {
