@@ -6,15 +6,12 @@
         <el-col :span="colSpan">
           <el-card shadow="hover" body-style="padding: 2px" style="margin-right: 10px;margin-bottom: 10px">
             <div slot="header" class="clearfix" style="height: 15px">
-              <span>
-                <el-tag size="mini">{{ server.label }}</el-tag>
-              </span>
+              <el-tag size="mini">{{ server.label }}</el-tag>
               <env-tag :env="server.env" class="env"/>
               <business-tags v-if="server.tags !== null" :tags="server.tags" style="margin-left: 10px"/>
-              <el-button type="text" v-if="server.document !== null"
-                         style="margin-left: 10px"
+              <el-button type="text" v-if="server.document !== null" style="padding: 3px 0; margin-left: 5px"
                          @click="handleRead(server)">
-                <i class="fab fa-creative-commons-share"></i>
+                <i class="fab fa-creative-commons-share"/>
               </el-button>
               <el-tooltip class="item" effect="light" content="登出" placement="top-start">
                 <el-button style="float: right; padding: 3px 0" type="text"
@@ -267,6 +264,7 @@ export default {
 </script>
 
 <style scoped>
+
 .env {
   margin-left: 5px;
 }

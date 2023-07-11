@@ -201,7 +201,6 @@ export default {
   height: 40px;
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 

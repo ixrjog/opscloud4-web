@@ -20,10 +20,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .userAvatar {
   display: flex;
   .el-avatar {
     margin-right: 3px;
   }
 }
+
 </style>

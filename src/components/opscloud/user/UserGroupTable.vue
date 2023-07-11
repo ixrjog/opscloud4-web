@@ -2,9 +2,9 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd">新建</el-button>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="输入关键字模糊查询"/>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handleAdd" size="mini">新建</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">

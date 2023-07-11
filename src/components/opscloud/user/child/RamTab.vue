@@ -1,10 +1,10 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row>
       <el-form label-width="100px">
         <el-form-item label="阿里云实例">
-          <el-select v-model="dsInstance" filterable placeholder="选择阿里云实例" style="width: 300px"
+          <el-select v-model="dsInstance" size="mini" filterable placeholder="选择阿里云实例" style="width: 300px"
                      value-key="id" @change="selInstance">
             <el-option v-for="item in dsInstanceOptions"
                        :key="item.id"
@@ -13,12 +13,12 @@
               <select-item :name="item.instanceType" :comment="item.instanceName"/>
             </el-option>
           </el-select>
-          <el-button @click="handleAddRamUser" :disabled="!button.create.disabled" :loading="button.create.creating">
+          <el-button size="mini" @click="handleAddRamUser" :disabled="!button.create.disabled" :loading="button.create.creating">
             新建
           </el-button>
         </el-form-item>
         <el-form-item label="RAM策略">
-          <el-select v-model.trim="policy" filterable clearable style="width: 300px" :disabled="dsInstance === null"
+          <el-select v-model.trim="policy" size="mini" filterable clearable style="width: 300px" :disabled="dsInstance === null"
                      remote reserve-keyword placeholder="选择RAM策略" value-key="id" :remote-method="getAsset">
             <el-option v-for="item in policyOptions"
                        :key="item.id"
@@ -28,7 +28,7 @@
               <select-item :name="item.name" :comment="item.description"/>
             </el-option>
           </el-select>
-          <el-button @click="handleGrantPolicy" :disabled="policy === null" :loading="button.grant.granting">授权
+          <el-button size="mini" @click="handleGrantPolicy" :disabled="policy === null" :loading="button.grant.granting">授权
           </el-button>
         </el-form-item>
       </el-form>

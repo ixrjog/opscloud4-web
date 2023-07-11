@@ -6,10 +6,10 @@
       <el-tab-pane label="项目配置" name="config">
         <el-form :model="project" label-width="150px">
           <el-form-item label="项目名称" required>
-            <el-input v-model="project.name" placeholder="请输入内容"/>
+            <el-input v-model="project.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="项目Key" :required="true" v-if="false">
-            <el-input v-model="project.projectKey" placeholder="请输入内容">
+            <el-input v-model="project.projectKey" placeholder="请输入内容" size="mini">
               <template v-slot:append>
                 <el-button size="mini" type="primary" @click="handleBuildKey">
                   <i class="fa fa-arrow-up" aria-hidden="true"/>
@@ -34,7 +34,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="有效" required>
-            <el-select v-model="project.isActive" placeholder="选择" style="width: 220px;">
+            <el-select v-model="project.isActive" size="mini" placeholder="选择" style="width: 220px;">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -43,16 +43,16 @@
           </el-form-item>
           <el-form-item label="开始时间" required>
             <div class="block">
-              <el-date-picker v-model="project.startTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"/>
+              <el-date-picker v-model="project.startTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" size="mini"/>
             </div>
           </el-form-item>
           <el-form-item label="结束时间">
             <div class="block">
-              <el-date-picker v-model="project.endTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd"/>
+              <el-date-picker v-model="project.endTime" type="date" placeholder="选择日期" value-format="yyyy-MM-dd" size="mini"/>
             </div>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="project.comment" placeholder="请输入内容"></el-input>
+            <el-input v-model="project.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
@@ -64,7 +64,7 @@
         <el-col :span="10">
           <el-form :model="queryParam" label-width="80px">
             <el-form-item label="业务类型">
-              <el-select v-model="queryParam.businessType" filterable placeholder="选择绑定资源业务类型"
+              <el-select v-model="queryParam.businessType" size="mini" filterable placeholder="选择绑定资源业务类型"
                          @change="handleSelectBusinessType">
                 <el-option v-for="item in businessTypeOptions"
                            :key="item.value"
@@ -73,7 +73,7 @@
               </el-select>
             </el-form-item>
             <el-form-item v-if="queryParam.businessType === businessType.ASSET" label="资源实例">
-              <el-select v-model="queryParam.dsInstance" filterable placeholder="选择资源实例"
+              <el-select v-model="queryParam.dsInstance" size="mini" filterable placeholder="选择资源实例"
                          value-key="id" @change="getAssetType">
                 <el-option v-for="item in dsInstanceOptions"
                            :key="item.id"
@@ -87,7 +87,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="选择项目">
-              <el-select v-model="queryParam.assetId" filterable :disabled="queryParam.businessType === ''"
+              <el-select v-model="queryParam.assetId" size="mini" filterable :disabled="queryParam.businessType === ''"
                          clearable remote reserve-keyword placeholder="关键字搜索资源"
                          :remote-method="getDevOpsProjectResource"
                          @change="getResource('')">
@@ -100,7 +100,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="资源类型">
-              <el-select v-model="queryParam.assetType" :disabled="queryParam.assetId === ''" clearable
+              <el-select v-model="queryParam.assetType" size="mini" :disabled="queryParam.assetId === ''" clearable
                          @change="getResource('')" placeholder="选择资源类型">
                 <el-option v-for="item in assetTypeOptions"
                            :key="item.id"
@@ -111,7 +111,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="绑定资源">
-              <el-select v-model="queryParam.resource" filterable clearable value-key="businessId"
+              <el-select v-model="queryParam.resource" size="mini" filterable clearable value-key="businessId"
                          :disabled="queryParam.assetType === ''"
                          remote reserve-keyword placeholder="关键字搜索资源" :remote-method="getResource">
                 <el-option v-for="item in resOptions"
@@ -149,7 +149,7 @@
         <el-col :span="10">
           <el-form :model="bindAppParam">
             <el-form-item label="应用">
-              <el-select v-model="bindAppParam.application" filterable value-key="id"
+              <el-select v-model="bindAppParam.application" size="mini" filterable value-key="id"
                          remote reserve-keyword placeholder="选择要绑定的应用" :remote-method="getApplication">
                 <el-option v-for="item in applicationOptions"
                            :key="item.id"

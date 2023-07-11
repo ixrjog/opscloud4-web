@@ -6,10 +6,10 @@
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="数据源信息" name="dsInfo">
           <el-form-item label="名称" :label-width="labelWidth" required>
-            <el-input v-model="datasourceConfig.name" placeholder="请输入内容"/>
+            <el-input v-model="datasourceConfig.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="数据源类型" :label-width="labelWidth" required>
-            <el-select v-model="datasourceConfig.dsType" placeholder="选择类型">
+            <el-select v-model="datasourceConfig.dsType" size="mini" placeholder="选择类型">
               <el-option v-for="item in dsTypeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -18,16 +18,16 @@
             </el-select>
           </el-form-item>
           <el-form-item label="分类" :label-width="labelWidth" required>
-            <el-input v-model="datasourceConfig.kind" placeholder="请输入内容"/>
+            <el-input v-model="datasourceConfig.kind" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="数据源接入点" :label-width="labelWidth">
-            <el-input v-model="datasourceConfig.dsUrl" placeholder="请输入内容(url或接入点)"/>
+            <el-input v-model="datasourceConfig.dsUrl" placeholder="请输入内容(url或接入点)" size="mini"/>
           </el-form-item>
           <el-form-item label="版本" :label-width="labelWidth">
-            <el-input v-model="datasourceConfig.version" placeholder="请输入内容"/>
+            <el-input v-model="datasourceConfig.version" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="有效" :label-width="labelWidth" required>
-            <el-select v-model="datasourceConfig.isActive" placeholder="选择类型">
+            <el-select v-model="datasourceConfig.isActive" size="mini" placeholder="选择类型">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -35,12 +35,12 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="datasourceConfig.comment" placeholder="请输入内容"/>
+            <el-input v-model="datasourceConfig.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane label="数据源属性" name="dsProps">
           <el-form-item label="凭据配置" label-position="top">
-            <el-select v-model.trim="credential" value-key="id" filterable clearable
+            <el-select v-model.trim="credential" size="mini" value-key="id" filterable clearable
                        remote reserve-keyword placeholder="输入关键词搜索凭据" :remote-method="getCredential"
                        style="width: 300px">
               <el-option v-for="item in credentialOptions"

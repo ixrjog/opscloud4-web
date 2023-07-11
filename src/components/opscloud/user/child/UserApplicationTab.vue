@@ -1,8 +1,8 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-select v-model.trim="applicationId" clearable filterable
+    <el-row>
+      <el-select v-model.trim="applicationId" size="mini" clearable filterable
                  remote reserve-keyword placeholder="选择要授权的应用" :remote-method="getApplication">
         <el-option v-for="item in applicationOptions"
                    :key="item.id"
@@ -13,12 +13,13 @@
       </el-button>
     </el-row>
     <el-divider></el-divider>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-input v-model="queryParam.queryName" placeholder="名称"/>
-      <el-button @click="fetchData">查询</el-button>
+    <el-row>
+      <el-input v-model="queryParam.queryName" placeholder="名称" size="mini"/>
+      <el-button size="mini" @click="fetchData">查询</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称"></el-table-column>
+      <el-table-column prop="name" label="名称"/>
       <el-table-column prop="userPermission.roleName" label="角色">
         <template v-slot="scope">
           <el-tag size="mini" :type=" scope.row.userPermission.permissionRole === 'admin' ? 'danger' :'info'">
@@ -26,7 +27,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述"></el-table-column>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="200">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowSet(scope.row)">

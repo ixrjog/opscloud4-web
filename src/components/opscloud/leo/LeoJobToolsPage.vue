@@ -2,8 +2,8 @@
 <template>
   <el-tabs type="border-card">
     <el-tab-pane label="复制任务">
-      <el-row :gutter="24" style="margin-left: 0">
-        <el-select v-model.trim="queryParam.srcApplicationId" filterable clearable
+      <el-row>
+        <el-select v-model.trim="queryParam.srcApplicationId" size="mini" filterable clearable
                    remote reserve-keyword placeholder="选择源应用" :remote-method="getSrcApplication">
           <el-option v-for="item in srcApplicationOptions"
                      :key="item.id"
@@ -12,7 +12,7 @@
             <select-item :name="item.name" :comment="item.comment"/>
           </el-option>
         </el-select>
-        <el-select v-model.trim="queryParam.destApplicationId" filterable clearable @change="fetchData"
+        <el-select v-model.trim="queryParam.destApplicationId" size="mini" filterable clearable @change="fetchData"
                    remote reserve-keyword placeholder="选择目标应用" :remote-method="getDestApplication">
           <el-option v-for="item in destApplicationOptions"
                      :key="item.id"
@@ -21,10 +21,10 @@
             <select-item :name="item.name" :comment="item.comment"/>
           </el-option>
         </el-select>
-        <el-button @click="fetchData" :disabled="queryParam.destApplicationId === ''" plain size="mini" class="button">
+        <el-button @click="fetchData" size="mini" :disabled="queryParam.destApplicationId === ''" plain class="button">
           查询
         </el-button>
-        <el-button @click="handleClone" type="primary" plain size="mini"
+        <el-button @click="handleClone" size="mini" type="primary" plain
                    :disabled="queryParam.srcApplicationId === '' || queryParam.destApplicationId === ''" class="button">
           复制
         </el-button>

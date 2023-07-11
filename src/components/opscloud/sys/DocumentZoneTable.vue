@@ -1,15 +1,15 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
-      <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" placeholder="输入关键字查询"/>
+      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="有效" @change="fetchData">
         <el-option v-for="item in activeOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
+      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">

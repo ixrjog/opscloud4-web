@@ -2,15 +2,15 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字查询"/>
-      <el-select v-model="queryParam.serverGroupId" filterable clearable
+      <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" placeholder="输入关键字查询"/>
+      <el-select v-model="queryParam.serverGroupId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="搜索服务器组" :remote-method="getGroup" @change="fetchData">
         <el-option v-for="item in serverGroupOptions"
                    :key="item.id"
                    :label="item.name"
                    :value="item.id"/>
       </el-select>
-      <el-select v-model="serverGroupTypeId" filterable clearable
+      <el-select v-model="serverGroupTypeId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType"
                  @change="getGroup('')">
         <el-option v-for="item in groupTypeOptions"
@@ -20,7 +20,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.envType" clearable filterable
+      <el-select v-model="queryParam.envType" size="mini" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv" @change="fetchData">
         <el-option v-for="item in envOptions"
                    :key="item.id"
@@ -29,34 +29,34 @@
           <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.isActive" clearable placeholder="有效" @change="fetchData">
+      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="有效" @change="fetchData">
         <el-option v-for="item in activeOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-select v-model="queryParam.serverStatus" clearable placeholder="状态" v-if="false">
+      <el-select v-model="queryParam.serverStatus" size="mini" clearable placeholder="状态" v-if="false">
         <el-option v-for="item in serverStatusOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+      <el-select v-model="queryParam.tagId" size="mini" filterable clearable remote reserve-keyword
                  placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
         <el-option v-for="item in tagOptions"
                    :key="item.id"
                    :label="item.tagKey"
                    :value="item.id"/>
       </el-select>
-      <el-select v-model="queryParam.monitorStatus" clearable placeholder="监控状态">
+      <el-select v-model="queryParam.monitorStatus" size="mini" clearable placeholder="监控状态">
         <el-option v-for="item in serverMonitorStatusOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
-      <el-button @click="handleScanMonitor" class="button">扫描监控</el-button>
+      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
+      <el-button @click="handleAdd" size="mini" class="button">新增</el-button>
+      <el-button @click="handleScanMonitor" size="mini" class="button">扫描监控</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">

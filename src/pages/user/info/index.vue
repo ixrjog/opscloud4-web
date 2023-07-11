@@ -2,7 +2,7 @@
 <template>
   <d2-container>
     <el-row>
-      <el-select v-model="username" filterable remote reserve-keyword placeholder="搜索用户"
+      <el-select v-model="username" size="mini" filterable remote reserve-keyword placeholder="搜索用户"
                  :remote-method="getUser" class="select" @change="getUserDetail">
         <el-option v-for="user in userOptions"
                    :key="user.username"
@@ -14,11 +14,11 @@
     </el-row>
     <h1>
       <el-avatar v-if="user.avatar !== null && user.avatar !== undefined" :src="user.avatar"
-                 :size="50"></el-avatar>
+                 :size="50"/>
     </h1>
     <el-row :gutter="24" style="margin-top: 10px" v-if="user !== null">
       <el-col :span="7">
-        <user-info :user="user" @fetchData="fetchData"></user-info>
+        <user-info :user="user" @fetchData="fetchData"/>
       </el-col>
       <el-col :span="17">
         <pubkey-info :user="user"/>

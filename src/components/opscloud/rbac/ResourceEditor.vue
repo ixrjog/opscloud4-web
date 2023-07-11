@@ -4,10 +4,10 @@
              :visible.sync="formStatus.visible">
     <el-form :model="resource">
       <el-form-item label="资源路径" :label-width="labelWidth" :required="true">
-        <el-input v-model="resource.resourceName" placeholder="请输入内容"/>
+        <el-input v-model="resource.resourceName" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="资源组" :label-width="labelWidth" :required="true">
-        <el-select v-model="resource.groupId" filterable clearable
+        <el-select v-model="resource.groupId" size="mini" filterable clearable
                    remote reserve-keyword placeholder="输入关键词搜索资源组" :remote-method="getGroup">
           <el-option v-for="item in groupOptions" :key="item.id" :label="item.groupName" :value="item.id">
             <select-item :name="item.groupName" :comment="item.comment"/>
@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="鉴权" :label-width="labelWidth" :required="true">
-        <el-select v-model="resource.needAuth" placeholder="是否鉴权">
+        <el-select v-model="resource.needAuth" size="mini" placeholder="是否鉴权">
           <el-option v-for="item in authOptions"
                      :key="item.value"
                      :label="item.label"
@@ -23,7 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="用户界面" :label-width="labelWidth" :required="true">
-        <el-select v-model="resource.ui" placeholder="用户界面">
+        <el-select v-model="resource.ui" size="mini" placeholder="用户界面">
           <el-option v-for="item in uiOptions"
                      :key="item.value"
                      :label="item.label"
@@ -31,12 +31,12 @@
         </el-select>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="resource.comment" placeholder="请输入内容"/>
+        <el-input v-model="resource.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleSave">确定</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>

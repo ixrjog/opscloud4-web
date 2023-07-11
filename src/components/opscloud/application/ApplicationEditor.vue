@@ -6,10 +6,10 @@
       <el-tab-pane label="应用配置" name="config">
         <el-form :model="application" label-width="150px">
           <el-form-item label="应用名称" required>
-            <el-input v-model="application.name" placeholder="请输入内容"/>
+            <el-input v-model="application.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item label="应用Key" :required="true">
-            <el-input v-model="application.applicationKey" placeholder="请输入内容">
+            <el-input v-model="application.applicationKey" placeholder="请输入内容" size="mini">
               <template v-slot:append>
                 <el-button size="mini" type="primary" @click="handleBuildKey">
                   <i class="fa fa-arrow-up" aria-hidden="true"/>
@@ -18,7 +18,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="有效" required>
-            <el-select v-model="application.isActive" placeholder="选择">
+            <el-select v-model="application.isActive" size="mini" placeholder="选择">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -26,7 +26,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="application.comment" placeholder="请输入内容"/>
+            <el-input v-model="application.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
           <el-form-item>
             <el-button size="mini" @click="formStatus.visible = false">取消</el-button>

@@ -1,16 +1,17 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字查询"/>
-      <el-select v-model="queryParam.finalized" clearable placeholder="完成">
+    <el-row>
+      <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" size="mini"/>
+      <el-select v-model="queryParam.finalized" size="mini" clearable placeholder="完成">
         <el-option v-for="item in taskEndOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
+      <el-button size="mini" @click="fetchData" class="button">查询</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="taskUuid" label="任务" width="400">
         <template v-slot="scope">

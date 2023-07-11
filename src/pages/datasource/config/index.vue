@@ -4,25 +4,24 @@
     <div>
       <h1>数据源配置</h1>
     </div>
-    <div style="margin-bottom: 5px">
-      <el-row :gutter="24" style="margin-bottom: 5px">
-        <el-input v-model="queryParam.queryName" placeholder="名称"/>
-        <el-select v-model="queryParam.dsType" clearable placeholder="数据源类型">
-          <el-option v-for="item in dsTypeOptions"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"/>
-        </el-select>
-        <el-select v-model="queryParam.isActive" clearable placeholder="有效">
-          <el-option v-for="item in activeOptions"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"/>
-        </el-select>
-        <el-button @click="handleAdd">新增</el-button>
-        <el-button @click="fetchData">查询</el-button>
-      </el-row>
-    </div>
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="名称"/>
+      <el-select v-model="queryParam.dsType" size="mini" clearable placeholder="数据源类型">
+        <el-option v-for="item in dsTypeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
+      </el-select>
+      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="有效">
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
+      </el-select>
+      <el-button @click="handleAdd" size="mini">新增</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+    </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="dsType" label="数据源类型" width="150">
@@ -90,7 +89,7 @@ const activeOptions = [{
 }]
 
 export default {
-  data () {
+  data() {
     return {
       table: {
         data: [],
@@ -127,7 +126,7 @@ export default {
     }
   },
   computed: {},
-  mounted () {
+  mounted() {
     this.getDsTypeOptions()
     this.fetchData()
   },
@@ -140,21 +139,21 @@ export default {
     WhetherTag
   },
   methods: {
-    paginationCurrentChange (currentPage) {
+    paginationCurrentChange(currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange (size) {
+    handleSizeChange(size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getDsTypeOptions () {
+    getDsTypeOptions() {
       GET_DATASOURCE_CONFIG_TYPE_OPTIONS()
         .then(res => {
           this.dsTypeOptions = res.body.options
         })
     },
-    handleAdd () {
+    handleAdd() {
       const dsConfig = {
         comment: null,
         credentialId: '',
@@ -173,7 +172,7 @@ export default {
       this.formStatus.config.operationType = true
       this.formStatus.config.visible = true
     },
-    handleRowRegister (row) {
+    handleRowRegister(row) {
       const datasource = {
         config: row,
         instance: {
@@ -192,12 +191,12 @@ export default {
       this.formStatus.instance.operationType = true
       this.formStatus.instance.visible = true
     },
-    handleRowEdit (row) {
+    handleRowEdit(row) {
       this.$refs.datasourceConfigEditor.initData(Object.assign({}, row))
       this.formStatus.config.operationType = false
       this.formStatus.config.visible = true
     },
-    fetchData () {
+    fetchData() {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,
@@ -216,10 +215,10 @@ export default {
 </script>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {

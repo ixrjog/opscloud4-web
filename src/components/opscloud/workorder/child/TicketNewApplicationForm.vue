@@ -3,13 +3,13 @@
   <div>
     <el-form :model="applicationData" label-width="120px">
       <el-form-item label="应用名称" required>
-        <el-input v-model="applicationData.name"/>
+        <el-input v-model="applicationData.name" size="mini"/>
         <div style="margin-top: 5px">
           <my-highlight code="Application Name Regex: [a-z][\\d0-9a-z-]{3,32}" lang="json"/>
         </div>
       </el-form-item>
       <el-form-item label="应用级别" required>
-        <el-radio-group v-model="applicationData.levelTag">
+        <el-radio-group v-model="applicationData.levelTag" size="mini">
           <el-radio-button label="A1"/>
           <el-radio-button label="A2"/>
           <el-radio-button label="A3"/>
@@ -19,7 +19,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="GitLab实例">
-        <el-select v-model="instanceUuid" filterable value-key="instanceName"
+        <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
                    style="width: 400px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
           <el-option v-for="item in dsInstanceOptions" :key="item.uuid" :label="item.instanceName" :value="item.uuid">
             <select-item :name="item.instanceName" :comment="item.instanceType"/>
@@ -27,7 +27,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="GitLab项目" required>
-        <el-select v-model="ticketEntry" filterable value-key="name"
+        <el-select v-model="ticketEntry" size="mini" filterable value-key="name"
                    style="width: 400px;" remote reserve-keyword placeholder="输入关键词搜索项目"
                    :remote-method="fetchData"
                    :loading="searchLoading" :disabled="instanceUuid === ''">
@@ -37,11 +37,11 @@
         </el-select>
       </el-form-item>
       <el-form-item label="描述" required>
-        <el-input v-model="applicationData.comment" placeholder="请输入应用描述"/>
+        <el-input v-model="applicationData.comment" size="mini" placeholder="请输入应用描述"/>
       </el-form-item>
       <el-form-item>
         <el-button plain type="primary" @click="addTicketEntry" :disabled="JSON.stringify(ticketEntry) === '{}'"
-                   :loading="buttonAdding">保存
+                   :loading="buttonAdding" size="mini">保存
         </el-button>
       </el-form-item>
     </el-form>

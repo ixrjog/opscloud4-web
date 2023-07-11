@@ -6,16 +6,16 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="workOrder" label-width="80px">
           <el-form-item label="名称" :required="true">
-            <el-input v-model="workOrder.name" placeholder="请输入工单名称"/>
+            <el-input v-model="workOrder.name" placeholder="请输入工单名称" size="mini"/>
           </el-form-item>
           <el-form-item label="类目颜色" :required="true">
             <el-color-picker v-model="workOrder.color"/>
           </el-form-item>
           <el-form-item label="Key" :required="true">
-            <el-input v-model="workOrder.workOrderKey" disabled/>
+            <el-input v-model="workOrder.workOrderKey" disabled size="mini"/>
           </el-form-item>
           <el-form-item label="群组" :required="true">
-            <el-select v-model="workOrder.workOrderGroupId" filterable remote reserve-keyword
+            <el-select v-model="workOrder.workOrderGroupId" size="mini" filterable remote reserve-keyword
                        placeholder="关键字搜索群组"
                        :remote-method="getWorkOrderGroups">
               <el-option v-for="item in workOrderGroupOptions"
@@ -25,26 +25,26 @@
             </el-select>
           </el-form-item>
           <el-form-item label="顺序" :required="true">
-            <el-input v-model.number="workOrder.seq" placeholder="请输入工单顺序"/>
+            <el-input v-model.number="workOrder.seq" placeholder="请输入工单顺序" size="mini"/>
           </el-form-item>
           <el-form-item label="图标">
-            <el-input v-model="workOrder.icon" placeholder="请输入工单图标">
+            <el-input v-model="workOrder.icon" placeholder="请输入工单图标" size="mini">
               <i slot="suffix" :class=workOrder.icon aria-hidden="true"/>
             </el-input>
           </el-form-item>
           <el-form-item label="状态" :required="true">
-            <el-radio-group v-model="workOrder.status">
-              <el-radio :label="workOrderStatus.NORMAL.type">{{ workOrderStatus.NORMAL.desc }}</el-radio>
-              <el-radio :label="workOrderStatus.DEVELOPING.type">{{ workOrderStatus.DEVELOPING.desc }}</el-radio>
-              <el-radio :label="workOrderStatus.SYS.type">{{ workOrderStatus.SYS.desc }}</el-radio>
-              <el-radio :label="workOrderStatus.INACTIVE.type">{{ workOrderStatus.INACTIVE.desc }}</el-radio>
+            <el-radio-group v-model="workOrder.status" size="mini">
+              <el-radio-button :label="workOrderStatus.NORMAL.type">{{ workOrderStatus.NORMAL.desc }}</el-radio-button>
+              <el-radio-button :label="workOrderStatus.DEVELOPING.type">{{ workOrderStatus.DEVELOPING.desc }}</el-radio-button>
+              <el-radio-button :label="workOrderStatus.SYS.type">{{ workOrderStatus.SYS.desc }}</el-radio-button>
+              <el-radio-button :label="workOrderStatus.INACTIVE.type">{{ workOrderStatus.INACTIVE.desc }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="帮助">
-            <el-input v-model.number="workOrder.docs" placeholder="只支持内部跳转"/>
+            <el-input v-model.number="workOrder.docs" placeholder="只支持内部跳转" size="mini"/>
           </el-form-item>
           <el-form-item label="描述">
-            <el-input v-model="workOrder.comment" placeholder="请输入工单描述"/>
+            <el-input v-model="workOrder.comment" placeholder="请输入工单描述" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -63,13 +63,14 @@
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleUpdate">保存</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+      <el-button size="mini" type="primary" @click="handleUpdate">保存</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
+
 import { QUERY_WORK_ORDER_GROUP_PAGE } from '@/api/modules/workorder/workorder.group.api'
 import { UPDATE_WORK_ORDER } from '@/api/modules/workorder/workorder.api'
 import workorderStatus from '@/components/opscloud/common/enums/workorder.status'

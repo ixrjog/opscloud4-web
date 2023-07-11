@@ -4,15 +4,15 @@
     <div>
       <h1>集群配置</h1>
     </div>
-    <el-row :gutter="24">
-      <el-input v-model="queryParam.tagKey" placeholder="标签关键字"/>
-      <el-select v-model="queryParam.businessType" clearable placeholder="业务类型">
+    <el-row>
+      <el-input v-model="queryParam.tagKey" size="mini" placeholder="标签关键字"/>
+      <el-select v-model="queryParam.businessType" size="mini" clearable placeholder="业务类型">
         <el-option v-for="item in businessTypeOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
+      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%" :row-class-name="tableRowClassName">
@@ -145,10 +145,10 @@ export default {
 </style>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {

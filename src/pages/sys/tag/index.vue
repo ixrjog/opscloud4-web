@@ -4,9 +4,9 @@
     <div>
       <h1>标签配置</h1>
     </div>
-    <el-row :gutter="24">
-      <el-input v-model="queryParam.tagKey" placeholder="标签关键字"/>
-      <el-select v-model="queryParam.businessType" clearable placeholder="业务类型">
+    <el-row>
+      <el-input v-model="queryParam.tagKey" size="mini" placeholder="标签关键字"/>
+      <el-select v-model="queryParam.businessType" size="mini" clearable placeholder="业务类型">
         <el-option v-for="item in businessTypeOptions"
                    :key="item.value"
                    :label="item.label"
@@ -14,8 +14,8 @@
           <select-item :name="item.label" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleAdd" class="button">新增</el-button>
+      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
+      <el-button @click="handleAdd" size="mini" class="button">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%">
@@ -155,10 +155,10 @@ export default {
 </script>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {

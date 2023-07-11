@@ -9,7 +9,7 @@
           <span v-if="node.type === 0">
             <el-form-item label="审批人" :required="true">
               <div style="display: flex">
-                <el-select v-if="ticketPhase !== null && ticketPhase === 'NEW'"
+                <el-select v-if="ticketPhase !== null && ticketPhase === 'NEW'" size="mini"
                            v-model="node.auditUser" filterable placeholder="选择审批人" value-key="id"
                            style="width: 250px; margin-right: 10px">
                   <el-option v-for="auditUser in node.auditUsers"

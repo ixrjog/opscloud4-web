@@ -4,10 +4,10 @@
              :visible.sync="formStatus.visible">
     <el-form :model="datasource">
       <el-form-item label="名称" :label-width="labelWidth" required>
-        <el-input v-model="datasource.instance.instanceName" placeholder="请输入内容"/>
+        <el-input v-model="datasource.instance.instanceName" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="数据源类型" :label-width="labelWidth" required>
-        <el-select v-model="datasource.config.dsType" placeholder="选择类型" disabled>
+        <el-select v-model="datasource.config.dsType" size="mini" placeholder="选择类型" disabled>
           <el-option v-for="item in dsTypeOptions"
                      :key="item.value"
                      :label="item.label"
@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="实例类型" :label-width="labelWidth" required>
-        <el-select v-model="datasource.instance.instanceType" placeholder="选择类型">
+        <el-select v-model="datasource.instance.instanceType" size="mini" placeholder="选择类型">
           <el-option v-for="item in instanceTypeOptions"
                      :key="item.value"
                      :label="item.label"
@@ -23,7 +23,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="有效" :label-width="labelWidth" required>
-        <el-select v-model="datasource.instance.isActive" placeholder="选择类型">
+        <el-select v-model="datasource.instance.isActive" size="mini" placeholder="选择类型">
           <el-option v-for="item in activeOptions"
                      :key="item.value"
                      :label="item.label"
@@ -31,10 +31,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="实例分类" :label-width="labelWidth">
-        <el-input v-model="datasource.instance.kind" placeholder="请输入内容"/>
+        <el-input v-model="datasource.instance.kind" placeholder="请输入内容" size="mini"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="datasource.instance.comment" placeholder="请输入内容"/>
+        <el-input v-model="datasource.instance.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

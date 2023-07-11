@@ -1,30 +1,31 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-input v-model="queryParam.username" placeholder="输入关键字查询"/>
-      <el-select v-model="queryParam.sessionType" clearable placeholder="会话类型">
+    <el-row>
+      <el-input v-model="queryParam.username"  size="mini" placeholder="输入关键字查询"/>
+      <el-select v-model="queryParam.sessionType" size="mini" clearable placeholder="会话类型">
         <el-option v-for="item in sessionTypeOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-select v-model="queryParam.serverHostname" clearable placeholder="会话实例">
+      <el-select v-model="queryParam.serverHostname" size="mini" clearable placeholder="会话实例">
         <el-option v-for="item in instanceOptions"
                    :key="item.id"
                    :label="item.name"
                    :value="item.name"/>
       </el-select>
-      <el-select v-model="queryParam.sessionClosed" clearable placeholder="会话状态">
+      <el-select v-model="queryParam.sessionClosed" size="mini" clearable placeholder="会话状态">
         <el-option v-for="item in sessionStatusOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" class="button">查询</el-button>
-      <el-button @click="handleBatchClose" class="button" :disabled="multipleSelection.length === 0">批量关闭
+      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
+      <el-button @click="handleBatchClose" size="mini" class="button" :disabled="multipleSelection.length === 0">批量关闭
       </el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" ref="multipleTable"
               @selection-change="handleSelectionChange" tooltip-effect="dark">
       <el-table-column type="selection" width="55">

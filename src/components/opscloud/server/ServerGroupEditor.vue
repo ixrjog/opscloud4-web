@@ -6,9 +6,9 @@
       <el-tab-pane label="基本信息" name="base">
         <el-form :model="serverGroup">
           <el-form-item label="名称" :label-width="labelWidth" :required="true">
-            <el-input v-model="serverGroup.name" placeholder="请输入内容"/>
+            <el-input v-model="serverGroup.name" placeholder="请输入内容" size="mini"/>
           </el-form-item>
-          <el-form-item label="组类型" :label-width="labelWidth" :required="true">
+          <el-form-item label="组类型" size="mini" :label-width="labelWidth" :required="true">
             <el-select v-model="serverGroup.serverGroupTypeId" filterable clearable
                        remote reserve-keyword placeholder="输入关键词搜组类型" :remote-method="getGroupType">
               <el-option v-for="item in groupTypeOptions"
@@ -20,7 +20,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="工单申请" :label-width="labelWidth" :required="true">
-            <el-select v-model="serverGroup.allowOrder" placeholder="选择类型">
+            <el-select v-model="serverGroup.allowOrder" size="mini" placeholder="选择类型">
               <el-option v-for="item in allowOrderOptions"
                          :key="item.value"
                          :label="item.label"
@@ -28,7 +28,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
-            <el-input v-model="serverGroup.comment" placeholder="请输入内容"/>
+            <el-input v-model="serverGroup.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
         </el-form>
       </el-tab-pane>

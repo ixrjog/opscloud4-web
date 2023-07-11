@@ -4,10 +4,10 @@
              :visible.sync="formStatus.visible">
     <el-form :model="workOrderGroup" label-width="80px">
       <el-form-item label="名称" :required="true">
-        <el-input v-model="workOrderGroup.name" placeholder="请输入工单群组名称"/>
+        <el-input v-model="workOrderGroup.name" placeholder="请输入工单群组名称" size="mini"/>
       </el-form-item>
       <el-form-item label="类型">
-        <el-select v-model="workOrderGroup.groupType">
+        <el-select v-model="workOrderGroup.groupType" size="mini">
           <el-option v-for="item in groupTypeOptions"
                      :key="item.value"
                      :label="item.label"
@@ -15,7 +15,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="顺序">
-        <el-input v-model.number="workOrderGroup.seq" placeholder="请输入工单群组顺序"/>
+        <el-input v-model.number="workOrderGroup.seq" placeholder="请输入工单群组顺序" size="mini"/>
       </el-form-item>
       <el-form-item label="图标">
         <el-input v-model="workOrderGroup.icon" placeholder="请输入工单群组图标">
@@ -23,12 +23,12 @@
         </el-input>
       </el-form-item>
       <el-form-item label="描述">
-        <el-input v-model="workOrderGroup.comment" placeholder="请输入工单群组描述"/>
+        <el-input v-model="workOrderGroup.comment" placeholder="请输入工单群组描述" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleSave">确定</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>

@@ -2,11 +2,12 @@
 <template>
   <d2-container>
     <h1>无效用户管理</h1>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0px;">
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
-      <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"/>
-      <el-button @click="fetchData">查询</el-button>
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="输入关键字模糊查询"/>
+      <el-checkbox label="过滤系统用户" size="mini" v-model="queryParam.filterTag" style="margin-left: 5px"/>
+      <el-button @click="fetchData" size="mini">查询</el-button>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column label="用户名" width="200">
         <template v-slot="scope">

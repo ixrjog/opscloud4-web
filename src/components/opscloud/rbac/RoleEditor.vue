@@ -4,17 +4,17 @@
              :visible.sync="formStatus.visible">
     <el-form :model="role">
       <el-form-item label="角色名称" :label-width="labelWidth">
-        <el-input v-model="role.roleName" placeholder="请输入内容"/>
+        <el-input v-model="role.roleName" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <el-form :model="role">
       <el-form-item label="访问级别" :label-width="labelWidth">
-        <el-input v-model="role.accessLevel" placeholder="请输入内容"/>
+        <el-input v-model="role.accessLevel" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <el-form :model="role">
       <el-form-item label="工单申请" :label-width="labelWidth">
-        <el-select v-model="role.allowOrder" placeholder="选择类型">
+        <el-select v-model="role.allowOrder" size="mini" placeholder="选择类型">
           <el-option v-for="item in allowOptions"
                      :key="item.value"
                      :label="item.label"
@@ -24,7 +24,7 @@
     </el-form>
     <el-form :model="role">
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="role.comment" placeholder="请输入内容"/>
+        <el-input v-model="role.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

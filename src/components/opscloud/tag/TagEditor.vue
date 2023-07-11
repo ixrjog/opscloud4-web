@@ -4,10 +4,10 @@
              :visible.sync="formStatus.visible">
     <el-form :model="tag">
       <el-form-item label="标签关键字" :label-width="labelWidth" required>
-        <el-input v-model="tag.tagKey" placeholder="请输入内容" :disabled="!formStatus.operationType"/>
+        <el-input v-model="tag.tagKey" placeholder="请输入内容" :disabled="!formStatus.operationType" size="mini"/>
       </el-form-item>
       <el-form-item label="标签业务类型" :label-width="labelWidth" required>
-        <el-select v-model="tag.businessType" placeholder="选择分类">
+        <el-select v-model="tag.businessType" placeholder="选择分类" size="mini">
           <el-option v-for="item in businessTypeOptions" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
@@ -15,12 +15,12 @@
         <el-color-picker v-model="tag.color"/>
       </el-form-item>
       <el-form-item label="描述" :label-width="labelWidth">
-        <el-input v-model="tag.comment" placeholder="请输入内容"/>
+        <el-input v-model="tag.comment" placeholder="请输入内容" size="mini"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" @click="handleSave">确定</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
     </div>
   </el-dialog>
 </template>

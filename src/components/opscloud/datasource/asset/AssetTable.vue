@@ -1,16 +1,17 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询"/>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handlePull">拉取</el-button>
-      <el-button @click="handleScan">扫描</el-button>
-      <el-button @click="handleDelete">删除</el-button>
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" placeholder="输入关键字模糊查询"/>
+      <el-button size="mini" @click="fetchData">查询</el-button>
+      <el-button size="mini" @click="handlePull">拉取</el-button>
+      <el-button size="mini" @click="handleScan">扫描</el-button>
+      <el-button size="mini" @click="handleDelete">删除</el-button>
       <slot name="button">
         <!--扩展字段-->
       </slot>
     </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column prop="assetId" :label="tableLayout.assetId.alias"
                        v-if="tableLayout.assetId.show !== undefined ? tableLayout.assetId.show : true"
@@ -292,6 +293,7 @@ export default {
 </script>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
@@ -300,4 +302,5 @@ export default {
 .el-button {
   margin-left: 5px;
 }
+
 </style>

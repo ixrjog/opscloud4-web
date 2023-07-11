@@ -9,7 +9,7 @@
       </el-button>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
-          {{ env.envName === 'gray' ? 'sit' : env.envName }}
+          {{ env.envName }}
         </el-radio-button>
       </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable size="mini"
@@ -22,7 +22,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-input v-model="queryParam.queryName" @change="fetchData" clearable placeholder="输入关键字查询任务名称"/>
+      <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" clearable placeholder="输入关键字查询任务名称"/>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
         <i class="fas fa-circle-notch"/>
@@ -49,7 +49,7 @@
       </el-table-column>
       <el-table-column prop="buildSize" label="Builds" width="80">
       </el-table-column>
-      <el-table-column prop="tags" label="Tags" width="200">
+      <el-table-column prop="tags" label="Tags" width="250">
         <template v-slot="scope">
           <business-tags :tags="scope.row.tags"/>
         </template>

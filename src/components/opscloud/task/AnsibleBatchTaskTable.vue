@@ -8,11 +8,11 @@
     <el-col :span="16">
       <el-card shadow="hover">
         <div slot="header" class="clearfix">
-          <span style="margin-left: 20px;font-size: 12px">任务配置</span>
+          <span>任务配置</span>
         </div>
         <el-form :model="serverTask">
           <el-form-item label="Ansible实例" :label-width="labelWidth" required>
-            <el-select v-model="dsInstance" filterable placeholder="选择Ansible实例"
+            <el-select v-model="dsInstance" size="mini" filterable placeholder="选择Ansible实例"
                        value-key="id">
               <el-option v-for="item in dsInstanceOptions"
                          :key="item.id"
@@ -23,7 +23,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="剧本" :label-width="labelWidth" required>
-            <el-select v-model.trim="playbook" filterable clearable
+            <el-select v-model.trim="playbook" size="mini" filterable clearable
                        remote reserve-keyword placeholder="搜索剧本"
                        :remote-method="getPlaybook"
                        @change="handleSelPlaybook"
@@ -34,7 +34,7 @@
                          :label="item.name"
                          :value="item"/>
             </el-select>
-            <el-button type="primary" plain size="mini" @click="handleOpenPlaybook" :disabled="playbook === ''">查看</el-button>
+            <el-button type="primary" plain size="mini" @click="handleOpenPlaybook" :disabled="playbook === ''" style="margin-left: 5px">查看</el-button>
           </el-form-item>
           <el-form-item label="变量(Vars)" :label-width="labelWidth">
             <editor v-model="serverTask.vars" @init="editorInit" lang="yaml" theme="chrome"

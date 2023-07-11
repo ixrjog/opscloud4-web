@@ -17,7 +17,8 @@
                       @handleChangeLayout="handleChangeLayout"
                       @handleResize="handleResize"/>
     </el-row>
-    <el-row :gutter="10" style="margin-top: 5px">
+    <div style="height: 5px"/>
+    <el-row :gutter="10">
       <el-col :span="8">
         <!--          服务器树-->
         <server-tree class="server-tree" ref="serverTree" v-show="terminalLayout.terminals.length === 0"/>
@@ -52,7 +53,7 @@ import TerminalLayout from '../../../components/opscloud/terminal/TerminalLayout
 import { mapState } from 'vuex'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import TerminalSettings from '@/components/opscloud/common/enums/terminal.settings.js'
-import DocumentZone from "@/components/opscloud/sys/DocumentZone.vue";
+import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   name: 'web-terminal',
@@ -200,7 +201,7 @@ export default {
      * isNotify : boolean
      * }
      * 单个终端退出
-     * @param id
+     * @param serverNode
      */
     handleLogoutByServerNode (serverNode) {
       this.terminalLayout.serverNodes = this.terminalLayout.serverNodes.filter(function (n) {

@@ -4,19 +4,18 @@
     <div>
       <h1>资产订阅配置</h1>
     </div>
-    <div style="margin-bottom: 5px">
-      <el-row :gutter="24" style="margin-bottom: 5px">
-        <el-input v-model="queryParam.queryName" placeholder="名称"/>
-        <el-select v-model="queryParam.isActive" clearable placeholder="有效">
-          <el-option v-for="item in activeOptions"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value"/>
-        </el-select>
-        <el-button @click="handleAdd">新增</el-button>
-        <el-button @click="fetchData">查询</el-button>
-      </el-row>
-    </div>
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="名称"/>
+      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="有效">
+        <el-option v-for="item in activeOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
+      </el-select>
+      <el-button @click="handleAdd" size="mini">新增</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+    </el-row>
+    <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%">
       <el-table-column prop="instance" label="实例名称" width="200">
         <template v-slot="scope">
@@ -201,10 +200,10 @@ export default {
 </script>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {

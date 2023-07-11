@@ -4,16 +4,16 @@
     <div>
       <h1>{{ title }}</h1>
     </div>
-    <el-row :gutter="24">
-      <el-input v-model="queryParam.queryName" placeholder="名称"/>
-      <el-select v-model="queryParam.kind" clearable placeholder="凭据分类">
+    <el-row>
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="名称"/>
+      <el-select v-model="queryParam.kind" size="mini" clearable placeholder="凭据分类">
         <el-option v-for="item in kindOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handlerAdd">新增</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handlerAdd" size="mini">新增</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
@@ -57,7 +57,7 @@ import CredentialKindTag from '../../../components/opscloud/common/tag/Credentia
 import CredentialEditor from '../../../components/opscloud/sys/CredentialEditor'
 
 export default {
-  data() {
+  data () {
     return {
       title: '系统凭据配置',
       table: {
@@ -85,7 +85,7 @@ export default {
     }
   },
   computed: {},
-  mounted() {
+  mounted () {
     this.getKindOptions()
     this.fetchData()
   },
@@ -95,21 +95,21 @@ export default {
     CredentialKindTag
   },
   methods: {
-    paginationCurrentChange(currentPage) {
+    paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getKindOptions() {
+    getKindOptions () {
       GET_CREDENTIAL_KIND_OPTIONS()
         .then(res => {
           this.kindOptions = res.body.options
         })
     },
-    handlerAdd() {
+    handlerAdd () {
       const credential = {
         title: '',
         kind: 1,
@@ -124,19 +124,19 @@ export default {
       this.formStatus.credential.operationType = true
       this.formStatus.credential.visible = true
     },
-    handleRowEdit(row) {
+    handleRowEdit (row) {
       this.$refs.credentialEditor.initData(Object.assign({}, row))
       this.formStatus.credential.operationType = false
       this.formStatus.credential.visible = true
     },
-    handleRowDel(row) {
+    handleRowDel (row) {
       DELETE_CREDENTIAL_BY_ID(row.id)
         .then(res => {
           this.$message.success('删除成功!')
           this.fetchData()
         })
     },
-    fetchData() {
+    fetchData () {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,
@@ -155,10 +155,10 @@ export default {
 </script>
 
 <style scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;
-  margin-left: 10px;
 }
 
 .el-select {

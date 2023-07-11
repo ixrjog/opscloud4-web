@@ -1,8 +1,8 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-left: 0">
-      <el-select v-model.trim="queryParam.applicationId" filterable clearable
+    <el-row>
+      <el-select v-model.trim="queryParam.applicationId" size="mini" filterable clearable
                  remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
                  @change="fetchData">
         <el-option v-for="item in applicationOptions"
@@ -12,7 +12,7 @@
           <select-item :name="item.name" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.envType" clearable filterable
+      <el-select v-model="queryParam.envType" size="mini" clearable filterable
                  remote reserve-keyword placeholder="输入关键词搜索环境" :remote-method="getEnv"
                  @change="fetchData">
         <el-option v-for="item in envOptions"
@@ -22,14 +22,14 @@
           <select-item :name="item.envName" :comment="item.comment"/>
         </el-option>
       </el-select>
-      <el-select v-model="queryParam.buildResult" clearable filterable placeholder="选择构建结果"
+      <el-select v-model="queryParam.buildResult" size="mini" clearable filterable placeholder="选择构建结果"
                  @change="fetchData">
         <el-option v-for="item in buildResultOptions"
                    :key="item.value"
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" class="button">刷新</el-button>
+      <el-button @click="fetchData" size="mini" class="button">刷新</el-button>
     </el-row>
     <div style="height: 5px"/>
     <div v-for="build in table.data" :key="build.id" style="font-size: 12px">

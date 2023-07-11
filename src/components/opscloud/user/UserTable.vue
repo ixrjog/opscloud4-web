@@ -2,8 +2,8 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询"/>
-      <el-select v-model="queryParam.tagId" filterable clearable remote reserve-keyword
+      <el-input v-model="queryParam.queryName" size="mini" placeholder="输入关键字模糊查询"/>
+      <el-select v-model="queryParam.tagId" size="mini" filterable clearable remote reserve-keyword
                  placeholder="请输入关键词搜索标签" :remote-method="getTag" @change="fetchData">
         <el-option v-for="item in tagOptions"
                    :key="item.id"
@@ -11,9 +11,9 @@
                    :value="item.id"/>
       </el-select>
       <el-checkbox label="过滤系统用户" v-model="queryParam.filterTag" style="margin-left: 5px"/>
-      <el-button @click="fetchData">查询</el-button>
-      <el-button @click="handleAdd">新建</el-button>
-      <el-button @click="handleSync">同步</el-button>
+      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="handleAdd" size="mini">新建</el-button>
+      <el-button @click="handleSync" size="mini">同步</el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
@@ -296,6 +296,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .el-input {
   display: inline-block;
   max-width: 200px;

@@ -3,7 +3,7 @@
   <div>
     <el-form :model="snsSubscriptionData" label-width="120px" ref="snsSubscriptionDataForm" :rules="rules">
       <el-form-item label="AWS实例">
-        <el-select v-model="instanceUuid" filterable value-key="instanceName"
+        <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
                    style="width: 250px;" placeholder="选择数据源实例" reserve-keyword>
           <el-option v-for="item in dsInstanceOptions"
                      :key="item.uuid"
@@ -14,7 +14,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="环境">
-        <el-select v-model="snsSubscriptionData.envName" filterable style="width: 250px;" placeholder="请选择环境"
+        <el-select v-model="snsSubscriptionData.envName" size="mini" filterable style="width: 250px;" placeholder="请选择环境"
                    :disabled="instanceUuid === ''" @change="regionIdChange">
           <el-option v-for="item in regionOptions"
                      :key="item.label"
@@ -25,7 +25,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="SNS 主题">
-        <el-select v-model="snsTopicEntry" filterable value-key="name"
+        <el-select v-model="snsTopicEntry" size="mini" filterable value-key="name"
                    style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索 SNS 主题"
                    :remote-method="fetchSnsTopicData" @change="snsTopicChange"
                    :disabled="snsSubscriptionData.regionId === ''">
@@ -39,7 +39,7 @@
         <span style="font-size: 10px;color: #909399">目前仅支持 Amazon SQS 协议</span>
       </el-form-item>
       <el-form-item label="SQS 队列">
-        <el-select v-model="sqsEntry" filterable value-key="name"
+        <el-select v-model="sqsEntry" size="mini" filterable value-key="name"
                    style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索 SQS 队列"
                    :remote-method="fetchSqsData" @change="sqsChange"
                    :disabled="snsSubscriptionData.topicArn === ''">
@@ -50,10 +50,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="描述" prop="remark">
-        <el-input v-model="snsSubscriptionData.remark" placeholder="请输入备注"/>
+        <el-input v-model="snsSubscriptionData.remark" placeholder="请输入备注" size="mini"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding">保存</el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
