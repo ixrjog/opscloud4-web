@@ -116,6 +116,9 @@ const keyOptions = [{
 }, {
   value: 'SERVICE',
   label: 'SERVICE'
+}, {
+  value: 'INGRESS',
+  label: 'INGRESS'
 }]
 
 export default {

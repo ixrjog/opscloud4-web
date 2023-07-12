@@ -16,7 +16,8 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="实例类型" :label-width="labelWidth" required>
-            <el-select v-model="template.instanceType" size="mini" placeholder="选择类型" @change="handleChangeInstanceType"
+            <el-select v-model="template.instanceType" size="mini" placeholder="选择类型"
+                       @change="handleChangeInstanceType"
                        :disabled="!formStatus.operationType && template.bizTemplateSize > 0">
               <el-option v-for="item in instanceTypeOptions"
                          :key="item.value"
@@ -101,8 +102,7 @@ const keyOptions = [{
 }, {
   value: 'INGRESS',
   label: 'INGRESS'
-}
-]
+}]
 
 export default {
   data () {
