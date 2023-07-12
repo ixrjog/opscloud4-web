@@ -27,10 +27,13 @@
       </el-table-column>
       <el-table-column prop="bizTemplateSize" label="使用" width="80">
       </el-table-column>
-      <el-table-column prop="env" label="实例类型/模板Key" width="170">
+      <el-table-column prop="env" label="实例类型" width="100">
         <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.instanceType }}</el-tag>
-          <br/>
+        </template>
+      </el-table-column>
+      <el-table-column prop="env" label="Key" width="100">
+        <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.templateKey }}</el-tag>
         </template>
       </el-table-column>
