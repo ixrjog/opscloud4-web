@@ -166,8 +166,9 @@ export default {
       this.serDeployTaskId = -1
       this.serDeployTaskUuid = ''
       this.serDeployTaskName = ''
-      this.envOptions = []
       this.currentSerList = []
+      this.taskItemList = []
+      this.subTaskList = []
     },
     getApplication () {
       const requestBody = {
@@ -186,6 +187,8 @@ export default {
       return JSON.stringify(this.application) === '{}'
     },
     fetchData () {
+      this.initData()
+      this.queryCurrentSer()
       this.$refs.serDeployTaskTable.initData(this.queryParam, this.application)
     },
     getEnv () {
