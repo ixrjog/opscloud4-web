@@ -11,12 +11,14 @@
             <div>
               <b>{{ version.jobName }}</b>
               <env-tag :env="version.env" style="margin-left: 10px"/>
+              <business-tags :tags="deployment.tags" style="margin-left: 10px"/>
               <span style="float: right; color: #9d9fa3">
                 <!-- 一键回滚-->
                 <el-button type="text" @click="handleRollback(deployment)"
                            :disabled="deployment.replicas === 0"
                            v-show="deployment.versionType === 'BLUE' && deployment.doDeployVersion.active">
-                  <i class="fas fa-undo-alt"/></el-button>
+                  <i class="fas fa-undo-alt"/>
+                </el-button>
                 <!-- 一键升级-->
                 <el-button type="text" @click="handleUpgrade(deployment)" :disabled="deployment.replicas === 0"
                            v-show="deployment.versionType === 'GREEN' && deployment.doDeployVersion.active">
@@ -28,10 +30,13 @@
                   <i class="fas fa-random"/>
                 </el-button>
                 <!-- 重新部署-->
-                <el-button type="text" @click="handleRedeploy(deployment)" :disabled="deployment.replicas === 0"><i
-                  class="fab fa-instalod"/></el-button>
+                <el-button type="text" @click="handleRedeploy(deployment)" :disabled="deployment.replicas === 0">
+                  <i class="fab fa-instalod"/>
+                </el-button>
                 <!-- 克隆无状态-->
-                <el-button type="text" @click="handleClone(deployment)"><i class="fas fa-clone"/></el-button>
+                <el-button type="text" @click="handleClone(deployment)">
+                  <i class="fas fa-clone"/>
+                </el-button>
               </span>
             </div>
             <div><span class="label">环境分组</span>{{ deployment.name }}</div>
@@ -68,6 +73,7 @@ import CloneDeploymentEditor from '@/components/opscloud/leo/child/CloneDeployme
 import { DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
 import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
+import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 
 export default {
   name: 'LeoDeploymentVersionDetails',
@@ -86,6 +92,7 @@ export default {
     }
   },
   components: {
+    BusinessTags,
     ContainerImageDisplay,
     CloneDeploymentEditor,
     DeploymentReplicas,

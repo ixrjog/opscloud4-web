@@ -33,6 +33,18 @@
                 </el-tag>
               </template>
             </el-table-column>
+            <el-table-column prop="properties" label="灰度发布">
+              <template v-slot="scope">
+                <el-tag size="mini" :type="scope.row.properties.isGray === 'true' ? 'success' : 'danger'">
+                  {{ scope.row.properties.isGray === 'true' ? '是' : '否' }}
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="properties" label="灰度分支">
+              <template v-slot="scope">
+                  {{ scope.row.properties.isGray === 'true' ? scope.row.properties.branchName : '' }}
+              </template>
+            </el-table-column>
             <el-table-column prop="properties" label="工单ID">
               <template v-slot="scope">{{ scope.row.properties.ticketId }}</template>
             </el-table-column>
