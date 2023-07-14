@@ -44,7 +44,7 @@
                  <deployment-name :deployment="resource.name" namespace="" :cluster="resource.instance.instanceName"/>
                  <business-tags :tags="resource.tags"/>
                  <el-tag style="margin-left: 5px" size="mini">
-                    副本
+                    Replicas
                    <deployment-replicas :replicas="resource.assetContainers.length"/>
                  </el-tag>
                  <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"/>

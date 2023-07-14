@@ -43,7 +43,8 @@
             <div><span class="label">资源限制</span>
               <deployment-resources-limits :properties="deployment.properties"/>
             </div>
-            <div><span class="label">副本数量</span>
+            <div>
+              <span class="label">副本数量</span>
               <deployment-replicas :replicas="deployment.replicas"/>
             </div>
             <div><span class="label">版本名称</span>{{ deployment.versionName }}
