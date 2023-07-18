@@ -86,3 +86,11 @@ export function GET_LATEST_LEO_DEPLOY (param) {
     params: param
   })
 }
+
+export function GET_APOLLO_RELEASE_REPORT (data) {
+  return request({
+    url: baseUrl + '/apollo/release/get',
+    method: 'post',
+    data
+  })
+}

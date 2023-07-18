@@ -5,11 +5,12 @@
       <div slot="header">
         <el-tag>{{ build.jobName }}</el-tag>
         <build-number-icon :build="build"/>
-        <span style="margin-left: 5px"><i class="far fa-clock"/>{{ build.ago }}</span>
-        <span style="margin-left: 8px"><i class="fab fa-teamspeak"/>{{
-            build.buildDetails.build.dict.displayName
-          }}</span>
-        <business-tags :tags="build.tags" style="margin-left: 5px"/>
+        <span style="margin-right: 5px"/>
+        <i class="far fa-clock"/>{{ build.ago }}
+        <span style="margin-right: 8px"/>
+        <i class="fab fa-teamspeak"/>{{ build.buildDetails.build.dict.displayName }}
+        <span style="margin-right: 5px"/>
+        <business-tags :tags="build.tags"/>
         <el-tooltip class="item" effect="light" content="停止构建" placement="top-start" v-if="!build.isFinish">
           <el-button class="btn" type="text" @click="stopBuild(build.id)" :loading="buttons.stopping">
             <i class="far fa-stop-circle"/>

@@ -4,6 +4,9 @@
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
                                datasource-nane="Apollo配置中心实例管理"/>
     <el-tabs v-model="activeName" v-if="instance.id !== null" @tab-click="handleClick">
+      <el-tab-pane label="报表" name="report">
+        <apollo-report :instanceId="instance.id" ref="apolloReport"/>
+      </el-tab-pane>
       <el-tab-pane label="应用" name="app">
         <asset-table :instanceId="instance.id" :assetType="assetType.APOLLO.APOLLO_APP"
                      :tableLayout="tableLayout.app"
@@ -18,7 +21,7 @@
           </template>
         </asset-table>
       </el-tab-pane>
-      <el-tab-pane label="配置发布" name="release">
+      <el-tab-pane label="配置发布X" name="releaseX" v-if="false">
         <asset-table :instanceId="instance.id" :assetType="assetType.APOLLO.APOLLO_INTERCEPT_RELEASE"
                      :tableLayout="tableLayout.release"
                      ref="releaseTable">
@@ -42,7 +45,7 @@
             </el-table-column>
             <el-table-column prop="properties" label="灰度分支">
               <template v-slot="scope">
-                  {{ scope.row.properties.isGray === 'true' ? scope.row.properties.branchName : '' }}
+                {{ scope.row.properties.isGray === 'true' ? scope.row.properties.branchName : '' }}
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="工单ID">
@@ -59,6 +62,9 @@
           </template>
         </asset-table>
       </el-tab-pane>
+      <el-tab-pane label="配置发布" name="release">
+        <apollo-release-table :instanceId="instance.id" ref="apolloReleaseTable"/>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -68,6 +74,8 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
+import ApolloReleaseTable from '@/components/opscloud/datasource/instance/apollo/ApolloReleaseTable.vue'
+import ApolloReport from '@/components/opscloud/datasource/instance/apollo/ApolloReport.vue'
 
 const tableLayout = {
   app: {
@@ -130,6 +138,8 @@ export default {
     this.init()
   },
   components: {
+    ApolloReport,
+    ApolloReleaseTable,
     AssetTable,
     DatasourceInstanceTitle
   },
@@ -140,7 +150,11 @@ export default {
         return
       }
       if (tab.name === 'release') {
-        this.$refs.releaseTable.fetchData()
+        this.$refs.apolloReleaseTable.fetchData()
+        return
+      }
+      if (tab.name === 'report') {
+        this.$refs.apolloReport.fetchData()
       }
     },
     init () {
@@ -159,10 +173,12 @@ export default {
 </script>
 
 <style scoped>
+
 .el-divider--horizontal {
   display: block;
   height: 1px;
   width: 100%;
   margin: 12px 0;
 }
+
 </style>
