@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row style="margin-bottom: 20px">
+    <el-row>
       <el-card class="box-card" shadow="hover">
         <div><b>Latest {{ queryParam.buildSize }} build task details</b></div>
         <el-table :data="table.build.data" style="width: 100%">
@@ -17,7 +17,7 @@
               <span>{{ scope.row.buildDetails.build.gitLab.project.sshUrl }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="buildDetails" label="构建分支" width="80">
+          <el-table-column prop="buildDetails" label="构建分支">
             <template v-slot="scope">
               <span>{{ scope.row.buildDetails.build.dict.branch }}</span>
             </template>
@@ -29,7 +29,7 @@
               <build-result :build="scope.row"/>
             </template>
           </el-table-column>
-          <el-table-column prop="tags" label="标签" width="120">
+          <el-table-column prop="tags" label="标签" width="250">
             <template v-slot="scope">
               <business-tags :tags="scope.row.tags"/>
             </template>
@@ -39,12 +39,13 @@
         </el-table>
       </el-card>
     </el-row>
+    <div style="height: 10px"/>
     <el-row>
       <el-card class="box-card" shadow="hover">
         <div><b>Latest {{ queryParam.deploySize }} deploy task details</b></div>
         <el-table :data="table.deploy.data" style="width: 100%">
-          <el-table-column prop="jobName" label="名称"></el-table-column>
-          <el-table-column prop="username" label="操作用户" width="120"></el-table-column>
+          <el-table-column prop="jobName" label="名称"/>
+          <el-table-column prop="username" label="操作用户" width="120"/>
           <el-table-column prop="deployDetails" label="环境类型" width="80">
             <template v-slot="scope">
               <span>{{ scope.row.deployDetails.deploy.dict.env }}</span>
@@ -63,16 +64,14 @@
                 cluster=""/>
             </template>
           </el-table-column>
-          <el-table-column prop="versionName" label="部署版本">
-          </el-table-column>
-          <el-table-column prop="ago" label="执行时间" width="80">
-          </el-table-column>
+          <el-table-column prop="versionName" label="部署版本"/>
+          <el-table-column prop="ago" label="执行时间" width="80"/>
           <el-table-column prop="deployResult" label="部署结果" width="120">
             <template v-slot="scope">
               <deploy-result :deploy="scope.row"/>
             </template>
           </el-table-column>
-          <el-table-column prop="tags" label="标签" width="120">
+          <el-table-column prop="tags" label="标签" width="250">
             <template v-slot="scope">
               <business-tags :tags="scope.row.tags"/>
             </template>
@@ -104,8 +103,8 @@ export default {
         fetchDataTimer: null
       },
       queryParam: {
-        buildSize: 6,
-        deploySize: 10
+        buildSize: 10,
+        deploySize: 15
       },
       table: {
         build: {
