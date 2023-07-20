@@ -34,13 +34,15 @@
       </el-button>
     </el-row>
     <!-- 任务&无状态版本详情 -->
+    <div style="height: 10px"></div>
     <el-row :gutter="20">
       <el-divider content-position="left">Task & Kubernetes Deployment Version Details
         <deploy-task-tips/>
       </el-divider>
       <!--suppress VueUnrecognizedDirective -->
-      <span v-loading="versionLoading">
-        <div v-if="versionLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
+      <span>
+        <div v-if="data.deploymentVersionDetails.length === 0" style="height: 60px; color: #909399; text-align: center"
+             v-loading="versionLoading">No Data</div>
         <leo-deployment-version-details v-if="data.deploymentVersionDetails.length > 0"
                                         :deployment-version-details="data.deploymentVersionDetails"/>
       </span>
@@ -50,18 +52,21 @@
     <el-row :gutter="20">
       <el-divider content-position="left">Latest Deployment Tasks</el-divider>
       <!--suppress VueUnrecognizedDirective -->
-      <span v-loading="deployLoading">
-        <div v-if="deployLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
+      <span>
+        <div v-if="data.deploys.length === 0" style="height: 60px; color: #909399; text-align: center"
+             v-loading="deployLoading">No Data</div>
         <el-col :span="7" style="margin-top: 10px" v-if="data.deploys.length > 0">
           <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
             <template>
-            <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
+              <el-card shadow="hover" body-style="padding: 2px" class="card">
               <div slot="header">
                 <deploy-number-icon :deploy="deploy"/>
                 <span style="margin-right: 5px"/>
                 <i class="far fa-clock"/>{{ deploy.ago }}
                 <span style="margin-right: 5px"/>
-                <i class="fab fa-teamspeak"/>{{ deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-' }}
+                <i class="fab fa-teamspeak"/>{{
+                  deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
+                }}
                 <span style="margin-right: 10px"/>
                 <business-tags :tags="deploy.tags"/>
                 <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
@@ -111,6 +116,7 @@
                 <span class="label">发布版本</span>{{ deploy.versionName === null ? '-' : deploy.versionName }}
               </div>
             </el-card>
+              <div style="height: 10px;"/>
           </template>
         </div>
       </el-col>

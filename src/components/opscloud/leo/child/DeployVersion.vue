@@ -8,7 +8,7 @@
     <!--    版本2-->
     <el-tag v-if="type === 'version2'">
       <b style="font-size: 15px; margin-right: 15px" v-if="version.versionName !== '-'">{{ version.versionName }}</b>
-      <span style="font-size: 12px">Replicas {{ version.pods.length }}/{{ replicas }}</span>
+      <span style="font-size: 12px">replicas {{ version.pods.length }}/{{ replicas }}</span>
     </el-tag>
     <span style="margin-left: 15px; font-size: 12px"><i class="fab fa-docker"/>{{ version.image }}</span>
   </div>
