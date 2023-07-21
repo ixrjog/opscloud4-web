@@ -13,7 +13,8 @@
           <b>Latest {{ queryParam.buildSize }} build task details</b>
         </div>
         <el-table :data="table.build.data" style="width: 100%">
-          <el-table-column prop="jobName" label="名称" sortable/>
+          <el-table-column prop="buildNumber" label="#" width="80"/>
+          <el-table-column prop="jobName" label="名称"/>
           <el-table-column prop="username" label="操作用户" width="120"/>
           <el-table-column prop="buildDetails" label="环境类型" width="80">
             <template v-slot="scope">
@@ -37,6 +38,7 @@
               <build-result :build="scope.row"/>
             </template>
           </el-table-column>
+          <el-table-column prop="ocInstance" label="执行实例" width="100"/>
           <el-table-column prop="isLive" label="心跳" width="80">
             <template v-slot="scope">
               <i class="fas fa-heartbeat" v-if="scope.row.isLive" style="color: #c9171f"/>
@@ -61,6 +63,7 @@
       <el-card class="box-card" shadow="hover">
         <div><b>Latest {{ queryParam.deploySize }} deploy task details</b></div>
         <el-table :data="table.deploy.data" style="width: 100%">
+          <el-table-column prop="deployNumber" label="#" width="80"/>
           <el-table-column prop="jobName" label="名称"/>
           <el-table-column prop="username" label="操作用户" width="120"/>
           <el-table-column prop="deployDetails" label="环境类型" width="80">
@@ -88,6 +91,7 @@
               <deploy-result :deploy="scope.row"/>
             </template>
           </el-table-column>
+          <el-table-column prop="ocInstance" label="执行实例" width="100"/>
           <el-table-column prop="isLive" label="心跳" width="80">
             <template v-slot="scope">
               <i class="fas fa-heartbeat" v-if="scope.row.isLive" style="color: #c9171f"/>
