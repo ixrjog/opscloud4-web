@@ -81,7 +81,7 @@
               <deployment-name
                 :deployment="scope.row.deployDetails.deploy.kubernetes.deployment !== null ? scope.row.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
                 :namespace="scope.row.deployDetails.deploy.kubernetes.deployment !== null ? scope.row.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
-                cluster=""/>
+                :cluster="scope.row.deployDetails.deploy.kubernetes.instance.name !== null ? scope.row.deployDetails.deploy.kubernetes.instance.name : 'n/a'"/>
             </template>
           </el-table-column>
           <el-table-column prop="versionName" label="部署版本"/>
