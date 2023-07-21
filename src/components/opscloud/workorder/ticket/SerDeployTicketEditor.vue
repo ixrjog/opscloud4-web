@@ -12,10 +12,23 @@
       <el-timeline>
         <el-timeline-item timestamp="工单选项" placement="top">
           <el-card shadow="hover">
-            <ticket-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
-                                   :workOrderTicketId="ticketView.ticketId"
-                                   :entryDesc="tableLayout.entryName"
-                                   @handleNotify="fetchData"/>
+            <span v-if="ticketView.ticketPhase === 'NEW'">
+              <el-select v-model="applicationId" filterable value-key="id"
+                         remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
+                         style="margin-right: 5px">
+                <el-option v-for="item in applicationOptions"
+                           :key="item.id"
+                           :label="item.name"
+                           :value="item.id">
+                  <select-item :name="item.name" :comment="item.comment"></select-item>
+                </el-option>
+              </el-select>
+              <ticket-entry-selector v-if="applicationId !== ''" style="display: inline-block"
+                                     :application-id="applicationId"
+                                     :workOrderTicketId="ticketView.ticketId"
+                                     :entryDesc="tableLayout.entryName"
+                                     @handleNotify="fetchData"/>
+            </span>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
@@ -81,10 +94,12 @@ import {
   SUBMIT_WORK_ORDER_TICKET,
   APPROVE_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
+import { QUERY_APPLICATION_PAGE } from '@/api/modules/application/application.api'
+import SelectItem from '@/components/opscloud/common/SelectItem'
 
 const TableLayout = {
   instance: false,
-  entryName: '部署Ser的应用'
+  entryName: ''
 }
 
 export default {
@@ -95,7 +110,11 @@ export default {
       approvalComment: '', // 审批说明
       submitting: false,
       saving: false,
-      approving: false
+      approving: false,
+      ticketEntryOptions: [],
+      applicationOptions: [],
+      searchLoading: false,
+      applicationId: ''
     }
   },
   name: 'ApolloTicketEditor',
@@ -105,13 +124,16 @@ export default {
     NodeView,
     TicketEntrySelector,
     TicketEntryTable,
-    WorkflowNodes
+    WorkflowNodes,
+    SelectItem
   },
   mixins: [],
   mounted () {
+    this.getApplication('')
   },
   methods: {
     initData (ticketView) {
+      this.applicationId = ''
       this.approvalComment = ''
       this.submitting = false
       this.saving = false
@@ -190,6 +212,19 @@ export default {
     closeEditor () {
       this.formStatus.visible = false
       this.$emit('close')
+    },
+    getApplication (name) {
+      const requestBody = {
+        queryName: name,
+        tagKey: 'Ser',
+        extend: false,
+        page: 1,
+        length: 10
+      }
+      QUERY_APPLICATION_PAGE(requestBody)
+        .then(({ body }) => {
+          this.applicationOptions = body.data
+        })
     },
     fetchData () {
       this.$refs.ticketEntryTable.fetchData()

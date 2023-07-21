@@ -215,6 +215,7 @@ export default {
     handleSerDeployTask (serDeployTaskUuid) {
       this.serDeployTaskUuid = serDeployTaskUuid
       this.getSerDeployTask()
+      this.queryCurrentSer()
     },
     handleAdd () {
       this.formStatus.serDeployTask.operationType = true

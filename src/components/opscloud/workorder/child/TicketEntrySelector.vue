@@ -41,6 +41,11 @@ export default {
       type: String,
       required: false,
       default: () => ''
+    },
+    applicationId: {
+      type: [String, Number],
+      required: false,
+      default: () => ''
     }
   },
   components: {
@@ -72,9 +77,11 @@ export default {
       this.searchLoading = true
       const requestBody = {
         queryName: name,
-        instanceUuid: this.instanceUuid,
         workOrderTicketId: this.workOrderTicketId,
         length: 20
+      }
+      if (this.applicationId !== '') {
+        requestBody.applicationId = this.applicationId
       }
       QUERY_WORK_ORDER_TICKET_ENTRY(requestBody)
         .then(res => {

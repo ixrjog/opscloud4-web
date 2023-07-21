@@ -22,7 +22,11 @@
                           :timestamp="subTask.createTime" placement="top">
           <el-card>
             <div slot="header" class="clearfix">
-              <el-tag>{{ subTask.env.envName }}</el-tag>
+              <el-tag style="margin-right: 5px">{{ subTask.env.envName }}</el-tag>
+              <span v-if="subTask.ticketFlag !== null">
+                <i class="fas fa-lock" v-if="!subTask.ticketFlag" style="color: #F56C6C"></i>
+                <i class="fas fa-unlock" v-if="subTask.ticketFlag" style="color: #67C23A"></i>
+              </span>
               <span style="margin-left: 5px;vertical-align: bottom" v-if="subTask.startTime">
                 <i class="far fa-clock"/>{{ subTask.ago }}</span>
               <span style="float: right;margin-left: 5px">
