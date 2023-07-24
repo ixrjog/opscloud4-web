@@ -2,7 +2,8 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询" size="mini" style="margin-right: 5px"/>
+      <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询" size="mini"
+                style="margin-right: 5px"/>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
           {{ env.envName }}
@@ -74,7 +75,6 @@ import Pagination from '../../common/page/Pagination'
 import BusinessType from '@/components/opscloud/common/enums/business.type.js'
 import BusinessTemplateEditor from '@/components/opscloud/datasource/template/BusinessTemplateEditor'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
-import SelectItem from '@/components/opscloud/common/SelectItem'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
@@ -128,7 +128,6 @@ export default {
   },
   components: {
     EnvTag,
-    SelectItem,
     BusinessTemplateEditor,
     Pagination,
     MyHighlight
@@ -142,7 +141,7 @@ export default {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getEnv(name) {
+    getEnv (name) {
       const requestBody = {
         envName: name,
         isActive: true,

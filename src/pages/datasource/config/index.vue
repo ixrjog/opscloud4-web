@@ -89,7 +89,7 @@ const activeOptions = [{
 }]
 
 export default {
-  data() {
+  data () {
     return {
       table: {
         data: [],
@@ -126,7 +126,7 @@ export default {
     }
   },
   computed: {},
-  mounted() {
+  mounted () {
     this.getDsTypeOptions()
     this.fetchData()
   },
@@ -139,21 +139,21 @@ export default {
     WhetherTag
   },
   methods: {
-    paginationCurrentChange(currentPage) {
+    paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getDsTypeOptions() {
+    getDsTypeOptions () {
       GET_DATASOURCE_CONFIG_TYPE_OPTIONS()
         .then(res => {
           this.dsTypeOptions = res.body.options
         })
     },
-    handleAdd() {
+    handleAdd () {
       const dsConfig = {
         comment: null,
         credentialId: '',
@@ -172,7 +172,7 @@ export default {
       this.formStatus.config.operationType = true
       this.formStatus.config.visible = true
     },
-    handleRowRegister(row) {
+    handleRowRegister (row) {
       const datasource = {
         config: row,
         instance: {
@@ -191,12 +191,12 @@ export default {
       this.formStatus.instance.operationType = true
       this.formStatus.instance.visible = true
     },
-    handleRowEdit(row) {
+    handleRowEdit (row) {
       this.$refs.datasourceConfigEditor.initData(Object.assign({}, row))
       this.formStatus.config.operationType = false
       this.formStatus.config.visible = true
     },
-    fetchData() {
+    fetchData () {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,

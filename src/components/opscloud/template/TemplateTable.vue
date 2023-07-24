@@ -74,9 +74,8 @@
 import {
   QUERY_TEMPLATE_PAGE, DELETE_TEMPLATE_BY_ID
 } from '@/api/modules/template/template.api.js'
-import {QUERY_ENV_PAGE} from '@/api/modules/sys/sys.env.api'
+import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import Pagination from '@/components/opscloud/common/page/Pagination'
-import SelectItem from '@/components/opscloud/common/SelectItem'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import TemplateEditor from '@/components/opscloud/template/TemplateEditor'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
@@ -94,7 +93,7 @@ const templateTypeOptions = [{
 export default {
   name: 'TemplateTable',
   props: {},
-  data() {
+  data () {
     return {
       table: {
         data: [],
@@ -122,30 +121,29 @@ export default {
         queryName: '',
         extend: true
       },
-      style: {height: '200px'}
+      style: { height: '200px' }
     }
   },
   computed: {},
-  mounted() {
+  mounted () {
     this.getEnv()
   },
   components: {
     TemplateEditor,
-    SelectItem,
     EnvTag,
     Pagination,
     MyHighlight
   },
   methods: {
-    paginationCurrentChange(currentPage) {
+    paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    getEnv(name) {
+    getEnv (name) {
       const requestBody = {
         envName: name,
         isActive: true,
@@ -157,7 +155,7 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    handleRowDel(row) {
+    handleRowDel (row) {
       this.$confirm('此操作将删除当前配置?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -171,7 +169,7 @@ export default {
         this.$message.info('已取消删除!')
       })
     },
-    handleAdd() {
+    handleAdd () {
       const template = {
         id: '',
         name: '',
@@ -187,12 +185,12 @@ export default {
       this.formStatus.template.operationType = true
       this.formStatus.template.visible = true
     },
-    handleRowEdit(row) {
+    handleRowEdit (row) {
       this.$refs.templateEditor.initData(row)
       this.formStatus.template.operationType = false
       this.formStatus.template.visible = true
     },
-    fetchData() {
+    fetchData () {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,
