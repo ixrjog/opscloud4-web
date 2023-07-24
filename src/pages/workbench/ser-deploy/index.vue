@@ -39,7 +39,7 @@
         <el-button @click="fetchData" :disabled="checkFetchData()">查询</el-button>
         <el-button @click="handleAdd" :disabled="checkFetchData()" style="margin: 0">新增</el-button>
       </el-row>
-      <el-divider content-position="left" v-if="!checkFetchData">
+      <el-divider content-position="left" v-if="!checkFetchData()">
         {{ application.name }} - {{ application.comment }}
       </el-divider>
       <el-row v-if="JSON.stringify(currentSerList) !== '[]'" style="margin-top: 10px">
