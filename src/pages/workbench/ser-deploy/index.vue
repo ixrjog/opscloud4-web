@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
     <div>
@@ -5,35 +6,30 @@
         <h1>{{ title }}</h1>
       </div>
       <el-row>
-        <el-select v-model.trim="application" filterable @change="fetchData" value-key="id"
+        <el-select v-model="application" filterable @change="fetchData" value-key="id"
                    remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication">
-          <el-option
-            v-for="item in applicationOptions"
-            :key="item.id"
-            :label="item.name"
-            :value="item">
-            <select-item :name="item.name" :comment="item.comment"></select-item>
+          <el-option v-for="item in applicationOptions"
+                     :key="item.id"
+                     :label="item.name"
+                     :value="item">
+            <select-item :name="item.name" :comment="item.comment"/>
           </el-option>
         </el-select>
         <el-input v-model="queryParam.queryName" placeholder="输入关键字查询" @change="fetchData"
-                  :disabled="checkFetchData()"/>
+                  :disabled="checkFetchData"/>
         <el-select v-model="queryParam.isActive" clearable placeholder="是否有效" @change="fetchData"
-                   :disabled="checkFetchData()">
-          <el-option
-            v-for="item in activeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+                   :disabled="checkFetchData">
+          <el-option v-for="item in activeOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
         <el-select v-model="queryParam.isFinish" clearable placeholder="是否完成" @change="fetchData"
                    :disabled="checkFetchData()">
-          <el-option
-            v-for="item in finishOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
+          <el-option v-for="item in finishOptions"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value"/>
         </el-select>
         <el-radio-group v-model="queryCurrentSerParam.envName" size="mini" @change="queryCurrentSer"
                         :disabled="checkFetchData()" style="margin-right: 5px">
@@ -52,8 +48,7 @@
       <el-row :gutter="10">
         <el-col :span="8">
           <ser-deploy-task-table ref="serDeployTaskTable"
-                                 @handleSerDeployTask="handleSerDeployTask">
-          </ser-deploy-task-table>
+                                 @handleSerDeployTask="handleSerDeployTask"/>
           <ser-deploy-task-editor ref="serDeployTaskEditor" :formStatus="formStatus.serDeployTask"
                                   @close="fetchData"></ser-deploy-task-editor>
         </el-col>
@@ -64,8 +59,7 @@
                                   :ser-deploy-task-uuid="serDeployTaskUuid"
                                   :sub-task-list="subTaskList"
                                   :task-item-list="taskItemList"
-                                  @handleSerDeployTask="handleSerDeployTask">
-            </ser-deploy-item-card>
+                                  @handleSerDeployTask="handleSerDeployTask"/>
           </el-row>
           <el-row>
             <ser-deploy-sub-task-card ref="serDeploySubTaskCard"
@@ -75,8 +69,7 @@
                                       :ser-deploy-task-uuid="serDeployTaskUuid"
                                       :sub-task-list="subTaskList"
                                       :task-item-list="taskItemList"
-                                      @handleSerDeployTask="handleSerDeployTask">
-            </ser-deploy-sub-task-card>
+                                      @handleSerDeployTask="handleSerDeployTask"/>
           </el-row>
         </el-col>
       </el-row>
