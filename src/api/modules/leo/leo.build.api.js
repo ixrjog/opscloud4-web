@@ -42,6 +42,14 @@ export function STOP_BUILD (param) {
   })
 }
 
+export function CLOSE_BUILD (param) {
+  return request({
+    url: baseUrl + '/close',
+    method: 'put',
+    params: param
+  })
+}
+
 export function UPDATE_LEO_BUILD (data) {
   return request({
     url: baseUrl + '/update',

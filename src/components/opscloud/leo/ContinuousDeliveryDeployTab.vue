@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <div>
-    <el-row :gutter="24" style="margin-bottom: 5px; margin-left: 0">
+    <el-row>
       <el-button :type="webSocketState.type" class="button" size="mini">
         <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"/>
         <i v-show="webSocketState.type === 'warning'" class="fas fa-unlink"
@@ -34,17 +34,15 @@
       </el-button>
     </el-row>
     <!-- 任务&无状态版本详情 -->
-    <!--    v-if="data.deploymentVersionDetails.length > 0"-->
+    <div style="height: 10px"></div>
     <el-row :gutter="20">
       <el-divider content-position="left">Task & Kubernetes Deployment Version Details
-        （<span><i class="far fa-square" style="color: #128ca8; margin-right: 1px"></i>Blue Version</span>、
-        <span><i class="far fa-square" style="color: #2bbe32; margin-right: 1px"></i>Green Version</span>、
-        <span><i class="far fa-square" style="color: #e56c0d; margin-right: 1px"></i>Other</span>、
-        <span><i class="far fa-square" style="color: #9d9fa3; margin-right: 1px"></i>Offline</span>）
+        <deploy-task-tips/>
       </el-divider>
       <!--suppress VueUnrecognizedDirective -->
-      <span v-loading="versionLoading">
-        <div v-if="versionLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
+      <span>
+        <div v-if="data.deploymentVersionDetails.length === 0" style="height: 60px; color: #909399; text-align: center"
+             v-loading="versionLoading">No Data</div>
         <leo-deployment-version-details v-if="data.deploymentVersionDetails.length > 0"
                                         :deployment-version-details="data.deploymentVersionDetails"/>
       </span>
@@ -54,19 +52,23 @@
     <el-row :gutter="20">
       <el-divider content-position="left">Latest Deployment Tasks</el-divider>
       <!--suppress VueUnrecognizedDirective -->
-      <span v-loading="deployLoading">
-        <div v-if="deployLoading" style="height: 60px; color: #909399; text-align: center">No Data</div>
+      <span>
+        <div v-if="data.deploys.length === 0" style="height: 60px; color: #909399; text-align: center"
+             v-loading="deployLoading">No Data</div>
         <el-col :span="7" style="margin-top: 10px" v-if="data.deploys.length > 0">
           <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
             <template>
-            <el-card shadow="hover" body-style="padding: 2px" class="card" style="margin-bottom: 10px">
+              <el-card shadow="hover" body-style="padding: 2px" class="card">
               <div slot="header">
-                <deployment-name
-                  :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
-                  :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
-                  cluster=""/>
                 <deploy-number-icon :deploy="deploy"/>
-                <span style="margin-left: 5px"><i class="far fa-clock"></i>{{ deploy.ago }}</span>
+                <span style="margin-right: 5px"/>
+                <i class="far fa-clock"/>{{ deploy.ago }}
+                <span style="margin-right: 5px"/>
+                <i class="fab fa-teamspeak"/>{{
+                  deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
+                }}
+                <span style="margin-right: 10px"/>
+                <business-tags :tags="deploy.tags"/>
                 <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
                   <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                           :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
@@ -86,28 +88,35 @@
                   </el-button>
                 </el-tooltip>
               </div>
-              <span class="label">执行时间</span>
-              <span v-show="deploy.startTime !== null && deploy.startTime !== ''"> {{
-                  deploy.startTime
-                }} - {{ deploy.endTime ? deploy.endTime : '?' }}
-              <span v-show="deploy.runtime !== null" style="margin-left: 2px">
-                <b style="color: #3b97d7"> {{ deploy.runtime }}</b></span>
-              </span>
+              <div>
+                <span class="label">执行时间</span>
+                <span v-show="deploy.startTime !== null && deploy.startTime !== ''">{{ deploy.startTime }} - {{
+                    deploy.endTime ? deploy.endTime : '?'
+                  }}
+                  <span v-show="deploy.runtime !== null" style="margin-left: 2px">
+                    <b style="color: #3b97d7"> {{ deploy.runtime }}</b>
+                  </span>
+                </span>
+              </div>
+              <div>
+                <span class="label">分组信息</span>
+                <deployment-name
+                  :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
+                  :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
+                  :cluster="deploy.deployDetails.deploy.kubernetes.instance.name !== null ? deploy.deployDetails.deploy.kubernetes.instance.name : 'n/a'"/>
+              </div>
               <div
                 v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
-                <span class="label">部署类型</span>
-                {{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
-                <business-tags :tags="deploy.tags"/>
+                <span class="label">部署类型</span>{{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
               </div>
-              <div><span class="label">部署结果</span><deploy-result style="margin-left: 5px" :deploy="deploy"/></div>
-              <div><span class="label">发布版本</span> {{
-                  deploy.versionName === null ? '-' : deploy.versionName
-                }}</div>
-              <div><span class="label">操作用户</span> {{
-                  deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
-                }}
+              <div>
+                <span class="label">部署结果</span><deploy-result :deploy="deploy"/>
+              </div>
+              <div>
+                <span class="label">发布版本</span>{{ deploy.versionName === null ? '-' : deploy.versionName }}
               </div>
             </el-card>
+              <div style="height: 10px;"/>
           </template>
         </div>
       </el-col>
@@ -122,7 +131,7 @@
             <el-tab-pane :label="data.deployDetails.versionDetails1.title">
               <deploy-version :version="data.deployDetails.versionDetails1" :type="'version1'"/>
               <span v-for="pod in data.deployDetails.versionDetails1.pods" :key="pod.name"
-                    style="font-size: 12px; display: inline-block;">
+                    style="font-size: 12px; display: inline-block">
                 <pod-version :pod="pod"/>
               </span>
             </el-tab-pane>
@@ -179,6 +188,7 @@ import {
   QUERY_MY_LEO_JOB_DEPLOY_PAGE,
   QUERY_MY_LEO_JOB_DEPLOYMENT_VERSION_DETAILS
 } from '@/api/modules/leo/leo.job.api'
+import DeployTaskTips from '@/components/opscloud/leo/child/DeployTaskTips.vue'
 
 const leaderLineOptions = {
   color: '#e56c0d',
@@ -260,6 +270,7 @@ export default {
   },
   computed: {},
   components: {
+    DeployTaskTips,
     SelectItem,
     LeoCreateDeployEditor,
     DeployResult,
@@ -588,6 +599,7 @@ export default {
 
 .label {
   color: #99a9bf;
+  margin-right: 5px;
 }
 
 .btn {

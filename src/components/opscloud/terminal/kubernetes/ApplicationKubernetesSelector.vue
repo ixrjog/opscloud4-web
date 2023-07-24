@@ -31,7 +31,8 @@
     <!--    ARMS-->
     <el-row v-if="application !== '' && application.armsTraceApp.show">
       <el-card shadow="never" class="banner">
-        <el-tag type="success" @click="openUrl(application.armsTraceApp.homeUrl)">ARMS应用实时监控服务<i class="fas fa-external-link-alt" style="margin-left: 2px"/></el-tag>
+        <el-tag type="success" @click="openUrl(application.armsTraceApp.homeUrl)">ARMS应用实时监控服务<i
+          class="fas fa-external-link-alt" style="margin-left: 2px"/></el-tag>
       </el-card>
       <div style="height: 5px"/>
     </el-row>
@@ -44,7 +45,7 @@
                  <deployment-name :deployment="resource.name" namespace="" :cluster="resource.instance.instanceName"/>
                  <business-tags :tags="resource.tags"/>
                  <el-tag style="margin-left: 5px" size="mini">
-                    副本
+                    replicas
                    <deployment-replicas :replicas="resource.assetContainers.length"/>
                  </el-tag>
                  <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"/>
@@ -109,21 +110,21 @@
 
 <script>
 
-import {QUERY_MY_APPLICATION_PAGE} from '@/api/modules/application/application.api.js'
+import { QUERY_MY_APPLICATION_PAGE } from '@/api/modules/application/application.api.js'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import PodPhaseTag from '@/components/opscloud/common/tag/PodPhaseTag'
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
-import {QUERY_ENV_PAGE} from '@/api/modules/sys/sys.env.api'
+import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import DeploymentReplicas from '@/components/opscloud/leo/child/DeploymentReplicas.vue'
 import DeploymentName from '@/components/opscloud/leo/child/DeploymentName.vue'
-import {toPodClass} from '@/filters/kubernetes.pod'
+import { toPodClass } from '@/filters/kubernetes.pod'
 import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
 import CopySpan from '@/components/opscloud/common/CopySpan.vue'
 import WebSocketAPI from '@/components/opscloud/common/enums/websocket.api.js'
 import util from '@/libs/util'
 import router from '@/router'
-import {GET_KUBERNETES_DEPLOYMENT} from '@/api/modules/kubernetes/kubernetes.api'
+import { GET_KUBERNETES_DEPLOYMENT } from '@/api/modules/kubernetes/kubernetes.api'
 import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
 
 const wsStates = {
@@ -139,7 +140,7 @@ const wsStates = {
 
 export default {
   name: 'application-kubernetes-selector',
-  data() {
+  data () {
     return {
       socket: null,
       socketURI: util.wsUrl(WebSocketAPI.KUBERNETES_DEPLOYMENT),
@@ -167,11 +168,11 @@ export default {
       loading: false
     }
   },
-  destroyed() {
+  destroyed () {
     this.exit()
   },
   watch: {},
-  mounted() {
+  mounted () {
     this.initSocket()
     this.getEnv('')
     this.getApplication('')
@@ -192,7 +193,7 @@ export default {
     toPodClass
   },
   methods: {
-    exit() {
+    exit () {
       // 销毁定时器
       clearInterval(this.timers.retrySocketTimer)
       try {
@@ -200,7 +201,7 @@ export default {
       } catch (e) {
       }
     },
-    setTimers() {
+    setTimers () {
       // retrySocket定时器
       if (this.timers.retrySocketTimer === null) {
         this.timers.retrySocketTimer = setInterval(() => {
@@ -208,7 +209,7 @@ export default {
         }, 10000)
       }
     },
-    retrySocket() {
+    retrySocket () {
       if (this.socket.readyState !== 1) {
         this.webSocketState = wsStates.fail
         try {
@@ -219,7 +220,7 @@ export default {
         this.initSocket()
       }
     },
-    initSocket() {
+    initSocket () {
       this.socket = new WebSocket(this.socketURI)
       this.socketOnClose()
       this.socketOnOpen()
@@ -227,7 +228,7 @@ export default {
       this.socketOnMessage()
       this.setTimers()
     },
-    socketOnOpen() {
+    socketOnOpen () {
       const token = util.cookies.get('token')
       if (!token || token === 'undefined') {
         this.exit()
@@ -242,25 +243,25 @@ export default {
         }
       }
     },
-    socketOnClose() {
+    socketOnClose () {
       this.socket.onclose = () => {
       }
     },
-    socketOnError() {
+    socketOnError () {
       this.socket.onerror = () => {
       }
     },
-    socketOnSend(data) {
+    socketOnSend (data) {
       this.socket.send(data)
     },
-    socketOnMessage() {
+    socketOnMessage () {
       this.socket.onmessage = (message) => {
         const messageJson = JSON.parse(message.data)
         // 消息路由
         this.processMessages(messageJson)
       }
     },
-    processMessages(msgBody) {
+    processMessages (msgBody) {
       const messageJson = msgBody
       const _this = this
       switch (messageJson.messageType) {
@@ -291,14 +292,14 @@ export default {
           break
         case 'AUTHENTICATION_FAILURE':
           this.exit()
-          router.push({name: 'login'})
+          router.push({ name: 'login' })
           break
       }
     },
-    sendMessage(message) {
+    sendMessage (message) {
       this.socketOnSend(JSON.stringify(message))
     },
-    getEnv(name) {
+    getEnv (name) {
       const requestBody = {
         envName: name,
         isActive: true,
@@ -310,7 +311,7 @@ export default {
           this.envOptions = res.body.data
         })
     },
-    getApplication(name) {
+    getApplication (name) {
       const requestBody = {
         queryName: name,
         extend: false,
@@ -322,21 +323,21 @@ export default {
           this.applicationOptions = res.body.data
         })
     },
-    handleChange() {
+    handleChange () {
       if (this.queryParam.applicationId === '') {
         this.getApplication('')
       } else {
         this.fetchData()
       }
     },
-    handleDocRead(row) {
+    handleDocRead (row) {
       this.$refs.businessDocReader.initData(Object.assign({}, row.document))
       this.formStatus.businessDoc.visible = true
     },
-    handleRemote(remoteServer) {
+    handleRemote (remoteServer) {
       this.$emit('handleRemote', remoteServer)
     },
-    handleOpenTerminalByType(resource, type) {
+    handleOpenTerminalByType (resource, type) {
       const pods = []
       for (const item of resource.assetContainers) {
         const containers = item.children.filter(e => e.checked)
@@ -374,16 +375,16 @@ export default {
       }
       this.$emit('handleOpen', loginParam)
     },
-    openUrl(url) {
+    openUrl (url) {
       window.open(url)
     },
-    handleLog(resource) {
+    handleLog (resource) {
       this.handleOpenTerminalByType(resource, 'CONTAINER_LOG')
     },
-    handleTerminal(resource) {
+    handleTerminal (resource) {
       this.handleOpenTerminalByType(resource, 'CONTAINER_TERMINAL')
     },
-    fetchData() {
+    fetchData () {
       if (this.queryParam.applicationId === '') {
         return
       }
@@ -399,8 +400,8 @@ export default {
           this.processMessages(res.body)
           this.loading = false
         }).catch(() => {
-        this.loading = false
-      })
+          this.loading = false
+        })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',
@@ -409,7 +410,7 @@ export default {
       this.sendMessage(queryMessage)
       this.application = ''
     },
-    selAllContainers(resource) {
+    selAllContainers (resource) {
       for (const assetContainer of resource.assetContainers) {
         for (const children of assetContainer.children) {
           children.checked = resource.checked
@@ -479,6 +480,7 @@ export default {
 .banner {
   position: relative;
   font-size: 12px;
+
   /deep/ .el-card__body {
     padding: 2px 2px 2px 2px;
   }

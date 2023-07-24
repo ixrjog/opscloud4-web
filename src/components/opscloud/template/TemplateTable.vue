@@ -19,7 +19,7 @@
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" width="200"></el-table-column>
+      <el-table-column prop="name" label="名称" width="200"/>
       <el-table-column prop="env" label="环境" width="80">
         <template v-slot="scope">
           <env-tag :env="scope.row.env"/>
@@ -27,10 +27,13 @@
       </el-table-column>
       <el-table-column prop="bizTemplateSize" label="使用" width="80">
       </el-table-column>
-      <el-table-column prop="env" label="实例类型/模板Key" width="170">
+      <el-table-column prop="instanceType" label="实例类型" width="120">
         <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.instanceType }}</el-tag>
-          <br/>
+        </template>
+      </el-table-column>
+      <el-table-column prop="templateKey" label="Key" width="120">
+        <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.templateKey }}</el-tag>
         </template>
       </el-table-column>
@@ -39,14 +42,14 @@
           <my-highlight :code="scope.row.content" :lang="scope.row.templateType" :myStyle="style"/>
         </template>
       </el-table-column>
-      <el-table-column prop="vars" label="自定义变量" width="350">
+      <el-table-column prop="vars" label="自定义变量">
         <template v-slot="scope">
           <my-highlight :code="scope.row.vars" :lang="scope.row.templateType" :myStyle="style"/>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="220">
         <template v-slot="scope">
-          <slot name="operation" :row="scope.row"></slot>
+          <slot name="operation" :row="scope.row"/>
           <el-button type="primary" plain size="mini"
                      @click="handleRowEdit(scope.row)">编辑
           </el-button>

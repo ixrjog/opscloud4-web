@@ -34,6 +34,14 @@ export function STOP_DEPLOY (param) {
   })
 }
 
+export function CLOSE_DEPLOY (param) {
+  return request({
+    url: baseUrl + '/close',
+    method: 'put',
+    params: param
+  })
+}
+
 export function CLONE_DEPLOY_DEPLOYMENT (data) {
   return request({
     url: baseUrl + '/deployment/clone',

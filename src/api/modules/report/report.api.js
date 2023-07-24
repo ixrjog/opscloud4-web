@@ -71,18 +71,26 @@ export function GET_LEO_PROD_REPORT () {
   })
 }
 
-export function GET_LATEST_LEO_BUILD (param) {
+export function GET_LATEST_LEO_BUILD (data) {
   return request({
     url: '/leo/latest/build/get',
-    method: 'get',
-    params: param
+    method: 'post',
+    data
   })
 }
 
-export function GET_LATEST_LEO_DEPLOY (param) {
+export function GET_LATEST_LEO_DEPLOY (data) {
   return request({
     url: '/leo/latest/deploy/get',
-    method: 'get',
-    params: param
+    method: 'post',
+    data
+  })
+}
+
+export function GET_APOLLO_RELEASE_REPORT (data) {
+  return request({
+    url: baseUrl + '/apollo/release/get',
+    method: 'post',
+    data
   })
 }

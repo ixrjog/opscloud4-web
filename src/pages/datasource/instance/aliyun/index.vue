@@ -68,7 +68,7 @@
                 </el-table-column>
                 <el-table-column label="交换机" width="350">
                   <template v-slot="scope">
-                    <el-tree :data="getVSwitches(scope.row)" accordion></el-tree>
+                    <el-tree :data="getVSwitches(scope.row)" accordion />
                   </template>
                 </el-table-column>
               </template>

@@ -21,6 +21,7 @@
     <pagination v-show="table.pagination.total !==0" :pagination="table.pagination"
                 @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"/>
+    <div style="height: 5px"/>
     <div v-for="deploy in table.data" :key="deploy.id" style="font-size: 12px">
       <template>
         <div>
@@ -28,6 +29,7 @@
         </div>
       </template>
     </div>
+    <div style="height: 5px"/>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"/>
   </el-dialog>

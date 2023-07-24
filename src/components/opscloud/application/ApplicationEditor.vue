@@ -174,17 +174,17 @@ export default {
     getAppResText (value) {
       switch (value) {
         case AppDsInstanceAssetType.GITLAB.GITLAB_GROUP:
-          return 'GitLab群组'
+          return 'GitLab group'
         case AppDsInstanceAssetType.GITLAB.GITLAB_PROJECT:
-          return 'GitLab项目'
+          return 'GitLab project'
         case AppDsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
-          return 'Kubernetes无状态'
+          return 'Kubernetes deployment'
         case 'DATASOURCE_INSTANCE':
-          return '数据源实例'
+          return 'Datasource instance'
         case 'SERVERGROUP':
-          return '服务器组'
+          return 'Server group'
         case 'SERVER':
-          return '服务器'
+          return 'Server'
         default:
           return value
       }
