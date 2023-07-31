@@ -45,7 +45,7 @@ export default {
   .serCard {
     position: relative;
     float: left;
-    max-width: 350px;
+    width: 280px;
     text-align: left;
     line-height: 1.5em;
     margin-right: 5px;
