@@ -342,7 +342,7 @@ export default {
         id: '',
         name: '',
         serverGroupId: '',
-        envType: 0,
+        envType: 1,
         publicIp: '',
         privateIp: '',
         serverType: 0,

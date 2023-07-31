@@ -27,13 +27,11 @@
             </el-select>
           </el-form-item>
           <el-form-item label="环境" :label-width="labelWidth" required>
-            <el-select v-model="server.envType" size="mini" clearable
-                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv">
-              <el-option v-for="item in envOptions"
-                         :key="item.envType"
-                         :label="item.envName"
-                         :value="item.envType"/>
-            </el-select>
+            <el-radio-group v-model="server.envType" size="mini">
+              <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
+                {{ env.envName }}
+              </el-radio-button>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label="系统类型" :label-width="labelWidth" required>
             <el-select v-model="server.osType" size="mini" placeholder="选择类型">
