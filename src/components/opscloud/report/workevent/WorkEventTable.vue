@@ -41,6 +41,7 @@
       <el-button @click="fetchData" class="button">查询</el-button>
       <el-button @click="handleAdd" class="button">新增</el-button>
     </el-row>
+    <div style="height: 10px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
       <el-table-column label="用户详情" width="200">
         <template v-slot="scope">
