@@ -86,6 +86,12 @@
           <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
+      <el-table-column prop="assetFlag" label="Asset" width="80">
+        <template v-slot="scope">
+          <i class="fab fa-font-awesome" style="color: #0da815" v-if="scope.row.assetFlag !== null && scope.row.assetFlag"/>
+          <i class="fab fa-font-awesome-alt" v-if="scope.row.assetFlag !== null && !scope.row.assetFlag"/>
+        </template>
+      </el-table-column>
       <el-table-column prop="isActive" label="有效" width="80">
         <template v-slot="scope">
           <active-tag :is-active="scope.row.isActive"/>
