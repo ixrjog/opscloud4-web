@@ -1,9 +1,8 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-row :gutter="10" style="margin-left: 5px; margin-bottom: 5px">
+  <el-row>
         <span v-for="version in deploymentVersionDetails" :key="version.jobName">
-          <el-col :span="6" v-for="deployment in version.deploymentVersions" :key="deployment.name">
-<!--            backgroundColor: deployment.versionColor-->
+          <span v-for="deployment in version.deploymentVersions" :key="deployment.name">
            <el-card style="font-size: 12px; margin-bottom: 5px"
                     :class="deployment|toDeploymentVersionClass"
                     shadow="hover">
@@ -59,7 +58,7 @@
                <div v-if="false"><span class="label">镜像地址</span>{{ deployment.image }}</div>
                <div><span class="label">镜像地址</span><container-image-display :image="deployment.image"/></div>
             </el-card>
-          </el-col>
+          </span>
         </span>
     <clone-deployment-editor :form-status="formStatus.clone" ref="cloneDeploymentEditor"/>
   </el-row>
@@ -227,18 +226,30 @@ export default {
 
 .versionBlue {
   border: 3px solid #128ca8;
+  width: 361px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .versionGreen {
   border: 3px solid #2bbe32;
+  width: 361px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .versionOther {
   border: 3px solid #e56c0d;
+  width: 361px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .versionOffline {
   border: 3px solid #9d9fa3;
+  width: 361px;
+  display: inline-block;
+  margin-right: 5px;
 }
 
 .el-icon-info {
