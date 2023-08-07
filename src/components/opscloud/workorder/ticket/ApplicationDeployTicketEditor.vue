@@ -22,7 +22,7 @@
                                 :tableLayout="tableLayout"
                                 ref="ticketEntryTable">
               <template v-slot:extend>
-                <el-table-column prop="entry" label="应用名称">
+                <el-table-column prop="entry" label="Application Name">
                   <template v-slot="scope">
                     <el-tag size="mini">{{ scope.row.entry.application.name }}</el-tag>
                   </template>
@@ -95,7 +95,7 @@ import TicketLeoBuildEntrySelector from '@/components/opscloud/workorder/child/T
 
 const TableLayout = {
   instance: false,
-  entryName: '构建版本'
+  entryName: 'Version'
 }
 
 export default {

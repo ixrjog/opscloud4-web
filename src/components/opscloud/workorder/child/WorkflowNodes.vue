@@ -7,7 +7,7 @@
           <!--节点标题-->
           <el-divider><b style="font-size: 10px;color: #909399">{{ node.name }}</b></el-divider>
           <span v-if="node.type === 0">
-            <el-form-item label="审批人" :required="true">
+            <el-form-item label="Approved By" :required="true" :label-width="labelWidth">
               <div style="display: flex">
                 <el-select v-if="ticketPhase !== null && ticketPhase === 'NEW'" size="mini"
                            v-model="node.auditUser" filterable placeholder="选择审批人" value-key="id"
@@ -26,7 +26,7 @@
             </el-form-item>
           </span>
           <span v-if="node.type === 1">
-            <el-form-item label="自动分配">
+            <el-form-item label="Automatic Assign" :label-width="labelWidth">
               <span v-for="auditUser in node.auditUsers" :key="auditUser.id"
                     style="margin-right: 5px;display: inline-block">
                 <user-avatar :user="auditUser" :size="avatar.size"/>
@@ -61,6 +61,7 @@ export default {
   },
   data () {
     return {
+      labelWidth: '150px',
       avatar: {
         size: 24
       },

@@ -11,7 +11,8 @@
             <el-input v-model="env.envName" size="mini" readonly style="width: 500px"/>
           </el-form-item>
           <el-form-item label="Build Job Name" :label-width="formStatus.labelWidth" required>
-            <el-select v-model="doDeployParam.jobId" size="mini" filterable clearable remote reserve-keyword @change="selLeoJob"
+            <el-select v-model="doDeployParam.jobId" size="mini" filterable clearable remote reserve-keyword
+                       @change="selLeoJob"
                        placeholder="搜索并选择任务" style="width: 500px" :remote-method="getLeoJob">
               <el-option v-for="item in jobOptions"
                          :key="item.id"
@@ -34,32 +35,29 @@
             </el-select>
           </el-form-item>
           <el-form-item label="Deploy Type" :label-width="formStatus.labelWidth" required>
-            <el-col :span="6">
-              <el-radio v-model="doDeployParam.deployType" size="mini"  label="ROLLING" border>滚动 Rolling</el-radio>
-              <el-alert class="radio-desc" :closable="false"
-                        title="渐进式创建新版本，然后停止老版本，自动完成整个流程 (滚动比例25%)"
-                        type="info"/>
-            </el-col>
-            <el-col :span="6">
-              <el-radio v-model="doDeployParam.deployType" size="mini" label="REDEPLOY" border>重启 Redeploy</el-radio>
-              <el-alert class="radio-desc" :closable="false"
-                        title="不变更版本，只滚动重启所有副本。离线的Canary环境重新上线"
-                        type="info"/>
-            </el-col>
-            <!--            小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署-->
-            <el-col :span="6">
-              <el-radio v-model="doDeployParam.deployType" size="mini" label="OFFLINE" border>下线 Offline</el-radio>
-              <el-alert class="radio-desc" :closable="false"
-                        title="仅支持小流量环境（Canary）下线"
-                        type="info">
-              </el-alert>
-            </el-col>
-            <el-col :span="6" v-if="false">
-              <el-radio v-model="doDeployParam.deployType" size="mini" label="BG" border :disabled="true">蓝绿 Blue/Green</el-radio>
-              <el-alert class="radio-desc" :closable="false"
-                        title="创建出新版本，与老版本并存，通过切换流量实现发布与回滚"
-                        type="info"/>
-            </el-col>
+            <el-row>
+              <el-col :span="8">
+                <el-radio v-model="doDeployParam.deployType" size="mini" label="ROLLING" border>滚动 Rolling</el-radio>
+                <el-alert class="radio-desc" :closable="false"
+                          title="渐进式创建新版本(滚动比例25%)，然后停止老版本，自动完成整个流程"
+                          type="info"/>
+              </el-col>
+              <el-col :span="8">
+                <el-radio v-model="doDeployParam.deployType" size="mini" label="REDEPLOY" border>重启 Redeploy
+                </el-radio>
+                <el-alert class="radio-desc" :closable="false"
+                          title="不变更版本，只滚动重启所有副本。离线的Canary环境重新上线"
+                          type="info"/>
+              </el-col>
+              <!--            小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署-->
+              <el-col :span="8">
+                <el-radio v-model="doDeployParam.deployType" size="mini" label="OFFLINE" border>下线 Offline</el-radio>
+                <el-alert class="radio-desc" :closable="false"
+                          title="允许非生产环境和canary环境下线"
+                          type="info">
+                </el-alert>
+              </el-col>
+            </el-row>
           </el-form-item>
           <el-form-item label="Release Version" :label-width="formStatus.labelWidth" required
                         v-if="doDeployParam.deployType === 'ROLLING'">
@@ -74,9 +72,9 @@
                 <span :style="{float: 'right', color: '#8492a6', fontSize: '13px',marginLeft: '15px'}">{{ item.ago }} #{{
                     item.buildNumber
                   }}次构建
-                  <span v-if="item.ticketId !== 0" style="color: #0da815">[<i class="fas fa-check"
-                                                                              v-if="item.ticketId !== 0"
-                                                                              style="margin-right: 1px"/>工单]</span>
+                  <span v-if="item.ticketId !== 0" style="color: #0da815">
+                    [<i class="fas fa-check" v-if="item.ticketId !== 0" style="margin-right: 1px"/>工单]
+                  </span>
                 </span>
               </el-option>
             </el-select>
@@ -97,7 +95,7 @@
             <el-input v-model="doDeployParam.comment" size="mini"/>
           </el-form-item>
         </el-form>
-        <div style="width:100%;text-align:center">
+        <div style="width:100%; text-align:center">
           <el-button size="mini" type="primary" @click="doDeploy" icon="fa fa-play" :loading="buttons.doDeploying"
                      :disabled="buttons.doDeploying || doDeployParam.jobId === '' ||  (doDeployParam.deployType === 'ROLLING' &&  doDeployParam.buildId === '') || doDeployParam.assetId === ''">
             <span style="margin-left: 2px">Do Deploy</span>
@@ -161,7 +159,7 @@ export default {
      *    application: {},
      *    env: {}
      *  }
-     * @param data
+     * @param name
      */
     getLeoJob (name) {
       const requestBody = {
@@ -299,8 +297,7 @@ export default {
 
 .radio-desc {
   margin-top: 3px;
-  width: 240px;
-  font-size: 12px;
+  width: 280px; font-size: 11px;
   line-height: 110%;
 }
 

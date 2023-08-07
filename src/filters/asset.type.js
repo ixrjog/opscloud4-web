@@ -9,15 +9,15 @@ export function getAssetTypeText (value) {
     case DsInstanceAssetType.GITLAB.GITLAB_GROUP:
       return '群组'
     case DsInstanceAssetType.GITLAB.GITLAB_PROJECT:
-      return '项目'
+      return 'Project'
     case DsInstanceAssetType.GITLAB.GITLAB_USER:
-      return '用户'
+      return 'User'
     case DsInstanceAssetType.GITLAB.GITLAB_SSHKEY:
-      return '密钥'
+      return 'SSHkey'
     case DsInstanceAssetType.ALIYUN.ECS:
       return 'ECS'
     case DsInstanceAssetType.ALIYUN.ECS_IMAGE:
-      return '镜像'
+      return 'Image'
     case DsInstanceAssetType.ALIYUN.VPC:
       return 'VPC'
     case DsInstanceAssetType.ALIYUN.ECS_SG:
@@ -75,31 +75,33 @@ export function getAssetTypeText (value) {
     case DsInstanceAssetType.AWS.ECR_REPOSITORY:
       return 'ECR仓库'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER:
-      return '用户'
+      return 'User'
     case DsInstanceAssetType.ZABBIX.ZABBIX_USER_GROUP:
-      return '用户组'
+      return 'UserGroup'
     case DsInstanceAssetType.ZABBIX.ZABBIX_HOST:
-      return '主机'
+      return 'Host'
     case DsInstanceAssetType.ZABBIX.ZABBIX_HOST_GROUP:
-      return '主机组'
+      return 'HostGroup'
     case DsInstanceAssetType.ZABBIX.ZABBIX_TEMPLATE:
-      return '模板'
+      return 'Template'
     case DsInstanceAssetType.ZABBIX.ZABBIX_TRIGGER:
-      return '触发的问题'
+      return 'Trigger'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_NODE:
-      return '节点'
+      return 'Worker'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_NAMESPACE:
-      return '命名空间'
+      return 'Namespace'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_POD:
-      return '容器组'
+      return 'Pod'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_DEPLOYMENT:
-      return '无状态'
+      return 'Deployment'
     case DsInstanceAssetType.KUBERNETES.KUBERNETES_SERVICE:
-      return '服务'
+      return 'Service'
+    case DsInstanceAssetType.KUBERNETES.KUBERNETES_INGRESS:
+      return 'Ingress'
     case DsInstanceAssetType.JENKINS.JENKINS_COMPUTER:
-      return '计算节点'
+      return 'Computer'
     case DsInstanceAssetType.JENKINS.JENKINS_TEMPLATE:
-      return '任务模板'
+      return 'Template'
     // Ansible
     case DsInstanceAssetType.ANSIBLE.ANSIBLE_VERSION:
       return '版本'

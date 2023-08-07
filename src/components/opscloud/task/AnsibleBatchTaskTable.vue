@@ -38,7 +38,7 @@
           </el-form-item>
           <el-form-item label="变量(Vars)" :label-width="labelWidth">
             <editor v-model="serverTask.vars" @init="editorInit" lang="yaml" theme="chrome"
-                    height="80"
+                    height="300"
                     :options="options"/>
           </el-form-item>
         </el-form>

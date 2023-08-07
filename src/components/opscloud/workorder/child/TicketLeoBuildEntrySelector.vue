@@ -3,7 +3,7 @@
   <div>
     <el-row>
       <el-select v-model="applicationName" size="mini" filterable clearable style="margin-left: 5px; width: 250px;"
-                 remote reserve-keyword placeholder="搜索并选择我的应用" :remote-method="getApplication"
+                 remote reserve-keyword placeholder="Search and select my app" :remote-method="getApplication"
                  @change="handleChange">
         <el-option v-for="item in applicationOptions"
                    :key="item.id"
@@ -14,7 +14,7 @@
       </el-select>
       <el-select v-model="ticketEntry" size="mini" filterable clearable value-key="name" :disabled="applicationName === ''"
                  style="display: inline-block; width: 250px; margin-left: 10px"
-                 reserve-keyword placeholder="选择构建版本"
+                 reserve-keyword placeholder="Select build version"
                  :loading="searchLoading">
         <el-option v-for="item in ticketEntryOptions"
                    :key="item.name"
@@ -25,7 +25,7 @@
       </el-select>
       <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry()"
                  :loading="buttonAdding"
-                 style="margin-left: 10px">添加
+                 style="margin-left: 10px">Add
       </el-button>
     </el-row>
   </div>

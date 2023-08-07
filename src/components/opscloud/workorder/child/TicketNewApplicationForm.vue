@@ -2,13 +2,13 @@
 <template>
   <div>
     <el-form :model="applicationData" label-width="120px">
-      <el-form-item label="应用名称" required>
+      <el-form-item label="Application Name" required :label-width="labelWidth">
         <el-input v-model="applicationData.name" size="mini"/>
         <div style="margin-top: 5px">
-          <my-highlight code="Application Name Regex: [a-z][\\d0-9a-z-]{3,32}" lang="json"/>
+          <my-highlight code="Regex: [a-z][\\d0-9a-z-]{3,32}" lang="json"/>
         </div>
       </el-form-item>
-      <el-form-item label="应用级别" required>
+      <el-form-item label="Level" required :label-width="labelWidth">
         <el-radio-group v-model="applicationData.levelTag" size="mini">
           <el-radio-button label="A1"/>
           <el-radio-button label="A2"/>
@@ -18,7 +18,7 @@
           <el-radio-button label="B3"/>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="GitLab实例">
+      <el-form-item label="GitLab Instance" :label-width="labelWidth">
         <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
                    style="width: 400px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
           <el-option v-for="item in dsInstanceOptions" :key="item.uuid" :label="item.instanceName" :value="item.uuid">
@@ -26,7 +26,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="GitLab项目" required>
+      <el-form-item label="GitLab Project" required :label-width="labelWidth">
         <el-select v-model="ticketEntry" size="mini" filterable value-key="name"
                    style="width: 400px;" remote reserve-keyword placeholder="输入关键词搜索项目"
                    :remote-method="fetchData"
@@ -36,12 +36,12 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="描述" required>
+      <el-form-item label="Desc" required :label-width="labelWidth">
         <el-input v-model="applicationData.comment" size="mini" placeholder="请输入应用描述"/>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="text-align: center">
         <el-button plain type="primary" @click="addTicketEntry" :disabled="JSON.stringify(ticketEntry) === '{}'"
-                   :loading="buttonAdding" size="mini">保存
+                   :loading="buttonAdding" size="mini">Save
         </el-button>
       </el-form-item>
     </el-form>
@@ -78,6 +78,7 @@ export default {
   },
   data () {
     return {
+      labelWidth: '200px',
       instanceUuid: '',
       instanceType: 'GITLAB',
       applicationData: applicationData,

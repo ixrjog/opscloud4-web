@@ -9,7 +9,7 @@
     <!--工单视图-->
     <div class="block" v-if="ticketView !== null">
       <el-timeline>
-        <el-timeline-item timestamp="工单选项" placement="top">
+        <el-timeline-item timestamp="WorkOrder Options" placement="top">
           <el-card shadow="hover">
             <ticket-new-application-form :workOrderTicketId="ticketView.ticketId" ref="ticketNewApplicationForm"
                                          v-show="ticketView.ticketPhase === 'NEW' && JSON.stringify(ticketView.ticketEntries) === '[]'"
@@ -20,12 +20,12 @@
                                 :tableLayout="tableLayout" v-show="JSON.stringify(ticketView.ticketEntries) !== '[]'"
                                 ref="ticketEntryTable" @ticketEntriesChanged="ticketEntriesChanged">
               <template v-slot:extend>
-                <el-table-column label="GitLab项目">
+                <el-table-column label="GitLab Project">
                   <template v-slot="scope">
                     <span>{{ scope.row.entry.assetKey }}</span>
                   </template>
                 </el-table-column>
-                <el-table-column label="应用级别">
+                <el-table-column label="Level">
                   <template v-slot="scope">
                     <el-tag size="mini">{{ scope.row.entry.levelTag }}</el-tag>
                   </template>
@@ -34,20 +34,20 @@
             </ticket-entry-table>
           </el-card>
         </el-timeline-item>
-        <el-timeline-item timestamp="审批选项" placement="top">
+        <el-timeline-item timestamp="Approval Options" placement="top">
           <workflow-nodes :workflowView="ticketView.workflowView" :ticketPhase="ticketView.ticketPhase"/>
         </el-timeline-item>
-        <el-timeline-item timestamp="申请说明" placement="top">
+        <el-timeline-item timestamp="Application Desc" placement="top">
           <el-input type="textarea" :rows="2"
                     :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
                     v-model="ticketView.comment"
                     :readonly="ticketView.ticketPhase !== 'NEW'"/>
         </el-timeline-item>
-        <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
+        <el-timeline-item timestamp="Approval Process" placement="top" v-if="ticketView.nodeView !== null">
           <node-view :nodeView="ticketView.nodeView"/>
         </el-timeline-item>
         <!--        审批意见只展示给当前审批人-->
-        <el-timeline-item timestamp="审批意见" placement="top" v-if="ticketView.isApprover">
+        <el-timeline-item timestamp="Approval Opinions" placement="top" v-if="ticketView.isApprover">
           <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="approvalComment"/>
         </el-timeline-item>
       </el-timeline>

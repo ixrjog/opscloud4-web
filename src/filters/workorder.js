@@ -33,12 +33,12 @@ export function toStatusColor (value) {
 export function toStatusName (value) {
   switch (value) {
     case 0:
-      return '新建'
+      return 'New'
     case 1:
-      return '开发中'
+      return 'Developing'
     case 2:
-      return '停用'
+      return 'Deactivate'
     default:
-      return '新建'
+      return 'New'
   }
 }
