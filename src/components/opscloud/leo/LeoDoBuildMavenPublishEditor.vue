@@ -102,6 +102,9 @@ export default {
         jobId: '',
         branch: '',
         params: {},
+        assetId: '',
+        projectId: '',
+        autoDeploy: false,
         versionName: '',
         versionDesc: ''
       },
