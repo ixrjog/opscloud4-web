@@ -8,9 +8,19 @@
         <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.KUBERNETES_NODE"
                      :tableLayout="tableLayout.node" ref="nodeTable">
           <template v-slot:extend>
-            <el-table-column label="容量" show-overflow-tooltip>
+            <el-table-column prop="properties" label="CPU/Memory" show-overflow-tooltip>
               <template v-slot="scope">
-                <span>CPU {{ scope.row.properties.cpu }} / Memory {{ scope.row.properties.memory }}</span>
+                <span>cpu {{ scope.row.properties.cpu }} / memory {{ scope.row.properties.memory }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="properties" label="Region" show-overflow-tooltip>
+              <template v-slot="scope">
+                <span>{{ scope.row.properties['labels:failure-domain.beta.kubernetes.io/region'] }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="properties" label="Zone" show-overflow-tooltip>
+              <template v-slot="scope">
+                <span>{{ scope.row.properties['labels:failure-domain.beta.kubernetes.io/zone'] }}</span>
               </template>
             </el-table-column>
           </template>

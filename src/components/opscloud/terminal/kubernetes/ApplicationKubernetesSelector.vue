@@ -31,8 +31,10 @@
     <!--    ARMS-->
     <el-row v-if="application !== '' && application.armsTraceApp.show">
       <el-card shadow="never" class="banner">
-        <el-tag type="success" @click="openUrl(application.armsTraceApp.homeUrl)">ARMS应用实时监控服务<i
-          class="fas fa-external-link-alt" style="margin-left: 2px"/></el-tag>
+        <el-tag type="success" @click="openUrl(application.armsTraceApp.homeUrl)">
+          ARMS应用实时监控服务
+          <i class="fas fa-external-link-alt" style="margin-left: 2px"/>
+        </el-tag>
       </el-card>
       <div style="height: 5px"/>
     </el-row>
@@ -70,7 +72,7 @@
                 <template v-for="pod in resource.assetContainers">
                    <el-card shadow="hover" :class="pod.properties.restartCount | toPodClass" :key="pod.asset.name">
                    <!-- podName -->
-                   <div style="margin-bottom: 2px">
+                   <div>
                      <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"/>
                      <el-popover placement="right" trigger="hover" v-if="false">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"/>
@@ -79,12 +81,18 @@
                          <i class="fas fa-globe"/><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
                      </el-popover>
                    </div>
-                   <div><span class="label">容器组IP</span>
-                     <copy-span :content="pod.asset.assetKey" :show-icon="true"/></div>
-                   <div><span class="label">启动时间</span>{{ pod.properties.startTime }}
-                    <span style="color: #20A9D9">[{{ pod.ago }}]</span> 重启次数:
+                   <div style="height: 2px"/>
+                   <div>
+                     <span class="label">容器组IP</span>
+                     <copy-span :content="pod.asset.assetKey" :show-icon="true"/>
+                     <zone-tag v-if="pod.properties.zone !== undefined" :zone="pod.properties.zone" style="margin-left: 5px"/>
+                   </div>
+                   <div>
+                     <span class="label">启动时间</span>{{ pod.properties.startTime }}
+                     <span style="color: #20A9D9">[{{ pod.ago }}]</span> 重启次数:
                      <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
-                       {{ pod.properties.restartCount }}</span>
+                       {{ pod.properties.restartCount }}
+                     </span>
                    </div>
                    <div><span class="label">版本名称</span>{{ pod.properties.versionName }}</div>
                    <div v-if="false"><span class="label">镜像地址</span>{{ pod.properties.image }}</div>
@@ -126,6 +134,7 @@ import util from '@/libs/util'
 import router from '@/router'
 import { GET_KUBERNETES_DEPLOYMENT } from '@/api/modules/kubernetes/kubernetes.api'
 import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
+import ZoneTag from '@/components/opscloud/terminal/child/ZoneTag.vue'
 
 const wsStates = {
   success: {
@@ -179,6 +188,7 @@ export default {
   },
   computed: {},
   components: {
+    ZoneTag,
     DeploymentName,
     DeploymentReplicas,
     BusinessTags,

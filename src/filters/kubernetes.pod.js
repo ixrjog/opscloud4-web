@@ -22,6 +22,15 @@ export function toPodClass (podRestartCount) {
   }
 }
 
+export function toZoneClass (zone) {
+  const z = zone.slice(-1)
+  if (z === 'a' || z === 'b' || z === 'c') {
+    return 'zone-' + z
+  } else {
+    return 'zone-unknown'
+  }
+}
+
 export function toDeploymentVersionClass (version) {
   switch (version.versionType) {
     case 'BLUE':
