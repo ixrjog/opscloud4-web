@@ -33,3 +33,10 @@ export function DELETE_TEMPLATE_BY_ID (id) {
     method: 'delete'
   })
 }
+
+export function GET_KIND_OPTIONS () {
+  return request({
+    url: baseUrl + '/kind/options/get',
+    method: 'get'
+  })
+}

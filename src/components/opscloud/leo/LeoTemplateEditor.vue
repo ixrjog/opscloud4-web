@@ -50,6 +50,9 @@
             <el-button size="mini" type="primary" @click="handleUpdateContent" v-show="!editing"
                        :loading="buttons.updateTemplateContent">导入
             </el-button>
+            <el-button size="mini" type="primary" @click="handleUpload"
+                       :loading="buttons.updateTemplateContent">上传
+            </el-button>
           </div>
         </el-row>
       </el-tab-pane>
@@ -71,7 +74,12 @@
 <script>
 
 // API
-import { ADD_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE, UPDATE_LEO_TEMPLATE_CONTENT } from '@/api/modules/leo/leo.template.api'
+import {
+  ADD_LEO_TEMPLATE,
+  UPDATE_LEO_TEMPLATE,
+  UPDATE_LEO_TEMPLATE_CONTENT,
+  UPLOAD_TEMPLATE
+} from '@/api/modules/leo/leo.template.api'
 
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 import MyMarkdown from '@/components/opscloud/common/MyMarkdown'
@@ -177,6 +185,12 @@ export default {
           this.$message.success('更新模板内容成功!')
           this.leoTemplate = res.body
           this.buttons.updateTemplateContent = false
+        })
+    },
+    handleUpload () {
+      UPLOAD_TEMPLATE({ templateId: this.leoTemplate.id })
+        .then((res) => {
+          this.$message.success('上传模板到Jenkins成功!')
         })
     },
     handleUpdate () {

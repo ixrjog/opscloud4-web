@@ -34,6 +34,14 @@ export function UPDATE_LEO_TEMPLATE_CONTENT (data) {
   })
 }
 
+export function UPLOAD_TEMPLATE (param) {
+  return request({
+    url: baseUrl + '/upload',
+    method: 'put',
+    params: param
+  })
+}
+
 export function UPGRADE_LEO_JOB_TEMPLATE (data) {
   return request({
     url: baseUrl + '/job/upgrade',

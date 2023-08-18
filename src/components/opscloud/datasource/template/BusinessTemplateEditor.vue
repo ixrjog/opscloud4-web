@@ -22,16 +22,16 @@
                 {{ env.envName }}
               </el-radio-button>
             </el-radio-group>
-<!--            <el-select v-model.trim="queryParam.envType" clearable-->
-<!--                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"-->
-<!--                       @change="handleChangeTemplate">-->
-<!--              <el-option v-for="item in envOptions"-->
-<!--                         :key="item.envType"-->
-<!--                         :label="item.envName"-->
-<!--                         :value="item.envType">-->
-<!--                <select-item :name="item.envName" :comment="item.comment"/>-->
-<!--              </el-option>-->
-<!--            </el-select>-->
+            <!--            <el-select v-model.trim="queryParam.envType" clearable-->
+            <!--                       remote reserve-keyword placeholder="选择环境" :remote-method="getEnv"-->
+            <!--                       @change="handleChangeTemplate">-->
+            <!--              <el-option v-for="item in envOptions"-->
+            <!--                         :key="item.envType"-->
+            <!--                         :label="item.envName"-->
+            <!--                         :value="item.envType">-->
+            <!--                <select-item :name="item.envName" :comment="item.comment"/>-->
+            <!--              </el-option>-->
+            <!--            </el-select>-->
           </el-form-item>
           <el-form-item label="模板Key" :label-width="labelWidth" required>
             <el-select v-model="queryParam.templateKey" placeholder="选择类型" @change="handleChangeTemplate">
@@ -145,7 +145,7 @@ export default {
     }
   },
   name: 'BusinessTemplateEditor',
-  props: ['formStatus', 'instanceTypeOptions'],
+  props: ['formStatus', 'instanceTypeOptions', 'kind'],
   components: {
     MyHighlight,
     SelectItem,
@@ -182,6 +182,7 @@ export default {
       const requestBody = {
         queryName: name,
         ...this.queryParam,
+        kind: this.kind,
         extend: false,
         page: 1,
         length: 20
@@ -189,6 +190,9 @@ export default {
       QUERY_TEMPLATE_PAGE(requestBody)
         .then(res => {
           this.templateOptions = res.body.data
+          if (this.templateOptions.length === 1) {
+            this.businessTemplate.templateId = this.templateOptions[0].id
+          }
         })
     },
     handleChangeTemplate () {

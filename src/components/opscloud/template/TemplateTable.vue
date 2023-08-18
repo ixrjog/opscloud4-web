@@ -14,6 +14,12 @@
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
+      <el-select v-model="queryParam.kind" size="mini" clearable placeholder="选择分类">
+        <el-option v-for="item in kindOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
+      </el-select>
       <el-button @click="fetchData" size="mini">查询</el-button>
       <el-button @click="handleAdd" size="mini" class="button">新增</el-button>
     </el-row>
@@ -37,6 +43,8 @@
           <el-tag size="mini">{{ scope.row.templateKey }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="kind" label="分类" width="120">
+      </el-table-column>
       <el-table-column prop="content" label="模板内容">
         <template v-slot="scope">
           <my-highlight :code="scope.row.content" :lang="scope.row.templateType" :myStyle="style"/>
@@ -53,7 +61,7 @@
           <el-button type="primary" plain size="mini"
                      @click="handleRowEdit(scope.row)">编辑
           </el-button>
-          <el-button type="danger" plain size="mini" :disabled="scope.row.bizTemplateSize > 0"
+          <el-button plain size="mini" :type="scope.row.bizTemplateSize > 0 ? 'danger': 'success'"
                      @click="handleRowDel(scope.row)">删除
           </el-button>
         </template>
@@ -72,7 +80,7 @@
 <script>
 
 import {
-  QUERY_TEMPLATE_PAGE, DELETE_TEMPLATE_BY_ID
+  QUERY_TEMPLATE_PAGE, DELETE_TEMPLATE_BY_ID, GET_KIND_OPTIONS
 } from '@/api/modules/template/template.api.js'
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import Pagination from '@/components/opscloud/common/page/Pagination'
@@ -117,16 +125,19 @@ export default {
       instanceTypeOptions: instanceTypeOptions,
       templateTypeOptions: templateTypeOptions,
       queryParam: {
+        kind: '',
         envType: 1,
         queryName: '',
         extend: true
       },
+      kindOptions: [],
       style: { height: '200px' }
     }
   },
   computed: {},
   mounted () {
     this.getEnv()
+    this.getKind()
   },
   components: {
     TemplateEditor,
@@ -153,6 +164,12 @@ export default {
       QUERY_ENV_PAGE(requestBody)
         .then(res => {
           this.envOptions = res.body.data
+        })
+    },
+    getKind () {
+      GET_KIND_OPTIONS()
+        .then(res => {
+          this.kindOptions = res.body.options
         })
     },
     handleRowDel (row) {

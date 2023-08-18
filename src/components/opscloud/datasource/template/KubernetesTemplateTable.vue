@@ -4,6 +4,12 @@
     <el-row>
       <el-input v-model="queryParam.queryName" @change="fetchData" placeholder="输入关键字模糊查询" size="mini"
                 style="margin-right: 5px"/>
+      <el-select v-model="queryParam.kind" size="mini" clearable placeholder="选择分类">
+        <el-option v-for="item in kindOptions"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"/>
+      </el-select>
       <el-radio-group v-model="queryParam.envType" size="mini" @change="fetchData">
         <el-radio-button v-for="env in envOptions" :label="env.envType" :key="env.envType">
           {{ env.envName }}
@@ -12,6 +18,14 @@
       <el-button @click="fetchData" size="mini">查询</el-button>
       <el-button @click="handleAdd" class="button" size="mini">新增</el-button>
       <el-button @click="handleScan" class="button" size="mini">扫描</el-button>
+      <div style="height: 10px"/>
+      <editor v-model="vars"
+              @init="editorInit"
+              lang="yaml"
+              theme="chrome"
+              height="80"
+              width="800"
+              :options="options"/>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
@@ -27,12 +41,19 @@
           <el-tag size="mini" v-if="scope.row.asset !== null" type="success">{{ scope.row.asset.assetKey }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="template" label="模板" width="250">
+      <el-table-column prop="template" label="模板" width="180">
         <template v-slot="scope">
-          <span>{{ scope.row.template.name }}</span>
-          <div>
+          {{ scope.row.template.name }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="template" label="分类" width="120">
+        <template v-slot="scope">
+          {{ scope.row.template.kind }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="template" label="模板Key" width="120">
+        <template v-slot="scope">
             <el-tag size="mini">{{ scope.row.template.templateKey }}</el-tag>
-          </div>
         </template>
       </el-table-column>
       <el-table-column prop="vars" label="自定义变量">
@@ -59,7 +80,7 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"/>
     <business-template-editor :formStatus="formStatus.businessTemplate"
-                              :instanceTypeOptions="instanceTypeOptions"
+                              :instanceTypeOptions="instanceTypeOptions" :kind="queryParam.kind"
                               ref="businessTemplateEditor" @close="fetchData"/>
   </div>
 </template>
@@ -77,11 +98,20 @@ import BusinessTemplateEditor from '@/components/opscloud/datasource/template/Bu
 import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
+import { GET_KIND_OPTIONS } from '@/api/modules/template/template.api'
 
 const instanceTypeOptions = [{
   value: 'KUBERNETES',
   label: 'KUBERNETES'
 }]
+
+const options = {
+  // vue2-ace-editor编辑器配置自动补全等
+  enableBasicAutocompletion: true,
+  enableSnippets: true,
+  // 自动补全
+  enableLiveAutocompletion: true
+}
 
 export default {
   name: 'KubernetesTemplateTable',
@@ -93,6 +123,7 @@ export default {
   },
   data () {
     return {
+      options: options,
       table: {
         data: [],
         loading: false,
@@ -102,6 +133,8 @@ export default {
           total: 0
         }
       },
+      vars: 'vars:\n' +
+        '  appName: ',
       formStatus: {
         businessTemplate: {
           visible: false,
@@ -115,9 +148,11 @@ export default {
       businessId: '',
       businessType: BusinessType.ASSET,
       instanceTypeOptions: instanceTypeOptions,
+      kindOptions: [],
       queryParam: {
         envType: '',
         queryName: '',
+        kind: '',
         extend: true
       }
     }
@@ -125,14 +160,24 @@ export default {
   computed: {},
   mounted () {
     this.getEnv()
+    this.getKind()
   },
   components: {
     EnvTag,
     BusinessTemplateEditor,
     Pagination,
-    MyHighlight
+    MyHighlight,
+    editor: require('vue2-ace-editor')
   },
   methods: {
+    editorInit: function () {
+      require('brace/ext/language_tools')
+      // language
+      require('brace/mode/yaml')
+      require('brace/theme/chrome')
+      // snippet
+      require('brace/snippets/yaml')
+    },
     paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
@@ -151,6 +196,12 @@ export default {
       QUERY_ENV_PAGE(requestBody)
         .then(res => {
           this.envOptions = res.body.data
+        })
+    },
+    getKind () {
+      GET_KIND_OPTIONS()
+        .then(res => {
+          this.kindOptions = res.body.options
         })
     },
     handleRowCreate (row) {
@@ -198,7 +249,8 @@ export default {
         templateId: '',
         envType: this.queryParam.envType === '' ? 1 : this.queryParam.envType,
         content: '',
-        vars: '',
+        vars: this.vars,
+        kind: this.queryParam.kind,
         comment: ''
       }
       this.$refs.businessTemplateEditor.initData(businessTemplate, 'KUBERNETES')
@@ -243,6 +295,10 @@ export default {
 }
 
 .el-select {
+  margin-left: 5px;
+}
+
+.el-radio-group {
   margin-left: 5px;
 }
 

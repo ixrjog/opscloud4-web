@@ -34,6 +34,9 @@
                          :value="item.value"/>
             </el-select>
           </el-form-item>
+          <el-form-item label="分类" :label-width="labelWidth">
+            <el-input v-model="template.kind" placeholder="请输入内容" size="mini"/>
+          </el-form-item>
           <el-form-item label="描述" :label-width="labelWidth">
             <el-input v-model="template.comment" placeholder="请输入内容" size="mini"/>
           </el-form-item>
