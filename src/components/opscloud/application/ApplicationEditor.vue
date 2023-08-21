@@ -104,7 +104,7 @@
           </div>
         </el-col>
       </el-tab-pane>
-      <el-tab-pane label="用户授权" name="permissionUser" v-if="application.id !== ''&& application.id !== 0">
+      <el-tab-pane label="用户授权" name="permissionUser" v-if="application.id !== '' && application.id !== 0">
         <permission-user-tab :businessType="businessType.APPLICATION" :businessId="application.id"
                              ref="permissionUserTab"/>
       </el-tab-pane>
@@ -147,7 +147,9 @@ export default {
   data () {
     return {
       activeName: 'config',
-      application: {},
+      application: {
+        id: 0
+      },
       businessTypeOptions: [],
       businessType: BusinessType,
       queryParam: {
@@ -336,20 +338,18 @@ export default {
         ADD_APPLICATION(requestBody)
           .then(() => {
             this.$message.success('成功')
-            this.formStatus.visible = false
-            this.$emit('close')
+            this.handleClose()
           })
       } else {
         UPDATE_APPLICATION(requestBody)
           .then(() => {
             this.$message.success('成功')
-            this.formStatus.visible = false
-            this.$emit('close')
+            this.handleClose()
           })
       }
     },
     handleClose () {
-      this.application = {}
+      this.application = { id: 0 }
       this.formStatus.visible = false
       this.$emit('close')
     }
