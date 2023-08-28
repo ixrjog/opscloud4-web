@@ -38,6 +38,7 @@
     <application-deploy-ticket-editor :formStatus="formStatus.ticket.application.deploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
     <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
     <ser-deploy-ticket-editor :formStatus="formStatus.ticket.application.serDeploy" ref="serDeployTicketEditor" @close="fetchData"/>
+    <application-fin-ops-tag-ticket-editor  :formStatus="formStatus.ticket.application.finOpsTag" ref="applicationFinOpsTagTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -78,6 +79,8 @@ import AliyunRamUpdateLoginProfileTicketEditor
   from '@/components/opscloud/workorder/ticket/AliyunRamUpdateLoginProfileTicketEditor.vue'
 import ApolloReleaseTicketEditor from '@/components/opscloud/workorder/ticket/ApolloReleaseTicketEditor.vue'
 import SerDeployTicketEditor from '@/components/opscloud/workorder/ticket/SerDeployTicketEditor.vue'
+import ApplicationFinOpsTagTicketEditor
+  from '@/components/opscloud/workorder/ticket/ApplicationFinOpsTagTicketEditor.vue'
 
 export default {
   data () {
@@ -118,7 +121,8 @@ export default {
     ApplicationDeployTicketEditor,
     NewApplicationTicketEditor,
     ApolloReleaseTicketEditor,
-    SerDeployTicketEditor
+    SerDeployTicketEditor,
+    ApplicationFinOpsTagTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -240,6 +244,10 @@ export default {
         case this.workOrderKeyConstants.APOLLO_RELEASE:
           this.handleOpenTicketEditor(this.formStatus.ticket.apollo.release)
           this.$refs.apolloReleaseTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.APPLICATION_FINOPS_TAG:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.finOpsTag)
+          this.$refs.applicationFinOpsTagTicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.SER_DEPLOY:
           this.handleOpenTicketEditor(this.formStatus.ticket.application.serDeploy)

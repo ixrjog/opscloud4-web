@@ -230,6 +230,7 @@ const tableLayout = {
 }
 
 export default {
+  name: 'datasource-instance-kubernetes',
   data () {
     return {
       activeName: 'node',

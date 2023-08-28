@@ -58,3 +58,12 @@ export function DELETE_TAG_BY_ID (id) {
     method: 'delete'
   })
 }
+
+
+export function GET_FINOPS_TAG_OPTIONS () {
+  // 接口请求
+  return request({
+    url: baseUrl + '/finops/options/get',
+    method: 'get'
+  })
+}

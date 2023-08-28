@@ -81,6 +81,9 @@ export default {
       new: {
         visible: false
       },
+      finOpsTag: {
+        visible: false
+      },
       serDeploy: {
         visible: false
       }

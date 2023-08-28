@@ -35,9 +35,9 @@ export default {
 
 .zone-c {
   color: white;
-  background: #EB5757;
-  background: -webkit-linear-gradient(to right, #EB5757, #f69fa3);
-  background: linear-gradient(to right, #EB5757, #f69fa3);
+  background: #eaa235;
+  background: -webkit-linear-gradient(to right, #e56c0d, #eaa235);
+  background: linear-gradient(to right, #e56c0d, #eaa235);
 }
 
 .zone-unknown {

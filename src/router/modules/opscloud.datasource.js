@@ -105,6 +105,7 @@ export default [
     component: () => import('@/pages/datasource/instance/kubernetes'),
     meta: {
       auth: true,
+      cache: true,
       title: 'Kubernetes数据源实例'
     }
   },
