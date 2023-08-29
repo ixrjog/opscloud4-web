@@ -94,3 +94,12 @@ export function GET_APOLLO_RELEASE_REPORT (data) {
     data
   })
 }
+
+
+export function GET_KUBERNETES_FINOPS_REPORT (param) {
+  return request({
+    url: baseUrl + '/kubernetes/finops/get',
+    method: 'get',
+    params: param
+  })
+}

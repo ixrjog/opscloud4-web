@@ -96,6 +96,9 @@
       <el-tab-pane label="BusinessTemplate" name="template">
         <kubernetes-template-table :instanceUuid="instance.uuid" ref="templateTable"/>
       </el-tab-pane>
+      <el-tab-pane label="FinOps" name="finOps">
+        <kubernetes-fin-ops-table :instanceId="instance.id" ref="finOpsTable"/>
+      </el-tab-pane>
     </el-tabs>
   </d2-container>
 </template>
@@ -106,6 +109,7 @@ import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTa
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import KubernetesTemplateTable from '@/components/opscloud/datasource/template/KubernetesTemplateTable'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
+import KubernetesFinOpsTable from '@/components/opscloud/datasource/finops/KubernetesFinOpsTable.vue'
 
 const tableLayout = {
   node: {
@@ -251,7 +255,8 @@ export default {
   components: {
     AssetTable,
     KubernetesTemplateTable,
-    DatasourceInstanceTitle
+    DatasourceInstanceTitle,
+    KubernetesFinOpsTable
   },
   methods: {
     handleClick (tab, event) {
@@ -305,7 +310,7 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  -webkit-box-sizing: border-box;
+  //-webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
