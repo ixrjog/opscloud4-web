@@ -60,6 +60,11 @@
             <users-tag :users="scope.row.users"/>
           </template>
         </el-table-column>
+        <el-table-column prop="isActive" label="有效" width="80">
+          <template v-slot="scope">
+            <active-tag :is-active="scope.row.isActive"/>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="200">
           <template v-slot="scope">
             <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -91,6 +96,7 @@ import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEdito
 import BusinessDocReader from '@/components/opscloud/business/BusinessDocReader'
 import { QUERY_TAG_PAGE } from '@/api/modules/tag/tag.api'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
+import ActiveTag from '@/components/opscloud/common/tag/ActiveTag.vue'
 
 export default {
   name: 'ApplicationTable',
@@ -162,6 +168,7 @@ export default {
     this.fetchData()
   },
   components: {
+    ActiveTag,
     Pagination,
     ApplicationEditor,
     UsersTag,
