@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-row>
-      <el-checkbox v-model="queryParam.onlyLookRunningTasks">
+      <el-checkbox v-model="queryParam.onlyLookRunningTasks" @click="fetchData">
         Only look at running tasks
       </el-checkbox>
     </el-row>
@@ -26,7 +26,7 @@
               <span>{{ scope.row.buildDetails.build.gitLab.project.sshUrl }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="buildDetails" label="构建分支">
+          <el-table-column prop="buildDetails" label="构建分支" width="250">
             <template v-slot="scope">
               <span>{{ scope.row.buildDetails.build.dict.branch }}</span>
             </template>
@@ -134,7 +134,7 @@ export default {
       queryParam: {
         onlyLookRunningTasks: true,
         buildSize: 8,
-        deploySize: 15
+        deploySize: 12
       },
       table: {
         build: {

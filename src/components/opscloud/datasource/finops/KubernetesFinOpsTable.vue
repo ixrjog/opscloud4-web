@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-row>
-      <el-button @click="fetchData" size="mini">查询</el-button>
+      <el-button @click="fetchData" size="mini"><i class="fas fa-circle-notch"/></el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-row :gutter="20">

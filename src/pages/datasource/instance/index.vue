@@ -17,7 +17,7 @@
                      :label="item.name"
                      :value="item.name" />
         </el-select>
-        <el-button @click="fetchData" size="mini"> <i class="fas fa-circle-notch"/></el-button>
+        <el-button @click="fetchData" size="mini"><i class="fas fa-circle-notch"/></el-button>
       </el-row>
       <div style="height: 5px"/>
       <el-row :gutter="10">
