@@ -139,6 +139,9 @@ export default {
         case this.dsInstanceType.ALIYUN_ARMS.type:
           instanceType = this.dsInstanceType.ALIYUN_ARMS
           break
+        case this.dsInstanceType.ALIYUN_EVENTBRIDGE.type:
+          instanceType = this.dsInstanceType.ALIYUN_EVENTBRIDGE
+          break
         default:
           this.$message({
             message: '未知的数据源实例类型',

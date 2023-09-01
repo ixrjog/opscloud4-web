@@ -191,6 +191,15 @@ export default [
     }
   },
   {
+    path: '/datasource/instance/eventbridge',
+    name: 'datasource-instance-eventbridge',
+    component: () => import('@/pages/datasource/instance/eventbridge'),
+    meta: {
+      auth: true,
+      title: 'EventBridge数据源实例'
+    }
+  },
+  {
     path: '/datasource/instance/apollo',
     name: 'datasource-instance-apollo',
     component: () => import('@/pages/datasource/instance/apollo'),

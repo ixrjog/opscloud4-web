@@ -1,18 +1,21 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-tag size="mini" :class="zone | toZoneClass">{{ zone }}</el-tag>
+  <el-tooltip class="item" effect="dark" :content="zone" placement="top">
+    <el-tag size="mini" :class="zone | toZoneClass"><i class="fab fa-battle-net"/> {{ zone | toZoneShort }}</el-tag>
+  </el-tooltip>
 </template>
 
 <script>
 
 // Filters
-import { toZoneClass } from '@/filters/kubernetes.pod'
+import { toZoneClass, toZoneShort } from '@/filters/kubernetes.pod'
 
 export default {
   name: 'ZoneTag',
   props: ['zone'],
   filters: {
-    toZoneClass
+    toZoneClass,
+    toZoneShort
   }
 }
 </script>
@@ -20,24 +23,24 @@ export default {
 <style scoped>
 
 .zone-a {
-  color: white;
+  color: rgb(9, 9, 9);
   background: #000000;
-  background: -webkit-linear-gradient(to right, #0f9b0f, #0ad97c);
-  background: linear-gradient(to right, #0f9b0f, #0ad97c);
+  background: -webkit-linear-gradient(to right, #a9f3a9, #ffffff);
+  background: linear-gradient(to right, #a9f3a9, #ffffff);
 }
 
 .zone-b {
-  color: white;
-  background: #000046;
-  background: -webkit-linear-gradient(to right, #1CB5E0, #62cee7);
-  background: linear-gradient(to right, #1CB5E0, #62cee7);
+  color: rgb(9, 9, 9);
+  background: #000000;
+  background: -webkit-linear-gradient(to right, #a0e5fa, #ffffff);
+  background: linear-gradient(to right, #a0e5fa, #ffffff);
 }
 
 .zone-c {
-  color: white;
-  background: #eaa235;
-  background: -webkit-linear-gradient(to right, #e56c0d, #eaa235);
-  background: linear-gradient(to right, #e56c0d, #eaa235);
+  color: rgb(9, 9, 9);
+  background: #000000;
+  background: -webkit-linear-gradient(to right, #7aa1f5, #ffffff);
+  background: linear-gradient(to right, #7aa1f5, #ffffff);
 }
 
 .zone-unknown {

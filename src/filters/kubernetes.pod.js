@@ -31,6 +31,10 @@ export function toZoneClass (zone) {
   }
 }
 
+export function toZoneShort (zone) {
+  return  zone.slice(-2)
+}
+
 export function toDeploymentVersionClass (version) {
   switch (version.versionType) {
     case 'BLUE':

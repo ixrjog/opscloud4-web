@@ -108,6 +108,9 @@ const DsInstanceAssetType = Object.freeze({
   },
   ALIYUN_ARMS: {
     ALIYUN_ARMS_TRACE_APP: 'ALIYUN_ARMS_TRACE_APP'
+  },
+  ALIYUN_EVENTBRIDGE: {
+    EVENT_BRIDGE_DEPLOY_EVENT: 'EVENT_BRIDGE_DEPLOY_EVENT'
   }
 })
 

@@ -236,6 +236,16 @@ const DsInstanceType = Object.freeze({
         label: 'ALIYUN_ARMS'
       }
     ]
+  },
+  ALIYUN_EVENTBRIDGE: {
+    type: 59,
+    name: 'ALIYUN_EVENTBRIDGE',
+    instanceType: [
+      {
+        value: 'ALIYUN_EVENTBRIDGE',
+        label: 'ALIYUN_EVENTBRIDGE'
+      }
+    ]
   }
 })
 
