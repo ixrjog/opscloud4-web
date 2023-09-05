@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog title="Deploy Task" :visible.sync="formStatus.visible" width="70%">
+  <el-dialog title="Deploy Task" :visible.sync="formStatus.visible" width="1100px">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Home" name="deploy">
         <el-form :model="application">

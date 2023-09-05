@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog title="KubernetesImage Build Task"
-             :visible.sync="formStatus.visible" width="50%">
+             :visible.sync="formStatus.visible" width="1100px">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Home" name="build">
         <el-form :model="leoJob">
@@ -56,7 +56,7 @@
               build completed
             </el-checkbox>
           </el-form-item>
-          <el-form-item label="Deployment" size="mini" :label-width="formStatus.labelWidth">
+          <el-form-item label="Deployment" size="mini" :label-width="formStatus.labelWidth" required v-show="this.doBuildParam.autoDeploy">
             <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
                        :disabled="!this.doBuildParam.autoDeploy"
                        placeholder="选择Deployment" style="width: 500px" :remote-method="getLeoDeployDeployment">

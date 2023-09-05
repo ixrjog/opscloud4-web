@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog title="Front-End Build Task"
-             :visible.sync="formStatus.visible" width="50%">
+             :visible.sync="formStatus.visible" width="1100px">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Home" name="build">
         <el-form :model="leoJob">

@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog title="MavenPublish 构建任务" :visible.sync="formStatus.visible" width="50%">
+  <el-dialog title="MavenPublish 构建任务" :visible.sync="formStatus.visible" width="1100px">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="构建" name="build">
         <el-form :model="leoJob">
