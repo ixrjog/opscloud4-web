@@ -30,6 +30,9 @@
                      :value="item.value"/>
         </el-select>
       </el-form-item>
+      <el-form-item label="版本" :label-width="labelWidth">
+        <el-input v-model="datasource.instance.version" placeholder="请输入内容" size="mini"/>
+      </el-form-item>
       <el-form-item label="实例分类" :label-width="labelWidth">
         <el-input v-model="datasource.instance.kind" placeholder="请输入内容" size="mini"/>
       </el-form-item>
@@ -39,7 +42,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">取消</el-button>
-      <el-button type="primary" size="mini" @click="handlerRegister"
+      <el-button type="primary" size="mini" @click="handleRegister"
                  v-text="datasource.instance.uuid === ''? '注册':'更新'">
       </el-button>
     </div>
@@ -151,7 +154,7 @@ export default {
       this.instanceTypeOptions = instanceType.instanceType
       this.datasource.instance.instanceType = instanceType.name
     },
-    handlerRegister () {
+    handleRegister () {
       REGISTER_DATASOURCE_INSTANCE(this.datasource.instance)
         .then(() => {
           if (this.formStatus.operationType) {

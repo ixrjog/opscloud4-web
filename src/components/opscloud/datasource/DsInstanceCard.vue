@@ -3,11 +3,12 @@
   <div>
     <el-card shadow="hover">
       <div slot="header" class="clearfix">
-        <el-tag style="margin-right: 5px" size="mini">{{ instance.instanceType }}</el-tag>
+<!--        <el-tag style="margin-right: 5px" size="mini" v-if="false">{{ instance.instanceType }}</el-tag>-->
         <my-span :content="instance.instanceName" style="font-size: 14px"/>
-        <el-button class="job-size" circle type="primary" v-show="instance.jobSize > 0">
-          {{ instance.jobSize }}
-        </el-button>
+        <el-tag class="versionTag" size="mini"  v-if="instance.version !== null && instance.version !== ''">{{ instance.version }}</el-tag>
+        <el-tag v-if="instance.isActive" class="activeTag"><i class="fab fa-apple"/></el-tag>
+        <el-tag v-if="!instance.isActive" class="inactiveTag"><i class="fas fa-ban"/></el-tag>
+        <el-tag v-if="instance.jobSize > 0" class="jobTag"><i class="fas fa-recycle"/>{{ instance.jobSize }}</el-tag>
         <span class="btn-group">
           <el-tooltip class="item" effect="dark" content="实例任务" placement="top-start">
           <el-button type="text" @click="handleSchedule">
@@ -218,12 +219,28 @@ export default {
 
 <style lang="less" scoped>
 
-.job-size {
-  text-align: center;
-  margin-left: 2px;
-  width: 16px;
-  height: 16px;
-  padding: 0;
+.versionTag {
+  margin-left: 5px;
+  color: white;
+  background-color: #00a2d4;
+}
+
+.activeTag {
+  margin-left: 5px;
+  color: white;
+  background-color: #09a104;
+}
+
+.inactiveTag {
+  margin-left: 5px;
+  color: white;
+  background-color: #ee4061;
+}
+
+.jobTag {
+  margin-left: 5px;
+  color: white;
+  background-color: #00a2d4;
 }
 
 .btn-group {
