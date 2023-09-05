@@ -39,23 +39,30 @@
         </el-table-column>
         <el-table-column prop="resourceMap" label="绑定资源" width="400px">
           <template v-slot="scope">
-            <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key" class="resDiv">
+            <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key">
               <el-divider content-position="left">
                 <b style="color: #9d9fa3">{{ key | getAppResText }}</b>
               </el-divider>
               <div v-for="item in value" :key="item.id">
-                <el-tooltip effect="dark" :content="item.comment" placement="top-start"
-                            :disabled="!item.comment">
-                  <el-tag size="mini" style="margin-left: 5px;margin-bottom: 5px">
-                    <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>
-                    {{ item.name }}
+                <el-tooltip effect="dark" :content="item.comment" placement="top-start" :disabled="!item.comment">
+                  <el-tag size="mini" class="activeTag">
+                    <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}
                   </el-tag>
                 </el-tooltip>
               </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="users" label="授权用户" width="350">
+        <el-table-column prop="leoJobs" label="Leo任务" width="200">
+          <template v-slot="scope">
+            <div v-for="leoJob in scope.row.leoJobs" :key="leoJob.id">
+                <el-tag size="mini" :class="leoJob.isActive ? 'activeTag' : 'inactiveTag'">
+                  {{ leoJob.name }}
+                </el-tag>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="users" label="授权用户" width="150">
           <template v-slot="scope">
             <users-tag :users="scope.row.users"/>
           </template>
@@ -270,6 +277,20 @@ export default {
 
 <style lang="less" scoped>
 
+.activeTag {
+  background-color: #408618;
+  color: white;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.inactiveTag {
+  background-color: rgb(131, 131, 131);
+  color: white;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
 .el-input {
   display: inline-block;
   max-width: 200px;
@@ -297,4 +318,5 @@ export default {
   width: 100%;
   margin: 12px 0;
 }
+
 </style>

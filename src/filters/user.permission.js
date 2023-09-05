@@ -11,6 +11,19 @@ export function toPermissionRoleType (value) {
   }
 }
 
+export function toPermissionRoleClass (value) {
+  switch (value) {
+    case 'dev':
+      return 'develop'
+    case 'qa':
+      return 'qualityAssurance'
+    case 'admin':
+      return 'admin'
+    default:
+      return 'user'
+  }
+}
+
 export function toPermissionRoleText (value) {
   switch (value) {
     case 'dev':

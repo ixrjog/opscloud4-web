@@ -15,20 +15,18 @@
         </el-row>
         <div style="height: 5px"/>
         <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
-          <el-table-column prop="name" label="名称" sortable width="300"/>
+          <el-table-column prop="name" label="名称" sortable/>
           <el-table-column prop="displayName" label="规则" sortable/>
           <el-table-column prop="ruleConfig" label="规则配置">
             <template v-slot="scope">
-              <my-highlight v-if="scope.row.ruleConfig !== ''" :code="scope.row.ruleConfig"
-                            lang="yaml" :myStyle="style"/>
+              <yaml-view :yaml-content="scope.row.ruleConfig"/>
             </template>
           </el-table-column>
-          <el-table-column prop="isActive" label="有效" width="80">
+          <el-table-column prop="isActive" label="有效">
             <template v-slot="scope">
               <active-tag :is-active="scope.row.isActive"/>
             </template>
           </el-table-column>
-          <el-table-column prop="comment" label="说明" v-if="false"/>
           <el-table-column label="操作" width="280">
             <template v-slot="scope">
               <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
@@ -53,9 +51,9 @@ import { DELETE_LEO_RULE_BY_ID, QUERY_LEO_RULE_PAGE } from '@/api/modules/leo/le
 
 import Pagination from '@/components/opscloud/common/page/Pagination.vue'
 import ActiveTag from '@/components/opscloud/common/tag/ActiveTag.vue'
-import MyHighlight from '@/components/opscloud/common/MyHighlight.vue'
 import LeoRuleEditor from '@/components/opscloud/leo/LeoRuleEditor.vue'
 import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
+import YamlView from '@/components/opscloud/common/view/YamlView.vue'
 
 const activeOptions = [{
   value: true,
@@ -66,7 +64,7 @@ const activeOptions = [{
 }]
 
 export default {
-  name: 'leoRuleTable',
+  name: 'LeoRuleTable',
   data () {
     return {
       activeName: 'rule',
@@ -88,7 +86,6 @@ export default {
           updateTitle: '更新规则配置'
         }
       },
-      style: { height: '80px' },
       queryParam: {
         queryName: '',
         isActive: '',
@@ -102,10 +99,10 @@ export default {
   },
   computed: {},
   components: {
+    YamlView,
     Pagination,
     ActiveTag,
     LeoRuleEditor,
-    MyHighlight,
     DocumentZone
   },
   filters: {},
