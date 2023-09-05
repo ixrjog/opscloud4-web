@@ -56,10 +56,10 @@
               {{ $t('leo.build.autoDeploy') }}
             </el-checkbox>
           </el-form-item>
-          <el-form-item label="Deployment" size="mini" :label-width="formStatus.labelWidth" required v-show="this.doBuildParam.autoDeploy">
+          <el-form-item :label="$t('leo.build.deployment')" size="mini" :label-width="formStatus.labelWidth" required v-show="this.doBuildParam.autoDeploy">
             <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
                        :disabled="!this.doBuildParam.autoDeploy"
-                       :placeholder="$t('leo.build.selectDeploy')" style="width: 500px" :remote-method="getLeoDeployDeployment">
+                       :placeholder="$t('leo.build.selectDeployment')" style="width: 500px" :remote-method="getLeoDeployDeployment">
               <el-option v-for="item in deployDeploymentOptions"
                          :key="item.businessId"
                          :label="item.name"

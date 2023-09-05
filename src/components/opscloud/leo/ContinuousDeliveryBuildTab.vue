@@ -43,7 +43,7 @@
           <latest-build-info :buildInfos="scope.row.latestBuildInfos"/>
         </template>
       </el-table-column>
-      <el-table-column prop="env" :label="$t('common.env')" width="80">
+      <el-table-column prop="env" :label="$t('common.env')" width="120">
         <template v-slot="scope">
           <env-tag :env="scope.row.env"/>
         </template>

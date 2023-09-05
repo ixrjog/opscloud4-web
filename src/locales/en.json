@@ -34,12 +34,27 @@
       "versionName": "Version Name",
       "versionDesc": "Version Desc",
       "doBuild": "Do Build",
+      "deployment": "Deployment",
       "selectDeployment": "Select deployment",
       "name": "Name",
       "preferredBranch": "Preferred Branch",
       "latestBuild": "Latest Build",
       "builds": "Builds",
-      "build": "Build"
+      "build": "Build",
+      "details": {
+        "startTime": "Start Time",
+        "buildResult" :"Build Result",
+        "versionName" : "Version Name",
+        "sshUrl": "Ssh Url",
+        "branch": "Branch",
+        "commit": "Commit",
+        "env" : "Environment",
+        "jenkins": "Jenkins",
+        "image": "Image",
+        "imageTag" : "Image Tag",
+        "verified" : "Verified",
+        "notVerified" : "Not verified"
+      }
     },
     "deploy": {
       "createDeployTask": "Create Deploy Task",

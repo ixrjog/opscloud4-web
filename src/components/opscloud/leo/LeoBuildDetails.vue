@@ -37,7 +37,7 @@
         </el-col>
         <el-col :span="10">
           <el-row style="margin-left: 10px">
-            <div><span class="label">执行时间</span>
+            <div><span class="label">{{  $t('leo.build.details.startTime') }}</span>
               <span v-show="build.startTime !== null && build.startTime !== ''"> {{
                   build.startTime
                 }} - {{ build.endTime ? build.endTime : '?' }}
@@ -45,13 +45,13 @@
                 style="color: #3b97d7">{{ build.runtime }}</b>&gt;</span>
               </span>
             </div>
-            <div><span class="label">构建结果</span>
+            <div><span class="label">{{ $t('leo.build.details.buildResult') }}</span>
               <build-result style="margin-left: 5px" :build="build"/>
             </div>
-            <div><span class="label">构件版本</span> {{ build.versionName }}</div>
-            <div><span class="label">项目仓库</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
-            <div><span class="label">构建分支</span> {{ build.buildDetails.build.dict.branch }}</div>
-            <div><span class="label">COMMIT</span> {{ build.buildDetails.build.dict.commit }}
+            <div><span class="label">{{ $t('leo.build.details.versionName') }}</span> {{ build.versionName }}</div>
+            <div><span class="label">{{  $t('leo.build.details.sshUrl') }}</span> {{ build.buildDetails.build.gitLab.project.sshUrl }}</div>
+            <div><span class="label">{{ $t('leo.build.details.branch') }}</span> {{ build.buildDetails.build.dict.branch }}</div>
+            <div><span class="label">{{ $t('leo.build.details.commit') }}</span> {{ build.buildDetails.build.dict.commit }}
               <span v-if="build.buildDetails.build !== null &&
                     build.buildDetails.build.gitLab !== null &&
                     build.buildDetails.build.gitLab.project !== null &&
@@ -60,22 +60,22 @@
                 <a target="blank" :href="build.buildDetails.build.gitLab.project.commit.webUrl"
                    style="color: #179bb9"><i class="fab fa-git-alt" style="margin-right: 1px"/></a></span>
             </div>
-            <div><span class="label">环境类型</span> {{ build.buildDetails.build.dict.env }}</div>
-            <div><span class="label">执行引擎</span>
+            <div><span class="label">{{ $t('leo.build.details.env') }}</span> {{ build.buildDetails.build.dict.env }}</div>
+            <div><span class="label">{{ $t('leo.build.details.jenkins') }}</span>
               {{
                 build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''
               }}
             </div>
             <!--kubernetes-image-->
             <template v-if="build.buildDetails.build.type=== 'kubernetes-image'">
-              <div><span class="label">容器镜像</span> {{ build.buildDetails.build.dict.image }}
+              <div><span class="label">{{ $t('leo.build.details.image') }}</span> {{ build.buildDetails.build.dict.image }}
                 <el-tag style="margin-left: 2px"
                         :type="build.isImageExists ? 'success' : 'warning'">{{
-                    build.isImageExists ? '已验证' : '未验证'
+                    build.isImageExists ? $t('leo.build.details.verified') : $t('leo.build.details.notVerified')
                   }}
                 </el-tag>
               </div>
-              <div><span class="label">镜像标签</span> {{ build.buildDetails.build.dict.imageTag }}</div>
+              <div><span class="label">{{ $t('leo.build.details.imageTag') }}</span> {{ build.buildDetails.build.dict.imageTag }}</div>
             </template>
             <!--maven-publish-->
             <template v-if="build.buildDetails.build.type=== 'maven-publish'">
@@ -230,6 +230,10 @@ export default {
 
 .label {
   color: #99a9bf;
+  display: inline-block;
+  text-align: right;
+  width: 80px;
+  margin-right: 10px;
 }
 
 </style>

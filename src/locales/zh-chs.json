@@ -28,6 +28,7 @@
       "sshUrl": "GitLab地址",
       "queryTags": "查询标签",
       "branch": "分支",
+      "deployment": "无状态",
       "deployOptions": "部署选项",
       "autoDeploy": "构建完成后自动部署",
       "project": "项目",
@@ -39,7 +40,21 @@
       "preferredBranch": "首选分支",
       "latestBuild": "最新构建",
       "builds": "构建次数",
-      "build": "构建"
+      "build": "构建",
+      "details": {
+        "startTime": "执行时间",
+        "buildResult" :"执行结果",
+        "versionName" : "版本名称",
+        "sshUrl": "仓库地址",
+        "branch": "构建分支",
+        "commit": "COMMIT",
+        "env" : "环境名称",
+        "jenkins": "执行引擎",
+        "image": "镜像地址",
+        "imageTag" : "镜像标签",
+        "verified" : "已验证",
+        "notVerified" : "未验证"
+      }
     },
     "deploy": {
       "createDeployTask": "创建部署任务",
