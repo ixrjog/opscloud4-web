@@ -8,7 +8,7 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.METER_SPHERE.METER_SPHERE_BUILD_HOOK"
                      :tableLayout="tableLayout.build" ref="buildHookTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="SUCCESS" width="150px">
+            <el-table-column prop="properties" label="SUCCESS">
               <template v-slot="scope">
                 <el-tag mini :type="scope.row.properties.success === 'true' ? 'success': 'danger'">
                   {{ scope.row.properties.success }}
@@ -17,12 +17,12 @@
             </el-table-column>
             <el-table-column prop="properties" label="Hook">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.hook !== ''" :code="scope.row.properties.hook" lang="json"/>
+                <json-view :json-content="scope.row.properties.hook"/>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="Result">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.body !== ''" :code="scope.row.properties.body" lang="json"/>
+                <json-view :json-content="scope.row.properties.body"/>
               </template>
             </el-table-column>
           </template>
@@ -32,7 +32,7 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.METER_SPHERE.METER_SPHERE_DEPLOY_HOOK"
                      :tableLayout="tableLayout.deploy" ref="deployHookTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="SUCCESS" width="150px">
+            <el-table-column prop="properties" label="SUCCESS">
               <template v-slot="scope">
                 <el-tag mini :type="scope.row.properties.success === 'true' ? 'success': 'danger'">
                   {{ scope.row.properties.success }}
@@ -41,12 +41,12 @@
             </el-table-column>
             <el-table-column prop="properties" label="Hook">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.hook !== ''" :code="scope.row.properties.hook" lang="json"/>
+                <json-view :json-content="scope.row.properties.hook"/>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="Result">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.body !== ''" :code="scope.row.properties.body" lang="json"/>
+                <json-view :json-content="scope.row.properties.body"/>
               </template>
             </el-table-column>
           </template>
@@ -61,7 +61,7 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
-import MyHighlight from '@/components/opscloud/common/MyHighlight'
+import JsonView from '@/components/opscloud/common/view/JsonView.vue'
 
 const tableLayout = {
   build: {
@@ -123,9 +123,9 @@ export default {
     this.init()
   },
   components: {
+    JsonView,
     AssetTable,
-    DatasourceInstanceTitle,
-    MyHighlight
+    DatasourceInstanceTitle
   },
   methods: {
     handleClick (tab, event) {

@@ -8,7 +8,7 @@
         <asset-table :instanceId="instanceId" :assetType="assetType.ALIYUN_EVENTBRIDGE.EVENT_BRIDGE_DEPLOY_EVENT"
                      :tableLayout="tableLayout.deploy" ref="deployEventTable">
           <template v-slot:extend>
-            <el-table-column prop="properties" label="Success" width="150px">
+            <el-table-column prop="properties" label="Success">
               <template v-slot="scope">
                 <el-tag mini :type="scope.row.properties.success === 'true' ? 'success': 'danger'">
                   {{ scope.row.properties.success }}
@@ -17,7 +17,7 @@
             </el-table-column>
             <el-table-column prop="properties" label="Hook">
               <template v-slot="scope">
-                <my-highlight v-if="scope.row.properties.hook !== ''" :code="scope.row.properties.hook" lang="json"/>
+                <json-view :json-content="scope.row.properties.hook"/>
               </template>
             </el-table-column>
             <el-table-column prop="properties" label="Request ID">
@@ -37,7 +37,7 @@
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
-import MyHighlight from '@/components/opscloud/common/MyHighlight'
+import JsonView from '@/components/opscloud/common/view/JsonView.vue'
 
 const tableLayout = {
   deploy: {
@@ -80,7 +80,7 @@ export default {
   components: {
     AssetTable,
     DatasourceInstanceTitle,
-    MyHighlight
+    JsonView
   },
   methods: {
     handleClick (tab, event) {
