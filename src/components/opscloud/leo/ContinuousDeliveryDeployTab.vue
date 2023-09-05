@@ -13,7 +13,7 @@
         </el-radio-button>
       </el-radio-group>
       <el-select v-model="queryParam.applicationId" filterable clearable size="mini"
-                 remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
+                 remote reserve-keyword :placeholder="$t('common.search.searchApplication')" :remote-method="getApplication"
                  @change="fetchData">
         <el-option v-for="item in applicationOptions"
                    :key="item.id"
@@ -27,16 +27,16 @@
         <i class="fas fa-circle-notch"/>
       </el-button>
       <el-button type="primary" size="mini" @click="createDeploy"
-                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">Create Deploy Task
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">{{ $t('leo.deploy.createDeployTask') }}
       </el-button>
       <el-button type="primary" plain size="mini" @click="handleHistory()"
-                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">History
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">{{ $t('common.history') }}
       </el-button>
     </el-row>
     <!-- 任务&无状态版本详情 -->
-    <div style="height: 10px"></div>
+    <div style="height: 10px"/>
     <el-row :gutter="20">
-      <el-divider content-position="left">Task & Kubernetes Deployment Version Details
+      <el-divider content-position="left">{{ $t('leo.deploy.deploymentVersionDetails') }}
         <deploy-task-tips/>
       </el-divider>
       <!--suppress VueUnrecognizedDirective -->
@@ -50,7 +50,7 @@
     <!-- 最新部署 -->
     <!--    v-if="data.deploys.length > 0"-->
     <el-row :gutter="20">
-      <el-divider content-position="left">Latest Deployment Tasks</el-divider>
+      <el-divider content-position="left">{{ $t('leo.deploy.latestDeploymentTasks') }}</el-divider>
       <!--suppress VueUnrecognizedDirective -->
       <span>
         <div v-if="data.deploys.length === 0" style="height: 60px; color: #909399; text-align: center"
@@ -202,11 +202,11 @@ const leaderLineOptions = {
 
 const wsStates = {
   success: {
-    name: 'WS连接成功',
+    name: 'Socket successful',
     type: 'success'
   },
   fail: {
-    name: 'WS连接断开',
+    name: 'Socket disconnected',
     type: 'warning'
   }
 }

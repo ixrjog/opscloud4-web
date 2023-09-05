@@ -1,13 +1,78 @@
 {
-	"_element": "zh-CN",
-	"_name": "简体中文",
-	"page": {
-		"demo": {
-			"playground": {
-				"locales": {
-					"text": "D2Admin 是一个完全 开源免费 的企业中后台产品前端集成方案，使用最新的前端技术栈，已经做好大部分项目前期准备工作，并且带有大量示例代码，助力管理系统敏捷开发。"
-				}
-			}
-		}
-	}
+  "_element": "zh-CN",
+  "_name": "简体中文",
+  "hello": "你好",
+  "common": {
+    "ok": "确定",
+    "close": "关闭",
+    "env": "环境",
+    "tags": "标签",
+    "operate": "操作",
+    "history": "历史",
+    "search": {
+      "searchApplication": "搜索并选择应用",
+      "searchJob": "搜索并选择任务",
+      "searchProject": "搜索并选择项目"
+    },
+    "select": {
+      "selectDeployment": "选择无状态"
+    }
+  },
+  "application": {
+    "name": "应用名称"
+  },
+  "leo": {
+    "build": {
+      "jobName": "任务名称",
+      "jobKey": "任务主键",
+      "sshUrl": "GitLab地址",
+      "queryTags": "查询标签",
+      "branch": "分支",
+      "deployOptions": "部署选项",
+      "autoDeploy": "构建完成后自动部署",
+      "project": "项目",
+      "versionName": "版本名称",
+      "versionDesc": "版本说明",
+      "doBuild": "执行构建",
+      "selectDeployment": "选择无状态",
+      "name": "任务名称",
+      "preferredBranch": "首选分支",
+      "latestBuild": "最新构建",
+      "builds": "构建次数",
+      "build": "构建"
+    },
+    "deploy": {
+      "createDeployTask": "创建部署任务",
+      "deploymentVersionDetails": "无状态版本详情",
+      "latestDeploymentTasks": "最新部署任务",
+      "deployment": "无状态",
+      "deployType": "部署类型",
+      "deployTypes": {
+        "rolling": "滚动 Rolling",
+        "rollingDesc": "渐进式创建新版本(滚动比例25%)，然后停止老版本，自动完成整个流程",
+        "redeploy": "重启 Redeploy",
+        "redeployDesc": "不变更版本，只滚动重启所有副本。离线环境重新上线",
+        "offline": "下线 Offline",
+        "offlineDesc": "允许非生产环境和Canary环境下线"
+      },
+      "Rolling": "",
+      "buildJobName": "构建任务名称",
+      "releaseVersion": "部署版本",
+      "deployDesc": "部署说明",
+      "searchReleaseVersion": "搜索并选择版本",
+      "doDeploy": "执行部署"
+    },
+    "job": {
+      "jobEnv": "任务环境"
+    }
+  },
+  "page": {
+    "demo": {
+      "playground": {
+        "locales": {
+          "text": "D2Admin 是一个完全 开源免费 的企业中后台产品前端集成方案，使用最新的前端技术栈，已经做好大部分项目前期准备工作，并且带有大量示例代码，助力管理系统敏捷开发。"
+        }
+      }
+    }
+  }
 }

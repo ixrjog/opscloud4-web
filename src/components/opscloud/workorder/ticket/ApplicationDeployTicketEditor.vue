@@ -90,7 +90,7 @@ import {
   SAVE_WORK_ORDER_TICKET,
   SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
-import SelectItem from '@/components/opscloud/common/SelectItem.vue'
+
 import TicketLeoBuildEntrySelector from '@/components/opscloud/workorder/child/TicketLeoBuildEntrySelector.vue'
 
 const TableLayout = {

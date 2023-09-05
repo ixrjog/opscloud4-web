@@ -1,13 +1,77 @@
 {
-	"_element": "en",
-	"_name": "English",
-	"page": {
-		"demo": {
-			"playground": {
-				"locales": {
-					"text": "D2Admin is a fully open source and free enterprise back-end product front-end integration solution, using the latest front-end technology stack, has prepared most of the project preparations, and with a lot of sample code to help the management system agile development."
-				}
-			}
-		}
-	}
+  "_element": "en",
+  "_name": "English",
+  "hello": "Hello",
+  "common": {
+    "ok": "Ok",
+    "close": "Close",
+    "env": "Environment",
+    "tags": "Tags",
+    "operate": "Operate",
+    "history": "History",
+    "search": {
+      "searchApplication": "Search and select an application",
+      "searchJob": "Search and select an job",
+      "searchProject": "Search and select an project"
+    },
+    "select": {
+       "selectDeployment": "Choose deployment"
+    }
+  },
+  "application": {
+    "name": "Application Name"
+  },
+  "leo": {
+    "build": {
+      "jobName": "Job Name",
+      "jobKey": "Job Key",
+      "sshUrl": "GitLab SSH URL",
+      "queryTags": "Query tags",
+      "branch": "Branch",
+      "deployOptions": "Deploy Options",
+      "autoDeploy": "Automatically deploy after build completed",
+      "project": "Project",
+      "versionName": "Version Name",
+      "versionDesc": "Version Desc",
+      "doBuild": "Do Build",
+      "selectDeployment": "Select deployment",
+      "name": "Name",
+      "preferredBranch": "Preferred Branch",
+      "latestBuild": "Latest Build",
+      "builds": "Builds",
+      "build": "Build"
+    },
+    "deploy": {
+      "createDeployTask": "Create Deploy Task",
+      "deploymentVersionDetails": "Task & Kubernetes Deployment Version Details",
+      "latestDeploymentTasks": "Latest Deployment Tasks",
+      "buildJobName": "Build Job Name",
+      "deployment": "Deployment",
+      "deployType": "Deploy Type",
+      "deployTypes": {
+        "rolling": "Rolling",
+        "rollingDesc": "Progressively create a new version (rolling ratio 25%), then stop the old version and automatically complete the entire process",
+        "redeploy": "Redeploy",
+        "redeployDesc": "Do not change the version, just restart all copies on a rolling basis. Offline environment comes back online",
+        "offline": "Offline",
+        "offlineDesc": "Allow non-production environments and canary environments to go offline"
+      },
+      "releaseVersion": "Release Version",
+      "deployDesc": "Deploy Desc",
+      "searchReleaseVersion": "Search and select an release version",
+      "doDeploy": "Do Deploy"
+    },
+    "job": {
+      "jobEnv": "Job Environment"
+    }
+  },
+  "page": {
+    "demo": {
+      "playground": {
+        "locales": {
+          "text": "D2Admin is a fully open source and free enterprise back-end product front-end integration solution, using the latest front-end technology stack, has prepared most of the project preparations, and with a lot of sample code to help the management system agile development."
+        }
+      }
+    }
+  }
 }

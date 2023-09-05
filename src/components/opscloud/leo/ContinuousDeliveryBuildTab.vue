@@ -13,7 +13,7 @@
         </el-radio-button>
       </el-radio-group>
       <el-select v-model.trim="queryParam.applicationId" filterable clearable size="mini"
-                 remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
+                 remote reserve-keyword :placeholder="$t('common.search.searchApplication')" :remote-method="getApplication"
                  @change="fetchData">
         <el-option v-for="item in applicationOptions"
                    :key="item.id"
@@ -23,7 +23,7 @@
         </el-option>
       </el-select>
       <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" clearable
-                placeholder="输入关键字查询任务名称"/>
+                :placeholder="$t('common.search.searchJob')"/>
       <el-button @click="fetchData" style="margin-left: 5px" type="primary" plain size="mini"
                  :disabled="queryParam.applicationId === null || queryParam.applicationId === ''">
         <i class="fas fa-circle-notch"/>
@@ -31,34 +31,34 @@
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
-      <el-table-column prop="name" label="Name" sortable/>
-      <el-table-column prop="branch" label="Preferred Branch" sortable>
+      <el-table-column prop="name" :label="$t('leo.build.name')" sortable/>
+      <el-table-column prop="branch" :label="$t('leo.build.preferredBranch')" sortable>
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"/>
           <span>{{ scope.row.branch }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="latestBuildInfos" label="Latest Build">
+      <el-table-column prop="latestBuildInfos" :label="$t('leo.build.latestBuild')">
         <template v-slot="scope">
           <latest-build-info :buildInfos="scope.row.latestBuildInfos"/>
         </template>
       </el-table-column>
-      <el-table-column prop="env" label="Env" width="80">
+      <el-table-column prop="env" :label="$t('common.env')" width="80">
         <template v-slot="scope">
           <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
-      <el-table-column prop="buildSize" label="Builds" width="80">
+      <el-table-column prop="buildSize" :label="$t('leo.build.builds')" width="80">
       </el-table-column>
-      <el-table-column prop="tags" label="Tags" width="250">
+      <el-table-column prop="tags" :label="$t('common.tags')" width="250">
         <template v-slot="scope">
           <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
-      <el-table-column label="Operate" width="200">
+      <el-table-column :label="$t('common.operate')" width="200">
         <template v-slot="scope">
-          <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">Build</el-button>
-          <el-button type="primary" plain size="mini" @click="handleHistory(scope.row)">History</el-button>
+          <el-button type="primary" plain size="mini" @click="handleBuild(scope.row)">{{ $t('leo.build.build') }}</el-button>
+          <el-button type="primary" plain size="mini" @click="handleHistory(scope.row)">{{ $t('common.history') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,11 +104,11 @@ import LeoDoBuildFrontEndEditor from '@/components/opscloud/leo/LeoDoBuildFrontE
 
 const wsStates = {
   success: {
-    name: 'WS连接成功',
+    name: 'Socket successful',
     type: 'success'
   },
   fail: {
-    name: 'WS连接断开',
+    name: 'Socket disconnected',
     type: 'warning'
   }
 }

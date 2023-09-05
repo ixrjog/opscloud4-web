@@ -1,19 +1,19 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog title="Deploy Task" :visible.sync="formStatus.visible" width="1100px">
+  <el-dialog title="Deploy Task" :visible.sync="formStatus.visible" width="1200px">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="Home" name="deploy">
         <el-form :model="application">
-          <el-form-item label="Application Name" :label-width="formStatus.labelWidth">
+          <el-form-item :label="$t('application.name')" :label-width="formStatus.labelWidth">
             <el-input v-model="application.name" size="mini" readonly/>
           </el-form-item>
-          <el-form-item label="Job Env" :label-width="formStatus.labelWidth">
+          <el-form-item :label="$t('leo.job.jobEnv')" :label-width="formStatus.labelWidth">
             <el-input v-model="env.envName" size="mini" readonly style="width: 500px"/>
           </el-form-item>
-          <el-form-item label="Build Job Name" :label-width="formStatus.labelWidth" required>
+          <el-form-item :label="$t('leo.deploy.buildJobName')" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.jobId" size="mini" filterable clearable remote reserve-keyword
                        @change="selLeoJob"
-                       placeholder="搜索并选择任务" style="width: 500px" :remote-method="getLeoJob">
+                       :placeholder="$t('common.search.searchJob')" style="width: 500px" :remote-method="getLeoJob">
               <el-option v-for="item in jobOptions"
                          :key="item.id"
                          :label="item.name"
@@ -22,10 +22,10 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Deployment" :label-width="formStatus.labelWidth" required>
+          <el-form-item :label="$t('leo.deploy.deployment')" :label-width="formStatus.labelWidth" required>
             <el-select v-model="doDeployParam.assetId" size="mini" filterable clearable remote reserve-keyword
                        :disabled="this.doDeployParam.jobId === ''"
-                       placeholder="选择Deployment" style="width: 500px" :remote-method="getLeoDeployDeployment">
+                       :placeholder="$t('common.select.selectDeployment')" style="width: 500px" :remote-method="getLeoDeployDeployment">
               <el-option v-for="item in deployDeploymentOptions"
                          :key="item.businessId"
                          :label="item.name"
@@ -34,36 +34,36 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Deploy Type" :label-width="formStatus.labelWidth" required>
+          <el-form-item :label="$t('leo.deploy.deployType')" :label-width="formStatus.labelWidth" required>
             <el-row>
               <el-col :span="8">
-                <el-radio v-model="doDeployParam.deployType" size="mini" label="ROLLING" border>滚动 Rolling</el-radio>
+                <el-radio v-model="doDeployParam.deployType" size="mini" label="ROLLING" border>{{ $t('leo.deploy.deployTypes.rolling') }}</el-radio>
                 <el-alert class="radio-desc" :closable="false"
-                          title="渐进式创建新版本(滚动比例25%)，然后停止老版本，自动完成整个流程"
+                          :title="$t('leo.deploy.deployTypes.rollingDesc')"
                           type="info"/>
               </el-col>
               <el-col :span="8">
-                <el-radio v-model="doDeployParam.deployType" size="mini" label="REDEPLOY" border>重启 Redeploy
+                <el-radio v-model="doDeployParam.deployType" size="mini" label="REDEPLOY" border>{{ $t('leo.deploy.deployTypes.redeploy') }}
                 </el-radio>
                 <el-alert class="radio-desc" :closable="false"
-                          title="不变更版本，只滚动重启所有副本。离线的Canary环境重新上线"
+                          :title="$t('leo.deploy.deployTypes.redeployDesc')"
                           type="info"/>
               </el-col>
               <!--            小部分流量，升级并导入新版本，手工验证完毕后，全量升级部署-->
               <el-col :span="8">
-                <el-radio v-model="doDeployParam.deployType" size="mini" label="OFFLINE" border>下线 Offline</el-radio>
+                <el-radio v-model="doDeployParam.deployType" size="mini" label="OFFLINE" border>{{ $t('leo.deploy.deployTypes.offline') }}</el-radio>
                 <el-alert class="radio-desc" :closable="false"
-                          title="允许非生产环境和canary环境下线"
+                          :title="$t('leo.deploy.deployTypes.offlineDesc')"
                           type="info">
                 </el-alert>
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="Release Version" :label-width="formStatus.labelWidth" required
+          <el-form-item :label="$t('leo.deploy.releaseVersion')" :label-width="formStatus.labelWidth" required
                         v-if="doDeployParam.deployType === 'ROLLING'">
             <el-select v-model="doDeployParam.buildId" size="mini" filterable clearable remote reserve-keyword
                        :disabled="doDeployParam.jobId === ''"
-                       placeholder="搜索并选择版本" style="width: 400px" :remote-method="getLeoDeployVersion">
+                       :placeholder="$t('leo.deploy.searchReleaseVersion')" style="width: 400px" :remote-method="getLeoDeployVersion">
               <el-option v-for="item in deployVersionOptions"
                          :key="item.id"
                          :label="item.versionName"
@@ -79,9 +79,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="Project" :label-width="formStatus.labelWidth">
+          <el-form-item :label="$t('leo.build.project')" :label-width="formStatus.labelWidth">
             <el-select v-model="doDeployParam.projectId" size="mini" filterable clearable remote reserve-keyword
-                       placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
+                       :placeholder="$t('common.search.searchProject')" style="width: 500px" :remote-method="getProject">
               <el-option v-for="item in projectOptions"
                          :key="item.id"
                          :label="item.name"
@@ -91,20 +91,20 @@
             </el-select>
             <el-button style="margin-left: 5px" size="mini" @click="openUrl">Jump to Create Project</el-button>
           </el-form-item>
-          <el-form-item label="Deploy Desc" :label-width="formStatus.labelWidth">
+          <el-form-item :label="$t('leo.deploy.deployDesc')" :label-width="formStatus.labelWidth">
             <el-input v-model="doDeployParam.comment" size="mini"/>
           </el-form-item>
         </el-form>
         <div style="width:100%; text-align:center">
           <el-button size="mini" type="primary" @click="doDeploy" icon="fa fa-play" :loading="buttons.doDeploying"
                      :disabled="buttons.doDeploying || doDeployParam.jobId === '' ||  (doDeployParam.deployType === 'ROLLING' &&  doDeployParam.buildId === '') || doDeployParam.assetId === ''">
-            <span style="margin-left: 2px">Do Deploy</span>
+            <span style="margin-left: 2px">{{ $t('leo.deploy.doDeploy') }}</span>
           </el-button>
         </div>
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="formStatus.visible = false">Close</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">{{ $t('common.close') }}</el-button>
     </div>
   </el-dialog>
 </template>
