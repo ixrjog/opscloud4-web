@@ -115,7 +115,7 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"/>
     <leo-job-editor :formStatus="formStatus.job" ref="jobEditor"
-                    @close="fetchData"></leo-job-editor>
+                    @close="fetchData"/>
     <leo-do-build-kubernetes-image-editor :form-status="formStatus.build.kubernetesImage"
                                           ref="doBuildKubernetesImageEditor"/>
     <leo-do-build-maven-publish-editor :form-status="formStatus.build.mavenPublish" ref="doBuildMavenPublishEditor"/>

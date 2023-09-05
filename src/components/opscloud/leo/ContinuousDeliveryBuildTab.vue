@@ -31,7 +31,7 @@
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" v-loading="table.loading" style="width: 100%">
-      <el-table-column prop="name" label="Name" sortable></el-table-column>
+      <el-table-column prop="name" label="Name" sortable/>
       <el-table-column prop="branch" label="Preferred Branch" sortable>
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"/>

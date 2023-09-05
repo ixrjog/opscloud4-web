@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <el-dialog :title="formStatus.operationType ? formStatus.addTitle : formStatus.updateTitle"
-             :visible.sync="formStatus.visible">
+             :visible.sync="formStatus.visible" width="1000px">
     <el-form :model="serverGroupType">
       <el-form-item label="名称" :label-width="formStatus.labelWidth">
         <el-input v-model="serverGroupType.name" placeholder="请输入内容" size="mini"/>

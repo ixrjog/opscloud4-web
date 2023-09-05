@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog :visible.sync="formStatus.visible" width="55%" :before-close="beforeClose">
+  <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '1500px': '1200px'" :before-close="beforeClose">
     <!--页眉-->
     <template v-slot:title>
       <ticket-title v-if="ticketView !== null" :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
 import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
@@ -111,10 +112,16 @@ import TicketSnsTopicForm from '@/components/opscloud/workorder/child/TicketSnsT
 import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import CopySpan from '@/components/opscloud/common/CopySpan'
 
+const TableLayout = {
+  instance: false,
+  entryName: 'VPN权限'
+}
+
 export default {
   data () {
     return {
       ticketView: null,
+      tableLayout: TableLayout,
       approvalComment: '', // 审批说明
       submitting: false,
       saving: false,

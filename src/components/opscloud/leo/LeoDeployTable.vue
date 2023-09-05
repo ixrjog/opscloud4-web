@@ -29,7 +29,7 @@
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" size="mini" class="button">刷新</el-button>
+      <el-button @click="fetchData" size="mini" class="button"><i class="fas fa-circle-notch"/></el-button>
     </el-row>
     <div style="height: 5px"/>
     <div v-for="deploy in table.data" :key="deploy.id" style="font-size: 12px">

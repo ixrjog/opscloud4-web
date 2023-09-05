@@ -52,8 +52,8 @@
             </el-alert>
           </el-form-item>
           <el-form-item label="Deploy Options" :label-width="formStatus.labelWidth" required>
-            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">Automatically deploy after
-              build completed
+            <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">
+              Automatically deploy after build completed
             </el-checkbox>
           </el-form-item>
           <el-form-item label="Deployment" size="mini" :label-width="formStatus.labelWidth" required v-show="this.doBuildParam.autoDeploy">

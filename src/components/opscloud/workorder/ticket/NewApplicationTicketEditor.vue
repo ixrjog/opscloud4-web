@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog :visible.sync="formStatus.visible" width="70%" :before-close="beforeClose">
+  <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '1500px': '1200px'" :before-close="beforeClose">
     <!--页眉-->
     <template v-slot:title>
       <ticket-title v-if="ticketView !== null" :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
