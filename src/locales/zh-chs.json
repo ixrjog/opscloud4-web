@@ -9,13 +9,20 @@
     "tags": "标签",
     "operate": "操作",
     "history": "历史",
+    "noInformationAvailable": "无可用信息",
     "search": {
+      "search": "输入关键字查询",
       "searchApplication": "搜索并选择应用",
       "searchJob": "搜索并选择任务",
       "searchProject": "搜索并选择项目"
     },
     "select": {
       "selectDeployment": "选择无状态"
+    },
+    "active" : "有效",
+    "activeOptions": {
+      "active": "有效",
+      "inactive": "无效"
     }
   },
   "application": {
@@ -54,7 +61,12 @@
         "imageTag" : "镜像标签",
         "verified" : "已验证",
         "notVerified" : "未验证"
-      }
+      },
+      "stopBuilding": "停止构建",
+      "consoleLog": "控制台流日志",
+      "editBuildDetails": "编辑构建详情",
+      "buildDetail" : "构建详情",
+      "buildConfig": "构建配置"
     },
     "deploy": {
       "createDeployTask": "创建部署任务",

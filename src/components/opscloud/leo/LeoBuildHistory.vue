@@ -2,14 +2,14 @@
 <template>
   <el-dialog :title="leoJob.name" :visible.sync="formStatus.visible" width="90%">
     <el-row>
-      <el-input v-model="queryParam.queryName" size="mini" placeholder="输入关键字查询" @change="fetchData"/>
-      <el-select v-model="queryParam.isActive" size="mini" clearable placeholder="有效" @change="fetchData">
+      <el-input v-model="queryParam.queryName" size="mini" :placeholder="$t('common.search.search')" @change="fetchData"/>
+      <el-select v-model="queryParam.isActive" size="mini" clearable :placeholder="$t('common.active.active')" @change="fetchData">
         <el-option v-for="item in activeOptions"
                    :key="item.value"
-                   :label="item.label"
+                   :label="$t(item.label)"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
+      <el-button @click="fetchData" size="mini" class="button"><i class="fas fa-circle-notch"/></el-button>
     </el-row>
     <div style="height: 5px"/>
     <pagination v-show="table.pagination.total !==0" :pagination="table.pagination"
@@ -46,10 +46,10 @@ const options = {
 
 const activeOptions = [{
   value: true,
-  label: '有效'
+  label: 'common.activeOptions.active'
 }, {
   value: false,
-  label: '无效'
+  label: 'common.activeOptions.inactive'
 }]
 
 export default {

@@ -101,5 +101,13 @@ tools.dateFormatter = function (date) {
   return `${date.getFullYear()}-${month}-${strDate}`
 }
 
+tools.i18nAgo = function (ago) {
+  return ago.replace('秒前', ' seconds ago')
+    .replace('分钟前', ' minutes ago')
+    .replace('小时前', ' hours ago')
+    .replace('天前', ' days ago')
+    .replace('月前', ' month ago')
+    .replace('年前', ' year ago')
+}
 
 export default tools

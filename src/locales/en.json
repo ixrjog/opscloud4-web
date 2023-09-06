@@ -5,17 +5,24 @@
   "common": {
     "ok": "Ok",
     "close": "Close",
-    "env": "Environment",
+    "env": "Env",
     "tags": "Tags",
     "operate": "Operate",
     "history": "History",
+    "noInformationAvailable": "No information available",
     "search": {
+      "search": "Enter keyword query",
       "searchApplication": "Search and select an application",
       "searchJob": "Search and select an job",
       "searchProject": "Search and select an project"
     },
     "select": {
-       "selectDeployment": "Choose deployment"
+      "selectDeployment": "Choose deployment"
+    },
+    "active" : "Active",
+    "activeOptions": {
+      "active": "Active",
+      "inactive": "Inactive"
     }
   },
   "application": {
@@ -26,7 +33,7 @@
       "jobName": "Job Name",
       "jobKey": "Job Key",
       "sshUrl": "GitLab SSH URL",
-      "queryTags": "Query tags",
+      "queryTags": "Query Tags",
       "branch": "Branch",
       "deployOptions": "Deploy Options",
       "autoDeploy": "Automatically deploy after build completed",
@@ -43,18 +50,24 @@
       "build": "Build",
       "details": {
         "startTime": "Start Time",
-        "buildResult" :"Build Result",
-        "versionName" : "Version Name",
+        "buildResult": "Build Result",
+        "versionName": "Version Name",
         "sshUrl": "Ssh Url",
         "branch": "Branch",
         "commit": "Commit",
-        "env" : "Environment",
+        "env": "Environment",
         "jenkins": "Jenkins",
         "image": "Image",
-        "imageTag" : "Image Tag",
-        "verified" : "Verified",
-        "notVerified" : "Not verified"
-      }
+        "imageTag": "Image Tag",
+        "verified": "Verified",
+        "notVerified": "Not verified"
+      },
+      "stopBuilding": "Stop building",
+      "consoleLog": "Console log",
+      "editBuildDetails": "Edit Build Details",
+      "buildDetail" : "Build Details",
+      "versionInformation": "Version Information",
+      "buildConfig": "Build Config"
     },
     "deploy": {
       "createDeployTask": "Create Deploy Task",

@@ -1,26 +1,26 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-dialog title="构建详情" :visible.sync="formStatus.visible" width="50%" append-to-body>
+  <el-dialog :title="$t('leo.build.buildDetail')" :visible.sync="formStatus.visible" width="50%" append-to-body>
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="版本信息" name="build" v-if="leoBuild != null">
+      <el-tab-pane :label="$t('leo.build.versionInformation')" name="build" v-if="leoBuild != null">
         <el-form :model="leoBuild">
-          <el-form-item label="版本名称" :label-width="formStatus.labelWidth">
+          <el-form-item :label="$t('leo.build.versionName')" :label-width="formStatus.labelWidth">
             <el-input v-model="leoBuild.versionName"/>
           </el-form-item>
-          <el-form-item label="版本描述" :label-width="formStatus.labelWidth">
+          <el-form-item :label="$t('leo.build.versionDesc')" :label-width="formStatus.labelWidth">
             <el-input v-model="leoBuild.versionDesc"/>
           </el-form-item>
-          <el-form-item label="有效" :label-width="formStatus.labelWidth" required>
-            <el-select v-model="leoBuild.isActive" placeholder="选择类型">
+          <el-form-item :label="$t('common.active')" :label-width="formStatus.labelWidth" required>
+            <el-select v-model="leoBuild.isActive">
               <el-option v-for="item in activeOptions"
                          :key="item.value"
-                         :label="item.label"
+                         :label="$t(item.label)"
                          :value="item.value"/>
             </el-select>
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="构建详情" name="buildConfig" v-if="leoBuild != null">
+      <el-tab-pane :label="$t('leo.build.buildCofing')" name="buildConfig" v-if="leoBuild != null">
         <el-row>
           <el-card shadow="never">
             <my-highlight :code="leoBuild.buildConfig" lang="yaml" :myStyle="style"/>
@@ -29,8 +29,8 @@
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" class="dialog-footer">
-      <el-button size="mini" @click="formStatus.visible = false">关闭</el-button>
-      <el-button size="mini" type="primary" @click="handleSave">确定</el-button>
+      <el-button size="mini" @click="formStatus.visible = false">{{ $t('common.close') }}</el-button>
+      <el-button size="mini" type="primary" @click="handleSave">{{ $t('common.ok') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -42,10 +42,10 @@ import { UPDATE_LEO_BUILD } from '@/api/modules/leo/leo.build.api'
 
 const activeOptions = [{
   value: true,
-  label: '有效'
+  label: 'common.activeOptions.active'
 }, {
   value: false,
-  label: '无效'
+  label: 'common.activeOptions.inactive'
 }]
 
 export default {
