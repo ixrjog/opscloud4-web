@@ -38,25 +38,26 @@
                 </el-button>
               </span>
             </div>
-            <div><span class="label">环境分组</span>{{ deployment.name }}</div>
-            <div><span class="label">资源限制</span>
-              <deployment-resources-limits :properties="deployment.properties"/>
-            </div>
-            <div>
-              <span class="label">副本数量</span>
-              <deployment-replicas :replicas="deployment.replicas"/>
-            </div>
-            <div><span class="label">版本名称</span>{{ deployment.versionName }}
-              <el-popover placement="right" trigger="hover">
+             <leo-label :name="$t('leo.deploy.deploymentVersion.name')">
+                {{ deployment.name }}
+              </leo-label>
+              <leo-label :name="$t('leo.deploy.deploymentVersion.resourcesLimits')">
+                <deployment-resources-limits :properties="deployment.properties"/>
+              </leo-label>
+              <leo-label :name="$t('leo.deploy.deploymentVersion.replicas')">
+                <deployment-replicas :replicas="deployment.replicas"/>
+              </leo-label>
+              <leo-label :name="$t('leo.build.versionName')">
+                {{ deployment.versionName }}<el-popover placement="right" trigger="hover">
                 <i class="el-icon-info" slot="reference"/>
-                 <span
-                   style="font-size: 10px; color: #9d9fa3">{{
-                     deployment.versionDesc === '' ? '用户未填写版本说明' : deployment.versionDesc
+                 <span style="font-size: 10px; color: #9d9fa3">{{
+                     deployment.versionDesc === '' ? $t('leo.build.noVersionDesc') : deployment.versionDesc
                    }}</span>
-              </el-popover>
-            </div>
-               <div v-if="false"><span class="label">镜像地址</span>{{ deployment.image }}</div>
-               <div><span class="label">镜像地址</span><container-image-display :image="deployment.image"/></div>
+                 </el-popover>
+              </leo-label>
+              <leo-label :name="$t('leo.build.details.image')">
+                 <container-image-display :image="deployment.image"/>
+              </leo-label>
             </el-card>
           </span>
         </span>
@@ -74,6 +75,7 @@ import { DO_DEPLOY } from '@/api/modules/leo/leo.deploy.api'
 import DeploymentResourcesLimits from '@/components/opscloud/leo/child/DeploymentResourcesLimits.vue'
 import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
+import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
 
 export default {
   name: 'LeoDeploymentVersionDetails',
@@ -92,6 +94,7 @@ export default {
     }
   },
   components: {
+    LeoLabel,
     BusinessTags,
     ContainerImageDisplay,
     CloneDeploymentEditor,
@@ -216,38 +219,33 @@ export default {
 
 >>> .el-card__body {
   padding: 3px;
-}
-
-.label {
-  /*color: #99a9bf;*/
-  color: #99a9bf;
-  margin-right: 5px;
+  line-height: 20px;
 }
 
 .versionBlue {
   border: 3px solid #128ca8;
-  width: 361px;
+  width: 400px;
   display: inline-block;
   margin-right: 5px;
 }
 
 .versionGreen {
   border: 3px solid #2bbe32;
-  width: 361px;
+  width: 400px;
   display: inline-block;
   margin-right: 5px;
 }
 
 .versionOther {
   border: 3px solid #e56c0d;
-  width: 361px;
+  width: 400px;
   display: inline-block;
   margin-right: 5px;
 }
 
 .versionOffline {
   border: 3px solid #9d9fa3;
-  width: 361px;
+  width: 400px;
   display: inline-block;
   margin-right: 5px;
 }

@@ -15,7 +15,7 @@
     <el-tooltip class="item" effect="light" content="任意窗口输入指令同步到所有终端" placement="bottom">
       <el-button @click="handleChangeBatch"
                  v-if="this.layout.status === 1 && terminalLayout.loginParam.sessionType === 'CONTAINER_TERMINAL'"
-                 :type="terminalTools.batchType" plain>命令同步
+                 :type="terminalTools.batchType" plain>{{ $t('kubeTerm.commandSynchronization') }}
       </el-button>
     </el-tooltip>
     <el-row>

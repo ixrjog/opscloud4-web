@@ -4,7 +4,19 @@
   "hello": "你好",
   "common": {
     "ok": "确定",
+    "submit": "提交",
+    "save" : "保存",
+    "agree": "同意",
+    "reject": "拒绝",
+    "view": "查看",
+    "delete": "删除",
+    "edit": "编辑",
+    "approval": "审批",
     "close": "关闭",
+    "add": "添加",
+    "batchDeletion" : "批量删除",
+    "all": "全部",
+    "pleaseEnterContent": "请输入内容",
     "env": "环境",
     "tags": "标签",
     "operate": "操作",
@@ -62,6 +74,7 @@
         "verified" : "已验证",
         "notVerified" : "未验证"
       },
+      "noVersionDesc": "用户未填写版本说明",
       "stopBuilding": "停止构建",
       "consoleLog": "控制台流日志",
       "editBuildDetails": "编辑构建详情",
@@ -82,16 +95,59 @@
         "offline": "下线 Offline",
         "offlineDesc": "允许非生产环境和Canary环境下线"
       },
+      "details": {
+        "startTime": "执行时间"
+      },
+      "deploymentVersion": {
+        "name": "环境分组",
+        "resourcesLimits": "资源限制",
+        "replicas" : "副本数量"
+      },
       "Rolling": "",
       "buildJobName": "构建任务名称",
       "releaseVersion": "部署版本",
       "deployDesc": "部署说明",
       "searchReleaseVersion": "搜索并选择版本",
-      "doDeploy": "执行部署"
+      "doDeploy": "执行部署",
+      "deployHistory" :"部署历史",
+      "deployResult": "部署结果",
+      "deploymentDetailsSnapshot": "部署详情快照",
+      "viewDeploymentSnapshot": "查看部署快照"
+    },
+    "pod": {
+      "podIp": "容器组IP",
+      "startTime": "启动时间",
+      "restart" : "重启次数"
     },
     "job": {
       "jobEnv": "任务环境"
     }
+  },
+  "kubeTerm": {
+    "selectAllContainers": "选择所有容器",
+    "viewContainerLogs": "查看选中的容器日志",
+    "loginContainerTerminal": "登录选中的容器终端",
+    "commandSynchronization": "命令同步",
+    "pod": {
+      "podIp": "容器组IP",
+      "startTime" : "启动时间",
+      "versionName": "版本名称",
+      "image": "镜像地址",
+      "restart": "重启次数"
+    }
+  },
+  "workOrder": {
+    "workOrderOptions": "工单选项",
+    "approvalOptions": "审批选项",
+    "applicationDescription" : "申请说明",
+    "approvalProcess": "审批流程",
+    "opinionOfApprover": "审批意见",
+    "theApplicantSeemsToHaveForgottenToWrite" : "申请人好像忘记写了!",
+    "numberOf": "编号",
+    "name": "工单名称",
+    "applicant": "申请人",
+    "phase": "阶段",
+    "applicationTime": "申请时间"
   },
   "page": {
     "demo": {

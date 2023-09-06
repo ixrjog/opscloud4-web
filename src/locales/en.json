@@ -4,7 +4,19 @@
   "hello": "Hello",
   "common": {
     "ok": "Ok",
+    "submit": "Submit",
+    "save": "Save",
+    "agree": "Agree",
+    "reject": "Reject",
+    "view": "View",
+    "delete": "Delete",
+    "edit": "Edit",
+    "approval": "Approval",
     "close": "Close",
+    "add" : "Add",
+    "batchDeletion" : "Batch Deletion",
+    "all": "All",
+    "pleaseEnterContent": "Please enter content",
     "env": "Env",
     "tags": "Tags",
     "operate": "Operate",
@@ -19,7 +31,7 @@
     "select": {
       "selectDeployment": "Choose deployment"
     },
-    "active" : "Active",
+    "active": "Active",
     "activeOptions": {
       "active": "Active",
       "inactive": "Inactive"
@@ -62,10 +74,11 @@
         "verified": "Verified",
         "notVerified": "Not verified"
       },
+      "noVersionDesc": "User did not fill in version description",
       "stopBuilding": "Stop building",
       "consoleLog": "Console log",
       "editBuildDetails": "Edit Build Details",
-      "buildDetail" : "Build Details",
+      "buildDetail": "Build Details",
       "versionInformation": "Version Information",
       "buildConfig": "Build Config"
     },
@@ -84,14 +97,57 @@
         "offline": "Offline",
         "offlineDesc": "Allow non-production environments and canary environments to go offline"
       },
+      "details": {
+        "startTime": "Start Time"
+      },
+      "deploymentVersion": {
+        "name": "Group Info",
+        "resourcesLimits": "Resources Limits",
+        "replicas": "Replicas"
+      },
       "releaseVersion": "Release Version",
       "deployDesc": "Deploy Desc",
       "searchReleaseVersion": "Search and select an release version",
-      "doDeploy": "Do Deploy"
+      "doDeploy": "Do Deploy",
+      "deployHistory": "Deploy History",
+      "deployResult": "Deploy Result",
+      "deploymentDetailsSnapshot": "Deployment Details Snapshot",
+      "viewDeploymentSnapshot": "View deployment snapshot"
+    },
+    "pod": {
+      "podIp": "Pod IP",
+      "startTime": "Start Time",
+      "restart": "Restart Count"
     },
     "job": {
       "jobEnv": "Job Environment"
     }
+  },
+  "kubeTerm": {
+    "selectAllContainers": "Select all containers",
+    "viewContainerLogs": "View selected container logs",
+    "loginContainerTerminal": "Login to the selected container terminal",
+    "commandSynchronization": "Command Synchronization",
+    "pod": {
+      "podIp": "Pod IP",
+      "startTime": "Start Time",
+      "versionName": "Version Name",
+      "image": "Image",
+      "restart": "Restart Count"
+    }
+  },
+  "workOrder": {
+    "workOrderOptions": "WorkOrder Options",
+    "approvalOptions": "Approval Options",
+    "applicationDescription": "Application Description",
+    "approvalProcess": "Approval Process",
+    "opinionOfApprover": "Opinion of Approver",
+    "theApplicantSeemsToHaveForgottenToWrite" : "The applicant seems to have forgotten to write",
+    "numberOf": "No.",
+    "name": "Name",
+    "applicant": "Applicant",
+    "phase": "Phase",
+    "applicationTime": "Application Time"
   },
   "page": {
     "demo": {

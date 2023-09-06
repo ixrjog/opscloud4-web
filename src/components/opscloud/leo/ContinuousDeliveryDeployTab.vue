@@ -13,7 +13,8 @@
         </el-radio-button>
       </el-radio-group>
       <el-select v-model="queryParam.applicationId" filterable clearable size="mini"
-                 remote reserve-keyword :placeholder="$t('common.search.searchApplication')" :remote-method="getApplication"
+                 remote reserve-keyword :placeholder="$t('common.search.searchApplication')"
+                 :remote-method="getApplication"
                  @change="fetchData">
         <el-option v-for="item in applicationOptions"
                    :key="item.id"
@@ -27,7 +28,8 @@
         <i class="fas fa-circle-notch"/>
       </el-button>
       <el-button type="primary" size="mini" @click="createDeploy"
-                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">{{ $t('leo.deploy.createDeployTask') }}
+                 :disabled="queryParam.applicationId === '' || queryParam.envType === ''">
+        {{ $t('leo.deploy.createDeployTask') }}
       </el-button>
       <el-button type="primary" plain size="mini" @click="handleHistory()"
                  :disabled="queryParam.applicationId === '' || queryParam.envType === ''">{{ $t('common.history') }}
@@ -59,70 +61,67 @@
           <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
             <template>
               <el-card shadow="hover" body-style="padding: 2px" class="card">
-              <div slot="header">
-                <deploy-number-icon :deploy="deploy"/>
-                <span style="margin-right: 5px"/>
-                <i class="far fa-clock"/>{{ deploy.ago }}
-                <span style="margin-right: 5px"/>
-                <i class="fab fa-teamspeak"/>{{
-                  deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
-                }}
-                <span style="margin-right: 10px"/>
-                <business-tags :tags="deploy.tags"/>
-                <el-tooltip class="item" effect="light" content="查看部署快照" placement="top-start">
-                  <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
+                <div slot="header">
+                  <deploy-number-icon :deploy="deploy"/>
+                  <span style="margin-right: 5px"/>
+                  <i class="far fa-clock"/>{{ i18nAgo(deploy.ago) }}
+                  <span style="margin-right: 5px"/>
+                  <i class="fab fa-teamspeak"/>{{
+                      deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.displayName !== null ? deploy.deployDetails.deploy.dict.displayName : '-'
+                    }}
+                  <span style="margin-right: 10px"/>
+                  <business-tags :tags="deploy.tags"/>
+                  <el-tooltip class="item" effect="light" :content="$t('leo.deploy.viewDeploymentSnapshot')" placement="top-start">
+                    <el-tag style="float: right" @click="queryDeployDetails(deploy)" size="mini"
                           :disabled="deploy.startTime === null" :type="deploy.startTime === null ? 'info': 'primary'"
                           :id="`deploy_${deploy.id}`">
-                    <i class="fas fa-plus-circle"/>
-                  </el-tag>
-                  <el-button class="btn" type="text" style="margin-right: 10px" v-if="false"
+                      <i class="fas fa-plus-circle"/>
+                    </el-tag>
+                    <el-button class="btn" type="text" style="margin-right: 10px" v-if="false"
                              @click="queryDeployDetails(deploy.id)" :disabled="deploy.startTime === null">
-                    <i class="fab fa-sistrix"/>
-                  </el-button>
-                </el-tooltip>
-                <el-tooltip class="item" effect="light" content="停止部署" placement="top-start"
+                      <i class="fab fa-sistrix"/>
+                    </el-button>
+                  </el-tooltip>
+                  <el-tooltip class="item" effect="light" content="停止部署" placement="top-start"
                             v-if="!deploy.isFinish">
-                  <el-button class="btn" style="margin-right: 10px" type="text" @click="stopDeploy(deploy.id)"
+                    <el-button class="btn" style="margin-right: 10px" type="text" @click="stopDeploy(deploy.id)"
                              :loading="buttons.stopping">
-                    <i class="far fa-stop-circle"/>
-                  </el-button>
-                </el-tooltip>
-              </div>
-              <div>
-                <span class="label">执行时间</span>
-                <span v-show="deploy.startTime !== null && deploy.startTime !== ''">{{ deploy.startTime }} - {{
-                    deploy.endTime ? deploy.endTime : '?'
-                  }}
+                      <i class="far fa-stop-circle"/>
+                    </el-button>
+                  </el-tooltip>
+                </div>
+                <leo-label :name="$t('leo.deploy.details.startTime')">
+                  <span v-show="deploy.startTime !== null && deploy.startTime !== ''">{{ deploy.startTime }} - {{
+                      deploy.endTime ? deploy.endTime : '?'
+                    }}
                   <span v-show="deploy.runtime !== null" style="margin-left: 2px">
                     <b style="color: #3b97d7"> {{ deploy.runtime }}</b>
                   </span>
-                </span>
-              </div>
-              <div>
-                <span class="label">分组信息</span>
-                <deployment-name
-                  :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
-                  :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
-                  :cluster="deploy.deployDetails.deploy.kubernetes.instance !== null && deploy.deployDetails.deploy.kubernetes.instance.name !== null ? deploy.deployDetails.deploy.kubernetes.instance.name : 'n/a'"/>
-              </div>
-              <div
-                v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
-                <span class="label">部署类型</span>{{ deploy.deployDetails.deploy.dict.deployTypeDesc }}
-              </div>
-              <div>
-                <span class="label">部署结果</span><deploy-result :deploy="deploy"/>
-              </div>
-              <div>
-                <span class="label">发布版本</span>{{ deploy.versionName === null ? '-' : deploy.versionName }}
-              </div>
-            </el-card>
+                  </span>
+                </leo-label>
+                <leo-label :name="$t('leo.deploy.deploymentVersion.name')">
+                  <deployment-name
+                   :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
+                   :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
+                   :cluster="deploy.deployDetails.deploy.kubernetes.instance !== null && deploy.deployDetails.deploy.kubernetes.instance.name !== null ? deploy.deployDetails.deploy.kubernetes.instance.name : 'n/a'"/>
+                </leo-label>
+                <template v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
+                  <leo-label :name="$t('leo.deploy.deployType')" :value="deploy.deployDetails.deploy.dict.deployTypeDesc"/>
+                </template>
+                <leo-label :name="$t('leo.deploy.deployResult')">
+                  <deploy-result :deploy="deploy"/>
+                </leo-label>
+                  <leo-label :name="$t('leo.deploy.releaseVersion')">
+                  {{ deploy.versionName === null ? '-' : deploy.versionName }}
+                </leo-label>
+              </el-card>
               <div style="height: 10px;"/>
           </template>
         </div>
       </el-col>
         <el-col :span="17" style="margin-top: 10px" v-if="data.deploys.length > 0">
-          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'"><i class="fas fa-plus-circle" id="deploy_details"
-                                                                    style="margin-left: 2px"/>Deployment Details Snapshot</el-tag>
+          <el-tag v-show="JSON.stringify(data.deploys) !== '[]'">
+            <i class="fas fa-plus-circle" id="deploy_details" style="margin-right: 2px"/>{{ $t('leo.deploy.deploymentDetailsSnapshot') }}</el-tag>
           <div style="margin-left: 20px; margin-top: 12px" v-if="JSON.stringify(data.deployDetails) !== '{}'">
           <el-tabs type="border-card" shadow="hover" body-style="padding: 2px"
                    v-if="data.deployDetails.versionDetails1 !== null && data.deployDetails.versionDetails1.show"
@@ -189,6 +188,8 @@ import {
   QUERY_MY_LEO_JOB_DEPLOYMENT_VERSION_DETAILS
 } from '@/api/modules/leo/leo.job.api'
 import DeployTaskTips from '@/components/opscloud/leo/child/DeployTaskTips.vue'
+import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
+import tools from '@/libs/tools'
 
 const leaderLineOptions = {
   color: '#e56c0d',
@@ -270,6 +271,7 @@ export default {
   },
   computed: {},
   components: {
+    LeoLabel,
     DeployTaskTips,
     SelectItem,
     LeoCreateDeployEditor,
@@ -538,6 +540,9 @@ export default {
       }
       this.sendMessage(queryMessage)
     },
+    i18nAgo (ago) {
+      return this.$i18n.locale === 'zh-chs' ? ago : tools.i18nAgo(ago)
+    },
     stopDeploy (id) {
       this.buttons.stopping = true
       STOP_DEPLOY({ deployId: id })
@@ -595,11 +600,6 @@ export default {
 
 .el-button {
   margin-left: 5px;
-}
-
-.label {
-  color: #99a9bf;
-  margin-right: 5px;
 }
 
 .btn {

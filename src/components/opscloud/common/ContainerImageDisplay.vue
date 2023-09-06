@@ -4,7 +4,7 @@
   <el-tooltip class="item" effect="dark" :content="image | toContainerRegistry" placement="top-end">
     <el-tag size="mini">CR</el-tag>
   </el-tooltip>
-    <span style="margin-left: 1px">{{image | toContainerRegistryPath}}</span>
+    <span>{{image | toContainerRegistryPath}}</span>
   </span>
 </template>
 

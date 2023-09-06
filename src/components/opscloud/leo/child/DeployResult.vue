@@ -1,10 +1,12 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <el-tag disable-transitions :type="deploy.deployResult|getBuildResultType" size="mini">
-    <i class="el-icon-loading" v-show="!deploy.isFinish"></i>{{ deploy.deployResult|getBuildResultText }}
+    <i class="el-icon-loading" v-show="!deploy.isFinish"/>
+    <span v-if="$i18n.locale === 'en'">{{ deploy.deployResult }}</span>
+    <span v-if="$i18n.locale === 'zh-chs'">{{ deploy.deployResult | getBuildResultText }}</span>
     <el-popover placement="right" trigger="hover">
       <i class="el-icon-info" style="color: green; margin-left: 5px" slot="reference"/>
-      <span style="font-size: 10px;color: #9d9fa3">{{deploy.deployStatus === '' ? '无可用信息' : deploy.deployStatus}}</span>
+      <span style="font-size: 10px;color: #9d9fa3">{{deploy.deployStatus === '' ? $t('common.noInformationAvailable') : deploy.deployStatus}}</span>
     </el-popover>
   </el-tag>
 </template>

@@ -4,13 +4,31 @@
     <el-card shadow="hover">
       <el-row>
         <el-radio-group v-model="queryParam.ticketPhase" size="mini" @change="fetchData">
-          <el-radio-button :label="ticketPhase.ALL">全部</el-radio-button>
-          <el-radio-button :label="ticketPhase.NEW">{{ ticketPhase.NEW | toPhaseText }}</el-radio-button>
-          <el-radio-button :label="ticketPhase.TOAUDIT">{{ ticketPhase.TOAUDIT | toPhaseText }}</el-radio-button>
-          <el-radio-button :label="ticketPhase.REJECT">{{ ticketPhase.REJECT | toPhaseText }}</el-radio-button>
-          <el-radio-button :label="ticketPhase.SUCCESS">{{ ticketPhase.SUCCESS | toPhaseText }}</el-radio-button>
-          <el-radio-button :label="ticketPhase.FAILED">{{ ticketPhase.FAILED | toPhaseText }}</el-radio-button>
-          <el-radio-button :label="ticketPhase.CLOSED">{{ ticketPhase.CLOSED | toPhaseText }}</el-radio-button>
+          <el-radio-button :label="ticketPhase.ALL">{{ $t('common.all')}}</el-radio-button>
+          <el-radio-button :label="ticketPhase.NEW">
+            <span v-if="$i18n.locale === 'zh-chs'">{{ ticketPhase.NEW | toPhaseText }}</span>
+            <span v-if="$i18n.locale === 'en'">{{ ticketPhase.NEW }}</span>
+          </el-radio-button>
+          <el-radio-button :label="ticketPhase.TOAUDIT">
+            <span v-if="$i18n.locale === 'zh-chs'">{{ ticketPhase.TOAUDIT | toPhaseText }}</span>
+            <span v-if="$i18n.locale === 'en'">{{ ticketPhase.TOAUDIT }}</span>
+          </el-radio-button>
+          <el-radio-button :label="ticketPhase.REJECT">
+            <span v-if="$i18n.locale === 'zh-chs'">{{ ticketPhase.REJECT | toPhaseText }}</span>
+            <span v-if="$i18n.locale === 'en'">{{ ticketPhase.REJECT  }}</span>
+          </el-radio-button>
+          <el-radio-button :label="ticketPhase.SUCCESS">
+            <span v-if="$i18n.locale === 'zh-chs'">{{ ticketPhase.SUCCESS | toPhaseText }}</span>
+            <span v-if="$i18n.locale === 'en'">{{ ticketPhase.SUCCESS  }}</span>
+          </el-radio-button>
+          <el-radio-button :label="ticketPhase.FAILED">
+            <span v-if="$i18n.locale === 'zh-chs'">{{ ticketPhase.FAILED | toPhaseText }}</span>
+            <span v-if="$i18n.locale === 'en'">{{ ticketPhase.FAILED }}</span>
+          </el-radio-button>
+          <el-radio-button :label="ticketPhase.CLOSED">
+            <span v-if="$i18n.locale === 'zh-chs'">{{ ticketPhase.CLOSED | toPhaseText }}</span>
+            <span v-if="$i18n.locale === 'en'">{{ ticketPhase.CLOSED }}</span>
+          </el-radio-button>
         </el-radio-group>
         <el-select v-model.trim="queryParam.workOrderId" filterable clearable @change="fetchData" size="mini"
                    placeholder="请选择工单类型">
@@ -27,58 +45,63 @@
           <i class="fas fa-circle-notch"/>
         </el-button>
         <el-button type="danger" plain size="mini" :disabled="queryParam.workOrderId === ''" @click="delOrderTicket">
-          批量删除
+          {{ $t('common.batchDeletion') }}
         </el-button>
       </el-row>
       <div style="height: 5px"/>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column prop="id" label="编号" width="80"/>
-        <el-table-column prop="workorder" label="工单">
+        <el-table-column prop="id" :label="$t('workOrder.numberOf')" width="80"/>
+        <el-table-column prop="workorder" :label="$t('workOrder.name')">
           <template v-slot="scope">
             <i :class="scope.row.workOrder.icon" style="margin-right: 5px"/>{{ scope.row.workOrder.name }}
           </template>
         </el-table-column>
-        <el-table-column prop="createUser" label="申请人">
+        <el-table-column prop="createUser" :label="$t('workOrder.applicant')">
           <template v-slot="scope">
             <user-avatar :user="scope.row.createUser" :size="24"/>
           </template>
         </el-table-column>
-        <el-table-column prop="ticketPhase" label="进度" width="120">
+        <el-table-column prop="ticketPhase" :label="$t('workOrder.phase')" width="120">
           <template v-slot="scope">
             <el-tag class="filters" :type="scope.row.ticketPhase | toPhaseType" size="mini">
               <i class="el-icon-loading" v-show="scope.row.ticketPhase === 'PROCESSING'"/>
-              {{ scope.row.ticketPhase | toPhaseText }}
+              <span v-if="$i18n.locale === 'zh-chs'">{{ scope.row.ticketPhase | toPhaseText }}</span>
+              <span v-if="$i18n.locale === 'en'">{{ scope.row.ticketPhase  }}</span>
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="ago" label="申请时间" width="120"/>
-        <el-table-column label="操作" width="180">
+        <el-table-column prop="ago" :label="$t('workOrder.applicationTime')" width="120">
+          <template v-slot="scope">
+            {{ i18nAgo(scope.row.ago) }}
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('common.operate')" width="180">
           <template v-slot="scope">
             <el-button v-if="scope.row.ticketPhase !== 'NEW' && !scope.row.isApprover"
                        type="success"
                        plain size="mini"
                        :loading="scope.row.loading"
                        :disabled="disabled"
-                       @click="previewTicket(scope.row)">查看
+                       @click="previewTicket(scope.row)">{{ $t('common.view') }}
             </el-button>
             <el-button v-if="scope.row.ticketPhase === 'NEW'"
                        type="primary"
                        plain size="mini"
                        :loading="scope.row.loading"
                        :disabled="disabled"
-                       @click="editTicket(scope.row)">编辑
+                       @click="editTicket(scope.row)">{{ $t('common.edit') }}
             </el-button>
             <el-button v-if="scope.row.isApprover"
                        type="primary"
                        plain size="mini"
                        :loading="scope.row.loading"
                        :disabled="disabled"
-                       @click="approvalTicket(scope.row)">审批
+                       @click="approvalTicket(scope.row)">{{ $t('common.approval') }}
             </el-button>
             <el-button v-if="isAdmin"
                        type="danger"
                        plain size="mini"
-                       @click="delTicket(scope.row)">删除
+                       @click="delTicket(scope.row)">{{ $t('common.delete') }}
             </el-button>
           </template>
         </el-table-column>
@@ -103,6 +126,7 @@ import ticketFormStatus from '@/components/opscloud/workorder/child/ticket.form'
 import Pagination from '@/components/opscloud/common/page/Pagination'
 import WorkOrderKeyConstants from '@/components/opscloud/common/enums/workorder.key.constants'
 import WorkOrderTicketPhase from '@/components/opscloud/common/enums/workorder.ticket.phase'
+import tools from '@/libs/tools'
 
 export default {
   name: 'MyTicketCard',
@@ -183,6 +207,9 @@ export default {
       }).catch(() => {
         this.$message.info('已取消删除!')
       })
+    },
+    i18nAgo (ago) {
+      return this.$i18n.locale === 'zh-chs' ? ago : tools.i18nAgo(ago)
     },
     delOrderTicket () {
       this.$confirm('此操作将删除指定的工单类型和状态的所有工单?', '提示', {

@@ -13,7 +13,7 @@
         </el-radio-button>
       </el-radio-group>
       <el-select v-model="queryParam.applicationId" filterable clearable style="margin-left: 5px" size="mini"
-                 remote reserve-keyword placeholder="搜索并选择应用" :remote-method="getApplication"
+                 remote reserve-keyword :placeholder="$t('common.search.searchApplication')" :remote-method="getApplication"
                  @change="handleChange">
         <el-option v-for="item in applicationOptions"
                    :key="item.id"
@@ -52,14 +52,16 @@
                  </el-tag>
                  <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"/>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="selAllContainers(resource)">
-                   <span style="font-size: 12px">所有容器</span>
+                   <span style="font-size: 12px">{{ $t('kubeTerm.selectAllContainers') }} </span>
                  </el-checkbox>
-                 <el-tooltip class="item" effect="dark" content="查看容器日志" placement="top-start">
+                 <el-tooltip class="item" effect="dark" :content="$t('kubeTerm.viewContainerLogs')"
+                             placement="top-start">
                    <el-button style="float: right; padding: 3px 0" type="text" @click="handleLog(resource)">
                      <i class="fab fa-wpforms" v-show="false"/>Log
                    </el-button>
                    </el-tooltip>
-                 <el-tooltip class="item" effect="dark" content="容器终端，登录容器执行命令" placement="top-start">
+                 <el-tooltip class="item" effect="dark" :content="$t('kubeTerm.loginContainerTerminal')"
+                             placement="top-start">
                    <el-button style="float: right; padding: 3px 0; margin-right: 5px" type="text"
                               @click="handleTerminal(resource)">
                      <i class="fas fa-terminal" v-show="false"/>Login
@@ -71,36 +73,35 @@
                <div class="podClass">
                 <template v-for="pod in resource.assetContainers">
                    <el-card shadow="hover" :class="pod.properties.restartCount | toPodClass" :key="pod.asset.name">
-                   <!-- podName -->
-                   <div>
-                     <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"/>
-                     <el-popover placement="right" trigger="hover" v-if="false">
+                     <div slot="header">
+                       <copy-span :content="pod.asset.name" :show-icon="true" style="font-weight:bold"/>
+                       <el-popover placement="right" trigger="hover" v-if="false">
                          <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"/>
                          <i class="fas fa-cannabis"/><span style="margin-left: 5px">{{ pod.properties.image }}</span>
                          <br/>
                          <i class="fas fa-globe"/><span style="margin-left: 5px">{{ pod.asset.assetKey }}</span>
-                     </el-popover>
-                   </div>
-                   <div style="height: 2px"/>
-                   <div>
-                     <span class="label">容器组IP</span>
-                     <copy-span :content="pod.asset.assetKey" :show-icon="true"/>
-                     <zone-tag v-if="pod.properties.zone !== undefined" :zone="pod.properties.zone" style="margin-left: 5px"/>
-                   </div>
-                   <div>
-                     <span class="label">启动时间</span>{{ pod.properties.startTime }}
-                     <span style="color: #20A9D9">[{{ pod.ago }}]</span> 重启次数:
-                     <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
+                       </el-popover>
+                     </div>
+                     <leo-label :name="$t('kubeTerm.pod.podIp')">
+                         <copy-span :content="pod.asset.assetKey" :show-icon="true"/>
+                         <zone-tag v-if="pod.properties.zone !== undefined" :zone="pod.properties.zone"
+                                   style="margin-left: 5px"/>
+                     </leo-label>
+                     <leo-label :name="$t('kubeTerm.pod.startTime')">
+                       {{ pod.properties.startTime }}
+                     <span style="color: #20A9D9">[{{ i18nAgo(pod.ago) }}]</span>
+                     </leo-label>
+                     <leo-label :name="$t('kubeTerm.pod.restart')">
+                        <span :style="pod.properties.restartCount === '0' ? 'color: #67C23A':'color: #F56C6C'">
                        {{ pod.properties.restartCount }}
                      </span>
-                   </div>
-                   <div><span class="label">版本名称</span>{{ pod.properties.versionName }}</div>
-                   <div v-if="false"><span class="label">镜像地址</span>{{ pod.properties.image }}</div>
-                   <div><span class="label">镜像地址</span>
-                     <container-image-display :image="pod.properties.image"/>
-                   </div>
+                     </leo-label>
+                     <leo-label :name="$t('kubeTerm.pod.versionName')" :value="pod.properties.versionName"/>
+                     <leo-label :name="$t('kubeTerm.pod.image')">
+                        <container-image-display :image="pod.properties.image"/>
+                     </leo-label>
                    <pod-phase-tag :pod="pod"/>
-                     <i class="fab fa-docker" style="margin-right: 5px"/>
+                     <i class="fab fa-docker" style="margin-right: 1px" v-if="false"/>
                      <el-checkbox v-for="container in pod.children" :key="container.asset.name"
                                   style="margin-right: 1px" v-model="container.checked">
                        <span style="font-size: 12px">{{ container.asset.name }}</span>
@@ -135,14 +136,16 @@ import router from '@/router'
 import { GET_KUBERNETES_DEPLOYMENT } from '@/api/modules/kubernetes/kubernetes.api'
 import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDisplay.vue'
 import ZoneTag from '@/components/opscloud/terminal/child/ZoneTag.vue'
+import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
+import tools from '@/libs/tools'
 
 const wsStates = {
   success: {
-    name: 'WS连接成功',
+    name: 'Socket successful',
     type: 'success'
   },
   fail: {
-    name: 'WS连接断开',
+    name: 'Socket disconnected',
     type: 'warning'
   }
 }
@@ -188,6 +191,7 @@ export default {
   },
   computed: {},
   components: {
+    LeoLabel,
     ZoneTag,
     DeploymentName,
     DeploymentReplicas,
@@ -394,6 +398,9 @@ export default {
     handleTerminal (resource) {
       this.handleOpenTerminalByType(resource, 'CONTAINER_TERMINAL')
     },
+    i18nAgo (ago) {
+      return this.$i18n.locale === 'zh-chs' ? ago : tools.i18nAgo(ago)
+    },
     fetchData () {
       if (this.queryParam.applicationId === '') {
         return
@@ -410,8 +417,8 @@ export default {
           this.processMessages(res.body)
           this.loading = false
         }).catch(() => {
-          this.loading = false
-        })
+        this.loading = false
+      })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',
@@ -445,14 +452,6 @@ export default {
     display: inline-block;
     max-width: 200px;
   }
-
-  //&select {
-  //  margin-left: 5px;
-  //}
-  //
-  //&button {
-  //  margin-left: 8px;
-  //}
 }
 
 .podClass {
@@ -498,11 +497,6 @@ export default {
 
 .el-radio-group {
   margin-left: 5px;
-}
-
-.label {
-  color: #99a9bf;
-  margin-right: 5px;
 }
 
 .podFault {

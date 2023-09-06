@@ -4,7 +4,7 @@
     <el-row>
       <el-select v-model="ticketEntry" size="mini" filterable clearable value-key="name"
                  style="display: inline-block; width: 250px"
-                 remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
+                 remote reserve-keyword :placeholder="$t('common.search.search')+ entryDesc" :remote-method="fetchData"
                  :loading="searchLoading">
         <el-option v-for="item in ticketEntryOptions"
                    :key="item.name"
@@ -15,7 +15,7 @@
       </el-select>
       <el-button type="success" :disabled="ticketEntry === ''" plain size="mini" @click="addTicketEntry"
                  :loading="buttonAdding"
-                 style="margin-left: 10px">添加
+                 style="margin-left: 10px">{{ $t('common.add') }}
       </el-button>
     </el-row>
   </div>

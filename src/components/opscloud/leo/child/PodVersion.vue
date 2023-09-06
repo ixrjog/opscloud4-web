@@ -2,13 +2,20 @@
 <template>
   <div class="podClass">
     <el-card shadow="hover" :class="pod.restartCount | toPodClass">
-      <div>{{ pod.name }}</div>
-      <el-popover placement="right" trigger="hover"><i class="fas fa-globe"></i><span style="margin-left: 5px">HostIP {{ pod.hostIP }}</span>
-      </el-popover>
-      <div><span class="label">容器组IP</span>{{ pod.podIP }}</div>
-      <div><span class="label">启动时间</span>{{ pod.startTime }}<span style="color: #00a2d4"> [{{ pod.ago }}]</span> 重启次数:
-        <span :style="pod.restartCount === 0 ?  'color: #67C23A' : 'color: #F56C6C'">{{ pod.restartCount }}</span>
+      <div slot="header">
+        <div>{{ pod.name }}</div>
+        <el-popover placement="right" trigger="hover">
+          <i class="fas fa-globe"/>
+          <span style="margin-left: 5px">HostIP {{ pod.hostIP }}</span>
+        </el-popover>
       </div>
+      <leo-label :name="$t('leo.pod.podIp')" :value="pod.podIP"/>
+      <leo-label :name="$t('leo.pod.startTime')">
+        {{ pod.startTime }}<span style="color: #00a2d4"> [{{ i18nAgo(pod.ago) }}]</span>
+      </leo-label>
+      <leo-label :name="$t('leo.pod.restart')">
+        <span :style="pod.restartCount === 0 ?  'color: #67C23A' : 'color: #F56C6C'">{{ pod.restartCount }}</span>
+      </leo-label>
       <pod-conditions :pod="pod"/>
     </el-card>
   </div>
@@ -17,6 +24,8 @@
 <script>
 import PodConditions from '@/components/opscloud/leo/child/PodConditions.vue'
 import { toPodClass } from '@/filters/kubernetes.pod'
+import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
+import tools from '@/libs/tools'
 
 export default {
   name: 'PodVersion',
@@ -25,7 +34,13 @@ export default {
     toPodClass
   },
   components: {
+    LeoLabel,
     PodConditions
+  },
+  methods: {
+    i18nAgo (ago) {
+      return this.$i18n.locale === 'zh-chs' ? ago : tools.i18nAgo(ago)
+    }
   }
 }
 </script>

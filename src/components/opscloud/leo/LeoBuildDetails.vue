@@ -11,7 +11,8 @@
         <i class="fab fa-teamspeak"/>{{ build.buildDetails.build.dict.displayName }}
         <span style="margin-right: 5px"/>
         <business-tags :tags="build.tags"/>
-        <el-tooltip class="item" effect="light" :content="$t('leo.build.stopBuilding')" placement="top-start" v-if="!build.isFinish">
+        <el-tooltip class="item" effect="light" :content="$t('leo.build.stopBuilding')" placement="top-start"
+                    v-if="!build.isFinish">
           <el-button class="btn" type="text" @click="stopBuild(build.id)" :loading="buttons.stopping">
             <i class="far fa-stop-circle"/>
           </el-button>
@@ -30,80 +31,63 @@
         </el-tooltip>
       </div>
       <el-row>
-        <el-col :span="14">
+        <el-col :span="15">
           <pipeline-graph :onNodeClick='( nodeName,id ) => { nodeClick(nodeName, id, build) }'
                           :stages='build.pipeline.nodes'
                           :layout='layout'/>
         </el-col>
-        <el-col :span="10">
+        <el-col :span="9">
           <el-row style="margin-left: 10px">
-            <div>
-              <span class="label">{{ $t('leo.build.details.startTime') }}</span>
-              <span v-show="build.startTime !== null && build.startTime !== ''">
+            <leo-label :name="$t('leo.build.details.startTime')">
+               <span v-show="build.startTime !== null && build.startTime !== ''">
                 {{ build.startTime }} - {{ build.endTime ? build.endTime : '?' }}
               <span v-show="build.runtime !== null" style="margin-left: 2px">
                 &lt;<b style="color: #3b97d7">{{ build.runtime }}</b>&gt;
               </span>
               </span>
-            </div>
-            <div><span class="label">{{ $t('leo.build.details.buildResult') }}</span>
+            </leo-label>
+            <leo-label :name="$t('leo.build.details.buildResult')">
               <build-result :build="build"/>
-            </div>
-            <div><span class="label">{{ $t('leo.build.details.versionName') }}</span>{{ build.versionName }}</div>
-            <div><span class="label">{{
-                $t('leo.build.details.sshUrl')
-              }}</span>{{ build.buildDetails.build.gitLab.project.sshUrl }}
-            </div>
-            <div><span class="label">{{ $t('leo.build.details.branch') }}</span>{{
-                build.buildDetails.build.dict.branch
-              }}
-            </div>
-            <div><span class="label">{{ $t('leo.build.details.commit') }}</span>{{
-                build.buildDetails.build.dict.commit
-              }}
+            </leo-label>
+            <leo-label :name="$t('leo.build.details.versionName')" :value="build.versionName"/>
+            <leo-label :name="$t('leo.build.details.sshUrl')" :value="build.buildDetails.build.gitLab.project.sshUrl"/>
+            <leo-label :name="$t('leo.build.details.branch')" :value="build.buildDetails.build.dict.branch"/>
+            <leo-label :name="$t('leo.build.details.commit')">
+              {{ build.buildDetails.build.dict.commit }}
               <span v-if="build.buildDetails.build !== null &&
                     build.buildDetails.build.gitLab !== null &&
                     build.buildDetails.build.gitLab.project !== null &&
                     build.buildDetails.build.gitLab.project.commit !== null &&
                     build.buildDetails.build.gitLab.project.commit.webUrl !== null">
-                <a target="blank" :href="build.buildDetails.build.gitLab.project.commit.webUrl"
-                   style="color: #179bb9"><i class="fab fa-git-alt" style="margin-right: 1px"/></a></span>
-            </div>
-            <div><span class="label">{{ $t('leo.build.details.env') }}</span>{{ build.buildDetails.build.dict.env }}
-            </div>
-            <div><span class="label">{{
-                $t('leo.build.details.jenkins')
-              }}</span>{{
-                build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || ''
-              }}
-            </div>
+                <a target="blank" :href="build.buildDetails.build.gitLab.project.commit.webUrl" style="color: #179bb9">
+                  <i class="fab fa-git-alt" style="margin-right: 1px"/>
+                </a>
+              </span>
+            </leo-label>
+            <leo-label :name="$t('leo.build.details.env')" :value="build.buildDetails.build.dict.env"></leo-label>
+            <leo-label :name="$t('leo.build.details.jenkins')">
+              {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || '' }}
+            </leo-label>
             <!--kubernetes-image-->
             <template v-if="build.buildDetails.build.type=== 'kubernetes-image'">
-              <div><span class="label">{{ $t('leo.build.details.image') }}</span>{{
-                  build.buildDetails.build.dict.image
-                }}
-                <el-tag style="margin-left: 2px"
-                        :type="build.isImageExists ? 'success' : 'warning'">{{
-                    build.isImageExists ? $t('leo.build.details.verified') : $t('leo.build.details.notVerified')
-                  }}
+              <leo-label :name="$t('leo.build.details.image')">
+                {{ build.buildDetails.build.dict.image }}
+                <el-tag style="margin-left: 2px" :type="build.isImageExists ? 'success' : 'warning'">
+                  {{ build.isImageExists ? $t('leo.build.details.verified') : $t('leo.build.details.notVerified') }}
                 </el-tag>
-              </div>
-              <div><span class="label">{{
-                  $t('leo.build.details.imageTag')
-                }}</span>{{ build.buildDetails.build.dict.imageTag }}
-              </div>
+              </leo-label>
+              <leo-label :name="$t('leo.build.details.imageTag')" :value="build.buildDetails.build.dict.imageTag"/>
             </template>
             <!--maven-publish-->
             <template v-if="build.buildDetails.build.type=== 'maven-publish'">
-              <div>
-                <span class="label">构件仓库</span>
+              <leo-label name="构件仓库">
                 {{ build.buildDetails.build.nexus.instance.name }}/{{ build.buildDetails.build.nexus.repository }}
-              </div>
-              <div>
-                <span class="label">完整名称</span> {{ build.buildDetails.build.nexus.component.group }}:{{
+              </leo-label>
+              <leo-label name="完整名称">
+                {{ build.buildDetails.build.nexus.component.group }}:{{
                   build.buildDetails.build.nexus.component.name
                 }}:{{ build.versionName }}
-              </div>
+              </leo-label>
             </template>
           </el-row>
         </el-col>
@@ -131,6 +115,7 @@ import tools from '@/libs/tools.js'
 import TerminalWithConsoleStream from '@/components/opscloud/leo/child/TerminalWithConsoleStream'
 import LeoBuildDetailsEditor from '@/components/opscloud/leo/LeoBuildDetailsEditor'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
+import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
 
 const layout = {
   nodeSpacingH: 90, // 节点间距
@@ -163,6 +148,7 @@ export default {
     }
   },
   components: {
+    LeoLabel,
     PipelineGraph,
     PipelineStep,
     TerminalWithConsoleStream,
@@ -245,14 +231,6 @@ export default {
 
 .card {
   margin-bottom: 10px
-}
-
-.label {
-  color: #99a9bf;
-  display: inline-block;
-  text-align: right;
-  width: 80px;
-  margin-right: 10px;
 }
 
 </style>

@@ -48,24 +48,24 @@
       <el-button v-if="ticketView.ticketPhase === 'NEW'"
                  size="mini" type="primary"
                  :loading="submitting"
-                 @click="submitTicket">提交
+                 @click="submitTicket">{{ $t('common.submit') }}
       </el-button>
       <el-button v-if="ticketView.ticketPhase === 'NEW'"
                  size="mini" type="primary"
                  :loading="saving"
-                 @click="saveTicket">暂存
+                 @click="saveTicket">{{ $t('common.save') }}
       </el-button>
       <el-button v-if="ticketView.isApprover"
                  type="success" plain size="mini"
                  :loading="approving"
-                 @click="approveTicket('AGREE')">同意
+                 @click="approveTicket('AGREE')">{{ $t('common.agree') }}
       </el-button>
       <el-button v-if="ticketView.isApprover"
                  type="danger" plain size="mini"
                  :loading="approving"
-                 @click="approveTicket('REJECT')">拒绝
+                 @click="approveTicket('REJECT')">{{ $t('common.reject') }}
       </el-button>
-      <el-button size="mini" @click="closeEditor">关闭</el-button>
+      <el-button size="mini" @click="closeEditor">{{ $t('common.close') }}</el-button>
     </div>
     <!--页脚-->
   </el-dialog>
