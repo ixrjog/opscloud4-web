@@ -20,7 +20,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane :label="$t('leo.build.buildCofing')" name="buildConfig" v-if="leoBuild != null">
+      <el-tab-pane :label="$t('leo.build.buildConfig')" name="buildConfig" v-if="leoBuild != null">
         <el-row>
           <el-card shadow="never">
             <my-highlight :code="leoBuild.buildConfig" lang="yaml" :myStyle="style"/>

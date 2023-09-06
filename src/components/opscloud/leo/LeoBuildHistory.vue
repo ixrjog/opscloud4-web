@@ -3,7 +3,7 @@
   <el-dialog :title="leoJob.name" :visible.sync="formStatus.visible" width="90%">
     <el-row>
       <el-input v-model="queryParam.queryName" size="mini" :placeholder="$t('common.search.search')" @change="fetchData"/>
-      <el-select v-model="queryParam.isActive" size="mini" clearable :placeholder="$t('common.active.active')" @change="fetchData">
+      <el-select v-model="queryParam.isActive" size="mini" clearable :placeholder="$t('common.active')" @change="fetchData">
         <el-option v-for="item in activeOptions"
                    :key="item.value"
                    :label="$t(item.label)"
