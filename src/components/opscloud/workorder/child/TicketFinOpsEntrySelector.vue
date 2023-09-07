@@ -4,7 +4,8 @@
     <el-row>
       <el-select v-model="ticketEntry" size="mini" filterable clearable value-key="name"
                  style="display: inline-block; width: 250px; margin-right: 5px"
-                 remote reserve-keyword :placeholder="'输入关键词搜索'+ entryDesc" :remote-method="fetchData"
+                 remote reserve-keyword :placeholder="$t('common.search.search') + ' ' + entryDesc.toLowerCase()"
+                 :remote-method="fetchData"
                  :loading="searchLoading">
         <el-option v-for="item in ticketEntryOptions"
                    :key="item.name"
@@ -16,7 +17,7 @@
 
       <el-select v-model="finOpsTag" size="mini" filterable value-key=""
                  style="display: inline-block; width: 250px"
-                 reserve-keyword placeholder="选择FinOps标签"
+                 reserve-keyword placeholder="Select FinOps tag"
                  :loading="searchLoading">
         <el-option v-for="item in finOpsTagOptions"
                    :key="item.label"
@@ -29,7 +30,7 @@
       <el-button type="success" :disabled="ticketEntry === '' || finOpsTag === ''" plain size="mini"
                  @click="addTicketEntry"
                  :loading="buttonAdding"
-                 style="margin-left: 10px">添加
+                 style="margin-left: 10px">{{ $t('common.add') }}
       </el-button>
     </el-row>
   </div>
@@ -61,11 +62,11 @@ export default {
       required: false,
       default: () => ''
     },
-    finOpsTagOptions : {
+    finOpsTagOptions: {
       type: Array,
       required: false,
       default: () => []
-    },
+    }
   },
   components: {
     SelectItem

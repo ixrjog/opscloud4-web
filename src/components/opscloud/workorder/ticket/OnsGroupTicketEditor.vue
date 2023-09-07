@@ -2,8 +2,8 @@
 <template>
   <el-dialog :visible.sync="formStatus.visible" :width="tableLayout.instance ? '1500px': '1200px'" :before-close="beforeClose">
     <!--页眉-->
-    <template v-slot:title>
-      <ticket-title v-if="ticketView !== null" :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
+    <template v-slot:title v-if="ticketView !== null">
+      <ticket-title-i18n :id="ticketView.ticketId" :work-order="ticketView.workOrder"/>
     </template>
     <!--页眉-->
     <!--工单视图-->
@@ -77,9 +77,9 @@
 </template>
 
 <script>
+
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
-import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
 import {
   SAVE_WORK_ORDER_TICKET,
@@ -87,6 +87,7 @@ import {
   APPROVE_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
 import TicketOnsGroupForm from '@/components/opscloud/workorder/child/TicketOnsGroupForm'
+import TicketTitleI18n from '@/components/opscloud/workorder/child/TicketTitleI18n.vue'
 
 const TableLayout = {
   instance: true,
@@ -107,7 +108,7 @@ export default {
   name: 'OnsGroupTicketEditor',
   props: ['formStatus'],
   components: {
-    TicketTitle,
+    TicketTitleI18n,
     NodeView,
     TicketOnsGroupForm,
     TicketEntryTable,

@@ -73,7 +73,6 @@
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
-import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
 import {
   SAVE_WORK_ORDER_TICKET,

@@ -31,7 +31,8 @@
     },
     "select": {
       "select": "Please select",
-      "selectDeployment": "Select deployment"
+      "selectDeployment": "Select deployment",
+      "selectDatasourceInstance": "Select dataSource instance"
     },
     "active": "Active",
     "activeOptions": {

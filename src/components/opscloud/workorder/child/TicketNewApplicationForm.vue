@@ -20,7 +20,7 @@
       </el-form-item>
       <el-form-item label="GitLab Instance" :label-width="labelWidth">
         <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
-                   style="width: 400px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
+                   style="width: 400px" :placeholder="$t('common.select.selectDatasourceInstance')" reserve-keyword @change="selInstance">
           <el-option v-for="item in dsInstanceOptions" :key="item.uuid" :label="item.instanceName" :value="item.uuid">
             <select-item :name="item.instanceName" :comment="item.instanceType"/>
           </el-option>
@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item label="GitLab Project" required :label-width="labelWidth">
         <el-select v-model="ticketEntry" size="mini" filterable value-key="name"
-                   style="width: 400px;" remote reserve-keyword placeholder="输入关键词搜索项目"
+                   style="width: 400px;" remote reserve-keyword :placeholder="$t('common.search.search')"
                    :remote-method="fetchData"
                    :loading="searchLoading" :disabled="instanceUuid === ''">
           <el-option v-for="item in ticketEntryOptions" :key="item.id" :label="item.entry.assetKey" :value="item">
@@ -37,7 +37,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="Desc" required :label-width="labelWidth">
-        <el-input v-model="applicationData.comment" size="mini" placeholder="请输入应用描述"/>
+        <el-input v-model="applicationData.comment" size="mini" placeholder="Please enter an application description"/>
       </el-form-item>
       <el-form-item style="text-align: center">
         <el-button plain type="primary" @click="addTicketEntry" :disabled="JSON.stringify(ticketEntry) === '{}'"
@@ -97,15 +97,15 @@ export default {
     },
     addTicketEntry () {
       if (this.applicationData.name === '') {
-        this.$message.warning('请输入应用名称')
+        this.$message.warning('Please enter an application name')
         return
       }
       if (this.applicationData.tag === '') {
-        this.$message.warning('请选择应用级别')
+        this.$message.warning('Please select an application level')
         return
       }
       if (this.applicationData.comment === '') {
-        this.$message.warning('请输入应用描述')
+        this.$message.warning('Please enter an application description')
         return
       }
       this.buttonAdding = true

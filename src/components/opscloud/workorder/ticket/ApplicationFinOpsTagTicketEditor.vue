@@ -4,13 +4,13 @@
              :before-close="beforeClose">
     <!--页眉-->
     <template v-slot:title v-if="ticketView !== null">
-      <ticket-title :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
+      <ticket-title-i18n :id="ticketView.ticketId" :work-order="ticketView.workOrder"/>
     </template>
     <!--页眉-->
     <!--工单视图-->
     <div class="block" v-if="ticketView !== null">
       <el-timeline>
-        <el-timeline-item timestamp="工单选项" placement="top">
+        <el-timeline-item :timestamp="$t('workOrder.workOrderOptions')" placement="top">
           <el-card shadow="hover">
             <ticket-fin-ops-entry-selector v-if="ticketView.ticketPhase === 'NEW'"
                                            :workOrderTicketId="ticketView.ticketId"
@@ -25,20 +25,20 @@
                                 ref="ticketEntryTable"/>
           </el-card>
         </el-timeline-item>
-        <el-timeline-item timestamp="审批选项" placement="top">
+        <el-timeline-item :timestamp="$t('workOrder.approvalOptions')" placement="top">
           <workflow-nodes :workflowView="ticketView.workflowView" :ticketPhase="ticketView.ticketPhase"/>
         </el-timeline-item>
-        <el-timeline-item timestamp="申请说明" placement="top">
+        <el-timeline-item :timestamp="$t('workOrder.applicationDescription')" placement="top">
           <el-input type="textarea" :rows="2" v-model="ticketView.comment"
-                    :placeholder="ticketView.ticketPhase === 'NEW' ? '请输入内容': '申请人好像忘记写了！'"
+                    :placeholder="ticketView.ticketPhase === 'NEW' ? $t('common.pleaseEnterContent') : $t('workOrder.theApplicantSeemsToHaveForgottenToWrite')"
                     :readonly="ticketView.ticketPhase !== 'NEW'"/>
         </el-timeline-item>
-        <el-timeline-item timestamp="审批流程" placement="top" v-if="ticketView.nodeView !== null">
+        <el-timeline-item :timestamp="$t('workOrder.approvalProcess')" placement="top" v-if="ticketView.nodeView !== null">
           <node-view :nodeView="ticketView.nodeView"/>
         </el-timeline-item>
         <!--        审批意见只展示给当前审批人-->
-        <el-timeline-item timestamp="审批意见" placement="top" v-if="ticketView.isApprover">
-          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="approvalComment"/>
+        <el-timeline-item :timestamp="$t('workOrder.opinionOfApprover')" placement="top" v-if="ticketView.isApprover">
+          <el-input type="textarea" :rows="2" :placeholder="$t('common.pleaseEnterContent')" v-model="approvalComment"/>
         </el-timeline-item>
       </el-timeline>
     </div>
@@ -73,7 +73,6 @@
 
 <script>
 
-import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
 import WorkflowNodes from '@/components/opscloud/workorder/child/WorkflowNodes'
 import {
@@ -84,11 +83,12 @@ import {
 import TicketFinOpsEntrySelector from '@/components/opscloud/workorder/child/TicketFinOpsEntrySelector.vue'
 import { GET_FINOPS_TAG_OPTIONS } from '@/api/modules/tag/tag.api'
 import TicketFinOpsEntryTable from '@/components/opscloud/workorder/child/TicketFinOpsEntryTable.vue'
+import TicketTitleI18n from '@/components/opscloud/workorder/child/TicketTitleI18n.vue'
 
 const TableLayout = {
   instance: false,
   role: true,
-  entryName: '应用'
+  entryName: 'Application Name'
 }
 
 export default {
@@ -106,7 +106,7 @@ export default {
   name: 'ApplicationPermissionTicketEditor',
   props: ['formStatus'],
   components: {
-    TicketTitle,
+    TicketTitleI18n,
     NodeView,
     TicketFinOpsEntrySelector,
     TicketFinOpsEntryTable,

@@ -31,7 +31,8 @@
     },
     "select": {
       "select": "请选择",
-      "selectDeployment": "选择无状态"
+      "selectDeployment": "选择无状态",
+      "selectDatasourceInstance": "选择数据源实例"
     },
     "active" : "有效",
     "activeOptions": {
