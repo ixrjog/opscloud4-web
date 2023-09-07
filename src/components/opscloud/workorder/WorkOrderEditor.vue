@@ -8,6 +8,9 @@
           <el-form-item label="名称" :required="true">
             <el-input v-model="workOrder.name" placeholder="请输入工单名称" size="mini"/>
           </el-form-item>
+          <el-form-item label="名称EN" :required="true">
+            <el-input v-model="workOrder.i18nEn" placeholder="请输入工单名称EN" size="mini"/>
+          </el-form-item>
           <el-form-item label="类目颜色" :required="true">
             <el-color-picker v-model="workOrder.color"/>
           </el-form-item>

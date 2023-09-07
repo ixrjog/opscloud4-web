@@ -2,19 +2,19 @@
 <template>
   <div>
     <el-table :data="ticketEntries" style="width: 100%" v-loading="loading">
-      <el-table-column label="实例名称" v-if="tableLayout.instance">
+      <el-table-column label="Instance Name" v-if="tableLayout.instance">
         <template v-slot="scope">
           <span>{{ scope.row.instance.instanceName }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="name" :label="tableLayout.entryName"></el-table-column>
-      <el-table-column label="角色" v-if="tableLayout.role !== null && tableLayout.role">
+      <el-table-column label="Role" v-if="tableLayout.role !== null && tableLayout.role">
         <template v-slot="scope">
-          <el-select v-model="scope.row.role" placeholder="请选择" @change="updateEntry(scope.row)"
+          <el-select v-model="scope.row.role" :placeholder="$t('common.select.select')" @change="updateEntry(scope.row)"
                      :disabled="ticketPhase !== 'NEW'">
             <el-option v-for="item in roleOptions"
                        :key="item.value"
-                       :label="item.label"
+                       :label="$t(item.label)"
                        :value="item.value"/>
           </el-select>
         </template>
@@ -22,20 +22,21 @@
       <slot name="extend">
         <!--扩展字段-->
       </slot>
-      <el-table-column prop="comment" label="描述"/>
-      <el-table-column label="执行结果" v-if="ticketPhase === orderPhase.SUCCESS || ticketPhase === orderPhase.FAILED">
+      <el-table-column prop="comment" label="Desc"/>
+      <el-table-column label="Result" v-if="ticketPhase === orderPhase.SUCCESS || ticketPhase === orderPhase.FAILED">
         <template v-slot="scope">
           <el-tooltip class="item" effect="dark" :content="scope.row.result === null ? 'success': scope.row.result"
                       placement="top-start">
             <el-tag :type="scope.row.entryStatus === 1 ? 'success' : 'danger'">
-              {{ scope.row.entryStatus === 1 ? '执行成功' : '执行失败' }}
+              <span v-if="$i18n.locale === 'zh-chs'">{{ scope.row.entryStatus === 1 ? '执行成功' : '执行失败' }}</span>
+              <span v-if="$i18n.locale === 'en'">{{ scope.row.entryStatus === 1 ? 'Success' : 'Failed' }}</span>
             </el-tag>
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="160" v-if="ticketPhase === orderPhase.NEW">
+      <el-table-column label="Operate" width="160" v-if="ticketPhase === orderPhase.NEW">
         <template v-slot="scope">
-          <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">移除</el-button>
+          <el-button type="danger" plain size="mini" @click="removeEntry(scope.row)">{{ $t('common.remove') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -54,15 +55,15 @@ import { toPermissionRoleType, toPermissionRoleText } from '@/filters/user.permi
 const roleOptions = [
   {
     value: '',
-    label: '普通用户'
+    label: 'workOrder.roleOptions.user'
   },
   {
     value: 'qa',
-    label: '质量保障'
+    label: 'workOrder.roleOptions.qa'
   },
   {
     value: 'admin',
-    label: '管理员'
+    label: 'workOrder.roleOptions.admin'
   }
 ]
 

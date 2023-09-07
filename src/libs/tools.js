@@ -102,12 +102,16 @@ tools.dateFormatter = function (date) {
 }
 
 tools.i18nAgo = function (ago) {
+  if (ago === null || ago === undefined) {
+    return ''
+  }
   return ago.replace('秒前', ' seconds ago')
     .replace('分钟前', ' minutes ago')
     .replace('小时前', ' hours ago')
     .replace('天前', ' days ago')
     .replace('月前', ' month ago')
     .replace('年前', ' year ago')
+    .replace('昨天', 'yesterday')
 }
 
 export default tools

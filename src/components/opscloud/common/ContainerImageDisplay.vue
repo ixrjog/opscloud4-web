@@ -2,7 +2,7 @@
 <template>
   <span>
   <el-tooltip class="item" effect="dark" :content="image | toContainerRegistry" placement="top-end">
-    <el-tag size="mini">CR</el-tag>
+    <span class="cr">[CR]</span>
   </el-tooltip>
     <span>{{image | toContainerRegistryPath}}</span>
   </span>
@@ -38,6 +38,15 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped>
+
+.cr {
+  border-radius: 4px;
+  padding: 0 5px 0 5px;
+  color: white;
+  background: #000000;
+  background: -webkit-linear-gradient(to right, #4a984e, #6bfdb8);
+  background: linear-gradient(to right, #4a984e, #6bfdb8);
+}
 
 </style>

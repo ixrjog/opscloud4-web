@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <el-tooltip class="item" effect="dark" :content="zone" placement="top">
-    <el-tag size="mini" :class="zone | toZoneClass"><i class="fab fa-battle-net"/> {{ zone | toZoneShort }}</el-tag>
+    <span :class="zone | toZoneClass"><i class="fab fa-battle-net"/> {{ zone | toZoneShort }}</span>
   </el-tooltip>
 </template>
 
@@ -27,6 +27,8 @@ export default {
   background: #000000;
   background: -webkit-linear-gradient(to right, #a9f3a9, #ffffff);
   background: linear-gradient(to right, #a9f3a9, #ffffff);
+  border-radius: 4px;
+  padding: 0 5px 0 5px;
 }
 
 .zone-b {
@@ -34,6 +36,8 @@ export default {
   background: #000000;
   background: -webkit-linear-gradient(to right, #a0e5fa, #ffffff);
   background: linear-gradient(to right, #a0e5fa, #ffffff);
+  border-radius: 4px;
+  padding: 0 5px 0 5px;
 }
 
 .zone-c {
@@ -41,6 +45,8 @@ export default {
   background: #000000;
   background: -webkit-linear-gradient(to right, #7aa1f5, #ffffff);
   background: linear-gradient(to right, #7aa1f5, #ffffff);
+  border-radius: 4px;
+  padding: 0 5px 0 5px;
 }
 
 .zone-unknown {
@@ -48,6 +54,8 @@ export default {
   background: #000000;
   background: -webkit-linear-gradient(to right, #3d3d3d, #a9a7a4);
   background: linear-gradient(to right, #3d3d3d, #a9a7a4);
+  border-radius: 4px;
+  padding: 0 5px 0 5px;
 }
 
 </style>

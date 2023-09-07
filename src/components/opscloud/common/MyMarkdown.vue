@@ -10,11 +10,7 @@
 import MarkdownItVue from 'markdown-it-vue'
 import 'markdown-it-vue/dist/markdown-it-vue-light.css'
 import 'markdown-it-vue/dist/markdown-it-vue.css'
-// import 'highlight.js/scss/default.scss'
-// import 'highlight.js/styles/vs2015.css'
-// import 'highlight.js/styles/github-gist.css'
-import 'highlight.js/styles/gradient-dark.css'
-
+import 'highlight.js/styles/github-gist.css'
 
 const options = {
   markdownIt: {
@@ -70,7 +66,7 @@ export default {
   /*控制代码不换行*/
   white-space: pre;
   word-wrap: normal;
-  background: #090909 !important;
+  background: #d9d9d9 !important;
   border-radius: 4px;
   font-size: 9px;
 }

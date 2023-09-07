@@ -4,7 +4,7 @@
     <el-row>
       <el-select v-model="ticketEntry" size="mini" filterable clearable value-key="name"
                  style="display: inline-block; width: 250px"
-                 remote reserve-keyword :placeholder="$t('common.search.search')+ entryDesc" :remote-method="fetchData"
+                 remote reserve-keyword :placeholder="$t('common.search.search') + ' '+ entryDesc.toLowerCase()" :remote-method="fetchData"
                  :loading="searchLoading">
         <el-option v-for="item in ticketEntryOptions"
                    :key="item.name"

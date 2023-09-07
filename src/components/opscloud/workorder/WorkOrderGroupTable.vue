@@ -15,6 +15,7 @@
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="i18nEn" label="国际化EN"/>
       <el-table-column prop="workOrderSize" label="工单数量"/>
       <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="280">
@@ -26,10 +27,10 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
-                @handleSizeChange="handleSizeChange"/>
     <work-order-group-editor ref="workOrderGroupEditor" :formStatus="formStatus"
                              @close="fetchData"/>
+    <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
+                @handleSizeChange="handleSizeChange"/>
   </div>
 </template>
 

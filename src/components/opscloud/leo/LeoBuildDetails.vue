@@ -40,10 +40,10 @@
           <el-row style="margin-left: 10px">
             <leo-label :name="$t('leo.build.details.startTime')">
                <span v-show="build.startTime !== null && build.startTime !== ''">
-                {{ build.startTime }} - {{ build.endTime ? build.endTime : '?' }}
-              <span v-show="build.runtime !== null" style="margin-left: 2px">
-                &lt;<b style="color: #3b97d7">{{ build.runtime }}</b>&gt;
-              </span>
+                 {{ build.startTime }} - {{ build.endTime ? build.endTime : '?' }}
+                 <span v-show="build.runtime !== null" style="margin-left: 2px">
+                   <span style="color: #3b97d7">{{ build.runtime }}</span>
+                 </span>
               </span>
             </leo-label>
             <leo-label :name="$t('leo.build.details.buildResult')">
@@ -64,7 +64,7 @@
                 </a>
               </span>
             </leo-label>
-            <leo-label :name="$t('leo.build.details.env')" :value="build.buildDetails.build.dict.env"></leo-label>
+            <leo-label :name="$t('leo.build.details.env')" :value="build.buildDetails.build.dict.env"/>
             <leo-label :name="$t('leo.build.details.jenkins')">
               {{ build.buildDetails.build.jenkins && build.buildDetails.build.jenkins.instance && build.buildDetails.build.jenkins.instance.name || '' }}
             </leo-label>
@@ -72,9 +72,9 @@
             <template v-if="build.buildDetails.build.type=== 'kubernetes-image'">
               <leo-label :name="$t('leo.build.details.image')">
                 {{ build.buildDetails.build.dict.image }}
-                <el-tag style="margin-left: 2px" :type="build.isImageExists ? 'success' : 'warning'">
+                <span style="margin-left: 2px" :class="build.isImageExists ? 'image-verified-verified' : 'image-verified-not-verified'">
                   {{ build.isImageExists ? $t('leo.build.details.verified') : $t('leo.build.details.notVerified') }}
-                </el-tag>
+                </span>
               </leo-label>
               <leo-label :name="$t('leo.build.details.imageTag')" :value="build.buildDetails.build.dict.imageTag"/>
             </template>
@@ -231,6 +231,14 @@ export default {
 
 .card {
   margin-bottom: 10px
+}
+
+.image-verified-verified {
+  color: #03a25b;
+}
+
+.image-verified-not-verified {
+  color: #e56c0d;
 }
 
 </style>

@@ -91,12 +91,11 @@
                   </el-tooltip>
                 </div>
                 <leo-label :name="$t('leo.deploy.details.startTime')">
-                  <span v-show="deploy.startTime !== null && deploy.startTime !== ''">{{ deploy.startTime }} - {{
-                      deploy.endTime ? deploy.endTime : '?'
-                    }}
-                  <span v-show="deploy.runtime !== null" style="margin-left: 2px">
-                    <b style="color: #3b97d7"> {{ deploy.runtime }}</b>
-                  </span>
+                  <span v-show="deploy.startTime !== null && deploy.startTime !== ''">
+                    {{ deploy.startTime }} - {{ deploy.endTime ? deploy.endTime : '?' }}
+                    <span v-show="deploy.runtime !== null" style="margin-left: 2px">
+                      <span style="color: #3b97d7">{{ deploy.runtime }}</span>
+                    </span>
                   </span>
                 </leo-label>
                 <leo-label :name="$t('leo.deploy.deploymentVersion.name')">
@@ -105,15 +104,15 @@
                    :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
                    :cluster="deploy.deployDetails.deploy.kubernetes.instance !== null && deploy.deployDetails.deploy.kubernetes.instance.name !== null ? deploy.deployDetails.deploy.kubernetes.instance.name : 'n/a'"/>
                 </leo-label>
-                <template v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
-                  <leo-label :name="$t('leo.deploy.deployType')" :value="deploy.deployDetails.deploy.dict.deployTypeDesc"/>
-                </template>
                 <leo-label :name="$t('leo.deploy.deployResult')">
                   <deploy-result :deploy="deploy"/>
                 </leo-label>
-                  <leo-label :name="$t('leo.deploy.releaseVersion')">
+                <leo-label :name="$t('leo.deploy.releaseVersion')">
                   {{ deploy.versionName === null ? '-' : deploy.versionName }}
                 </leo-label>
+                <template v-if="deploy.deployDetails.deploy.dict !== null && deploy.deployDetails.deploy.dict.deployTypeDesc !== null">
+                  <leo-label :name="$t('leo.deploy.deployType')" :value="deploy.deployDetails.deploy.dict.deployTypeDesc"/>
+                </template>
               </el-card>
               <div style="height: 10px;"/>
           </template>

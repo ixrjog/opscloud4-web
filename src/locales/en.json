@@ -12,6 +12,7 @@
     "delete": "Delete",
     "edit": "Edit",
     "approval": "Approval",
+    "remove": "Remove",
     "close": "Close",
     "add" : "Add",
     "batchDeletion" : "Batch Deletion",
@@ -29,7 +30,8 @@
       "searchProject": "Search and select an project"
     },
     "select": {
-      "selectDeployment": "Choose deployment"
+      "select": "Please select",
+      "selectDeployment": "Select deployment"
     },
     "active": "Active",
     "activeOptions": {
@@ -147,7 +149,16 @@
     "name": "Name",
     "applicant": "Applicant",
     "phase": "Phase",
-    "applicationTime": "Application Time"
+    "applicationTime": "Time",
+    "selectAWorkOrderType": "Select a work order type",
+    "approvedBy": "Approved by",
+    "selectApprover": "Select approver",
+    "automaticAssign": "Automatic Assign",
+    "roleOptions": {
+      "user": "User",
+      "qa": "Quality Assurance",
+      "admin": "Admin"
+    }
   },
   "page": {
     "demo": {

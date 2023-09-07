@@ -6,14 +6,17 @@
         <div v-for="(group,index) in workOrderView.workOrderGroups" :key="group.id">
           <el-collapse-item :name="index">
             <template v-slot:title>
-              <i :class="group.icon" style="margin-right: 5px"/>{{ group.name }}
+              <i :class="group.icon" style="margin-right: 5px"/>
+              <span v-if="$i18n.locale === 'zh-chs'">{{ group.name }}</span>
+              <span v-if="$i18n.locale === 'en'">{{ group.i18nEn }}</span>
             </template>
             <el-table :data="group.workOrders" stripe :show-header=false>
               <el-table-column label="工单">
                 <template v-slot="scope">
                   <i v-if="scope.row.icon !== null && scope.row.icon !== ''" :class="scope.row.icon"
                      style="margin-right: 5px"/>
-                  <span>{{ scope.row.name }}</span>
+                  <span v-if="$i18n.locale === 'zh-chs'">{{ scope.row.name }}</span>
+                  <span v-if="$i18n.locale === 'en'">{{ scope.row.i18nEn }}</span>
                   <span v-if="scope.row.docs !== null && scope.row.docs !== ''">
                      <a :href="scope.row.docs">
                        <i class="fab fa-creative-commons-share" style="color: #008200; margin-left: 5px"/>
@@ -23,7 +26,9 @@
                              :disabled="scope.row.status === 2"
                              :loading="scope.row.loading"
                              plain size="mini"
-                             @click="createTicket(scope.row)">{{ scope.row.status | toStatusName }}
+                             @click="createTicket(scope.row)">
+                    <span v-if="$i18n.locale === 'zh-chs'">   {{ scope.row.status | toStatusName }}</span>
+                    <span v-if="$i18n.locale === 'en'">   {{ scope.row.status | toStatusNameI18nEn }}</span>
                   </el-button>
                 </template>
               </el-table-column>
@@ -39,7 +44,7 @@
 
 import { GET_WORK_ORDER_VIEW } from '@/api/modules/workorder/workorder.api.js'
 import { CREATE_WORK_ORDER_TICKET } from '@/api/modules/workorder/workorder.ticket.api.js'
-import { toStatusName } from '@/filters/workorder'
+import { toStatusName, toStatusNameI18nEn } from '@/filters/workorder'
 
 export default {
   name: 'WorkOrderCard',
@@ -52,7 +57,8 @@ export default {
   },
   components: {},
   filters: {
-    toStatusName
+    toStatusName,
+    toStatusNameI18nEn,
   },
   mounted () {
     this.fetchData()

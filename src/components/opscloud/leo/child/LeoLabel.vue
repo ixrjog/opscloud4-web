@@ -1,8 +1,12 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <div calss="label">
-    <slot>{{ value === undefined ? '-' : value }}</slot>
-    <span class="name">{{ name }}</span>
+  <div>
+      <span class="name">
+        {{ name }}
+      </span>
+      <span class="value">
+        <slot>{{ value === undefined ? '-' : value }}</slot>
+      </span>
   </div>
 </template>
 
@@ -17,11 +21,16 @@ export default {
 <style scoped>
 
 .name {
-  line-height: 1;
   color: #99a9bf;
   display: inline-block;
+  width: 120px;
+  font-size: 10px;
+}
+
+.value {
+  display: inline-block;
   float: right;
-  right: 2px;
+  font-size: 10px;
 }
 
 </style>

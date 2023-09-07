@@ -5,12 +5,14 @@
       <el-form ref="form" label-width="80px">
         <span v-for="node in workflowView.nodes" :key="node.name">
           <!--节点标题-->
-          <el-divider><b style="font-size: 10px;color: #909399">{{ node.name }}</b></el-divider>
+          <el-divider>
+            <b style="font-size: 10px;color: #909399">{{ node.name }}</b>
+          </el-divider>
           <span v-if="node.type === 0">
-            <el-form-item label="Approved By" :required="true" :label-width="labelWidth">
+            <el-form-item :label="$t('workOrder.approvedBy')" :required="true" :label-width="labelWidth">
               <div style="display: flex">
                 <el-select v-if="ticketPhase !== null && ticketPhase === 'NEW'" size="mini"
-                           v-model="node.auditUser" filterable placeholder="选择审批人" value-key="id"
+                           v-model="node.auditUser" filterable :placeholder="$t('workOrder.selectApprover')" value-key="id"
                            style="width: 250px; margin-right: 10px">
                   <el-option v-for="auditUser in node.auditUsers"
                              :key="auditUser.id"
@@ -26,7 +28,7 @@
             </el-form-item>
           </span>
           <span v-if="node.type === 1">
-            <el-form-item label="Automatic Assign" :label-width="labelWidth">
+            <el-form-item :label="$t('workOrder.automaticAssign')" :label-width="labelWidth">
               <span v-for="auditUser in node.auditUsers" :key="auditUser.id"
                     style="margin-right: 5px;display: inline-block">
                 <user-avatar :user="auditUser" :size="avatar.size"/>

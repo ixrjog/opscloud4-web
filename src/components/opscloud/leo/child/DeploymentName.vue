@@ -1,6 +1,6 @@
 <template>
   <span>
-      <b :style="style">{{ cluster === '' ? '' : cluster + ':' }}{{namespace === '' ? '' : namespace + ':'}}{{ deployment }}</b>
+      <span :style="style">{{ cluster === '' ? '' : cluster + ':' }}{{namespace === '' ? '' : namespace + ':'}}{{ deployment }}</span>
   </span>
 </template>
 

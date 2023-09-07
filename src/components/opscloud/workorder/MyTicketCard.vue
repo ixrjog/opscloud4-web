@@ -31,13 +31,13 @@
           </el-radio-button>
         </el-radio-group>
         <el-select v-model.trim="queryParam.workOrderId" filterable clearable @change="fetchData" size="mini"
-                   placeholder="请选择工单类型">
+                   :placeholder="$t('workOrder.selectAWorkOrderType')" style="width: 250px">
           <el-option v-for="item in workOrderOptions"
                      :key="item.id"
-                     :label="item.name"
+                     :label="$i18n.locale === 'zh-chs' ? item.name : item.i18nEn"
                      :value="item.id">
             <span style="float: left">
-              <i :class="item.icon" style="margin-right: 5px"/>{{ item.name }}
+              <i :class="item.icon" style="margin-right: 5px"/>{{ $i18n.locale === 'zh-chs' ? item.name : item.i18nEn }}
             </span>
           </el-option>
         </el-select>
@@ -53,7 +53,9 @@
         <el-table-column prop="id" :label="$t('workOrder.numberOf')" width="80"/>
         <el-table-column prop="workorder" :label="$t('workOrder.name')">
           <template v-slot="scope">
-            <i :class="scope.row.workOrder.icon" style="margin-right: 5px"/>{{ scope.row.workOrder.name }}
+            <i :class="scope.row.workOrder.icon" style="margin-right: 5px"/>
+            <span v-if="$i18n.locale === 'zh-chs'">{{ scope.row.workOrder.name }}</span>
+            <span v-if="$i18n.locale === 'en'">{{ scope.row.workOrder.i18nEn }}</span>
           </template>
         </el-table-column>
         <el-table-column prop="createUser" :label="$t('workOrder.applicant')">

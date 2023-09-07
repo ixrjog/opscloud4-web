@@ -6,6 +6,9 @@
       <el-form-item label="名称" :required="true">
         <el-input v-model="workOrderGroup.name" placeholder="请输入工单群组名称" size="mini"/>
       </el-form-item>
+      <el-form-item label="名称EN" :required="true">
+        <el-input v-model="workOrderGroup.i18nEn" placeholder="请输入工单群组EN名称" size="mini"/>
+      </el-form-item>
       <el-form-item label="类型">
         <el-select v-model="workOrderGroup.groupType" size="mini">
           <el-option v-for="item in groupTypeOptions"

@@ -26,6 +26,7 @@
           <span style="margin-left: 10px">{{ scope.row.name }}</span>
         </template>
       </el-table-column>
+      <el-table-column prop="i18nEn" label="名称EN"/>
       <el-table-column label="类目颜色" width="100">
         <template v-slot="scope">
           <el-color-picker v-model="scope.row.color"/>
@@ -48,9 +49,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <work-order-editor ref="workOrderEditor" :formStatus="formStatus" @close="fetchData"/>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"/>
-    <work-order-editor ref="workOrderEditor" :formStatus="formStatus" @close="fetchData"/>
   </div>
 </template>
 

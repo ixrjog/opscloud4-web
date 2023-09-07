@@ -33,6 +33,19 @@ export function toStatusColor (value) {
 export function toStatusName (value) {
   switch (value) {
     case 0:
+      return '新建'
+    case 1:
+      return '开发中'
+    case 2:
+      return '停用'
+    default:
+      return '新建'
+  }
+}
+
+export function toStatusNameI18nEn (value) {
+  switch (value) {
+    case 0:
       return 'New'
     case 1:
       return 'Developing'

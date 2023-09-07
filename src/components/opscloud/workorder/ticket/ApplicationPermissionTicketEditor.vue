@@ -4,7 +4,7 @@
              :before-close="beforeClose">
     <!--页眉-->
     <template v-slot:title v-if="ticketView !== null">
-      <ticket-title :id="ticketView.ticketId" :title="ticketView.workOrder.name"/>
+      <ticket-title-i18n :id="ticketView.ticketId" :work-order="ticketView.workOrder"/>
     </template>
     <!--页眉-->
     <!--工单视图-->
@@ -71,7 +71,6 @@
 
 <script>
 
-import TicketTitle from '@/components/opscloud/workorder/child/TicketTitle'
 import TicketEntrySelector from '@/components/opscloud/workorder/child/TicketEntrySelector'
 import TicketEntryTable from '@/components/opscloud/workorder/child/TicketEntryTable'
 import NodeView from '@/components/opscloud/workorder/child/NodeView'
@@ -81,11 +80,12 @@ import {
   SAVE_WORK_ORDER_TICKET,
   SUBMIT_WORK_ORDER_TICKET
 } from '@/api/modules/workorder/workorder.ticket.api'
+import TicketTitleI18n from '@/components/opscloud/workorder/child/TicketTitleI18n.vue'
 
 const TableLayout = {
   instance: false,
   role: true,
-  entryName: '应用'
+  entryName: 'Application'
 }
 
 export default {
@@ -102,7 +102,7 @@ export default {
   name: 'ApplicationPermissionTicketEditor',
   props: ['formStatus'],
   components: {
-    TicketTitle,
+    TicketTitleI18n,
     NodeView,
     TicketEntrySelector,
     TicketEntryTable,
