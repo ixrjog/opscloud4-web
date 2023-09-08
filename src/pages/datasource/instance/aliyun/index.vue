@@ -2,7 +2,7 @@
 <template>
   <d2-container>
     <datasource-instance-title v-if="instance.id !== null" :instance-id="instance.id"
-                               datasource-nane="Aliyun实例管理"></datasource-instance-title>
+                               datasource-nane="Aliyun实例管理"/>
     <el-tabs v-model="activeName.name" v-if="instance.id !== null" @tab-click="handleClick">
       <el-tab-pane label="弹性计算" name="elasticCompute">
         <el-tabs tab-position="left" v-model="activeName.ecs" @tab-click="handleClick">

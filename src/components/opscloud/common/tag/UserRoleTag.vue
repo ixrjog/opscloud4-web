@@ -9,16 +9,9 @@
 
 <script>
 export default {
-  name: 'UserTag',
+  name: 'UserRoleTag',
   props: ['user'],
-  methods: {
-    // tagColor (user) {
-    //   if (user.userPermission?.permissionRole && user.userPermission.permissionRole === 'admin') {
-    //     return 'danger'
-    //   }
-    //   return ''
-    // }
-  }
+  methods: {}
 }
 </script>
 
