@@ -17,12 +17,12 @@
       <el-table-column prop="userSize" label="成员数量" width="120"></el-table-column>
       <el-table-column prop="users" label="授权用户">
         <template v-slot="scope">
-            <span  v-for="user in scope.row.users" :key="user.id">
+            <span v-for="user in scope.row.users" :key="user.id">
                 <user-tag :user="user" style="margin-right: 5px"/>
             </span>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述" width="300"></el-table-column>
+      <el-table-column prop="comment" label="描述" width="300"/>
       <el-table-column label="操作" width="220">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>

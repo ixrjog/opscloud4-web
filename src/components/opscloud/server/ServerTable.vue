@@ -60,18 +60,22 @@
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
-      <el-table-column label="名称 / 群组">
+      <el-table-column :label="$t('server.name')">
         <template v-slot="scope">
           <span>{{ scope.row.name }}</span>
-          <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
+          <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 5px"
                      @click="handleDocRead(scope.row)">
             <i class="fab fa-creative-commons-share"/>
           </el-button>
-          <div>{{ scope.row.serverGroup.name }}</div>
         </template>
       </el-table-column>
-      <el-table-column prop="serialNumber" label="序号" width="80" sortable/>
-      <el-table-column label="IP地址" width="150">
+      <el-table-column props="serverGroup" :label="$t('server.serverGroup')">
+        <template v-slot="scope">
+          {{ scope.row.serverGroup.name }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="serialNumber" :label="$t('server.sn')" width="80" sortable/>
+      <el-table-column :label="$t('server.ip')" width="150">
         <template v-slot="scope">
           <span>{{ scope.row.privateIp }}
             <span style="color: #8492a6 ; font-size: 12px">私有</span>
@@ -81,18 +85,18 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="env" label="环境" width="80">
+      <el-table-column prop="env" :label="$t('server.env')" width="80">
         <template v-slot="scope">
           <env-tag :env="scope.row.env"/>
         </template>
       </el-table-column>
-      <el-table-column prop="assetFlag" label="Asset" width="80">
+      <el-table-column prop="assetFlag" :label="$t('server.asset')" width="80">
         <template v-slot="scope">
           <i class="fab fa-font-awesome" style="color: #0da815" v-if="scope.row.assetFlag !== null && scope.row.assetFlag"/>
           <i class="fab fa-font-awesome-alt" v-if="scope.row.assetFlag !== null && !scope.row.assetFlag"/>
         </template>
       </el-table-column>
-      <el-table-column prop="isActive" label="有效" width="80">
+      <el-table-column prop="isActive" :label="$t('server.active')" width="80">
         <template v-slot="scope">
           <active-tag :is-active="scope.row.isActive"/>
         </template>
@@ -103,26 +107,26 @@
           <server-status-tag :serverStatus="scope.row.serverStatus"/>
         </template>
       </el-table-column>
-      <el-table-column prop="monitorStatus" label="监控" width="80">
+      <el-table-column prop="monitorStatus" :label="$t('server.monitor')" width="80">
         <template v-slot="scope">
           <server-monitor-status-tag :monitorStatus="scope.row.monitorStatus"/>
         </template>
       </el-table-column>
-      <el-table-column prop="account" label="账户">
+      <el-table-column prop="accounts" :label="$t('server.accounts')">
         <template v-slot="scope">
           <account-tags :accounts="scope.row.accounts"/>
         </template>
       </el-table-column>
-      <el-table-column prop="tags" label="标签">
+      <el-table-column prop="tags" :label="$t('server.tags')">
         <template v-slot="scope">
           <business-tags :tags="scope.row.tags"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="230">
+      <el-table-column :label="$t('common.operate')" width="230">
         <template v-slot="scope">
-          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
-          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">{{ $t('common.edit') }}</el-button>
+          <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">{{ $t('common.tag') }}</el-button>
+          <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

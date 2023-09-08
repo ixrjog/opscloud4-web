@@ -13,9 +13,10 @@
     "edit": "Edit",
     "approval": "Approval",
     "remove": "Remove",
+    "tag": "Tag",
     "close": "Close",
-    "add" : "Add",
-    "batchDeletion" : "Batch Deletion",
+    "add": "Add",
+    "batchDeletion": "Batch Deletion",
     "all": "All",
     "pleaseEnterContent": "Please enter content",
     "env": "Env",
@@ -41,7 +42,12 @@
     }
   },
   "application": {
-    "name": "Application Name"
+    "name": "Application Name",
+    "application": "Application",
+    "boundResources": "Bound Resource",
+    "jobs": "Leo Job",
+    "authorizedUsers": "Authorized User",
+    "active": "Active"
   },
   "leo": {
     "build": {
@@ -145,7 +151,7 @@
     "applicationDescription": "Application Description",
     "approvalProcess": "Approval Process",
     "opinionOfApprover": "Opinion of Approver",
-    "theApplicantSeemsToHaveForgottenToWrite" : "The applicant seems to have forgotten to write",
+    "theApplicantSeemsToHaveForgottenToWrite": "The applicant seems to have forgotten to write",
     "numberOf": "No.",
     "name": "Name",
     "applicant": "Applicant",
@@ -160,6 +166,18 @@
       "qa": "Quality Assurance",
       "admin": "Admin"
     }
+  },
+  "server": {
+    "name": "Name",
+    "serverGroup": "Server Group",
+    "sn": "SN",
+    "ip": "IP",
+    "env": "Env",
+    "asset": "Asset",
+    "active": "Active",
+    "monitor": "Monitor",
+    "accounts": "Account",
+    "tags": "Tag"
   },
   "page": {
     "demo": {

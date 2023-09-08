@@ -1,7 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
-    <h1>服务器管理</h1>
+<!--    <h1>服务器管理</h1>-->
     <el-tabs v-model="activeName">
       <el-tab-pane label="服务器管理" name="server">
         <server-table/>

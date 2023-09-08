@@ -13,6 +13,7 @@
     "edit": "编辑",
     "approval": "审批",
     "remove": "移除",
+    "tag": "标签",
     "close": "关闭",
     "add": "添加",
     "batchDeletion" : "批量删除",
@@ -41,7 +42,12 @@
     }
   },
   "application": {
-    "name": "应用名称"
+    "name": "应用名",
+    "application": "应用",
+    "boundResources": "绑定的资源",
+    "jobs": "任务",
+    "authorizedUsers": "授权的用户",
+    "active": "有效"
   },
   "leo": {
     "build": {
@@ -160,6 +166,18 @@
       "qa": "质量保障",
       "admin": "管理员"
     }
+  },
+  "server": {
+    "name": "名称",
+    "serverGroup": "服务器组",
+    "sn": "编号",
+    "ip": "IP地址",
+    "env": "环境",
+    "asset": "资产",
+    "active": "有效",
+    "monitor": "监控",
+    "accounts": "账户",
+    "tags": "标签"
   },
   "page": {
     "demo": {

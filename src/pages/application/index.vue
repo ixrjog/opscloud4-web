@@ -2,9 +2,6 @@
 <template>
   <d2-container>
     <template>
-      <div v-show="false">
-        <h1>{{ title }}</h1>
-      </div>
       <el-row>
         <el-input v-model="queryParam.queryName" size="mini" @change="fetchData" placeholder="输入关键字模糊查询"/>
         <el-select v-model="queryParam.tagId" size="mini" filterable clearable remote reserve-keyword
@@ -14,12 +11,16 @@
                      :label="item.tagKey"
                      :value="item.id"/>
         </el-select>
-        <el-button @click="fetchData" size="mini" style="margin-left: 5px">查询</el-button>
-        <el-button style="margin-left: 5px" size="mini" @click="handleAdd">新增</el-button>
+        <el-button @click="fetchData" size="mini" style="margin-left: 5px">
+          <i class="fas fa-circle-notch"/>
+        </el-button>
+        <el-button style="margin-left: 5px" size="mini" @click="handleAdd">
+          <i class="fas fa-plus"/>
+        </el-button>
       </el-row>
       <div style="height: 5px"/>
       <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-        <el-table-column label="应用" width="200px">
+        <el-table-column :label="$t('application.application')" width="200px">
           <template v-slot="scope">
             <el-row>
               <span>{{ scope.row.name }}</span>
@@ -37,7 +38,7 @@
             <business-tags :tags="scope.row.tags"/>
           </template>
         </el-table-column>
-        <el-table-column prop="resourceMap" label="绑定资源" width="400px">
+        <el-table-column prop="resourceMap" :label="$t('application.boundResources')" width="400px">
           <template v-slot="scope">
             <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key">
               <el-divider content-position="left">
@@ -53,7 +54,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="leoJobs" label="Leo任务" width="200">
+        <el-table-column prop="leoJobs" :label="$t('application.jobs')" width="200">
           <template v-slot="scope">
             <div v-for="leoJob in scope.row.leoJobs" :key="leoJob.id">
                 <el-tag size="mini" :class="leoJob.isActive ? 'activeTag' : 'inactiveTag'">
@@ -62,21 +63,21 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="users" label="授权用户" width="150">
+        <el-table-column prop="users" :label="$t('application.authorizedUsers')" width="150">
           <template v-slot="scope">
             <users-tag :users="scope.row.users"/>
           </template>
         </el-table-column>
-        <el-table-column prop="isActive" label="有效" width="80">
+        <el-table-column prop="isActive" :label="$t('application.active')" width="80">
           <template v-slot="scope">
             <active-tag :is-active="scope.row.isActive"/>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column :label="$t('common.operate')" width="200">
           <template v-slot="scope">
-            <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">编辑</el-button>
-            <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">标签</el-button>
-            <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">删除</el-button>
+            <el-button type="primary" plain size="mini" @click="handleRowEdit(scope.row)">{{ $t('common.edit') }}</el-button>
+            <el-button type="primary" plain size="mini" @click="handleRowTagEdit(scope.row)">{{ $t('common.tag') }}</el-button>
+            <el-button type="danger" plain size="mini" @click="handleRowDel(scope.row)">{{ $t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
