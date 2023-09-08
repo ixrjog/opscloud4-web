@@ -11,14 +11,7 @@
 export default {
   name: 'UserTag',
   props: ['user'],
-  methods: {
-    // tagColor (user) {
-    //   if (user.userPermission?.permissionRole && user.userPermission.permissionRole === 'admin') {
-    //     return 'danger'
-    //   }
-    //   return ''
-    // }
-  }
+  methods: {}
 }
 </script>
 

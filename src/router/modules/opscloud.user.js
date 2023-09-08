@@ -5,7 +5,16 @@ export default [
     component: () => import('@/pages/user'),
     meta: {
       auth: true,
-      title: '用户配置'
+      title: '用户管理'
+    }
+  },
+  {
+    path: '/user/group',
+    name: 'user-group',
+    component: () => import('@/pages/user/group'),
+    meta: {
+      auth: true,
+      title: '用户组管理'
     }
   },
   {

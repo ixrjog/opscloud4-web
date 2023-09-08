@@ -1,6 +1,7 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <div>
+   <d2-container>
+    <template>
     <el-row>
       <el-input v-model="queryParam.queryName" size="mini" placeholder="输入关键字模糊查询"/>
       <el-button @click="fetchData" size="mini">查询</el-button>
@@ -8,21 +9,21 @@
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="名称" width="200"/>
+      <el-table-column prop="name" label="名称"/>
       <el-table-column prop="allowOrder" label="工单申请" width="120">
         <template v-slot="scope">
           <allow-tag :allow="scope.row.allowOrder"/>
         </template>
       </el-table-column>
       <el-table-column prop="userSize" label="成员数量" width="120"></el-table-column>
-      <el-table-column prop="users" label="授权用户">
+      <el-table-column prop="users" label="授权用户" width="600">
         <template v-slot="scope">
             <span v-for="user in scope.row.users" :key="user.id">
                 <user-tag :user="user" style="margin-right: 5px"/>
             </span>
         </template>
       </el-table-column>
-      <el-table-column prop="comment" label="描述" width="300"/>
+      <el-table-column prop="comment" label="描述"/>
       <el-table-column label="操作" width="220">
         <template v-slot="scope">
           <el-button type="primary" plain size="mini" @click="handleRowUpdate(scope.row)">编辑</el-button>
@@ -35,16 +36,17 @@
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"/>
     <user-group-editor :formStatus="formStatus.userGroup" ref="userGroupEditor" @close="fetchData"/>
-  </div>
+    </template>
+  </d2-container>
 </template>
 
 <script>
 
 import { QUERY_USER_GROUP_PAGE, DELETE_USERGROUP_BY_ID } from '@/api/modules/user/user.group.api.js'
-import Pagination from '../common/page/Pagination'
-import UserGroupEditor from './UserGroupEditor'
 import AllowTag from '@/components/opscloud/common/tag/AllowTag'
 import UserTag from '@/components/opscloud/common/tag/UserTag.vue'
+import UserGroupEditor from '@/components/opscloud/user/UserGroupEditor.vue'
+import Pagination from '@/components/opscloud/common/page/Pagination.vue'
 
 export default {
   name: 'UserGroupTable',
@@ -73,8 +75,10 @@ export default {
       }
     }
   },
-  computed: {},
   mounted () {
+    this.fetchData()
+  },
+  computed: {
   },
   components: {
     UserGroupEditor,
