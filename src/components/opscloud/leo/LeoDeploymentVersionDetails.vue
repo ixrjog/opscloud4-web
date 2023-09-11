@@ -42,7 +42,7 @@
                 {{ deployment.name }}
               </leo-label>
               <leo-label :name="$t('leo.deploy.deploymentVersion.resourcesLimits')">
-                <deployment-resources-limits :properties="deployment.properties"/>
+                <deployment-resources-limits :properties="deployment.properties" simple/>
               </leo-label>
               <leo-label :name="$t('leo.deploy.deploymentVersion.replicas')">
                 <deployment-replicas :replicas="deployment.replicas"/>
