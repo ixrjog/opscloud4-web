@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <el-card>
+  <div>
     <el-row>
       <el-button :type="webSocketState.type" class="button" size="mini">
         <i v-show="webSocketState.type === 'success'" class="fas fa-link" style="margin-right: 5px"/>
@@ -114,7 +114,7 @@
       </template>
     </el-row>
     <business-doc-reader :form-status="formStatus.businessDoc" ref="businessDocReader"/>
-  </el-card>
+  </div>
 </template>
 
 <script>
