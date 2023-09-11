@@ -23,7 +23,7 @@ export default {
 .name {
   color: #99a9bf;
   display: inline-block;
-  width: 120px;
+  width: 110px;
   font-size: 10px;
 }
 
