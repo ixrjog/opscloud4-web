@@ -59,7 +59,7 @@
         No Data
       </div>
       <div style="height: 10px"/>
-      <el-col style="width: 420px" v-if="data.deploys.length > 0">
+      <el-col style="width: 430px" v-if="data.deploys.length > 0">
         <div v-for="deploy in data.deploys" :key="deploy.id" style="font-size: 12px">
           <template>
             <el-card shadow="hover" body-style="padding: 2px" class="card">

@@ -2,7 +2,9 @@
 <template>
   <span>
   <el-tooltip class="item" effect="dark" :content="image | toContainerRegistry" placement="top-end">
-    <span class="cr">[CR]</span>
+    <span class="cr">
+      {<i class="fab fa-unity"/>CR}
+    </span>
   </el-tooltip>
     <span>{{image | toContainerRegistryPath}}</span>
   </span>
@@ -41,6 +43,10 @@ export default {
 <style scoped>
 
 .cr {
+  color: #0da815;
+}
+
+.cr-x {
   border-radius: 4px;
   padding: 0 5px 0 5px;
   color: white;
