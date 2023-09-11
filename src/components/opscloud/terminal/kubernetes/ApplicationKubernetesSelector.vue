@@ -13,7 +13,8 @@
         </el-radio-button>
       </el-radio-group>
       <el-select v-model="queryParam.applicationId" filterable clearable style="margin-left: 5px" size="mini"
-                 remote reserve-keyword :placeholder="$t('common.search.searchApplication')" :remote-method="getApplication"
+                 remote reserve-keyword :placeholder="$t('common.search.searchApplication')"
+                 :remote-method="getApplication"
                  @change="handleChange">
         <el-option v-for="item in applicationOptions"
                    :key="item.id"
@@ -417,8 +418,8 @@ export default {
           this.processMessages(res.body)
           this.loading = false
         }).catch(() => {
-        this.loading = false
-      })
+          this.loading = false
+        })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',
