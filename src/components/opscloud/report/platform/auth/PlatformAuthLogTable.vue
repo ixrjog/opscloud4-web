@@ -18,19 +18,19 @@
       <el-button @click="fetchData" class="button">查询</el-button>
     </el-row>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="platformName" label="平台" width="150" sortable></el-table-column>
-      <el-table-column prop="username" label="用户名" width="300" sortable></el-table-column>
-      <el-table-column prop="otp" label="使用OTP" width="100">
+      <el-table-column prop="platformName" label="平台" sortable></el-table-column>
+      <el-table-column prop="username" label="用户名" sortable></el-table-column>
+      <el-table-column prop="otp" label="使用OTP">
         <template v-slot="scope">
           <el-tag :type="scope.row.otp ? 'success' : 'info'">{{scope.row.otp ? '是' : '否'}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="result" label="认证结果" width="150">
+      <el-table-column prop="result" label="认证结果">
         <template v-slot="scope">
           <el-tag :type="scope.row.result ? 'success' : 'danger'">{{scope.row.result ? '认证成功' : '认证失败'}}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="createTime" label="认证时间" width="250">
+      <el-table-column prop="createTime" label="认证时间">
         <template v-slot="scope">
           <div>
             <span style="margin-right: 2px">{{ scope.row.createTime }}</span>
@@ -38,7 +38,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="resultMsg" label="认证信息"></el-table-column>
+      <el-table-column prop="resultMsg" label="认证信息"/>
     </el-table>
     <pagination :pagination="table.pagination" @paginationCurrentChange="paginationCurrentChange"
                 @handleSizeChange="handleSizeChange"/>
