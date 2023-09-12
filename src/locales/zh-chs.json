@@ -4,8 +4,9 @@
   "hello": "你好",
   "common": {
     "ok": "确定",
+    "cancel": "取消",
     "submit": "提交",
-    "save" : "保存",
+    "save": "保存",
     "agree": "同意",
     "reject": "拒绝",
     "view": "查看",
@@ -16,7 +17,7 @@
     "tag": "标签",
     "close": "关闭",
     "add": "添加",
-    "batchDeletion" : "批量删除",
+    "batchDeletion": "批量删除",
     "all": "全部",
     "pleaseEnterContent": "请输入内容",
     "env": "环境",
@@ -35,7 +36,7 @@
       "selectDeployment": "选择无状态",
       "selectDatasourceInstance": "选择数据源实例"
     },
-    "active" : "有效",
+    "active": "有效",
     "activeOptions": {
       "active": "有效",
       "inactive": "无效"
@@ -71,23 +72,23 @@
       "build": "构建",
       "details": {
         "startTime": "执行时间",
-        "buildResult" :"执行结果",
-        "versionName" : "版本名称",
+        "buildResult": "执行结果",
+        "versionName": "版本名称",
         "sshUrl": "仓库地址",
         "branch": "构建分支",
         "commit": "COMMIT",
-        "env" : "环境名称",
+        "env": "环境名称",
         "jenkins": "执行引擎",
         "image": "镜像地址",
-        "imageTag" : "镜像标签",
-        "verified" : "已验证",
-        "notVerified" : "未验证"
+        "imageTag": "镜像标签",
+        "verified": "已验证",
+        "notVerified": "未验证"
       },
       "noVersionDesc": "用户未填写版本说明",
       "stopBuilding": "停止构建",
       "consoleLog": "控制台流日志",
       "editBuildDetails": "编辑构建详情",
-      "buildDetail" : "构建详情",
+      "buildDetail": "构建详情",
       "buildConfig": "构建配置"
     },
     "deploy": {
@@ -110,7 +111,7 @@
       "deploymentVersion": {
         "name": "环境分组",
         "resourcesLimits": "资源限制",
-        "replicas" : "副本数量"
+        "replicas": "副本数量"
       },
       "Rolling": "",
       "buildJobName": "构建任务名称",
@@ -118,7 +119,7 @@
       "deployDesc": "部署说明",
       "searchReleaseVersion": "搜索并选择版本",
       "doDeploy": "执行部署",
-      "deployHistory" :"部署历史",
+      "deployHistory": "部署历史",
       "deployResult": "部署结果",
       "deploymentDetailsSnapshot": "部署详情快照",
       "viewDeploymentSnapshot": "查看部署快照"
@@ -126,7 +127,7 @@
     "pod": {
       "podIp": "容器组IP",
       "startTime": "启动时间",
-      "restart" : "重启次数"
+      "restart": "重启次数"
     },
     "job": {
       "jobEnv": "任务环境"
@@ -139,7 +140,7 @@
     "commandSynchronization": "命令同步",
     "pod": {
       "podIp": "容器组IP",
-      "startTime" : "启动时间",
+      "startTime": "启动时间",
       "versionName": "版本名称",
       "image": "镜像地址",
       "restart": "重启次数"
@@ -148,10 +149,10 @@
   "workOrder": {
     "workOrderOptions": "工单选项",
     "approvalOptions": "审批选项",
-    "applicationDescription" : "申请说明",
+    "applicationDescription": "申请说明",
     "approvalProcess": "审批流程",
     "opinionOfApprover": "审批意见",
-    "theApplicantSeemsToHaveForgottenToWrite" : "申请人好像忘记写了!",
+    "theApplicantSeemsToHaveForgottenToWrite": "申请人好像忘记写了!",
     "numberOf": "编号",
     "name": "工单名称",
     "applicant": "申请人",
@@ -178,6 +179,31 @@
     "monitor": "监控",
     "accounts": "账户",
     "tags": "标签"
+  },
+  "webTerm": {
+    "layoutModeOptions": {
+      "doubleColumn": "双列布局",
+      "singleColumn": "单列布局"
+    },
+    "loginUserTypeOptions": {
+      "lowPrivilege": "低权限账户",
+      "privilege": "特权账户"
+    },
+    "commandSync": "命令同步",
+    "fullScreen": "全屏显示",
+    "terminalSettings": "终端设置",
+    "resize": "适应窗体",
+    "loginAll": "批量登录",
+    "logoutAll": "批量登出",
+    "settings": {
+      "userProfiles": "用户配置文件",
+      "foreground" : "前景色",
+      "background": "背景色",
+      "cursor": "光标色",
+      "cursorAccent": "Cursor Accent",
+      "selection": "选中背景色",
+      "windowsRows": "终端行数"
+    }
   },
   "page": {
     "demo": {

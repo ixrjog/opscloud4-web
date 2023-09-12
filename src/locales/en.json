@@ -4,6 +4,7 @@
   "hello": "Hello",
   "common": {
     "ok": "Ok",
+    "cancel": "Cancel",
     "submit": "Submit",
     "save": "Save",
     "agree": "Agree",
@@ -178,6 +179,31 @@
     "monitor": "Monitor",
     "accounts": "Account",
     "tags": "Tag"
+  },
+  "webTerm": {
+    "layoutModeOptions": {
+      "doubleColumn": "Double column",
+      "singleColumn": "Single column"
+    },
+    "loginUserTypeOptions": {
+      "lowPrivilege": "Low privilege",
+      "privilege": "Privilege"
+    },
+    "commandSync": "Command Sync",
+    "fullScreen": "Full Screen",
+    "terminalSettings": "Terminal Settings",
+    "resize": "Resize",
+    "loginAll": "Login All",
+    "logoutAll": "Logout All",
+    "settings": {
+      "userProfiles": "User Profiles",
+      "foreground" : "Foreground",
+      "background": "Background",
+      "cursor": "Cursor",
+      "cursorAccent": "Cursor Accent",
+      "selection": "Selection",
+      "windowsRows": "Windows Rows"
+    }
   },
   "page": {
     "demo": {
