@@ -27,7 +27,7 @@
        <span class="custom-tree-node" slot-scope="{ node, data }">
          <span>{{ node.label }}</span>
          <business-tags v-if="data.server !== null && data.server.tags !== null" :tags="data.server.tags"/>
-      </span>
+       </span>
     </el-tree>
   </el-card>
 </template>

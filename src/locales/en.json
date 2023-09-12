@@ -205,6 +205,9 @@
       "windowsRows": "Windows Rows"
     }
   },
+  "arms": {
+    "name": "Application Real-Time Monitoring Service (ARMS)"
+  },
   "page": {
     "demo": {
       "playground": {

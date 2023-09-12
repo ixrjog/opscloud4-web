@@ -205,6 +205,9 @@
       "windowsRows": "终端行数"
     }
   },
+  "arms": {
+    "name": "应用实时监控服务ARMS"
+  },
   "page": {
     "demo": {
       "playground": {

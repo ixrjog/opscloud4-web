@@ -33,7 +33,7 @@
     <el-row v-if="application !== '' && application.armsTraceApp.show">
       <el-card shadow="never" class="banner">
         <el-tag type="success" @click="openUrl(application.armsTraceApp.homeUrl)">
-          ARMS应用实时监控服务
+          {{ $t('arms.name') }}
           <i class="fas fa-external-link-alt" style="margin-left: 2px"/>
         </el-tag>
       </el-card>
@@ -418,8 +418,8 @@ export default {
           this.processMessages(res.body)
           this.loading = false
         }).catch(() => {
-          this.loading = false
-        })
+        this.loading = false
+      })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',
