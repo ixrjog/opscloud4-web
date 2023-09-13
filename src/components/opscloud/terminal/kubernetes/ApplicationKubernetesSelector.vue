@@ -418,8 +418,8 @@ export default {
           this.processMessages(res.body)
           this.loading = false
         }).catch(() => {
-        this.loading = false
-      })
+          this.loading = false
+        })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',

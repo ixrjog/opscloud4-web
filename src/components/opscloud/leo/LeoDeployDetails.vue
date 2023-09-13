@@ -11,7 +11,7 @@
         <span style="margin-right: 10px"/>
         <business-tags :tags="deploy.tags"/>
       </div>
-      <el-row :gutter="20">
+      <el-row :gutter="20" class="deploy-content">
         <el-col :span="12">
           <leo-label :name="$t('leo.deploy.details.startTime')">
              <span v-show="deploy.startTime !== null && deploy.startTime !== ''">{{deploy.startTime}} - {{ deploy.endTime ? deploy.endTime : '?' }}
@@ -83,6 +83,10 @@ export default {
   color: #e56c0d;
   margin-left: 3px;
   margin-right: 5px;
+}
+
+.deploy-content {
+  line-height: 18px;
 }
 
 </style>

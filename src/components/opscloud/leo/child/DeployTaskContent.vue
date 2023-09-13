@@ -1,6 +1,6 @@
 <!--suppress HtmlUnknownTag -->
 <template>
-  <div>
+  <div class="deploy-content">
     <leo-label :name="$t('leo.deploy.details.startTime')">
                   <span v-show="deploy.startTime !== null && deploy.startTime !== ''">
                     {{ deploy.startTime }} - {{ deploy.endTime ? deploy.endTime : '?' }}
@@ -48,5 +48,9 @@ export default {
 </script>
 
 <style scoped>
+
+.deploy-content {
+  line-height: 18px;
+}
 
 </style>
