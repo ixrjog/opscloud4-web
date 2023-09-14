@@ -66,7 +66,7 @@ export default {
   /*控制代码不换行*/
   white-space: pre;
   word-wrap: normal;
-  background: #d9d9d9 !important;
+  background: #f6f6f6 !important;
   border-radius: 4px;
   font-size: 9px;
 }
