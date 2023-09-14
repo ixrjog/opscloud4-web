@@ -38,14 +38,14 @@
 
 <script>
 
-import {QUERY_USER_PAGE} from '@/api/modules/user/user.api.js'
+import { QUERY_USER_PAGE } from '@/api/modules/user/user.api.js'
 import RoleTags from '../../../components/opscloud/rbac/child/RoleTags'
 import UserRoleEditor from '../../../components/opscloud/rbac/UserRoleEditor'
 import Pagination from '../../../components/opscloud/common/page/Pagination'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags'
 
 export default {
-  data() {
+  data () {
     return {
       table: {
         data: [],
@@ -70,7 +70,7 @@ export default {
     }
   },
   computed: {},
-  mounted() {
+  mounted () {
     this.fetchData()
   },
   components: {
@@ -80,19 +80,19 @@ export default {
     BusinessTags
   },
   methods: {
-    paginationCurrentChange(currentPage) {
+    paginationCurrentChange (currentPage) {
       this.table.pagination.currentPage = currentPage
       this.fetchData()
     },
-    handleSizeChange(size) {
+    handleSizeChange (size) {
       this.table.pagination.pageSize = size
       this.fetchData()
     },
-    handleRowEdit(row) {
+    handleRowEdit (row) {
       this.$refs.userRoleEditor.initData(row)
       this.formStatus.role.visible = true
     },
-    fetchData() {
+    fetchData () {
       this.table.loading = true
       const requestBody = {
         ...this.queryParam,

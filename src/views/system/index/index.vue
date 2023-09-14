@@ -70,7 +70,7 @@ export default {
       /**
        * OPSCLOUD前端版本号
        */
-      version:  process.env.VUE_APP_OC_VERSION
+      version: process.env.VUE_APP_OC_VERSION
     }
   },
   components: {

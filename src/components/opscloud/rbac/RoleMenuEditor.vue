@@ -84,7 +84,7 @@ export default {
           this.$message.success('保存成功')
           this.getAuthRoleMenuDetail()
         }).catch(() => {
-        this.loading = false
+          this.loading = false
       })
     },
     initData (role) {

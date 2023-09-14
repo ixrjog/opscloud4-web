@@ -20,12 +20,12 @@ import DocumentZone from '@/components/opscloud/sys/DocumentZone.vue'
 
 export default {
   name: 'leoTemplate',
-  data() {
+  data () {
     return {
       activeName: 'template'
     }
   },
-  mounted() {
+  mounted () {
   },
   components: {
     LeoTemplateTable,

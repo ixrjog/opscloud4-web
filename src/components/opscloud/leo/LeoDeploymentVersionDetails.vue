@@ -219,7 +219,7 @@ export default {
 
 >>> .el-card__body {
   padding: 3px;
-  line-height: 18px;
+  line-height: 14px;
 }
 
 .versionBlue {
