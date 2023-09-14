@@ -8,7 +8,6 @@ export function toContainerRegistry (image) {
   } else {
     return image.substring(0, index)
   }
-
 }
 
 export function toContainerRegistryPath (image) {

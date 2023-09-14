@@ -3,7 +3,8 @@
   <span>
   <el-tooltip class="item" effect="dark" :content="image | toContainerRegistry" placement="top-end">
     <span class="cr">
-      {<i class="fab fa-unity"/>CR}
+<!--      <i class="fab fa-unity"/>-->
+      {CR}
     </span>
   </el-tooltip>
     <span>{{image | toContainerRegistryPath}}</span>

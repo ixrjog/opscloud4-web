@@ -193,7 +193,7 @@ export default {
             labelWidth: '150px'
           },
           frontEnd: {
-            visible: false,
+            visible: false
           },
           mavenPublish: {
             visible: false,

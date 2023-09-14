@@ -85,7 +85,7 @@ export default {
           this.getAuthRoleMenuDetail()
         }).catch(() => {
           this.loading = false
-      })
+        })
     },
     initData (role) {
       this.menuContent = ''
