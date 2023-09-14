@@ -70,6 +70,7 @@
       "latestBuild": "最新构建",
       "builds": "构建次数",
       "build": "构建",
+      "committed": "提交于",
       "details": {
         "startTime": "执行时间",
         "buildResult": "执行结果",

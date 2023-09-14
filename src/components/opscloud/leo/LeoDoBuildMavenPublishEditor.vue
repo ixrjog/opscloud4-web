@@ -39,16 +39,9 @@
                        :loading="branchOptionsLoading">
               <i class="fab fa-hubspot" aria-hidden="true"/>
             </el-button>
-            <!--commit详情 :title="branch.commitId" :description="branch.commitMessage" -->
-            <el-alert v-show="JSON.stringify(this.branch) !== '{}'"
-                      style="margin-top: 5px; background-color: #e56c0d"
-                      :closable="false">
-              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF">
-                <i class="fab fa-git-alt" style="margin-right: 1px"/>
-                <b>{{ branch.commitId }}</b>
-              </a>
-              <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
-            </el-alert>
+            <!-- Commit详情 -->
+            <div style="height: 10px"/>
+            <commit-details :branch="branch"/>
           </el-form-item>
           <el-form-item label="组件名称" :label-width="formStatus.labelWidth" required>
             <el-input v-model="mavenPublishInfo.artifactId" readonly placeholder="自动填充，从配置文件获取" size="mini"/>
@@ -84,6 +77,7 @@ import {
   GET_BUILD_MAVEN_PUBLISH_INFO
 } from '@/api/modules/leo/leo.build.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
+import CommitDetails from '@/components/opscloud/leo/child/CommitDetails.vue'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -131,6 +125,7 @@ export default {
   name: 'LeoDoBuildMavenPublishEditor',
   props: ['formStatus'],
   components: {
+    CommitDetails,
     SelectItem
   },
   mixins: [],

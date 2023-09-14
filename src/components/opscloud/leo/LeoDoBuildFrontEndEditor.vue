@@ -41,16 +41,9 @@
                        :loading="branchOptionsLoading">
               <i class="fab fa-hubspot" aria-hidden="true"/>
             </el-button>
-            <!--commit详情 :title="branch.commitId" :description="branch.commitMessage" -->
-            <el-alert v-show="JSON.stringify(this.branch) !== '{}'"
-                      style="margin-top: 5px; background-color: #e56c0d"
-                      :closable="false">
-              <a target="blank" :href="branch.commitWebUrl" style="color: #FFFFFF">
-                <i class="fab fa-git-alt" style="margin-right: 1px"/>
-                <b>{{ branch.commitId }}</b>
-              </a>
-              <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
-            </el-alert>
+            <!-- Commit详情 -->
+            <div style="height: 10px"/>
+            <commit-details :branch="branch"/>
           </el-form-item>
           <el-form-item label="Project" :label-width="form.labelWidth">
             <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
@@ -92,7 +85,7 @@ import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
-import util from '@/libs/util'
+import CommitDetails from '@/components/opscloud/leo/child/CommitDetails.vue'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -142,6 +135,7 @@ export default {
   name: 'LeoDoBuildFrontEndEditor',
   props: ['formStatus'],
   components: {
+    CommitDetails,
     SelectItem
   },
   mixins: [],

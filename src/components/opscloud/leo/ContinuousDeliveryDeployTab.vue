@@ -96,7 +96,7 @@
           </template>
         </div>
       </el-col>
-      <span style="display: flex;flex-flow: row wrap"  v-if="data.deploys.length > 0">
+      <span style="display: flex; flex-flow: row wrap"  v-if="data.deploys.length > 0">
         <el-tag v-show="JSON.stringify(data.deploys) !== '[]'">
           <i class="fas fa-plus-circle" id="deploy_details" style="margin-right: 2px"/>
           {{ $t('leo.deploy.deploymentDetailsSnapshot') }}

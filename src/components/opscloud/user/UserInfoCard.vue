@@ -2,33 +2,43 @@
 <template>
   <div>
     <el-card class="box-card" shadow="hover">
-      <div slot="header" class="clearfix">
+      <div slot="header" class="clearfix" v-if="false">
         <span>Hi {{ user.displayName }}</span>
         <el-button style="float: right; padding: 3px 0" type="text" @click="handleEdit()">编辑</el-button>
       </div>
+      <div>
+        <div style="width:100%; text-align: center">
+          <el-avatar v-if="user.avatar !== null && user.avatar !== undefined" :src="user.avatar" :size="50"/>
+        </div>
+        <div style="width:100%; text-align: center">
+          {{ user.displayName }}
+          <div style="color: rgb(98,98,98)">{{ user.comment }}</div>
+        </div>
+      </div>
+      <el-divider></el-divider>
       <el-form :model="user" label-width="60px">
         <el-form-item label="用户名">
-          <el-input v-model="user.username" size="mini" readonly/>
+          <span>{{ user.username }}</span>
         </el-form-item>
         <el-form-item label="显示名">
-          <el-input v-model="user.displayName" size="mini" readonly/>
+          <span>{{ user.displayName }}</span>
         </el-form-item>
         <el-form-item label="姓名">
-          <el-input v-model="user.name" size="mini" readonly/>
+          <span>{{ user.name }}</span>
         </el-form-item>
         <el-form-item label="电话">
-          <el-input v-model="user.phone" size="mini" readonly/>
+          <span>{{ user.phone }}</span>
         </el-form-item>
         <el-form-item label="邮箱">
-          <el-input v-model="user.email" size="mini" readonly/>
+          <span>{{ user.email }}</span>
         </el-form-item>
         <el-form-item label="微信">
-          <el-input v-model="user.wechat" size="mini" readonly/>
-        </el-form-item>
-        <el-form-item label="留言">
-          <el-input v-model="user.comment" size="mini" readonly/>
+          <span>{{ user.wechat }}</span>
         </el-form-item>
       </el-form>
+      <div style="width: 100%; text-align: center">
+        <el-button type="primary" plain @click="handleEdit()">{{ $t('common.edit') }}</el-button>
+      </div>
     </el-card>
     <user-editor :formStatus="formStatus.user" ref="userEditor" @close="fetchData"/>
   </div>

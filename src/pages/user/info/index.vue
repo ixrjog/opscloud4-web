@@ -12,15 +12,11 @@
         </el-option>
       </el-select>
     </el-row>
-    <h1>
-      <el-avatar v-if="user.avatar !== null && user.avatar !== undefined" :src="user.avatar"
-                 :size="50"/>
-    </h1>
     <el-row :gutter="24" style="margin-top: 10px" v-if="user !== null">
-      <el-col :span="7">
+      <el-col style="width: 400px">
         <user-info :user="user" @fetchData="fetchData"/>
       </el-col>
-      <el-col :span="17">
+      <span style="display: flex; flex-flow: row wrap; flex-direction: column; margin-left: 20px">
         <pubkey-info :user="user"/>
         <roles-info :roles="user.roles"/>
         <application-info :userId="user.id"/>
@@ -29,7 +25,7 @@
         <user-ram-user-info-card :user="user"/>
         <user-am-info-card :user="user"/>
         <access-token-info :user="user" @fetchData="fetchData"/>
-      </el-col>
+      </span>
     </el-row>
   </d2-container>
 </template>

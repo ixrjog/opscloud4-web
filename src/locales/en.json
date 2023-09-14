@@ -70,6 +70,7 @@
       "latestBuild": "Latest Build",
       "builds": "Builds",
       "build": "Build",
+      "committed": "committed",
       "details": {
         "startTime": "Start Time",
         "buildResult": "Build Result",

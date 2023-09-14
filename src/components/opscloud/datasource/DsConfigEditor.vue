@@ -62,7 +62,7 @@
                     height="400"
                     :options="options"/>
           </el-form-item>
-          <div style="width:100%;text-align:center">
+          <div style="width:100%; text-align:center">
             <el-button size="mini" type="primary" @click="handleEditing" v-show="!editing">编辑属性</el-button>
           </div>
         </el-tab-pane>
