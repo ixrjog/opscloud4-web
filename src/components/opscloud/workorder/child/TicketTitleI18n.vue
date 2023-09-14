@@ -19,7 +19,7 @@ export default {
     workOrder: {
       type: Object,
       required: true,
-      default: { name: 'null', i18nEn: 'null' }
+      default: () => ({ name: 'null', i18nEn: 'null' })
     }
   }
 }

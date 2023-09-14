@@ -502,9 +502,11 @@ export default {
 
 .podFault {
   border: 2px solid #e56c0d;
+  line-height: 14px;
 }
 
 .podNormal {
+  line-height: 14px;
 }
 
 </style>

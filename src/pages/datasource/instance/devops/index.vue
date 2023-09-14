@@ -60,14 +60,7 @@
 
 import AssetTable from '../../../../components/opscloud/datasource/asset/AssetTable'
 import DsInstanceAssetType from '@/components/opscloud/common/enums/ds.instance.asset.type'
-import DsChildrenTag from '../../../../components/opscloud/datasource/common/DsChildrenTag'
-import EntryDetail from '@/components/opscloud/common/EntryDetail'
 import DatasourceInstanceTitle from '@/components/opscloud/datasource/DsInstanceTitle'
-
-const treeObj = {
-  label: '',
-  children: []
-}
 
 const tableLayout = {
   project: {
@@ -122,7 +115,7 @@ const tableLayout = {
     },
     assetKey2: {
       alias: '工作项类型',
-      show: true,
+      show: true
     },
     zone: {
       alias: '-',
@@ -149,8 +142,6 @@ export default {
   },
   components: {
     AssetTable,
-    DsChildrenTag,
-    EntryDetail,
     DatasourceInstanceTitle
   },
   methods: {
@@ -165,7 +156,6 @@ export default {
       }
       if (tab.name === 'workitem') {
         this.$refs.workitemTable.fetchData()
-        return
       }
     },
     init () {

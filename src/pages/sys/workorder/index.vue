@@ -36,6 +36,8 @@
     <gitlab-group-ticket-editor :formStatus="formStatus.ticket.gitlab.group" ref="gitlabGroupTicketEditor" @close="fetchData"/>
     <ons-topic-ticket-editor :formStatus="formStatus.ticket.ons.topic" ref="onsTopicTicketEditor" @close="fetchData"/>
     <ons-group-ticket-editor :formStatus="formStatus.ticket.ons.group" ref="onsGroupTicketEditor" @close="fetchData"/>
+    <ons-topic-v5-ticket-editor :formStatus="formStatus.ticket.ons5.topic" ref="onsTopicV5TicketEditor" @close="fetchData"/>
+    <ons-group-v5-ticket-editor :formStatus="formStatus.ticket.ons5.group" ref="onsGroupV5TicketEditor" @close="fetchData"/>
     <employee-resign-ticket-editor :formStatus="formStatus.ticket.employeeResign" ref="employeeResignTicketEditor" @close="fetchData"/>
     <sqs-ticket-editor :formStatus="formStatus.ticket.sqs" ref="sqsTicketEditor" @close="fetchData"/>
     <sns-topic-ticket-editor :formStatus="formStatus.ticket.sns.topic" ref="snsTopicTicketEditor" @close="fetchData"/>
@@ -69,7 +71,9 @@ import WorkOrderTable from '@/components/opscloud/workorder/WorkOrderTable'
 import IamPolicyTicketEditor from '@/components/opscloud/workorder/ticket/IamPolicyTicketEditor'
 import WorkOrderReport from '@/components/opscloud/workorder/WorkOrderReport'
 import OnsTopicTicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicTicketEditor'
+import onsTopicV5TicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicV5TicketEditor'
 import OnsGroupTicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupTicketEditor'
+import onsGroupV5TicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupV5TicketEditor'
 import EmployeeResignTicketEditor from '@/components/opscloud/workorder/ticket/EmployeeResignTicketEditor'
 import GrafanaTicketEditor from '@/components/opscloud/workorder/ticket/GrafanaTicketEditor'
 import SqsTicketEditor from '@/components/opscloud/workorder/ticket/SqsTicketEditor'
@@ -124,6 +128,8 @@ export default {
     GitlabGroupTicketEditor,
     OnsTopicTicketEditor,
     OnsGroupTicketEditor,
+    onsTopicV5TicketEditor,
+    onsGroupV5TicketEditor,
     EmployeeResignTicketEditor,
     SqsTicketEditor,
     SnsTopicTicketEditor,
@@ -225,6 +231,14 @@ export default {
         case this.workOrderKeyConstants.ONS_ROCKETMQ_GROUP:
           this.handleOpenTicketEditor(this.formStatus.ticket.ons.group)
           this.$refs.onsGroupTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.ONS5_TOPIC:
+          this.handleOpenTicketEditor(this.formStatus.ticket.ons5.topic)
+          this.$refs.onsTopicV5TicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.ONS5_GROUP:
+          this.handleOpenTicketEditor(this.formStatus.ticket.ons5.group)
+          this.$refs.onsGroupV5TicketEditor.initData(ticket)
           break
         case this.workOrderKeyConstants.SYS_EMPLOYEE_RESIGN:
           this.handleOpenTicketEditor(this.formStatus.ticket.employeeResign)
