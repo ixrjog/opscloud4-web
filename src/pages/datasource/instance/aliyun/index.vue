@@ -68,7 +68,7 @@
                 </el-table-column>
                 <el-table-column label="交换机" width="350">
                   <template v-slot="scope">
-                    <el-tree :data="getVSwitches(scope.row)" accordion />
+                    <el-tree :data="getVSwitches(scope.row)" accordion/>
                   </template>
                 </el-table-column>
               </template>
@@ -362,6 +362,59 @@
                     <span>{{ scope.row.kind }}</span>
                   </template>
                 </el-table-column>
+                <el-table-column prop="description" label="备注">
+                  <template v-slot="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="ONS 5.0 消息服务" name="ons5">
+        <el-tabs tab-position="left" v-model="activeName.ons5" @tab-click="handleClick">
+          <el-tab-pane label="实例" name="ons5Instance">
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS5_INSTANCE"
+                         :tableLayout="tableLayout.ons.rocketMq.instance"
+                         ref="onsRocketMqInstanceTable">
+              <template v-slot:extend>
+                <el-table-column prop="properties" label="实例详情">
+                  <template v-slot="scope">
+                    <span>{{ scope.row.kind }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="description" label="备注">
+                  <template v-slot="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="Topic" name="ons5Topic">
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS5_TOPIC"
+                         :tableLayout="tableLayout.ons.rocketMq.topic"
+                         ref="onsRocketMqTopicTable">
+              <template v-slot:extend>
+                <el-table-column prop="kind" label="消息类型">
+                  <template v-slot="scope">
+                    <span>{{ scope.row.kind }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="description" label="备注">
+                  <template v-slot="scope">
+                    <span>{{ scope.row.description }}</span>
+                  </template>
+                </el-table-column>
+              </template>
+            </asset-table>
+          </el-tab-pane>
+          <el-tab-pane label="Group" name="ons5Group">
+            <asset-table :instanceId="instance.id" :assetType="assetType.ALIYUN.ONS5_GROUP"
+                         :tableLayout="tableLayout.ons.rocketMq.group"
+                         ref="onsRocketMqGroupTable">
+              <template v-slot:extend>
                 <el-table-column prop="description" label="备注">
                   <template v-slot="scope">
                     <span>{{ scope.row.description }}</span>
@@ -774,6 +827,7 @@ export default {
         ram: 'ramUser',
         rds: 'rdsInstance',
         ons: 'onsRocketMqInstance',
+        ons5: 'ons5Instance',
         dms: 'dmsUser'
       },
       instance: {
@@ -846,15 +900,15 @@ export default {
         this.$refs.dmsUserTable.fetchData()
         return
       }
-      if (tab.name === 'onsRocketMqInstance' || tab.name === 'ons') {
+      if (tab.name === 'onsRocketMqInstance' || tab.name === 'ons5Instance' || tab.name === 'ons' || tab.name === 'ons5') {
         this.$refs.onsRocketMqInstanceTable.fetchData()
         return
       }
-      if (tab.name === 'onsRocketMqTopic') {
+      if (tab.name === 'onsRocketMqTopic' || tab.name === 'ons5Topic') {
         this.$refs.onsRocketMqTopicTable.fetchData()
         return
       }
-      if (tab.name === 'onsRocketMqGroup') {
+      if (tab.name === 'onsRocketMqGroup' || tab.name === 'ons5Group') {
         this.$refs.onsRocketMqGroupTable.fetchData()
         return
       }

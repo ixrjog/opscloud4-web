@@ -46,6 +46,10 @@ export default {
       topic: { visible: false },
       group: { visible: false }
     },
+    ons5: {
+      topic: { visible: false },
+      group: { visible: false }
+    },
     employeeResign: {
       visible: false
     },

@@ -58,7 +58,7 @@ export default {
   components: {},
   filters: {
     toStatusName,
-    toStatusNameI18nEn,
+    toStatusNameI18nEn
   },
   mounted () {
     this.fetchData()
