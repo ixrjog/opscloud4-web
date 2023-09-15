@@ -2,9 +2,10 @@
 <template>
   <div>
     <el-form :model="groupData" label-width="120px">
-      <el-form-item label="阿里云实例">
+      <el-form-item :label="$t('workOrder.onsTopicV5Ticket.instanceName')">
         <el-select v-model="instanceUuid" size="mini" filterable value-key="instanceName"
-                   style="width: 250px;" placeholder="选择数据源实例" reserve-keyword @change="selInstance">
+                   style="width: 250px;" :placeholder="$t('common.select.selectDatasourceInstance')" reserve-keyword
+                   @change="selInstance">
           <el-option v-for="item in dsInstanceOptions"
                      :key="item.uuid"
                      :label="item.instanceName"
@@ -13,9 +14,9 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="ONS实例">
+      <el-form-item :label="$t('workOrder.onsTopicV5Ticket.onsInstance')">
         <el-select v-model="ticketEntry" size="mini" filterable value-key="name"
-                   style="width: 250px;" remote reserve-keyword placeholder="输入关键词搜索ONS实例"
+                   style="width: 250px;" remote reserve-keyword :placeholder="$t('common.search.search')"
                    :remote-method="fetchData"
                    :loading="searchLoading" :disabled="instanceUuid === ''" @change="onsInstanceChange">
           <el-option v-for="item in ticketEntryOptions"
@@ -28,75 +29,76 @@
       </el-form-item>
       <el-form-item label="GID" required>
         <el-input v-model="groupData.consumerGroupId" :disabled="added" size="mini"/>
-        <span style="height: 18px;font-size: 10px;color: #909399">
-          以 “GID_”开头，只能包含大写字母、数字和下划线（_），最多 64 个字符
+        <span style="height: 18px;font-size: 10px; color: #909399">
+          {{ $t('workOrder.onsGroupV5Ticket.gidDesc') }}
         </span>
       </el-form-item>
-      <el-form-item label="投递顺序性" required>
+      <el-form-item :label="$t('workOrder.onsGroupV5Ticket.deliveryOrder')" required>
         <el-radio-group v-model="groupData.deliveryOrderType" size="mini" :disabled="added">
           <el-radio-button :label="deliveryOrderType.concurrently.type">
-            {{ deliveryOrderType.concurrently.desc }}
+            {{ $t('workOrder.onsGroupV5Ticket.deliveryOrderTypes.concurrently.name') }}
           </el-radio-button>
           <el-radio-button :label="deliveryOrderType.orderly.type">
-            {{ deliveryOrderType.orderly.desc }}
+            {{ $t('workOrder.onsGroupV5Ticket.deliveryOrderTypes.orderly.name') }}
           </el-radio-button>
         </el-radio-group>
-        <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right">
-          <el-link
-            href="https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumer-groups"
-            :underline="false" target="_blank">
-            <i class="el-icon-info" style="margin-left: 5px;height: 200%"/>
-          </el-link>
-        </el-tooltip>
-        <el-alert type="info" :closable="false" style="margin-top: 10px;line-height: 1.5">
+        <el-alert type="info" :closable="false" style="margin-top: 10px; line-height: 1.5">
           <template v-slot:default>
-            <i class="el-icon-info" style="font-size: 14px;color: #409eff;"/>
-            <span v-if="groupData.deliveryOrderType === deliveryOrderType.concurrently.type">
-              该模式下服务端投递消息将按照高吞吐效率优先并发处理，消息之间无顺序依赖。即使设置了相同MessageGroup的顺序消息也会无序投递。
-            </span>
-            <span v-if="groupData.deliveryOrderType === deliveryOrderType.orderly.type">
-              顺序投递模式下消费者只能按照消息分组的顺序获取消息，前面的消息没有提交完成则无法获取消费后续的消息.
-            </span>
+            <i class="el-icon-info" style="font-size: 14px; color: #409eff;"/>
+            {{ $t(getDeliveryOrderTypeDesc(groupData.deliveryOrderType)) }}
+            <!--            <span v-if="groupData.deliveryOrderType === deliveryOrderType.concurrently.type">-->
+            <!--              该模式下服务端投递消息将按照高吞吐效率优先并发处理，消息之间无顺序依赖。即使设置了相同MessageGroup的顺序消息也会无序投递。-->
+            <!--            </span>-->
+            <!--            <span v-if="groupData.deliveryOrderType === deliveryOrderType.orderly.type">-->
+            <!--              顺序投递模式下消费者只能按照消息分组的顺序获取消息，前面的消息没有提交完成则无法获取消费后续的消息.-->
+            <!--            </span>-->
           </template>
         </el-alert>
-        <el-card shadow="never" style="margin-top: 10px">
+        <div style="height: 10px"/>
+        <el-card shadow="never">
           <el-form>
-            <el-form-item label="消费重试策略" required>
+            <el-form-item :label="$t('workOrder.onsGroupV5Ticket.consumptionRetryPolicy')" required>
               <el-tag size="mini" type="info">
-                {{ groupData.consumeRetryPolicy.retryPolicy | getRetryPolicyText }}
+                {{ $t(getRetryPolicyText(groupData.consumeRetryPolicy.retryPolicy)) }}
+                <!--                {{ groupData.consumeRetryPolicy.retryPolicy | getRetryPolicyText }}-->
               </el-tag>
-              <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right">
+              <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right" v-if="false">
                 <el-link
                   href="https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumption-retries"
                   :underline="false" target="_blank">
-                  <i class="el-icon-info" style="margin-left: 5px;height: 200%"/>
+                  <i class="el-icon-info" style="margin-left: 5px; height: 200%"/>
                 </el-link>
               </el-tooltip>
               <el-alert type="info" :closable="false" style="margin-top: 10px;line-height: 1.5">
                 <template v-slot:default>
                   <i class="el-icon-info" style="font-size: 14px;color: #409eff;"/>
-                  <span v-if="groupData.consumeRetryPolicy.retryPolicy === retryPolicy.fixedRetryPolicy.type">
-                    并发投递模式下消费重试间隔遵循阶梯避退策略。
-                  </span>
-                  <span v-if="groupData.consumeRetryPolicy.retryPolicy === retryPolicy.defaultRetryPolicy.type">
-                    固定间隔策略下，PushConsumer会在本地按照固定间隔重试。
-                  </span>
+                  {{ $t(getRetryPolicyDesc(groupData.consumeRetryPolicy.retryPolicy)) }}
+                  <!--                  -->
+                  <!--                  <span v-if="groupData.consumeRetryPolicy.retryPolicy === retryPolicy.fixedRetryPolicy.type">-->
+                  <!--                    并发投递模式下消费重试间隔遵循阶梯避退策略。-->
+                  <!--                  </span>-->
+                  <!--                  <span v-if="groupData.consumeRetryPolicy.retryPolicy === retryPolicy.defaultRetryPolicy.type">-->
+                  <!--                    固定间隔策略下，PushConsumer会在本地按照固定间隔重试。-->
+                  <!--                  </span>-->
                 </template>
               </el-alert>
             </el-form-item>
-            <el-form-item label="最大重试次数" required>
+            <el-form-item :label="$t('workOrder.onsGroupV5Ticket.maximumRetries')" required>
               <el-input-number v-model="groupData.consumeRetryPolicy.maxRetryTimes" :step="1" step-strictly :min="1"
                                :max="1000" size="mini" :disabled="added"></el-input-number>
             </el-form-item>
           </el-form>
         </el-card>
       </el-form-item>
-      <el-form-item label="描述" required>
-        <el-input v-model="groupData.remark" :disabled="added" placeholder="请输入备注，例如:营销 - 促销优惠"
+      <el-form-item :label="$t('workOrder.onsGroupV5Ticket.desc')" required>
+        <el-input v-model="groupData.remark" :disabled="added" placeholder="Enter a group description"
                   size="mini"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">添加</el-button>
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">{{
+            $t('common.add')
+          }}
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -246,6 +248,30 @@ export default {
     },
     selInstance () {
       this.fetchData('')
+    },
+    getDeliveryOrderTypeDesc (type) {
+      switch (type) {
+        case 'Concurrently':
+          return 'workOrder.onsGroupV5Ticket.deliveryOrderTypes.concurrently.desc'
+        case 'Orderly':
+          return 'workOrder.onsGroupV5Ticket.deliveryOrderTypes.orderly.desc'
+      }
+    },
+    getRetryPolicyText (type) {
+      switch (type) {
+        case 'DefaultRetryPolicy':
+          return 'workOrder.onsGroupV5Ticket.retryPolicy.defaultRetryPolicy.text'
+        case 'FixedRetryPolicy':
+          return 'workOrder.onsGroupV5Ticket.retryPolicy.fixedRetryPolicy.text'
+      }
+    },
+    getRetryPolicyDesc (type) {
+      switch (type) {
+        case 'DefaultRetryPolicy':
+          return 'workOrder.onsGroupV5Ticket.retryPolicy.defaultRetryPolicy.desc'
+        case 'FixedRetryPolicy':
+          return 'workOrder.onsGroupV5Ticket.retryPolicy.fixedRetryPolicy.desc'
+      }
     },
     fetchData (name) {
       this.searchLoading = true

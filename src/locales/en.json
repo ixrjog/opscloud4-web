@@ -167,6 +167,60 @@
       "user": "User",
       "qa": "Quality Assurance",
       "admin": "Admin"
+    },
+    "onsTopicV5Ticket": {
+      "instanceName": "Aliyun",
+      "onsInstance": "ONS Instance",
+      "messageType": "Message Type",
+      "desc": "Desc",
+      "topicDesc": "Must start with 'TOPIC_' and contain uppercase English, numbers, and underscores (_), with a maximum of 64 characters",
+      "messageTypes": {
+        "normal": {
+          "name": "Normal Message",
+          "desc": "Normal messages are applicable to scenarios such as asynchronous decoupling between systems, load shifting, Log Service, large-scale cache synchronization between brokers, and real-time computing and analysis. For more information, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/normal-messages"
+        },
+        "fifo": {
+          "name": "Ordered Message",
+          "desc": "Ordered messages are an advanced type of messages that are provided by Message Queue for Apache RocketMQ. Ordered messages are applicable to scenarios such as orderly event processing, matching transactions, and real-time synchronization of incremental data. For more information, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/ordered-messages-1"
+        },
+        "delay": {
+          "name": "Scheduled/Delayed Message",
+          "desc": "A scheduled message is sent to a RocketMQ broker and delivered at a specified point in time after the message is sent. For example, you can specify the RocketMQ broker to deliver the message at 15:00:00 on January 1, 2016. A delayed message is sent to a RocketMQ broker and delivered after a specified period of time, for example, 30 minutes after the message is sent. For more information, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/scheduled-and-delayed-messages"
+        },
+        "transaction": {
+          "name": "Transaction Message",
+          "desc": "Message Queue for Apache RocketMQ provides a distributed transaction processing feature that is similar to X/Open XA to ensure transaction consistency by using transactional messages. For more information, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/transactional-messages"
+        }
+      }
+    },
+    "onsGroupV5Ticket": {
+      "deliveryOrder": "Delivery Order",
+      "deliveryOrderTypes": {
+        "concurrently": {
+          "name": "Concurrent Delivery",
+          "desc": "In this mode, messages delivered by a broker are concurrently processed based on the policy of ensuring high throughput, and no order dependency exists between messages. Even ordered messages that belong to the same message group are also delivered out of order. For more information, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumer-groups"
+        },
+        "orderly": {
+          "name": "Ordered Delivery",
+          "desc" : "In ordered delivery mode, consumers can obtain messages only in the order in which they are grouped. If a message is not submitted, consumers cannot obtain subsequent messages. For more information, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumer-groups"
+        }
+      },
+      "consumptionRetryPolicy": "Consumption Retry Policy",
+      "retryPolicy": {
+        "defaultRetryPolicy": {
+          "type": "DefaultRetryPolicy",
+          "text": "Exponential Backoff",
+          "desc": "In concurrent delivery mode, the interval at which the system retries message consumption increases as the number of retries increases. For more information about the retry intervals, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumption-retries"
+        },
+        "fixedRetryPolicy": {
+          "type": "FixedRetryPolicy",
+          "text": "Fixed Interval",
+          "desc": "If a fixed interval is used, PushConsumer retries locally at the fixed interval. For more information, click https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumption-retries"
+        }
+      },
+      "maximumRetries": "Maximum Retries",
+      "desc": "Desc",
+      "gidDesc": "Must start with 'GID_' and can only contain uppercase letters, numbers, and underscores (_), with a maximum of 64 characters"
     }
   },
   "server": {
@@ -198,7 +252,7 @@
     "logoutAll": "Logout All",
     "settings": {
       "userProfiles": "User Profiles",
-      "foreground" : "Foreground",
+      "foreground": "Foreground",
       "background": "Background",
       "cursor": "Cursor",
       "cursorAccent": "Cursor Accent",

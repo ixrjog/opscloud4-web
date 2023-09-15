@@ -167,6 +167,60 @@
       "user": "普通用户",
       "qa": "质量保障",
       "admin": "管理员"
+    },
+    "onsTopicV5Ticket": {
+      "instanceName": "阿里云",
+      "onsInstance": "ONS实例",
+      "messageType": "消息类型",
+      "desc": "说明",
+      "topicDesc": "必须以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,最多 64 个字符",
+      "messageTypes": {
+        "normal": {
+          "name": "普通消息",
+          "desc": "普通消息适用于系统间异步解耦、削峰填谷、日志服务、大规模机器的Cache同步以及实时计算分析等场景。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/normal-messages"
+        },
+        "fifo": {
+          "name": "顺序消息",
+          "desc": "顺序消息是 RocketMQ提供的高级消息类型，适用于有序事件处理、撮合交易、数据实时增量同步等场景。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/ordered-messages-1"
+        },
+        "delay": {
+          "name": "定时/延时消息",
+          "desc": "定时消息是指将消息发送到MQ服务端，在消息发送时间（当前时间）之后的指定时间点进行投递，例如指定在2016/01/01 15:00:00进行消息投递。延时消息是指将消息发送到MQ服务端，在消息发送时间（当前时间）之后的指定延迟时间点进行投递，比如指定在消息发送时间的30分钟之后进行投递。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/scheduled-and-delayed-messages"
+        },
+        "transaction": {
+          "name": "事务消息",
+          "desc": "事务消息提供类似 X/Open XA 的分布事务功能，通过事务消息能达到分布式事务的最终一致。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/transactional-messages"
+        }
+      }
+    },
+    "onsGroupV5Ticket": {
+      "deliveryOrder": "投递顺序性",
+      "deliveryOrderTypes": {
+        "concurrently": {
+          "name": "并发投递",
+          "desc": "该模式下服务端投递消息将按照高吞吐效率优先并发处理，消息之间无顺序依赖。即使设置了相同MessageGroup的顺序消息也会无序投递。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumer-groups"
+        },
+        "orderly": {
+          "name": "顺序投递",
+          "desc" : "顺序投递模式下消费者只能按照消息分组的顺序获取消息，前面的消息没有提交完成则无法获取消费后续的消息。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumer-groups"
+        }
+      },
+      "consumptionRetryPolicy": "消费重试策略",
+      "retryPolicy": {
+        "defaultRetryPolicy": {
+          "type": "DefaultRetryPolicy",
+          "text": "阶梯退避重试",
+          "desc": "并发投递模式下消费重试间隔遵循阶梯避退策略。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumption-retries"
+        },
+        "fixedRetryPolicy": {
+          "type": "FixedRetryPolicy",
+          "text": "固定间隔重试",
+          "desc": "固定间隔策略下，PushConsumer会在本地按照固定间隔重试。更多参考 https://help.aliyun.com/zh/apsaramq-for-rocketmq/cloud-message-queue-rocketmq-5-x-series/developer-reference/consumption-retries"
+        }
+      },
+      "maximumRetries": "最大重试次数",
+      "desc": "说明",
+      "gidDesc": "以 “GID_”开头，只能包含大写字母、数字和下划线（_），最多 64 个字符"
     }
   },
   "server": {
@@ -198,7 +252,7 @@
     "logoutAll": "批量登出",
     "settings": {
       "userProfiles": "用户配置文件",
-      "foreground" : "前景色",
+      "foreground": "前景色",
       "background": "背景色",
       "cursor": "光标色",
       "cursorAccent": "Cursor Accent",

@@ -32,19 +32,19 @@ export default {
   topic5: {
     normal: {
       type: 'NORMAL',
-      desc: '普通消息'
+      desc: 'workOrder.onsTopicV5Ticket.messageTypes.normal.name'
     },
     fifo: {
       type: 'FIFO',
-      desc: '顺序消息'
+      desc: 'workOrder.onsTopicV5Ticket.messageTypes.fifo.name'
     },
     delay: {
       type: 'DELAY',
-      desc: '定时/延时消息'
+      desc: 'workOrder.onsTopicV5Ticket.messageTypes.delay.name'
     },
     transaction: {
       type: 'TRANSACTION',
-      desc: '事务消息'
+      desc: 'workOrder.onsTopicV5Ticket.messageTypes.transaction.name'
     }
   },
   group5: {
