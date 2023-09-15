@@ -6,38 +6,39 @@
            <el-card style="font-size: 12px; margin-bottom: 5px"
                     :class="deployment|toDeploymentVersionClass"
                     shadow="hover">
-            <!--  head -->
-            <div>
-              <b>{{ version.jobName }}</b>
-              <env-tag :env="version.env" style="margin-left: 10px"/>
-              <business-tags :tags="deployment.tags" style="margin-left: 10px"/>
-              <span style="float: right; color: #9d9fa3">
-                <!-- 一键回滚-->
-                <el-button type="text" @click="handleRollback(deployment)"
+             <!--  head -->
+             <div>
+               <b>{{ version.jobName }}</b>
+               <env-tag :env="version.env" style="margin-left: 5px"/>
+               <business-tags :tags="deployment.tags" style="margin-left: 5px"/>
+               <span style="float: right; color: #9d9fa3">
+                 <!-- 一键回滚-->
+                 <el-button type="text" @click="handleRollback(deployment)"
                            :disabled="deployment.replicas === 0"
                            v-show="deployment.versionType === 'BLUE' && deployment.doDeployVersion.active">
-                  <i class="fas fa-undo-alt"/>
-                </el-button>
-                <!-- 一键升级-->
-                <el-button type="text" @click="handleUpgrade(deployment)" :disabled="deployment.replicas === 0"
+                   <i class="fas fa-undo-alt"/>
+                 </el-button>
+                 <!-- 一键升级-->
+                 <el-button type="text" @click="handleUpgrade(deployment)" :disabled="deployment.replicas === 0"
                            v-show="deployment.versionType === 'GREEN' && deployment.doDeployVersion.active">
                   <i class="fas fa-redo-alt"/>
-                </el-button>
-                <!-- 一键追平-->
-                <el-button type="text" @click="handleUpgrade(deployment)" :disabled="deployment.replicas === 0"
+                 </el-button>
+                 <!-- 一键追平-->
+                 <el-button type="text" @click="handleUpgrade(deployment)" :disabled="deployment.replicas === 0"
                            v-show="deployment.versionType === 'OTHER' && deployment.doDeployVersion.active">
-                  <i class="fas fa-random"/>
-                </el-button>
-                <!-- 重新部署-->
-                <el-button type="text" @click="handleRedeploy(deployment)" :disabled="deployment.replicas === 0">
-                  <i class="fab fa-instalod"/>
-                </el-button>
-                <!-- 克隆无状态-->
-                <el-button type="text" @click="handleClone(deployment)">
-                  <i class="fas fa-clone"/>
-                </el-button>
-              </span>
-            </div>
+                   <i class="fas fa-random"/>
+                 </el-button>
+                 <!-- 重新部署-->
+                 <el-button type="text" @click="handleRedeploy(deployment)" :disabled="deployment.replicas === 0">
+                   <i class="fab fa-instalod"/>
+                 </el-button>
+                 <!-- 克隆无状态-->
+                 <el-button type="text" @click="handleClone(deployment)">
+                   <i class="fas fa-clone"/>
+                 </el-button>
+               </span>
+             </div>
+             <el-divider/>
              <leo-label :name="$t('leo.deploy.deploymentVersion.name')">
                 {{ deployment.name }}
               </leo-label>
@@ -224,28 +225,28 @@ export default {
 
 .versionBlue {
   border: 3px solid #128ca8;
-  width: 400px;
+  width: 420px;
   display: inline-block;
   margin-right: 5px;
 }
 
 .versionGreen {
   border: 3px solid #2bbe32;
-  width: 400px;
+  width: 420px;
   display: inline-block;
   margin-right: 5px;
 }
 
 .versionOther {
   border: 3px solid #e56c0d;
-  width: 400px;
+  width: 420px;
   display: inline-block;
   margin-right: 5px;
 }
 
 .versionOffline {
   border: 3px solid #9d9fa3;
-  width: 400px;
+  width: 420px;
   display: inline-block;
   margin-right: 5px;
 }
@@ -257,6 +258,10 @@ export default {
 
 .el-button--mini, .el-button--mini.is-round {
   padding: 2px;
+}
+
+.el-divider--horizontal {
+  margin: 5px 0;
 }
 
 </style>
