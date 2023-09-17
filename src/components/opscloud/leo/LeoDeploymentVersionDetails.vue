@@ -261,7 +261,7 @@ export default {
 }
 
 .el-divider--horizontal {
-  margin: 5px 0;
+  margin: 5px 0 !important;
 }
 
 </style>
