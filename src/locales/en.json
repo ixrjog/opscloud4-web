@@ -173,7 +173,7 @@
       "onsInstance": "ONS Instance",
       "messageType": "Message Type",
       "desc": "Desc",
-      "topicDesc": "Must start with 'TOPIC_' and contain uppercase English, numbers, and underscores (_), with a maximum of 64 characters",
+      "topicDesc": "Must start with 'TOPIC_' and contain uppercase English, numbers, and underscores (_), with a maximum of 60 characters",
       "messageTypes": {
         "normal": {
           "name": "Normal Message",
@@ -220,7 +220,7 @@
       },
       "maximumRetries": "Maximum Retries",
       "desc": "Desc",
-      "gidDesc": "Must start with 'GID_' and can only contain uppercase letters, numbers, and underscores (_), with a maximum of 64 characters"
+      "gidDesc": "Must start with 'GID_' and can only contain uppercase letters, numbers, and underscores (_), with a maximum of 60 characters"
     }
   },
   "server": {

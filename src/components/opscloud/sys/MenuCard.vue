@@ -18,18 +18,21 @@
             <el-input v-model="menu.title" size="mini" placeholder="请输入名称"/>
           </el-form-item>
           <el-form-item required>
+            <el-input v-model="menu.i18nEn" size="mini" placeholder="国际化EN名称"/>
+          </el-form-item>
+          <el-form-item required>
             <el-input v-model="menu.icon" size="mini" placeholder="请输入图标">
               <i slot="suffix" :class=menu.icon aria-hidden="true"/>
             </el-input>
           </el-form-item>
           <span style="float: right">
             <el-form-item>
-              <el-button :disabled="menu.id === ''" @click="handlerMenuChild(menu)" plain type="primary" size="mini">
+              <el-button :disabled="menu.id === ''" @click="handleMenuChild(menu)" plain type="primary" size="mini">
                 下级
               </el-button>
             </el-form-item>
             <el-form-item>
-              <el-button @click.prevent="handlerDel(menu)" type="danger" plain size="mini">
+              <el-button @click.prevent="handleDel(menu)" type="danger" plain size="mini">
                 删除
               </el-button>
             </el-form-item>
@@ -41,6 +44,7 @@
 </template>
 
 <script>
+
 import draggable from 'vuedraggable'
 import ui from '@/libs/util.ui'
 import { DELETE_MENU, QUERY_MENU, SAVE_MENU } from '@/api/modules/sys/sys.menu.api'
@@ -80,10 +84,10 @@ export default {
           ui.init()
         })
     },
-    handlerMenuChild (menu) {
-      this.$emit('handlerMenuChild', menu.id, menu.title)
+    handleMenuChild (menu) {
+      this.$emit('handleMenuChild', menu.id, menu.title)
     },
-    handlerDel (menu) {
+    handleDel (menu) {
       if (menu.id === '') {
         const index = this.menuList.indexOf(menu)
         if (index !== -1) {
@@ -116,10 +120,12 @@ export default {
 </script>
 
 <style>
+
 .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
   //-webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 </style>

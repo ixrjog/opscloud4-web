@@ -56,7 +56,7 @@ export default [
     meta: {
       auth: true,
       cache: true,
-      title: '风控规则变更'
+      title: 'SerDeploy'
     }
   }
 ]

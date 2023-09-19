@@ -5,7 +5,7 @@ export default [
     component: () => import('@/pages/workorder'),
     meta: {
       auth: true,
-      title: '我的工单'
+      title: 'MyWorkOrder'
     }
   }
 ]

@@ -18,6 +18,9 @@
             <el-input v-model="menuChild.title" size="mini" placeholder="请输入名称"/>
           </el-form-item>
           <el-form-item required>
+            <el-input v-model="menuChild.i18nEn" size="mini" placeholder="国际化EN名称"/>
+          </el-form-item>
+          <el-form-item required>
             <el-input v-model="menuChild.path" size="mini" class="input" placeholder="请输入路径"/>
           </el-form-item>
           <el-form-item required>
@@ -26,7 +29,7 @@
             </el-input>
           </el-form-item>
           <el-form-item style="float: right">
-            <el-button type="danger" plain size="mini" @click.prevent="handlerDel(menuChild)">
+            <el-button type="danger" plain size="mini" @click.prevent="handleDel(menuChild)">
               删除
             </el-button>
           </el-form-item>
@@ -37,6 +40,7 @@
 </template>
 
 <script>
+
 import draggable from 'vuedraggable'
 import { DELETE_MENU_CHILD, QUERY_MENU_CHILD, SAVE_MENU_CHILD } from '@/api/modules/sys/sys.menu.api'
 import ui from '@/libs/util.ui'
@@ -86,10 +90,10 @@ export default {
           ui.init()
         })
     },
-    handlerSubmenu (menu) {
-      this.$emit('handlerMenuChild', menu.id)
+    handleSubmenu (menu) {
+      this.$emit('handleMenuChild', menu.id)
     },
-    handlerDel (menuChild) {
+    handleDel (menuChild) {
       if (menuChild.id === '') {
         const index = this.menuChildList.indexOf(menuChild)
         if (index !== -1) {
@@ -122,6 +126,7 @@ export default {
 </script>
 
 <style scoped>
+
 .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
@@ -136,4 +141,5 @@ export default {
 .input {
   width: 200px;
 }
+
 </style>

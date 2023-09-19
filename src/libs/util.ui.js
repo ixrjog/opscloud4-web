@@ -22,13 +22,29 @@ function supplementPath (menu) {
   }))
 }
 
-ui.init = function () {
+/**
+ * 20230918 i18n
+ * @param i18n
+ */
+ui.init = function (i18n) {
   const token = util.cookies.get('token')
   if (token === undefined) return // 未登录
   GET_USER_UI_INFO()
     .then(res => {
       const ui = res.body
-      store.commit('d2admin/menu/asideSet', supplementPath(ui.menuInfo))
+      if (i18n === 'en') {
+        for (let menu of ui.menuInfo) {
+          menu.title = menu.i18nEn
+          for (let subMenu of menu.children) {
+            subMenu.title = subMenu.i18nEn
+          }
+        }
+        store.commit('d2admin/menu/asideSet', supplementPath(ui.menuInfo))
+        return
+      }
+      if (i18n === 'zh-chs') {
+        store.commit('d2admin/menu/asideSet', supplementPath(ui.menuInfo))
+      }
     })
 }
 

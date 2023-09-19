@@ -4,7 +4,7 @@
     <h1>{{ title }}</h1>
     <el-row :gutter="20">
       <el-col :span="10">
-        <menu-card @handlerMenuChild="handlerMenuChild"/>
+        <menu-card @handleMenuChild="handleMenuChild"/>
       </el-col>
       <el-col :span="12">
         <menu-child-card ref="menuChildCard"/>
@@ -31,7 +31,7 @@ export default {
   mounted () {
   },
   methods: {
-    handlerMenuChild (menuId, title) {
+    handleMenuChild (menuId, title) {
       this.$refs.menuChildCard.initData(menuId, title)
     }
   }

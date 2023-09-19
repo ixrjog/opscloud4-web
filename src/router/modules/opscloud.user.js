@@ -14,7 +14,7 @@ export default [
     component: () => import('@/pages/user/group'),
     meta: {
       auth: true,
-      title: '用户组管理'
+      title: 'UserGroup'
     }
   },
   {
@@ -23,7 +23,7 @@ export default [
     component: () => import('@/pages/user/details'),
     meta: {
       auth: true,
-      title: '用户详情'
+      title: 'UserDetails'
     }
   },
   {
@@ -50,7 +50,7 @@ export default [
     component: () => import('@/pages/user/inactive'),
     meta: {
       auth: true,
-      title: '无效用户配置'
+      title: 'InactiveUsers'
     }
   },
   {
@@ -59,7 +59,7 @@ export default [
     component: () => import('@/pages/user/info'),
     meta: {
       auth: true,
-      title: '用户详情'
+      title: 'UserInfo'
     }
   }
 ]

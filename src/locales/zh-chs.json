@@ -173,7 +173,7 @@
       "onsInstance": "ONS实例",
       "messageType": "消息类型",
       "desc": "说明",
-      "topicDesc": "必须以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,最多 64 个字符",
+      "topicDesc": "必须以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,最多 60 个字符",
       "messageTypes": {
         "normal": {
           "name": "普通消息",
@@ -220,7 +220,7 @@
       },
       "maximumRetries": "最大重试次数",
       "desc": "说明",
-      "gidDesc": "以 “GID_”开头，只能包含大写字母、数字和下划线（_），最多 64 个字符"
+      "gidDesc": "以 “GID_”开头，只能包含大写字母、数字和下划线（_），最多 60 个字符"
     }
   },
   "server": {
