@@ -46,21 +46,14 @@
           <template v-slot:default>
             <i class="el-icon-info" style="font-size: 14px; color: #409eff;"/>
             {{ $t(getDeliveryOrderTypeDesc(groupData.deliveryOrderType)) }}
-            <!--            <span v-if="groupData.deliveryOrderType === deliveryOrderType.concurrently.type">-->
-            <!--              该模式下服务端投递消息将按照高吞吐效率优先并发处理，消息之间无顺序依赖。即使设置了相同MessageGroup的顺序消息也会无序投递。-->
-            <!--            </span>-->
-            <!--            <span v-if="groupData.deliveryOrderType === deliveryOrderType.orderly.type">-->
-            <!--              顺序投递模式下消费者只能按照消息分组的顺序获取消息，前面的消息没有提交完成则无法获取消费后续的消息.-->
-            <!--            </span>-->
           </template>
         </el-alert>
         <div style="height: 10px"/>
         <el-card shadow="never">
           <el-form>
             <el-form-item :label="$t('workOrder.onsGroupV5Ticket.consumptionRetryPolicy')" required>
-              <el-tag size="mini" type="info">
+              <el-tag size="mini" type="info" v-if="groupData && groupData.consumeRetryPolicy">
                 {{ $t(getRetryPolicyText(groupData.consumeRetryPolicy.retryPolicy)) }}
-                <!--                {{ groupData.consumeRetryPolicy.retryPolicy | getRetryPolicyText }}-->
               </el-tag>
               <el-tooltip class="item" effect="dark" content="点击查看更多" placement="right" v-if="false">
                 <el-link
@@ -70,22 +63,16 @@
                 </el-link>
               </el-tooltip>
               <el-alert type="info" :closable="false" style="margin-top: 10px;line-height: 1.5">
-                <template v-slot:default>
+                <template v-slot:default v-if="groupData && groupData.consumeRetryPolicy">
                   <i class="el-icon-info" style="font-size: 14px;color: #409eff;"/>
                   {{ $t(getRetryPolicyDesc(groupData.consumeRetryPolicy.retryPolicy)) }}
-                  <!--                  -->
-                  <!--                  <span v-if="groupData.consumeRetryPolicy.retryPolicy === retryPolicy.fixedRetryPolicy.type">-->
-                  <!--                    并发投递模式下消费重试间隔遵循阶梯避退策略。-->
-                  <!--                  </span>-->
-                  <!--                  <span v-if="groupData.consumeRetryPolicy.retryPolicy === retryPolicy.defaultRetryPolicy.type">-->
-                  <!--                    固定间隔策略下，PushConsumer会在本地按照固定间隔重试。-->
-                  <!--                  </span>-->
                 </template>
               </el-alert>
             </el-form-item>
             <el-form-item :label="$t('workOrder.onsGroupV5Ticket.maximumRetries')" required>
               <el-input-number v-model="groupData.consumeRetryPolicy.maxRetryTimes" :step="1" step-strictly :min="1"
-                               :max="1000" size="mini" :disabled="added"></el-input-number>
+                               :max="1000" size="mini" :disabled="added"
+                               v-if="groupData && groupData.consumeRetryPolicy"></el-input-number>
             </el-form-item>
           </el-form>
         </el-card>
@@ -95,9 +82,8 @@
                   size="mini"/>
       </el-form-item>
       <el-form-item>
-        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">{{
-            $t('common.add')
-          }}
+        <el-button plain type="primary" @click="addTicketEntry" :loading="buttonAdding" size="mini">
+          {{ $t('common.add') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -187,7 +173,8 @@ export default {
         this.groupData = {
           consumerGroupId: ticketEntries[0].entry.consumerGroupId,
           remark: ticketEntries[0].entry.remark,
-          deliveryOrderType: Object.assign({}, ticketEntries[0].entry.deliveryOrderType),
+          consumeRetryPolicy: Object.assign({}, ticketEntries[0].entry.consumeRetryPolicy),
+          deliveryOrderType: ticketEntries[0].entry.deliveryOrderType,
           instanceId: '',
           regionId: ''
         }

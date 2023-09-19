@@ -13,8 +13,8 @@
         <el-timeline-item :timestamp="$t('workOrder.workOrderOptions')" placement="top">
           <el-card shadow="hover">
             <ticket-ons-group-v5-form :workOrderTicketId="ticketView.ticketId" ref="ticketOnsGroupV5Form"
-                                   v-if="ticketView.ticketPhase === 'NEW'"
-                                   @handleNotify="fetchData"/>
+                                      v-if="ticketView.ticketPhase === 'NEW'"
+                                      @handleNotify="fetchData"/>
             <ticket-entry-table :ticketId="ticketView.ticketId"
                                 :workOrderKey="ticketView.workOrderKey"
                                 :ticketPhase="ticketView.ticketPhase"
@@ -48,7 +48,8 @@
                     :placeholder="ticketView.ticketPhase === 'NEW' ? $t('common.pleaseEnterContent') : $t('workOrder.theApplicantSeemsToHaveForgottenToWrite')"
                     :readonly="ticketView.ticketPhase !== 'NEW'"/>
         </el-timeline-item>
-        <el-timeline-item :timestamp="$t('workOrder.approvalProcess')" placement="top" v-if="ticketView.nodeView !== null">
+        <el-timeline-item :timestamp="$t('workOrder.approvalProcess')" placement="top"
+                          v-if="ticketView.nodeView !== null">
           <node-view :nodeView="ticketView.nodeView"/>
         </el-timeline-item>
         <!--        审批意见只展示给当前审批人-->
