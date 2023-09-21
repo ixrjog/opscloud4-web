@@ -153,7 +153,7 @@ export default {
         ...this.ticketEntry,
         instanceUuid: this.ticketEntry.entry.instanceUuid
       }
-      requestBody.topicName = requestBody.name + ':' + this.topicData.topicName
+      requestBody.name = requestBody.name + ':' + this.topicData.topicName
       requestBody.content = JSON.stringify(this.topicData)
       requestBody.comment = this.topicData.remark
       ADD_WORK_ORDER_TICKET_ENTRY(requestBody).then(() => {
