@@ -23,7 +23,7 @@
               <template v-slot:extend>
                 <el-table-column label="Message Type">
                   <template v-slot="scope">
-                    <span>{{ scope.row.entry.messageType | getMessageTypeText }}</span>
+                    <span>{{ $t(getMessageTypeTextI18n(scope.row.entry.messageType)) }}</span>
                   </template>
                 </el-table-column>
               </template>
@@ -204,6 +204,18 @@ export default {
         this.saving = false
         this.$message.error(res.msg)
       })
+    },
+    getMessageTypeTextI18n (value) {
+      switch (value) {
+        case OnsTopicV5.topic5.normal.type:
+          return OnsTopicV5.topic5.normal.desc
+        case OnsTopicV5.topic5.fifo.type:
+          return OnsTopicV5.topic5.fifo.desc
+        case OnsTopicV5.topic5.delay.type:
+          return OnsTopicV5.topic5.delay.desc
+        case OnsTopicV5.topic5.transaction.type:
+          return OnsTopicV5.topic5.transaction.desc
+      }
     },
     beforeClose (done) {
       this.$confirm('确定关闭工单?')
