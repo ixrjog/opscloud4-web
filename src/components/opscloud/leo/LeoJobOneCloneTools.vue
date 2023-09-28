@@ -68,6 +68,11 @@
             </el-tag>
           </template>
         </el-table-column>
+        <el-table-column prop="jobConfig" label="任务配置" width="80">
+          <template v-slot="scope">
+            <yaml-view :yaml-content="scope.row.jobConfig"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="env" label="环境" width="80">
           <template v-slot="scope">
             <env-tag :env="scope.row.env"/>
@@ -118,6 +123,7 @@ import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor.vue'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ActiveTag from '@/components/opscloud/common/tag/ActiveTag.vue'
 import { QUERY_ENV_PAGE } from "@/api/modules/sys/sys.env.api";
+import YamlView from '@/components/opscloud/common/view/YamlView.vue'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -174,6 +180,7 @@ export default {
     }
   },
   components: {
+    YamlView,
     SelectItem,
     EnvTag,
     BusinessTags,

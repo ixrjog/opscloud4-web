@@ -63,6 +63,11 @@
             </el-tag>
           </template>
         </el-table-column>
+        <el-table-column prop="jobConfig" label="任务配置" width="80">
+          <template v-slot="scope">
+            <yaml-view :yaml-content="scope.row.jobConfig"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="env" label="环境" width="80">
           <template v-slot="scope">
             <env-tag :env="scope.row.env"/>
@@ -107,6 +112,7 @@ import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEdito
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor.vue'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ActiveTag from '@/components/opscloud/common/tag/ActiveTag.vue'
+import YamlView from '@/components/opscloud/common/view/YamlView.vue'
 
 export default {
   name: 'LeoJobCloneTools',
@@ -149,6 +155,7 @@ export default {
     }
   },
   components: {
+    YamlView,
     SelectItem,
     EnvTag,
     BusinessTags,

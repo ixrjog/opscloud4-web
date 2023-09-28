@@ -59,7 +59,7 @@
           </el-tooltip>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="名称" sortable></el-table-column>
+      <el-table-column prop="name" label="名称" sortable/>
       <el-table-column prop="branch" label="首选分支" sortable>
         <template v-slot="scope">
           <i class="fa fa-code-fork" style="margin-right: 2px"/>
@@ -76,6 +76,11 @@
           <el-tag size="mini" :type="scope.row.verifyTemplateVersion.type" style="margin-left: 5px">
             {{ scope.row.verifyTemplateVersion.displayVersion }}
           </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="jobConfig" label="任务配置" width="80">
+        <template v-slot="scope">
+          <yaml-view :yaml-content="scope.row.jobConfig"/>
         </template>
       </el-table-column>
       <el-table-column prop="env" label="环境" width="80">
@@ -150,6 +155,8 @@ import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuildKubernetesImageEditor.vue'
 import LeoDoBuildMavenPublishEditor from '@/components/opscloud/leo/LeoDoBuildMavenPublishEditor.vue'
 import LeoDoBuildFrontEndEditor from '@/components/opscloud/leo/LeoDoBuildFrontEndEditor.vue'
+import JsonView from '@/components/opscloud/common/view/JsonView.vue'
+import YamlView from '@/components/opscloud/common/view/YamlView.vue'
 
 const activeOptions = [{
   value: true,
@@ -231,6 +238,8 @@ export default {
   },
   computed: {},
   components: {
+    YamlView,
+    JsonView,
     Pagination,
     SelectItem,
     BusinessTags,
