@@ -32,19 +32,18 @@ ui.init = function (i18n) {
   GET_USER_UI_INFO()
     .then(res => {
       const ui = res.body
-      if (i18n === 'en') {
-        for (let menu of ui.menuInfo) {
-          menu.title = menu.i18nEn
-          for (let subMenu of menu.children) {
-            subMenu.title = subMenu.i18nEn
-          }
-        }
+      if (i18n === 'zh-chs') {
         store.commit('d2admin/menu/asideSet', supplementPath(ui.menuInfo))
         return
       }
-      if (i18n === 'zh-chs') {
-        store.commit('d2admin/menu/asideSet', supplementPath(ui.menuInfo))
+      // default en
+      for (let menu of ui.menuInfo) {
+        menu.title = menu.i18nEn
+        for (let subMenu of menu.children) {
+          subMenu.title = subMenu.i18nEn
+        }
       }
+      store.commit('d2admin/menu/asideSet', supplementPath(ui.menuInfo))
     })
 }
 
