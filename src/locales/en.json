@@ -221,9 +221,15 @@
       "maximumRetries": "Maximum Retries",
       "desc": "Desc",
       "gidDesc": "Must start with 'GID_' and can only contain uppercase letters, numbers, and underscores (_), with a maximum of 60 characters"
+    },
+    "applicationScaleReplicasTicket": {
+      "created": "Created",
+      "desired": "Desired"
     }
   },
   "server": {
+    "server" : "Server",
+    "serverAccount" : "Server Account",
     "name": "Name",
     "serverGroup": "Server Group",
     "sn": "SN",

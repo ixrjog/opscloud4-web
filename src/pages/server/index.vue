@@ -1,12 +1,11 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <d2-container>
-<!--    <h1>服务器管理</h1>-->
     <el-tabs v-model="activeName">
-      <el-tab-pane label="服务器管理" name="server">
+      <el-tab-pane :label="$t('server.server')" name="server">
         <server-table/>
       </el-tab-pane>
-      <el-tab-pane label="账户管理" name="account">
+      <el-tab-pane :label="$t('server.serverAccount')" name="account">
         <server-account-table/>
       </el-tab-pane>
     </el-tabs>

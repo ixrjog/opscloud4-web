@@ -54,9 +54,15 @@
                    :label="item.label"
                    :value="item.value"/>
       </el-select>
-      <el-button @click="fetchData" size="mini" class="button">查询</el-button>
-      <el-button @click="handleAdd" size="mini" class="button">新增</el-button>
-      <el-button @click="handleScanMonitor" size="mini" class="button">扫描监控</el-button>
+      <el-button @click="fetchData" size="mini" class="button">
+        <i class="fas fa-circle-notch"/>
+      </el-button>
+      <el-button @click="handleAdd" size="mini" class="button">
+        <i class="fas fa-plus"/>
+      </el-button>
+      <el-button @click="handleScanMonitor" size="mini" class="button">
+        <i class="fab fa-cloudscale"/>扫描监控
+      </el-button>
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
@@ -219,8 +225,8 @@ export default {
           visible: false,
           labelWidth: '150px',
           operationType: true,
-          addTitle: '新增服务器配置',
-          updateTitle: '更新服务器配置'
+          addTitle: 'Add Server Configuration',
+          updateTitle: 'Update Server Configuration'
         }
       },
       queryParam: {

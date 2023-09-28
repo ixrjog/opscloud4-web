@@ -221,9 +221,15 @@
       "maximumRetries": "最大重试次数",
       "desc": "说明",
       "gidDesc": "以 “GID_”开头，只能包含大写字母、数字和下划线（_），最多 60 个字符"
+    },
+    "applicationScaleReplicasTicket": {
+      "created": "已创建",
+      "desired": "总共需要"
     }
   },
   "server": {
+    "server" : "服务器",
+    "serverAccount" : "服务器账户",
     "name": "名称",
     "serverGroup": "服务器组",
     "sn": "编号",
