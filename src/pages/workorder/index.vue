@@ -40,7 +40,8 @@
     <application-deploy-ticket-editor :formStatus="formStatus.ticket.application.deploy" ref="applicationDeployTicketEditor" @close="fetchData"/>
     <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
     <ser-deploy-ticket-editor :formStatus="formStatus.ticket.application.serDeploy" ref="serDeployTicketEditor" @close="fetchData"/>
-    <application-fin-ops-tag-ticket-editor  :formStatus="formStatus.ticket.application.finOpsTag" ref="applicationFinOpsTagTicketEditor" @close="fetchData"/>
+    <application-fin-ops-tag-ticket-editor :formStatus="formStatus.ticket.application.finOpsTag" ref="applicationFinOpsTagTicketEditor" @close="fetchData"/>
+    <aws-transfer-create-user-ticket-editor :formStatus="formStatus.ticket.awsTransferCreateUser" ref="awsTransferCreateUserTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -85,6 +86,8 @@ import ApplicationFinOpsTagTicketEditor
   from '@/components/opscloud/workorder/ticket/ApplicationFinOpsTagTicketEditor.vue'
 import OnsTopicV5TicketEditor from '@/components/opscloud/workorder/ticket/OnsTopicV5TicketEditor'
 import OnsGroupV5TicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupV5TicketEditor'
+import AwsTransferCreateUserTicketEditor
+  from '@/components/opscloud/workorder/ticket/AwsTransferCreateUserTicketEditor.vue'
 
 export default {
   data () {
@@ -128,7 +131,8 @@ export default {
     NewApplicationTicketEditor,
     ApolloReleaseTicketEditor,
     SerDeployTicketEditor,
-    ApplicationFinOpsTagTicketEditor
+    ApplicationFinOpsTagTicketEditor,
+    AwsTransferCreateUserTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -266,6 +270,10 @@ export default {
         case this.workOrderKeyConstants.SER_DEPLOY:
           this.handleOpenTicketEditor(this.formStatus.ticket.application.serDeploy)
           this.$refs.serDeployTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.AWS_TRANSFER_CREATE_USER:
+          this.handleOpenTicketEditor(this.formStatus.ticket.awsTransferCreateUser)
+          this.$refs.awsTransferCreateUserTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

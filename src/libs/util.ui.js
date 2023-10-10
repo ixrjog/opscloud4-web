@@ -27,6 +27,7 @@ function supplementPath (menu) {
  * @param i18n
  */
 ui.init = function (i18n) {
+  if (i18n === undefined) return
   const token = util.cookies.get('token')
   if (token === undefined) return // 未登录
   GET_USER_UI_INFO()
@@ -37,9 +38,9 @@ ui.init = function (i18n) {
         return
       }
       // default en
-      for (let menu of ui.menuInfo) {
+      for (const menu of ui.menuInfo) {
         menu.title = menu.i18nEn
-        for (let subMenu of menu.children) {
+        for (const subMenu of menu.children) {
           subMenu.title = subMenu.i18nEn
         }
       }

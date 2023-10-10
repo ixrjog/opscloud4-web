@@ -38,7 +38,7 @@
           <el-tag size="mini">{{ scope.row.instanceType }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="templateKey" label="Key" width="120">
+      <el-table-column prop="templateKey" label="Key" width="150">
         <template v-slot="scope">
           <el-tag size="mini">{{ scope.row.templateKey }}</el-tag>
         </template>
@@ -88,10 +88,12 @@ import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import TemplateEditor from '@/components/opscloud/template/TemplateEditor'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 
-const instanceTypeOptions = [{
-  value: 'KUBERNETES',
-  label: 'KUBERNETES'
-}]
+const instanceTypeOptions = [
+  {
+    value: 'KUBERNETES',
+    label: 'KUBERNETES'
+  }
+]
 
 const templateTypeOptions = [{
   value: 'yaml',

@@ -6,6 +6,7 @@
 
 <script>
 import util from '@/libs/util'
+import ui from '@/libs/util.ui'
 export default {
   name: 'app',
   watch: {
@@ -18,6 +19,7 @@ export default {
     i18nHandle (val, oldVal) {
       util.cookies.set('lang', val)
       document.querySelector('html').setAttribute('lang', val)
+      ui.init(this.$i18n.locale)
     }
   }
 }

@@ -32,6 +32,9 @@ export default {
     awsIamUpdateLoginProfile: {
       visible: false
     },
+    awsTransferCreateUser: {
+      visible: false
+    },
     aliyunRamUpdateLoginProfile: {
       visible: false
     },

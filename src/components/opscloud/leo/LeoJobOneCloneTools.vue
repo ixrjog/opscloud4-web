@@ -122,7 +122,7 @@ import BusinessTagEditor from '@/components/opscloud/common/tag/BusinessTagEdito
 import LeoJobEditor from '@/components/opscloud/leo/LeoJobEditor.vue'
 import BusinessTags from '@/components/opscloud/common/tag/BusinessTags.vue'
 import ActiveTag from '@/components/opscloud/common/tag/ActiveTag.vue'
-import { QUERY_ENV_PAGE } from "@/api/modules/sys/sys.env.api";
+import { QUERY_ENV_PAGE } from '@/api/modules/sys/sys.env.api'
 import YamlView from '@/components/opscloud/common/view/YamlView.vue'
 
 const options = {

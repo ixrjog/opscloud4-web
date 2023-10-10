@@ -6,18 +6,20 @@
     </div>
     <div>
       <el-row>
-        <el-radio-group v-model="queryParam.instanceType" size="mini" @change="fetchData">
+        <el-radio-group v-model="queryParam.instanceType" size="mini" @change="fetchData" v-if="false">
           <el-radio-button v-for="item in dsInstanceType" :label="item.name" :key="item.name">
             {{ item.name }}
           </el-radio-button>
         </el-radio-group>
-        <el-select v-model="queryParam.instanceType" size="mini" clearable placeholder="数据源类型" filterable @change="fetchData" v-if="false">
+        <el-select v-model="queryParam.instanceType" size="mini" clearable placeholder="数据源类型" filterable @change="fetchData">
           <el-option v-for="item in dsInstanceType"
                      :key="item.name"
                      :label="item.name"
                      :value="item.name" />
         </el-select>
-        <el-button @click="fetchData" size="mini"><i class="fas fa-circle-notch"/></el-button>
+        <el-button @click="fetchData" size="mini">
+          <i class="fas fa-circle-notch"/>
+        </el-button>
       </el-row>
       <div style="height: 5px"/>
       <el-row :gutter="10">

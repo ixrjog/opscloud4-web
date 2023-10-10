@@ -3,10 +3,22 @@
   <span>
     <i class="el-icon-loading" v-show="!deploy.isFinish"/>
     <span v-if="$i18n.locale === 'en'" :class="deploy.deployResult">{{ deploy.deployResult }}</span>
-    <span v-if="$i18n.locale === 'zh-chs'" :class="deploy.deployResult">{{ deploy.deployResult | getBuildResultText }}</span>
+    <span v-if="$i18n.locale === 'zh-chs'" :class="deploy.deployResult">{{
+        deploy.deployResult | getBuildResultText
+      }}</span>
     <el-popover placement="right" trigger="hover">
       <i class="el-icon-info" style="color: green; margin-left: 5px" slot="reference"/>
-      <span>{{deploy.deployStatus === '' ? $t('common.noInformationAvailable') : deploy.deployStatus}}</span>
+      <span
+        style="font-size: 10px">{{ deploy.deployStatus === '' ? $t('common.noInformationAvailable') : deploy.deployStatus }}</span>
+      <el-divider/>
+      <span v-if="deploy.deployLogs === null || deploy.deployLogs.size === 0">No Logs</span>
+      <span v-if="deploy.deployLogs !== null && deploy.deployLogs.size !== 0">
+         <div style="font-size: 10px" v-for="item in deploy.deployLogs" :key="item.id">
+        {{ item.createTime }} <span :style="item.level === 'ERROR' ? 'color: red': ''">{{
+             item.level
+           }}</span> {{ item.log }}
+      </div>
+      </span>
     </el-popover>
   </span>
 </template>
@@ -27,6 +39,13 @@ export default {
 </script>
 
 <style scoped>
+
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 12px 0;
+}
 
 .SUCCESS {
   color: #03a25b;

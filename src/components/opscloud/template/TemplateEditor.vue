@@ -96,16 +96,26 @@ const options = {
   enableLiveAutocompletion: true
 }
 
-const keyOptions = [{
-  value: 'DEPLOYMENT',
-  label: 'DEPLOYMENT'
-}, {
-  value: 'SERVICE',
-  label: 'SERVICE'
-}, {
-  value: 'INGRESS',
-  label: 'INGRESS'
-}]
+const keyOptions = [
+  {
+    value: 'DEPLOYMENT',
+    label: 'DEPLOYMENT'
+  }, {
+    value: 'SERVICE',
+    label: 'SERVICE'
+  }, {
+    value: 'INGRESS',
+    label: 'INGRESS'
+  },
+  {
+    value: 'VIRTUAL_SERVICE',
+    label: 'VIRTUAL_SERVICE'
+  },
+  {
+    value: 'DESTINATION_RULE',
+    label: 'DESTINATION_RULE'
+  }
+]
 
 export default {
   data () {

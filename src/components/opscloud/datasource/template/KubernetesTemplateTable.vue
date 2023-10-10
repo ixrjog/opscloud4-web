@@ -53,7 +53,7 @@
       </el-table-column>
       <el-table-column prop="template" label="模板Key" width="120">
         <template v-slot="scope">
-            <el-tag size="mini">{{ scope.row.template.templateKey }}</el-tag>
+          <el-tag size="mini">{{ scope.row.template.templateKey }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="vars" label="自定义变量">
@@ -100,10 +100,12 @@ import EnvTag from '@/components/opscloud/common/tag/EnvTag'
 import MyHighlight from '@/components/opscloud/common/MyHighlight'
 import { GET_KIND_OPTIONS } from '@/api/modules/template/template.api'
 
-const instanceTypeOptions = [{
-  value: 'KUBERNETES',
-  label: 'KUBERNETES'
-}]
+const instanceTypeOptions = [
+  {
+    value: 'KUBERNETES',
+    label: 'KUBERNETES'
+  }
+]
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等

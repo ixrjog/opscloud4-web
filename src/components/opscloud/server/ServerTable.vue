@@ -66,6 +66,7 @@
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading" :row-class-name="tableRowClassName">
+      <el-table-column prop="id" label="ID" width="80" sortable/>
       <el-table-column :label="$t('server.name')">
         <template v-slot="scope">
           <span>{{ scope.row.name }}</span>

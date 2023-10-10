@@ -51,6 +51,7 @@
     <new-application-ticket-editor :formStatus="formStatus.ticket.application.new" ref="newApplicationTicketEditor" @close="fetchData"/>
     <ser-deploy-ticket-editor :formStatus="formStatus.ticket.application.serDeploy" ref="serDeployTicketEditor" @close="fetchData"/>
     <application-fin-ops-tag-ticket-editor  :formStatus="formStatus.ticket.application.finOpsTag" ref="applicationFinOpsTagTicketEditor" @close="fetchData"/>
+    <aws-transfer-create-user-ticket-editor :formStatus="formStatus.ticket.awsTransferCreateUser" ref="awsTransferCreateUserTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -94,6 +95,8 @@ import ApolloReleaseTicketEditor from '@/components/opscloud/workorder/ticket/Ap
 import SerDeployTicketEditor from '@/components/opscloud/workorder/ticket/SerDeployTicketEditor.vue'
 import ApplicationFinOpsTagTicketEditor
   from '@/components/opscloud/workorder/ticket/ApplicationFinOpsTagTicketEditor.vue'
+import AwsTransferCreateUserTicketEditor
+  from '@/components/opscloud/workorder/ticket/AwsTransferCreateUserTicketEditor.vue'
 
 export default {
   data () {
@@ -110,6 +113,7 @@ export default {
     }
   },
   components: {
+    AwsTransferCreateUserTicketEditor,
     ApplicationReduceReplicasTicketEditor,
     WorkOrderReport,
     WorkOrderGroupTable,
@@ -291,6 +295,10 @@ export default {
         case this.workOrderKeyConstants.SER_DEPLOY:
           this.handleOpenTicketEditor(this.formStatus.ticket.application.serDeploy)
           this.$refs.serDeployTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.AWS_TRANSFER_CREATE_USER:
+          this.handleOpenTicketEditor(this.formStatus.ticket.awsTransferCreateUser)
+          this.$refs.awsTransferCreateUserTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

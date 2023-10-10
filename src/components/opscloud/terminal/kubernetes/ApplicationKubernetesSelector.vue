@@ -49,7 +49,7 @@
                  <business-tags :tags="resource.tags"/>
                  <el-tag style="margin-left: 5px" size="mini">
                     replicas
-                   <deployment-replicas :replicas="resource.assetContainers.length"/>
+                   <deployment-replicas v-if="resource.assetContainers !== null" :replicas="resource.assetContainers.length"/>
                  </el-tag>
                  <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"/>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="selAllContainers(resource)">
@@ -418,8 +418,8 @@ export default {
           this.processMessages(res.body)
           this.loading = false
         }).catch(() => {
-          this.loading = false
-        })
+        this.loading = false
+      })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',

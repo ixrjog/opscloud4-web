@@ -44,7 +44,9 @@
             </el-table-column>
             <el-table-column label="资源限制" show-overflow-tooltip>
               <template v-slot="scope">
-                <span>CPU {{ scope.row.properties['resources.limits.cpu'] }} / Memory {{ scope.row.properties['resources.limits.memory'] }}</span>
+                <span>CPU {{
+                    scope.row.properties['resources.limits.cpu']
+                  }} / Memory {{ scope.row.properties['resources.limits.memory'] }}</span>
               </template>
             </el-table-column>
           </template>
@@ -76,6 +78,20 @@
                 <span>{{ scope.row.properties.rules }}</span>
               </template>
             </el-table-column>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="VirtualService" name="virtualService">
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.ISTIO_VIRTUAL_SERVICE"
+                     :tableLayout="tableLayout.virtualService" ref="virtualServiceTable">
+          <template v-slot:extend>
+          </template>
+        </asset-table>
+      </el-tab-pane>
+      <el-tab-pane label="DestinationRule" name="destinationRule">
+        <asset-table :instanceId="instance.id" :assetType="assetType.KUBERNETES.ISTIO_DESTINATION_RULE"
+                     :tableLayout="tableLayout.destinationRule" ref="destinationRuleTable">
+          <template v-slot:extend>
           </template>
         </asset-table>
       </el-tab-pane>
@@ -191,6 +207,46 @@ const tableLayout = {
       show: false
     }
   },
+  virtualService: {
+    assetId: {
+      alias: 'UID'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '命名空间',
+      show: true
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
+  destinationRule: {
+    assetId: {
+      alias: 'UID'
+    },
+    name: {
+      alias: '名称'
+    },
+    assetKey: {
+      alias: '',
+      show: false
+    },
+    assetKey2: {
+      alias: '命名空间',
+      show: true
+    },
+    zone: {
+      alias: '',
+      show: false
+    }
+  },
   service: {
     assetId: {
       alias: 'UID'
@@ -274,6 +330,15 @@ export default {
       if (tab.name === 'service') {
         this.$refs.serviceTable.fetchData()
       }
+      if (tab.name === 'ingress') {
+        this.$refs.ingressTable.fetchData()
+      }
+      if (tab.name === 'virtualService') {
+        this.$refs.virtualServiceTable.fetchData()
+      }
+      if (tab.name === 'destinationRule') {
+        this.$refs.destinationRuleTable.fetchData()
+      }
       if (tab.name === 'pod') {
         this.$refs.podTable.fetchData()
       }
@@ -310,8 +375,7 @@ export default {
 >>> .el-card__header {
   padding: 10px 10px;
   border-bottom: 1px solid #EBEEF5;
-  //-webkit-box-sizing: border-box;
-  box-sizing: border-box;
+//-webkit-box-sizing: border-box; box-sizing: border-box;
 }
 
 </style>

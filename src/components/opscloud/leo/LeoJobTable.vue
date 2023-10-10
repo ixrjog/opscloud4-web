@@ -155,7 +155,6 @@ import LeoBuildHistory from '@/components/opscloud/leo/LeoBuildHistory'
 import LeoDoBuildKubernetesImageEditor from '@/components/opscloud/leo/LeoDoBuildKubernetesImageEditor.vue'
 import LeoDoBuildMavenPublishEditor from '@/components/opscloud/leo/LeoDoBuildMavenPublishEditor.vue'
 import LeoDoBuildFrontEndEditor from '@/components/opscloud/leo/LeoDoBuildFrontEndEditor.vue'
-import JsonView from '@/components/opscloud/common/view/JsonView.vue'
 import YamlView from '@/components/opscloud/common/view/YamlView.vue'
 
 const activeOptions = [{
@@ -239,7 +238,6 @@ export default {
   computed: {},
   components: {
     YamlView,
-    JsonView,
     Pagination,
     SelectItem,
     BusinessTags,
