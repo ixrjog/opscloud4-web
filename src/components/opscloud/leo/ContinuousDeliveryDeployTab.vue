@@ -50,7 +50,6 @@
       </span>
     </el-row>
     <!-- 最新部署 -->
-    <!--    v-if="data.deploys.length > 0"-->
     <el-row :gutter="20">
       <el-divider content-position="left">{{ $t('leo.deploy.latestDeploymentTasks') }}</el-divider>
       <!--suppress VueUnrecognizedDirective -->
@@ -97,7 +96,7 @@
         </div>
       </el-col>
       <span style="display: flex; flex-flow: row wrap"  v-if="data.deploys.length > 0">
-        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'">
+        <el-tag v-show="JSON.stringify(data.deploys) !== '[]'" size="mini">
           <i class="fas fa-plus-circle" id="deploy_details" style="margin-right: 2px"/>
           {{ $t('leo.deploy.deploymentDetailsSnapshot') }}
         </el-tag>

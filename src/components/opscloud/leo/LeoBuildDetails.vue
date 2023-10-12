@@ -3,7 +3,7 @@
   <div>
     <el-card shadow="hover" body-style="padding: 2px" class="card">
       <div slot="header">
-        <el-tag>{{ build.jobName }}</el-tag>
+        <el-tag size="mini">{{ build.jobName }}</el-tag>
         <build-number-icon :build="build"/>
         <span style="margin-right: 5px"/>
         <i class="far fa-clock"/>{{ i18nAgo(build.ago) }}
