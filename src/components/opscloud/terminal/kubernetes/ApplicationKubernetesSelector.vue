@@ -31,12 +31,7 @@
     <div style="height: 5px"/>
     <!--    ARMS-->
     <el-row v-if="application !== '' && application.armsTraceApp.show">
-      <el-card shadow="never" class="banner">
-        <el-tag type="success" @click="openUrl(application.armsTraceApp.homeUrl)">
-          {{ $t('arms.name') }}
-          <i class="fas fa-external-link-alt" style="margin-left: 2px"/>
-        </el-tag>
-      </el-card>
+      <arms-banner :application="application"/>
       <div style="height: 5px"/>
     </el-row>
     <el-row>
@@ -49,9 +44,12 @@
                  <business-tags :tags="resource.tags"/>
                  <el-tag style="margin-left: 5px" size="mini">
                     replicas
-                   <deployment-replicas v-if="resource.assetContainers !== null" :replicas="resource.assetContainers.length"/>
+                   <deployment-replicas v-if="resource.assetContainers !== null"
+                                        :replicas="resource.assetContainers.length"/>
                  </el-tag>
                  <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"/>
+                 <!-- Envoy Logo-->
+                 <envoy-logo style="margin-left: 5px" v-if="resource.asset.properties['sidecar.istio.io/inject'] === 'true'"/>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="selAllContainers(resource)">
                    <span style="font-size: 12px">{{ $t('kubeTerm.selectAllContainers') }} </span>
                  </el-checkbox>
@@ -139,6 +137,8 @@ import ContainerImageDisplay from '@/components/opscloud/common/ContainerImageDi
 import ZoneTag from '@/components/opscloud/terminal/child/ZoneTag.vue'
 import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
 import tools from '@/libs/tools'
+import ArmsBanner from '@/components/opscloud/terminal/child/ArmsBanner.vue'
+import EnvoyLogo from '@/components/opscloud/terminal/child/EnvoyLogo.vue'
 
 const wsStates = {
   success: {
@@ -150,6 +150,8 @@ const wsStates = {
     type: 'warning'
   }
 }
+
+const envoyLogoImg = require('@/static/Envoy_Logo_Final_CMYK.png')
 
 export default {
   name: 'application-kubernetes-selector',
@@ -192,6 +194,8 @@ export default {
   },
   computed: {},
   components: {
+    EnvoyLogo,
+    ArmsBanner,
     LeoLabel,
     ZoneTag,
     DeploymentName,
