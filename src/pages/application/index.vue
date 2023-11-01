@@ -25,7 +25,8 @@
             <el-row>
               <span>{{ scope.row.name }}</span>
               <el-button type="text" v-if="scope.row.document !== null" style="margin-left: 10px"
-                         @click="handleDocRead(scope.row)"><i class="fab fa-creative-commons-share"/>
+                         @click="handleDocRead(scope.row)">
+                <i class="fab fa-creative-commons-share"/>
               </el-button>
             </el-row>
             <el-row v-if="false">
@@ -34,30 +35,38 @@
             <el-row>
               <b style="color: #9d9fa3">{{ scope.row.comment }}</b>
             </el-row>
-            <!--Tags-->
-            <business-tags :tags="scope.row.tags"/>
           </template>
         </el-table-column>
         <el-table-column prop="resourceMap" :label="$t('application.boundResources')" width="400px">
           <template v-slot="scope">
+            <!-- Assets -->
             <div v-for="(value,key) in scope.row.resourceMap" :key="key" :label="key">
               <el-divider content-position="left">
                 <b style="color: #9d9fa3">{{ key | getAppResText }}</b>
               </el-divider>
               <div v-for="item in value" :key="item.id">
                 <el-tooltip effect="dark" :content="item.comment" placement="top-start" :disabled="!item.comment">
-                  <el-tag size="mini" class="activeTag">
+                  <el-tag size="mini">
                     <span v-if="item.instance !== null">{{ item.instance.instanceName }}/</span>{{ item.name }}
                   </el-tag>
                 </el-tooltip>
               </div>
             </div>
+            <!-- Leo Jobs -->
+            <el-divider content-position="left">
+              <b style="color: #9d9fa3">CI/CD Job</b>
+            </el-divider>
+            <div v-for="leoJob in scope.row.leoJobs" :key="leoJob.id">
+              <el-tag size="mini" :type="leoJob.isActive ? 'primary' : 'info'">
+                {{ leoJob.name }}
+              </el-tag>
+            </div>
           </template>
         </el-table-column>
-        <el-table-column prop="leoJobs" :label="$t('application.jobs')" width="200">
+        <el-table-column prop="leoJobs" :label="$t('application.jobs')" width="200" v-if="false">
           <template v-slot="scope">
             <div v-for="leoJob in scope.row.leoJobs" :key="leoJob.id">
-                <el-tag size="mini" :class="leoJob.isActive ? 'activeTag' : 'inactiveTag'">
+                <el-tag size="mini" :type="leoJob.isActive ? 'success' : 'info'">
                   {{ leoJob.name }}
                 </el-tag>
             </div>
@@ -71,6 +80,11 @@
         <el-table-column prop="isActive" :label="$t('application.active')" width="80">
           <template v-slot="scope">
             <active-tag :is-active="scope.row.isActive"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="tags" :label="$t('server.tags')" width="80">
+          <template v-slot="scope">
+            <business-tags :tags="scope.row.tags"/>
           </template>
         </el-table-column>
         <el-table-column :label="$t('common.operate')" width="200">
@@ -279,15 +293,15 @@ export default {
 <style lang="less" scoped>
 
 .activeTag {
-  background-color: #408618;
-  color: white;
+  //background-color: #408618;
+  color: #408618;
   margin-left: 5px;
   margin-bottom: 5px;
 }
 
 .inactiveTag {
-  background-color: rgb(131, 131, 131);
-  color: white;
+  //background-color: rgb(131, 131, 131);
+  color: rgb(131, 131, 131);
   margin-left: 5px;
   margin-bottom: 5px;
 }

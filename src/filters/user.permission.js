@@ -1,13 +1,13 @@
 export function toPermissionRoleType (value) {
   switch (value) {
     case 'dev':
-      return 'success'
+      return 'primary'
     case 'qa':
-      return 'warning'
+      return 'primary'
     case 'admin':
       return 'danger'
     default:
-      return 'info'
+      return 'primary'
   }
 }
 

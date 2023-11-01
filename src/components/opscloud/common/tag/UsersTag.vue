@@ -2,7 +2,7 @@
 <template>
   <span class="tag-group">
     <span v-for="item in users" :key="item.id">
-        <el-tag :class="item.userPermission.permissionRole | toPermissionRoleClass" size="mini">
+        <el-tag :type="item.userPermission.permissionRole | toPermissionRoleType" size="mini" style="margin-right: 5px">
           <span v-if="showName(item)">
             {{ item.username }}&lt;{{ item.displayName }}&gt;
           </span>
