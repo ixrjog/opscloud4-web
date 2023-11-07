@@ -1,6 +1,7 @@
 import util from '@/libs/util.js'
 import router from '@/router'
 import { SYS_USER_LOGIN, SYS_USER_LOGOUT } from '@/api/sys.user.js'
+import ui from '@/libs/util.ui'
 
 export default {
   namespaced: true,
@@ -73,6 +74,7 @@ export default {
       await dispatch('d2admin/size/load', null, { root: true })
       // 持久化数据加载颜色设置
       await dispatch('d2admin/color/load', null, { root: true })
+      ui.init()
     }
   }
 }

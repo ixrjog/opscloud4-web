@@ -23,10 +23,10 @@ function supplementPath (menu) {
 }
 
 /**
- * 20230918 i18n
- * @param i18n
+ * 20231107 fix i18n
  */
-ui.init = function (i18n) {
+ui.init = function () {
+  const i18n = util.cookies.get('lang')
   if (i18n === undefined) return
   const token = util.cookies.get('token')
   if (token === undefined) return // 未登录
