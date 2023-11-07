@@ -225,6 +225,9 @@
     "applicationScaleReplicasTicket": {
       "created": "Created",
       "desired": "Desired"
+    },
+    "kubernetesContainerJvmSpecChangesTicket": {
+      "spec": "Container JVM Spec"
     }
   },
   "server": {

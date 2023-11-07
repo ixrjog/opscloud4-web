@@ -72,7 +72,7 @@ export default {
 <style lang="scss" scoped>
 
 .my-highlight {
-  margin: 0px;
+  margin: 0;
   border-radius: 4px;
   font-size: 10px;
   background: #f3f3f3 !important;

@@ -42,6 +42,7 @@
     <ser-deploy-ticket-editor :formStatus="formStatus.ticket.application.serDeploy" ref="serDeployTicketEditor" @close="fetchData"/>
     <application-fin-ops-tag-ticket-editor :formStatus="formStatus.ticket.application.finOpsTag" ref="applicationFinOpsTagTicketEditor" @close="fetchData"/>
     <aws-transfer-create-user-ticket-editor :formStatus="formStatus.ticket.awsTransferCreateUser" ref="awsTransferCreateUserTicketEditor" @close="fetchData"/>
+    <kubernetes-container-jvm-spec-changes-ticket-editor :formStatus="formStatus.ticket.application.jvmSpec" ref="kubernetesContainerJvmSpecChangesTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -88,6 +89,8 @@ import OnsTopicV5TicketEditor from '@/components/opscloud/workorder/ticket/OnsTo
 import OnsGroupV5TicketEditor from '@/components/opscloud/workorder/ticket/OnsGroupV5TicketEditor'
 import AwsTransferCreateUserTicketEditor
   from '@/components/opscloud/workorder/ticket/AwsTransferCreateUserTicketEditor.vue'
+import KubernetesContainerJvmSpecChangesTicketEditor
+  from '@/components/opscloud/workorder/ticket/KubernetesContainerJvmSpecChangesTicketEditor.vue'
 
 export default {
   data () {
@@ -101,6 +104,7 @@ export default {
   mounted () {
   },
   components: {
+    KubernetesContainerJvmSpecChangesTicketEditor,
     WorkOrderCard,
     MyTicketCard,
     ServerGroupTicketEditor,
@@ -274,6 +278,10 @@ export default {
         case this.workOrderKeyConstants.AWS_TRANSFER_CREATE_USER:
           this.handleOpenTicketEditor(this.formStatus.ticket.awsTransferCreateUser)
           this.$refs.awsTransferCreateUserTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.KUBERNETES_CONTAINER_JVM_SPEC_CHANGES:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.jvmSpec)
+          this.$refs.kubernetesContainerJvmSpecChangesTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')

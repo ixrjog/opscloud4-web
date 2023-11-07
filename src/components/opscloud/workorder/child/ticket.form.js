@@ -93,6 +93,9 @@ export default {
       },
       serDeploy: {
         visible: false
+      },
+      jvmSpec: {
+        visible: false
       }
     }
   }
