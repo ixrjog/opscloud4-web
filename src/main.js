@@ -12,7 +12,6 @@ import router from './router'
 // import { menuHeader, menuAside } from '@/menu'
 import { menuHeader } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
-import ui from '@/libs/util.ui'
 import VueClipboard from 'vue-clipboard2'
 
 // vue-echarts
