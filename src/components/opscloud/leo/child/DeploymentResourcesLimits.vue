@@ -1,14 +1,15 @@
 <!--suppress HtmlUnknownTag -->
 <template>
   <span>
-      <el-tag v-if="!simple && properties['resources.limits.cpu'] !== undefined" size="mini">
-    <span>
+    <el-tag v-if="!simple && properties['resources.limits.cpu'] !== undefined" size="mini">
+      <i class="fas fa-microchip" style="margin-right: 2px"/>
+      <span>
+          {{ CPU }} {{ properties['resources.limits.cpu'] }} {{ Memory }} {{ properties['resources.limits.memory'] }}
+      </span>
+    </el-tag>
+    <span v-if="simple">
       {{ CPU }} {{ properties['resources.limits.cpu'] }} {{ Memory }} {{ properties['resources.limits.memory'] }}
     </span>
-  </el-tag>
-  <span v-if="simple">
-    {{ CPU }} {{ properties['resources.limits.cpu'] }} {{ Memory }} {{properties['resources.limits.memory']}}
-  </span>
   </span>
 </template>
 

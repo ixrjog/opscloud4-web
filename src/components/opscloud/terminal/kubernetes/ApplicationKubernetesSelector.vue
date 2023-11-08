@@ -39,7 +39,7 @@
           <span v-for="resource in application.resources" :key="resource.id">
             <el-card shadow="never" class="deploymentClass" style="font-size: 10px">
                <div style="margin-top: -10px">
-                 <!-- Deployment无状态 -->
+                 <!-- Kubernetes Deployment -->
                  <deployment-name :deployment="resource.name" namespace="" :cluster="resource.instance.instanceName"/>
                  <business-tags :tags="resource.tags"/>
                  <el-tag style="margin-left: 5px" size="mini">
@@ -47,9 +47,13 @@
                    <deployment-replicas v-if="resource.assetContainers !== null"
                                         :replicas="resource.assetContainers.length"/>
                  </el-tag>
+                 <!-- Kubernetes Deployment Resources Limits -->
                  <deployment-resources-limits style="margin-left: 5px" :properties="resource.asset.properties"/>
-                 <!-- Envoy Logo-->
-                 <envoy-logo style="margin-left: 5px" v-if="resource.asset.properties['sidecar.istio.io/inject'] === 'true'"/>
+                 <!-- Kubernetes Deployment Env JAVA_OPTS -->
+                 <deployment-env-java-opts style="margin-left: 5px" :properties="resource.asset.properties" v-if="resource.asset.properties['env.java.opts.tag'] !== undefined"/>
+                 <!-- Envoy Logo -->
+                 <envoy-logo style="margin-left: 5px"
+                             v-if="resource.asset.properties['sidecar.istio.io/inject'] === 'true'"/>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="selAllContainers(resource)">
                    <span style="font-size: 12px">{{ $t('kubeTerm.selectAllContainers') }} </span>
                  </el-checkbox>
@@ -68,7 +72,7 @@
                  </el-tooltip>
                </div>
                <el-divider/>
-              <!-- Pod容器组 -->
+              <!-- Pod -->
                <div class="podClass">
                 <template v-for="pod in resource.assetContainers">
                    <el-card shadow="hover" :class="pod.properties.restartCount | toPodClass" :key="pod.asset.name">
@@ -139,6 +143,7 @@ import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
 import tools from '@/libs/tools'
 import ArmsBanner from '@/components/opscloud/terminal/child/ArmsBanner.vue'
 import EnvoyLogo from '@/components/opscloud/terminal/child/EnvoyLogo.vue'
+import DeploymentEnvJavaOpts from '@/components/opscloud/leo/child/DeploymentEnvJavaOpts.vue'
 
 const wsStates = {
   success: {
@@ -150,8 +155,6 @@ const wsStates = {
     type: 'warning'
   }
 }
-
-const envoyLogoImg = require('@/static/Envoy_Logo_Final_CMYK.png')
 
 export default {
   name: 'application-kubernetes-selector',
@@ -194,6 +197,7 @@ export default {
   },
   computed: {},
   components: {
+    DeploymentEnvJavaOpts,
     EnvoyLogo,
     ArmsBanner,
     LeoLabel,
@@ -422,8 +426,8 @@ export default {
           this.processMessages(res.body)
           this.loading = false
         }).catch(() => {
-        this.loading = false
-      })
+          this.loading = false
+        })
       const queryMessage = {
         token: util.cookies.get('token'),
         messageType: 'QUERY_KUBERNETES_DEPLOYMENT',
