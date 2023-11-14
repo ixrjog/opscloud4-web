@@ -53,7 +53,7 @@
                  <deployment-env-java-opts style="margin-left: 5px" :properties="resource.asset.properties" v-if="resource.asset.properties['env.java.opts.tag'] !== undefined"/>
                  <!-- Envoy Logo -->
                  <envoy-logo style="margin-left: 5px"
-                             v-if="resource.asset.properties['sidecar.istio.io/inject'] === 'true'"/>
+                             v-if="resource.asset.properties['sidecar.istio.io/inject'] && resource.asset.properties['sidecar.istio.io/inject'] === 'true'"/>
                  <el-checkbox style="margin-left: 5px" v-model="resource.checked" @change="selAllContainers(resource)">
                    <span style="font-size: 12px">{{ $t('kubeTerm.selectAllContainers') }} </span>
                  </el-checkbox>
@@ -143,7 +143,7 @@ import LeoLabel from '@/components/opscloud/leo/child/LeoLabel.vue'
 import tools from '@/libs/tools'
 import ArmsBanner from '@/components/opscloud/terminal/child/ArmsBanner.vue'
 import EnvoyLogo from '@/components/opscloud/terminal/child/EnvoyLogo.vue'
-import DeploymentEnvJavaOpts from '@/components/opscloud/leo/child/DeploymentEnvJavaOpts.vue'
+import DeploymentEnvJavaOpts from '@/components/opscloud/terminal/child/DeploymentEnvJavaOpts.vue'
 
 const wsStates = {
   success: {

@@ -112,7 +112,9 @@
         "startTime": "Start Time"
       },
       "deploymentVersion": {
-        "name": "Group Info",
+        "clusterName": "Cluster Name",
+        "namespace": "Namespace",
+        "name": "Group Name",
         "resourcesLimits": "Resources Limits",
         "replicas": "Replicas"
       },

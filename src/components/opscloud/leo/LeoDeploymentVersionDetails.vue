@@ -39,16 +39,28 @@
                </span>
              </div>
              <el-divider/>
+             <!-- 集群名称-->
+             <leo-label :name="$t('leo.deploy.deploymentVersion.clusterName')">
+                {{ deployment.name.split(':')[0] }}
+             </leo-label>
+             <!-- 集群名称-->
+             <leo-label :name="$t('leo.deploy.deploymentVersion.namespace')">
+                {{ deployment.name.split(':')[1] }}
+             </leo-label>
+             <!-- 分组名称-->
              <leo-label :name="$t('leo.deploy.deploymentVersion.name')">
+                {{ deployment.name.split(':')[2] }}
+             </leo-label>
+             <leo-label :name="$t('leo.deploy.deploymentVersion.name')" v-if="false">
                 {{ deployment.name }}
-              </leo-label>
-              <leo-label :name="$t('leo.deploy.deploymentVersion.resourcesLimits')">
+             </leo-label>
+             <leo-label :name="$t('leo.deploy.deploymentVersion.resourcesLimits')">
                 <deployment-resources-limits :properties="deployment.properties" simple/>
-              </leo-label>
-              <leo-label :name="$t('leo.deploy.deploymentVersion.replicas')">
+             </leo-label>
+             <leo-label :name="$t('leo.deploy.deploymentVersion.replicas')">
                 <deployment-replicas :replicas="deployment.replicas"/>
-              </leo-label>
-              <leo-label :name="$t('leo.build.versionName')">
+             </leo-label>
+             <leo-label :name="$t('leo.build.versionName')">
                 {{ deployment.versionName }}<el-popover placement="right" trigger="hover">
                 <i class="el-icon-info" slot="reference"/>
                  <span style="font-size: 10px; color: #9d9fa3">{{

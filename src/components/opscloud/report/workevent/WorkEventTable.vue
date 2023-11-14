@@ -2,7 +2,7 @@
 <template>
   <div>
     <el-row>
-      <el-input v-model.trim="queryParam.queryName" placeholder="输入关键字模糊查询" class="input"/>
+      <el-input v-model="queryParam.queryName" placeholder="输入关键字模糊查询" class="input"/>
       <el-select v-model="queryParam.workRoleId" placeholder="选择角色" class="select" clearable
                  @change="workRoleChange">
         <el-option v-for="item in workRoleOptions"

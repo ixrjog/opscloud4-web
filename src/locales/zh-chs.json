@@ -110,7 +110,9 @@
         "startTime": "执行时间"
       },
       "deploymentVersion": {
-        "name": "环境分组",
+        "clusterName": "集群名称",
+        "namespace": "命名空间",
+        "name": "分组名称",
         "resourcesLimits": "资源限制",
         "replicas": "副本数量"
       },
