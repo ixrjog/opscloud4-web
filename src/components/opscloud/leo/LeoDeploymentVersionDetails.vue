@@ -43,7 +43,7 @@
              <leo-label :name="$t('leo.deploy.deploymentVersion.clusterName')">
                 {{ deployment.name.split(':')[0] }}
              </leo-label>
-             <!-- 集群名称-->
+             <!-- 命名空间-->
              <leo-label :name="$t('leo.deploy.deploymentVersion.namespace')">
                 {{ deployment.name.split(':')[1] }}
              </leo-label>

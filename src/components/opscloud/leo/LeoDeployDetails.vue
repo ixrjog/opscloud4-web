@@ -20,7 +20,19 @@
               </span>
             </span>
           </leo-label>
+          <!-- 集群名称-->
+          <leo-label :name="$t('leo.deploy.deploymentVersion.clusterName')">
+            {{ deploy.deployDetails.deploy.kubernetes.instance !== null && deploy.deployDetails.deploy.kubernetes.instance.name !== null ? deploy.deployDetails.deploy.kubernetes.instance.name : 'n/a' }}
+          </leo-label>
+          <!-- 命名空间-->
+          <leo-label :name="$t('leo.deploy.deploymentVersion.namespace')">
+            {{ deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a' }}
+          </leo-label>
+          <!-- 分组名称-->
           <leo-label :name="$t('leo.deploy.deploymentVersion.name')">
+            {{ deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a' }}
+          </leo-label>
+          <leo-label :name="$t('leo.deploy.deploymentVersion.name')" v-if="false">
             <deployment-name
               :deployment="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.name : 'n/a'"
               :namespace="deploy.deployDetails.deploy.kubernetes.deployment !== null ? deploy.deployDetails.deploy.kubernetes.deployment.namespace : 'n/a'"
