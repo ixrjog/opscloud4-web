@@ -57,3 +57,11 @@ export function UPDATE_LEO_BUILD (data) {
     data
   })
 }
+
+export function BRANCH_COMPARE (data) {
+  return request({
+    url: baseUrl + '/branch/compare',
+    method: 'post',
+    data
+  })
+}

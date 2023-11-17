@@ -91,7 +91,10 @@
       "editBuildDetails": "Edit Build Details",
       "buildDetail": "Build Details",
       "versionInformation": "Version Information",
-      "buildConfig": "Build Config"
+      "buildConfig": "Build Config",
+      "riskReminder": "Risk Reminder",
+      "branchLagging": "Branch lagging",
+      "ignoreAlarms" : "I am aware of the risks"
     },
     "deploy": {
       "createDeployTask": "Create Deploy Task",

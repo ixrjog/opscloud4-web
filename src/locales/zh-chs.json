@@ -90,7 +90,10 @@
       "consoleLog": "控制台流日志",
       "editBuildDetails": "编辑构建详情",
       "buildDetail": "构建详情",
-      "buildConfig": "构建配置"
+      "buildConfig": "构建配置",
+      "riskReminder": "风险提醒",
+      "branchLagging": "构建分支落后",
+      "ignoreAlarms" : "我已知晓风险"
     },
     "deploy": {
       "createDeployTask": "创建部署任务",

@@ -32,10 +32,17 @@
                 </el-option>
               </el-option-group>
             </el-select>
+            <!-- 刷新分支按钮 -->
             <el-button size="mini" type="primary" style="margin-left: 5px" @click="getBranchOptions"
                        :loading="branchOptionsLoading">
               <i class="fas fa-circle-notch" aria-hidden="true"/>
             </el-button>
+            <!-- 分支比对按钮 -->
+            <el-button size="mini" type="primary" style="margin-left: 5px" @click="compareBranch"
+                       :disabled="doBuildParam.branch === '' || JSON.stringify(branchOptions) === '[]'">
+              <i class="fab fa-git-alt" aria-hidden="true"/>
+            </el-button>
+            <!-- 创建默认分支按钮 -->
             <el-button size="mini" type="primary" style="margin-left: 5px" @click="createBranch"
                        :loading="branchOptionsLoading">
               <i class="fab fa-hubspot" aria-hidden="true"/>
@@ -43,16 +50,21 @@
             <!-- Commit详情 -->
             <div style="height: 10px"/>
             <commit-details :branch="branch"/>
+            <build-risk-warning v-if="JSON.stringify(compareResults) !== '{}' &&  compareResults.commits.length > 0"
+                                :compareResults="compareResults"
+                                @handleIgnoreAlarms="handleIgnoreAlarms"/>
           </el-form-item>
           <el-form-item :label="$t('leo.build.deployOptions')" :label-width="formStatus.labelWidth" required>
             <el-checkbox v-model="doBuildParam.autoDeploy" @change="getLeoDeployDeployment">
               {{ $t('leo.build.autoDeploy') }}
             </el-checkbox>
           </el-form-item>
-          <el-form-item :label="$t('leo.build.deployment')" size="mini" :label-width="formStatus.labelWidth" required v-show="this.doBuildParam.autoDeploy">
+          <el-form-item :label="$t('leo.build.deployment')" size="mini" :label-width="formStatus.labelWidth" required
+                        v-show="this.doBuildParam.autoDeploy">
             <el-select v-model="doBuildParam.assetId" filterable clearable remote reserve-keyword
                        :disabled="!this.doBuildParam.autoDeploy"
-                       :placeholder="$t('leo.build.selectDeployment')" style="width: 500px" :remote-method="getLeoDeployDeployment">
+                       :placeholder="$t('leo.build.selectDeployment')" style="width: 500px"
+                       :remote-method="getLeoDeployDeployment">
               <el-option v-for="item in deployDeploymentOptions"
                          :key="item.businessId"
                          :label="item.name"
@@ -63,7 +75,8 @@
           </el-form-item>
           <el-form-item :label="$t('leo.build.project')" size="mini" :label-width="formStatus.labelWidth">
             <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
-                       :placeholder="$t('common.search.searchProject')" style="width: 500px" :remote-method="getProject">
+                       :placeholder="$t('common.search.searchProject')" style="width: 500px"
+                       :remote-method="getProject">
               <el-option v-for="item in projectOptions"
                          :key="item.id"
                          :label="item.name"
@@ -82,7 +95,8 @@
         </el-form>
         <div style="width:100%;text-align:center">
           <el-button size="mini" type="primary" @click="doBuild" icon="fa fa-play" :loading="buttons.doBuilding"
-                     :disabled="buttons.building"><span style="margin-left: 2px">{{ $t('leo.build.doBuild') }}</span>
+                     :disabled="(atRisk && !this.ignoreAlarms) || buttons.building">
+            <span style="margin-left: 2px">{{ $t('leo.build.doBuild') }}</span>
           </el-button>
           <br/>
         </div>
@@ -91,18 +105,26 @@
     <div slot="footer" class="dialog-footer">
       <el-button size="mini" @click="formStatus.visible = false">{{ $t('common.close') }}</el-button>
     </div>
+    <gitLab-compare-component :form-status="gitLabCompareComponent.formStatus" ref="gitLabCompareComponent"/>
   </el-dialog>
 </template>
 
 <script>
 
 // API
-import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/modules/leo/leo.build.api'
+import {
+  DO_BUILD,
+  GET_BUILD_BRANCH_OPTIONS,
+  CREATE_BUILD_BRANCH,
+  BRANCH_COMPARE
+} from '@/api/modules/leo/leo.build.api'
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
 import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
 import CommitDetails from '@/components/opscloud/leo/child/CommitDetails.vue'
+import GitLabCompareComponent from '@/components/opscloud/leo/child/GitLabCompareComponent.vue'
+import BuildRiskWarning from '@/components/opscloud/leo/child/BuildRiskWarning.vue'
 
 const options = {
   // vue2-ace-editor编辑器配置自动补全等
@@ -132,6 +154,11 @@ export default {
         sshUrl: '',
         openTag: true
       },
+      gitLabCompareComponent: {
+        formStatus: {
+          visible: false
+        }
+      },
       editing: false,
       branch: {},
       branchOptions: [],
@@ -143,13 +170,20 @@ export default {
       style: { height: '400px' },
       buttons: {
         doBuilding: false
-      }
+      },
+      compareResults: {},
+      // 有风险
+      atRisk: false,
+      // 忽律风险
+      ignoreAlarms: false
     }
   },
   name: 'LeoDoBuildKubernetesImageEditor',
   props: ['formStatus'],
   components: {
+    BuildRiskWarning,
     CommitDetails,
+    GitLabCompareComponent,
     SelectItem
   },
   mixins: [],
@@ -168,10 +202,13 @@ export default {
       require('brace/snippets/xml')
     },
     initData (leoJob) {
+      this.compareResults = {}
       this.activeName = 'build'
       this.branch = {}
-      this.buttons.doBuilding = false
       this.leoJob = leoJob
+      // 初始化风险提示
+      this.atRisk = this.leoJob.env.envName === 'prod' && this.branch === 'master';
+      this.buttons.doBuilding = false
       this.doBuildParam.branch = leoJob.configDetails.job.gitLab.project.branch
       this.doBuildParam.jobId = this.leoJob.id
       this.getBranchOptionsParam = {
@@ -181,7 +218,7 @@ export default {
       }
       this.getBranchOptions()
       this.doBuildParam.assetId = ''
-
+      this.ignoreAlarms = false
       if (this.leoJob.envType === 4) {
         this.doBuildParam.autoDeploy = false
       } else {
@@ -207,7 +244,33 @@ export default {
             break
           }
         }
+        this.ignoreAlarms = false
+        // 非PROD环境, 分支风险提示
+        this.compareResults = {}
+        if (this.leoJob.env.envName === 'prod' && this.branch !== 'master') {
+          this.atRisk = true
+          this.compare()
+        }
       }
+    },
+    compare () {
+      const requestBody = {
+        from: this.branch.value,
+        to: 'master',
+        jobId: this.getBranchOptionsParam.jobId,
+        sshUrl: this.getBranchOptionsParam.sshUrl
+      }
+      this.buttons.doCompare = true
+      BRANCH_COMPARE(requestBody).then(res => {
+        this.compareResults = res.body
+        this.atRisk = JSON.stringify(this.compareResults) !== '{}' &&  this.compareResults.commits.length > 0
+      }).catch((res) => {
+        this.atRisk = false
+        this.$message.error(res.msg)
+      })
+    },
+    handleIgnoreAlarms (ignore) {
+      this.ignoreAlarms = ignore
     },
     openUrl () {
       this.formStatus.visible = false
@@ -259,6 +322,10 @@ export default {
           this.branchOptionsLoading = false
           this.handleChange()
         })
+    },
+    compareBranch () {
+      this.gitLabCompareComponent.formStatus.visible = true
+      this.$refs.gitLabCompareComponent.initData(this.doBuildParam.branch, Object.assign({}, this.branchOptions), this.getBranchOptionsParam)
     },
     createBranch () {
       this.branchOptionsLoading = true
