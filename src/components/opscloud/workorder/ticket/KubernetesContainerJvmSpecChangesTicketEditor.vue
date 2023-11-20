@@ -28,7 +28,7 @@
                 <el-table-column prop="entry" :label="$t('workOrder.kubernetesContainerJvmSpecChangesTicket.spec')">
                   <template v-slot="scope">
                     <el-select v-model="scope.row.entry.spec" size="mini" filterable
-                               style="width: 100px" reserve-keyword
+                               style="width: 150px" reserve-keyword
                                @change="updateEntry(scope.row)">
                       <el-option v-for="item in specOptions"
                                  :key="item.value"
