@@ -2,7 +2,8 @@
 <template>
   <span>
     <el-tag v-if="!simple && properties['env.java.opts.tag'] !== undefined" size="mini">
-      <i class="fab fa-java" style="margin-right: 5px"/>
+      <i class="fab fa-java" style="margin-right: 5px" v-if="false"/>
+      <img class="javaLogo" src="@/static/logo/java-icon.svg" alt="">
       <span>{{ properties['env.java.opts.tag'] }}</span>
       <el-popover placement="right" trigger="hover">
         <i class="el-icon-info" style="color: green; margin-left: 5px" slot="reference"/>
@@ -50,6 +51,13 @@ export default {
   height: 1px;
   width: 100%;
   margin: 12px 0;
+}
+
+.javaLogo {
+  display: inline-block;
+  vertical-align: middle;
+  height: 17px;
+  margin-top: -4px;
 }
 
 </style>

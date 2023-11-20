@@ -207,7 +207,7 @@ export default {
       this.branch = {}
       this.leoJob = leoJob
       // 初始化风险提示
-      this.atRisk = this.leoJob.env.envName === 'prod' && this.branch === 'master';
+      this.atRisk = this.leoJob.env.envName === 'prod' && this.branch === 'master'
       this.buttons.doBuilding = false
       this.doBuildParam.branch = leoJob.configDetails.job.gitLab.project.branch
       this.doBuildParam.jobId = this.leoJob.id
@@ -263,7 +263,7 @@ export default {
       this.buttons.doCompare = true
       BRANCH_COMPARE(requestBody).then(res => {
         this.compareResults = res.body
-        this.atRisk = JSON.stringify(this.compareResults) !== '{}' &&  this.compareResults.commits.length > 0
+        this.atRisk = JSON.stringify(this.compareResults) !== '{}' && this.compareResults.commits.length > 0
       }).catch((res) => {
         this.atRisk = false
         this.$message.error(res.msg)

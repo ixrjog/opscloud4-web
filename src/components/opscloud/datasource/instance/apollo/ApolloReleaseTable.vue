@@ -27,7 +27,7 @@
     </el-row>
     <div style="height: 5px"/>
     <el-table :data="table.data" style="width: 100%" v-loading="table.loading">
-      <el-table-column prop="name" label="应用名称"/>
+      <el-table-column prop="name" label="应用名称" width="250"/>
       <el-table-column prop="assetKey" label="环境" width="80"/>
       <el-table-column prop="properties" label="变更拦截" width="80">
         <template v-slot="scope">
@@ -36,6 +36,12 @@
           </el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="properties" label="操作类型" width="120">
+        <template v-slot="scope">
+          {{ scope.row.properties.action }}
+        </template>
+      </el-table-column>
+
       <el-table-column prop="properties" label="灰度发布" width="80">
         <template v-slot="scope">
           <el-tag size="mini" :type="scope.row.properties.isGray === 'true' ? 'success' : 'danger'">

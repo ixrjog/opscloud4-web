@@ -2,7 +2,7 @@
 <template>
   <el-tag type="success">
     <div class="envoyLogo">
-      <img class="envoyLogoImg" src="@/static/Envoy_Logo_Final_CMYK.png" alt="">
+      <img class="envoyLogoImg" src="@/static/logo/envoyproxyio-icon.svg" alt="">
     </div>
   </el-tag>
 </template>
