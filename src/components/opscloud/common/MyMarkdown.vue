@@ -72,7 +72,7 @@ export default {
 }
 
 >>> .markdown-body {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 110%;
   padding: 0.6em;
 }
