@@ -68,7 +68,7 @@ export default {
   word-wrap: normal;
   background: #f6f6f6 !important;
   border-radius: 4px;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 >>> .markdown-body {
