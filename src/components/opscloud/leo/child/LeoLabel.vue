@@ -24,13 +24,13 @@ export default {
   color: #99a9bf;
   display: inline-block;
   width: 110px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .value {
   display: inline-block;
   float: right;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 </style>

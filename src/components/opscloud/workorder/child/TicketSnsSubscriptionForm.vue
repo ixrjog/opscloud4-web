@@ -36,7 +36,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="订阅协议">
-        <span style="font-size: 10px;color: #909399">目前仅支持 Amazon SQS 协议</span>
+        <span style="font-size: 12px; color: #909399">目前仅支持 Amazon SQS 协议</span>
       </el-form-item>
       <el-form-item label="SQS 队列">
         <el-select v-model="sqsEntry" size="mini" filterable value-key="name"

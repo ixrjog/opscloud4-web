@@ -37,7 +37,7 @@
     <el-row>
       <template v-if="application !== '' && application.resources !== null && application.resources.length > 0">
           <span v-for="resource in application.resources" :key="resource.id">
-            <el-card shadow="never" class="deploymentClass" style="font-size: 10px">
+            <el-card shadow="never" class="deploymentClass" style="font-size: 12px">
                <div style="margin-top: -10px">
                  <!-- Kubernetes Deployment -->
                  <deployment-name :deployment="resource.name" namespace="" :cluster="resource.instance.instanceName"/>

@@ -54,7 +54,7 @@
                            :label="item.instanceName"
                            :value="item">
                   <span style="float: left">{{ item.instanceType }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{
+                  <span style="float: right; color: #8492a6; font-size: 12px; margin-left: 20px">{{
                       item.instanceName
                     }}</span>
                 </el-option>
@@ -78,8 +78,6 @@
                            :label="item.name"
                            :value="item">
                   <select-item :name="item.name" :comment="item.comment"/>
-                  <!--                  <span style="float: left">{{ item.name }}</span><span-->
-                  <!--                  style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">{{ item.comment }}</span>-->
                 </el-option>
               </el-select>
             </el-form-item>

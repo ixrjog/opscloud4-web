@@ -74,7 +74,7 @@ export default {
 .my-highlight {
   margin: 0;
   border-radius: 4px;
-  font-size: 10px;
+  font-size: 12px;
   background: #f3f3f3 !important;
   //background-color: #dad8c8;
   line-height: 110%;

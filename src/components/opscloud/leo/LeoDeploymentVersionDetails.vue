@@ -63,7 +63,7 @@
              <leo-label :name="$t('leo.build.versionName')">
                 {{ deployment.versionName }}<el-popover placement="right" trigger="hover">
                 <i class="el-icon-info" slot="reference"/>
-                 <span style="font-size: 10px; color: #9d9fa3">{{
+                 <span style="font-size: 12px; color: #9d9fa3">{{
                      deployment.versionDesc === '' ? $t('leo.build.noVersionDesc') : deployment.versionDesc
                    }}</span>
                  </el-popover>

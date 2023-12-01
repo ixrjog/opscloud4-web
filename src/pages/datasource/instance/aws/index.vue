@@ -108,7 +108,7 @@
                 <el-table-column prop="properties" label="Region Id">
                   <template v-slot="scope">
                     <span style="display: block">{{ scope.row.regionId }}</span>
-                    <span style="color: #8492a6;font-size: 10px">
+                    <span style="color: #8492a6; font-size: 12px">
                       {{ scope.row.regionId | getAWSRegionTypeText }}</span>
                     <el-popover placement="right" width="600" trigger="hover">
                       <i class="el-icon-info" style="color: green;margin-left: 5px" slot="reference"/>
@@ -162,7 +162,7 @@
                 <el-table-column label="Region ID">
                   <template v-slot="scope">
                     <span style="display: block">{{ scope.row.regionId }}</span>
-                    <span style="color: #8492a6;font-size: 10px">
+                    <span style="color: #8492a6; font-size: 12px">
                       {{ scope.row.regionId | getAWSRegionTypeText }}</span>
                   </template>
                 </el-table-column>

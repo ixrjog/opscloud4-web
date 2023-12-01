@@ -6,13 +6,13 @@
     <span v-if="$i18n.locale === 'zh-chs'" :class="build.buildResult">{{ build.buildResult | getBuildResultText }}</span>
     <el-popover placement="right" trigger="hover">
       <i class="el-icon-info" style="color: green; margin-left: 5px" slot="reference"/>
-      <span style="font-size: 10px">
+      <span style="font-size: 12px">
         {{ build.buildStatus === '' ? $t('common.noInformationAvailable') : build.buildStatus }}
       </span>
       <el-divider/>
       <span v-if="build.buildLogs === null || build.buildLogs.size === 0">No Logs</span>
       <span v-if="build.buildLogs !== null && build.buildLogs.size !== 0">
-         <div style="font-size: 10px" v-for="item in build.buildLogs" :key="item.id">
+         <div style="font-size: 12px" v-for="item in build.buildLogs" :key="item.id">
            {{ item.createTime }} <span :style="item.level === 'ERROR' ? 'color: red': ''">{{ item.level }}</span> {{ item.log }}
          </div>
       </span>

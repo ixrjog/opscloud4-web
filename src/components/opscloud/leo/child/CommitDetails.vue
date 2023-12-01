@@ -8,7 +8,7 @@
     </a>
     <div style="color: #d9d9d9">{{ branch.commitMessage }}</div>
     <el-divider/>
-    <div style="color: #FFFFFF; float: right; font-size: 10px">
+    <div style="color: #FFFFFF; float: right; font-size: 12px">
       {{ branch.authorName }} {{ branch.authorEmail }} {{ $t('leo.build.committed') }} {{ branch.authoredDate }} [
       {{ i18nAgo(branch.ago) }} ]
     </div>

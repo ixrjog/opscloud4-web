@@ -159,7 +159,7 @@ export default {
 
 .d2-highlight {
   margin-top: 5px;
-  font-size: 10px;
+  font-size: 12px;
   background-color: #dad8c8;
   line-height: 110%;
 }

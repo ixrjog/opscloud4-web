@@ -8,13 +8,13 @@
       }}</span>
     <el-popover placement="right" trigger="hover">
       <i class="el-icon-info" style="color: green; margin-left: 5px" slot="reference"/>
-      <span style="font-size: 10px">
+      <span style="font-size: 12px">
         {{ deploy.deployStatus === '' ? $t('common.noInformationAvailable') : deploy.deployStatus }}
       </span>
       <el-divider/>
       <span v-if="deploy.deployLogs === null || deploy.deployLogs.size === 0">No Logs</span>
       <span v-if="deploy.deployLogs !== null && deploy.deployLogs.size !== 0">
-         <div style="font-size: 10px" v-for="item in deploy.deployLogs" :key="item.id">
+         <div style="font-size: 12px" v-for="item in deploy.deployLogs" :key="item.id">
            {{ item.createTime }} <span :style="item.level === 'ERROR' ? 'color: red': ''">{{ item.level }}</span> {{ item.log }}
          </div>
       </span>

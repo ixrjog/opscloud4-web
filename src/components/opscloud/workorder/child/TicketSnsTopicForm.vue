@@ -26,7 +26,7 @@
       </el-form-item>
       <el-form-item label="主题名称" prop="topic">
         <el-input v-model="snsTopicData.topic" size="mini"></el-input>
-        <span style="height: 18px;font-size: 10px;color: #909399">
+        <span style="height: 18px; font-size: 12px; color: #909399">
           以 {{ topicPrefix }} 开头,以 {{ topicSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 256 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>
       </el-form-item>
@@ -34,7 +34,7 @@
         <el-radio-group v-model="snsTopicData.topicType" size="mini" @change="topicTypeChange">
           <el-radio label="0">标准
             <el-alert type="info" :closable="false">
-              <div style="font-size: 10px;color: #909399;width: 260px">
+              <div style="font-size: 12px; color: #909399; width: 260px">
                 <li>最优消息排序</li>
                 <li>至少一次消息传输</li>
                 <li>每秒最高发布吞吐量</li>
@@ -43,7 +43,7 @@
           </el-radio>
           <el-radio label="1" disabled>FIFO(暂不支持)
             <el-alert type="info" :closable="false">
-              <div style="font-size: 10px;color: #909399;width: 260px">
+              <div style="font-size: 12px; color: #909399; width: 260px">
                 <li>严格保持的消息排序</li>
                 <li>只执行一次的消息传输</li>
                 <li>高吞吐量，每秒可发布多达 300 条消息</li>
@@ -54,7 +54,7 @@
       </el-form-item>
       <el-form-item prop="contentBasedDeduplication" v-if="snsTopicData.topicType === '1'">
         <el-checkbox v-model="snsTopicData.contentBasedDeduplication">基于内容的消息重复数据删除</el-checkbox>
-        <div style="height: 18px;font-size: 10px;color: #909399">
+        <div style="height: 18px; font-size: 12px; color: #909399">
           根据消息内容启用默认消息重复数据删除。如果未选中，则必须为每个发布请求提供重复数据删除 ID。
         </div>
       </el-form-item>

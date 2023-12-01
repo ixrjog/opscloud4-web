@@ -343,7 +343,7 @@ export default {
 }
 
 .label {
-  font-size: 10px;
+  font-size: 12px;
   color: #B7B6B6;
 }
 

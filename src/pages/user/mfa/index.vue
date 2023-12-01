@@ -10,17 +10,17 @@
             <el-button type="primary" size="mini" style="float: right" @click="handleReset">重置MFA</el-button>
           </div>
           <div style="line-height: 150%">
-            <span style="font-size: 10px">虚拟 MFA，是遵循 TOTP 标准算法产生 6 位数字验证码的应用程序</span>
+            <span style="font-size: 12px">虚拟 MFA，是遵循 TOTP 标准算法产生 6 位数字验证码的应用程序</span>
           </div>
           <div v-if="mfa !== null" style="line-height: 150%">
             <el-tooltip class="item" effect="dark" content="启用后登录平台必须输入OTP" placement="top-start">
-              <span style="font-size: 10px">设备状态 <el-tag :type="mfa.mfa ? 'success': 'info'" size="mini">{{
+              <span style="font-size: 12px">设备状态 <el-tag :type="mfa.mfa ? 'success': 'info'" size="mini">{{
                   mfa.mfa ? '已启用' : '未启用'
                 }}</el-tag></span>
             </el-tooltip>
             <br/>
             <el-tooltip class="item" effect="dark" content="用户无法重置MFA" placement="top-start">
-                   <span style="font-size: 10px">强制启用MFA <el-tag
+                   <span style="font-size: 12px">强制启用MFA <el-tag
                      :type="mfa.forceMfa ? 'success': 'info'" size="mini">{{ mfa.forceMfa ? '是' : '否' }}</el-tag></span>
             </el-tooltip>
           </div>

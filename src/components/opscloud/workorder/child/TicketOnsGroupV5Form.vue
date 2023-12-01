@@ -29,7 +29,7 @@
       </el-form-item>
       <el-form-item label="GID" required>
         <el-input v-model="groupData.consumerGroupId" :disabled="added" size="mini"/>
-        <span style="height: 18px;font-size: 10px; color: #909399">
+        <span style="height: 18px; font-size: 12px; color: #909399">
           {{ $t('workOrder.onsGroupV5Ticket.gidDesc') }}
         </span>
       </el-form-item>

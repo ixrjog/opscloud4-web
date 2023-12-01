@@ -123,10 +123,18 @@ export default {
           this.form.credentialLabel = 'AccessKey'
           this.form.credential2Label = 'SecretKey'
           break
-        case 6: // Kube Config
+        // Kubernetes kubeConfig
+        case 6:
           this.form.showCredential2 = false
           this.form.credentialHeight = 500
           this.form.credentialLabel = 'KubeConfig'
+          break
+        // SSL Certificates
+        case 7:
+          this.form.showCredential2 = true
+          this.form.credentialHeight = 500
+          this.form.credentialLabel = 'Certificate File'
+          this.form.credential2Label = 'Certificate Key'
           break
       }
     },

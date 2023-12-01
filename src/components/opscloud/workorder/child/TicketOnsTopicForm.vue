@@ -28,7 +28,7 @@
       </el-form-item>
       <el-form-item label="Topic" required>
         <el-input v-model="topicData.topic" :disabled="added" size="mini"></el-input>
-        <span style="height: 18px;font-size: 10px;color: #909399">
+        <span style="height: 18px; font-size: 12px; color: #909399">
           以 “TOPIC_”开头，包含大写英文、数字和下划线（_）,最多 64 个字符
         </span>
       </el-form-item>

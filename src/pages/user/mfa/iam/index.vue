@@ -12,7 +12,7 @@
             </div>
             <div style="line-height: 150%">
               <el-tooltip class="item" effect="dark" content="启用后登录平台必须输入OTP" placement="top-start">
-                <span style="font-size: 10px">已分配MFA设备 <el-tag size="mini">{{ item.title }}</el-tag></span>
+                <span style="font-size: 12px">已分配MFA设备 <el-tag size="mini">{{ item.title }}</el-tag></span>
               </el-tooltip>
             </div>
             <el-card class="box-card" shadow="hover" style="margin-top: 15px">

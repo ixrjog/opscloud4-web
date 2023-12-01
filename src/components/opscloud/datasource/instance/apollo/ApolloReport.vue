@@ -117,7 +117,7 @@ export default {
     fetchData () {
       const requestBody = {
         ...this.queryParam,
-        instanceId: this.instanceId,
+        instanceId: this.instanceId
       }
       GET_APOLLO_RELEASE_REPORT(requestBody)
         .then(res => {
@@ -160,7 +160,7 @@ export default {
 }
 
 .label {
-  font-size: 10px;
+  font-size: 12px;
   color: #B7B6B6;
 }
 

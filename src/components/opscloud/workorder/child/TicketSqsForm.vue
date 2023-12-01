@@ -26,7 +26,7 @@
       </el-form-item>
       <el-form-item label="队列名称" prop="queueName">
         <el-input v-model="sqsData.queueName" size="mini"/>
-        <span style="height: 18px;font-size: 10px;color: #909399">
+        <span style="height: 18px; font-size: 12px; color: #909399">
          以 {{ queueNamePrefix }} 开头,以 {{ queueNameSuffix }} 结尾，包含小写英文、数字和下划线（_）,最多 80 个字符，FIFO 名称必须以“.fifo”结尾。
         </span>
       </el-form-item>
@@ -52,7 +52,7 @@
                     <el-option label="小时" :value="time.hour"/>
                   </el-select>
                 </el-input>
-                <span style="height: 18px;font-size: 10px;color: #909399">
+                <span style="height: 18px; font-size: 12px; color: #909399">
                   应介于 0 秒至 12 小时之间。
                 </span>
               </el-form-item>
@@ -67,7 +67,7 @@
                     <el-option label="天" :value="time.day"/>
                   </el-select>
                 </el-input>
-                <span style="height: 18px;font-size: 10px;color: #909399">
+                <span style="height: 18px; font-size: 12px; color: #909399">
                   应介于 1 分钟至 14 天之间。
                 </span>
               </el-form-item>
@@ -82,7 +82,7 @@
                     <el-option label="分钟" :value="time.minute"></el-option>
                   </el-select>
                 </el-input>
-                <span style="height: 18px;font-size: 10px;color: #909399">
+                <span style="height: 18px; font-size: 12px; color: #909399">
                   应介于 0 秒至 15 分钟之间。
                 </span>
               </el-form-item>
@@ -92,7 +92,7 @@
                 <el-input v-model="sqsData.maximumMessageSize" size="mini">
                   <template slot="append">KB</template>
                 </el-input>
-                <span style="height: 18px;font-size: 10px;color: #909399">
+                <span style="height: 18px; font-size: 12px; color: #909399">
                   应介于 1 KB 和 256 KB之间。
                 </span>
               </el-form-item>
@@ -104,7 +104,7 @@
                 <el-input v-model="sqsData.receiveMessageWaitTimeSeconds" size="mini">
                   <template slot="append">秒</template>
                 </el-input>
-                <span style="height: 18px;font-size: 10px;color: #909399">
+                <span style="height: 18px; font-size: 12px; color: #909399">
                   应介于 0 至 20 秒之间。
                 </span>
               </el-form-item>

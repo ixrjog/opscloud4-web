@@ -6,7 +6,7 @@
         <span v-for="node in workflowView.nodes" :key="node.name">
           <!--节点标题-->
           <el-divider>
-            <b style="font-size: 10px;color: #909399">{{ node.name }}</b>
+            <b style="font-size: 12px;color: #909399">{{ node.name }}</b>
           </el-divider>
           <span v-if="node.type === 0">
             <el-form-item :label="$t('workOrder.approvedBy')" :required="true" :label-width="labelWidth">

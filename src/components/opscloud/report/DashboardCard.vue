@@ -5,7 +5,7 @@
       <span>{{ title }}</span>
     </div>
     <div style="font-size: 45px;color:#20A9D9 ;font-weight: 300">{{ value }}</div>
-    <div style="font-size: 10px; color: #B7B6B6">{{ valueDesc }}</div>
+    <div style="font-size: 12px; color: #B7B6B6">{{ valueDesc }}</div>
   </el-card>
 </template>
 

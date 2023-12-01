@@ -29,7 +29,7 @@
             <el-form-item label="任务YAML" label-width="100px">
               <editor v-model="clone.jobConfig" @init="editorInit"
                       lang="yaml" theme="chrome" height="250" :options="options" ref="editor"
-                      style="font-size: 10px; line-height: 110%;  padding: 0.5em"/>
+                      style="font-size: 12px; line-height: 110%;  padding: 0.5em"/>
             </el-form-item>
           </el-form>
         </el-card>

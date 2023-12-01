@@ -52,6 +52,6 @@ export default {
 
 <style scoped lang="less">
 .copyClass i {
-  font-size: 10px;
+  font-size: 12px;
 }
 </style>

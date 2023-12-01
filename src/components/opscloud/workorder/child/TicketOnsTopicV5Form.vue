@@ -29,7 +29,7 @@
       </el-form-item>
       <el-form-item label="Topic" required>
         <el-input v-model="topicData.topicName" :disabled="added" size="mini"/>
-        <span style="height: 18px;font-size: 10px;color: #909399">
+        <span style="height: 18px;font-size: 12px; color: #909399">
           {{ $t('workOrder.onsTopicV5Ticket.topicDesc') }}
         </span>
       </el-form-item>

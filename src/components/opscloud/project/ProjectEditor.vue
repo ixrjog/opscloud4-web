@@ -80,7 +80,7 @@
                            :label="item.instanceName"
                            :value="item">
                   <span style="float: left">{{ item.instanceType }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 10px;margin-left: 20px">
+                  <span style="float: right; color: #8492a6; font-size: 12px;margin-left: 20px">
                     {{ item.instanceName }}
                   </span>
                 </el-option>

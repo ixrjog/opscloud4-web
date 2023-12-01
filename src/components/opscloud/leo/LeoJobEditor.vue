@@ -72,7 +72,7 @@
             <editor v-if="editing && JSON.stringify(leoJob.jobConfig) !== '{}'"
                     v-model="leoJob.jobConfig" @init="editorInit"
                     lang="yaml" theme="chrome" height="400" :options="options" ref="editor"
-                    style="font-size: 10px; line-height: 110%;  padding: 0.5em;"/>
+                    style="font-size: 12px; line-height: 110%;  padding: 0.5em;"/>
           </el-card>
         </el-row>
         <el-row>
