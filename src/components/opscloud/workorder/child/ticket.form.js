@@ -96,6 +96,9 @@ export default {
       },
       jvmSpec: {
         visible: false
+      },
+      istio: {
+        visible: false
       }
     }
   }

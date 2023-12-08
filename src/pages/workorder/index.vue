@@ -43,6 +43,7 @@
     <application-fin-ops-tag-ticket-editor :formStatus="formStatus.ticket.application.finOpsTag" ref="applicationFinOpsTagTicketEditor" @close="fetchData"/>
     <aws-transfer-create-user-ticket-editor :formStatus="formStatus.ticket.awsTransferCreateUser" ref="awsTransferCreateUserTicketEditor" @close="fetchData"/>
     <kubernetes-container-jvm-spec-changes-ticket-editor :formStatus="formStatus.ticket.application.jvmSpec" ref="kubernetesContainerJvmSpecChangesTicketEditor" @close="fetchData"/>
+    <kubernetes-istio-configuration-ticket-editor :formStatus="formStatus.ticket.application.istio" ref="kubernetesIstioConfigurationTicketEditor" @close="fetchData"/>
   </d2-container>
 </template>
 
@@ -91,6 +92,8 @@ import AwsTransferCreateUserTicketEditor
   from '@/components/opscloud/workorder/ticket/AwsTransferCreateUserTicketEditor.vue'
 import KubernetesContainerJvmSpecChangesTicketEditor
   from '@/components/opscloud/workorder/ticket/KubernetesContainerJvmSpecChangesTicketEditor.vue'
+import KubernetesIstioConfigurationTicketEditor
+  from '@/components/opscloud/workorder/ticket/KubernetesIstioConfigurationTicketEditor.vue'
 
 export default {
   data () {
@@ -136,7 +139,8 @@ export default {
     ApolloReleaseTicketEditor,
     SerDeployTicketEditor,
     ApplicationFinOpsTagTicketEditor,
-    AwsTransferCreateUserTicketEditor
+    AwsTransferCreateUserTicketEditor,
+    KubernetesIstioConfigurationTicketEditor
   },
   methods: {
     handleOpenTicketEditor (formStatus) {
@@ -282,6 +286,10 @@ export default {
         case this.workOrderKeyConstants.KUBERNETES_CONTAINER_JVM_SPEC_CHANGES:
           this.handleOpenTicketEditor(this.formStatus.ticket.application.jvmSpec)
           this.$refs.kubernetesContainerJvmSpecChangesTicketEditor.initData(ticket)
+          break
+        case this.workOrderKeyConstants.KUBERNETES_ISTIO_CONFIGURATION:
+          this.handleOpenTicketEditor(this.formStatus.ticket.application.istio)
+          this.$refs.kubernetesIstioConfigurationTicketEditor.initData(ticket)
           break
         default:
           this.$message.error('工单类型错误或未配置!')
