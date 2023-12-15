@@ -45,18 +45,6 @@
             <div style="height: 10px"/>
             <commit-details :branch="branch"/>
           </el-form-item>
-          <el-form-item label="Project" :label-width="form.labelWidth">
-            <el-select v-model="doBuildParam.projectId" filterable clearable remote reserve-keyword
-                       placeholder="选择关联项目" style="width: 500px" :remote-method="getProject">
-              <el-option v-for="item in projectOptions"
-                         :key="item.id"
-                         :label="item.name"
-                         :value="item.id">
-                <select-item :name="item.name" :comment="item.comment"/>
-              </el-option>
-            </el-select>
-            <el-button style="margin-left: 5px" @click="openUrl">Jump to Create Project</el-button>
-          </el-form-item>
           <el-form-item label="Version Name" :label-width="form.labelWidth">
             <el-input v-model="doBuildParam.versionName"></el-input>
           </el-form-item>
@@ -84,7 +72,6 @@ import { DO_BUILD, GET_BUILD_BRANCH_OPTIONS, CREATE_BUILD_BRANCH } from '@/api/m
 import SelectItem from '@/components/opscloud/common/SelectItem'
 import { QUERY_LEO_DEPLOY_DEPLOYMENT } from '@/api/modules/leo/leo.deploy.api'
 import BusinessType from '@/components/opscloud/common/enums/business.type'
-import { QUERY_RES_PROJECT_PAGE } from '@/api/modules/project/project.api'
 import CommitDetails from '@/components/opscloud/leo/child/CommitDetails.vue'
 
 const options = {
@@ -108,7 +95,6 @@ export default {
         branch: '',
         params: {},
         assetId: '',
-        projectId: '',
         autoDeploy: true,
         versionName: '',
         versionDesc: ''
@@ -124,7 +110,6 @@ export default {
       branchOptionsLoading: false,
       deployDeploymentOptions: [],
       businessType: BusinessType,
-      projectOptions: [],
       options: options,
       style: { height: '400px' },
       buttons: {
@@ -173,9 +158,6 @@ export default {
       } else {
         this.getLeoDeployDeployment()
       }
-      this.projectOptions = []
-      this.doBuildParam.projectId = ''
-      this.getProject('')
     },
     handleClick (tab, event) {
       if (tab.name === 'build') {
@@ -195,12 +177,6 @@ export default {
         }
       }
     },
-    openUrl () {
-      this.formStatus.visible = false
-      this.$router.push({
-        path: '/project'
-      })
-    },
     getLeoDeployDeployment () {
       if (!this.doBuildParam.autoDeploy) return
       if (this.doBuildParam.jobId === '') return
@@ -213,27 +189,6 @@ export default {
           // 单个则默认选中
           if (this.deployDeploymentOptions.length === 1) {
             this.doBuildParam.assetId = this.deployDeploymentOptions[0].businessId
-          }
-        })
-    },
-    getProject (name) {
-      if (this.leoJob === {}) return
-      const requestBody = {
-        businessType: this.businessType.APPLICATION,
-        businessId: this.leoJob.applicationId,
-        resourceType: 'APPLICATION',
-        extend: true,
-        relation: false,
-        queryName: name,
-        page: 1,
-        length: 20
-      }
-      QUERY_RES_PROJECT_PAGE(requestBody)
-        .then(res => {
-          this.projectOptions = res.body.data
-          // 单个则默认选中
-          if (this.projectOptions.length === 1) {
-            this.doBuildParam.projectId = this.projectOptions[0].id
           }
         })
     },
